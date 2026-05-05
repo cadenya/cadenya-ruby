@@ -1,0 +1,20 @@
+module Cadenya
+  module Resources
+    class Uploads
+      def create: (
+        String workspace_id,
+        metadata: Cadenya::CreateResourceMetadata,
+        spec: Cadenya::UploadSpec,
+        ?request_options: Cadenya::request_opts
+      ) -> Cadenya::Upload
+
+      def retrieve: (
+        String id,
+        workspace_id: String,
+        ?request_options: Cadenya::request_opts
+      ) -> Cadenya::Upload
+
+      def initialize: (client: Cadenya::Client) -> void
+    end
+  end
+end

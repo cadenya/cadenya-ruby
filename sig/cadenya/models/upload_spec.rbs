@@ -1,0 +1,26 @@
+module Cadenya
+  module Models
+    type upload_spec =
+      { content_type: String, filename: String, size_bytes: String }
+
+    class UploadSpec < Cadenya::Internal::Type::BaseModel
+      attr_accessor content_type: String
+
+      attr_accessor filename: String
+
+      attr_accessor size_bytes: String
+
+      def initialize: (
+        content_type: String,
+        filename: String,
+        size_bytes: String
+      ) -> void
+
+      def to_hash: -> {
+        content_type: String,
+        filename: String,
+        size_bytes: String
+      }
+    end
+  end
+end

@@ -1,0 +1,38 @@
+module Cadenya
+  module Models
+    class AgentSchedule = Agents::AgentSchedule
+
+    module Agents
+      type agent_schedule =
+        {
+          metadata: Cadenya::ResourceMetadata,
+          spec: Cadenya::Agents::AgentScheduleSpec,
+          info: Cadenya::Agents::AgentScheduleInfo
+        }
+
+      class AgentSchedule < Cadenya::Internal::Type::BaseModel
+        attr_accessor metadata: Cadenya::ResourceMetadata
+
+        attr_accessor spec: Cadenya::Agents::AgentScheduleSpec
+
+        attr_reader info: Cadenya::Agents::AgentScheduleInfo?
+
+        def info=: (
+          Cadenya::Agents::AgentScheduleInfo
+        ) -> Cadenya::Agents::AgentScheduleInfo
+
+        def initialize: (
+          metadata: Cadenya::ResourceMetadata,
+          spec: Cadenya::Agents::AgentScheduleSpec,
+          ?info: Cadenya::Agents::AgentScheduleInfo
+        ) -> void
+
+        def to_hash: -> {
+          metadata: Cadenya::ResourceMetadata,
+          spec: Cadenya::Agents::AgentScheduleSpec,
+          info: Cadenya::Agents::AgentScheduleInfo
+        }
+      end
+    end
+  end
+end

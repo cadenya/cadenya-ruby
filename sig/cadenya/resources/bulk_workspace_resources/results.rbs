@@ -1,0 +1,20 @@
+module Cadenya
+  module Resources
+    class BulkWorkspaceResources
+      class Results
+        def list: (
+          String bulk_workspace_apply_id,
+          workspace_id: String,
+          ?action: Cadenya::Models::BulkWorkspaceResources::ResultListParams::action,
+          ?cursor: String,
+          ?limit: Integer,
+          ?sort_order: String,
+          ?type: String,
+          ?request_options: Cadenya::request_opts
+        ) -> Cadenya::Internal::CursorPagination[Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResult]
+
+        def initialize: (client: Cadenya::Client) -> void
+      end
+    end
+  end
+end

@@ -1,0 +1,44 @@
+module Cadenya
+  module Models
+    class AgentScheduleSpecSchedule = Agents::AgentScheduleSpecSchedule
+
+    module Agents
+      type agent_schedule_spec_schedule =
+        {
+          calendars: ::Array[Cadenya::Agents::ScheduleCalendar],
+          intervals: ::Array[Cadenya::Agents::ScheduleInterval],
+          timezone: String
+        }
+
+      class AgentScheduleSpecSchedule < Cadenya::Internal::Type::BaseModel
+        attr_reader calendars: ::Array[Cadenya::Agents::ScheduleCalendar]?
+
+        def calendars=: (
+          ::Array[Cadenya::Agents::ScheduleCalendar]
+        ) -> ::Array[Cadenya::Agents::ScheduleCalendar]
+
+        attr_reader intervals: ::Array[Cadenya::Agents::ScheduleInterval]?
+
+        def intervals=: (
+          ::Array[Cadenya::Agents::ScheduleInterval]
+        ) -> ::Array[Cadenya::Agents::ScheduleInterval]
+
+        attr_reader timezone: String?
+
+        def timezone=: (String) -> String
+
+        def initialize: (
+          ?calendars: ::Array[Cadenya::Agents::ScheduleCalendar],
+          ?intervals: ::Array[Cadenya::Agents::ScheduleInterval],
+          ?timezone: String
+        ) -> void
+
+        def to_hash: -> {
+          calendars: ::Array[Cadenya::Agents::ScheduleCalendar],
+          intervals: ::Array[Cadenya::Agents::ScheduleInterval],
+          timezone: String
+        }
+      end
+    end
+  end
+end

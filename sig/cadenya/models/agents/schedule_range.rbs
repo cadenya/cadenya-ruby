@@ -1,0 +1,29 @@
+module Cadenya
+  module Models
+    module Agents
+      type schedule_range = { end_: Integer, start: Integer, step: Integer }
+
+      class ScheduleRange < Cadenya::Internal::Type::BaseModel
+        attr_reader end_: Integer?
+
+        def end_=: (Integer) -> Integer
+
+        attr_reader start: Integer?
+
+        def start=: (Integer) -> Integer
+
+        attr_reader step: Integer?
+
+        def step=: (Integer) -> Integer
+
+        def initialize: (
+          ?end_: Integer,
+          ?start: Integer,
+          ?step: Integer
+        ) -> void
+
+        def to_hash: -> { end_: Integer, start: Integer, step: Integer }
+      end
+    end
+  end
+end

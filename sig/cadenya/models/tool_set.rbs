@@ -1,0 +1,32 @@
+module Cadenya
+  module Models
+    type tool_set =
+      {
+        metadata: Cadenya::ResourceMetadata,
+        spec: Cadenya::ToolSetSpec,
+        info: Cadenya::ToolSetInfo
+      }
+
+    class ToolSet < Cadenya::Internal::Type::BaseModel
+      attr_accessor metadata: Cadenya::ResourceMetadata
+
+      attr_accessor spec: Cadenya::ToolSetSpec
+
+      attr_reader info: Cadenya::ToolSetInfo?
+
+      def info=: (Cadenya::ToolSetInfo) -> Cadenya::ToolSetInfo
+
+      def initialize: (
+        metadata: Cadenya::ResourceMetadata,
+        spec: Cadenya::ToolSetSpec,
+        ?info: Cadenya::ToolSetInfo
+      ) -> void
+
+      def to_hash: -> {
+        metadata: Cadenya::ResourceMetadata,
+        spec: Cadenya::ToolSetSpec,
+        info: Cadenya::ToolSetInfo
+      }
+    end
+  end
+end

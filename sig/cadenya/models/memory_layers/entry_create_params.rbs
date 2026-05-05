@@ -1,0 +1,43 @@
+module Cadenya
+  module Models
+    module MemoryLayers
+      type entry_create_params =
+        {
+          workspace_id: String,
+          memory_layer_id: String,
+          metadata: Cadenya::CreateResourceMetadata,
+          spec: Cadenya::MemoryLayers::MemoryEntryCreateSpec
+        }
+        & Cadenya::Internal::Type::request_parameters
+
+      class EntryCreateParams < Cadenya::Internal::Type::BaseModel
+        extend Cadenya::Internal::Type::RequestParameters::Converter
+        include Cadenya::Internal::Type::RequestParameters
+
+        attr_accessor workspace_id: String
+
+        attr_accessor memory_layer_id: String
+
+        attr_accessor metadata: Cadenya::CreateResourceMetadata
+
+        attr_accessor spec: Cadenya::MemoryLayers::MemoryEntryCreateSpec
+
+        def initialize: (
+          workspace_id: String,
+          memory_layer_id: String,
+          metadata: Cadenya::CreateResourceMetadata,
+          spec: Cadenya::MemoryLayers::MemoryEntryCreateSpec,
+          ?request_options: Cadenya::request_opts
+        ) -> void
+
+        def to_hash: -> {
+          workspace_id: String,
+          memory_layer_id: String,
+          metadata: Cadenya::CreateResourceMetadata,
+          spec: Cadenya::MemoryLayers::MemoryEntryCreateSpec,
+          request_options: Cadenya::RequestOptions
+        }
+      end
+    end
+  end
+end

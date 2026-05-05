@@ -1,0 +1,23 @@
+module Cadenya
+  module Models
+    class ObjectiveFeedbackData = Objectives::ObjectiveFeedbackData
+
+    module Objectives
+      type objective_feedback_data = { comment: String, score: Float }
+
+      class ObjectiveFeedbackData < Cadenya::Internal::Type::BaseModel
+        attr_reader comment: String?
+
+        def comment=: (String) -> String
+
+        attr_reader score: Float?
+
+        def score=: (Float) -> Float
+
+        def initialize: (?comment: String, ?score: Float) -> void
+
+        def to_hash: -> { comment: String, score: Float }
+      end
+    end
+  end
+end

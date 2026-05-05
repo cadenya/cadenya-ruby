@@ -1,0 +1,41 @@
+module Cadenya
+  module Models
+    type create_resource_metadata =
+      {
+        name: String,
+        bundle_key: String,
+        external_id: String,
+        labels: ::Hash[Symbol, String]
+      }
+
+    class CreateResourceMetadata < Cadenya::Internal::Type::BaseModel
+      attr_accessor name: String
+
+      attr_reader bundle_key: String?
+
+      def bundle_key=: (String) -> String
+
+      attr_reader external_id: String?
+
+      def external_id=: (String) -> String
+
+      attr_reader labels: ::Hash[Symbol, String]?
+
+      def labels=: (::Hash[Symbol, String]) -> ::Hash[Symbol, String]
+
+      def initialize: (
+        name: String,
+        ?bundle_key: String,
+        ?external_id: String,
+        ?labels: ::Hash[Symbol, String]
+      ) -> void
+
+      def to_hash: -> {
+        name: String,
+        bundle_key: String,
+        external_id: String,
+        labels: ::Hash[Symbol, String]
+      }
+    end
+  end
+end

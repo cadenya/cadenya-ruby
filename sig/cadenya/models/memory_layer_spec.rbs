@@ -1,0 +1,56 @@
+module Cadenya
+  module Models
+    type memory_layer_spec =
+      {
+        type: Cadenya::Models::MemoryLayerSpec::type_,
+        description: String,
+        expires_at: Time,
+        system_managed: bool
+      }
+
+    class MemoryLayerSpec < Cadenya::Internal::Type::BaseModel
+      attr_accessor type: Cadenya::Models::MemoryLayerSpec::type_
+
+      attr_reader description: String?
+
+      def description=: (String) -> String
+
+      attr_reader expires_at: Time?
+
+      def expires_at=: (Time) -> Time
+
+      attr_reader system_managed: bool?
+
+      def system_managed=: (bool) -> bool
+
+      def initialize: (
+        type: Cadenya::Models::MemoryLayerSpec::type_,
+        ?description: String,
+        ?expires_at: Time,
+        ?system_managed: bool
+      ) -> void
+
+      def to_hash: -> {
+        type: Cadenya::Models::MemoryLayerSpec::type_,
+        description: String,
+        expires_at: Time,
+        system_managed: bool
+      }
+
+      type type_ =
+        :MEMORY_LAYER_TYPE_UNSPECIFIED
+        | :MEMORY_LAYER_TYPE_EPISODIC
+        | :MEMORY_LAYER_TYPE_SKILLS
+
+      module Type
+        extend Cadenya::Internal::Type::Enum
+
+        MEMORY_LAYER_TYPE_UNSPECIFIED: :MEMORY_LAYER_TYPE_UNSPECIFIED
+        MEMORY_LAYER_TYPE_EPISODIC: :MEMORY_LAYER_TYPE_EPISODIC
+        MEMORY_LAYER_TYPE_SKILLS: :MEMORY_LAYER_TYPE_SKILLS
+
+        def self?.values: -> ::Array[Cadenya::Models::MemoryLayerSpec::type_]
+      end
+    end
+  end
+end

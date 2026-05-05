@@ -1,0 +1,17 @@
+module Cadenya
+  module Resources
+    class Workspaces
+      def list: (
+        ?cursor: String,
+        ?include_info: bool,
+        ?limit: Integer,
+        ?sort_order: String,
+        ?request_options: Cadenya::request_opts
+      ) -> Cadenya::Internal::CursorPagination[Cadenya::Workspace]
+
+      def get: (?request_options: Cadenya::request_opts) -> Cadenya::Workspace
+
+      def initialize: (client: Cadenya::Client) -> void
+    end
+  end
+end

@@ -1,0 +1,39 @@
+module Cadenya
+  module Models
+    type objective_list_events_response =
+      {
+        data: Cadenya::ObjectiveEventData,
+        metadata: Cadenya::OperationMetadata,
+        context_window_id: String,
+        info: Cadenya::ObjectiveEventInfo
+      }
+
+    class ObjectiveListEventsResponse < Cadenya::Internal::Type::BaseModel
+      attr_accessor data: Cadenya::ObjectiveEventData
+
+      attr_accessor metadata: Cadenya::OperationMetadata
+
+      attr_reader context_window_id: String?
+
+      def context_window_id=: (String) -> String
+
+      attr_reader info: Cadenya::ObjectiveEventInfo?
+
+      def info=: (Cadenya::ObjectiveEventInfo) -> Cadenya::ObjectiveEventInfo
+
+      def initialize: (
+        data: Cadenya::ObjectiveEventData,
+        metadata: Cadenya::OperationMetadata,
+        ?context_window_id: String,
+        ?info: Cadenya::ObjectiveEventInfo
+      ) -> void
+
+      def to_hash: -> {
+        data: Cadenya::ObjectiveEventData,
+        metadata: Cadenya::OperationMetadata,
+        context_window_id: String,
+        info: Cadenya::ObjectiveEventInfo
+      }
+    end
+  end
+end

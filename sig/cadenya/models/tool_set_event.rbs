@@ -1,0 +1,64 @@
+module Cadenya
+  module Models
+    type tool_set_event =
+      {
+        metadata: Cadenya::OperationMetadata,
+        event: Cadenya::ToolSetEventData,
+        info: Cadenya::ToolSetEvent::Info,
+        tool_set_id: String
+      }
+
+    class ToolSetEvent < Cadenya::Internal::Type::BaseModel
+      attr_accessor metadata: Cadenya::OperationMetadata
+
+      attr_reader event: Cadenya::ToolSetEventData?
+
+      def event=: (Cadenya::ToolSetEventData) -> Cadenya::ToolSetEventData
+
+      attr_reader info: Cadenya::ToolSetEvent::Info?
+
+      def info=: (Cadenya::ToolSetEvent::Info) -> Cadenya::ToolSetEvent::Info
+
+      attr_reader tool_set_id: String?
+
+      def tool_set_id=: (String) -> String
+
+      def initialize: (
+        metadata: Cadenya::OperationMetadata,
+        ?event: Cadenya::ToolSetEventData,
+        ?info: Cadenya::ToolSetEvent::Info,
+        ?tool_set_id: String
+      ) -> void
+
+      def to_hash: -> {
+        metadata: Cadenya::OperationMetadata,
+        event: Cadenya::ToolSetEventData,
+        info: Cadenya::ToolSetEvent::Info,
+        tool_set_id: String
+      }
+
+      type info =
+        { created_by: Cadenya::Profile, tool_set: Cadenya::ResourceMetadata }
+
+      class Info < Cadenya::Internal::Type::BaseModel
+        attr_reader created_by: Cadenya::Profile?
+
+        def created_by=: (Cadenya::Profile) -> Cadenya::Profile
+
+        attr_reader tool_set: Cadenya::ResourceMetadata?
+
+        def tool_set=: (Cadenya::ResourceMetadata) -> Cadenya::ResourceMetadata
+
+        def initialize: (
+          ?created_by: Cadenya::Profile,
+          ?tool_set: Cadenya::ResourceMetadata
+        ) -> void
+
+        def to_hash: -> {
+          created_by: Cadenya::Profile,
+          tool_set: Cadenya::ResourceMetadata
+        }
+      end
+    end
+  end
+end

@@ -1,0 +1,27 @@
+module Cadenya
+  module Models
+    class AgentVariationSpecConstraints = Agents::AgentVariationSpecConstraints
+
+    module Agents
+      type agent_variation_spec_constraints =
+        { max_sub_objectives: Integer, max_tool_calls: Integer }
+
+      class AgentVariationSpecConstraints < Cadenya::Internal::Type::BaseModel
+        attr_reader max_sub_objectives: Integer?
+
+        def max_sub_objectives=: (Integer) -> Integer
+
+        attr_reader max_tool_calls: Integer?
+
+        def max_tool_calls=: (Integer) -> Integer
+
+        def initialize: (
+          ?max_sub_objectives: Integer,
+          ?max_tool_calls: Integer
+        ) -> void
+
+        def to_hash: -> { max_sub_objectives: Integer, max_tool_calls: Integer }
+      end
+    end
+  end
+end

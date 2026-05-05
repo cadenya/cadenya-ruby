@@ -1,0 +1,61 @@
+module Cadenya
+  module Models
+    module ToolSets
+      type tool_update_params =
+        {
+          workspace_id: String,
+          tool_set_id: String,
+          id: String,
+          metadata: Cadenya::UpdateResourceMetadata,
+          spec: Cadenya::ToolSets::ToolSpec,
+          update_mask: String
+        }
+        & Cadenya::Internal::Type::request_parameters
+
+      class ToolUpdateParams < Cadenya::Internal::Type::BaseModel
+        extend Cadenya::Internal::Type::RequestParameters::Converter
+        include Cadenya::Internal::Type::RequestParameters
+
+        attr_accessor workspace_id: String
+
+        attr_accessor tool_set_id: String
+
+        attr_accessor id: String
+
+        attr_reader metadata: Cadenya::UpdateResourceMetadata?
+
+        def metadata=: (
+          Cadenya::UpdateResourceMetadata
+        ) -> Cadenya::UpdateResourceMetadata
+
+        attr_reader spec: Cadenya::ToolSets::ToolSpec?
+
+        def spec=: (Cadenya::ToolSets::ToolSpec) -> Cadenya::ToolSets::ToolSpec
+
+        attr_reader update_mask: String?
+
+        def update_mask=: (String) -> String
+
+        def initialize: (
+          workspace_id: String,
+          tool_set_id: String,
+          id: String,
+          ?metadata: Cadenya::UpdateResourceMetadata,
+          ?spec: Cadenya::ToolSets::ToolSpec,
+          ?update_mask: String,
+          ?request_options: Cadenya::request_opts
+        ) -> void
+
+        def to_hash: -> {
+          workspace_id: String,
+          tool_set_id: String,
+          id: String,
+          metadata: Cadenya::UpdateResourceMetadata,
+          spec: Cadenya::ToolSets::ToolSpec,
+          update_mask: String,
+          request_options: Cadenya::RequestOptions
+        }
+      end
+    end
+  end
+end

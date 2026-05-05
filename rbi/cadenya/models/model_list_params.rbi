@@ -1,0 +1,151 @@
+# typed: strong
+
+module Cadenya
+  module Models
+    class ModelListParams < Cadenya::Internal::Type::BaseModel
+      extend Cadenya::Internal::Type::RequestParameters::Converter
+      include Cadenya::Internal::Type::RequestParameters
+
+      OrHash =
+        T.type_alias do
+          T.any(Cadenya::ModelListParams, Cadenya::Internal::AnyHash)
+        end
+
+      sig { returns(String) }
+      attr_accessor :workspace_id
+
+      # Filter by bundle_key — return only resources owned by this bundle.
+      sig { returns(T.nilable(String)) }
+      attr_reader :bundle_key
+
+      sig { params(bundle_key: String).void }
+      attr_writer :bundle_key
+
+      # Pagination cursor from previous response
+      sig { returns(T.nilable(String)) }
+      attr_reader :cursor
+
+      sig { params(cursor: String).void }
+      attr_writer :cursor
+
+      # Maximum number of results to return
+      sig { returns(T.nilable(Integer)) }
+      attr_reader :limit
+
+      sig { params(limit: Integer).void }
+      attr_writer :limit
+
+      # Filter by name prefix
+      sig { returns(T.nilable(String)) }
+      attr_reader :prefix
+
+      sig { params(prefix: String).void }
+      attr_writer :prefix
+
+      # Free-form search query
+      sig { returns(T.nilable(String)) }
+      attr_reader :query
+
+      sig { params(query: String).void }
+      attr_writer :query
+
+      # Sort order for results (asc or desc by creation time)
+      sig { returns(T.nilable(String)) }
+      attr_reader :sort_order
+
+      sig { params(sort_order: String).void }
+      attr_writer :sort_order
+
+      # Filter by model status
+      sig { returns(T.nilable(Cadenya::ModelListParams::Status::OrSymbol)) }
+      attr_reader :status
+
+      sig { params(status: Cadenya::ModelListParams::Status::OrSymbol).void }
+      attr_writer :status
+
+      sig do
+        params(
+          workspace_id: String,
+          bundle_key: String,
+          cursor: String,
+          limit: Integer,
+          prefix: String,
+          query: String,
+          sort_order: String,
+          status: Cadenya::ModelListParams::Status::OrSymbol,
+          request_options: Cadenya::RequestOptions::OrHash
+        ).returns(T.attached_class)
+      end
+      def self.new(
+        workspace_id:,
+        # Filter by bundle_key — return only resources owned by this bundle.
+        bundle_key: nil,
+        # Pagination cursor from previous response
+        cursor: nil,
+        # Maximum number of results to return
+        limit: nil,
+        # Filter by name prefix
+        prefix: nil,
+        # Free-form search query
+        query: nil,
+        # Sort order for results (asc or desc by creation time)
+        sort_order: nil,
+        # Filter by model status
+        status: nil,
+        request_options: {}
+      )
+      end
+
+      sig do
+        override.returns(
+          {
+            workspace_id: String,
+            bundle_key: String,
+            cursor: String,
+            limit: Integer,
+            prefix: String,
+            query: String,
+            sort_order: String,
+            status: Cadenya::ModelListParams::Status::OrSymbol,
+            request_options: Cadenya::RequestOptions
+          }
+        )
+      end
+      def to_hash
+      end
+
+      # Filter by model status
+      module Status
+        extend Cadenya::Internal::Type::Enum
+
+        TaggedSymbol =
+          T.type_alias { T.all(Symbol, Cadenya::ModelListParams::Status) }
+        OrSymbol = T.type_alias { T.any(Symbol, String) }
+
+        MODEL_STATUS_UNSPECIFIED =
+          T.let(
+            :MODEL_STATUS_UNSPECIFIED,
+            Cadenya::ModelListParams::Status::TaggedSymbol
+          )
+        MODEL_STATUS_ENABLED =
+          T.let(
+            :MODEL_STATUS_ENABLED,
+            Cadenya::ModelListParams::Status::TaggedSymbol
+          )
+        MODEL_STATUS_DISABLED =
+          T.let(
+            :MODEL_STATUS_DISABLED,
+            Cadenya::ModelListParams::Status::TaggedSymbol
+          )
+
+        sig do
+          override.returns(
+            T::Array[Cadenya::ModelListParams::Status::TaggedSymbol]
+          )
+        end
+        def self.values
+        end
+      end
+    end
+  end
+end

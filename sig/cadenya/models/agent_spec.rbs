@@ -1,0 +1,78 @@
+module Cadenya
+  module Models
+    type agent_spec =
+      {
+        status: Cadenya::Models::AgentSpec::status,
+        variation_selection_mode: Cadenya::Models::AgentSpec::variation_selection_mode,
+        description: String,
+        input_data_schema: top,
+        webhook_events_url: String
+      }
+
+    class AgentSpec < Cadenya::Internal::Type::BaseModel
+      attr_accessor status: Cadenya::Models::AgentSpec::status
+
+      attr_accessor variation_selection_mode: Cadenya::Models::AgentSpec::variation_selection_mode
+
+      attr_reader description: String?
+
+      def description=: (String) -> String
+
+      attr_reader input_data_schema: top?
+
+      def input_data_schema=: (top) -> top
+
+      attr_reader webhook_events_url: String?
+
+      def webhook_events_url=: (String) -> String
+
+      def initialize: (
+        status: Cadenya::Models::AgentSpec::status,
+        variation_selection_mode: Cadenya::Models::AgentSpec::variation_selection_mode,
+        ?description: String,
+        ?input_data_schema: top,
+        ?webhook_events_url: String
+      ) -> void
+
+      def to_hash: -> {
+        status: Cadenya::Models::AgentSpec::status,
+        variation_selection_mode: Cadenya::Models::AgentSpec::variation_selection_mode,
+        description: String,
+        input_data_schema: top,
+        webhook_events_url: String
+      }
+
+      type status =
+        :AGENT_STATUS_UNSPECIFIED
+        | :AGENT_STATUS_DRAFT
+        | :AGENT_STATUS_PUBLISHED
+        | :AGENT_STATUS_ARCHIVED
+
+      module Status
+        extend Cadenya::Internal::Type::Enum
+
+        AGENT_STATUS_UNSPECIFIED: :AGENT_STATUS_UNSPECIFIED
+        AGENT_STATUS_DRAFT: :AGENT_STATUS_DRAFT
+        AGENT_STATUS_PUBLISHED: :AGENT_STATUS_PUBLISHED
+        AGENT_STATUS_ARCHIVED: :AGENT_STATUS_ARCHIVED
+
+        def self?.values: -> ::Array[Cadenya::Models::AgentSpec::status]
+      end
+
+      type variation_selection_mode =
+        :VARIATION_SELECTION_MODE_UNSPECIFIED
+        | :VARIATION_SELECTION_MODE_RANDOM
+        | :VARIATION_SELECTION_MODE_WEIGHTED
+
+      module VariationSelectionMode
+        extend Cadenya::Internal::Type::Enum
+
+        VARIATION_SELECTION_MODE_UNSPECIFIED: :VARIATION_SELECTION_MODE_UNSPECIFIED
+        VARIATION_SELECTION_MODE_RANDOM: :VARIATION_SELECTION_MODE_RANDOM
+        VARIATION_SELECTION_MODE_WEIGHTED: :VARIATION_SELECTION_MODE_WEIGHTED
+
+        def self?.values: -> ::Array[Cadenya::Models::AgentSpec::variation_selection_mode]
+      end
+    end
+  end
+end

@@ -1,0 +1,43 @@
+module Cadenya
+  module Models
+    type profile_spec =
+      { type: Cadenya::Models::ProfileSpec::type_, email: String, name: String }
+
+    class ProfileSpec < Cadenya::Internal::Type::BaseModel
+      attr_accessor type: Cadenya::Models::ProfileSpec::type_
+
+      attr_reader email: String?
+
+      def email=: (String) -> String
+
+      attr_reader name: String?
+
+      def name=: (String) -> String
+
+      def initialize: (
+        type: Cadenya::Models::ProfileSpec::type_,
+        ?email: String,
+        ?name: String
+      ) -> void
+
+      def to_hash: -> {
+        type: Cadenya::Models::ProfileSpec::type_,
+        email: String,
+        name: String
+      }
+
+      type type_ =
+        :PROFILE_TYPE_USER | :PROFILE_TYPE_API_KEY | :PROFILE_TYPE_SYSTEM
+
+      module Type
+        extend Cadenya::Internal::Type::Enum
+
+        PROFILE_TYPE_USER: :PROFILE_TYPE_USER
+        PROFILE_TYPE_API_KEY: :PROFILE_TYPE_API_KEY
+        PROFILE_TYPE_SYSTEM: :PROFILE_TYPE_SYSTEM
+
+        def self?.values: -> ::Array[Cadenya::Models::ProfileSpec::type_]
+      end
+    end
+  end
+end

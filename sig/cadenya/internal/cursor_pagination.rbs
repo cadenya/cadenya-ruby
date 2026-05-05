@@ -1,0 +1,24 @@
+module Cadenya
+  module Internal
+    class CursorPagination[Elem]
+      include Cadenya::Internal::Type::BasePage[Elem]
+
+      attr_accessor items: ::Array[Elem]?
+
+      attr_accessor pagination: Pagination
+
+      def inspect: -> String
+
+      type pagination = { next_cursor: String }
+      class Pagination < Cadenya::Internal::Type::BaseModel
+        attr_reader next_cursor: String?
+
+        def next_cursor=: (String) -> String
+
+        def initialize: (?next_cursor: String) -> void
+
+        def to_hash: -> { next_cursor: String }
+      end
+    end
+  end
+end

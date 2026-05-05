@@ -1,0 +1,81 @@
+module Cadenya
+  module Models
+    type model_spec =
+      {
+        family: String,
+        input_price_per_million_tokens: String,
+        max_input_tokens: Integer,
+        max_output_tokens: Integer,
+        output_price_per_million_tokens: String,
+        provider: String,
+        status: Cadenya::Models::ModelSpec::status
+      }
+
+    class ModelSpec < Cadenya::Internal::Type::BaseModel
+      attr_reader family: String?
+
+      def family=: (String) -> String
+
+      attr_reader input_price_per_million_tokens: String?
+
+      def input_price_per_million_tokens=: (String) -> String
+
+      attr_reader max_input_tokens: Integer?
+
+      def max_input_tokens=: (Integer) -> Integer
+
+      attr_reader max_output_tokens: Integer?
+
+      def max_output_tokens=: (Integer) -> Integer
+
+      attr_reader output_price_per_million_tokens: String?
+
+      def output_price_per_million_tokens=: (String) -> String
+
+      attr_reader provider: String?
+
+      def provider=: (String) -> String
+
+      attr_reader status: Cadenya::Models::ModelSpec::status?
+
+      def status=: (
+        Cadenya::Models::ModelSpec::status
+      ) -> Cadenya::Models::ModelSpec::status
+
+      def initialize: (
+        ?family: String,
+        ?input_price_per_million_tokens: String,
+        ?max_input_tokens: Integer,
+        ?max_output_tokens: Integer,
+        ?output_price_per_million_tokens: String,
+        ?provider: String,
+        ?status: Cadenya::Models::ModelSpec::status
+      ) -> void
+
+      def to_hash: -> {
+        family: String,
+        input_price_per_million_tokens: String,
+        max_input_tokens: Integer,
+        max_output_tokens: Integer,
+        output_price_per_million_tokens: String,
+        provider: String,
+        status: Cadenya::Models::ModelSpec::status
+      }
+
+      type status =
+        :MODEL_STATUS_UNSPECIFIED
+        | :MODEL_STATUS_ENABLED
+        | :MODEL_STATUS_DISABLED
+
+      module Status
+        extend Cadenya::Internal::Type::Enum
+
+        MODEL_STATUS_UNSPECIFIED: :MODEL_STATUS_UNSPECIFIED
+        MODEL_STATUS_ENABLED: :MODEL_STATUS_ENABLED
+        MODEL_STATUS_DISABLED: :MODEL_STATUS_DISABLED
+
+        def self?.values: -> ::Array[Cadenya::Models::ModelSpec::status]
+      end
+    end
+  end
+end

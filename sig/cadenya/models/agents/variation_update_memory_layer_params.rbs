@@ -1,0 +1,50 @@
+module Cadenya
+  module Models
+    module Agents
+      type variation_update_memory_layer_params =
+        {
+          workspace_id: String,
+          agent_id: String,
+          variation_id: String,
+          id: String,
+          position: Integer
+        }
+        & Cadenya::Internal::Type::request_parameters
+
+      class VariationUpdateMemoryLayerParams < Cadenya::Internal::Type::BaseModel
+        extend Cadenya::Internal::Type::RequestParameters::Converter
+        include Cadenya::Internal::Type::RequestParameters
+
+        attr_accessor workspace_id: String
+
+        attr_accessor agent_id: String
+
+        attr_accessor variation_id: String
+
+        attr_accessor id: String
+
+        attr_reader position: Integer?
+
+        def position=: (Integer) -> Integer
+
+        def initialize: (
+          workspace_id: String,
+          agent_id: String,
+          variation_id: String,
+          id: String,
+          ?position: Integer,
+          ?request_options: Cadenya::request_opts
+        ) -> void
+
+        def to_hash: -> {
+          workspace_id: String,
+          agent_id: String,
+          variation_id: String,
+          id: String,
+          position: Integer,
+          request_options: Cadenya::RequestOptions
+        }
+      end
+    end
+  end
+end

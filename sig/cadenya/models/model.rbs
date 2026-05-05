@@ -1,0 +1,22 @@
+module Cadenya
+  module Models
+    type model =
+      { metadata: Cadenya::ResourceMetadata, spec: Cadenya::ModelSpec }
+
+    class Model < Cadenya::Internal::Type::BaseModel
+      attr_accessor metadata: Cadenya::ResourceMetadata
+
+      attr_accessor spec: Cadenya::ModelSpec
+
+      def initialize: (
+        metadata: Cadenya::ResourceMetadata,
+        spec: Cadenya::ModelSpec
+      ) -> void
+
+      def to_hash: -> {
+        metadata: Cadenya::ResourceMetadata,
+        spec: Cadenya::ModelSpec
+      }
+    end
+  end
+end

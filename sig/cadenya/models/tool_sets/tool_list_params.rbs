@@ -1,0 +1,122 @@
+module Cadenya
+  module Models
+    module ToolSets
+      type tool_list_params =
+        {
+          workspace_id: String,
+          tool_set_id: String,
+          bundle_key: String,
+          cursor: String,
+          include_info: bool,
+          limit: Integer,
+          names: ::Array[String],
+          prefix: String,
+          query: String,
+          requires_approval: bool,
+          sort_order: String,
+          statuses: ::Array[Cadenya::Models::ToolSets::ToolListParams::status]
+        }
+        & Cadenya::Internal::Type::request_parameters
+
+      class ToolListParams < Cadenya::Internal::Type::BaseModel
+        extend Cadenya::Internal::Type::RequestParameters::Converter
+        include Cadenya::Internal::Type::RequestParameters
+
+        attr_accessor workspace_id: String
+
+        attr_accessor tool_set_id: String
+
+        attr_reader bundle_key: String?
+
+        def bundle_key=: (String) -> String
+
+        attr_reader cursor: String?
+
+        def cursor=: (String) -> String
+
+        attr_reader include_info: bool?
+
+        def include_info=: (bool) -> bool
+
+        attr_reader limit: Integer?
+
+        def limit=: (Integer) -> Integer
+
+        attr_reader names: ::Array[String]?
+
+        def names=: (::Array[String]) -> ::Array[String]
+
+        attr_reader prefix: String?
+
+        def prefix=: (String) -> String
+
+        attr_reader query: String?
+
+        def query=: (String) -> String
+
+        attr_reader requires_approval: bool?
+
+        def requires_approval=: (bool) -> bool
+
+        attr_reader sort_order: String?
+
+        def sort_order=: (String) -> String
+
+        attr_reader statuses: ::Array[Cadenya::Models::ToolSets::ToolListParams::status]?
+
+        def statuses=: (
+          ::Array[Cadenya::Models::ToolSets::ToolListParams::status]
+        ) -> ::Array[Cadenya::Models::ToolSets::ToolListParams::status]
+
+        def initialize: (
+          workspace_id: String,
+          tool_set_id: String,
+          ?bundle_key: String,
+          ?cursor: String,
+          ?include_info: bool,
+          ?limit: Integer,
+          ?names: ::Array[String],
+          ?prefix: String,
+          ?query: String,
+          ?requires_approval: bool,
+          ?sort_order: String,
+          ?statuses: ::Array[Cadenya::Models::ToolSets::ToolListParams::status],
+          ?request_options: Cadenya::request_opts
+        ) -> void
+
+        def to_hash: -> {
+          workspace_id: String,
+          tool_set_id: String,
+          bundle_key: String,
+          cursor: String,
+          include_info: bool,
+          limit: Integer,
+          names: ::Array[String],
+          prefix: String,
+          query: String,
+          requires_approval: bool,
+          sort_order: String,
+          statuses: ::Array[Cadenya::Models::ToolSets::ToolListParams::status],
+          request_options: Cadenya::RequestOptions
+        }
+
+        type status =
+          :TOOL_STATUS_UNSPECIFIED
+          | :TOOL_STATUS_AVAILABLE
+          | :TOOL_STATUS_OMITTED
+          | :TOOL_STATUS_ARCHIVED
+
+        module Status
+          extend Cadenya::Internal::Type::Enum
+
+          TOOL_STATUS_UNSPECIFIED: :TOOL_STATUS_UNSPECIFIED
+          TOOL_STATUS_AVAILABLE: :TOOL_STATUS_AVAILABLE
+          TOOL_STATUS_OMITTED: :TOOL_STATUS_OMITTED
+          TOOL_STATUS_ARCHIVED: :TOOL_STATUS_ARCHIVED
+
+          def self?.values: -> ::Array[Cadenya::Models::ToolSets::ToolListParams::status]
+        end
+      end
+    end
+  end
+end

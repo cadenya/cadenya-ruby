@@ -1,0 +1,15 @@
+module Cadenya
+  module Models
+    type workspace_spec = { description: String }
+
+    class WorkspaceSpec < Cadenya::Internal::Type::BaseModel
+      attr_reader description: String?
+
+      def description=: (String) -> String
+
+      def initialize: (?description: String) -> void
+
+      def to_hash: -> { description: String }
+    end
+  end
+end

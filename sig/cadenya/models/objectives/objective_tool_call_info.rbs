@@ -1,0 +1,32 @@
+module Cadenya
+  module Models
+    class ObjectiveToolCallInfo = Objectives::ObjectiveToolCallInfo
+
+    module Objectives
+      type objective_tool_call_info =
+        { created_by: Cadenya::Profile, objective: Cadenya::OperationMetadata }
+
+      class ObjectiveToolCallInfo < Cadenya::Internal::Type::BaseModel
+        attr_reader created_by: Cadenya::Profile?
+
+        def created_by=: (Cadenya::Profile) -> Cadenya::Profile
+
+        attr_reader objective: Cadenya::OperationMetadata?
+
+        def objective=: (
+          Cadenya::OperationMetadata
+        ) -> Cadenya::OperationMetadata
+
+        def initialize: (
+          ?created_by: Cadenya::Profile,
+          ?objective: Cadenya::OperationMetadata
+        ) -> void
+
+        def to_hash: -> {
+          created_by: Cadenya::Profile,
+          objective: Cadenya::OperationMetadata
+        }
+      end
+    end
+  end
+end

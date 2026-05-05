@@ -1,0 +1,45 @@
+module Cadenya
+  module Models
+    module Agents
+      type variation_assignment =
+        {
+          id: String,
+          agent: Cadenya::BareMetadata,
+          tool: Cadenya::BareMetadata,
+          tool_set: Cadenya::BareMetadata
+        }
+
+      class VariationAssignment < Cadenya::Internal::Type::BaseModel
+        attr_reader agent: Cadenya::BareMetadata?
+
+        def agent=: (Cadenya::BareMetadata) -> Cadenya::BareMetadata
+
+        attr_reader tool: Cadenya::BareMetadata?
+
+        def tool=: (Cadenya::BareMetadata) -> Cadenya::BareMetadata
+
+        attr_reader tool_set: Cadenya::BareMetadata?
+
+        def tool_set=: (Cadenya::BareMetadata) -> Cadenya::BareMetadata
+
+        attr_reader id: String?
+
+        def id=: (String) -> String
+
+        def initialize: (
+          ?id: String,
+          ?agent: Cadenya::BareMetadata,
+          ?tool: Cadenya::BareMetadata,
+          ?tool_set: Cadenya::BareMetadata
+        ) -> void
+
+        def to_hash: -> {
+          id: String,
+          agent: Cadenya::BareMetadata,
+          tool: Cadenya::BareMetadata,
+          tool_set: Cadenya::BareMetadata
+        }
+      end
+    end
+  end
+end

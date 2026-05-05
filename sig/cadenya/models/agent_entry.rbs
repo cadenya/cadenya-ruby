@@ -1,0 +1,50 @@
+module Cadenya
+  module Models
+    type agent_entry =
+      {
+        name: String,
+        spec: Cadenya::AgentSpec,
+        labels: ::Hash[Symbol, String],
+        schedules: ::Hash[Symbol, Cadenya::AgentScheduleEntry],
+        variations: ::Hash[Symbol, Cadenya::AgentVariationEntry]
+      }
+
+    class AgentEntry < Cadenya::Internal::Type::BaseModel
+      attr_accessor name: String
+
+      attr_accessor spec: Cadenya::AgentSpec
+
+      attr_reader labels: ::Hash[Symbol, String]?
+
+      def labels=: (::Hash[Symbol, String]) -> ::Hash[Symbol, String]
+
+      attr_reader schedules: ::Hash[Symbol, Cadenya::AgentScheduleEntry]?
+
+      def schedules=: (
+        ::Hash[Symbol, Cadenya::AgentScheduleEntry]
+      ) -> ::Hash[Symbol, Cadenya::AgentScheduleEntry]
+
+      attr_reader variations: ::Hash[Symbol, Cadenya::AgentVariationEntry]?
+
+      def variations=: (
+        ::Hash[Symbol, Cadenya::AgentVariationEntry]
+      ) -> ::Hash[Symbol, Cadenya::AgentVariationEntry]
+
+      def initialize: (
+        name: String,
+        spec: Cadenya::AgentSpec,
+        ?labels: ::Hash[Symbol, String],
+        ?schedules: ::Hash[Symbol, Cadenya::AgentScheduleEntry],
+        ?variations: ::Hash[Symbol, Cadenya::AgentVariationEntry]
+      ) -> void
+
+      def to_hash: -> {
+        name: String,
+        spec: Cadenya::AgentSpec,
+        labels: ::Hash[Symbol, String],
+        schedules: ::Hash[Symbol, Cadenya::AgentScheduleEntry],
+        variations: ::Hash[Symbol, Cadenya::AgentVariationEntry]
+      }
+    end
+  end
+end

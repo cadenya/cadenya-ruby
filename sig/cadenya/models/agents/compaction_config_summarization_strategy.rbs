@@ -1,0 +1,17 @@
+module Cadenya
+  module Models
+    module Agents
+      type compaction_config_summarization_strategy = { instructions: String }
+
+      class CompactionConfigSummarizationStrategy < Cadenya::Internal::Type::BaseModel
+        attr_reader instructions: String?
+
+        def instructions=: (String) -> String
+
+        def initialize: (?instructions: String) -> void
+
+        def to_hash: -> { instructions: String }
+      end
+    end
+  end
+end

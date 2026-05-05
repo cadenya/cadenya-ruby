@@ -1,0 +1,32 @@
+module Cadenya
+  module Models
+    type memory_layer_info =
+      { created_by: Cadenya::Profile, entry_count: Integer, last_used_at: Time }
+
+    class MemoryLayerInfo < Cadenya::Internal::Type::BaseModel
+      attr_reader created_by: Cadenya::Profile?
+
+      def created_by=: (Cadenya::Profile) -> Cadenya::Profile
+
+      attr_reader entry_count: Integer?
+
+      def entry_count=: (Integer) -> Integer
+
+      attr_reader last_used_at: Time?
+
+      def last_used_at=: (Time) -> Time
+
+      def initialize: (
+        ?created_by: Cadenya::Profile,
+        ?entry_count: Integer,
+        ?last_used_at: Time
+      ) -> void
+
+      def to_hash: -> {
+        created_by: Cadenya::Profile,
+        entry_count: Integer,
+        last_used_at: Time
+      }
+    end
+  end
+end

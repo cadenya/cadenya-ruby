@@ -1,0 +1,68 @@
+module Cadenya
+  module Models
+    class AgentScheduleInfo = Agents::AgentScheduleInfo
+
+    module Agents
+      type agent_schedule_info =
+        {
+          created_by: Cadenya::Profile,
+          last_fire_at: Time,
+          last_objective_id: String,
+          last_skipped_at: Time,
+          last_skip_reason: String,
+          next_fire_at: Time,
+          total_fires: Integer
+        }
+
+      class AgentScheduleInfo < Cadenya::Internal::Type::BaseModel
+        attr_reader created_by: Cadenya::Profile?
+
+        def created_by=: (Cadenya::Profile) -> Cadenya::Profile
+
+        attr_reader last_fire_at: Time?
+
+        def last_fire_at=: (Time) -> Time
+
+        attr_reader last_objective_id: String?
+
+        def last_objective_id=: (String) -> String
+
+        attr_reader last_skipped_at: Time?
+
+        def last_skipped_at=: (Time) -> Time
+
+        attr_reader last_skip_reason: String?
+
+        def last_skip_reason=: (String) -> String
+
+        attr_reader next_fire_at: Time?
+
+        def next_fire_at=: (Time) -> Time
+
+        attr_reader total_fires: Integer?
+
+        def total_fires=: (Integer) -> Integer
+
+        def initialize: (
+          ?created_by: Cadenya::Profile,
+          ?last_fire_at: Time,
+          ?last_objective_id: String,
+          ?last_skipped_at: Time,
+          ?last_skip_reason: String,
+          ?next_fire_at: Time,
+          ?total_fires: Integer
+        ) -> void
+
+        def to_hash: -> {
+          created_by: Cadenya::Profile,
+          last_fire_at: Time,
+          last_objective_id: String,
+          last_skipped_at: Time,
+          last_skip_reason: String,
+          next_fire_at: Time,
+          total_fires: Integer
+        }
+      end
+    end
+  end
+end

@@ -1,0 +1,9 @@
+module Cadenya
+  module Internal
+    extend Cadenya::Internal::Util::SorbetRuntimeSupport
+
+    type file_input = Pathname | StringIO | IO | String | Cadenya::FilePart
+
+    OMIT: Object
+  end
+end

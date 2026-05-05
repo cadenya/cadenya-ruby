@@ -1,0 +1,32 @@
+module Cadenya
+  module Models
+    type memory_read =
+      { memory_entry_id: String, memory_layer_id: String, message: String }
+
+    class MemoryRead < Cadenya::Internal::Type::BaseModel
+      attr_reader memory_entry_id: String?
+
+      def memory_entry_id=: (String) -> String
+
+      attr_reader memory_layer_id: String?
+
+      def memory_layer_id=: (String) -> String
+
+      attr_reader message: String?
+
+      def message=: (String) -> String
+
+      def initialize: (
+        ?memory_entry_id: String,
+        ?memory_layer_id: String,
+        ?message: String
+      ) -> void
+
+      def to_hash: -> {
+        memory_entry_id: String,
+        memory_layer_id: String,
+        message: String
+      }
+    end
+  end
+end

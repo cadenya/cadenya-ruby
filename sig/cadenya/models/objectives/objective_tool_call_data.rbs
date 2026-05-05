@@ -1,0 +1,52 @@
+module Cadenya
+  module Models
+    class ObjectiveToolCallData = Objectives::ObjectiveToolCallData
+
+    module Objectives
+      type objective_tool_call_data =
+        {
+          callable: Cadenya::CallableTool,
+          arguments: ::Hash[Symbol, top],
+          memo: String,
+          result: String,
+          status_changed_by: Cadenya::Profile
+        }
+
+      class ObjectiveToolCallData < Cadenya::Internal::Type::BaseModel
+        attr_accessor callable: Cadenya::CallableTool
+
+        attr_reader arguments: ::Hash[Symbol, top]?
+
+        def arguments=: (::Hash[Symbol, top]) -> ::Hash[Symbol, top]
+
+        attr_reader memo: String?
+
+        def memo=: (String) -> String
+
+        attr_reader result: String?
+
+        def result=: (String) -> String
+
+        attr_reader status_changed_by: Cadenya::Profile?
+
+        def status_changed_by=: (Cadenya::Profile) -> Cadenya::Profile
+
+        def initialize: (
+          callable: Cadenya::CallableTool,
+          ?arguments: ::Hash[Symbol, top],
+          ?memo: String,
+          ?result: String,
+          ?status_changed_by: Cadenya::Profile
+        ) -> void
+
+        def to_hash: -> {
+          callable: Cadenya::CallableTool,
+          arguments: ::Hash[Symbol, top],
+          memo: String,
+          result: String,
+          status_changed_by: Cadenya::Profile
+        }
+      end
+    end
+  end
+end

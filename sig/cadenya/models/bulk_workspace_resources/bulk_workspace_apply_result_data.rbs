@@ -1,0 +1,105 @@
+module Cadenya
+  module Models
+    module BulkWorkspaceResources
+      type bulk_workspace_apply_result_data =
+        {
+          agent: Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultDataAgentOutcome,
+          agent_schedule: Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultDataAgentScheduleOutcome,
+          agent_variation: Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultDataAgentVariationOutcome,
+          memory_entry: Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultDataMemoryEntryOutcome,
+          memory_layer: Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultDataMemoryLayerOutcome,
+          tool: Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultDataToolOutcome,
+          tool_set: Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultDataToolSetOutcome,
+          type: String,
+          variation_assignment: Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultDataVariationAssignmentOutcome,
+          variation_memory_layer: Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultDataVariationMemoryLayerOutcome
+        }
+
+      class BulkWorkspaceApplyResultData < Cadenya::Internal::Type::BaseModel
+        attr_reader agent: Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultDataAgentOutcome?
+
+        def agent=: (
+          Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultDataAgentOutcome
+        ) -> Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultDataAgentOutcome
+
+        attr_reader agent_schedule: Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultDataAgentScheduleOutcome?
+
+        def agent_schedule=: (
+          Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultDataAgentScheduleOutcome
+        ) -> Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultDataAgentScheduleOutcome
+
+        attr_reader agent_variation: Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultDataAgentVariationOutcome?
+
+        def agent_variation=: (
+          Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultDataAgentVariationOutcome
+        ) -> Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultDataAgentVariationOutcome
+
+        attr_reader memory_entry: Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultDataMemoryEntryOutcome?
+
+        def memory_entry=: (
+          Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultDataMemoryEntryOutcome
+        ) -> Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultDataMemoryEntryOutcome
+
+        attr_reader memory_layer: Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultDataMemoryLayerOutcome?
+
+        def memory_layer=: (
+          Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultDataMemoryLayerOutcome
+        ) -> Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultDataMemoryLayerOutcome
+
+        attr_reader tool: Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultDataToolOutcome?
+
+        def tool=: (
+          Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultDataToolOutcome
+        ) -> Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultDataToolOutcome
+
+        attr_reader tool_set: Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultDataToolSetOutcome?
+
+        def tool_set=: (
+          Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultDataToolSetOutcome
+        ) -> Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultDataToolSetOutcome
+
+        attr_reader type: String?
+
+        def type=: (String) -> String
+
+        attr_reader variation_assignment: Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultDataVariationAssignmentOutcome?
+
+        def variation_assignment=: (
+          Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultDataVariationAssignmentOutcome
+        ) -> Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultDataVariationAssignmentOutcome
+
+        attr_reader variation_memory_layer: Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultDataVariationMemoryLayerOutcome?
+
+        def variation_memory_layer=: (
+          Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultDataVariationMemoryLayerOutcome
+        ) -> Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultDataVariationMemoryLayerOutcome
+
+        def initialize: (
+          ?agent: Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultDataAgentOutcome,
+          ?agent_schedule: Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultDataAgentScheduleOutcome,
+          ?agent_variation: Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultDataAgentVariationOutcome,
+          ?memory_entry: Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultDataMemoryEntryOutcome,
+          ?memory_layer: Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultDataMemoryLayerOutcome,
+          ?tool: Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultDataToolOutcome,
+          ?tool_set: Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultDataToolSetOutcome,
+          ?type: String,
+          ?variation_assignment: Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultDataVariationAssignmentOutcome,
+          ?variation_memory_layer: Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultDataVariationMemoryLayerOutcome
+        ) -> void
+
+        def to_hash: -> {
+          agent: Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultDataAgentOutcome,
+          agent_schedule: Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultDataAgentScheduleOutcome,
+          agent_variation: Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultDataAgentVariationOutcome,
+          memory_entry: Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultDataMemoryEntryOutcome,
+          memory_layer: Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultDataMemoryLayerOutcome,
+          tool: Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultDataToolOutcome,
+          tool_set: Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultDataToolSetOutcome,
+          type: String,
+          variation_assignment: Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultDataVariationAssignmentOutcome,
+          variation_memory_layer: Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultDataVariationMemoryLayerOutcome
+        }
+      end
+    end
+  end
+end

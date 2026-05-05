@@ -1,0 +1,87 @@
+module Cadenya
+  module Resources
+    class Objectives
+      attr_reader tools: Cadenya::Resources::Objectives::Tools
+
+      attr_reader tool_calls: Cadenya::Resources::Objectives::ToolCalls
+
+      attr_reader tasks: Cadenya::Resources::Objectives::Tasks
+
+      attr_reader feedback: Cadenya::Resources::Objectives::Feedback
+
+      def create: (
+        String workspace_id,
+        agent_id: String,
+        data: Cadenya::ObjectiveData,
+        metadata: Cadenya::CreateOperationMetadata,
+        ?variation_id: String,
+        ?request_options: Cadenya::request_opts
+      ) -> Cadenya::Objective
+
+      def retrieve: (
+        String id,
+        workspace_id: String,
+        ?request_options: Cadenya::request_opts
+      ) -> Cadenya::Objective
+
+      def list: (
+        String workspace_id,
+        ?agent_id: String,
+        ?agent_schedule_id: String,
+        ?cursor: String,
+        ?include_info: bool,
+        ?limit: Integer,
+        ?parent_objective_id: String,
+        ?profile_id: String,
+        ?sort_order: String,
+        ?state: Cadenya::Models::ObjectiveListParams::state,
+        ?request_options: Cadenya::request_opts
+      ) -> Cadenya::Internal::CursorPagination[Cadenya::Objective]
+
+      def cancel: (
+        String objective_id,
+        workspace_id: String,
+        ?reason: String,
+        ?request_options: Cadenya::request_opts
+      ) -> Cadenya::Objective
+
+      def compact: (
+        String objective_id,
+        workspace_id: String,
+        ?compaction_config: Cadenya::Agents::AgentVariationSpecCompactionConfig,
+        ?request_options: Cadenya::request_opts
+      ) -> Cadenya::Models::ObjectiveCompactResponse
+
+      def continue: (
+        String objective_id,
+        workspace_id: String,
+        ?enqueue: bool,
+        ?message: String,
+        ?secrets: ::Array[Cadenya::ObjectiveContinueParams::Secret],
+        ?request_options: Cadenya::request_opts
+      ) -> Cadenya::Models::ObjectiveContinueResponse
+
+      def list_context_windows: (
+        String objective_id,
+        workspace_id: String,
+        ?cursor: String,
+        ?include_info: bool,
+        ?limit: Integer,
+        ?request_options: Cadenya::request_opts
+      ) -> Cadenya::Internal::CursorPagination[Cadenya::ObjectiveContextWindow]
+
+      def list_events: (
+        String objective_id,
+        workspace_id: String,
+        ?cursor: String,
+        ?include_info: bool,
+        ?limit: Integer,
+        ?sort_order: String,
+        ?window_id: String,
+        ?request_options: Cadenya::request_opts
+      ) -> Cadenya::Internal::CursorPagination[Cadenya::Models::ObjectiveListEventsResponse]
+
+      def initialize: (client: Cadenya::Client) -> void
+    end
+  end
+end

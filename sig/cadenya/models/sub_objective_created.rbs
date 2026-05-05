@@ -1,0 +1,15 @@
+module Cadenya
+  module Models
+    type sub_objective_created = { metadata: Cadenya::OperationMetadata }
+
+    class SubObjectiveCreated < Cadenya::Internal::Type::BaseModel
+      attr_reader metadata: Cadenya::OperationMetadata?
+
+      def metadata=: (Cadenya::OperationMetadata) -> Cadenya::OperationMetadata
+
+      def initialize: (?metadata: Cadenya::OperationMetadata) -> void
+
+      def to_hash: -> { metadata: Cadenya::OperationMetadata }
+    end
+  end
+end

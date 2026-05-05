@@ -1,0 +1,32 @@
+module Cadenya
+  module Resources
+    class Models
+      def retrieve: (
+        String id,
+        workspace_id: String,
+        ?request_options: Cadenya::request_opts
+      ) -> Cadenya::Model
+
+      def list: (
+        String workspace_id,
+        ?bundle_key: String,
+        ?cursor: String,
+        ?limit: Integer,
+        ?prefix: String,
+        ?query: String,
+        ?sort_order: String,
+        ?status: Cadenya::Models::ModelListParams::status,
+        ?request_options: Cadenya::request_opts
+      ) -> Cadenya::Internal::CursorPagination[Cadenya::Model]
+
+      def set_status: (
+        String id,
+        workspace_id: String,
+        ?status: Cadenya::Models::ModelSetStatusParams::status,
+        ?request_options: Cadenya::request_opts
+      ) -> Cadenya::Model
+
+      def initialize: (client: Cadenya::Client) -> void
+    end
+  end
+end

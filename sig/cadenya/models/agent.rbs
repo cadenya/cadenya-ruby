@@ -1,0 +1,32 @@
+module Cadenya
+  module Models
+    type agent =
+      {
+        metadata: Cadenya::ResourceMetadata,
+        spec: Cadenya::AgentSpec,
+        info: Cadenya::AgentInfo
+      }
+
+    class Agent < Cadenya::Internal::Type::BaseModel
+      attr_accessor metadata: Cadenya::ResourceMetadata
+
+      attr_accessor spec: Cadenya::AgentSpec
+
+      attr_reader info: Cadenya::AgentInfo?
+
+      def info=: (Cadenya::AgentInfo) -> Cadenya::AgentInfo
+
+      def initialize: (
+        metadata: Cadenya::ResourceMetadata,
+        spec: Cadenya::AgentSpec,
+        ?info: Cadenya::AgentInfo
+      ) -> void
+
+      def to_hash: -> {
+        metadata: Cadenya::ResourceMetadata,
+        spec: Cadenya::AgentSpec,
+        info: Cadenya::AgentInfo
+      }
+    end
+  end
+end

@@ -1,0 +1,58 @@
+module Cadenya
+  module Resources
+    class Agents
+      attr_reader feedback: Cadenya::Resources::Agents::Feedback
+
+      attr_reader webhook_deliveries: Cadenya::Resources::Agents::WebhookDeliveries
+
+      attr_reader variations: Cadenya::Resources::Agents::Variations
+
+      attr_reader schedules: Cadenya::Resources::Agents::Schedules
+
+      def create: (
+        String workspace_id,
+        metadata: Cadenya::CreateResourceMetadata,
+        spec: Cadenya::AgentSpec,
+        ?default_variation: Cadenya::AgentCreateParams::DefaultVariation,
+        ?request_options: Cadenya::request_opts
+      ) -> Cadenya::Agent
+
+      def retrieve: (
+        String id,
+        workspace_id: String,
+        ?request_options: Cadenya::request_opts
+      ) -> Cadenya::Agent
+
+      def update: (
+        String id,
+        workspace_id: String,
+        ?metadata: Cadenya::UpdateResourceMetadata,
+        ?spec: Cadenya::AgentSpec,
+        ?update_mask: String,
+        ?request_options: Cadenya::request_opts
+      ) -> Cadenya::Agent
+
+      def list: (
+        String workspace_id,
+        ?bundle_key: String,
+        ?cursor: String,
+        ?include_info: bool,
+        ?limit: Integer,
+        ?prefix: String,
+        ?query: String,
+        ?sort_order: String,
+        ?status: Cadenya::Models::AgentListParams::status,
+        ?variation_selection_mode: Cadenya::Models::AgentListParams::variation_selection_mode,
+        ?request_options: Cadenya::request_opts
+      ) -> Cadenya::Internal::CursorPagination[Cadenya::Agent]
+
+      def delete: (
+        String id,
+        workspace_id: String,
+        ?request_options: Cadenya::request_opts
+      ) -> nil
+
+      def initialize: (client: Cadenya::Client) -> void
+    end
+  end
+end

@@ -1,0 +1,30 @@
+module Cadenya
+  module Models
+    type upload =
+      {
+        info: Cadenya::UploadInfo,
+        metadata: Cadenya::ResourceMetadata,
+        spec: Cadenya::UploadSpec
+      }
+
+    class Upload < Cadenya::Internal::Type::BaseModel
+      attr_accessor info: Cadenya::UploadInfo
+
+      attr_accessor metadata: Cadenya::ResourceMetadata
+
+      attr_accessor spec: Cadenya::UploadSpec
+
+      def initialize: (
+        info: Cadenya::UploadInfo,
+        metadata: Cadenya::ResourceMetadata,
+        spec: Cadenya::UploadSpec
+      ) -> void
+
+      def to_hash: -> {
+        info: Cadenya::UploadInfo,
+        metadata: Cadenya::ResourceMetadata,
+        spec: Cadenya::UploadSpec
+      }
+    end
+  end
+end

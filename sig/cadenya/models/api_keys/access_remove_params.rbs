@@ -1,0 +1,30 @@
+module Cadenya
+  module Models
+    module APIKeys
+      type access_remove_params =
+        { id: String, workspace_id: String }
+        & Cadenya::Internal::Type::request_parameters
+
+      class AccessRemoveParams < Cadenya::Internal::Type::BaseModel
+        extend Cadenya::Internal::Type::RequestParameters::Converter
+        include Cadenya::Internal::Type::RequestParameters
+
+        attr_accessor id: String
+
+        attr_accessor workspace_id: String
+
+        def initialize: (
+          id: String,
+          workspace_id: String,
+          ?request_options: Cadenya::request_opts
+        ) -> void
+
+        def to_hash: -> {
+          id: String,
+          workspace_id: String,
+          request_options: Cadenya::RequestOptions
+        }
+      end
+    end
+  end
+end

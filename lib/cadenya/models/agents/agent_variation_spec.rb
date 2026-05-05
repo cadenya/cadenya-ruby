@@ -1,0 +1,106 @@
+# frozen_string_literal: true
+
+module Cadenya
+  module Models
+    module Agents
+      class AgentVariationSpec < Cadenya::Internal::Type::BaseModel
+        # @!attribute compaction_config
+        #   CompactionConfig defines how context window compaction behaves for objectives
+        #   using this variation.
+        #
+        #   @return [Cadenya::Models::Agents::AgentVariationSpecCompactionConfig, nil]
+        optional :compaction_config,
+                 -> { Cadenya::Agents::AgentVariationSpecCompactionConfig },
+                 api_name: :compactionConfig
+
+        # @!attribute constraints
+        #   Execution constraints
+        #
+        #   @return [Cadenya::Models::Agents::AgentVariationSpecConstraints, nil]
+        optional :constraints, -> { Cadenya::Agents::AgentVariationSpecConstraints }
+
+        # @!attribute description
+        #   Human-readable description of what this variation does or when it should be used
+        #
+        #   @return [String, nil]
+        optional :description, String
+
+        # @!attribute enable_episodic_memory
+        #   Enable episodic memory for objectives using this variation. When true, the
+        #   system automatically creates a document namespace for each objective using the
+        #   objective's episodic_key as the external_id, allowing the agent to store and
+        #   retrieve documents specific to that episode.
+        #
+        #   @return [Boolean, nil]
+        optional :enable_episodic_memory, Cadenya::Internal::Type::Boolean, api_name: :enableEpisodicMemory
+
+        # @!attribute episodic_memory_ttl
+        #   How long episodic memories should be retained. After this duration, episodic
+        #   document namespaces can be automatically cleaned up. If not set, episodic
+        #   memories are retained indefinitely.
+        #
+        #   @return [Integer, nil]
+        optional :episodic_memory_ttl, Integer, api_name: :episodicMemoryTtl
+
+        # @!attribute model_config
+        #   ModelConfig defines the model configuration for a variation
+        #
+        #   @return [Cadenya::Models::Agents::AgentVariationSpecModelConfig, nil]
+        optional :model_config, -> { Cadenya::Agents::AgentVariationSpecModelConfig }, api_name: :modelConfig
+
+        # @!attribute progressive_discovery
+        #   ProgressiveDiscovery is used to indicate that the agent should automatically
+        #   discover tools that are not explicitly assigned to it. Max tools is the maximum
+        #   number of tools that can be discovered per search. Hints are optional hints for
+        #   tool search. These are used in conjunction with the context-aware tool search
+        #   and can help select the best tools for the task.
+        #
+        #   @return [Cadenya::Models::Agents::AgentVariationSpecProgressiveDiscovery, nil]
+        optional :progressive_discovery,
+                 -> { Cadenya::Agents::AgentVariationSpecProgressiveDiscovery },
+                 api_name: :progressiveDiscovery
+
+        # @!attribute prompt
+        #   The system prompt for this variation
+        #
+        #   @return [String, nil]
+        optional :prompt, String
+
+        # @!attribute weight
+        #   Weight for weighted random selection (>= 0). P(v) = v.weight / sum(all_weights).
+        #   Only used when the agent's variation_selection_mode is WEIGHTED. A weight of 0
+        #   means never auto-selected, but can still be chosen explicitly via variation_id
+        #   on CreateObjectiveRequest.
+        #
+        #   @return [Integer, nil]
+        optional :weight, Integer
+
+        # @!method initialize(compaction_config: nil, constraints: nil, description: nil, enable_episodic_memory: nil, episodic_memory_ttl: nil, model_config: nil, progressive_discovery: nil, prompt: nil, weight: nil)
+        #   Some parameter documentations has been truncated, see
+        #   {Cadenya::Models::Agents::AgentVariationSpec} for more details.
+        #
+        #   AgentVariationSpec defines the operational configuration for a variation
+        #
+        #   @param compaction_config [Cadenya::Models::Agents::AgentVariationSpecCompactionConfig] CompactionConfig defines how context window compaction behaves for objectives us
+        #
+        #   @param constraints [Cadenya::Models::Agents::AgentVariationSpecConstraints] Execution constraints
+        #
+        #   @param description [String] Human-readable description of what this variation does or when it should be used
+        #
+        #   @param enable_episodic_memory [Boolean] Enable episodic memory for objectives using this variation.
+        #
+        #   @param episodic_memory_ttl [Integer] How long episodic memories should be retained.
+        #
+        #   @param model_config [Cadenya::Models::Agents::AgentVariationSpecModelConfig] ModelConfig defines the model configuration for a variation
+        #
+        #   @param progressive_discovery [Cadenya::Models::Agents::AgentVariationSpecProgressiveDiscovery] ProgressiveDiscovery is used to indicate that the agent should automatically dis
+        #
+        #   @param prompt [String] The system prompt for this variation
+        #
+        #   @param weight [Integer] Weight for weighted random selection (>= 0). P(v) = v.weight / sum(all_weights).
+      end
+    end
+
+    AgentVariationSpec = Agents::AgentVariationSpec
+  end
+end

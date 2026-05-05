@@ -1,0 +1,30 @@
+module Cadenya
+  module Models
+    type search_search_tools_or_tool_sets_params =
+      { workspace_id: String, query: String }
+      & Cadenya::Internal::Type::request_parameters
+
+    class SearchSearchToolsOrToolSetsParams < Cadenya::Internal::Type::BaseModel
+      extend Cadenya::Internal::Type::RequestParameters::Converter
+      include Cadenya::Internal::Type::RequestParameters
+
+      attr_accessor workspace_id: String
+
+      attr_reader query: String?
+
+      def query=: (String) -> String
+
+      def initialize: (
+        workspace_id: String,
+        ?query: String,
+        ?request_options: Cadenya::request_opts
+      ) -> void
+
+      def to_hash: -> {
+        workspace_id: String,
+        query: String,
+        request_options: Cadenya::RequestOptions
+      }
+    end
+  end
+end

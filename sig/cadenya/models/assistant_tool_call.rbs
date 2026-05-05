@@ -1,0 +1,32 @@
+module Cadenya
+  module Models
+    type assistant_tool_call =
+      { arguments: String, function_name: String, tool: Cadenya::CallableTool }
+
+    class AssistantToolCall < Cadenya::Internal::Type::BaseModel
+      attr_reader arguments: String?
+
+      def arguments=: (String) -> String
+
+      attr_reader function_name: String?
+
+      def function_name=: (String) -> String
+
+      attr_reader tool: Cadenya::CallableTool?
+
+      def tool=: (Cadenya::CallableTool) -> Cadenya::CallableTool
+
+      def initialize: (
+        ?arguments: String,
+        ?function_name: String,
+        ?tool: Cadenya::CallableTool
+      ) -> void
+
+      def to_hash: -> {
+        arguments: String,
+        function_name: String,
+        tool: Cadenya::CallableTool
+      }
+    end
+  end
+end

@@ -1,0 +1,25 @@
+module Cadenya
+  module Models
+    type workspace =
+      {
+        metadata: Cadenya::AccountResourceMetadata,
+        spec: Cadenya::WorkspaceSpec
+      }
+
+    class Workspace < Cadenya::Internal::Type::BaseModel
+      attr_accessor metadata: Cadenya::AccountResourceMetadata
+
+      attr_accessor spec: Cadenya::WorkspaceSpec
+
+      def initialize: (
+        metadata: Cadenya::AccountResourceMetadata,
+        spec: Cadenya::WorkspaceSpec
+      ) -> void
+
+      def to_hash: -> {
+        metadata: Cadenya::AccountResourceMetadata,
+        spec: Cadenya::WorkspaceSpec
+      }
+    end
+  end
+end

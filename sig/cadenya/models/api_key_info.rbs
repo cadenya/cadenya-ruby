@@ -1,0 +1,38 @@
+module Cadenya
+  module Models
+    type api_key_info =
+      {
+        created_by: Cadenya::Profile,
+        workspaces_preview: ::Array[Cadenya::BareMetadata],
+        workspaces_total: Integer
+      }
+
+    class APIKeyInfo < Cadenya::Internal::Type::BaseModel
+      attr_reader created_by: Cadenya::Profile?
+
+      def created_by=: (Cadenya::Profile) -> Cadenya::Profile
+
+      attr_reader workspaces_preview: ::Array[Cadenya::BareMetadata]?
+
+      def workspaces_preview=: (
+        ::Array[Cadenya::BareMetadata]
+      ) -> ::Array[Cadenya::BareMetadata]
+
+      attr_reader workspaces_total: Integer?
+
+      def workspaces_total=: (Integer) -> Integer
+
+      def initialize: (
+        ?created_by: Cadenya::Profile,
+        ?workspaces_preview: ::Array[Cadenya::BareMetadata],
+        ?workspaces_total: Integer
+      ) -> void
+
+      def to_hash: -> {
+        created_by: Cadenya::Profile,
+        workspaces_preview: ::Array[Cadenya::BareMetadata],
+        workspaces_total: Integer
+      }
+    end
+  end
+end

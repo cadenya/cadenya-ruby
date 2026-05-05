@@ -1,0 +1,13 @@
+module Cadenya
+  module Resources
+    class Search
+      def search_tools_or_tool_sets: (
+        String workspace_id,
+        ?query: String,
+        ?request_options: Cadenya::request_opts
+      ) -> Cadenya::Models::SearchSearchToolsOrToolSetsResponse
+
+      def initialize: (client: Cadenya::Client) -> void
+    end
+  end
+end
