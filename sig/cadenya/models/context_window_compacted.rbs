@@ -1,0 +1,45 @@
+module Cadenya
+  module Models
+    type context_window_compacted =
+      {
+        messages_compacted: Integer,
+        new_context_window: Cadenya::ObjectiveContextWindowData,
+        strategies: ::Array[String],
+        summary: String
+      }
+
+    class ContextWindowCompacted < Cadenya::Internal::Type::BaseModel
+      attr_reader messages_compacted: Integer?
+
+      def messages_compacted=: (Integer) -> Integer
+
+      attr_reader new_context_window: Cadenya::ObjectiveContextWindowData?
+
+      def new_context_window=: (
+        Cadenya::ObjectiveContextWindowData
+      ) -> Cadenya::ObjectiveContextWindowData
+
+      attr_reader strategies: ::Array[String]?
+
+      def strategies=: (::Array[String]) -> ::Array[String]
+
+      attr_reader summary: String?
+
+      def summary=: (String) -> String
+
+      def initialize: (
+        ?messages_compacted: Integer,
+        ?new_context_window: Cadenya::ObjectiveContextWindowData,
+        ?strategies: ::Array[String],
+        ?summary: String
+      ) -> void
+
+      def to_hash: -> {
+        messages_compacted: Integer,
+        new_context_window: Cadenya::ObjectiveContextWindowData,
+        strategies: ::Array[String],
+        summary: String
+      }
+    end
+  end
+end

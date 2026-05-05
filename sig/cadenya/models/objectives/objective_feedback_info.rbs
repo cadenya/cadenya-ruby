@@ -1,0 +1,40 @@
+module Cadenya
+  module Models
+    class ObjectiveFeedbackInfo = Objectives::ObjectiveFeedbackInfo
+
+    module Objectives
+      type objective_feedback_info =
+        {
+          agent_variation: Cadenya::BareMetadata,
+          objective: Cadenya::BareMetadata,
+          submitted_by: Cadenya::Profile
+        }
+
+      class ObjectiveFeedbackInfo < Cadenya::Internal::Type::BaseModel
+        attr_reader agent_variation: Cadenya::BareMetadata?
+
+        def agent_variation=: (Cadenya::BareMetadata) -> Cadenya::BareMetadata
+
+        attr_reader objective: Cadenya::BareMetadata?
+
+        def objective=: (Cadenya::BareMetadata) -> Cadenya::BareMetadata
+
+        attr_reader submitted_by: Cadenya::Profile?
+
+        def submitted_by=: (Cadenya::Profile) -> Cadenya::Profile
+
+        def initialize: (
+          ?agent_variation: Cadenya::BareMetadata,
+          ?objective: Cadenya::BareMetadata,
+          ?submitted_by: Cadenya::Profile
+        ) -> void
+
+        def to_hash: -> {
+          agent_variation: Cadenya::BareMetadata,
+          objective: Cadenya::BareMetadata,
+          submitted_by: Cadenya::Profile
+        }
+      end
+    end
+  end
+end

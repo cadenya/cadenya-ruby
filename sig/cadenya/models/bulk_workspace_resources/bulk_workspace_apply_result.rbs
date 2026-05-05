@@ -1,0 +1,27 @@
+module Cadenya
+  module Models
+    module BulkWorkspaceResources
+      type bulk_workspace_apply_result =
+        {
+          data: Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultData,
+          metadata: Cadenya::OperationMetadata
+        }
+
+      class BulkWorkspaceApplyResult < Cadenya::Internal::Type::BaseModel
+        attr_accessor data: Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultData
+
+        attr_accessor metadata: Cadenya::OperationMetadata
+
+        def initialize: (
+          data: Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultData,
+          metadata: Cadenya::OperationMetadata
+        ) -> void
+
+        def to_hash: -> {
+          data: Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultData,
+          metadata: Cadenya::OperationMetadata
+        }
+      end
+    end
+  end
+end

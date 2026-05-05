@@ -1,0 +1,58 @@
+# typed: strong
+
+module Cadenya
+  module Models
+    class ObjectiveCancelParams < Cadenya::Internal::Type::BaseModel
+      extend Cadenya::Internal::Type::RequestParameters::Converter
+      include Cadenya::Internal::Type::RequestParameters
+
+      OrHash =
+        T.type_alias do
+          T.any(Cadenya::ObjectiveCancelParams, Cadenya::Internal::AnyHash)
+        end
+
+      sig { returns(String) }
+      attr_accessor :workspace_id
+
+      sig { returns(String) }
+      attr_accessor :objective_id
+
+      # Optional reason for cancellation
+      sig { returns(T.nilable(String)) }
+      attr_reader :reason
+
+      sig { params(reason: String).void }
+      attr_writer :reason
+
+      sig do
+        params(
+          workspace_id: String,
+          objective_id: String,
+          reason: String,
+          request_options: Cadenya::RequestOptions::OrHash
+        ).returns(T.attached_class)
+      end
+      def self.new(
+        workspace_id:,
+        objective_id:,
+        # Optional reason for cancellation
+        reason: nil,
+        request_options: {}
+      )
+      end
+
+      sig do
+        override.returns(
+          {
+            workspace_id: String,
+            objective_id: String,
+            reason: String,
+            request_options: Cadenya::RequestOptions
+          }
+        )
+      end
+      def to_hash
+      end
+    end
+  end
+end

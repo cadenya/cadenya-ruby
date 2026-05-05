@@ -1,0 +1,33 @@
+module Cadenya
+  module Models
+    module ToolSets
+      type tool_spec_config =
+        {
+          http: Cadenya::ToolSets::ConfigHTTP,
+          mcp: Cadenya::ToolSets::ConfigMcp
+        }
+
+      class ToolSpecConfig < Cadenya::Internal::Type::BaseModel
+        attr_reader http: Cadenya::ToolSets::ConfigHTTP?
+
+        def http=: (
+          Cadenya::ToolSets::ConfigHTTP
+        ) -> Cadenya::ToolSets::ConfigHTTP
+
+        attr_reader mcp: Cadenya::ToolSets::ConfigMcp?
+
+        def mcp=: (Cadenya::ToolSets::ConfigMcp) -> Cadenya::ToolSets::ConfigMcp
+
+        def initialize: (
+          ?http: Cadenya::ToolSets::ConfigHTTP,
+          ?mcp: Cadenya::ToolSets::ConfigMcp
+        ) -> void
+
+        def to_hash: -> {
+          http: Cadenya::ToolSets::ConfigHTTP,
+          mcp: Cadenya::ToolSets::ConfigMcp
+        }
+      end
+    end
+  end
+end

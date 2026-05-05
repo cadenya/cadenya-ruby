@@ -1,0 +1,38 @@
+module Cadenya
+  module Models
+    type callable_tool =
+      {
+        agent: Cadenya::ResourceMetadata,
+        cadenya_provided_tool: Cadenya::ResourceMetadata,
+        tool: Cadenya::ResourceMetadata
+      }
+
+    class CallableTool < Cadenya::Internal::Type::BaseModel
+      attr_reader agent: Cadenya::ResourceMetadata?
+
+      def agent=: (Cadenya::ResourceMetadata) -> Cadenya::ResourceMetadata
+
+      attr_reader cadenya_provided_tool: Cadenya::ResourceMetadata?
+
+      def cadenya_provided_tool=: (
+        Cadenya::ResourceMetadata
+      ) -> Cadenya::ResourceMetadata
+
+      attr_reader tool: Cadenya::ResourceMetadata?
+
+      def tool=: (Cadenya::ResourceMetadata) -> Cadenya::ResourceMetadata
+
+      def initialize: (
+        ?agent: Cadenya::ResourceMetadata,
+        ?cadenya_provided_tool: Cadenya::ResourceMetadata,
+        ?tool: Cadenya::ResourceMetadata
+      ) -> void
+
+      def to_hash: -> {
+        agent: Cadenya::ResourceMetadata,
+        cadenya_provided_tool: Cadenya::ResourceMetadata,
+        tool: Cadenya::ResourceMetadata
+      }
+    end
+  end
+end

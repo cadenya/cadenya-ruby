@@ -1,0 +1,63 @@
+module Cadenya
+  module Models
+    module Agents
+      type schedule_update_params =
+        {
+          workspace_id: String,
+          agent_id: String,
+          id: String,
+          metadata: Cadenya::UpdateResourceMetadata,
+          spec: Cadenya::Agents::AgentScheduleSpec,
+          update_mask: String
+        }
+        & Cadenya::Internal::Type::request_parameters
+
+      class ScheduleUpdateParams < Cadenya::Internal::Type::BaseModel
+        extend Cadenya::Internal::Type::RequestParameters::Converter
+        include Cadenya::Internal::Type::RequestParameters
+
+        attr_accessor workspace_id: String
+
+        attr_accessor agent_id: String
+
+        attr_accessor id: String
+
+        attr_reader metadata: Cadenya::UpdateResourceMetadata?
+
+        def metadata=: (
+          Cadenya::UpdateResourceMetadata
+        ) -> Cadenya::UpdateResourceMetadata
+
+        attr_reader spec: Cadenya::Agents::AgentScheduleSpec?
+
+        def spec=: (
+          Cadenya::Agents::AgentScheduleSpec
+        ) -> Cadenya::Agents::AgentScheduleSpec
+
+        attr_reader update_mask: String?
+
+        def update_mask=: (String) -> String
+
+        def initialize: (
+          workspace_id: String,
+          agent_id: String,
+          id: String,
+          ?metadata: Cadenya::UpdateResourceMetadata,
+          ?spec: Cadenya::Agents::AgentScheduleSpec,
+          ?update_mask: String,
+          ?request_options: Cadenya::request_opts
+        ) -> void
+
+        def to_hash: -> {
+          workspace_id: String,
+          agent_id: String,
+          id: String,
+          metadata: Cadenya::UpdateResourceMetadata,
+          spec: Cadenya::Agents::AgentScheduleSpec,
+          update_mask: String,
+          request_options: Cadenya::RequestOptions
+        }
+      end
+    end
+  end
+end

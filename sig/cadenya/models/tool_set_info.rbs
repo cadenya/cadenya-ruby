@@ -1,0 +1,43 @@
+module Cadenya
+  module Models
+    type tool_set_info =
+      {
+        agent_count: Integer,
+        created_by: Cadenya::Profile,
+        last_sync: Time,
+        tool_count: Integer
+      }
+
+    class ToolSetInfo < Cadenya::Internal::Type::BaseModel
+      attr_reader created_by: Cadenya::Profile?
+
+      def created_by=: (Cadenya::Profile) -> Cadenya::Profile
+
+      attr_reader agent_count: Integer?
+
+      def agent_count=: (Integer) -> Integer
+
+      attr_reader last_sync: Time?
+
+      def last_sync=: (Time) -> Time
+
+      attr_reader tool_count: Integer?
+
+      def tool_count=: (Integer) -> Integer
+
+      def initialize: (
+        ?agent_count: Integer,
+        ?created_by: Cadenya::Profile,
+        ?last_sync: Time,
+        ?tool_count: Integer
+      ) -> void
+
+      def to_hash: -> {
+        agent_count: Integer,
+        created_by: Cadenya::Profile,
+        last_sync: Time,
+        tool_count: Integer
+      }
+    end
+  end
+end

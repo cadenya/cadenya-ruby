@@ -1,0 +1,82 @@
+module Cadenya
+  module Models
+    type objective_info =
+      {
+        agent: Cadenya::ResourceMetadata,
+        agent_variation: Cadenya::ResourceMetadata,
+        created_by: Cadenya::Profile,
+        effective_memory_stack: ::Array[Cadenya::MemoryReference],
+        total_context_windows: Integer,
+        total_events: Integer,
+        total_input_tokens: Integer,
+        total_output_tokens: Integer,
+        total_tool_calls: Integer
+      }
+
+    class ObjectiveInfo < Cadenya::Internal::Type::BaseModel
+      attr_reader agent: Cadenya::ResourceMetadata?
+
+      def agent=: (Cadenya::ResourceMetadata) -> Cadenya::ResourceMetadata
+
+      attr_reader agent_variation: Cadenya::ResourceMetadata?
+
+      def agent_variation=: (
+        Cadenya::ResourceMetadata
+      ) -> Cadenya::ResourceMetadata
+
+      attr_reader created_by: Cadenya::Profile?
+
+      def created_by=: (Cadenya::Profile) -> Cadenya::Profile
+
+      attr_reader effective_memory_stack: ::Array[Cadenya::MemoryReference]?
+
+      def effective_memory_stack=: (
+        ::Array[Cadenya::MemoryReference]
+      ) -> ::Array[Cadenya::MemoryReference]
+
+      attr_reader total_context_windows: Integer?
+
+      def total_context_windows=: (Integer) -> Integer
+
+      attr_reader total_events: Integer?
+
+      def total_events=: (Integer) -> Integer
+
+      attr_reader total_input_tokens: Integer?
+
+      def total_input_tokens=: (Integer) -> Integer
+
+      attr_reader total_output_tokens: Integer?
+
+      def total_output_tokens=: (Integer) -> Integer
+
+      attr_reader total_tool_calls: Integer?
+
+      def total_tool_calls=: (Integer) -> Integer
+
+      def initialize: (
+        ?agent: Cadenya::ResourceMetadata,
+        ?agent_variation: Cadenya::ResourceMetadata,
+        ?created_by: Cadenya::Profile,
+        ?effective_memory_stack: ::Array[Cadenya::MemoryReference],
+        ?total_context_windows: Integer,
+        ?total_events: Integer,
+        ?total_input_tokens: Integer,
+        ?total_output_tokens: Integer,
+        ?total_tool_calls: Integer
+      ) -> void
+
+      def to_hash: -> {
+        agent: Cadenya::ResourceMetadata,
+        agent_variation: Cadenya::ResourceMetadata,
+        created_by: Cadenya::Profile,
+        effective_memory_stack: ::Array[Cadenya::MemoryReference],
+        total_context_windows: Integer,
+        total_events: Integer,
+        total_input_tokens: Integer,
+        total_output_tokens: Integer,
+        total_tool_calls: Integer
+      }
+    end
+  end
+end

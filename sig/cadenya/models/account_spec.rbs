@@ -1,0 +1,45 @@
+module Cadenya
+  module Models
+    type account_spec =
+      {
+        billing_email: String,
+        description: String,
+        domain: String,
+        workspaces: ::Array[Cadenya::Workspace]
+      }
+
+    class AccountSpec < Cadenya::Internal::Type::BaseModel
+      attr_reader billing_email: String?
+
+      def billing_email=: (String) -> String
+
+      attr_reader description: String?
+
+      def description=: (String) -> String
+
+      attr_reader domain: String?
+
+      def domain=: (String) -> String
+
+      attr_reader workspaces: ::Array[Cadenya::Workspace]?
+
+      def workspaces=: (
+        ::Array[Cadenya::Workspace]
+      ) -> ::Array[Cadenya::Workspace]
+
+      def initialize: (
+        ?billing_email: String,
+        ?description: String,
+        ?domain: String,
+        ?workspaces: ::Array[Cadenya::Workspace]
+      ) -> void
+
+      def to_hash: -> {
+        billing_email: String,
+        description: String,
+        domain: String,
+        workspaces: ::Array[Cadenya::Workspace]
+      }
+    end
+  end
+end

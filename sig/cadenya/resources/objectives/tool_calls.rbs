@@ -1,0 +1,34 @@
+module Cadenya
+  module Resources
+    class Objectives
+      class ToolCalls
+        def list: (
+          String objective_id,
+          workspace_id: String,
+          ?cursor: String,
+          ?include_info: bool,
+          ?limit: Integer,
+          ?status: Cadenya::Models::Objectives::ToolCallListParams::status,
+          ?request_options: Cadenya::request_opts
+        ) -> Cadenya::Internal::CursorPagination[Cadenya::Objectives::ObjectiveToolCall]
+
+        def approve: (
+          String tool_call_id,
+          workspace_id: String,
+          objective_id: String,
+          ?request_options: Cadenya::request_opts
+        ) -> Cadenya::Objectives::ObjectiveToolCall
+
+        def deny: (
+          String tool_call_id,
+          workspace_id: String,
+          objective_id: String,
+          ?memo: String,
+          ?request_options: Cadenya::request_opts
+        ) -> Cadenya::Objectives::ObjectiveToolCall
+
+        def initialize: (client: Cadenya::Client) -> void
+      end
+    end
+  end
+end

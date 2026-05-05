@@ -1,0 +1,45 @@
+module Cadenya
+  module Models
+    module Objectives
+      type tool_call_deny_params =
+        {
+          workspace_id: String,
+          objective_id: String,
+          tool_call_id: String,
+          memo: String
+        }
+        & Cadenya::Internal::Type::request_parameters
+
+      class ToolCallDenyParams < Cadenya::Internal::Type::BaseModel
+        extend Cadenya::Internal::Type::RequestParameters::Converter
+        include Cadenya::Internal::Type::RequestParameters
+
+        attr_accessor workspace_id: String
+
+        attr_accessor objective_id: String
+
+        attr_accessor tool_call_id: String
+
+        attr_reader memo: String?
+
+        def memo=: (String) -> String
+
+        def initialize: (
+          workspace_id: String,
+          objective_id: String,
+          tool_call_id: String,
+          ?memo: String,
+          ?request_options: Cadenya::request_opts
+        ) -> void
+
+        def to_hash: -> {
+          workspace_id: String,
+          objective_id: String,
+          tool_call_id: String,
+          memo: String,
+          request_options: Cadenya::RequestOptions
+        }
+      end
+    end
+  end
+end

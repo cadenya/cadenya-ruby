@@ -1,0 +1,48 @@
+module Cadenya
+  module Models
+    type objective_create_params =
+      {
+        workspace_id: String,
+        agent_id: String,
+        data: Cadenya::ObjectiveData,
+        metadata: Cadenya::CreateOperationMetadata,
+        variation_id: String
+      }
+      & Cadenya::Internal::Type::request_parameters
+
+    class ObjectiveCreateParams < Cadenya::Internal::Type::BaseModel
+      extend Cadenya::Internal::Type::RequestParameters::Converter
+      include Cadenya::Internal::Type::RequestParameters
+
+      attr_accessor workspace_id: String
+
+      attr_accessor agent_id: String
+
+      attr_accessor data: Cadenya::ObjectiveData
+
+      attr_accessor metadata: Cadenya::CreateOperationMetadata
+
+      attr_reader variation_id: String?
+
+      def variation_id=: (String) -> String
+
+      def initialize: (
+        workspace_id: String,
+        agent_id: String,
+        data: Cadenya::ObjectiveData,
+        metadata: Cadenya::CreateOperationMetadata,
+        ?variation_id: String,
+        ?request_options: Cadenya::request_opts
+      ) -> void
+
+      def to_hash: -> {
+        workspace_id: String,
+        agent_id: String,
+        data: Cadenya::ObjectiveData,
+        metadata: Cadenya::CreateOperationMetadata,
+        variation_id: String,
+        request_options: Cadenya::RequestOptions
+      }
+    end
+  end
+end

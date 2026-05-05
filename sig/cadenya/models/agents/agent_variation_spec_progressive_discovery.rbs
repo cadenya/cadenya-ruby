@@ -1,0 +1,36 @@
+module Cadenya
+  module Models
+    class AgentVariationSpecProgressiveDiscovery = Agents::AgentVariationSpecProgressiveDiscovery
+
+    module Agents
+      type agent_variation_spec_progressive_discovery =
+        { hints: ::Array[String], max_tools: Integer, rerank_threshold: Float }
+
+      class AgentVariationSpecProgressiveDiscovery < Cadenya::Internal::Type::BaseModel
+        attr_reader hints: ::Array[String]?
+
+        def hints=: (::Array[String]) -> ::Array[String]
+
+        attr_reader max_tools: Integer?
+
+        def max_tools=: (Integer) -> Integer
+
+        attr_reader rerank_threshold: Float?
+
+        def rerank_threshold=: (Float) -> Float
+
+        def initialize: (
+          ?hints: ::Array[String],
+          ?max_tools: Integer,
+          ?rerank_threshold: Float
+        ) -> void
+
+        def to_hash: -> {
+          hints: ::Array[String],
+          max_tools: Integer,
+          rerank_threshold: Float
+        }
+      end
+    end
+  end
+end

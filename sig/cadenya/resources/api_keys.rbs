@@ -1,0 +1,47 @@
+module Cadenya
+  module Resources
+    class APIKeys
+      attr_reader access: Cadenya::Resources::APIKeys::Access
+
+      def create: (
+        metadata: Cadenya::APIKeyCreateParams::Metadata,
+        spec: Cadenya::APIKeySpec,
+        ?initial_workspace_ids: ::Array[String],
+        ?request_options: Cadenya::request_opts
+      ) -> Cadenya::APIKey
+
+      def retrieve: (
+        String id,
+        ?request_options: Cadenya::request_opts
+      ) -> Cadenya::APIKey
+
+      def update: (
+        String id,
+        ?metadata: Cadenya::APIKeyUpdateParams::Metadata,
+        ?spec: Cadenya::APIKeySpec,
+        ?update_mask: String,
+        ?request_options: Cadenya::request_opts
+      ) -> Cadenya::APIKey
+
+      def list: (
+        ?bundle_key: String,
+        ?cursor: String,
+        ?include_info: bool,
+        ?limit: Integer,
+        ?prefix: String,
+        ?query: String,
+        ?sort_order: String,
+        ?request_options: Cadenya::request_opts
+      ) -> Cadenya::Internal::CursorPagination[Cadenya::APIKey]
+
+      def delete: (String id, ?request_options: Cadenya::request_opts) -> nil
+
+      def rotate: (
+        String id,
+        ?request_options: Cadenya::request_opts
+      ) -> Cadenya::APIKey
+
+      def initialize: (client: Cadenya::Client) -> void
+    end
+  end
+end

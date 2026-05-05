@@ -1,0 +1,46 @@
+module Cadenya
+  module Models
+    type objective =
+      {
+        data: Cadenya::ObjectiveData,
+        metadata: Cadenya::OperationMetadata,
+        status: Cadenya::ObjectiveStatus,
+        info: Cadenya::ObjectiveInfo,
+        last_five_windows: ::Array[Cadenya::ObjectiveContextWindow]
+      }
+
+    class Objective < Cadenya::Internal::Type::BaseModel
+      attr_accessor data: Cadenya::ObjectiveData
+
+      attr_accessor metadata: Cadenya::OperationMetadata
+
+      attr_accessor status: Cadenya::ObjectiveStatus
+
+      attr_reader info: Cadenya::ObjectiveInfo?
+
+      def info=: (Cadenya::ObjectiveInfo) -> Cadenya::ObjectiveInfo
+
+      attr_reader last_five_windows: ::Array[Cadenya::ObjectiveContextWindow]?
+
+      def last_five_windows=: (
+        ::Array[Cadenya::ObjectiveContextWindow]
+      ) -> ::Array[Cadenya::ObjectiveContextWindow]
+
+      def initialize: (
+        data: Cadenya::ObjectiveData,
+        metadata: Cadenya::OperationMetadata,
+        status: Cadenya::ObjectiveStatus,
+        ?info: Cadenya::ObjectiveInfo,
+        ?last_five_windows: ::Array[Cadenya::ObjectiveContextWindow]
+      ) -> void
+
+      def to_hash: -> {
+        data: Cadenya::ObjectiveData,
+        metadata: Cadenya::OperationMetadata,
+        status: Cadenya::ObjectiveStatus,
+        info: Cadenya::ObjectiveInfo,
+        last_five_windows: ::Array[Cadenya::ObjectiveContextWindow]
+      }
+    end
+  end
+end

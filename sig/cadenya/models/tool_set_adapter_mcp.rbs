@@ -1,0 +1,68 @@
+module Cadenya
+  module Models
+    type tool_set_adapter_mcp =
+      {
+        exclude_tools: Cadenya::McpToolFilter,
+        headers: ::Hash[Symbol, String],
+        include_tools: Cadenya::McpToolFilter,
+        tool_approvals: Cadenya::ToolSetAdapterMcp::ToolApprovals,
+        url: String
+      }
+
+    class ToolSetAdapterMcp < Cadenya::Internal::Type::BaseModel
+      attr_reader exclude_tools: Cadenya::McpToolFilter?
+
+      def exclude_tools=: (Cadenya::McpToolFilter) -> Cadenya::McpToolFilter
+
+      attr_reader headers: ::Hash[Symbol, String]?
+
+      def headers=: (::Hash[Symbol, String]) -> ::Hash[Symbol, String]
+
+      attr_reader include_tools: Cadenya::McpToolFilter?
+
+      def include_tools=: (Cadenya::McpToolFilter) -> Cadenya::McpToolFilter
+
+      attr_reader tool_approvals: Cadenya::ToolSetAdapterMcp::ToolApprovals?
+
+      def tool_approvals=: (
+        Cadenya::ToolSetAdapterMcp::ToolApprovals
+      ) -> Cadenya::ToolSetAdapterMcp::ToolApprovals
+
+      attr_reader url: String?
+
+      def url=: (String) -> String
+
+      def initialize: (
+        ?exclude_tools: Cadenya::McpToolFilter,
+        ?headers: ::Hash[Symbol, String],
+        ?include_tools: Cadenya::McpToolFilter,
+        ?tool_approvals: Cadenya::ToolSetAdapterMcp::ToolApprovals,
+        ?url: String
+      ) -> void
+
+      def to_hash: -> {
+        exclude_tools: Cadenya::McpToolFilter,
+        headers: ::Hash[Symbol, String],
+        include_tools: Cadenya::McpToolFilter,
+        tool_approvals: Cadenya::ToolSetAdapterMcp::ToolApprovals,
+        url: String
+      }
+
+      type tool_approvals = { always: bool, only: Cadenya::McpToolFilter }
+
+      class ToolApprovals < Cadenya::Internal::Type::BaseModel
+        attr_reader always: bool?
+
+        def always=: (bool) -> bool
+
+        attr_reader only: Cadenya::McpToolFilter?
+
+        def only=: (Cadenya::McpToolFilter) -> Cadenya::McpToolFilter
+
+        def initialize: (?always: bool, ?only: Cadenya::McpToolFilter) -> void
+
+        def to_hash: -> { always: bool, only: Cadenya::McpToolFilter }
+      end
+    end
+  end
+end

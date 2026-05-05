@@ -1,0 +1,99 @@
+module Cadenya
+  module Models
+    type memory_layer_list_params =
+      {
+        workspace_id: String,
+        bundle_key: String,
+        cursor: String,
+        include_info: bool,
+        limit: Integer,
+        prefix: String,
+        query: String,
+        sort_order: String,
+        type: Cadenya::Models::MemoryLayerListParams::type_
+      }
+      & Cadenya::Internal::Type::request_parameters
+
+    class MemoryLayerListParams < Cadenya::Internal::Type::BaseModel
+      extend Cadenya::Internal::Type::RequestParameters::Converter
+      include Cadenya::Internal::Type::RequestParameters
+
+      attr_accessor workspace_id: String
+
+      attr_reader bundle_key: String?
+
+      def bundle_key=: (String) -> String
+
+      attr_reader cursor: String?
+
+      def cursor=: (String) -> String
+
+      attr_reader include_info: bool?
+
+      def include_info=: (bool) -> bool
+
+      attr_reader limit: Integer?
+
+      def limit=: (Integer) -> Integer
+
+      attr_reader prefix: String?
+
+      def prefix=: (String) -> String
+
+      attr_reader query: String?
+
+      def query=: (String) -> String
+
+      attr_reader sort_order: String?
+
+      def sort_order=: (String) -> String
+
+      attr_reader type: Cadenya::Models::MemoryLayerListParams::type_?
+
+      def type=: (
+        Cadenya::Models::MemoryLayerListParams::type_
+      ) -> Cadenya::Models::MemoryLayerListParams::type_
+
+      def initialize: (
+        workspace_id: String,
+        ?bundle_key: String,
+        ?cursor: String,
+        ?include_info: bool,
+        ?limit: Integer,
+        ?prefix: String,
+        ?query: String,
+        ?sort_order: String,
+        ?type: Cadenya::Models::MemoryLayerListParams::type_,
+        ?request_options: Cadenya::request_opts
+      ) -> void
+
+      def to_hash: -> {
+        workspace_id: String,
+        bundle_key: String,
+        cursor: String,
+        include_info: bool,
+        limit: Integer,
+        prefix: String,
+        query: String,
+        sort_order: String,
+        type: Cadenya::Models::MemoryLayerListParams::type_,
+        request_options: Cadenya::RequestOptions
+      }
+
+      type type_ =
+        :MEMORY_LAYER_TYPE_UNSPECIFIED
+        | :MEMORY_LAYER_TYPE_EPISODIC
+        | :MEMORY_LAYER_TYPE_SKILLS
+
+      module Type
+        extend Cadenya::Internal::Type::Enum
+
+        MEMORY_LAYER_TYPE_UNSPECIFIED: :MEMORY_LAYER_TYPE_UNSPECIFIED
+        MEMORY_LAYER_TYPE_EPISODIC: :MEMORY_LAYER_TYPE_EPISODIC
+        MEMORY_LAYER_TYPE_SKILLS: :MEMORY_LAYER_TYPE_SKILLS
+
+        def self?.values: -> ::Array[Cadenya::Models::MemoryLayerListParams::type_]
+      end
+    end
+  end
+end

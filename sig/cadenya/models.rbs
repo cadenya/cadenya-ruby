@@ -1,0 +1,283 @@
+module Cadenya
+  class AccountAPI = Cadenya::Models::AccountAPI
+
+  class AccountInfo = Cadenya::Models::AccountInfo
+
+  class AccountResourceMetadata = Cadenya::Models::AccountResourceMetadata
+
+  class AccountRetrieveParams = Cadenya::Models::AccountRetrieveParams
+
+  class AccountRotateWebhookSigningKeyParams = Cadenya::Models::AccountRotateWebhookSigningKeyParams
+
+  class AccountSpec = Cadenya::Models::AccountSpec
+
+  class Agent = Cadenya::Models::Agent
+
+  class AgentCreateParams = Cadenya::Models::AgentCreateParams
+
+  class AgentDeleteParams = Cadenya::Models::AgentDeleteParams
+
+  class AgentEntry = Cadenya::Models::AgentEntry
+
+  class AgentInfo = Cadenya::Models::AgentInfo
+
+  class AgentListParams = Cadenya::Models::AgentListParams
+
+  class AgentRetrieveParams = Cadenya::Models::AgentRetrieveParams
+
+  module Agents = Cadenya::Models::Agents
+
+  class AgentScheduleEntry = Cadenya::Models::AgentScheduleEntry
+
+  class AgentSpec = Cadenya::Models::AgentSpec
+
+  class AgentUpdateParams = Cadenya::Models::AgentUpdateParams
+
+  class AgentVariationEntry = Cadenya::Models::AgentVariationEntry
+
+  class APIKey = Cadenya::Models::APIKey
+
+  class APIKeyCreateParams = Cadenya::Models::APIKeyCreateParams
+
+  class APIKeyDeleteParams = Cadenya::Models::APIKeyDeleteParams
+
+  class APIKeyInfo = Cadenya::Models::APIKeyInfo
+
+  class APIKeyListParams = Cadenya::Models::APIKeyListParams
+
+  class APIKeyRetrieveParams = Cadenya::Models::APIKeyRetrieveParams
+
+  class APIKeyRotateParams = Cadenya::Models::APIKeyRotateParams
+
+  module APIKeys = Cadenya::Models::APIKeys
+
+  class APIKeySpec = Cadenya::Models::APIKeySpec
+
+  class APIKeyUpdateParams = Cadenya::Models::APIKeyUpdateParams
+
+  class AssistantMessage = Cadenya::Models::AssistantMessage
+
+  class AssistantToolCall = Cadenya::Models::AssistantToolCall
+
+  class BareMetadata = Cadenya::Models::BareMetadata
+
+  class BulkWorkspaceApply = Cadenya::Models::BulkWorkspaceApply
+
+  class BulkWorkspaceApplyData = Cadenya::Models::BulkWorkspaceApplyData
+
+  class BulkWorkspaceApplyInfo = Cadenya::Models::BulkWorkspaceApplyInfo
+
+  class BulkWorkspaceApplyStatus = Cadenya::Models::BulkWorkspaceApplyStatus
+
+  class BulkWorkspaceResourceApplyParams = Cadenya::Models::BulkWorkspaceResourceApplyParams
+
+  class BulkWorkspaceResourceListParams = Cadenya::Models::BulkWorkspaceResourceListParams
+
+  class BulkWorkspaceResourceRetrieveParams = Cadenya::Models::BulkWorkspaceResourceRetrieveParams
+
+  module BulkWorkspaceResources = Cadenya::Models::BulkWorkspaceResources
+
+  class CallableTool = Cadenya::Models::CallableTool
+
+  class ContextWindowCompacted = Cadenya::Models::ContextWindowCompacted
+
+  class CreateOperationMetadata = Cadenya::Models::CreateOperationMetadata
+
+  class CreateResourceMetadata = Cadenya::Models::CreateResourceMetadata
+
+  class McpToolFilter = Cadenya::Models::McpToolFilter
+
+  class MemoryEntryItem = Cadenya::Models::MemoryEntryItem
+
+  class MemoryLayer = Cadenya::Models::MemoryLayer
+
+  class MemoryLayerCreateParams = Cadenya::Models::MemoryLayerCreateParams
+
+  class MemoryLayerDeleteParams = Cadenya::Models::MemoryLayerDeleteParams
+
+  class MemoryLayerEntry = Cadenya::Models::MemoryLayerEntry
+
+  class MemoryLayerInfo = Cadenya::Models::MemoryLayerInfo
+
+  class MemoryLayerListParams = Cadenya::Models::MemoryLayerListParams
+
+  class MemoryLayerRetrieveParams = Cadenya::Models::MemoryLayerRetrieveParams
+
+  module MemoryLayers = Cadenya::Models::MemoryLayers
+
+  class MemoryLayerSpec = Cadenya::Models::MemoryLayerSpec
+
+  class MemoryLayerUpdateParams = Cadenya::Models::MemoryLayerUpdateParams
+
+  class MemoryRead = Cadenya::Models::MemoryRead
+
+  class MemoryReference = Cadenya::Models::MemoryReference
+
+  class Model = Cadenya::Models::Model
+
+  class ModelListParams = Cadenya::Models::ModelListParams
+
+  class ModelRetrieveParams = Cadenya::Models::ModelRetrieveParams
+
+  class ModelSetStatusParams = Cadenya::Models::ModelSetStatusParams
+
+  class ModelSpec = Cadenya::Models::ModelSpec
+
+  class Objective = Cadenya::Models::Objective
+
+  class ObjectiveCancelParams = Cadenya::Models::ObjectiveCancelParams
+
+  class ObjectiveCompactParams = Cadenya::Models::ObjectiveCompactParams
+
+  class ObjectiveContextWindow = Cadenya::Models::ObjectiveContextWindow
+
+  class ObjectiveContextWindowData = Cadenya::Models::ObjectiveContextWindowData
+
+  class ObjectiveContinueParams = Cadenya::Models::ObjectiveContinueParams
+
+  class ObjectiveCreateParams = Cadenya::Models::ObjectiveCreateParams
+
+  class ObjectiveData = Cadenya::Models::ObjectiveData
+
+  class ObjectiveDataSecret = Cadenya::Models::ObjectiveDataSecret
+
+  class ObjectiveError = Cadenya::Models::ObjectiveError
+
+  class ObjectiveEventData = Cadenya::Models::ObjectiveEventData
+
+  class ObjectiveEventInfo = Cadenya::Models::ObjectiveEventInfo
+
+  class ObjectiveEventWebhookData = Cadenya::Models::ObjectiveEventWebhookData
+
+  class ObjectiveInfo = Cadenya::Models::ObjectiveInfo
+
+  class ObjectiveListContextWindowsParams = Cadenya::Models::ObjectiveListContextWindowsParams
+
+  class ObjectiveListEventsParams = Cadenya::Models::ObjectiveListEventsParams
+
+  class ObjectiveListParams = Cadenya::Models::ObjectiveListParams
+
+  class ObjectiveRetrieveParams = Cadenya::Models::ObjectiveRetrieveParams
+
+  module Objectives = Cadenya::Models::Objectives
+
+  class ObjectiveStatus = Cadenya::Models::ObjectiveStatus
+
+  class OperationMetadata = Cadenya::Models::OperationMetadata
+
+  class Page = Cadenya::Models::Page
+
+  class Profile = Cadenya::Models::Profile
+
+  class ProfileSpec = Cadenya::Models::ProfileSpec
+
+  class ResourceMetadata = Cadenya::Models::ResourceMetadata
+
+  class RotateWebhookSigningKeyResponse = Cadenya::Models::RotateWebhookSigningKeyResponse
+
+  class SearchSearchToolsOrToolSetsParams = Cadenya::Models::SearchSearchToolsOrToolSetsParams
+
+  class SubObjectiveCreated = Cadenya::Models::SubObjectiveCreated
+
+  class SyncCompleted = Cadenya::Models::SyncCompleted
+
+  class SyncFailed = Cadenya::Models::SyncFailed
+
+  class SyncStarted = Cadenya::Models::SyncStarted
+
+  class ToolApprovalRequested = Cadenya::Models::ToolApprovalRequested
+
+  class ToolApproved = Cadenya::Models::ToolApproved
+
+  class ToolCalled = Cadenya::Models::ToolCalled
+
+  class ToolDenied = Cadenya::Models::ToolDenied
+
+  class ToolEntry = Cadenya::Models::ToolEntry
+
+  class ToolError = Cadenya::Models::ToolError
+
+  class ToolResult = Cadenya::Models::ToolResult
+
+  class ToolSet = Cadenya::Models::ToolSet
+
+  class ToolSetAdapter = Cadenya::Models::ToolSetAdapter
+
+  class ToolSetAdapterHTTP = Cadenya::Models::ToolSetAdapterHTTP
+
+  class ToolSetAdapterMcp = Cadenya::Models::ToolSetAdapterMcp
+
+  class ToolSetCreateParams = Cadenya::Models::ToolSetCreateParams
+
+  class ToolSetDeleteParams = Cadenya::Models::ToolSetDeleteParams
+
+  class ToolSetEntry = Cadenya::Models::ToolSetEntry
+
+  class ToolSetEvent = Cadenya::Models::ToolSetEvent
+
+  class ToolSetEventData = Cadenya::Models::ToolSetEventData
+
+  class ToolSetInfo = Cadenya::Models::ToolSetInfo
+
+  class ToolSetListEventsParams = Cadenya::Models::ToolSetListEventsParams
+
+  class ToolSetListParams = Cadenya::Models::ToolSetListParams
+
+  class ToolSetRetrieveParams = Cadenya::Models::ToolSetRetrieveParams
+
+  module ToolSets = Cadenya::Models::ToolSets
+
+  class ToolSetSpec = Cadenya::Models::ToolSetSpec
+
+  class ToolSetUpdateParams = Cadenya::Models::ToolSetUpdateParams
+
+  class UnsafeUnwrapWebhookEvent = Cadenya::Models::UnsafeUnwrapWebhookEvent
+
+  class UnwrapWebhookEvent = Cadenya::Models::UnwrapWebhookEvent
+
+  class UpdateResourceMetadata = Cadenya::Models::UpdateResourceMetadata
+
+  class Upload = Cadenya::Models::Upload
+
+  class UploadCreateParams = Cadenya::Models::UploadCreateParams
+
+  class UploadInfo = Cadenya::Models::UploadInfo
+
+  class UploadRetrieveParams = Cadenya::Models::UploadRetrieveParams
+
+  class UploadSpec = Cadenya::Models::UploadSpec
+
+  class UserMessage = Cadenya::Models::UserMessage
+
+  class VariationAssignmentEntry = Cadenya::Models::VariationAssignmentEntry
+
+  class VariationMemoryLayerEntry = Cadenya::Models::VariationMemoryLayerEntry
+
+  class WebhookUnsafeUnwrapParams = Cadenya::Models::WebhookUnsafeUnwrapParams
+
+  class WebhookUnwrapParams = Cadenya::Models::WebhookUnwrapParams
+
+  class Workspace = Cadenya::Models::Workspace
+
+  class WorkspaceGetParams = Cadenya::Models::WorkspaceGetParams
+
+  class WorkspaceListParams = Cadenya::Models::WorkspaceListParams
+
+  class WorkspaceSecret = Cadenya::Models::WorkspaceSecret
+
+  class WorkspaceSecretCreateParams = Cadenya::Models::WorkspaceSecretCreateParams
+
+  class WorkspaceSecretDeleteParams = Cadenya::Models::WorkspaceSecretDeleteParams
+
+  class WorkspaceSecretInfo = Cadenya::Models::WorkspaceSecretInfo
+
+  class WorkspaceSecretListParams = Cadenya::Models::WorkspaceSecretListParams
+
+  class WorkspaceSecretRetrieveParams = Cadenya::Models::WorkspaceSecretRetrieveParams
+
+  class WorkspaceSecretSpec = Cadenya::Models::WorkspaceSecretSpec
+
+  class WorkspaceSecretUpdateParams = Cadenya::Models::WorkspaceSecretUpdateParams
+
+  class WorkspaceSpec = Cadenya::Models::WorkspaceSpec
+end

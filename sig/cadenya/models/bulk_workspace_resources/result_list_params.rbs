@@ -1,0 +1,91 @@
+module Cadenya
+  module Models
+    module BulkWorkspaceResources
+      type result_list_params =
+        {
+          workspace_id: String,
+          bulk_workspace_apply_id: String,
+          action: Cadenya::Models::BulkWorkspaceResources::ResultListParams::action,
+          cursor: String,
+          limit: Integer,
+          sort_order: String,
+          type: String
+        }
+        & Cadenya::Internal::Type::request_parameters
+
+      class ResultListParams < Cadenya::Internal::Type::BaseModel
+        extend Cadenya::Internal::Type::RequestParameters::Converter
+        include Cadenya::Internal::Type::RequestParameters
+
+        attr_accessor workspace_id: String
+
+        attr_accessor bulk_workspace_apply_id: String
+
+        attr_reader action: Cadenya::Models::BulkWorkspaceResources::ResultListParams::action?
+
+        def action=: (
+          Cadenya::Models::BulkWorkspaceResources::ResultListParams::action
+        ) -> Cadenya::Models::BulkWorkspaceResources::ResultListParams::action
+
+        attr_reader cursor: String?
+
+        def cursor=: (String) -> String
+
+        attr_reader limit: Integer?
+
+        def limit=: (Integer) -> Integer
+
+        attr_reader sort_order: String?
+
+        def sort_order=: (String) -> String
+
+        attr_reader type: String?
+
+        def type=: (String) -> String
+
+        def initialize: (
+          workspace_id: String,
+          bulk_workspace_apply_id: String,
+          ?action: Cadenya::Models::BulkWorkspaceResources::ResultListParams::action,
+          ?cursor: String,
+          ?limit: Integer,
+          ?sort_order: String,
+          ?type: String,
+          ?request_options: Cadenya::request_opts
+        ) -> void
+
+        def to_hash: -> {
+          workspace_id: String,
+          bulk_workspace_apply_id: String,
+          action: Cadenya::Models::BulkWorkspaceResources::ResultListParams::action,
+          cursor: String,
+          limit: Integer,
+          sort_order: String,
+          type: String,
+          request_options: Cadenya::RequestOptions
+        }
+
+        type action =
+          :ACTION_UNSPECIFIED
+          | :ACTION_CREATED
+          | :ACTION_UPDATED
+          | :ACTION_UNCHANGED
+          | :ACTION_DELETED
+          | :ACTION_FAILED
+
+        module Action
+          extend Cadenya::Internal::Type::Enum
+
+          ACTION_UNSPECIFIED: :ACTION_UNSPECIFIED
+          ACTION_CREATED: :ACTION_CREATED
+          ACTION_UPDATED: :ACTION_UPDATED
+          ACTION_UNCHANGED: :ACTION_UNCHANGED
+          ACTION_DELETED: :ACTION_DELETED
+          ACTION_FAILED: :ACTION_FAILED
+
+          def self?.values: -> ::Array[Cadenya::Models::BulkWorkspaceResources::ResultListParams::action]
+        end
+      end
+    end
+  end
+end

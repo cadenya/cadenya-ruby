@@ -1,0 +1,19 @@
+module Cadenya
+  module Resources
+    class Agents
+      class WebhookDeliveries
+        def list: (
+          String agent_id,
+          workspace_id: String,
+          ?cursor: String,
+          ?event_type: Cadenya::Models::Agents::WebhookDeliveryListParams::event_type,
+          ?limit: Integer,
+          ?objective_id: String,
+          ?request_options: Cadenya::request_opts
+        ) -> Cadenya::Internal::CursorPagination[Cadenya::Agents::WebhookDelivery]
+
+        def initialize: (client: Cadenya::Client) -> void
+      end
+    end
+  end
+end

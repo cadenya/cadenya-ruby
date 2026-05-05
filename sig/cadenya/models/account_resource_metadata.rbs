@@ -1,0 +1,49 @@
+module Cadenya
+  module Models
+    type account_resource_metadata =
+      {
+        id: String,
+        account_id: String,
+        name: String,
+        profile_id: String,
+        external_id: String,
+        labels: ::Hash[Symbol, String]
+      }
+
+    class AccountResourceMetadata < Cadenya::Internal::Type::BaseModel
+      attr_accessor name: String
+
+      attr_reader external_id: String?
+
+      def external_id=: (String) -> String
+
+      attr_reader labels: ::Hash[Symbol, String]?
+
+      def labels=: (::Hash[Symbol, String]) -> ::Hash[Symbol, String]
+
+      attr_accessor id: String
+
+      attr_accessor account_id: String
+
+      attr_accessor profile_id: String
+
+      def initialize: (
+        id: String,
+        account_id: String,
+        name: String,
+        profile_id: String,
+        ?external_id: String,
+        ?labels: ::Hash[Symbol, String]
+      ) -> void
+
+      def to_hash: -> {
+        id: String,
+        account_id: String,
+        name: String,
+        profile_id: String,
+        external_id: String,
+        labels: ::Hash[Symbol, String]
+      }
+    end
+  end
+end

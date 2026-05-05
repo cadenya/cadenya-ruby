@@ -1,0 +1,61 @@
+module Cadenya
+  module Models
+    type bulk_workspace_apply_data =
+      {
+        bundle_key: String,
+        agents: ::Hash[Symbol, Cadenya::AgentEntry],
+        automatically_publish_agents: bool,
+        memory_layers: ::Hash[Symbol, Cadenya::MemoryLayerEntry],
+        source_url: String,
+        tool_sets: ::Hash[Symbol, Cadenya::ToolSetEntry]
+      }
+
+    class BulkWorkspaceApplyData < Cadenya::Internal::Type::BaseModel
+      attr_accessor bundle_key: String
+
+      attr_reader agents: ::Hash[Symbol, Cadenya::AgentEntry]?
+
+      def agents=: (
+        ::Hash[Symbol, Cadenya::AgentEntry]
+      ) -> ::Hash[Symbol, Cadenya::AgentEntry]
+
+      attr_reader automatically_publish_agents: bool?
+
+      def automatically_publish_agents=: (bool) -> bool
+
+      attr_reader memory_layers: ::Hash[Symbol, Cadenya::MemoryLayerEntry]?
+
+      def memory_layers=: (
+        ::Hash[Symbol, Cadenya::MemoryLayerEntry]
+      ) -> ::Hash[Symbol, Cadenya::MemoryLayerEntry]
+
+      attr_reader source_url: String?
+
+      def source_url=: (String) -> String
+
+      attr_reader tool_sets: ::Hash[Symbol, Cadenya::ToolSetEntry]?
+
+      def tool_sets=: (
+        ::Hash[Symbol, Cadenya::ToolSetEntry]
+      ) -> ::Hash[Symbol, Cadenya::ToolSetEntry]
+
+      def initialize: (
+        bundle_key: String,
+        ?agents: ::Hash[Symbol, Cadenya::AgentEntry],
+        ?automatically_publish_agents: bool,
+        ?memory_layers: ::Hash[Symbol, Cadenya::MemoryLayerEntry],
+        ?source_url: String,
+        ?tool_sets: ::Hash[Symbol, Cadenya::ToolSetEntry]
+      ) -> void
+
+      def to_hash: -> {
+        bundle_key: String,
+        agents: ::Hash[Symbol, Cadenya::AgentEntry],
+        automatically_publish_agents: bool,
+        memory_layers: ::Hash[Symbol, Cadenya::MemoryLayerEntry],
+        source_url: String,
+        tool_sets: ::Hash[Symbol, Cadenya::ToolSetEntry]
+      }
+    end
+  end
+end

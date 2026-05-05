@@ -1,0 +1,158 @@
+# typed: strong
+
+module Cadenya
+  module Models
+    class AgentSpec < Cadenya::Internal::Type::BaseModel
+      OrHash =
+        T.type_alias { T.any(Cadenya::AgentSpec, Cadenya::Internal::AnyHash) }
+
+      # Status of the agent
+      sig { returns(Cadenya::AgentSpec::Status::OrSymbol) }
+      attr_accessor :status
+
+      # Controls how variations are automatically selected when creating objectives
+      # Defaults to RANDOM when unspecified
+      sig { returns(Cadenya::AgentSpec::VariationSelectionMode::OrSymbol) }
+      attr_accessor :variation_selection_mode
+
+      # Description of the agent's purpose
+      sig { returns(T.nilable(String)) }
+      attr_reader :description
+
+      sig { params(description: String).void }
+      attr_writer :description
+
+      # InputDataSchema is used for enforcing a data input when objectives are created.
+      # This is valuable when using liquid formatting in agent variation prompts. Input
+      # data schema is also valuable when using an agent as a sub-agent, as the schema
+      # is used as the tool's input parameter schema. If omitted, the sub-agent schema
+      # will be loaded with a simple "prompt" free text string as its schema.
+      sig { returns(T.nilable(T.anything)) }
+      attr_reader :input_data_schema
+
+      sig { params(input_data_schema: T.anything).void }
+      attr_writer :input_data_schema
+
+      # The URL that Cadenya will send events for any objective assigned to the agent.
+      sig { returns(T.nilable(String)) }
+      attr_reader :webhook_events_url
+
+      sig { params(webhook_events_url: String).void }
+      attr_writer :webhook_events_url
+
+      # Agent specification (user-provided configuration)
+      sig do
+        params(
+          status: Cadenya::AgentSpec::Status::OrSymbol,
+          variation_selection_mode:
+            Cadenya::AgentSpec::VariationSelectionMode::OrSymbol,
+          description: String,
+          input_data_schema: T.anything,
+          webhook_events_url: String
+        ).returns(T.attached_class)
+      end
+      def self.new(
+        # Status of the agent
+        status:,
+        # Controls how variations are automatically selected when creating objectives
+        # Defaults to RANDOM when unspecified
+        variation_selection_mode:,
+        # Description of the agent's purpose
+        description: nil,
+        # InputDataSchema is used for enforcing a data input when objectives are created.
+        # This is valuable when using liquid formatting in agent variation prompts. Input
+        # data schema is also valuable when using an agent as a sub-agent, as the schema
+        # is used as the tool's input parameter schema. If omitted, the sub-agent schema
+        # will be loaded with a simple "prompt" free text string as its schema.
+        input_data_schema: nil,
+        # The URL that Cadenya will send events for any objective assigned to the agent.
+        webhook_events_url: nil
+      )
+      end
+
+      sig do
+        override.returns(
+          {
+            status: Cadenya::AgentSpec::Status::OrSymbol,
+            variation_selection_mode:
+              Cadenya::AgentSpec::VariationSelectionMode::OrSymbol,
+            description: String,
+            input_data_schema: T.anything,
+            webhook_events_url: String
+          }
+        )
+      end
+      def to_hash
+      end
+
+      # Status of the agent
+      module Status
+        extend Cadenya::Internal::Type::Enum
+
+        TaggedSymbol =
+          T.type_alias { T.all(Symbol, Cadenya::AgentSpec::Status) }
+        OrSymbol = T.type_alias { T.any(Symbol, String) }
+
+        AGENT_STATUS_UNSPECIFIED =
+          T.let(
+            :AGENT_STATUS_UNSPECIFIED,
+            Cadenya::AgentSpec::Status::TaggedSymbol
+          )
+        AGENT_STATUS_DRAFT =
+          T.let(:AGENT_STATUS_DRAFT, Cadenya::AgentSpec::Status::TaggedSymbol)
+        AGENT_STATUS_PUBLISHED =
+          T.let(
+            :AGENT_STATUS_PUBLISHED,
+            Cadenya::AgentSpec::Status::TaggedSymbol
+          )
+        AGENT_STATUS_ARCHIVED =
+          T.let(
+            :AGENT_STATUS_ARCHIVED,
+            Cadenya::AgentSpec::Status::TaggedSymbol
+          )
+
+        sig do
+          override.returns(T::Array[Cadenya::AgentSpec::Status::TaggedSymbol])
+        end
+        def self.values
+        end
+      end
+
+      # Controls how variations are automatically selected when creating objectives
+      # Defaults to RANDOM when unspecified
+      module VariationSelectionMode
+        extend Cadenya::Internal::Type::Enum
+
+        TaggedSymbol =
+          T.type_alias do
+            T.all(Symbol, Cadenya::AgentSpec::VariationSelectionMode)
+          end
+        OrSymbol = T.type_alias { T.any(Symbol, String) }
+
+        VARIATION_SELECTION_MODE_UNSPECIFIED =
+          T.let(
+            :VARIATION_SELECTION_MODE_UNSPECIFIED,
+            Cadenya::AgentSpec::VariationSelectionMode::TaggedSymbol
+          )
+        VARIATION_SELECTION_MODE_RANDOM =
+          T.let(
+            :VARIATION_SELECTION_MODE_RANDOM,
+            Cadenya::AgentSpec::VariationSelectionMode::TaggedSymbol
+          )
+        VARIATION_SELECTION_MODE_WEIGHTED =
+          T.let(
+            :VARIATION_SELECTION_MODE_WEIGHTED,
+            Cadenya::AgentSpec::VariationSelectionMode::TaggedSymbol
+          )
+
+        sig do
+          override.returns(
+            T::Array[Cadenya::AgentSpec::VariationSelectionMode::TaggedSymbol]
+          )
+        end
+        def self.values
+        end
+      end
+    end
+  end
+end

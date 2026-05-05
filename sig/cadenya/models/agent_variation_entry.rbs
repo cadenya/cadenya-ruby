@@ -1,0 +1,50 @@
+module Cadenya
+  module Models
+    type agent_variation_entry =
+      {
+        name: String,
+        spec: Cadenya::Agents::AgentVariationSpec,
+        assignments: ::Array[Cadenya::VariationAssignmentEntry],
+        labels: ::Hash[Symbol, String],
+        memory_layers: ::Array[Cadenya::VariationMemoryLayerEntry]
+      }
+
+    class AgentVariationEntry < Cadenya::Internal::Type::BaseModel
+      attr_accessor name: String
+
+      attr_accessor spec: Cadenya::Agents::AgentVariationSpec
+
+      attr_reader assignments: ::Array[Cadenya::VariationAssignmentEntry]?
+
+      def assignments=: (
+        ::Array[Cadenya::VariationAssignmentEntry]
+      ) -> ::Array[Cadenya::VariationAssignmentEntry]
+
+      attr_reader labels: ::Hash[Symbol, String]?
+
+      def labels=: (::Hash[Symbol, String]) -> ::Hash[Symbol, String]
+
+      attr_reader memory_layers: ::Array[Cadenya::VariationMemoryLayerEntry]?
+
+      def memory_layers=: (
+        ::Array[Cadenya::VariationMemoryLayerEntry]
+      ) -> ::Array[Cadenya::VariationMemoryLayerEntry]
+
+      def initialize: (
+        name: String,
+        spec: Cadenya::Agents::AgentVariationSpec,
+        ?assignments: ::Array[Cadenya::VariationAssignmentEntry],
+        ?labels: ::Hash[Symbol, String],
+        ?memory_layers: ::Array[Cadenya::VariationMemoryLayerEntry]
+      ) -> void
+
+      def to_hash: -> {
+        name: String,
+        spec: Cadenya::Agents::AgentVariationSpec,
+        assignments: ::Array[Cadenya::VariationAssignmentEntry],
+        labels: ::Hash[Symbol, String],
+        memory_layers: ::Array[Cadenya::VariationMemoryLayerEntry]
+      }
+    end
+  end
+end

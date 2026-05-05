@@ -1,0 +1,28 @@
+module Cadenya
+  module Models
+    type assistant_message =
+      { content: String, tool_calls: ::Array[Cadenya::AssistantToolCall] }
+
+    class AssistantMessage < Cadenya::Internal::Type::BaseModel
+      attr_reader content: String?
+
+      def content=: (String) -> String
+
+      attr_reader tool_calls: ::Array[Cadenya::AssistantToolCall]?
+
+      def tool_calls=: (
+        ::Array[Cadenya::AssistantToolCall]
+      ) -> ::Array[Cadenya::AssistantToolCall]
+
+      def initialize: (
+        ?content: String,
+        ?tool_calls: ::Array[Cadenya::AssistantToolCall]
+      ) -> void
+
+      def to_hash: -> {
+        content: String,
+        tool_calls: ::Array[Cadenya::AssistantToolCall]
+      }
+    end
+  end
+end

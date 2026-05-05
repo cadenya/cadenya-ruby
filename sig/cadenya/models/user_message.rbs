@@ -1,0 +1,15 @@
+module Cadenya
+  module Models
+    type user_message = { content: String }
+
+    class UserMessage < Cadenya::Internal::Type::BaseModel
+      attr_reader content: String?
+
+      def content=: (String) -> String
+
+      def initialize: (?content: String) -> void
+
+      def to_hash: -> { content: String }
+    end
+  end
+end

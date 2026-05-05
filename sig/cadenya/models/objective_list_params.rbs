@@ -1,0 +1,112 @@
+module Cadenya
+  module Models
+    type objective_list_params =
+      {
+        workspace_id: String,
+        agent_id: String,
+        agent_schedule_id: String,
+        cursor: String,
+        include_info: bool,
+        limit: Integer,
+        parent_objective_id: String,
+        profile_id: String,
+        sort_order: String,
+        state: Cadenya::Models::ObjectiveListParams::state
+      }
+      & Cadenya::Internal::Type::request_parameters
+
+    class ObjectiveListParams < Cadenya::Internal::Type::BaseModel
+      extend Cadenya::Internal::Type::RequestParameters::Converter
+      include Cadenya::Internal::Type::RequestParameters
+
+      attr_accessor workspace_id: String
+
+      attr_reader agent_id: String?
+
+      def agent_id=: (String) -> String
+
+      attr_reader agent_schedule_id: String?
+
+      def agent_schedule_id=: (String) -> String
+
+      attr_reader cursor: String?
+
+      def cursor=: (String) -> String
+
+      attr_reader include_info: bool?
+
+      def include_info=: (bool) -> bool
+
+      attr_reader limit: Integer?
+
+      def limit=: (Integer) -> Integer
+
+      attr_reader parent_objective_id: String?
+
+      def parent_objective_id=: (String) -> String
+
+      attr_reader profile_id: String?
+
+      def profile_id=: (String) -> String
+
+      attr_reader sort_order: String?
+
+      def sort_order=: (String) -> String
+
+      attr_reader state: Cadenya::Models::ObjectiveListParams::state?
+
+      def state=: (
+        Cadenya::Models::ObjectiveListParams::state
+      ) -> Cadenya::Models::ObjectiveListParams::state
+
+      def initialize: (
+        workspace_id: String,
+        ?agent_id: String,
+        ?agent_schedule_id: String,
+        ?cursor: String,
+        ?include_info: bool,
+        ?limit: Integer,
+        ?parent_objective_id: String,
+        ?profile_id: String,
+        ?sort_order: String,
+        ?state: Cadenya::Models::ObjectiveListParams::state,
+        ?request_options: Cadenya::request_opts
+      ) -> void
+
+      def to_hash: -> {
+        workspace_id: String,
+        agent_id: String,
+        agent_schedule_id: String,
+        cursor: String,
+        include_info: bool,
+        limit: Integer,
+        parent_objective_id: String,
+        profile_id: String,
+        sort_order: String,
+        state: Cadenya::Models::ObjectiveListParams::state,
+        request_options: Cadenya::RequestOptions
+      }
+
+      type state =
+        :STATE_UNSPECIFIED
+        | :STATE_PENDING
+        | :STATE_RUNNING
+        | :STATE_COMPLETED
+        | :STATE_FAILED
+        | :STATE_CANCELLED
+
+      module State
+        extend Cadenya::Internal::Type::Enum
+
+        STATE_UNSPECIFIED: :STATE_UNSPECIFIED
+        STATE_PENDING: :STATE_PENDING
+        STATE_RUNNING: :STATE_RUNNING
+        STATE_COMPLETED: :STATE_COMPLETED
+        STATE_FAILED: :STATE_FAILED
+        STATE_CANCELLED: :STATE_CANCELLED
+
+        def self?.values: -> ::Array[Cadenya::Models::ObjectiveListParams::state]
+      end
+    end
+  end
+end

@@ -1,0 +1,53 @@
+module Cadenya
+  class Client < Cadenya::Internal::Transport::BaseClient
+    DEFAULT_MAX_RETRIES: 2
+
+    DEFAULT_TIMEOUT_IN_SECONDS: Float
+
+    DEFAULT_INITIAL_RETRY_DELAY: Float
+
+    DEFAULT_MAX_RETRY_DELAY: Float
+
+    attr_reader api_key: String
+
+    attr_reader webhook_key: String?
+
+    attr_reader account: Cadenya::Resources::Account
+
+    attr_reader agents: Cadenya::Resources::Agents
+
+    attr_reader objectives: Cadenya::Resources::Objectives
+
+    attr_reader memory_layers: Cadenya::Resources::MemoryLayers
+
+    attr_reader uploads: Cadenya::Resources::Uploads
+
+    attr_reader models: Cadenya::Resources::Models
+
+    attr_reader search: Cadenya::Resources::Search
+
+    attr_reader tool_sets: Cadenya::Resources::ToolSets
+
+    attr_reader api_keys: Cadenya::Resources::APIKeys
+
+    attr_reader workspace_secrets: Cadenya::Resources::WorkspaceSecrets
+
+    attr_reader workspaces: Cadenya::Resources::Workspaces
+
+    attr_reader webhooks: Cadenya::Resources::Webhooks
+
+    attr_reader bulk_workspace_resources: Cadenya::Resources::BulkWorkspaceResources
+
+    private def auth_headers: -> ::Hash[String, String]
+
+    def initialize: (
+      ?api_key: String?,
+      ?webhook_key: String?,
+      ?base_url: String?,
+      ?max_retries: Integer,
+      ?timeout: Float,
+      ?initial_retry_delay: Float,
+      ?max_retry_delay: Float
+    ) -> void
+  end
+end

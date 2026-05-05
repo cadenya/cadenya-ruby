@@ -1,0 +1,55 @@
+module Cadenya
+  module Models
+    type model_set_status_params =
+      {
+        workspace_id: String,
+        id: String,
+        status: Cadenya::Models::ModelSetStatusParams::status
+      }
+      & Cadenya::Internal::Type::request_parameters
+
+    class ModelSetStatusParams < Cadenya::Internal::Type::BaseModel
+      extend Cadenya::Internal::Type::RequestParameters::Converter
+      include Cadenya::Internal::Type::RequestParameters
+
+      attr_accessor workspace_id: String
+
+      attr_accessor id: String
+
+      attr_reader status: Cadenya::Models::ModelSetStatusParams::status?
+
+      def status=: (
+        Cadenya::Models::ModelSetStatusParams::status
+      ) -> Cadenya::Models::ModelSetStatusParams::status
+
+      def initialize: (
+        workspace_id: String,
+        id: String,
+        ?status: Cadenya::Models::ModelSetStatusParams::status,
+        ?request_options: Cadenya::request_opts
+      ) -> void
+
+      def to_hash: -> {
+        workspace_id: String,
+        id: String,
+        status: Cadenya::Models::ModelSetStatusParams::status,
+        request_options: Cadenya::RequestOptions
+      }
+
+      type status =
+        :MODEL_STATUS_UNSPECIFIED
+        | :MODEL_STATUS_ENABLED
+        | :MODEL_STATUS_DISABLED
+
+      module Status
+        extend Cadenya::Internal::Type::Enum
+
+        MODEL_STATUS_UNSPECIFIED: :MODEL_STATUS_UNSPECIFIED
+        MODEL_STATUS_ENABLED: :MODEL_STATUS_ENABLED
+        MODEL_STATUS_DISABLED: :MODEL_STATUS_DISABLED
+
+        def self?.values: -> ::Array[Cadenya::Models::ModelSetStatusParams::status]
+      end
+    end
+  end
+end

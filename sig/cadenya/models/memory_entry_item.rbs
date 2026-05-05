@@ -1,0 +1,36 @@
+module Cadenya
+  module Models
+    type memory_entry_item =
+      { key: String, content: String, description: String, upload_id: String }
+
+    class MemoryEntryItem < Cadenya::Internal::Type::BaseModel
+      attr_accessor key: String
+
+      attr_reader content: String?
+
+      def content=: (String) -> String
+
+      attr_reader description: String?
+
+      def description=: (String) -> String
+
+      attr_reader upload_id: String?
+
+      def upload_id=: (String) -> String
+
+      def initialize: (
+        key: String,
+        ?content: String,
+        ?description: String,
+        ?upload_id: String
+      ) -> void
+
+      def to_hash: -> {
+        key: String,
+        content: String,
+        description: String,
+        upload_id: String
+      }
+    end
+  end
+end

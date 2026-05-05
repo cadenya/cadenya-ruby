@@ -1,0 +1,54 @@
+module Cadenya
+  module Models
+    module Objectives
+      type task_list_params =
+        {
+          workspace_id: String,
+          objective_id: String,
+          cursor: String,
+          limit: Integer,
+          sort_order: String
+        }
+        & Cadenya::Internal::Type::request_parameters
+
+      class TaskListParams < Cadenya::Internal::Type::BaseModel
+        extend Cadenya::Internal::Type::RequestParameters::Converter
+        include Cadenya::Internal::Type::RequestParameters
+
+        attr_accessor workspace_id: String
+
+        attr_accessor objective_id: String
+
+        attr_reader cursor: String?
+
+        def cursor=: (String) -> String
+
+        attr_reader limit: Integer?
+
+        def limit=: (Integer) -> Integer
+
+        attr_reader sort_order: String?
+
+        def sort_order=: (String) -> String
+
+        def initialize: (
+          workspace_id: String,
+          objective_id: String,
+          ?cursor: String,
+          ?limit: Integer,
+          ?sort_order: String,
+          ?request_options: Cadenya::request_opts
+        ) -> void
+
+        def to_hash: -> {
+          workspace_id: String,
+          objective_id: String,
+          cursor: String,
+          limit: Integer,
+          sort_order: String,
+          request_options: Cadenya::RequestOptions
+        }
+      end
+    end
+  end
+end

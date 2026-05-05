@@ -1,0 +1,41 @@
+module Cadenya
+  module Models
+    type tool_set_entry =
+      {
+        name: String,
+        spec: Cadenya::ToolSetSpec,
+        labels: ::Hash[Symbol, String],
+        tools: ::Hash[Symbol, Cadenya::ToolEntry]
+      }
+
+    class ToolSetEntry < Cadenya::Internal::Type::BaseModel
+      attr_accessor name: String
+
+      attr_accessor spec: Cadenya::ToolSetSpec
+
+      attr_reader labels: ::Hash[Symbol, String]?
+
+      def labels=: (::Hash[Symbol, String]) -> ::Hash[Symbol, String]
+
+      attr_reader tools: ::Hash[Symbol, Cadenya::ToolEntry]?
+
+      def tools=: (
+        ::Hash[Symbol, Cadenya::ToolEntry]
+      ) -> ::Hash[Symbol, Cadenya::ToolEntry]
+
+      def initialize: (
+        name: String,
+        spec: Cadenya::ToolSetSpec,
+        ?labels: ::Hash[Symbol, String],
+        ?tools: ::Hash[Symbol, Cadenya::ToolEntry]
+      ) -> void
+
+      def to_hash: -> {
+        name: String,
+        spec: Cadenya::ToolSetSpec,
+        labels: ::Hash[Symbol, String],
+        tools: ::Hash[Symbol, Cadenya::ToolEntry]
+      }
+    end
+  end
+end

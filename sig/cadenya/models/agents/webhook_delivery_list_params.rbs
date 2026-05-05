@@ -1,0 +1,100 @@
+module Cadenya
+  module Models
+    module Agents
+      type webhook_delivery_list_params =
+        {
+          workspace_id: String,
+          agent_id: String,
+          cursor: String,
+          event_type: Cadenya::Models::Agents::WebhookDeliveryListParams::event_type,
+          limit: Integer,
+          objective_id: String
+        }
+        & Cadenya::Internal::Type::request_parameters
+
+      class WebhookDeliveryListParams < Cadenya::Internal::Type::BaseModel
+        extend Cadenya::Internal::Type::RequestParameters::Converter
+        include Cadenya::Internal::Type::RequestParameters
+
+        attr_accessor workspace_id: String
+
+        attr_accessor agent_id: String
+
+        attr_reader cursor: String?
+
+        def cursor=: (String) -> String
+
+        attr_reader event_type: Cadenya::Models::Agents::WebhookDeliveryListParams::event_type?
+
+        def event_type=: (
+          Cadenya::Models::Agents::WebhookDeliveryListParams::event_type
+        ) -> Cadenya::Models::Agents::WebhookDeliveryListParams::event_type
+
+        attr_reader limit: Integer?
+
+        def limit=: (Integer) -> Integer
+
+        attr_reader objective_id: String?
+
+        def objective_id=: (String) -> String
+
+        def initialize: (
+          workspace_id: String,
+          agent_id: String,
+          ?cursor: String,
+          ?event_type: Cadenya::Models::Agents::WebhookDeliveryListParams::event_type,
+          ?limit: Integer,
+          ?objective_id: String,
+          ?request_options: Cadenya::request_opts
+        ) -> void
+
+        def to_hash: -> {
+          workspace_id: String,
+          agent_id: String,
+          cursor: String,
+          event_type: Cadenya::Models::Agents::WebhookDeliveryListParams::event_type,
+          limit: Integer,
+          objective_id: String,
+          request_options: Cadenya::RequestOptions
+        }
+
+        type event_type =
+          :OBJECTIVE_EVENT_TYPE_UNSPECIFIED
+          | :OBJECTIVE_EVENT_TYPE_USER_MESSAGE
+          | :OBJECTIVE_EVENT_TYPE_TOOL_APPROVAL_REQUESTED
+          | :OBJECTIVE_EVENT_TYPE_TOOL_APPROVED
+          | :OBJECTIVE_EVENT_TYPE_TOOL_DENIED
+          | :OBJECTIVE_EVENT_TYPE_TOOL_CALLED
+          | :OBJECTIVE_EVENT_TYPE_SUB_OBJECTIVE_CREATED
+          | :OBJECTIVE_EVENT_TYPE_ERROR
+          | :OBJECTIVE_EVENT_TYPE_ASSISTANT_MESSAGE
+          | :OBJECTIVE_EVENT_TYPE_TOOL_RESULT
+          | :OBJECTIVE_EVENT_TYPE_TOOL_ERROR
+          | :OBJECTIVE_EVENT_TYPE_CONTEXT_WINDOW_COMPACTED
+          | :OBJECTIVE_EVENT_TYPE_MEMORY_READ
+          | :OBJECTIVE_EVENT_TYPE_CANCELLED
+
+        module EventType
+          extend Cadenya::Internal::Type::Enum
+
+          OBJECTIVE_EVENT_TYPE_UNSPECIFIED: :OBJECTIVE_EVENT_TYPE_UNSPECIFIED
+          OBJECTIVE_EVENT_TYPE_USER_MESSAGE: :OBJECTIVE_EVENT_TYPE_USER_MESSAGE
+          OBJECTIVE_EVENT_TYPE_TOOL_APPROVAL_REQUESTED: :OBJECTIVE_EVENT_TYPE_TOOL_APPROVAL_REQUESTED
+          OBJECTIVE_EVENT_TYPE_TOOL_APPROVED: :OBJECTIVE_EVENT_TYPE_TOOL_APPROVED
+          OBJECTIVE_EVENT_TYPE_TOOL_DENIED: :OBJECTIVE_EVENT_TYPE_TOOL_DENIED
+          OBJECTIVE_EVENT_TYPE_TOOL_CALLED: :OBJECTIVE_EVENT_TYPE_TOOL_CALLED
+          OBJECTIVE_EVENT_TYPE_SUB_OBJECTIVE_CREATED: :OBJECTIVE_EVENT_TYPE_SUB_OBJECTIVE_CREATED
+          OBJECTIVE_EVENT_TYPE_ERROR: :OBJECTIVE_EVENT_TYPE_ERROR
+          OBJECTIVE_EVENT_TYPE_ASSISTANT_MESSAGE: :OBJECTIVE_EVENT_TYPE_ASSISTANT_MESSAGE
+          OBJECTIVE_EVENT_TYPE_TOOL_RESULT: :OBJECTIVE_EVENT_TYPE_TOOL_RESULT
+          OBJECTIVE_EVENT_TYPE_TOOL_ERROR: :OBJECTIVE_EVENT_TYPE_TOOL_ERROR
+          OBJECTIVE_EVENT_TYPE_CONTEXT_WINDOW_COMPACTED: :OBJECTIVE_EVENT_TYPE_CONTEXT_WINDOW_COMPACTED
+          OBJECTIVE_EVENT_TYPE_MEMORY_READ: :OBJECTIVE_EVENT_TYPE_MEMORY_READ
+          OBJECTIVE_EVENT_TYPE_CANCELLED: :OBJECTIVE_EVENT_TYPE_CANCELLED
+
+          def self?.values: -> ::Array[Cadenya::Models::Agents::WebhookDeliveryListParams::event_type]
+        end
+      end
+    end
+  end
+end

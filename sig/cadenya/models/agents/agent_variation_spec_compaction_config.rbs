@@ -1,0 +1,44 @@
+module Cadenya
+  module Models
+    class AgentVariationSpecCompactionConfig = Agents::AgentVariationSpecCompactionConfig
+
+    module Agents
+      type agent_variation_spec_compaction_config =
+        {
+          summarization: Cadenya::Agents::CompactionConfigSummarizationStrategy,
+          tool_result_clearing: Cadenya::Agents::CompactionConfigToolResultClearingStrategy,
+          trigger_threshold: Float
+        }
+
+      class AgentVariationSpecCompactionConfig < Cadenya::Internal::Type::BaseModel
+        attr_reader summarization: Cadenya::Agents::CompactionConfigSummarizationStrategy?
+
+        def summarization=: (
+          Cadenya::Agents::CompactionConfigSummarizationStrategy
+        ) -> Cadenya::Agents::CompactionConfigSummarizationStrategy
+
+        attr_reader tool_result_clearing: Cadenya::Agents::CompactionConfigToolResultClearingStrategy?
+
+        def tool_result_clearing=: (
+          Cadenya::Agents::CompactionConfigToolResultClearingStrategy
+        ) -> Cadenya::Agents::CompactionConfigToolResultClearingStrategy
+
+        attr_reader trigger_threshold: Float?
+
+        def trigger_threshold=: (Float) -> Float
+
+        def initialize: (
+          ?summarization: Cadenya::Agents::CompactionConfigSummarizationStrategy,
+          ?tool_result_clearing: Cadenya::Agents::CompactionConfigToolResultClearingStrategy,
+          ?trigger_threshold: Float
+        ) -> void
+
+        def to_hash: -> {
+          summarization: Cadenya::Agents::CompactionConfigSummarizationStrategy,
+          tool_result_clearing: Cadenya::Agents::CompactionConfigToolResultClearingStrategy,
+          trigger_threshold: Float
+        }
+      end
+    end
+  end
+end

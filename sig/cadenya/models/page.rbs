@@ -1,0 +1,19 @@
+module Cadenya
+  module Models
+    type page = { next_cursor: String, total: Integer }
+
+    class Page < Cadenya::Internal::Type::BaseModel
+      attr_reader next_cursor: String?
+
+      def next_cursor=: (String) -> String
+
+      attr_reader total: Integer?
+
+      def total=: (Integer) -> Integer
+
+      def initialize: (?next_cursor: String, ?total: Integer) -> void
+
+      def to_hash: -> { next_cursor: String, total: Integer }
+    end
+  end
+end

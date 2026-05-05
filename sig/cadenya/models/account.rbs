@@ -1,0 +1,30 @@
+module Cadenya
+  module Models
+    type account_api =
+      {
+        info: Cadenya::AccountInfo,
+        metadata: Cadenya::AccountResourceMetadata,
+        spec: Cadenya::AccountSpec
+      }
+
+    class AccountAPI < Cadenya::Internal::Type::BaseModel
+      attr_accessor info: Cadenya::AccountInfo
+
+      attr_accessor metadata: Cadenya::AccountResourceMetadata
+
+      attr_accessor spec: Cadenya::AccountSpec
+
+      def initialize: (
+        info: Cadenya::AccountInfo,
+        metadata: Cadenya::AccountResourceMetadata,
+        spec: Cadenya::AccountSpec
+      ) -> void
+
+      def to_hash: -> {
+        info: Cadenya::AccountInfo,
+        metadata: Cadenya::AccountResourceMetadata,
+        spec: Cadenya::AccountSpec
+      }
+    end
+  end
+end

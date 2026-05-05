@@ -1,0 +1,39 @@
+module Cadenya
+  module Models
+    type bulk_workspace_apply =
+      {
+        data: Cadenya::BulkWorkspaceApplyData,
+        metadata: Cadenya::OperationMetadata,
+        status: Cadenya::BulkWorkspaceApplyStatus,
+        info: Cadenya::BulkWorkspaceApplyInfo
+      }
+
+    class BulkWorkspaceApply < Cadenya::Internal::Type::BaseModel
+      attr_accessor data: Cadenya::BulkWorkspaceApplyData
+
+      attr_accessor metadata: Cadenya::OperationMetadata
+
+      attr_accessor status: Cadenya::BulkWorkspaceApplyStatus
+
+      attr_reader info: Cadenya::BulkWorkspaceApplyInfo?
+
+      def info=: (
+        Cadenya::BulkWorkspaceApplyInfo
+      ) -> Cadenya::BulkWorkspaceApplyInfo
+
+      def initialize: (
+        data: Cadenya::BulkWorkspaceApplyData,
+        metadata: Cadenya::OperationMetadata,
+        status: Cadenya::BulkWorkspaceApplyStatus,
+        ?info: Cadenya::BulkWorkspaceApplyInfo
+      ) -> void
+
+      def to_hash: -> {
+        data: Cadenya::BulkWorkspaceApplyData,
+        metadata: Cadenya::OperationMetadata,
+        status: Cadenya::BulkWorkspaceApplyStatus,
+        info: Cadenya::BulkWorkspaceApplyInfo
+      }
+    end
+  end
+end

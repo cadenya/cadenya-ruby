@@ -1,0 +1,119 @@
+module Cadenya
+  module Models
+    module BulkWorkspaceResources
+      type bulk_workspace_apply_result_data_memory_entry_outcome =
+        {
+          action: Cadenya::Models::BulkWorkspaceResources::BulkWorkspaceApplyResultDataMemoryEntryOutcome::action,
+          error: Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultDataMemoryEntryOutcome::Error,
+          external_id: String,
+          resource: Cadenya::MemoryLayers::MemoryEntry
+        }
+
+      class BulkWorkspaceApplyResultDataMemoryEntryOutcome < Cadenya::Internal::Type::BaseModel
+        attr_reader action: Cadenya::Models::BulkWorkspaceResources::BulkWorkspaceApplyResultDataMemoryEntryOutcome::action?
+
+        def action=: (
+          Cadenya::Models::BulkWorkspaceResources::BulkWorkspaceApplyResultDataMemoryEntryOutcome::action
+        ) -> Cadenya::Models::BulkWorkspaceResources::BulkWorkspaceApplyResultDataMemoryEntryOutcome::action
+
+        attr_reader error: Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultDataMemoryEntryOutcome::Error?
+
+        def error=: (
+          Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultDataMemoryEntryOutcome::Error
+        ) -> Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultDataMemoryEntryOutcome::Error
+
+        attr_reader external_id: String?
+
+        def external_id=: (String) -> String
+
+        attr_reader resource: Cadenya::MemoryLayers::MemoryEntry?
+
+        def resource=: (
+          Cadenya::MemoryLayers::MemoryEntry
+        ) -> Cadenya::MemoryLayers::MemoryEntry
+
+        def initialize: (
+          ?action: Cadenya::Models::BulkWorkspaceResources::BulkWorkspaceApplyResultDataMemoryEntryOutcome::action,
+          ?error: Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultDataMemoryEntryOutcome::Error,
+          ?external_id: String,
+          ?resource: Cadenya::MemoryLayers::MemoryEntry
+        ) -> void
+
+        def to_hash: -> {
+          action: Cadenya::Models::BulkWorkspaceResources::BulkWorkspaceApplyResultDataMemoryEntryOutcome::action,
+          error: Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultDataMemoryEntryOutcome::Error,
+          external_id: String,
+          resource: Cadenya::MemoryLayers::MemoryEntry
+        }
+
+        type action =
+          :ACTION_UNSPECIFIED
+          | :ACTION_CREATED
+          | :ACTION_UPDATED
+          | :ACTION_UNCHANGED
+          | :ACTION_DELETED
+          | :ACTION_FAILED
+
+        module Action
+          extend Cadenya::Internal::Type::Enum
+
+          ACTION_UNSPECIFIED: :ACTION_UNSPECIFIED
+          ACTION_CREATED: :ACTION_CREATED
+          ACTION_UPDATED: :ACTION_UPDATED
+          ACTION_UNCHANGED: :ACTION_UNCHANGED
+          ACTION_DELETED: :ACTION_DELETED
+          ACTION_FAILED: :ACTION_FAILED
+
+          def self?.values: -> ::Array[Cadenya::Models::BulkWorkspaceResources::BulkWorkspaceApplyResultDataMemoryEntryOutcome::action]
+        end
+
+        type error =
+          {
+            code: Integer,
+            details: ::Array[Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultDataMemoryEntryOutcome::Error::Detail],
+            message: String
+          }
+
+        class Error < Cadenya::Internal::Type::BaseModel
+          attr_reader code: Integer?
+
+          def code=: (Integer) -> Integer
+
+          attr_reader details: ::Array[Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultDataMemoryEntryOutcome::Error::Detail]?
+
+          def details=: (
+            ::Array[Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultDataMemoryEntryOutcome::Error::Detail]
+          ) -> ::Array[Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultDataMemoryEntryOutcome::Error::Detail]
+
+          attr_reader message: String?
+
+          def message=: (String) -> String
+
+          def initialize: (
+            ?code: Integer,
+            ?details: ::Array[Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultDataMemoryEntryOutcome::Error::Detail],
+            ?message: String
+          ) -> void
+
+          def to_hash: -> {
+            code: Integer,
+            details: ::Array[Cadenya::BulkWorkspaceResources::BulkWorkspaceApplyResultDataMemoryEntryOutcome::Error::Detail],
+            message: String
+          }
+
+          type detail = { type: String }
+
+          class Detail < Cadenya::Internal::Type::BaseModel
+            attr_reader type: String?
+
+            def type=: (String) -> String
+
+            def initialize: (?type: String) -> void
+
+            def to_hash: -> { type: String }
+          end
+        end
+      end
+    end
+  end
+end

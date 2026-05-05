@@ -1,0 +1,15 @@
+module Cadenya
+  module Models
+    type account_rotate_webhook_signing_key_params =
+      {  } & Cadenya::Internal::Type::request_parameters
+
+    class AccountRotateWebhookSigningKeyParams < Cadenya::Internal::Type::BaseModel
+      extend Cadenya::Internal::Type::RequestParameters::Converter
+      include Cadenya::Internal::Type::RequestParameters
+
+      def initialize: (?request_options: Cadenya::request_opts) -> void
+
+      def to_hash: -> { request_options: Cadenya::RequestOptions }
+    end
+  end
+end

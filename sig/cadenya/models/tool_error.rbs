@@ -1,0 +1,19 @@
+module Cadenya
+  module Models
+    type tool_error = { message: String, tool_call_id: String }
+
+    class ToolError < Cadenya::Internal::Type::BaseModel
+      attr_reader message: String?
+
+      def message=: (String) -> String
+
+      attr_reader tool_call_id: String?
+
+      def tool_call_id=: (String) -> String
+
+      def initialize: (?message: String, ?tool_call_id: String) -> void
+
+      def to_hash: -> { message: String, tool_call_id: String }
+    end
+  end
+end

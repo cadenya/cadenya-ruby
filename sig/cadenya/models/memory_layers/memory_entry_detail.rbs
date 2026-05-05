@@ -1,0 +1,41 @@
+module Cadenya
+  module Models
+    module MemoryLayers
+      type memory_entry_detail =
+        {
+          content: String,
+          metadata: Cadenya::ResourceMetadata,
+          spec: Cadenya::MemoryLayers::MemoryEntrySpec,
+          info: Cadenya::MemoryLayers::MemoryEntryInfo
+        }
+
+      class MemoryEntryDetail < Cadenya::Internal::Type::BaseModel
+        attr_accessor content: String
+
+        attr_accessor metadata: Cadenya::ResourceMetadata
+
+        attr_accessor spec: Cadenya::MemoryLayers::MemoryEntrySpec
+
+        attr_reader info: Cadenya::MemoryLayers::MemoryEntryInfo?
+
+        def info=: (
+          Cadenya::MemoryLayers::MemoryEntryInfo
+        ) -> Cadenya::MemoryLayers::MemoryEntryInfo
+
+        def initialize: (
+          content: String,
+          metadata: Cadenya::ResourceMetadata,
+          spec: Cadenya::MemoryLayers::MemoryEntrySpec,
+          ?info: Cadenya::MemoryLayers::MemoryEntryInfo
+        ) -> void
+
+        def to_hash: -> {
+          content: String,
+          metadata: Cadenya::ResourceMetadata,
+          spec: Cadenya::MemoryLayers::MemoryEntrySpec,
+          info: Cadenya::MemoryLayers::MemoryEntryInfo
+        }
+      end
+    end
+  end
+end

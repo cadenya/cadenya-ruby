@@ -1,0 +1,90 @@
+module Cadenya
+  module Models
+    class AgentVariationSpec = Agents::AgentVariationSpec
+
+    module Agents
+      type agent_variation_spec =
+        {
+          compaction_config: Cadenya::Agents::AgentVariationSpecCompactionConfig,
+          constraints: Cadenya::Agents::AgentVariationSpecConstraints,
+          description: String,
+          enable_episodic_memory: bool,
+          episodic_memory_ttl: Integer,
+          model_config: Cadenya::Agents::AgentVariationSpecModelConfig,
+          progressive_discovery: Cadenya::Agents::AgentVariationSpecProgressiveDiscovery,
+          prompt: String,
+          weight: Integer
+        }
+
+      class AgentVariationSpec < Cadenya::Internal::Type::BaseModel
+        attr_reader compaction_config: Cadenya::Agents::AgentVariationSpecCompactionConfig?
+
+        def compaction_config=: (
+          Cadenya::Agents::AgentVariationSpecCompactionConfig
+        ) -> Cadenya::Agents::AgentVariationSpecCompactionConfig
+
+        attr_reader constraints: Cadenya::Agents::AgentVariationSpecConstraints?
+
+        def constraints=: (
+          Cadenya::Agents::AgentVariationSpecConstraints
+        ) -> Cadenya::Agents::AgentVariationSpecConstraints
+
+        attr_reader description: String?
+
+        def description=: (String) -> String
+
+        attr_reader enable_episodic_memory: bool?
+
+        def enable_episodic_memory=: (bool) -> bool
+
+        attr_reader episodic_memory_ttl: Integer?
+
+        def episodic_memory_ttl=: (Integer) -> Integer
+
+        attr_reader model_config: Cadenya::Agents::AgentVariationSpecModelConfig?
+
+        def model_config=: (
+          Cadenya::Agents::AgentVariationSpecModelConfig
+        ) -> Cadenya::Agents::AgentVariationSpecModelConfig
+
+        attr_reader progressive_discovery: Cadenya::Agents::AgentVariationSpecProgressiveDiscovery?
+
+        def progressive_discovery=: (
+          Cadenya::Agents::AgentVariationSpecProgressiveDiscovery
+        ) -> Cadenya::Agents::AgentVariationSpecProgressiveDiscovery
+
+        attr_reader prompt: String?
+
+        def prompt=: (String) -> String
+
+        attr_reader weight: Integer?
+
+        def weight=: (Integer) -> Integer
+
+        def initialize: (
+          ?compaction_config: Cadenya::Agents::AgentVariationSpecCompactionConfig,
+          ?constraints: Cadenya::Agents::AgentVariationSpecConstraints,
+          ?description: String,
+          ?enable_episodic_memory: bool,
+          ?episodic_memory_ttl: Integer,
+          ?model_config: Cadenya::Agents::AgentVariationSpecModelConfig,
+          ?progressive_discovery: Cadenya::Agents::AgentVariationSpecProgressiveDiscovery,
+          ?prompt: String,
+          ?weight: Integer
+        ) -> void
+
+        def to_hash: -> {
+          compaction_config: Cadenya::Agents::AgentVariationSpecCompactionConfig,
+          constraints: Cadenya::Agents::AgentVariationSpecConstraints,
+          description: String,
+          enable_episodic_memory: bool,
+          episodic_memory_ttl: Integer,
+          model_config: Cadenya::Agents::AgentVariationSpecModelConfig,
+          progressive_discovery: Cadenya::Agents::AgentVariationSpecProgressiveDiscovery,
+          prompt: String,
+          weight: Integer
+        }
+      end
+    end
+  end
+end

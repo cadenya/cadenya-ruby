@@ -1,0 +1,138 @@
+module Cadenya
+  module Models
+    type mcp_tool_filter =
+      {
+        operator: Cadenya::Models::McpToolFilter::operator,
+        filters: ::Array[Cadenya::McpToolFilter::Filter]
+      }
+
+    class McpToolFilter < Cadenya::Internal::Type::BaseModel
+      attr_accessor operator: Cadenya::Models::McpToolFilter::operator
+
+      attr_reader filters: ::Array[Cadenya::McpToolFilter::Filter]?
+
+      def filters=: (
+        ::Array[Cadenya::McpToolFilter::Filter]
+      ) -> ::Array[Cadenya::McpToolFilter::Filter]
+
+      def initialize: (
+        operator: Cadenya::Models::McpToolFilter::operator,
+        ?filters: ::Array[Cadenya::McpToolFilter::Filter]
+      ) -> void
+
+      def to_hash: -> {
+        operator: Cadenya::Models::McpToolFilter::operator,
+        filters: ::Array[Cadenya::McpToolFilter::Filter]
+      }
+
+      type operator = :OPERATOR_UNSPECIFIED | :OPERATOR_AND | :OPERATOR_OR
+
+      module Operator
+        extend Cadenya::Internal::Type::Enum
+
+        OPERATOR_UNSPECIFIED: :OPERATOR_UNSPECIFIED
+        OPERATOR_AND: :OPERATOR_AND
+        OPERATOR_OR: :OPERATOR_OR
+
+        def self?.values: -> ::Array[Cadenya::Models::McpToolFilter::operator]
+      end
+
+      type filter =
+        {
+          attribute: Cadenya::Models::McpToolFilter::Filter::attribute,
+          matcher: Cadenya::McpToolFilter::Filter::Matcher
+        }
+
+      class Filter < Cadenya::Internal::Type::BaseModel
+        attr_accessor attribute: Cadenya::Models::McpToolFilter::Filter::attribute
+
+        attr_reader matcher: Cadenya::McpToolFilter::Filter::Matcher?
+
+        def matcher=: (
+          Cadenya::McpToolFilter::Filter::Matcher
+        ) -> Cadenya::McpToolFilter::Filter::Matcher
+
+        def initialize: (
+          attribute: Cadenya::Models::McpToolFilter::Filter::attribute,
+          ?matcher: Cadenya::McpToolFilter::Filter::Matcher
+        ) -> void
+
+        def to_hash: -> {
+          attribute: Cadenya::Models::McpToolFilter::Filter::attribute,
+          matcher: Cadenya::McpToolFilter::Filter::Matcher
+        }
+
+        type attribute =
+          :ATTRIBUTE_UNSPECIFIED
+          | :ATTRIBUTE_NAME
+          | :ATTRIBUTE_TITLE
+          | :ATTRIBUTE_DESCRIPTION
+
+        module Attribute
+          extend Cadenya::Internal::Type::Enum
+
+          ATTRIBUTE_UNSPECIFIED: :ATTRIBUTE_UNSPECIFIED
+          ATTRIBUTE_NAME: :ATTRIBUTE_NAME
+          ATTRIBUTE_TITLE: :ATTRIBUTE_TITLE
+          ATTRIBUTE_DESCRIPTION: :ATTRIBUTE_DESCRIPTION
+
+          def self?.values: -> ::Array[Cadenya::Models::McpToolFilter::Filter::attribute]
+        end
+
+        type matcher =
+          {
+            case_sensitive: bool,
+            contains: String,
+            ends_with: String,
+            exact: String,
+            regex: String,
+            starts_with: String
+          }
+
+        class Matcher < Cadenya::Internal::Type::BaseModel
+          attr_reader case_sensitive: bool?
+
+          def case_sensitive=: (bool) -> bool
+
+          attr_reader contains: String?
+
+          def contains=: (String) -> String
+
+          attr_reader ends_with: String?
+
+          def ends_with=: (String) -> String
+
+          attr_reader exact: String?
+
+          def exact=: (String) -> String
+
+          attr_reader regex: String?
+
+          def regex=: (String) -> String
+
+          attr_reader starts_with: String?
+
+          def starts_with=: (String) -> String
+
+          def initialize: (
+            ?case_sensitive: bool,
+            ?contains: String,
+            ?ends_with: String,
+            ?exact: String,
+            ?regex: String,
+            ?starts_with: String
+          ) -> void
+
+          def to_hash: -> {
+            case_sensitive: bool,
+            contains: String,
+            ends_with: String,
+            exact: String,
+            regex: String,
+            starts_with: String
+          }
+        end
+      end
+    end
+  end
+end
