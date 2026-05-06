@@ -43,13 +43,13 @@ If you’d like to use the repository from source, you can either install from g
 To install via git in your `Gemfile`:
 
 ```ruby
-gem "cadenya", git: "https://github.com/stainless-sdks/cadenya-ruby"
+gem "cadenya", git: "https://github.com/cadenya/cadenya-ruby"
 ```
 
 Alternatively, reference local copy of the repo:
 
 ```bash
-$ git clone -- 'https://github.com/stainless-sdks/cadenya-ruby' '<path-to-repo>'
+$ git clone -- 'https://github.com/cadenya/cadenya-ruby' '<path-to-repo>'
 ```
 
 ```ruby
