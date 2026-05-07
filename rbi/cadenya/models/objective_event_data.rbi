@@ -50,13 +50,17 @@ module Cadenya
       sig { params(memory_read: Cadenya::MemoryRead::OrHash).void }
       attr_writer :memory_read
 
-      sig { returns(T.nilable(Cadenya::SubObjectiveCreated)) }
-      attr_reader :sub_objective_created
+      sig { returns(T.nilable(Cadenya::SubAgentSpawned)) }
+      attr_reader :sub_agent_spawned
 
-      sig do
-        params(sub_objective_created: Cadenya::SubObjectiveCreated::OrHash).void
-      end
-      attr_writer :sub_objective_created
+      sig { params(sub_agent_spawned: Cadenya::SubAgentSpawned::OrHash).void }
+      attr_writer :sub_agent_spawned
+
+      sig { returns(T.nilable(Cadenya::SubAgentUpdated)) }
+      attr_reader :sub_agent_updated
+
+      sig { params(sub_agent_updated: Cadenya::SubAgentUpdated::OrHash).void }
+      attr_writer :sub_agent_updated
 
       sig { returns(T.nilable(Cadenya::ToolApprovalRequested)) }
       attr_reader :tool_approval_requested
@@ -117,7 +121,8 @@ module Cadenya
           context_window_compacted: Cadenya::ContextWindowCompacted::OrHash,
           error: Cadenya::ObjectiveError::OrHash,
           memory_read: Cadenya::MemoryRead::OrHash,
-          sub_objective_created: Cadenya::SubObjectiveCreated::OrHash,
+          sub_agent_spawned: Cadenya::SubAgentSpawned::OrHash,
+          sub_agent_updated: Cadenya::SubAgentUpdated::OrHash,
           tool_approval_requested: Cadenya::ToolApprovalRequested::OrHash,
           tool_approved: Cadenya::ToolApproved::OrHash,
           tool_called: Cadenya::ToolCalled::OrHash,
@@ -140,7 +145,8 @@ module Cadenya
         # stack and loads an entry. Lookups that miss (key not found in any layer) do not
         # emit this event.
         memory_read: nil,
-        sub_objective_created: nil,
+        sub_agent_spawned: nil,
+        sub_agent_updated: nil,
         tool_approval_requested: nil,
         tool_approved: nil,
         tool_called: nil,
@@ -160,7 +166,8 @@ module Cadenya
             context_window_compacted: Cadenya::ContextWindowCompacted,
             error: Cadenya::ObjectiveError,
             memory_read: Cadenya::MemoryRead,
-            sub_objective_created: Cadenya::SubObjectiveCreated,
+            sub_agent_spawned: Cadenya::SubAgentSpawned,
+            sub_agent_updated: Cadenya::SubAgentUpdated,
             tool_approval_requested: Cadenya::ToolApprovalRequested,
             tool_approved: Cadenya::ToolApproved,
             tool_called: Cadenya::ToolCalled,

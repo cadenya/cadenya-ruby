@@ -36,10 +36,15 @@ module Cadenya
       #   @return [Cadenya::Models::MemoryRead, nil]
       optional :memory_read, -> { Cadenya::MemoryRead }, api_name: :memoryRead
 
-      # @!attribute sub_objective_created
+      # @!attribute sub_agent_spawned
       #
-      #   @return [Cadenya::Models::SubObjectiveCreated, nil]
-      optional :sub_objective_created, -> { Cadenya::SubObjectiveCreated }, api_name: :subObjectiveCreated
+      #   @return [Cadenya::Models::SubAgentSpawned, nil]
+      optional :sub_agent_spawned, -> { Cadenya::SubAgentSpawned }, api_name: :subAgentSpawned
+
+      # @!attribute sub_agent_updated
+      #
+      #   @return [Cadenya::Models::SubAgentUpdated, nil]
+      optional :sub_agent_updated, -> { Cadenya::SubAgentUpdated }, api_name: :subAgentUpdated
 
       # @!attribute tool_approval_requested
       #
@@ -85,7 +90,7 @@ module Cadenya
       #   @return [Cadenya::Models::UserMessage, nil]
       optional :user_message, -> { Cadenya::UserMessage }, api_name: :userMessage
 
-      # @!method initialize(assistant_message: nil, cancelled: nil, context_window_compacted: nil, error: nil, memory_read: nil, sub_objective_created: nil, tool_approval_requested: nil, tool_approved: nil, tool_called: nil, tool_denied: nil, tool_error: nil, tool_result: nil, type: nil, user_message: nil)
+      # @!method initialize(assistant_message: nil, cancelled: nil, context_window_compacted: nil, error: nil, memory_read: nil, sub_agent_spawned: nil, sub_agent_updated: nil, tool_approval_requested: nil, tool_approved: nil, tool_called: nil, tool_denied: nil, tool_error: nil, tool_result: nil, type: nil, user_message: nil)
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::ObjectiveEventData} for more details.
       #
@@ -99,7 +104,9 @@ module Cadenya
       #
       #   @param memory_read [Cadenya::Models::MemoryRead] MemoryRead is emitted each time the agent resolves a key against the
       #
-      #   @param sub_objective_created [Cadenya::Models::SubObjectiveCreated]
+      #   @param sub_agent_spawned [Cadenya::Models::SubAgentSpawned]
+      #
+      #   @param sub_agent_updated [Cadenya::Models::SubAgentUpdated]
       #
       #   @param tool_approval_requested [Cadenya::Models::ToolApprovalRequested]
       #
