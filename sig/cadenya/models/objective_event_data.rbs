@@ -7,7 +7,8 @@ module Cadenya
         context_window_compacted: Cadenya::ContextWindowCompacted,
         error: Cadenya::ObjectiveError,
         memory_read: Cadenya::MemoryRead,
-        sub_objective_created: Cadenya::SubObjectiveCreated,
+        sub_agent_spawned: Cadenya::SubAgentSpawned,
+        sub_agent_updated: Cadenya::SubAgentUpdated,
         tool_approval_requested: Cadenya::ToolApprovalRequested,
         tool_approved: Cadenya::ToolApproved,
         tool_called: Cadenya::ToolCalled,
@@ -45,11 +46,17 @@ module Cadenya
 
       def memory_read=: (Cadenya::MemoryRead) -> Cadenya::MemoryRead
 
-      attr_reader sub_objective_created: Cadenya::SubObjectiveCreated?
+      attr_reader sub_agent_spawned: Cadenya::SubAgentSpawned?
 
-      def sub_objective_created=: (
-        Cadenya::SubObjectiveCreated
-      ) -> Cadenya::SubObjectiveCreated
+      def sub_agent_spawned=: (
+        Cadenya::SubAgentSpawned
+      ) -> Cadenya::SubAgentSpawned
+
+      attr_reader sub_agent_updated: Cadenya::SubAgentUpdated?
+
+      def sub_agent_updated=: (
+        Cadenya::SubAgentUpdated
+      ) -> Cadenya::SubAgentUpdated
 
       attr_reader tool_approval_requested: Cadenya::ToolApprovalRequested?
 
@@ -91,7 +98,8 @@ module Cadenya
         ?context_window_compacted: Cadenya::ContextWindowCompacted,
         ?error: Cadenya::ObjectiveError,
         ?memory_read: Cadenya::MemoryRead,
-        ?sub_objective_created: Cadenya::SubObjectiveCreated,
+        ?sub_agent_spawned: Cadenya::SubAgentSpawned,
+        ?sub_agent_updated: Cadenya::SubAgentUpdated,
         ?tool_approval_requested: Cadenya::ToolApprovalRequested,
         ?tool_approved: Cadenya::ToolApproved,
         ?tool_called: Cadenya::ToolCalled,
@@ -108,7 +116,8 @@ module Cadenya
         context_window_compacted: Cadenya::ContextWindowCompacted,
         error: Cadenya::ObjectiveError,
         memory_read: Cadenya::MemoryRead,
-        sub_objective_created: Cadenya::SubObjectiveCreated,
+        sub_agent_spawned: Cadenya::SubAgentSpawned,
+        sub_agent_updated: Cadenya::SubAgentUpdated,
         tool_approval_requested: Cadenya::ToolApprovalRequested,
         tool_approved: Cadenya::ToolApproved,
         tool_called: Cadenya::ToolCalled,

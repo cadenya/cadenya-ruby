@@ -177,7 +177,9 @@ module Cadenya
 
   class SearchSearchToolsOrToolSetsParams = Cadenya::Models::SearchSearchToolsOrToolSetsParams
 
-  class SubObjectiveCreated = Cadenya::Models::SubObjectiveCreated
+  class SubAgentSpawned = Cadenya::Models::SubAgentSpawned
+
+  class SubAgentUpdated = Cadenya::Models::SubAgentUpdated
 
   class SyncCompleted = Cadenya::Models::SyncCompleted
 

@@ -1,0 +1,66 @@
+module Cadenya
+  module Models
+    type sub_agent_updated =
+      {
+        agent: Cadenya::BareMetadata,
+        message: String,
+        objective: Cadenya::BareMetadata,
+        status: Cadenya::Models::SubAgentUpdated::status
+      }
+
+    class SubAgentUpdated < Cadenya::Internal::Type::BaseModel
+      attr_reader agent: Cadenya::BareMetadata?
+
+      def agent=: (Cadenya::BareMetadata) -> Cadenya::BareMetadata
+
+      attr_reader message: String?
+
+      def message=: (String) -> String
+
+      attr_reader objective: Cadenya::BareMetadata?
+
+      def objective=: (Cadenya::BareMetadata) -> Cadenya::BareMetadata
+
+      attr_reader status: Cadenya::Models::SubAgentUpdated::status?
+
+      def status=: (
+        Cadenya::Models::SubAgentUpdated::status
+      ) -> Cadenya::Models::SubAgentUpdated::status
+
+      def initialize: (
+        ?agent: Cadenya::BareMetadata,
+        ?message: String,
+        ?objective: Cadenya::BareMetadata,
+        ?status: Cadenya::Models::SubAgentUpdated::status
+      ) -> void
+
+      def to_hash: -> {
+        agent: Cadenya::BareMetadata,
+        message: String,
+        objective: Cadenya::BareMetadata,
+        status: Cadenya::Models::SubAgentUpdated::status
+      }
+
+      type status =
+        :STATUS_UNSPECIFIED
+        | :STATUS_PENDING
+        | :STATUS_RUNNING
+        | :STATUS_COMPLETED
+        | :STATUS_FAILED
+        | :STATUS_CANCELLED
+
+      module Status
+        extend Cadenya::Internal::Type::Enum
+
+        STATUS_UNSPECIFIED: :STATUS_UNSPECIFIED
+        STATUS_PENDING: :STATUS_PENDING
+        STATUS_RUNNING: :STATUS_RUNNING
+        STATUS_COMPLETED: :STATUS_COMPLETED
+        STATUS_FAILED: :STATUS_FAILED
+        STATUS_CANCELLED: :STATUS_CANCELLED
+
+        def self?.values: -> ::Array[Cadenya::Models::SubAgentUpdated::status]
+      end
+    end
+  end
+end
