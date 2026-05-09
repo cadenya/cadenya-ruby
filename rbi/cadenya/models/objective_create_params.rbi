@@ -26,7 +26,7 @@ module Cadenya
       # CreateOperationMetadata contains the user-provided fields for creating an
       # operation. Read-only fields (id, account_id, workspace_id, created_at,
       # profile_id) are excluded since they are set by the server.
-      sig { returns(Cadenya::CreateOperationMetadata) }
+      sig { returns(T.nilable(Cadenya::CreateOperationMetadata)) }
       attr_reader :metadata
 
       sig { params(metadata: Cadenya::CreateOperationMetadata::OrHash).void }
@@ -57,7 +57,7 @@ module Cadenya
         # CreateOperationMetadata contains the user-provided fields for creating an
         # operation. Read-only fields (id, account_id, workspace_id, created_at,
         # profile_id) are excluded since they are set by the server.
-        metadata:,
+        metadata: nil,
         # Optional explicit variation selection. Overrides the agent's
         # variation_selection_mode.
         variation_id: nil,
