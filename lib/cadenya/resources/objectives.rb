@@ -20,7 +20,7 @@ module Cadenya
       #
       # Creates a new objective in the workspace
       #
-      # @overload create(workspace_id, agent_id:, data:, metadata:, variation_id: nil, request_options: {})
+      # @overload create(workspace_id, agent_id:, data:, metadata: nil, variation_id: nil, request_options: {})
       #
       # @param workspace_id [String]
       #

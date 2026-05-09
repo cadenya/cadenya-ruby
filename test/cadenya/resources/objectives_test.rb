@@ -6,7 +6,7 @@ class Cadenya::Test::Resources::ObjectivesTest < Cadenya::Test::ResourceTest
   def test_create_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.objectives.create("workspaceId", agent_id: "agentId", data: {}, metadata: {})
+    response = @cadenya.objectives.create("workspaceId", agent_id: "agentId", data: {})
 
     assert_pattern do
       response => Cadenya::Objective
