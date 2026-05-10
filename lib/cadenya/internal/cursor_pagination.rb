@@ -94,7 +94,7 @@ module Cadenya
         # @!attribute next_cursor
         #
         #   @return [String, nil]
-        optional :next_cursor, String
+        optional :next_cursor, String, api_name: :nextCursor
 
         # @!method initialize(next_cursor: nil)
         #   @param next_cursor [String]
