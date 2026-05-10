@@ -269,7 +269,7 @@ module Cadenya
 
       # Lists all events for an objective
       #
-      # @overload list_events(objective_id, workspace_id:, cursor: nil, include_info: nil, limit: nil, sort_order: nil, window_id: nil, request_options: {})
+      # @overload list_events(objective_id, workspace_id:, cursor: nil, include_info: nil, limit: nil, since_event_id: nil, sort_order: nil, window_id: nil, request_options: {})
       #
       # @param objective_id [String] Path param: Objective ID for filtering
       #
@@ -280,6 +280,8 @@ module Cadenya
       # @param include_info [Boolean] Query param: When set to true you may use more of your alloted API rate-limit
       #
       # @param limit [Integer] Query param: Maximum number of results to return
+      #
+      # @param since_event_id [String] Query param: Optional string to fetch events since an ID
       #
       # @param sort_order [String] Query param: Sort order for results (asc or desc by creation time)
       #
@@ -302,6 +304,7 @@ module Cadenya
           path: ["v1/workspaces/%1$s/objectives/%2$s/events", workspace_id, objective_id],
           query: query.transform_keys(
             include_info: "includeInfo",
+            since_event_id: "sinceEventId",
             sort_order: "sortOrder",
             window_id: "windowId"
           ),

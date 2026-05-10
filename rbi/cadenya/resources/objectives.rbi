@@ -207,6 +207,7 @@ module Cadenya
           cursor: String,
           include_info: T::Boolean,
           limit: Integer,
+          since_event_id: String,
           sort_order: String,
           window_id: String,
           request_options: Cadenya::RequestOptions::OrHash
@@ -227,6 +228,8 @@ module Cadenya
         include_info: nil,
         # Query param: Maximum number of results to return
         limit: nil,
+        # Query param: Optional string to fetch events since an ID
+        since_event_id: nil,
         # Query param: Sort order for results (asc or desc by creation time)
         sort_order: nil,
         # Query param: Optional context window ID to filter events by

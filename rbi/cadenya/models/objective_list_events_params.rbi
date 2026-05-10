@@ -38,6 +38,13 @@ module Cadenya
       sig { params(limit: Integer).void }
       attr_writer :limit
 
+      # Optional string to fetch events since an ID
+      sig { returns(T.nilable(String)) }
+      attr_reader :since_event_id
+
+      sig { params(since_event_id: String).void }
+      attr_writer :since_event_id
+
       # Sort order for results (asc or desc by creation time)
       sig { returns(T.nilable(String)) }
       attr_reader :sort_order
@@ -59,6 +66,7 @@ module Cadenya
           cursor: String,
           include_info: T::Boolean,
           limit: Integer,
+          since_event_id: String,
           sort_order: String,
           window_id: String,
           request_options: Cadenya::RequestOptions::OrHash
@@ -73,6 +81,8 @@ module Cadenya
         include_info: nil,
         # Maximum number of results to return
         limit: nil,
+        # Optional string to fetch events since an ID
+        since_event_id: nil,
         # Sort order for results (asc or desc by creation time)
         sort_order: nil,
         # Optional context window ID to filter events by
@@ -89,6 +99,7 @@ module Cadenya
             cursor: String,
             include_info: T::Boolean,
             limit: Integer,
+            since_event_id: String,
             sort_order: String,
             window_id: String,
             request_options: Cadenya::RequestOptions
