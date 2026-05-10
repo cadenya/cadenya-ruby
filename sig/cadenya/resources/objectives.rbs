@@ -76,6 +76,7 @@ module Cadenya
         ?cursor: String,
         ?include_info: bool,
         ?limit: Integer,
+        ?since_event_id: String,
         ?sort_order: String,
         ?window_id: String,
         ?request_options: Cadenya::request_opts
