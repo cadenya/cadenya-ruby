@@ -20,7 +20,11 @@ module Cadenya
 
       attr_accessor data: Cadenya::ObjectiveData
 
-      attr_accessor metadata: Cadenya::CreateOperationMetadata
+      attr_reader metadata: Cadenya::CreateOperationMetadata?
+
+      def metadata=: (
+        Cadenya::CreateOperationMetadata
+      ) -> Cadenya::CreateOperationMetadata
 
       attr_reader variation_id: String?
 
@@ -30,7 +34,7 @@ module Cadenya
         workspace_id: String,
         agent_id: String,
         data: Cadenya::ObjectiveData,
-        metadata: Cadenya::CreateOperationMetadata,
+        ?metadata: Cadenya::CreateOperationMetadata,
         ?variation_id: String,
         ?request_options: Cadenya::request_opts
       ) -> void

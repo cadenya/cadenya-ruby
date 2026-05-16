@@ -178,11 +178,6 @@ module Cadenya
               :OBJECTIVE_EVENT_TYPE_TOOL_CALLED,
               Cadenya::Agents::WebhookDeliveryData::EventType::TaggedSymbol
             )
-          OBJECTIVE_EVENT_TYPE_SUB_OBJECTIVE_CREATED =
-            T.let(
-              :OBJECTIVE_EVENT_TYPE_SUB_OBJECTIVE_CREATED,
-              Cadenya::Agents::WebhookDeliveryData::EventType::TaggedSymbol
-            )
           OBJECTIVE_EVENT_TYPE_ERROR =
             T.let(
               :OBJECTIVE_EVENT_TYPE_ERROR,
@@ -216,6 +211,16 @@ module Cadenya
           OBJECTIVE_EVENT_TYPE_CANCELLED =
             T.let(
               :OBJECTIVE_EVENT_TYPE_CANCELLED,
+              Cadenya::Agents::WebhookDeliveryData::EventType::TaggedSymbol
+            )
+          OBJECTIVE_EVENT_TYPE_SUB_AGENT_SPAWNED =
+            T.let(
+              :OBJECTIVE_EVENT_TYPE_SUB_AGENT_SPAWNED,
+              Cadenya::Agents::WebhookDeliveryData::EventType::TaggedSymbol
+            )
+          OBJECTIVE_EVENT_TYPE_SUB_AGENT_UPDATED =
+            T.let(
+              :OBJECTIVE_EVENT_TYPE_SUB_AGENT_UPDATED,
               Cadenya::Agents::WebhookDeliveryData::EventType::TaggedSymbol
             )
 
