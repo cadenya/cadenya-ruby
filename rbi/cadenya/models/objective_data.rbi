@@ -64,6 +64,14 @@ module Cadenya
       sig { params(agent: Cadenya::Agent::OrHash).void }
       attr_writer :agent
 
+      # The output of the objective, populated when the objective completes. Will match
+      # the schema of output_json_schema or output_json_inferred.
+      sig { returns(T.nilable(T.anything)) }
+      attr_reader :output
+
+      sig { params(output: T.anything).void }
+      attr_writer :output
+
       # A parent objective means the objective was spawned off using a separate agent to
       # complete an objective
       sig { returns(T.nilable(String)) }
@@ -101,6 +109,7 @@ module Cadenya
           data: T.anything,
           initial_message: String,
           memory_stack: T::Array[Cadenya::MemoryReference::OrHash],
+          output: T.anything,
           parent_objective_id: String,
           secrets: T::Array[Cadenya::ObjectiveDataSecret::OrHash],
           source_schedule_id: String,
@@ -133,6 +142,9 @@ module Cadenya
         # - this field) must not exceed 10 entries. A request that would produce an
         #   effective stack larger than 10 is rejected with InvalidArgument.
         memory_stack: nil,
+        # The output of the objective, populated when the objective completes. Will match
+        # the schema of output_json_schema or output_json_inferred.
+        output: nil,
         # A parent objective means the objective was spawned off using a separate agent to
         # complete an objective
         parent_objective_id: nil,
@@ -157,6 +169,7 @@ module Cadenya
             data: T.anything,
             initial_message: String,
             memory_stack: T::Array[Cadenya::MemoryReference],
+            output: T.anything,
             parent_objective_id: String,
             secrets: T::Array[Cadenya::ObjectiveDataSecret],
             source_schedule_id: String,

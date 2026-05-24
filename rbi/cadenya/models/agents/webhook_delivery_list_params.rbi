@@ -192,6 +192,11 @@ module Cadenya
               :OBJECTIVE_EVENT_TYPE_SUB_AGENT_UPDATED,
               Cadenya::Agents::WebhookDeliveryListParams::EventType::TaggedSymbol
             )
+          OBJECTIVE_EVENT_TYPE_FINALIZED =
+            T.let(
+              :OBJECTIVE_EVENT_TYPE_FINALIZED,
+              Cadenya::Agents::WebhookDeliveryListParams::EventType::TaggedSymbol
+            )
 
           sig do
             override.returns(

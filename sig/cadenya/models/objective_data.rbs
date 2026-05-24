@@ -6,6 +6,7 @@ module Cadenya
         data: top,
         initial_message: String,
         memory_stack: ::Array[Cadenya::MemoryReference],
+        output: top,
         parent_objective_id: String,
         secrets: ::Array[Cadenya::ObjectiveDataSecret],
         source_schedule_id: String,
@@ -38,6 +39,10 @@ module Cadenya
 
       def agent=: (Cadenya::Agent) -> Cadenya::Agent
 
+      attr_reader output: top?
+
+      def output=: (top) -> top
+
       attr_reader parent_objective_id: String?
 
       def parent_objective_id=: (String) -> String
@@ -61,6 +66,7 @@ module Cadenya
         ?data: top,
         ?initial_message: String,
         ?memory_stack: ::Array[Cadenya::MemoryReference],
+        ?output: top,
         ?parent_objective_id: String,
         ?secrets: ::Array[Cadenya::ObjectiveDataSecret],
         ?source_schedule_id: String,
@@ -73,6 +79,7 @@ module Cadenya
         data: top,
         initial_message: String,
         memory_stack: ::Array[Cadenya::MemoryReference],
+        output: top,
         parent_objective_id: String,
         secrets: ::Array[Cadenya::ObjectiveDataSecret],
         source_schedule_id: String,

@@ -28,6 +28,14 @@ module Cadenya
       #   @return [Cadenya::Models::ObjectiveError, nil]
       optional :error, -> { Cadenya::ObjectiveError }
 
+      # @!attribute finalized
+      #   ObjectiveFinalized is the terminal event written when an objective is finalized.
+      #   After this event, the objective is super-terminal: no further iterations,
+      #   compaction, or continuation are permitted.
+      #
+      #   @return [Cadenya::Models::ObjectiveEventData::Finalized, nil]
+      optional :finalized, -> { Cadenya::ObjectiveEventData::Finalized }
+
       # @!attribute memory_read
       #   MemoryRead is emitted each time the agent resolves a key against the memory
       #   stack and loads an entry. Lookups that miss (key not found in any layer) do not
@@ -90,7 +98,7 @@ module Cadenya
       #   @return [Cadenya::Models::UserMessage, nil]
       optional :user_message, -> { Cadenya::UserMessage }, api_name: :userMessage
 
-      # @!method initialize(assistant_message: nil, cancelled: nil, context_window_compacted: nil, error: nil, memory_read: nil, sub_agent_spawned: nil, sub_agent_updated: nil, tool_approval_requested: nil, tool_approved: nil, tool_called: nil, tool_denied: nil, tool_error: nil, tool_result: nil, type: nil, user_message: nil)
+      # @!method initialize(assistant_message: nil, cancelled: nil, context_window_compacted: nil, error: nil, finalized: nil, memory_read: nil, sub_agent_spawned: nil, sub_agent_updated: nil, tool_approval_requested: nil, tool_approved: nil, tool_called: nil, tool_denied: nil, tool_error: nil, tool_result: nil, type: nil, user_message: nil)
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::ObjectiveEventData} for more details.
       #
@@ -101,6 +109,8 @@ module Cadenya
       #   @param context_window_compacted [Cadenya::Models::ContextWindowCompacted]
       #
       #   @param error [Cadenya::Models::ObjectiveError]
+      #
+      #   @param finalized [Cadenya::Models::ObjectiveEventData::Finalized] ObjectiveFinalized is the terminal event written when an objective is
       #
       #   @param memory_read [Cadenya::Models::MemoryRead] MemoryRead is emitted each time the agent resolves a key against the
       #
@@ -143,6 +153,27 @@ module Cadenya
         #   compaction, or continuation are permitted.
         #
         #   @param message [String] Optional human-readable note recorded at cancel time. Today the workflow
+      end
+
+      # @see Cadenya::Models::ObjectiveEventData#finalized
+      class Finalized < Cadenya::Internal::Type::BaseModel
+        # @!attribute output
+        #   If the objective was created with an output schema, and the agent successfully
+        #   completed the objective, this field will contain the structured output of the
+        #   objective.
+        #
+        #   @return [Object, nil]
+        optional :output, Cadenya::Internal::Type::Unknown
+
+        # @!method initialize(output: nil)
+        #   Some parameter documentations has been truncated, see
+        #   {Cadenya::Models::ObjectiveEventData::Finalized} for more details.
+        #
+        #   ObjectiveFinalized is the terminal event written when an objective is finalized.
+        #   After this event, the objective is super-terminal: no further iterations,
+        #   compaction, or continuation are permitted.
+        #
+        #   @param output [Object] If the objective was created with an output schema, and the agent
       end
     end
   end

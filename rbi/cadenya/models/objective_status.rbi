@@ -53,12 +53,14 @@ module Cadenya
           T.let(:STATE_PENDING, Cadenya::ObjectiveStatus::State::TaggedSymbol)
         STATE_RUNNING =
           T.let(:STATE_RUNNING, Cadenya::ObjectiveStatus::State::TaggedSymbol)
-        STATE_COMPLETED =
-          T.let(:STATE_COMPLETED, Cadenya::ObjectiveStatus::State::TaggedSymbol)
+        STATE_WAITING =
+          T.let(:STATE_WAITING, Cadenya::ObjectiveStatus::State::TaggedSymbol)
         STATE_FAILED =
           T.let(:STATE_FAILED, Cadenya::ObjectiveStatus::State::TaggedSymbol)
         STATE_CANCELLED =
           T.let(:STATE_CANCELLED, Cadenya::ObjectiveStatus::State::TaggedSymbol)
+        STATE_FINALIZED =
+          T.let(:STATE_FINALIZED, Cadenya::ObjectiveStatus::State::TaggedSymbol)
 
         sig do
           override.returns(

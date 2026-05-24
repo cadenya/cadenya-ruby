@@ -6,6 +6,7 @@ module Cadenya
         cancelled: Cadenya::ObjectiveEventData::Cancelled,
         context_window_compacted: Cadenya::ContextWindowCompacted,
         error: Cadenya::ObjectiveError,
+        finalized: Cadenya::ObjectiveEventData::Finalized,
         memory_read: Cadenya::MemoryRead,
         sub_agent_spawned: Cadenya::SubAgentSpawned,
         sub_agent_updated: Cadenya::SubAgentUpdated,
@@ -41,6 +42,12 @@ module Cadenya
       attr_reader error: Cadenya::ObjectiveError?
 
       def error=: (Cadenya::ObjectiveError) -> Cadenya::ObjectiveError
+
+      attr_reader finalized: Cadenya::ObjectiveEventData::Finalized?
+
+      def finalized=: (
+        Cadenya::ObjectiveEventData::Finalized
+      ) -> Cadenya::ObjectiveEventData::Finalized
 
       attr_reader memory_read: Cadenya::MemoryRead?
 
@@ -97,6 +104,7 @@ module Cadenya
         ?cancelled: Cadenya::ObjectiveEventData::Cancelled,
         ?context_window_compacted: Cadenya::ContextWindowCompacted,
         ?error: Cadenya::ObjectiveError,
+        ?finalized: Cadenya::ObjectiveEventData::Finalized,
         ?memory_read: Cadenya::MemoryRead,
         ?sub_agent_spawned: Cadenya::SubAgentSpawned,
         ?sub_agent_updated: Cadenya::SubAgentUpdated,
@@ -115,6 +123,7 @@ module Cadenya
         cancelled: Cadenya::ObjectiveEventData::Cancelled,
         context_window_compacted: Cadenya::ContextWindowCompacted,
         error: Cadenya::ObjectiveError,
+        finalized: Cadenya::ObjectiveEventData::Finalized,
         memory_read: Cadenya::MemoryRead,
         sub_agent_spawned: Cadenya::SubAgentSpawned,
         sub_agent_updated: Cadenya::SubAgentUpdated,
@@ -138,6 +147,18 @@ module Cadenya
         def initialize: (?message: String) -> void
 
         def to_hash: -> { message: String }
+      end
+
+      type finalized = { output: top }
+
+      class Finalized < Cadenya::Internal::Type::BaseModel
+        attr_reader output: top?
+
+        def output=: (top) -> top
+
+        def initialize: (?output: top) -> void
+
+        def to_hash: -> { output: top }
       end
     end
   end
