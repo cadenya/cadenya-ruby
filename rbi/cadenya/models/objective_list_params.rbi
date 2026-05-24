@@ -159,9 +159,9 @@ module Cadenya
             :STATE_RUNNING,
             Cadenya::ObjectiveListParams::State::TaggedSymbol
           )
-        STATE_COMPLETED =
+        STATE_WAITING =
           T.let(
-            :STATE_COMPLETED,
+            :STATE_WAITING,
             Cadenya::ObjectiveListParams::State::TaggedSymbol
           )
         STATE_FAILED =
@@ -172,6 +172,11 @@ module Cadenya
         STATE_CANCELLED =
           T.let(
             :STATE_CANCELLED,
+            Cadenya::ObjectiveListParams::State::TaggedSymbol
+          )
+        STATE_FINALIZED =
+          T.let(
+            :STATE_FINALIZED,
             Cadenya::ObjectiveListParams::State::TaggedSymbol
           )
 

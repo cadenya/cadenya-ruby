@@ -91,9 +91,10 @@ module Cadenya
         :STATE_UNSPECIFIED
         | :STATE_PENDING
         | :STATE_RUNNING
-        | :STATE_COMPLETED
+        | :STATE_WAITING
         | :STATE_FAILED
         | :STATE_CANCELLED
+        | :STATE_FINALIZED
 
       module State
         extend Cadenya::Internal::Type::Enum
@@ -101,9 +102,10 @@ module Cadenya
         STATE_UNSPECIFIED: :STATE_UNSPECIFIED
         STATE_PENDING: :STATE_PENDING
         STATE_RUNNING: :STATE_RUNNING
-        STATE_COMPLETED: :STATE_COMPLETED
+        STATE_WAITING: :STATE_WAITING
         STATE_FAILED: :STATE_FAILED
         STATE_CANCELLED: :STATE_CANCELLED
+        STATE_FINALIZED: :STATE_FINALIZED
 
         def self?.values: -> ::Array[Cadenya::Models::ObjectiveListParams::state]
       end

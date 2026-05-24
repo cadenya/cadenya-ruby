@@ -41,6 +41,17 @@ module Cadenya
       sig { params(error: Cadenya::ObjectiveError::OrHash).void }
       attr_writer :error
 
+      # ObjectiveFinalized is the terminal event written when an objective is finalized.
+      # After this event, the objective is super-terminal: no further iterations,
+      # compaction, or continuation are permitted.
+      sig { returns(T.nilable(Cadenya::ObjectiveEventData::Finalized)) }
+      attr_reader :finalized
+
+      sig do
+        params(finalized: Cadenya::ObjectiveEventData::Finalized::OrHash).void
+      end
+      attr_writer :finalized
+
       # MemoryRead is emitted each time the agent resolves a key against the memory
       # stack and loads an entry. Lookups that miss (key not found in any layer) do not
       # emit this event.
@@ -120,6 +131,7 @@ module Cadenya
           cancelled: Cadenya::ObjectiveEventData::Cancelled::OrHash,
           context_window_compacted: Cadenya::ContextWindowCompacted::OrHash,
           error: Cadenya::ObjectiveError::OrHash,
+          finalized: Cadenya::ObjectiveEventData::Finalized::OrHash,
           memory_read: Cadenya::MemoryRead::OrHash,
           sub_agent_spawned: Cadenya::SubAgentSpawned::OrHash,
           sub_agent_updated: Cadenya::SubAgentUpdated::OrHash,
@@ -141,6 +153,10 @@ module Cadenya
         cancelled: nil,
         context_window_compacted: nil,
         error: nil,
+        # ObjectiveFinalized is the terminal event written when an objective is finalized.
+        # After this event, the objective is super-terminal: no further iterations,
+        # compaction, or continuation are permitted.
+        finalized: nil,
         # MemoryRead is emitted each time the agent resolves a key against the memory
         # stack and loads an entry. Lookups that miss (key not found in any layer) do not
         # emit this event.
@@ -165,6 +181,7 @@ module Cadenya
             cancelled: Cadenya::ObjectiveEventData::Cancelled,
             context_window_compacted: Cadenya::ContextWindowCompacted,
             error: Cadenya::ObjectiveError,
+            finalized: Cadenya::ObjectiveEventData::Finalized,
             memory_read: Cadenya::MemoryRead,
             sub_agent_spawned: Cadenya::SubAgentSpawned,
             sub_agent_updated: Cadenya::SubAgentUpdated,
@@ -213,6 +230,41 @@ module Cadenya
         end
 
         sig { override.returns({ message: String }) }
+        def to_hash
+        end
+      end
+
+      class Finalized < Cadenya::Internal::Type::BaseModel
+        OrHash =
+          T.type_alias do
+            T.any(
+              Cadenya::ObjectiveEventData::Finalized,
+              Cadenya::Internal::AnyHash
+            )
+          end
+
+        # If the objective was created with an output schema, and the agent successfully
+        # completed the objective, this field will contain the structured output of the
+        # objective.
+        sig { returns(T.nilable(T.anything)) }
+        attr_reader :output
+
+        sig { params(output: T.anything).void }
+        attr_writer :output
+
+        # ObjectiveFinalized is the terminal event written when an objective is finalized.
+        # After this event, the objective is super-terminal: no further iterations,
+        # compaction, or continuation are permitted.
+        sig { params(output: T.anything).returns(T.attached_class) }
+        def self.new(
+          # If the objective was created with an output schema, and the agent successfully
+          # completed the objective, this field will contain the structured output of the
+          # objective.
+          output: nil
+        )
+        end
+
+        sig { override.returns({ output: T.anything }) }
         def to_hash
         end
       end

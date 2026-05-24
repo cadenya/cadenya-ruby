@@ -24,9 +24,10 @@ module Cadenya
         STATE_UNSPECIFIED = :STATE_UNSPECIFIED
         STATE_PENDING = :STATE_PENDING
         STATE_RUNNING = :STATE_RUNNING
-        STATE_COMPLETED = :STATE_COMPLETED
+        STATE_WAITING = :STATE_WAITING
         STATE_FAILED = :STATE_FAILED
         STATE_CANCELLED = :STATE_CANCELLED
+        STATE_FINALIZED = :STATE_FINALIZED
 
         # @!method self.values
         #   @return [Array<Symbol>]

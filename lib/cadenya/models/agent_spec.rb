@@ -34,13 +34,22 @@ module Cadenya
       #   @return [Object, nil]
       optional :input_data_schema, Cadenya::Internal::Type::Unknown, api_name: :inputDataSchema
 
+      # @!attribute output_definition
+      #   Optional output definition for objectives created for this agent. When provided,
+      #   Cadenya will append a tool to that will be called by the LLM in use by the
+      #   variant to extract information in the format provided here. Use this option when
+      #   you want structured data to be created by your objectives.
+      #
+      #   @return [Object, nil]
+      optional :output_definition, Cadenya::Internal::Type::Unknown, api_name: :outputDefinition
+
       # @!attribute webhook_events_url
       #   The URL that Cadenya will send events for any objective assigned to the agent.
       #
       #   @return [String, nil]
       optional :webhook_events_url, String, api_name: :webhookEventsUrl
 
-      # @!method initialize(status:, variation_selection_mode:, description: nil, input_data_schema: nil, webhook_events_url: nil)
+      # @!method initialize(status:, variation_selection_mode:, description: nil, input_data_schema: nil, output_definition: nil, webhook_events_url: nil)
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::AgentSpec} for more details.
       #
@@ -53,6 +62,8 @@ module Cadenya
       #   @param description [String] Description of the agent's purpose
       #
       #   @param input_data_schema [Object] InputDataSchema is used for enforcing a data input when objectives are created.
+      #
+      #   @param output_definition [Object] Optional output definition for objectives created for this agent.
       #
       #   @param webhook_events_url [String] The URL that Cadenya will send events for any objective assigned to the agent.
 
