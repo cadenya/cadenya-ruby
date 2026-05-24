@@ -53,6 +53,13 @@ module Cadenya
         #   @return [Cadenya::Models::Agent, nil]
         optional :agent, -> { Cadenya::Agent }
 
+        # @!attribute output
+        #   The output of the objective, populated when the objective completes. Will match
+        #   the schema of output_json_schema or output_json_inferred.
+        #
+        #   @return [Object, nil]
+        optional :output, Cadenya::Internal::Type::Unknown
+
         # @!attribute parent_objective_id
         #   A parent objective means the objective was spawned off using a separate agent to
         #   complete an objective
@@ -81,7 +88,7 @@ module Cadenya
         optional :variation, -> { Cadenya::Agents::AgentVariation }
       end
 
-      # @!method initialize(agent: nil, data: nil, initial_message: nil, memory_stack: nil, parent_objective_id: nil, secrets: nil, source_schedule_id: nil, system_prompt: nil, variation: nil)
+      # @!method initialize(agent: nil, data: nil, initial_message: nil, memory_stack: nil, output: nil, parent_objective_id: nil, secrets: nil, source_schedule_id: nil, system_prompt: nil, variation: nil)
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::ObjectiveData} for more details.
       #
@@ -92,6 +99,8 @@ module Cadenya
       #   @param initial_message [String] The initial message sent to the agent. This becomes the first user message in th
       #
       #   @param memory_stack [Array<Cadenya::Models::MemoryReference>] Memory layers/entries to push onto this objective's memory stack on
+      #
+      #   @param output [Object] The output of the objective, populated when the objective completes. Will match
       #
       #   @param parent_objective_id [String] A parent objective means the objective was spawned off using a separate agent to
       #

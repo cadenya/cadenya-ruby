@@ -33,6 +33,16 @@ module Cadenya
       sig { params(input_data_schema: T.anything).void }
       attr_writer :input_data_schema
 
+      # Optional output definition for objectives created for this agent. When provided,
+      # Cadenya will append a tool to that will be called by the LLM in use by the
+      # variant to extract information in the format provided here. Use this option when
+      # you want structured data to be created by your objectives.
+      sig { returns(T.nilable(T.anything)) }
+      attr_reader :output_definition
+
+      sig { params(output_definition: T.anything).void }
+      attr_writer :output_definition
+
       # The URL that Cadenya will send events for any objective assigned to the agent.
       sig { returns(T.nilable(String)) }
       attr_reader :webhook_events_url
@@ -48,6 +58,7 @@ module Cadenya
             Cadenya::AgentSpec::VariationSelectionMode::OrSymbol,
           description: String,
           input_data_schema: T.anything,
+          output_definition: T.anything,
           webhook_events_url: String
         ).returns(T.attached_class)
       end
@@ -65,6 +76,11 @@ module Cadenya
         # is used as the tool's input parameter schema. If omitted, the sub-agent schema
         # will be loaded with a simple "prompt" free text string as its schema.
         input_data_schema: nil,
+        # Optional output definition for objectives created for this agent. When provided,
+        # Cadenya will append a tool to that will be called by the LLM in use by the
+        # variant to extract information in the format provided here. Use this option when
+        # you want structured data to be created by your objectives.
+        output_definition: nil,
         # The URL that Cadenya will send events for any objective assigned to the agent.
         webhook_events_url: nil
       )
@@ -78,6 +94,7 @@ module Cadenya
               Cadenya::AgentSpec::VariationSelectionMode::OrSymbol,
             description: String,
             input_data_schema: T.anything,
+            output_definition: T.anything,
             webhook_events_url: String
           }
         )
