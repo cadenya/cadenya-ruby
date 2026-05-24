@@ -72,6 +72,14 @@ module Cadenya
       sig { params(output: T.anything).void }
       attr_writer :output
 
+      # Snapshot of the agent spec's output_definition at objective creation time. When
+      # present, the objective will run an extraction step after the LLM finishes.
+      sig { returns(T.nilable(T.anything)) }
+      attr_reader :output_definition
+
+      sig { params(output_definition: T.anything).void }
+      attr_writer :output_definition
+
       # A parent objective means the objective was spawned off using a separate agent to
       # complete an objective
       sig { returns(T.nilable(String)) }
@@ -110,6 +118,7 @@ module Cadenya
           initial_message: String,
           memory_stack: T::Array[Cadenya::MemoryReference::OrHash],
           output: T.anything,
+          output_definition: T.anything,
           parent_objective_id: String,
           secrets: T::Array[Cadenya::ObjectiveDataSecret::OrHash],
           source_schedule_id: String,
@@ -145,6 +154,9 @@ module Cadenya
         # The output of the objective, populated when the objective completes. Will match
         # the schema of output_json_schema or output_json_inferred.
         output: nil,
+        # Snapshot of the agent spec's output_definition at objective creation time. When
+        # present, the objective will run an extraction step after the LLM finishes.
+        output_definition: nil,
         # A parent objective means the objective was spawned off using a separate agent to
         # complete an objective
         parent_objective_id: nil,
@@ -170,6 +182,7 @@ module Cadenya
             initial_message: String,
             memory_stack: T::Array[Cadenya::MemoryReference],
             output: T.anything,
+            output_definition: T.anything,
             parent_objective_id: String,
             secrets: T::Array[Cadenya::ObjectiveDataSecret],
             source_schedule_id: String,
