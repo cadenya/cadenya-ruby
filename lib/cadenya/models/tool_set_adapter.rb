@@ -13,9 +13,15 @@ module Cadenya
       #   @return [Cadenya::Models::ToolSetAdapterMcp, nil]
       optional :mcp, -> { Cadenya::ToolSetAdapterMcp }
 
-      # @!method initialize(http: nil, mcp: nil)
+      # @!attribute openapi
+      #
+      #   @return [Cadenya::Models::ToolSetAdapterOpenAPI, nil]
+      optional :openapi, -> { Cadenya::ToolSetAdapterOpenAPI }
+
+      # @!method initialize(http: nil, mcp: nil, openapi: nil)
       #   @param http [Cadenya::Models::ToolSetAdapterHTTP]
       #   @param mcp [Cadenya::Models::ToolSetAdapterMcp]
+      #   @param openapi [Cadenya::Models::ToolSetAdapterOpenAPI]
     end
   end
 end

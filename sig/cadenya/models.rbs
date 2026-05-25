@@ -55,9 +55,13 @@ module Cadenya
 
   class APIKeyUpdateParams = Cadenya::Models::APIKeyUpdateParams
 
+  class ApprovalRequirementFilter = Cadenya::Models::ApprovalRequirementFilter
+
   class AssistantMessage = Cadenya::Models::AssistantMessage
 
   class AssistantToolCall = Cadenya::Models::AssistantToolCall
+
+  class AttributeFilter = Cadenya::Models::AttributeFilter
 
   class BareMetadata = Cadenya::Models::BareMetadata
 
@@ -84,8 +88,6 @@ module Cadenya
   class CreateOperationMetadata = Cadenya::Models::CreateOperationMetadata
 
   class CreateResourceMetadata = Cadenya::Models::CreateResourceMetadata
-
-  class McpToolFilter = Cadenya::Models::McpToolFilter
 
   class MemoryEntryItem = Cadenya::Models::MemoryEntryItem
 
@@ -177,6 +179,8 @@ module Cadenya
 
   class SearchSearchToolsOrToolSetsParams = Cadenya::Models::SearchSearchToolsOrToolSetsParams
 
+  class StringMatcher = Cadenya::Models::StringMatcher
+
   class SubAgentSpawned = Cadenya::Models::SubAgentSpawned
 
   class SubAgentUpdated = Cadenya::Models::SubAgentUpdated
@@ -199,6 +203,8 @@ module Cadenya
 
   class ToolError = Cadenya::Models::ToolError
 
+  class ToolFilter = Cadenya::Models::ToolFilter
+
   class ToolResult = Cadenya::Models::ToolResult
 
   class ToolSet = Cadenya::Models::ToolSet
@@ -209,6 +215,8 @@ module Cadenya
 
   class ToolSetAdapterMcp = Cadenya::Models::ToolSetAdapterMcp
 
+  class ToolSetAdapterOpenAPI = Cadenya::Models::ToolSetAdapterOpenAPI
+
   class ToolSetCreateParams = Cadenya::Models::ToolSetCreateParams
 
   class ToolSetDeleteParams = Cadenya::Models::ToolSetDeleteParams
@@ -218,6 +226,8 @@ module Cadenya
   class ToolSetEvent = Cadenya::Models::ToolSetEvent
 
   class ToolSetEventData = Cadenya::Models::ToolSetEventData
+
+  class ToolSetGetOpenAPISpecParams = Cadenya::Models::ToolSetGetOpenAPISpecParams
 
   class ToolSetInfo = Cadenya::Models::ToolSetInfo
 

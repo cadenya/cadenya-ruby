@@ -136,6 +136,24 @@ module Cadenya
       )
       end
 
+      # Retrieves the current OpenAPI specification JSON that has been consumed by the
+      # tool set. Only applicable to tool sets using the OpenAPI adapter.
+      sig do
+        params(
+          tool_set_id: String,
+          workspace_id: String,
+          request_options: Cadenya::RequestOptions::OrHash
+        ).returns(Cadenya::Models::ToolSetGetOpenAPISpecResponse)
+      end
+      def get_openapi_spec(
+        # Tool set ID. Accepts the canonical ts\_… form or the external_id:<value> form.
+        tool_set_id,
+        # Workspace ID.
+        workspace_id:,
+        request_options: {}
+      )
+      end
+
       # Lists all events (including sync status) for a tool set
       sig do
         params(

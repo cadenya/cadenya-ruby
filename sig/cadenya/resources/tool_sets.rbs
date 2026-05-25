@@ -43,6 +43,12 @@ module Cadenya
         ?request_options: Cadenya::request_opts
       ) -> nil
 
+      def get_openapi_spec: (
+        String tool_set_id,
+        workspace_id: String,
+        ?request_options: Cadenya::request_opts
+      ) -> Cadenya::Models::ToolSetGetOpenAPISpecResponse
+
       def list_events: (
         String tool_set_id,
         workspace_id: String,

@@ -6,8 +6,8 @@ module Cadenya
       # @!attribute exclude_tools
       #   Top-level filter with simple boolean logic (no nesting)
       #
-      #   @return [Cadenya::Models::McpToolFilter, nil]
-      optional :exclude_tools, -> { Cadenya::McpToolFilter }, api_name: :excludeTools
+      #   @return [Cadenya::Models::ToolFilter, nil]
+      optional :exclude_tools, -> { Cadenya::ToolFilter }, api_name: :excludeTools
 
       # @!attribute headers
       #
@@ -17,15 +17,15 @@ module Cadenya
       # @!attribute include_tools
       #   Top-level filter with simple boolean logic (no nesting)
       #
-      #   @return [Cadenya::Models::McpToolFilter, nil]
-      optional :include_tools, -> { Cadenya::McpToolFilter }, api_name: :includeTools
+      #   @return [Cadenya::Models::ToolFilter, nil]
+      optional :include_tools, -> { Cadenya::ToolFilter }, api_name: :includeTools
 
       # @!attribute tool_approvals
-      #   Approval filters that will automatically set the approval requirement on the
-      #   tools synced from the MCP server
+      #   Approval filters that will automatically set the approval requirement on tools
+      #   synced from an external source
       #
-      #   @return [Cadenya::Models::ToolSetAdapterMcp::ToolApprovals, nil]
-      optional :tool_approvals, -> { Cadenya::ToolSetAdapterMcp::ToolApprovals }, api_name: :toolApprovals
+      #   @return [Cadenya::Models::ApprovalRequirementFilter, nil]
+      optional :tool_approvals, -> { Cadenya::ApprovalRequirementFilter }, api_name: :toolApprovals
 
       # @!attribute url
       #
@@ -36,37 +36,15 @@ module Cadenya
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::ToolSetAdapterMcp} for more details.
       #
-      #   @param exclude_tools [Cadenya::Models::McpToolFilter] Top-level filter with simple boolean logic (no nesting)
+      #   @param exclude_tools [Cadenya::Models::ToolFilter] Top-level filter with simple boolean logic (no nesting)
       #
       #   @param headers [Hash{Symbol=>String}]
       #
-      #   @param include_tools [Cadenya::Models::McpToolFilter] Top-level filter with simple boolean logic (no nesting)
+      #   @param include_tools [Cadenya::Models::ToolFilter] Top-level filter with simple boolean logic (no nesting)
       #
-      #   @param tool_approvals [Cadenya::Models::ToolSetAdapterMcp::ToolApprovals] Approval filters that will automatically set the approval requirement on the too
+      #   @param tool_approvals [Cadenya::Models::ApprovalRequirementFilter] Approval filters that will automatically set the approval requirement on tools s
       #
       #   @param url [String]
-
-      # @see Cadenya::Models::ToolSetAdapterMcp#tool_approvals
-      class ToolApprovals < Cadenya::Internal::Type::BaseModel
-        # @!attribute always
-        #
-        #   @return [Boolean, nil]
-        optional :always, Cadenya::Internal::Type::Boolean
-
-        # @!attribute only
-        #   Top-level filter with simple boolean logic (no nesting)
-        #
-        #   @return [Cadenya::Models::McpToolFilter, nil]
-        optional :only, -> { Cadenya::McpToolFilter }
-
-        # @!method initialize(always: nil, only: nil)
-        #   Approval filters that will automatically set the approval requirement on the
-        #   tools synced from the MCP server
-        #
-        #   @param always [Boolean]
-        #
-        #   @param only [Cadenya::Models::McpToolFilter] Top-level filter with simple boolean logic (no nesting)
-      end
     end
   end
 end
