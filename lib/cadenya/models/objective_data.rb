@@ -57,15 +57,17 @@ module Cadenya
         #   The output of the objective, populated when the objective completes. Will match
         #   the schema of output_json_schema or output_json_inferred.
         #
-        #   @return [Object, nil]
-        optional :output, Cadenya::Internal::Type::Unknown
+        #   @return [Hash{Symbol=>Object}, nil]
+        optional :output, Cadenya::Internal::Type::HashOf[Cadenya::Internal::Type::Unknown]
 
         # @!attribute output_definition
         #   Snapshot of the agent spec's output_definition at objective creation time. When
         #   present, the objective will run an extraction step after the LLM finishes.
         #
-        #   @return [Object, nil]
-        optional :output_definition, Cadenya::Internal::Type::Unknown, api_name: :outputDefinition
+        #   @return [Hash{Symbol=>Object}, nil]
+        optional :output_definition,
+                 Cadenya::Internal::Type::HashOf[Cadenya::Internal::Type::Unknown],
+                 api_name: :outputDefinition
 
         # @!attribute parent_objective_id
         #   A parent objective means the objective was spawned off using a separate agent to
@@ -107,9 +109,9 @@ module Cadenya
       #
       #   @param memory_stack [Array<Cadenya::Models::MemoryReference>] Memory layers/entries to push onto this objective's memory stack on
       #
-      #   @param output [Object] The output of the objective, populated when the objective completes. Will match
+      #   @param output [Hash{Symbol=>Object}] The output of the objective, populated when the objective completes. Will match
       #
-      #   @param output_definition [Object] Snapshot of the agent spec's output_definition at objective creation time.
+      #   @param output_definition [Hash{Symbol=>Object}] Snapshot of the agent spec's output_definition at objective creation time.
       #
       #   @param parent_objective_id [String] A parent objective means the objective was spawned off using a separate agent to
       #

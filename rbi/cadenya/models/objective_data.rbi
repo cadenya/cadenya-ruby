@@ -66,18 +66,18 @@ module Cadenya
 
       # The output of the objective, populated when the objective completes. Will match
       # the schema of output_json_schema or output_json_inferred.
-      sig { returns(T.nilable(T.anything)) }
+      sig { returns(T.nilable(T::Hash[Symbol, T.anything])) }
       attr_reader :output
 
-      sig { params(output: T.anything).void }
+      sig { params(output: T::Hash[Symbol, T.anything]).void }
       attr_writer :output
 
       # Snapshot of the agent spec's output_definition at objective creation time. When
       # present, the objective will run an extraction step after the LLM finishes.
-      sig { returns(T.nilable(T.anything)) }
+      sig { returns(T.nilable(T::Hash[Symbol, T.anything])) }
       attr_reader :output_definition
 
-      sig { params(output_definition: T.anything).void }
+      sig { params(output_definition: T::Hash[Symbol, T.anything]).void }
       attr_writer :output_definition
 
       # A parent objective means the objective was spawned off using a separate agent to
@@ -117,8 +117,8 @@ module Cadenya
           data: T.anything,
           initial_message: String,
           memory_stack: T::Array[Cadenya::MemoryReference::OrHash],
-          output: T.anything,
-          output_definition: T.anything,
+          output: T::Hash[Symbol, T.anything],
+          output_definition: T::Hash[Symbol, T.anything],
           parent_objective_id: String,
           secrets: T::Array[Cadenya::ObjectiveDataSecret::OrHash],
           source_schedule_id: String,
@@ -181,8 +181,8 @@ module Cadenya
             data: T.anything,
             initial_message: String,
             memory_stack: T::Array[Cadenya::MemoryReference],
-            output: T.anything,
-            output_definition: T.anything,
+            output: T::Hash[Symbol, T.anything],
+            output_definition: T::Hash[Symbol, T.anything],
             parent_objective_id: String,
             secrets: T::Array[Cadenya::ObjectiveDataSecret],
             source_schedule_id: String,
