@@ -1,15 +1,22 @@
 module Cadenya
   module Models
-    type tool_set_adapter_mcp =
+    type tool_set_adapter_openapi =
       {
+        base_url: String,
         exclude_tools: Cadenya::ToolFilter,
         headers: ::Hash[Symbol, String],
         include_tools: Cadenya::ToolFilter,
+        server_name: String,
         tool_approvals: Cadenya::ApprovalRequirementFilter,
+        upload_id: String,
         url: String
       }
 
-    class ToolSetAdapterMcp < Cadenya::Internal::Type::BaseModel
+    class ToolSetAdapterOpenAPI < Cadenya::Internal::Type::BaseModel
+      attr_reader base_url: String?
+
+      def base_url=: (String) -> String
+
       attr_reader exclude_tools: Cadenya::ToolFilter?
 
       def exclude_tools=: (Cadenya::ToolFilter) -> Cadenya::ToolFilter
@@ -22,29 +29,43 @@ module Cadenya
 
       def include_tools=: (Cadenya::ToolFilter) -> Cadenya::ToolFilter
 
+      attr_reader server_name: String?
+
+      def server_name=: (String) -> String
+
       attr_reader tool_approvals: Cadenya::ApprovalRequirementFilter?
 
       def tool_approvals=: (
         Cadenya::ApprovalRequirementFilter
       ) -> Cadenya::ApprovalRequirementFilter
 
+      attr_reader upload_id: String?
+
+      def upload_id=: (String) -> String
+
       attr_reader url: String?
 
       def url=: (String) -> String
 
       def initialize: (
+        ?base_url: String,
         ?exclude_tools: Cadenya::ToolFilter,
         ?headers: ::Hash[Symbol, String],
         ?include_tools: Cadenya::ToolFilter,
+        ?server_name: String,
         ?tool_approvals: Cadenya::ApprovalRequirementFilter,
+        ?upload_id: String,
         ?url: String
       ) -> void
 
       def to_hash: -> {
+        base_url: String,
         exclude_tools: Cadenya::ToolFilter,
         headers: ::Hash[Symbol, String],
         include_tools: Cadenya::ToolFilter,
+        server_name: String,
         tool_approvals: Cadenya::ApprovalRequirementFilter,
+        upload_id: String,
         url: String
       }
     end

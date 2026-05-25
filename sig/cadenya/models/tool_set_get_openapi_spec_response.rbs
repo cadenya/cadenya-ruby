@@ -1,0 +1,15 @@
+module Cadenya
+  module Models
+    type tool_set_get_openapi_spec_response = { spec: String }
+
+    class ToolSetGetOpenAPISpecResponse < Cadenya::Internal::Type::BaseModel
+      attr_reader spec: String?
+
+      def spec=: (String) -> String
+
+      def initialize: (?spec: String) -> void
+
+      def to_hash: -> { spec: String }
+    end
+  end
+end

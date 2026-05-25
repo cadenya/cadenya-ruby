@@ -1,7 +1,11 @@
 module Cadenya
   module Models
     type tool_set_adapter =
-      { http: Cadenya::ToolSetAdapterHTTP, mcp: Cadenya::ToolSetAdapterMcp }
+      {
+        http: Cadenya::ToolSetAdapterHTTP,
+        mcp: Cadenya::ToolSetAdapterMcp,
+        openapi: Cadenya::ToolSetAdapterOpenAPI
+      }
 
     class ToolSetAdapter < Cadenya::Internal::Type::BaseModel
       attr_reader http: Cadenya::ToolSetAdapterHTTP?
@@ -12,14 +16,22 @@ module Cadenya
 
       def mcp=: (Cadenya::ToolSetAdapterMcp) -> Cadenya::ToolSetAdapterMcp
 
+      attr_reader openapi: Cadenya::ToolSetAdapterOpenAPI?
+
+      def openapi=: (
+        Cadenya::ToolSetAdapterOpenAPI
+      ) -> Cadenya::ToolSetAdapterOpenAPI
+
       def initialize: (
         ?http: Cadenya::ToolSetAdapterHTTP,
-        ?mcp: Cadenya::ToolSetAdapterMcp
+        ?mcp: Cadenya::ToolSetAdapterMcp,
+        ?openapi: Cadenya::ToolSetAdapterOpenAPI
       ) -> void
 
       def to_hash: -> {
         http: Cadenya::ToolSetAdapterHTTP,
-        mcp: Cadenya::ToolSetAdapterMcp
+        mcp: Cadenya::ToolSetAdapterMcp,
+        openapi: Cadenya::ToolSetAdapterOpenAPI
       }
     end
   end

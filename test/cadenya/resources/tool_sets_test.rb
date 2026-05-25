@@ -92,6 +92,22 @@ class Cadenya::Test::Resources::ToolSetsTest < Cadenya::Test::ResourceTest
     end
   end
 
+  def test_get_openapi_spec_required_params
+    skip("Mock server tests are disabled")
+
+    response = @cadenya.tool_sets.get_openapi_spec("toolSetId", workspace_id: "workspaceId")
+
+    assert_pattern do
+      response => Cadenya::Models::ToolSetGetOpenAPISpecResponse
+    end
+
+    assert_pattern do
+      response => {
+        spec: String | nil
+      }
+    end
+  end
+
   def test_list_events_required_params
     skip("Mock server tests are disabled")
 

@@ -185,6 +185,37 @@ module Cadenya
       end
 
       # Some parameter documentations has been truncated, see
+      # {Cadenya::Models::ToolSetGetOpenAPISpecParams} for more details.
+      #
+      # Retrieves the current OpenAPI specification JSON that has been consumed by the
+      # tool set. Only applicable to tool sets using the OpenAPI adapter.
+      #
+      # @overload get_openapi_spec(tool_set_id, workspace_id:, request_options: {})
+      #
+      # @param tool_set_id [String] Tool set ID. Accepts the canonical ts\_… form or the
+      #
+      # @param workspace_id [String] Workspace ID.
+      #
+      # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
+      #
+      # @return [Cadenya::Models::ToolSetGetOpenAPISpecResponse]
+      #
+      # @see Cadenya::Models::ToolSetGetOpenAPISpecParams
+      def get_openapi_spec(tool_set_id, params)
+        parsed, options = Cadenya::ToolSetGetOpenAPISpecParams.dump_request(params)
+        workspace_id =
+          parsed.delete(:workspace_id) do
+            raise ArgumentError.new("missing required path argument #{_1}")
+          end
+        @client.request(
+          method: :get,
+          path: ["v1/workspaces/%1$s/tool_sets/%2$s/openapi_spec", workspace_id, tool_set_id],
+          model: Cadenya::Models::ToolSetGetOpenAPISpecResponse,
+          options: options
+        )
+      end
+
+      # Some parameter documentations has been truncated, see
       # {Cadenya::Models::ToolSetListEventsParams} for more details.
       #
       # Lists all events (including sync status) for a tool set

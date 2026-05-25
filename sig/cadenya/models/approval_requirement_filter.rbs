@@ -1,0 +1,20 @@
+module Cadenya
+  module Models
+    type approval_requirement_filter =
+      { always: bool, only: Cadenya::ToolFilter }
+
+    class ApprovalRequirementFilter < Cadenya::Internal::Type::BaseModel
+      attr_reader always: bool?
+
+      def always=: (bool) -> bool
+
+      attr_reader only: Cadenya::ToolFilter?
+
+      def only=: (Cadenya::ToolFilter) -> Cadenya::ToolFilter
+
+      def initialize: (?always: bool, ?only: Cadenya::ToolFilter) -> void
+
+      def to_hash: -> { always: bool, only: Cadenya::ToolFilter }
+    end
+  end
+end
