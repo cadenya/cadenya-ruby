@@ -21,23 +21,31 @@ module Cadenya
         sig { params(mcp: Cadenya::ToolSets::ConfigMcp::OrHash).void }
         attr_writer :mcp
 
+        sig { returns(T.nilable(Cadenya::ToolSets::ConfigOpenAPI)) }
+        attr_reader :openapi
+
+        sig { params(openapi: Cadenya::ToolSets::ConfigOpenAPI::OrHash).void }
+        attr_writer :openapi
+
         # Config defines the adapter to use for the tool. This is used to determine how
         # the tool is called. For example, if the tool is an HTTP tool, the adapter will
         # be Http. If the tool is an inline tool, the adapter will be Inline.
         sig do
           params(
             http: Cadenya::ToolSets::ConfigHTTP::OrHash,
-            mcp: Cadenya::ToolSets::ConfigMcp::OrHash
+            mcp: Cadenya::ToolSets::ConfigMcp::OrHash,
+            openapi: Cadenya::ToolSets::ConfigOpenAPI::OrHash
           ).returns(T.attached_class)
         end
-        def self.new(http: nil, mcp: nil)
+        def self.new(http: nil, mcp: nil, openapi: nil)
         end
 
         sig do
           override.returns(
             {
               http: Cadenya::ToolSets::ConfigHTTP,
-              mcp: Cadenya::ToolSets::ConfigMcp
+              mcp: Cadenya::ToolSets::ConfigMcp,
+              openapi: Cadenya::ToolSets::ConfigOpenAPI
             }
           )
         end

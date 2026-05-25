@@ -4,7 +4,8 @@ module Cadenya
       type tool_spec_config =
         {
           http: Cadenya::ToolSets::ConfigHTTP,
-          mcp: Cadenya::ToolSets::ConfigMcp
+          mcp: Cadenya::ToolSets::ConfigMcp,
+          openapi: Cadenya::ToolSets::ConfigOpenAPI
         }
 
       class ToolSpecConfig < Cadenya::Internal::Type::BaseModel
@@ -18,14 +19,22 @@ module Cadenya
 
         def mcp=: (Cadenya::ToolSets::ConfigMcp) -> Cadenya::ToolSets::ConfigMcp
 
+        attr_reader openapi: Cadenya::ToolSets::ConfigOpenAPI?
+
+        def openapi=: (
+          Cadenya::ToolSets::ConfigOpenAPI
+        ) -> Cadenya::ToolSets::ConfigOpenAPI
+
         def initialize: (
           ?http: Cadenya::ToolSets::ConfigHTTP,
-          ?mcp: Cadenya::ToolSets::ConfigMcp
+          ?mcp: Cadenya::ToolSets::ConfigMcp,
+          ?openapi: Cadenya::ToolSets::ConfigOpenAPI
         ) -> void
 
         def to_hash: -> {
           http: Cadenya::ToolSets::ConfigHTTP,
-          mcp: Cadenya::ToolSets::ConfigMcp
+          mcp: Cadenya::ToolSets::ConfigMcp,
+          openapi: Cadenya::ToolSets::ConfigOpenAPI
         }
       end
     end
