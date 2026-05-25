@@ -27,20 +27,20 @@ module Cadenya
       # data schema is also valuable when using an agent as a sub-agent, as the schema
       # is used as the tool's input parameter schema. If omitted, the sub-agent schema
       # will be loaded with a simple "prompt" free text string as its schema.
-      sig { returns(T.nilable(T.anything)) }
+      sig { returns(T.nilable(T::Hash[Symbol, T.anything])) }
       attr_reader :input_data_schema
 
-      sig { params(input_data_schema: T.anything).void }
+      sig { params(input_data_schema: T::Hash[Symbol, T.anything]).void }
       attr_writer :input_data_schema
 
       # Optional output definition for objectives created for this agent. When provided,
       # Cadenya will append a tool to that will be called by the LLM in use by the
       # variant to extract information in the format provided here. Use this option when
       # you want structured data to be created by your objectives.
-      sig { returns(T.nilable(T.anything)) }
+      sig { returns(T.nilable(T::Hash[Symbol, T.anything])) }
       attr_reader :output_definition
 
-      sig { params(output_definition: T.anything).void }
+      sig { params(output_definition: T::Hash[Symbol, T.anything]).void }
       attr_writer :output_definition
 
       # The URL that Cadenya will send events for any objective assigned to the agent.
@@ -57,8 +57,8 @@ module Cadenya
           variation_selection_mode:
             Cadenya::AgentSpec::VariationSelectionMode::OrSymbol,
           description: String,
-          input_data_schema: T.anything,
-          output_definition: T.anything,
+          input_data_schema: T::Hash[Symbol, T.anything],
+          output_definition: T::Hash[Symbol, T.anything],
           webhook_events_url: String
         ).returns(T.attached_class)
       end
@@ -93,8 +93,8 @@ module Cadenya
             variation_selection_mode:
               Cadenya::AgentSpec::VariationSelectionMode::OrSymbol,
             description: String,
-            input_data_schema: T.anything,
-            output_definition: T.anything,
+            input_data_schema: T::Hash[Symbol, T.anything],
+            output_definition: T::Hash[Symbol, T.anything],
             webhook_events_url: String
           }
         )

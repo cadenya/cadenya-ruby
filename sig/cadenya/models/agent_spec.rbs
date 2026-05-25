@@ -5,8 +5,8 @@ module Cadenya
         status: Cadenya::Models::AgentSpec::status,
         variation_selection_mode: Cadenya::Models::AgentSpec::variation_selection_mode,
         description: String,
-        input_data_schema: top,
-        output_definition: top,
+        input_data_schema: ::Hash[Symbol, top],
+        output_definition: ::Hash[Symbol, top],
         webhook_events_url: String
       }
 
@@ -19,13 +19,13 @@ module Cadenya
 
       def description=: (String) -> String
 
-      attr_reader input_data_schema: top?
+      attr_reader input_data_schema: ::Hash[Symbol, top]?
 
-      def input_data_schema=: (top) -> top
+      def input_data_schema=: (::Hash[Symbol, top]) -> ::Hash[Symbol, top]
 
-      attr_reader output_definition: top?
+      attr_reader output_definition: ::Hash[Symbol, top]?
 
-      def output_definition=: (top) -> top
+      def output_definition=: (::Hash[Symbol, top]) -> ::Hash[Symbol, top]
 
       attr_reader webhook_events_url: String?
 
@@ -35,8 +35,8 @@ module Cadenya
         status: Cadenya::Models::AgentSpec::status,
         variation_selection_mode: Cadenya::Models::AgentSpec::variation_selection_mode,
         ?description: String,
-        ?input_data_schema: top,
-        ?output_definition: top,
+        ?input_data_schema: ::Hash[Symbol, top],
+        ?output_definition: ::Hash[Symbol, top],
         ?webhook_events_url: String
       ) -> void
 
@@ -44,8 +44,8 @@ module Cadenya
         status: Cadenya::Models::AgentSpec::status,
         variation_selection_mode: Cadenya::Models::AgentSpec::variation_selection_mode,
         description: String,
-        input_data_schema: top,
-        output_definition: top,
+        input_data_schema: ::Hash[Symbol, top],
+        output_definition: ::Hash[Symbol, top],
         webhook_events_url: String
       }
 

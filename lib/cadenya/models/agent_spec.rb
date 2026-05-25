@@ -31,8 +31,10 @@ module Cadenya
       #   is used as the tool's input parameter schema. If omitted, the sub-agent schema
       #   will be loaded with a simple "prompt" free text string as its schema.
       #
-      #   @return [Object, nil]
-      optional :input_data_schema, Cadenya::Internal::Type::Unknown, api_name: :inputDataSchema
+      #   @return [Hash{Symbol=>Object}, nil]
+      optional :input_data_schema,
+               Cadenya::Internal::Type::HashOf[Cadenya::Internal::Type::Unknown],
+               api_name: :inputDataSchema
 
       # @!attribute output_definition
       #   Optional output definition for objectives created for this agent. When provided,
@@ -40,8 +42,10 @@ module Cadenya
       #   variant to extract information in the format provided here. Use this option when
       #   you want structured data to be created by your objectives.
       #
-      #   @return [Object, nil]
-      optional :output_definition, Cadenya::Internal::Type::Unknown, api_name: :outputDefinition
+      #   @return [Hash{Symbol=>Object}, nil]
+      optional :output_definition,
+               Cadenya::Internal::Type::HashOf[Cadenya::Internal::Type::Unknown],
+               api_name: :outputDefinition
 
       # @!attribute webhook_events_url
       #   The URL that Cadenya will send events for any objective assigned to the agent.
@@ -61,9 +65,9 @@ module Cadenya
       #
       #   @param description [String] Description of the agent's purpose
       #
-      #   @param input_data_schema [Object] InputDataSchema is used for enforcing a data input when objectives are created.
+      #   @param input_data_schema [Hash{Symbol=>Object}] InputDataSchema is used for enforcing a data input when objectives are created.
       #
-      #   @param output_definition [Object] Optional output definition for objectives created for this agent.
+      #   @param output_definition [Hash{Symbol=>Object}] Optional output definition for objectives created for this agent.
       #
       #   @param webhook_events_url [String] The URL that Cadenya will send events for any objective assigned to the agent.
 
