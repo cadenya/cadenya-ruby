@@ -21,7 +21,7 @@ module Cadenya
       module ToolSets
       end
 
-      module Workspaces
+      module WorkspaceAdmin
       end
     end
   end

@@ -5,8 +5,7 @@ module Cadenya
     class WorkspaceMember < Cadenya::Internal::Type::BaseModel
       response_only do
         # @!attribute actor_id
-        #   The actor row linking the profile to the workspace (the junction record). This
-        #   is the id used to remove the member.
+        #   The actor row linking the profile to the workspace (the junction record).
         #
         #   @return [String]
         required :actor_id, String, api_name: :actorId
@@ -37,9 +36,6 @@ module Cadenya
       end
 
       # @!method initialize(actor_id:, profile_id:, added_at: nil, email: nil, name: nil)
-      #   Some parameter documentations has been truncated, see
-      #   {Cadenya::Models::WorkspaceMember} for more details.
-      #
       #   A member of a workspace: the profile granted access plus the actor row that
       #   links it to the workspace. Returned by member list/add operations.
       #
