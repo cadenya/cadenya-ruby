@@ -26,6 +26,11 @@ module Cadenya
     # @return [Cadenya::Resources::Account]
     attr_reader :account
 
+    # Read account profiles. Profiles are the account-level principals (users and API
+    # keys) that can be granted access to workspaces.
+    # @return [Cadenya::Resources::Profiles]
+    attr_reader :profiles
+
     # Manage AI agents within a workspace. Agents define AI behavior and tool access.
     # @return [Cadenya::Resources::Agents]
     attr_reader :agents
@@ -72,7 +77,9 @@ module Cadenya
     attr_reader :workspace_secrets
 
     # Manage workspaces within an account. Workspaces provide organizational grouping
-    # and isolation for resources such as agents, tools, and API keys.
+    # and isolation for resources such as agents, tools, and API keys. Workspace
+    # creation, archival, and membership management require an account administrator
+    # (a token whose profile holds the admin role).
     # @return [Cadenya::Resources::Workspaces]
     attr_reader :workspaces
 
@@ -151,6 +158,7 @@ module Cadenya
       )
 
       @account = Cadenya::Resources::Account.new(client: self)
+      @profiles = Cadenya::Resources::Profiles.new(client: self)
       @agents = Cadenya::Resources::Agents.new(client: self)
       @objectives = Cadenya::Resources::Objectives.new(client: self)
       @memory_layers = Cadenya::Resources::MemoryLayers.new(client: self)

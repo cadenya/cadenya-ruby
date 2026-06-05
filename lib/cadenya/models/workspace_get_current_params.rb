@@ -2,8 +2,8 @@
 
 module Cadenya
   module Models
-    # @see Cadenya::Resources::Workspaces#get
-    class WorkspaceGetParams < Cadenya::Internal::Type::BaseModel
+    # @see Cadenya::Resources::Workspaces#get_current
+    class WorkspaceGetCurrentParams < Cadenya::Internal::Type::BaseModel
       extend Cadenya::Internal::Type::RequestParameters::Converter
       include Cadenya::Internal::Type::RequestParameters
 
