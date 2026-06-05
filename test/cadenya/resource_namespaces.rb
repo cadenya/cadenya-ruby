@@ -20,6 +20,9 @@ module Cadenya
 
       module ToolSets
       end
+
+      module Workspaces
+      end
     end
   end
 end

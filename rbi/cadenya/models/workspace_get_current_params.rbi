@@ -2,13 +2,13 @@
 
 module Cadenya
   module Models
-    class WorkspaceGetParams < Cadenya::Internal::Type::BaseModel
+    class WorkspaceGetCurrentParams < Cadenya::Internal::Type::BaseModel
       extend Cadenya::Internal::Type::RequestParameters::Converter
       include Cadenya::Internal::Type::RequestParameters
 
       OrHash =
         T.type_alias do
-          T.any(Cadenya::WorkspaceGetParams, Cadenya::Internal::AnyHash)
+          T.any(Cadenya::WorkspaceGetCurrentParams, Cadenya::Internal::AnyHash)
         end
 
       sig do

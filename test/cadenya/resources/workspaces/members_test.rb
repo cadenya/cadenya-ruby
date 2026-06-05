@@ -2,11 +2,11 @@
 
 require_relative "../../test_helper"
 
-class Cadenya::Test::Resources::APIKeys::AccessTest < Cadenya::Test::ResourceTest
+class Cadenya::Test::Resources::Workspaces::MembersTest < Cadenya::Test::ResourceTest
   def test_list
     skip("Mock server tests are disabled")
 
-    response = @cadenya.api_keys.access.list("id")
+    response = @cadenya.workspaces.members.list("workspaceId")
 
     assert_pattern do
       response => Cadenya::Internal::CursorPagination
@@ -16,14 +16,16 @@ class Cadenya::Test::Resources::APIKeys::AccessTest < Cadenya::Test::ResourceTes
     return if row.nil?
 
     assert_pattern do
-      row => Cadenya::Workspace
+      row => Cadenya::WorkspaceMember
     end
 
     assert_pattern do
       row => {
-        metadata: Cadenya::AccountResourceMetadata,
-        spec: Cadenya::WorkspaceSpec,
-        status: Cadenya::Workspace::Status | nil
+        actor_id: String,
+        profile_id: String,
+        added_at: Time | nil,
+        email: String | nil,
+        name: String | nil
       }
     end
   end
@@ -31,17 +33,19 @@ class Cadenya::Test::Resources::APIKeys::AccessTest < Cadenya::Test::ResourceTes
   def test_add
     skip("Mock server tests are disabled")
 
-    response = @cadenya.api_keys.access.add("id")
+    response = @cadenya.workspaces.members.add("workspaceId")
 
     assert_pattern do
-      response => Cadenya::APIKey
+      response => Cadenya::WorkspaceMember
     end
 
     assert_pattern do
       response => {
-        metadata: Cadenya::AccountResourceMetadata,
-        spec: Cadenya::APIKeySpec,
-        info: Cadenya::APIKeyInfo | nil
+        actor_id: String,
+        profile_id: String,
+        added_at: Time | nil,
+        email: String | nil,
+        name: String | nil
       }
     end
   end
@@ -49,7 +53,7 @@ class Cadenya::Test::Resources::APIKeys::AccessTest < Cadenya::Test::ResourceTes
   def test_remove_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.api_keys.access.remove("workspaceId", id: "id")
+    response = @cadenya.workspaces.members.remove("id", workspace_id: "workspaceId")
 
     assert_pattern do
       response => nil

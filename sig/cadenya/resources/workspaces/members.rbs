@@ -1,0 +1,28 @@
+module Cadenya
+  module Resources
+    class Workspaces
+      class Members
+        def list: (
+          String workspace_id,
+          ?cursor: String,
+          ?limit: Integer,
+          ?request_options: Cadenya::request_opts
+        ) -> Cadenya::Internal::CursorPagination[Cadenya::WorkspaceMember]
+
+        def add: (
+          String workspace_id,
+          ?profile_id: String,
+          ?request_options: Cadenya::request_opts
+        ) -> Cadenya::WorkspaceMember
+
+        def remove: (
+          String id,
+          workspace_id: String,
+          ?request_options: Cadenya::request_opts
+        ) -> nil
+
+        def initialize: (client: Cadenya::Client) -> void
+      end
+    end
+  end
+end
