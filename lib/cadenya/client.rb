@@ -26,11 +26,6 @@ module Cadenya
     # @return [Cadenya::Resources::Account]
     attr_reader :account
 
-    # Read account profiles. Profiles are the account-level principals (users and API
-    # keys) that can be granted access to workspaces.
-    # @return [Cadenya::Resources::Profiles]
-    attr_reader :profiles
-
     # Manage AI agents within a workspace. Agents define AI behavior and tool access.
     # @return [Cadenya::Resources::Agents]
     attr_reader :agents
@@ -77,11 +72,22 @@ module Cadenya
     attr_reader :workspace_secrets
 
     # Manage workspaces within an account. Workspaces provide organizational grouping
-    # and isolation for resources such as agents, tools, and API keys. Workspace
-    # creation, archival, and membership management require an account administrator
-    # (a token whose profile holds the admin role).
+    # and isolation for resources such as agents, tools, and API keys.
+    #
+    # This is the workspace-scoped, end-user surface. Administrative operations
+    # (create / archive workspaces, manage members) live in WorkspaceAdminService
+    # under /v1/account/workspaces and require the admin role.
     # @return [Cadenya::Resources::Workspaces]
     attr_reader :workspaces
+
+    # Administer workspaces across the account: create and archive workspaces and
+    # manage their membership. These operations are account-scoped and require the
+    # admin role (a token whose profile holds the WorkOS admin role); they live under
+    # /v1/account/workspaces rather than the workspace-scoped /v1/workspaces tree so
+    # an admin can manage any workspace in the account, including ones they are not
+    # themselves a member of.
+    # @return [Cadenya::Resources::WorkspaceAdmin]
+    attr_reader :workspace_admin
 
     # @return [Cadenya::Resources::Webhooks]
     attr_reader :webhooks
@@ -158,7 +164,6 @@ module Cadenya
       )
 
       @account = Cadenya::Resources::Account.new(client: self)
-      @profiles = Cadenya::Resources::Profiles.new(client: self)
       @agents = Cadenya::Resources::Agents.new(client: self)
       @objectives = Cadenya::Resources::Objectives.new(client: self)
       @memory_layers = Cadenya::Resources::MemoryLayers.new(client: self)
@@ -169,6 +174,7 @@ module Cadenya
       @api_keys = Cadenya::Resources::APIKeys.new(client: self)
       @workspace_secrets = Cadenya::Resources::WorkspaceSecrets.new(client: self)
       @workspaces = Cadenya::Resources::Workspaces.new(client: self)
+      @workspace_admin = Cadenya::Resources::WorkspaceAdmin.new(client: self)
       @webhooks = Cadenya::Resources::Webhooks.new(client: self)
       @bulk_workspace_resources = Cadenya::Resources::BulkWorkspaceResources.new(client: self)
     end

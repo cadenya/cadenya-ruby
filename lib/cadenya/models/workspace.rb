@@ -2,7 +2,7 @@
 
 module Cadenya
   module Models
-    # @see Cadenya::Resources::Workspaces#create
+    # @see Cadenya::Resources::Workspaces#list
     class Workspace < Cadenya::Internal::Type::BaseModel
       # @!attribute metadata
       #   AccountResourceMetadata is used to represent a resource that is associated to an

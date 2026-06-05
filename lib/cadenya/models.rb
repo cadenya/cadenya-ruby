@@ -211,8 +211,6 @@ module Cadenya
 
   Profile = Cadenya::Models::Profile
 
-  ProfileListParams = Cadenya::Models::ProfileListParams
-
   ProfileSpec = Cadenya::Models::ProfileSpec
 
   ResourceMetadata = Cadenya::Models::ResourceMetadata
@@ -313,19 +311,21 @@ module Cadenya
 
   Workspace = Cadenya::Models::Workspace
 
-  WorkspaceCreateParams = Cadenya::Models::WorkspaceCreateParams
+  WorkspaceAdmin = Cadenya::Models::WorkspaceAdmin
 
-  WorkspaceDeleteParams = Cadenya::Models::WorkspaceDeleteParams
+  WorkspaceAdminArchiveParams = Cadenya::Models::WorkspaceAdminArchiveParams
 
-  WorkspaceGetCurrentParams = Cadenya::Models::WorkspaceGetCurrentParams
+  WorkspaceAdminCreateParams = Cadenya::Models::WorkspaceAdminCreateParams
+
+  WorkspaceAdminListParams = Cadenya::Models::WorkspaceAdminListParams
+
+  WorkspaceAdminRetrieveParams = Cadenya::Models::WorkspaceAdminRetrieveParams
+
+  WorkspaceGetParams = Cadenya::Models::WorkspaceGetParams
 
   WorkspaceListParams = Cadenya::Models::WorkspaceListParams
 
   WorkspaceMember = Cadenya::Models::WorkspaceMember
-
-  WorkspaceRetrieveParams = Cadenya::Models::WorkspaceRetrieveParams
-
-  Workspaces = Cadenya::Models::Workspaces
 
   WorkspaceSecret = Cadenya::Models::WorkspaceSecret
 
