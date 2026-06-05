@@ -75,6 +75,37 @@ module Cadenya
       end
 
       # Some parameter documentations has been truncated, see
+      # {Cadenya::Models::WorkspaceAdminUpdateParams} for more details.
+      #
+      # Updates a workspace's metadata (e.g. name) and spec. Admin only.
+      #
+      # @overload update(workspace_id, metadata: nil, spec: nil, update_mask: nil, request_options: {})
+      #
+      # @param workspace_id [String] Workspace ID to update (path).
+      #
+      # @param metadata [Cadenya::Models::WorkspaceAdminUpdateParams::Metadata] UpdateAccountResourceMetadata contains the user-provided fields for updating
+      #
+      # @param spec [Cadenya::Models::WorkspaceSpec]
+      #
+      # @param update_mask [String] Fields to update.
+      #
+      # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
+      #
+      # @return [Cadenya::Models::Workspace]
+      #
+      # @see Cadenya::Models::WorkspaceAdminUpdateParams
+      def update(workspace_id, params = {})
+        parsed, options = Cadenya::WorkspaceAdminUpdateParams.dump_request(params)
+        @client.request(
+          method: :patch,
+          path: ["v1/account/workspaces/%1$s", workspace_id],
+          body: parsed,
+          model: Cadenya::Workspace,
+          options: options
+        )
+      end
+
+      # Some parameter documentations has been truncated, see
       # {Cadenya::Models::WorkspaceAdminListParams} for more details.
       #
       # Lists every workspace in the account, optionally including archived ones. Admin
