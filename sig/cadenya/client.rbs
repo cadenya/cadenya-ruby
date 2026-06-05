@@ -14,8 +14,6 @@ module Cadenya
 
     attr_reader account: Cadenya::Resources::Account
 
-    attr_reader profiles: Cadenya::Resources::Profiles
-
     attr_reader agents: Cadenya::Resources::Agents
 
     attr_reader objectives: Cadenya::Resources::Objectives
@@ -35,6 +33,8 @@ module Cadenya
     attr_reader workspace_secrets: Cadenya::Resources::WorkspaceSecrets
 
     attr_reader workspaces: Cadenya::Resources::Workspaces
+
+    attr_reader workspace_admin: Cadenya::Resources::WorkspaceAdmin
 
     attr_reader webhooks: Cadenya::Resources::Webhooks
 

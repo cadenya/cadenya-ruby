@@ -8,8 +8,7 @@ module Cadenya
           T.any(Cadenya::WorkspaceMember, Cadenya::Internal::AnyHash)
         end
 
-      # The actor row linking the profile to the workspace (the junction record). This
-      # is the id used to remove the member.
+      # The actor row linking the profile to the workspace (the junction record).
       sig { returns(String) }
       attr_accessor :actor_id
 
@@ -50,8 +49,7 @@ module Cadenya
         ).returns(T.attached_class)
       end
       def self.new(
-        # The actor row linking the profile to the workspace (the junction record). This
-        # is the id used to remove the member.
+        # The actor row linking the profile to the workspace (the junction record).
         actor_id:,
         # The account profile that has access to the workspace.
         profile_id:,

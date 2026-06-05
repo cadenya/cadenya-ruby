@@ -1,0 +1,58 @@
+module Cadenya
+  module Models
+    type workspace_admin_create_params =
+      {
+        metadata: Cadenya::WorkspaceAdminCreateParams::Metadata,
+        spec: Cadenya::WorkspaceSpec
+      }
+      & Cadenya::Internal::Type::request_parameters
+
+    class WorkspaceAdminCreateParams < Cadenya::Internal::Type::BaseModel
+      extend Cadenya::Internal::Type::RequestParameters::Converter
+      include Cadenya::Internal::Type::RequestParameters
+
+      attr_accessor metadata: Cadenya::WorkspaceAdminCreateParams::Metadata
+
+      attr_accessor spec: Cadenya::WorkspaceSpec
+
+      def initialize: (
+        metadata: Cadenya::WorkspaceAdminCreateParams::Metadata,
+        spec: Cadenya::WorkspaceSpec,
+        ?request_options: Cadenya::request_opts
+      ) -> void
+
+      def to_hash: -> {
+        metadata: Cadenya::WorkspaceAdminCreateParams::Metadata,
+        spec: Cadenya::WorkspaceSpec,
+        request_options: Cadenya::RequestOptions
+      }
+
+      type metadata =
+        { name: String, external_id: String, labels: ::Hash[Symbol, String] }
+
+      class Metadata < Cadenya::Internal::Type::BaseModel
+        attr_accessor name: String
+
+        attr_reader external_id: String?
+
+        def external_id=: (String) -> String
+
+        attr_reader labels: ::Hash[Symbol, String]?
+
+        def labels=: (::Hash[Symbol, String]) -> ::Hash[Symbol, String]
+
+        def initialize: (
+          name: String,
+          ?external_id: String,
+          ?labels: ::Hash[Symbol, String]
+        ) -> void
+
+        def to_hash: -> {
+          name: String,
+          external_id: String,
+          labels: ::Hash[Symbol, String]
+        }
+      end
+    end
+  end
+end

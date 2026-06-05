@@ -1,0 +1,32 @@
+module Cadenya
+  module Resources
+    class WorkspaceAdmin
+      attr_reader members: Cadenya::Resources::WorkspaceAdmin::Members
+
+      def create: (
+        metadata: Cadenya::WorkspaceAdminCreateParams::Metadata,
+        spec: Cadenya::WorkspaceSpec,
+        ?request_options: Cadenya::request_opts
+      ) -> Cadenya::Workspace
+
+      def retrieve: (
+        String workspace_id,
+        ?request_options: Cadenya::request_opts
+      ) -> Cadenya::Workspace
+
+      def list: (
+        ?cursor: String,
+        ?include_archived: bool,
+        ?limit: Integer,
+        ?request_options: Cadenya::request_opts
+      ) -> Cadenya::Internal::CursorPagination[Cadenya::Workspace]
+
+      def archive: (
+        String workspace_id,
+        ?request_options: Cadenya::request_opts
+      ) -> nil
+
+      def initialize: (client: Cadenya::Client) -> void
+    end
+  end
+end
