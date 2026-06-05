@@ -3,6 +3,8 @@ module Cadenya
     class WorkspaceAdmin
       attr_reader members: Cadenya::Resources::WorkspaceAdmin::Members
 
+      attr_reader profiles: Cadenya::Resources::WorkspaceAdmin::Profiles
+
       def create: (
         metadata: Cadenya::WorkspaceAdminCreateParams::Metadata,
         spec: Cadenya::WorkspaceSpec,
