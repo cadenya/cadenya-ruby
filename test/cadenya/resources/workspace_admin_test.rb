@@ -39,6 +39,24 @@ class Cadenya::Test::Resources::WorkspaceAdminTest < Cadenya::Test::ResourceTest
     end
   end
 
+  def test_update
+    skip("Mock server tests are disabled")
+
+    response = @cadenya.workspace_admin.update("workspaceId")
+
+    assert_pattern do
+      response => Cadenya::Workspace
+    end
+
+    assert_pattern do
+      response => {
+        metadata: Cadenya::AccountResourceMetadata,
+        spec: Cadenya::WorkspaceSpec,
+        status: Cadenya::Workspace::Status | nil
+      }
+    end
+  end
+
   def test_list
     skip("Mock server tests are disabled")
 

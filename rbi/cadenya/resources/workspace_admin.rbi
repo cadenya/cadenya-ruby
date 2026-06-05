@@ -59,6 +59,30 @@ module Cadenya
       )
       end
 
+      # Updates a workspace's metadata (e.g. name) and spec. Admin only.
+      sig do
+        params(
+          workspace_id: String,
+          metadata: Cadenya::WorkspaceAdminUpdateParams::Metadata::OrHash,
+          spec: Cadenya::WorkspaceSpec::OrHash,
+          update_mask: String,
+          request_options: Cadenya::RequestOptions::OrHash
+        ).returns(Cadenya::Workspace)
+      end
+      def update(
+        # Workspace ID to update (path).
+        workspace_id,
+        # UpdateAccountResourceMetadata contains the user-provided fields for updating an
+        # account-scoped resource. Read-only fields (id, account_id, profile_id) are
+        # excluded since they are set by the server.
+        metadata: nil,
+        spec: nil,
+        # Fields to update.
+        update_mask: nil,
+        request_options: {}
+      )
+      end
+
       # Lists every workspace in the account, optionally including archived ones. Admin
       # only.
       sig do

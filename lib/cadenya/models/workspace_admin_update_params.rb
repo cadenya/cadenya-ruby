@@ -1,0 +1,85 @@
+# frozen_string_literal: true
+
+module Cadenya
+  module Models
+    # @see Cadenya::Resources::WorkspaceAdmin#update
+    class WorkspaceAdminUpdateParams < Cadenya::Internal::Type::BaseModel
+      extend Cadenya::Internal::Type::RequestParameters::Converter
+      include Cadenya::Internal::Type::RequestParameters
+
+      # @!attribute workspace_id
+      #
+      #   @return [String]
+      required :workspace_id, String
+
+      # @!attribute metadata
+      #   UpdateAccountResourceMetadata contains the user-provided fields for updating an
+      #   account-scoped resource. Read-only fields (id, account_id, profile_id) are
+      #   excluded since they are set by the server.
+      #
+      #   @return [Cadenya::Models::WorkspaceAdminUpdateParams::Metadata, nil]
+      optional :metadata, -> { Cadenya::WorkspaceAdminUpdateParams::Metadata }
+
+      # @!attribute spec
+      #
+      #   @return [Cadenya::Models::WorkspaceSpec, nil]
+      optional :spec, -> { Cadenya::WorkspaceSpec }
+
+      # @!attribute update_mask
+      #   Fields to update.
+      #
+      #   @return [String, nil]
+      optional :update_mask, String, api_name: :updateMask
+
+      # @!method initialize(workspace_id:, metadata: nil, spec: nil, update_mask: nil, request_options: {})
+      #   Some parameter documentations has been truncated, see
+      #   {Cadenya::Models::WorkspaceAdminUpdateParams} for more details.
+      #
+      #   @param workspace_id [String]
+      #
+      #   @param metadata [Cadenya::Models::WorkspaceAdminUpdateParams::Metadata] UpdateAccountResourceMetadata contains the user-provided fields for updating
+      #
+      #   @param spec [Cadenya::Models::WorkspaceSpec]
+      #
+      #   @param update_mask [String] Fields to update.
+      #
+      #   @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}]
+
+      class Metadata < Cadenya::Internal::Type::BaseModel
+        # @!attribute name
+        #   Human-readable name for the resource (e.g., "Production API Key", "Staging
+        #   Workspace")
+        #
+        #   @return [String]
+        required :name, String
+
+        # @!attribute external_id
+        #   External ID for the resource (e.g., a workflow ID from an external system)
+        #
+        #   @return [String, nil]
+        optional :external_id, String, api_name: :externalId
+
+        # @!attribute labels
+        #   Arbitrary key-value pairs for categorization and filtering Examples:
+        #   {"environment": "production", "team": "platform", "version": "v2"}
+        #
+        #   @return [Hash{Symbol=>String}, nil]
+        optional :labels, Cadenya::Internal::Type::HashOf[String]
+
+        # @!method initialize(name:, external_id: nil, labels: nil)
+        #   Some parameter documentations has been truncated, see
+        #   {Cadenya::Models::WorkspaceAdminUpdateParams::Metadata} for more details.
+        #
+        #   UpdateAccountResourceMetadata contains the user-provided fields for updating an
+        #   account-scoped resource. Read-only fields (id, account_id, profile_id) are
+        #   excluded since they are set by the server.
+        #
+        #   @param name [String] Human-readable name for the resource (e.g., "Production API Key", "Staging Works
+        #
+        #   @param external_id [String] External ID for the resource (e.g., a workflow ID from an external system)
+        #
+        #   @param labels [Hash{Symbol=>String}] Arbitrary key-value pairs for categorization and filtering
+      end
+    end
+  end
+end
