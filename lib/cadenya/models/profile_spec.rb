@@ -40,6 +40,7 @@ module Cadenya
       module Type
         extend Cadenya::Internal::Type::Enum
 
+        PROFILE_TYPE_UNSPECIFIED = :PROFILE_TYPE_UNSPECIFIED
         PROFILE_TYPE_USER = :PROFILE_TYPE_USER
         PROFILE_TYPE_API_KEY = :PROFILE_TYPE_API_KEY
         PROFILE_TYPE_SYSTEM = :PROFILE_TYPE_SYSTEM
