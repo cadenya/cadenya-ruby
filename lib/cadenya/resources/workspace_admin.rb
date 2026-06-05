@@ -98,7 +98,9 @@ module Cadenya
       end
 
       # Archives a workspace (soft delete). The workspace is retained, but any
-      # subsequent request scoped to it returns a permission error. Admin only.
+      # subsequent request scoped to it returns a permission error. Archiving the
+      # account's last active (non-archived) workspace is not allowed and returns
+      # FailedPrecondition. Admin only.
       #
       # @overload archive(workspace_id, request_options: {})
       #
