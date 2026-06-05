@@ -22,19 +22,12 @@ module Cadenya
 
         # @!attribute query
         #   Free-form search over profile name and email. Case-insensitive substring match;
-        #   empty returns all profiles (subject to the type filter).
+        #   empty returns all profiles.
         #
         #   @return [String, nil]
         optional :query, String
 
-        # @!attribute type
-        #   Filter by profile type. Defaults to all types when unset; pass PROFILE_TYPE_USER
-        #   to list only human users (the common case for a member picker).
-        #
-        #   @return [Symbol, Cadenya::Models::WorkspaceAdmin::ProfileListParams::Type, nil]
-        optional :type, enum: -> { Cadenya::WorkspaceAdmin::ProfileListParams::Type }
-
-        # @!method initialize(cursor: nil, limit: nil, query: nil, type: nil, request_options: {})
+        # @!method initialize(cursor: nil, limit: nil, query: nil, request_options: {})
         #   Some parameter documentations has been truncated, see
         #   {Cadenya::Models::WorkspaceAdmin::ProfileListParams} for more details.
         #
@@ -44,22 +37,7 @@ module Cadenya
         #
         #   @param query [String] Free-form search over profile name and email. Case-insensitive substring
         #
-        #   @param type [Symbol, Cadenya::Models::WorkspaceAdmin::ProfileListParams::Type] Filter by profile type. Defaults to all types when unset; pass
-        #
         #   @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}]
-
-        # Filter by profile type. Defaults to all types when unset; pass PROFILE_TYPE_USER
-        # to list only human users (the common case for a member picker).
-        module Type
-          extend Cadenya::Internal::Type::Enum
-
-          PROFILE_TYPE_USER = :PROFILE_TYPE_USER
-          PROFILE_TYPE_API_KEY = :PROFILE_TYPE_API_KEY
-          PROFILE_TYPE_SYSTEM = :PROFILE_TYPE_SYSTEM
-
-          # @!method self.values
-          #   @return [Array<Symbol>]
-        end
       end
     end
   end

@@ -2,12 +2,7 @@ module Cadenya
   module Models
     module WorkspaceAdmin
       type profile_list_params =
-        {
-          cursor: String,
-          limit: Integer,
-          query: String,
-          type: Cadenya::Models::WorkspaceAdmin::ProfileListParams::type_
-        }
+        { cursor: String, limit: Integer, query: String }
         & Cadenya::Internal::Type::request_parameters
 
       class ProfileListParams < Cadenya::Internal::Type::BaseModel
@@ -26,17 +21,10 @@ module Cadenya
 
         def query=: (String) -> String
 
-        attr_reader type: Cadenya::Models::WorkspaceAdmin::ProfileListParams::type_?
-
-        def type=: (
-          Cadenya::Models::WorkspaceAdmin::ProfileListParams::type_
-        ) -> Cadenya::Models::WorkspaceAdmin::ProfileListParams::type_
-
         def initialize: (
           ?cursor: String,
           ?limit: Integer,
           ?query: String,
-          ?type: Cadenya::Models::WorkspaceAdmin::ProfileListParams::type_,
           ?request_options: Cadenya::request_opts
         ) -> void
 
@@ -44,22 +32,8 @@ module Cadenya
           cursor: String,
           limit: Integer,
           query: String,
-          type: Cadenya::Models::WorkspaceAdmin::ProfileListParams::type_,
           request_options: Cadenya::RequestOptions
         }
-
-        type type_ =
-          :PROFILE_TYPE_USER | :PROFILE_TYPE_API_KEY | :PROFILE_TYPE_SYSTEM
-
-        module Type
-          extend Cadenya::Internal::Type::Enum
-
-          PROFILE_TYPE_USER: :PROFILE_TYPE_USER
-          PROFILE_TYPE_API_KEY: :PROFILE_TYPE_API_KEY
-          PROFILE_TYPE_SYSTEM: :PROFILE_TYPE_SYSTEM
-
-          def self?.values: -> ::Array[Cadenya::Models::WorkspaceAdmin::ProfileListParams::type_]
-        end
       end
     end
   end

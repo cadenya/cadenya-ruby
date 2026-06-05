@@ -17,7 +17,6 @@ module Cadenya
             cursor: String,
             limit: Integer,
             query: String,
-            type: Cadenya::WorkspaceAdmin::ProfileListParams::Type::OrSymbol,
             request_options: Cadenya::RequestOptions::OrHash
           ).returns(Cadenya::Internal::CursorPagination[Cadenya::Profile])
         end
@@ -27,11 +26,8 @@ module Cadenya
           # Maximum number of results to return
           limit: nil,
           # Free-form search over profile name and email. Case-insensitive substring match;
-          # empty returns all profiles (subject to the type filter).
+          # empty returns all profiles.
           query: nil,
-          # Filter by profile type. Defaults to all types when unset; pass PROFILE_TYPE_USER
-          # to list only human users (the common case for a member picker).
-          type: nil,
           request_options: {}
         )
         end

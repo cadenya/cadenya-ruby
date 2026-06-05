@@ -64,6 +64,11 @@ module Cadenya
           T.type_alias { T.all(Symbol, Cadenya::ProfileSpec::Type) }
         OrSymbol = T.type_alias { T.any(Symbol, String) }
 
+        PROFILE_TYPE_UNSPECIFIED =
+          T.let(
+            :PROFILE_TYPE_UNSPECIFIED,
+            Cadenya::ProfileSpec::Type::TaggedSymbol
+          )
         PROFILE_TYPE_USER =
           T.let(:PROFILE_TYPE_USER, Cadenya::ProfileSpec::Type::TaggedSymbol)
         PROFILE_TYPE_API_KEY =
