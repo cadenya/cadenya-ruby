@@ -16,15 +16,13 @@ module Cadenya
         # Searches the account's profiles for a member picker, with free-form name/email
         # search and an optional type filter. Account-scoped; admin only.
         #
-        # @overload list(cursor: nil, limit: nil, query: nil, type: nil, request_options: {})
+        # @overload list(cursor: nil, limit: nil, query: nil, request_options: {})
         #
         # @param cursor [String] Pagination cursor from previous response
         #
         # @param limit [Integer] Maximum number of results to return
         #
         # @param query [String] Free-form search over profile name and email. Case-insensitive substring
-        #
-        # @param type [Symbol, Cadenya::Models::WorkspaceAdmin::ProfileListParams::Type] Filter by profile type. Defaults to all types when unset; pass
         #
         # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
         #

@@ -6,7 +6,6 @@ module Cadenya
           ?cursor: String,
           ?limit: Integer,
           ?query: String,
-          ?type: Cadenya::Models::WorkspaceAdmin::ProfileListParams::type_,
           ?request_options: Cadenya::request_opts
         ) -> Cadenya::Internal::CursorPagination[Cadenya::Profile]
 
