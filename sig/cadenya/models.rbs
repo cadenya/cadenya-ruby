@@ -281,6 +281,8 @@ module Cadenya
 
   class WorkspaceAdminRetrieveParams = Cadenya::Models::WorkspaceAdminRetrieveParams
 
+  class WorkspaceAdminUpdateParams = Cadenya::Models::WorkspaceAdminUpdateParams
+
   class WorkspaceGetParams = Cadenya::Models::WorkspaceGetParams
 
   class WorkspaceListParams = Cadenya::Models::WorkspaceListParams

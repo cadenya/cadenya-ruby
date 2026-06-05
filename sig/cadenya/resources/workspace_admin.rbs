@@ -16,6 +16,14 @@ module Cadenya
         ?request_options: Cadenya::request_opts
       ) -> Cadenya::Workspace
 
+      def update: (
+        String workspace_id,
+        ?metadata: Cadenya::WorkspaceAdminUpdateParams::Metadata,
+        ?spec: Cadenya::WorkspaceSpec,
+        ?update_mask: String,
+        ?request_options: Cadenya::request_opts
+      ) -> Cadenya::Workspace
+
       def list: (
         ?cursor: String,
         ?include_archived: bool,

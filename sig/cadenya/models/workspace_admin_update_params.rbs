@@ -1,0 +1,76 @@
+module Cadenya
+  module Models
+    type workspace_admin_update_params =
+      {
+        workspace_id: String,
+        metadata: Cadenya::WorkspaceAdminUpdateParams::Metadata,
+        spec: Cadenya::WorkspaceSpec,
+        update_mask: String
+      }
+      & Cadenya::Internal::Type::request_parameters
+
+    class WorkspaceAdminUpdateParams < Cadenya::Internal::Type::BaseModel
+      extend Cadenya::Internal::Type::RequestParameters::Converter
+      include Cadenya::Internal::Type::RequestParameters
+
+      attr_accessor workspace_id: String
+
+      attr_reader metadata: Cadenya::WorkspaceAdminUpdateParams::Metadata?
+
+      def metadata=: (
+        Cadenya::WorkspaceAdminUpdateParams::Metadata
+      ) -> Cadenya::WorkspaceAdminUpdateParams::Metadata
+
+      attr_reader spec: Cadenya::WorkspaceSpec?
+
+      def spec=: (Cadenya::WorkspaceSpec) -> Cadenya::WorkspaceSpec
+
+      attr_reader update_mask: String?
+
+      def update_mask=: (String) -> String
+
+      def initialize: (
+        workspace_id: String,
+        ?metadata: Cadenya::WorkspaceAdminUpdateParams::Metadata,
+        ?spec: Cadenya::WorkspaceSpec,
+        ?update_mask: String,
+        ?request_options: Cadenya::request_opts
+      ) -> void
+
+      def to_hash: -> {
+        workspace_id: String,
+        metadata: Cadenya::WorkspaceAdminUpdateParams::Metadata,
+        spec: Cadenya::WorkspaceSpec,
+        update_mask: String,
+        request_options: Cadenya::RequestOptions
+      }
+
+      type metadata =
+        { name: String, external_id: String, labels: ::Hash[Symbol, String] }
+
+      class Metadata < Cadenya::Internal::Type::BaseModel
+        attr_accessor name: String
+
+        attr_reader external_id: String?
+
+        def external_id=: (String) -> String
+
+        attr_reader labels: ::Hash[Symbol, String]?
+
+        def labels=: (::Hash[Symbol, String]) -> ::Hash[Symbol, String]
+
+        def initialize: (
+          name: String,
+          ?external_id: String,
+          ?labels: ::Hash[Symbol, String]
+        ) -> void
+
+        def to_hash: -> {
+          name: String,
+          external_id: String,
+          labels: ::Hash[Symbol, String]
+        }
+      end
+    end
+  end
+end
