@@ -18,6 +18,15 @@ module Cadenya
       sig { returns(Cadenya::Resources::WorkspaceAdmin::Members) }
       attr_reader :members
 
+      # Administer workspaces across the account: create and archive workspaces and
+      # manage their membership. These operations are account-scoped and require the
+      # admin role (a token whose profile holds the WorkOS admin role); they live under
+      # /v1/account/workspaces rather than the workspace-scoped /v1/workspaces tree so
+      # an admin can manage any workspace in the account, including ones they are not
+      # themselves a member of.
+      sig { returns(Cadenya::Resources::WorkspaceAdmin::Profiles) }
+      attr_reader :profiles
+
       # Creates a new workspace in the account. Admin only.
       sig do
         params(
