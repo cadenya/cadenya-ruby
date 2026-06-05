@@ -1,0 +1,20 @@
+module Cadenya
+  module Models
+    type workspace_delete_params =
+      { id: String } & Cadenya::Internal::Type::request_parameters
+
+    class WorkspaceDeleteParams < Cadenya::Internal::Type::BaseModel
+      extend Cadenya::Internal::Type::RequestParameters::Converter
+      include Cadenya::Internal::Type::RequestParameters
+
+      attr_accessor id: String
+
+      def initialize: (
+        id: String,
+        ?request_options: Cadenya::request_opts
+      ) -> void
+
+      def to_hash: -> { id: String, request_options: Cadenya::RequestOptions }
+    end
+  end
+end

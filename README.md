@@ -53,15 +53,15 @@ List methods in the Cadenya API are paginated.
 This library provides auto-paginating iterators with each list response, so you do not have to request successive pages manually:
 
 ```ruby
-page = cadenya.agents.list
+page = cadenya.profiles.list
 
 # Fetch single item from page.
-agent = page.items[0]
-puts(agent.metadata)
+profile = page.items[0]
+puts(profile.metadata)
 
 # Automatically fetches more pages as needed.
-page.auto_paging_each do |agent|
-  puts(agent.metadata)
+page.auto_paging_each do |profile|
+  puts(profile.metadata)
 end
 ```
 
@@ -233,25 +233,25 @@ cadenya.account.retrieve(**params)
 Since this library does not depend on `sorbet-runtime`, it cannot provide [`T::Enum`](https://sorbet.org/docs/tenum) instances. Instead, we provide "tagged symbols" instead, which is always a primitive at runtime:
 
 ```ruby
-# :AGENT_STATUS_UNSPECIFIED
-puts(Cadenya::AgentListParams::Status::AGENT_STATUS_UNSPECIFIED)
+# :PROFILE_TYPE_USER
+puts(Cadenya::ProfileListParams::Type::PROFILE_TYPE_USER)
 
-# Revealed type: `T.all(Cadenya::AgentListParams::Status, Symbol)`
-T.reveal_type(Cadenya::AgentListParams::Status::AGENT_STATUS_UNSPECIFIED)
+# Revealed type: `T.all(Cadenya::ProfileListParams::Type, Symbol)`
+T.reveal_type(Cadenya::ProfileListParams::Type::PROFILE_TYPE_USER)
 ```
 
 Enum parameters have a "relaxed" type, so you can either pass in enum constants or their literal value:
 
 ```ruby
 # Using the enum constants preserves the tagged type information:
-cadenya.agents.list(
-  status: Cadenya::AgentListParams::Status::AGENT_STATUS_UNSPECIFIED,
+cadenya.profiles.list(
+  type: Cadenya::ProfileListParams::Type::PROFILE_TYPE_USER,
   # …
 )
 
 # Literal values are also permissible:
-cadenya.agents.list(
-  status: :AGENT_STATUS_UNSPECIFIED,
+cadenya.profiles.list(
+  type: :PROFILE_TYPE_USER,
   # …
 )
 ```

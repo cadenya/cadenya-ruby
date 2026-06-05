@@ -3,7 +3,8 @@ module Cadenya
     type workspace =
       {
         metadata: Cadenya::AccountResourceMetadata,
-        spec: Cadenya::WorkspaceSpec
+        spec: Cadenya::WorkspaceSpec,
+        status: Cadenya::Models::Workspace::status
       }
 
     class Workspace < Cadenya::Internal::Type::BaseModel
@@ -11,15 +12,35 @@ module Cadenya
 
       attr_accessor spec: Cadenya::WorkspaceSpec
 
+      attr_reader status: Cadenya::Models::Workspace::status?
+
+      def status=: (
+        Cadenya::Models::Workspace::status
+      ) -> Cadenya::Models::Workspace::status
+
       def initialize: (
         metadata: Cadenya::AccountResourceMetadata,
-        spec: Cadenya::WorkspaceSpec
+        spec: Cadenya::WorkspaceSpec,
+        ?status: Cadenya::Models::Workspace::status
       ) -> void
 
       def to_hash: -> {
         metadata: Cadenya::AccountResourceMetadata,
-        spec: Cadenya::WorkspaceSpec
+        spec: Cadenya::WorkspaceSpec,
+        status: Cadenya::Models::Workspace::status
       }
+
+      type status = :STATUS_ENABLED | :STATUS_DISABLED | :STATUS_ARCHIVED
+
+      module Status
+        extend Cadenya::Internal::Type::Enum
+
+        STATUS_ENABLED: :STATUS_ENABLED
+        STATUS_DISABLED: :STATUS_DISABLED
+        STATUS_ARCHIVED: :STATUS_ARCHIVED
+
+        def self?.values: -> ::Array[Cadenya::Models::Workspace::status]
+      end
     end
   end
 end

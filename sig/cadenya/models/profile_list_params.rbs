@@ -1,0 +1,64 @@
+module Cadenya
+  module Models
+    type profile_list_params =
+      {
+        cursor: String,
+        limit: Integer,
+        query: String,
+        type: Cadenya::Models::ProfileListParams::type_
+      }
+      & Cadenya::Internal::Type::request_parameters
+
+    class ProfileListParams < Cadenya::Internal::Type::BaseModel
+      extend Cadenya::Internal::Type::RequestParameters::Converter
+      include Cadenya::Internal::Type::RequestParameters
+
+      attr_reader cursor: String?
+
+      def cursor=: (String) -> String
+
+      attr_reader limit: Integer?
+
+      def limit=: (Integer) -> Integer
+
+      attr_reader query: String?
+
+      def query=: (String) -> String
+
+      attr_reader type: Cadenya::Models::ProfileListParams::type_?
+
+      def type=: (
+        Cadenya::Models::ProfileListParams::type_
+      ) -> Cadenya::Models::ProfileListParams::type_
+
+      def initialize: (
+        ?cursor: String,
+        ?limit: Integer,
+        ?query: String,
+        ?type: Cadenya::Models::ProfileListParams::type_,
+        ?request_options: Cadenya::request_opts
+      ) -> void
+
+      def to_hash: -> {
+        cursor: String,
+        limit: Integer,
+        query: String,
+        type: Cadenya::Models::ProfileListParams::type_,
+        request_options: Cadenya::RequestOptions
+      }
+
+      type type_ =
+        :PROFILE_TYPE_USER | :PROFILE_TYPE_API_KEY | :PROFILE_TYPE_SYSTEM
+
+      module Type
+        extend Cadenya::Internal::Type::Enum
+
+        PROFILE_TYPE_USER: :PROFILE_TYPE_USER
+        PROFILE_TYPE_API_KEY: :PROFILE_TYPE_API_KEY
+        PROFILE_TYPE_SYSTEM: :PROFILE_TYPE_SYSTEM
+
+        def self?.values: -> ::Array[Cadenya::Models::ProfileListParams::type_]
+      end
+    end
+  end
+end
