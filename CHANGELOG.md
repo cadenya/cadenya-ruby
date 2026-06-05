@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.3.0 (2026-06-05)
+
+Full Changelog: [v0.2.0...v0.3.0](https://github.com/cadenya/cadenya-ruby/compare/v0.2.0...v0.3.0)
+
+### Features
+
+* Add admin profile search (workspaceAdmin.profiles.list) — ENG-308 ([1e4797b](https://github.com/cadenya/cadenya-ruby/commit/1e4797be9bef5f7382270eb22d4e7ee1cea5a317))
+* **api:** api update ([8721ef8](https://github.com/cadenya/cadenya-ruby/commit/8721ef8a408a83e13ef49da9f8257027da9fa69d))
+* **api:** api update ([e4f7e6e](https://github.com/cadenya/cadenya-ruby/commit/e4f7e6e38b74ecb01be4e006d24ce5878343d481))
+* **api:** api update ([ca33f81](https://github.com/cadenya/cadenya-ruby/commit/ca33f814f4b7dbcdff61c64165a15742c1e281d0))
+* **api:** api update ([e7a5a6d](https://github.com/cadenya/cadenya-ruby/commit/e7a5a6de7e7a9c4f9310e5feff50cc1a733103f1))
+* **api:** api update ([98b0521](https://github.com/cadenya/cadenya-ruby/commit/98b0521380484243a201a4c0c2779808d4a2acad))
+* **api:** api update ([f2e807e](https://github.com/cadenya/cadenya-ruby/commit/f2e807e762dc8d0e4b2dfcd4cf16ff5161ef3003))
+* **api:** api update ([c2c28b1](https://github.com/cadenya/cadenya-ruby/commit/c2c28b16acff45120a9568952a812341502329fc))
+* **api:** api update ([0cb5f64](https://github.com/cadenya/cadenya-ruby/commit/0cb5f6447508b9fa8ed4ca297bc5181955f50c90))
+* **api:** api update ([2975430](https://github.com/cadenya/cadenya-ruby/commit/29754304ee42e35d1c3d38bd02bca0cf45271a16))
+
 ## 0.2.0 (2026-05-14)
 
 Full Changelog: [v0.1.0...v0.2.0](https://github.com/cadenya/cadenya-ruby/compare/v0.1.0...v0.2.0)
