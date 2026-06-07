@@ -70,16 +70,11 @@ module Cadenya
         sig { params(agent_variation_count: Integer).void }
         attr_writer :agent_variation_count
 
-        # BareMetadata contains the minimal metadata for a resource: the ID and an
-        # optional human-readable name. These are used for reference fields where the full
-        # metadata (account scoping, timestamps, labels, external IDs) is not needed —
-        # e.g., the tool references inside an agent variation spec or the tools assigned
-        # to an objective. Both fields are server-populated; clients provide IDs through
-        # sibling fields rather than by constructing a BareMetadata themselves.
-        sig { returns(T.nilable(Cadenya::BareMetadata)) }
+        # Standard metadata for persistent, named resources (e.g., agents, tools, prompts)
+        sig { returns(T.nilable(Cadenya::ResourceMetadata)) }
         attr_reader :ai_provider_key
 
-        sig { params(ai_provider_key: Cadenya::BareMetadata::OrHash).void }
+        sig { params(ai_provider_key: Cadenya::ResourceMetadata::OrHash).void }
         attr_writer :ai_provider_key
 
         # The AI provider this model routes through (via its provider key).
@@ -93,7 +88,7 @@ module Cadenya
         sig do
           params(
             agent_variation_count: Integer,
-            ai_provider_key: Cadenya::BareMetadata::OrHash,
+            ai_provider_key: Cadenya::ResourceMetadata::OrHash,
             provider: Cadenya::Model::Info::Provider::OrSymbol
           ).returns(T.attached_class)
         end
@@ -101,12 +96,7 @@ module Cadenya
           # Number of agent variations currently provisioned on this model. Useful for
           # previewing how many variations a swap would affect.
           agent_variation_count: nil,
-          # BareMetadata contains the minimal metadata for a resource: the ID and an
-          # optional human-readable name. These are used for reference fields where the full
-          # metadata (account scoping, timestamps, labels, external IDs) is not needed —
-          # e.g., the tool references inside an agent variation spec or the tools assigned
-          # to an objective. Both fields are server-populated; clients provide IDs through
-          # sibling fields rather than by constructing a BareMetadata themselves.
+          # Standard metadata for persistent, named resources (e.g., agents, tools, prompts)
           ai_provider_key: nil,
           # The AI provider this model routes through (via its provider key).
           provider: nil
@@ -117,7 +107,7 @@ module Cadenya
           override.returns(
             {
               agent_variation_count: Integer,
-              ai_provider_key: Cadenya::BareMetadata,
+              ai_provider_key: Cadenya::ResourceMetadata,
               provider: Cadenya::Model::Info::Provider::TaggedSymbol
             }
           )

@@ -45,15 +45,10 @@ module Cadenya
           optional :agent_variation_count, Integer, api_name: :agentVariationCount
 
           # @!attribute ai_provider_key
-          #   BareMetadata contains the minimal metadata for a resource: the ID and an
-          #   optional human-readable name. These are used for reference fields where the full
-          #   metadata (account scoping, timestamps, labels, external IDs) is not needed —
-          #   e.g., the tool references inside an agent variation spec or the tools assigned
-          #   to an objective. Both fields are server-populated; clients provide IDs through
-          #   sibling fields rather than by constructing a BareMetadata themselves.
+          #   Standard metadata for persistent, named resources (e.g., agents, tools, prompts)
           #
-          #   @return [Cadenya::Models::BareMetadata, nil]
-          optional :ai_provider_key, -> { Cadenya::BareMetadata }, api_name: :aiProviderKey
+          #   @return [Cadenya::Models::ResourceMetadata, nil]
+          optional :ai_provider_key, -> { Cadenya::ResourceMetadata }, api_name: :aiProviderKey
 
           # @!attribute provider
           #   The AI provider this model routes through (via its provider key).
@@ -70,7 +65,7 @@ module Cadenya
         #
         #   @param agent_variation_count [Integer] Number of agent variations currently provisioned on this model. Useful for
         #
-        #   @param ai_provider_key [Cadenya::Models::BareMetadata] BareMetadata contains the minimal metadata for a resource: the ID and an
+        #   @param ai_provider_key [Cadenya::Models::ResourceMetadata] Standard metadata for persistent, named resources (e.g., agents, tools, prompts)
         #
         #   @param provider [Symbol, Cadenya::Models::Model::Info::Provider] The AI provider this model routes through (via its provider key).
 
