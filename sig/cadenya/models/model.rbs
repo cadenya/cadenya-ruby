@@ -1,22 +1,71 @@
 module Cadenya
   module Models
     type model =
-      { metadata: Cadenya::ResourceMetadata, spec: Cadenya::ModelSpec }
+      {
+        metadata: Cadenya::ResourceMetadata,
+        spec: Cadenya::ModelSpec,
+        info: Cadenya::Model::Info
+      }
 
     class Model < Cadenya::Internal::Type::BaseModel
       attr_accessor metadata: Cadenya::ResourceMetadata
 
       attr_accessor spec: Cadenya::ModelSpec
 
+      attr_reader info: Cadenya::Model::Info?
+
+      def info=: (Cadenya::Model::Info) -> Cadenya::Model::Info
+
       def initialize: (
         metadata: Cadenya::ResourceMetadata,
-        spec: Cadenya::ModelSpec
+        spec: Cadenya::ModelSpec,
+        ?info: Cadenya::Model::Info
       ) -> void
 
       def to_hash: -> {
         metadata: Cadenya::ResourceMetadata,
-        spec: Cadenya::ModelSpec
+        spec: Cadenya::ModelSpec,
+        info: Cadenya::Model::Info
       }
+
+      type info =
+        {
+          ai_provider_key: Cadenya::BareMetadata,
+          provider: Cadenya::Models::Model::Info::provider
+        }
+
+      class Info < Cadenya::Internal::Type::BaseModel
+        attr_reader ai_provider_key: Cadenya::BareMetadata?
+
+        def ai_provider_key=: (Cadenya::BareMetadata) -> Cadenya::BareMetadata
+
+        attr_reader provider: Cadenya::Models::Model::Info::provider?
+
+        def provider=: (
+          Cadenya::Models::Model::Info::provider
+        ) -> Cadenya::Models::Model::Info::provider
+
+        def initialize: (
+          ?ai_provider_key: Cadenya::BareMetadata,
+          ?provider: Cadenya::Models::Model::Info::provider
+        ) -> void
+
+        def to_hash: -> {
+          ai_provider_key: Cadenya::BareMetadata,
+          provider: Cadenya::Models::Model::Info::provider
+        }
+
+        type provider = :AI_PROVIDER_UNSPECIFIED | :AI_PROVIDER_OPENROUTER
+
+        module Provider
+          extend Cadenya::Internal::Type::Enum
+
+          AI_PROVIDER_UNSPECIFIED: :AI_PROVIDER_UNSPECIFIED
+          AI_PROVIDER_OPENROUTER: :AI_PROVIDER_OPENROUTER
+
+          def self?.values: -> ::Array[Cadenya::Models::Model::Info::provider]
+        end
+      end
     end
   end
 end

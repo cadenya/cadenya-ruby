@@ -26,6 +26,7 @@ module Cadenya
       def list: (
         String workspace_id,
         ?cursor: String,
+        ?include_info: bool,
         ?limit: Integer,
         ?prefix: String,
         ?query: String,

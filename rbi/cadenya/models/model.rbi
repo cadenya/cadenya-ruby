@@ -20,26 +20,125 @@ module Cadenya
       sig { params(spec: Cadenya::ModelSpec::OrHash).void }
       attr_writer :spec
 
+      # ModelInfo carries server-derived, read-only details about a model.
+      sig { returns(T.nilable(Cadenya::Model::Info)) }
+      attr_reader :info
+
+      sig { params(info: Cadenya::Model::Info::OrHash).void }
+      attr_writer :info
+
       sig do
         params(
           metadata: Cadenya::ResourceMetadata::OrHash,
-          spec: Cadenya::ModelSpec::OrHash
+          spec: Cadenya::ModelSpec::OrHash,
+          info: Cadenya::Model::Info::OrHash
         ).returns(T.attached_class)
       end
       def self.new(
         # Standard metadata for persistent, named resources (e.g., agents, tools, prompts)
         metadata:,
         # Model specification
-        spec:
+        spec:,
+        # ModelInfo carries server-derived, read-only details about a model.
+        info: nil
       )
       end
 
       sig do
         override.returns(
-          { metadata: Cadenya::ResourceMetadata, spec: Cadenya::ModelSpec }
+          {
+            metadata: Cadenya::ResourceMetadata,
+            spec: Cadenya::ModelSpec,
+            info: Cadenya::Model::Info
+          }
         )
       end
       def to_hash
+      end
+
+      class Info < Cadenya::Internal::Type::BaseModel
+        OrHash =
+          T.type_alias do
+            T.any(Cadenya::Model::Info, Cadenya::Internal::AnyHash)
+          end
+
+        # BareMetadata contains the minimal metadata for a resource: the ID and an
+        # optional human-readable name. These are used for reference fields where the full
+        # metadata (account scoping, timestamps, labels, external IDs) is not needed —
+        # e.g., the tool references inside an agent variation spec or the tools assigned
+        # to an objective. Both fields are server-populated; clients provide IDs through
+        # sibling fields rather than by constructing a BareMetadata themselves.
+        sig { returns(T.nilable(Cadenya::BareMetadata)) }
+        attr_reader :ai_provider_key
+
+        sig { params(ai_provider_key: Cadenya::BareMetadata::OrHash).void }
+        attr_writer :ai_provider_key
+
+        # The AI provider this model routes through (via its provider key).
+        sig { returns(T.nilable(Cadenya::Model::Info::Provider::TaggedSymbol)) }
+        attr_reader :provider
+
+        sig { params(provider: Cadenya::Model::Info::Provider::OrSymbol).void }
+        attr_writer :provider
+
+        # ModelInfo carries server-derived, read-only details about a model.
+        sig do
+          params(
+            ai_provider_key: Cadenya::BareMetadata::OrHash,
+            provider: Cadenya::Model::Info::Provider::OrSymbol
+          ).returns(T.attached_class)
+        end
+        def self.new(
+          # BareMetadata contains the minimal metadata for a resource: the ID and an
+          # optional human-readable name. These are used for reference fields where the full
+          # metadata (account scoping, timestamps, labels, external IDs) is not needed —
+          # e.g., the tool references inside an agent variation spec or the tools assigned
+          # to an objective. Both fields are server-populated; clients provide IDs through
+          # sibling fields rather than by constructing a BareMetadata themselves.
+          ai_provider_key: nil,
+          # The AI provider this model routes through (via its provider key).
+          provider: nil
+        )
+        end
+
+        sig do
+          override.returns(
+            {
+              ai_provider_key: Cadenya::BareMetadata,
+              provider: Cadenya::Model::Info::Provider::TaggedSymbol
+            }
+          )
+        end
+        def to_hash
+        end
+
+        # The AI provider this model routes through (via its provider key).
+        module Provider
+          extend Cadenya::Internal::Type::Enum
+
+          TaggedSymbol =
+            T.type_alias { T.all(Symbol, Cadenya::Model::Info::Provider) }
+          OrSymbol = T.type_alias { T.any(Symbol, String) }
+
+          AI_PROVIDER_UNSPECIFIED =
+            T.let(
+              :AI_PROVIDER_UNSPECIFIED,
+              Cadenya::Model::Info::Provider::TaggedSymbol
+            )
+          AI_PROVIDER_OPENROUTER =
+            T.let(
+              :AI_PROVIDER_OPENROUTER,
+              Cadenya::Model::Info::Provider::TaggedSymbol
+            )
+
+          sig do
+            override.returns(
+              T::Array[Cadenya::Model::Info::Provider::TaggedSymbol]
+            )
+          end
+          def self.values
+          end
+        end
       end
     end
   end

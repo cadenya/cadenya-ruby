@@ -3,8 +3,10 @@ module Cadenya
     type model_list_params =
       {
         workspace_id: String,
+        ai_provider_key_id: String,
         bundle_key: String,
         cursor: String,
+        include_info: bool,
         limit: Integer,
         prefix: String,
         query: String,
@@ -19,6 +21,10 @@ module Cadenya
 
       attr_accessor workspace_id: String
 
+      attr_reader ai_provider_key_id: String?
+
+      def ai_provider_key_id=: (String) -> String
+
       attr_reader bundle_key: String?
 
       def bundle_key=: (String) -> String
@@ -26,6 +32,10 @@ module Cadenya
       attr_reader cursor: String?
 
       def cursor=: (String) -> String
+
+      attr_reader include_info: bool?
+
+      def include_info=: (bool) -> bool
 
       attr_reader limit: Integer?
 
@@ -51,8 +61,10 @@ module Cadenya
 
       def initialize: (
         workspace_id: String,
+        ?ai_provider_key_id: String,
         ?bundle_key: String,
         ?cursor: String,
+        ?include_info: bool,
         ?limit: Integer,
         ?prefix: String,
         ?query: String,
@@ -63,8 +75,10 @@ module Cadenya
 
       def to_hash: -> {
         workspace_id: String,
+        ai_provider_key_id: String,
         bundle_key: String,
         cursor: String,
+        include_info: bool,
         limit: Integer,
         prefix: String,
         query: String,

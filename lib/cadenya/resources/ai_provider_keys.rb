@@ -96,13 +96,18 @@ module Cadenya
         )
       end
 
+      # Some parameter documentations has been truncated, see
+      # {Cadenya::Models::AIProviderKeyListParams} for more details.
+      #
       # Lists all customer-provided AI provider keys in the workspace
       #
-      # @overload list(workspace_id, cursor: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, request_options: {})
+      # @overload list(workspace_id, cursor: nil, include_info: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, request_options: {})
       #
       # @param workspace_id [String] The workspace whose keys will be listed.
       #
       # @param cursor [String] Pagination cursor from previous response
+      #
+      # @param include_info [Boolean] When true, populate each item's info (model counts), at the cost of extra
       #
       # @param limit [Integer] Maximum number of results to return
       #
@@ -123,7 +128,7 @@ module Cadenya
         @client.request(
           method: :get,
           path: ["v1/workspaces/%1$s/ai_provider_keys", workspace_id],
-          query: query.transform_keys(sort_order: "sortOrder"),
+          query: query.transform_keys(include_info: "includeInfo", sort_order: "sortOrder"),
           page: Cadenya::Internal::CursorPagination,
           model: Cadenya::AIProviderKey,
           options: options

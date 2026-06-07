@@ -1,22 +1,55 @@
 module Cadenya
   module Models
     type ai_provider_key =
-      { metadata: Cadenya::ResourceMetadata, spec: Cadenya::AIProviderKeySpec }
+      {
+        metadata: Cadenya::ResourceMetadata,
+        spec: Cadenya::AIProviderKeySpec,
+        info: Cadenya::AIProviderKey::Info
+      }
 
     class AIProviderKey < Cadenya::Internal::Type::BaseModel
       attr_accessor metadata: Cadenya::ResourceMetadata
 
       attr_accessor spec: Cadenya::AIProviderKeySpec
 
+      attr_reader info: Cadenya::AIProviderKey::Info?
+
+      def info=: (Cadenya::AIProviderKey::Info) -> Cadenya::AIProviderKey::Info
+
       def initialize: (
         metadata: Cadenya::ResourceMetadata,
-        spec: Cadenya::AIProviderKeySpec
+        spec: Cadenya::AIProviderKeySpec,
+        ?info: Cadenya::AIProviderKey::Info
       ) -> void
 
       def to_hash: -> {
         metadata: Cadenya::ResourceMetadata,
-        spec: Cadenya::AIProviderKeySpec
+        spec: Cadenya::AIProviderKeySpec,
+        info: Cadenya::AIProviderKey::Info
       }
+
+      type info =
+        { disabled_model_count: Integer, enabled_model_count: Integer }
+
+      class Info < Cadenya::Internal::Type::BaseModel
+        attr_reader disabled_model_count: Integer?
+
+        def disabled_model_count=: (Integer) -> Integer
+
+        attr_reader enabled_model_count: Integer?
+
+        def enabled_model_count=: (Integer) -> Integer
+
+        def initialize: (
+          ?disabled_model_count: Integer,
+          ?enabled_model_count: Integer
+        ) -> void
+
+        def to_hash: -> {
+          disabled_model_count: Integer,
+          enabled_model_count: Integer
+        }
+      end
     end
   end
 end
