@@ -21,6 +21,14 @@ module Cadenya
       sig { params(cursor: String).void }
       attr_writer :cursor
 
+      # When true, populate each item's info (model counts), at the cost of extra
+      # lookups.
+      sig { returns(T.nilable(T::Boolean)) }
+      attr_reader :include_info
+
+      sig { params(include_info: T::Boolean).void }
+      attr_writer :include_info
+
       # Maximum number of results to return
       sig { returns(T.nilable(Integer)) }
       attr_reader :limit
@@ -53,6 +61,7 @@ module Cadenya
         params(
           workspace_id: String,
           cursor: String,
+          include_info: T::Boolean,
           limit: Integer,
           prefix: String,
           query: String,
@@ -64,6 +73,9 @@ module Cadenya
         workspace_id:,
         # Pagination cursor from previous response
         cursor: nil,
+        # When true, populate each item's info (model counts), at the cost of extra
+        # lookups.
+        include_info: nil,
         # Maximum number of results to return
         limit: nil,
         # Filter expression (query param: prefix)
@@ -81,6 +93,7 @@ module Cadenya
           {
             workspace_id: String,
             cursor: String,
+            include_info: T::Boolean,
             limit: Integer,
             prefix: String,
             query: String,

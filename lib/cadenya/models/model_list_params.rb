@@ -12,6 +12,13 @@ module Cadenya
       #   @return [String]
       required :workspace_id, String
 
+      # @!attribute ai_provider_key_id
+      #   Filter to models provisioned on a specific AI provider key. Accepts the key's id
+      #   or an "external_id:"-prefixed slug.
+      #
+      #   @return [String, nil]
+      optional :ai_provider_key_id, String
+
       # @!attribute bundle_key
       #   Filter by bundle_key — return only resources owned by this bundle.
       #
@@ -23,6 +30,13 @@ module Cadenya
       #
       #   @return [String, nil]
       optional :cursor, String
+
+      # @!attribute include_info
+      #   When true, populate each item's info (e.g. the AI provider), at the cost of
+      #   extra lookups.
+      #
+      #   @return [Boolean, nil]
+      optional :include_info, Cadenya::Internal::Type::Boolean
 
       # @!attribute limit
       #   Maximum number of results to return
@@ -54,12 +68,19 @@ module Cadenya
       #   @return [Symbol, Cadenya::Models::ModelListParams::Status, nil]
       optional :status, enum: -> { Cadenya::ModelListParams::Status }
 
-      # @!method initialize(workspace_id:, bundle_key: nil, cursor: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, status: nil, request_options: {})
+      # @!method initialize(workspace_id:, ai_provider_key_id: nil, bundle_key: nil, cursor: nil, include_info: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, status: nil, request_options: {})
+      #   Some parameter documentations has been truncated, see
+      #   {Cadenya::Models::ModelListParams} for more details.
+      #
       #   @param workspace_id [String]
+      #
+      #   @param ai_provider_key_id [String] Filter to models provisioned on a specific AI provider key. Accepts the
       #
       #   @param bundle_key [String] Filter by bundle_key — return only resources owned by this bundle.
       #
       #   @param cursor [String] Pagination cursor from previous response
+      #
+      #   @param include_info [Boolean] When true, populate each item's info (e.g. the AI provider), at the cost of
       #
       #   @param limit [Integer] Maximum number of results to return
       #

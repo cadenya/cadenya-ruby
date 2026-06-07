@@ -18,6 +18,13 @@ module Cadenya
       #   @return [String, nil]
       optional :cursor, String
 
+      # @!attribute include_info
+      #   When true, populate each item's info (model counts), at the cost of extra
+      #   lookups.
+      #
+      #   @return [Boolean, nil]
+      optional :include_info, Cadenya::Internal::Type::Boolean
+
       # @!attribute limit
       #   Maximum number of results to return
       #
@@ -42,10 +49,15 @@ module Cadenya
       #   @return [String, nil]
       optional :sort_order, String
 
-      # @!method initialize(workspace_id:, cursor: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, request_options: {})
+      # @!method initialize(workspace_id:, cursor: nil, include_info: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, request_options: {})
+      #   Some parameter documentations has been truncated, see
+      #   {Cadenya::Models::AIProviderKeyListParams} for more details.
+      #
       #   @param workspace_id [String]
       #
       #   @param cursor [String] Pagination cursor from previous response
+      #
+      #   @param include_info [Boolean] When true, populate each item's info (model counts), at the cost of extra
       #
       #   @param limit [Integer] Maximum number of results to return
       #

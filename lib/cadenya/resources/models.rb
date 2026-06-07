@@ -33,15 +33,22 @@ module Cadenya
         )
       end
 
+      # Some parameter documentations has been truncated, see
+      # {Cadenya::Models::ModelListParams} for more details.
+      #
       # Lists all models in the workspace
       #
-      # @overload list(workspace_id, bundle_key: nil, cursor: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, status: nil, request_options: {})
+      # @overload list(workspace_id, ai_provider_key_id: nil, bundle_key: nil, cursor: nil, include_info: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, status: nil, request_options: {})
       #
       # @param workspace_id [String] Workspace ID.
+      #
+      # @param ai_provider_key_id [String] Filter to models provisioned on a specific AI provider key. Accepts the
       #
       # @param bundle_key [String] Filter by bundle_key — return only resources owned by this bundle.
       #
       # @param cursor [String] Pagination cursor from previous response
+      #
+      # @param include_info [Boolean] When true, populate each item's info (e.g. the AI provider), at the cost of
       #
       # @param limit [Integer] Maximum number of results to return
       #
@@ -64,7 +71,12 @@ module Cadenya
         @client.request(
           method: :get,
           path: ["v1/workspaces/%1$s/models", workspace_id],
-          query: query.transform_keys(bundle_key: "bundleKey", sort_order: "sortOrder"),
+          query: query.transform_keys(
+            ai_provider_key_id: "aiProviderKeyId",
+            bundle_key: "bundleKey",
+            include_info: "includeInfo",
+            sort_order: "sortOrder"
+          ),
           page: Cadenya::Internal::CursorPagination,
           model: Cadenya::Model,
           options: options

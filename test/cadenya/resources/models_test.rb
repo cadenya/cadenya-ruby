@@ -15,7 +15,8 @@ class Cadenya::Test::Resources::ModelsTest < Cadenya::Test::ResourceTest
     assert_pattern do
       response => {
         metadata: Cadenya::ResourceMetadata,
-        spec: Cadenya::ModelSpec
+        spec: Cadenya::ModelSpec,
+        info: Cadenya::Model::Info | nil
       }
     end
   end
@@ -39,7 +40,8 @@ class Cadenya::Test::Resources::ModelsTest < Cadenya::Test::ResourceTest
     assert_pattern do
       row => {
         metadata: Cadenya::ResourceMetadata,
-        spec: Cadenya::ModelSpec
+        spec: Cadenya::ModelSpec,
+        info: Cadenya::Model::Info | nil
       }
     end
   end
@@ -56,7 +58,8 @@ class Cadenya::Test::Resources::ModelsTest < Cadenya::Test::ResourceTest
     assert_pattern do
       response => {
         metadata: Cadenya::ResourceMetadata,
-        spec: Cadenya::ModelSpec
+        spec: Cadenya::ModelSpec,
+        info: Cadenya::Model::Info | nil
       }
     end
   end

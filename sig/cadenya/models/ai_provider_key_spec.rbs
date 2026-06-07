@@ -1,28 +1,49 @@
 module Cadenya
   module Models
     type ai_provider_key_spec =
-      { api_key: String, provider: String, region: String }
+      {
+        api_key: String,
+        openrouter: top,
+        provider: Cadenya::Models::AIProviderKeySpec::provider
+      }
 
     class AIProviderKeySpec < Cadenya::Internal::Type::BaseModel
       attr_reader api_key: String?
 
       def api_key=: (String) -> String
 
-      attr_reader provider: String?
+      attr_reader openrouter: top?
 
-      def provider=: (String) -> String
+      def openrouter=: (top) -> top
 
-      attr_reader region: String?
+      attr_reader provider: Cadenya::Models::AIProviderKeySpec::provider?
 
-      def region=: (String) -> String
+      def provider=: (
+        Cadenya::Models::AIProviderKeySpec::provider
+      ) -> Cadenya::Models::AIProviderKeySpec::provider
 
       def initialize: (
         ?api_key: String,
-        ?provider: String,
-        ?region: String
+        ?openrouter: top,
+        ?provider: Cadenya::Models::AIProviderKeySpec::provider
       ) -> void
 
-      def to_hash: -> { api_key: String, provider: String, region: String }
+      def to_hash: -> {
+        api_key: String,
+        openrouter: top,
+        provider: Cadenya::Models::AIProviderKeySpec::provider
+      }
+
+      type provider = :AI_PROVIDER_UNSPECIFIED | :AI_PROVIDER_OPENROUTER
+
+      module Provider
+        extend Cadenya::Internal::Type::Enum
+
+        AI_PROVIDER_UNSPECIFIED: :AI_PROVIDER_UNSPECIFIED
+        AI_PROVIDER_OPENROUTER: :AI_PROVIDER_OPENROUTER
+
+        def self?.values: -> ::Array[Cadenya::Models::AIProviderKeySpec::provider]
+      end
     end
   end
 end
