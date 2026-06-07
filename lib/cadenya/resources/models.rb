@@ -113,6 +113,31 @@ module Cadenya
         )
       end
 
+      # Reassigns agent variations from one model to another in bulk. Runs
+      # asynchronously and returns immediately.
+      #
+      # @overload swap(workspace_id, model_swaps: nil, request_options: {})
+      #
+      # @param workspace_id [String] Workspace ID.
+      #
+      # @param model_swaps [Array<Cadenya::Models::ModelSwapParams::ModelSwap>] The swaps to perform.
+      #
+      # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
+      #
+      # @return [Object]
+      #
+      # @see Cadenya::Models::ModelSwapParams
+      def swap(workspace_id, params = {})
+        parsed, options = Cadenya::ModelSwapParams.dump_request(params)
+        @client.request(
+          method: :post,
+          path: ["v1/workspaces/%1$s/models:swapModelOnVariations", workspace_id],
+          body: parsed,
+          model: Cadenya::Internal::Type::Unknown,
+          options: options
+        )
+      end
+
       # @api private
       #
       # @param client [Cadenya::Client]

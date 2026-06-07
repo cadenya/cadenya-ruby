@@ -62,6 +62,14 @@ module Cadenya
             T.any(Cadenya::Model::Info, Cadenya::Internal::AnyHash)
           end
 
+        # Number of agent variations currently provisioned on this model. Useful for
+        # previewing how many variations a swap would affect.
+        sig { returns(T.nilable(Integer)) }
+        attr_reader :agent_variation_count
+
+        sig { params(agent_variation_count: Integer).void }
+        attr_writer :agent_variation_count
+
         # BareMetadata contains the minimal metadata for a resource: the ID and an
         # optional human-readable name. These are used for reference fields where the full
         # metadata (account scoping, timestamps, labels, external IDs) is not needed —
@@ -84,11 +92,15 @@ module Cadenya
         # ModelInfo carries server-derived, read-only details about a model.
         sig do
           params(
+            agent_variation_count: Integer,
             ai_provider_key: Cadenya::BareMetadata::OrHash,
             provider: Cadenya::Model::Info::Provider::OrSymbol
           ).returns(T.attached_class)
         end
         def self.new(
+          # Number of agent variations currently provisioned on this model. Useful for
+          # previewing how many variations a swap would affect.
+          agent_variation_count: nil,
           # BareMetadata contains the minimal metadata for a resource: the ID and an
           # optional human-readable name. These are used for reference fields where the full
           # metadata (account scoping, timestamps, labels, external IDs) is not needed —
@@ -104,6 +116,7 @@ module Cadenya
         sig do
           override.returns(
             {
+              agent_variation_count: Integer,
               ai_provider_key: Cadenya::BareMetadata,
               provider: Cadenya::Model::Info::Provider::TaggedSymbol
             }
