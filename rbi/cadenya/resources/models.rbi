@@ -27,8 +27,10 @@ module Cadenya
       sig do
         params(
           workspace_id: String,
+          ai_provider_key_id: String,
           bundle_key: String,
           cursor: String,
+          include_info: T::Boolean,
           limit: Integer,
           prefix: String,
           query: String,
@@ -40,10 +42,16 @@ module Cadenya
       def list(
         # Workspace ID.
         workspace_id,
+        # Filter to models provisioned on a specific AI provider key. Accepts the key's id
+        # or an "external_id:"-prefixed slug.
+        ai_provider_key_id: nil,
         # Filter by bundle_key — return only resources owned by this bundle.
         bundle_key: nil,
         # Pagination cursor from previous response
         cursor: nil,
+        # When true, populate each item's info (e.g. the AI provider), at the cost of
+        # extra lookups.
+        include_info: nil,
         # Maximum number of results to return
         limit: nil,
         # Filter by name prefix

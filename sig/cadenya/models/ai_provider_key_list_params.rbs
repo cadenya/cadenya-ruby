@@ -4,6 +4,7 @@ module Cadenya
       {
         workspace_id: String,
         cursor: String,
+        include_info: bool,
         limit: Integer,
         prefix: String,
         query: String,
@@ -20,6 +21,10 @@ module Cadenya
       attr_reader cursor: String?
 
       def cursor=: (String) -> String
+
+      attr_reader include_info: bool?
+
+      def include_info=: (bool) -> bool
 
       attr_reader limit: Integer?
 
@@ -40,6 +45,7 @@ module Cadenya
       def initialize: (
         workspace_id: String,
         ?cursor: String,
+        ?include_info: bool,
         ?limit: Integer,
         ?prefix: String,
         ?query: String,
@@ -50,6 +56,7 @@ module Cadenya
       def to_hash: -> {
         workspace_id: String,
         cursor: String,
+        include_info: bool,
         limit: Integer,
         prefix: String,
         query: String,

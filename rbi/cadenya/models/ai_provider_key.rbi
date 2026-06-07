@@ -21,18 +21,30 @@ module Cadenya
       sig { params(spec: Cadenya::AIProviderKeySpec::OrHash).void }
       attr_writer :spec
 
+      # AIProviderKeyInfo carries server-derived, read-only details about a key, for AI
+      # provider management UIs.
+      sig { returns(T.nilable(Cadenya::AIProviderKey::Info)) }
+      attr_reader :info
+
+      sig { params(info: Cadenya::AIProviderKey::Info::OrHash).void }
+      attr_writer :info
+
       # AIProviderKey is a customer-provided (BYOK) credential for an AI provider,
       # scoped to a workspace. The secret value is never returned in responses.
       sig do
         params(
           metadata: Cadenya::ResourceMetadata::OrHash,
-          spec: Cadenya::AIProviderKeySpec::OrHash
+          spec: Cadenya::AIProviderKeySpec::OrHash,
+          info: Cadenya::AIProviderKey::Info::OrHash
         ).returns(T.attached_class)
       end
       def self.new(
         # Standard metadata for persistent, named resources (e.g., agents, tools, prompts)
         metadata:,
-        spec:
+        spec:,
+        # AIProviderKeyInfo carries server-derived, read-only details about a key, for AI
+        # provider management UIs.
+        info: nil
       )
       end
 
@@ -40,11 +52,57 @@ module Cadenya
         override.returns(
           {
             metadata: Cadenya::ResourceMetadata,
-            spec: Cadenya::AIProviderKeySpec
+            spec: Cadenya::AIProviderKeySpec,
+            info: Cadenya::AIProviderKey::Info
           }
         )
       end
       def to_hash
+      end
+
+      class Info < Cadenya::Internal::Type::BaseModel
+        OrHash =
+          T.type_alias do
+            T.any(Cadenya::AIProviderKey::Info, Cadenya::Internal::AnyHash)
+          end
+
+        # Number of disabled models provisioned on this key.
+        sig { returns(T.nilable(Integer)) }
+        attr_reader :disabled_model_count
+
+        sig { params(disabled_model_count: Integer).void }
+        attr_writer :disabled_model_count
+
+        # Number of enabled models provisioned on this key.
+        sig { returns(T.nilable(Integer)) }
+        attr_reader :enabled_model_count
+
+        sig { params(enabled_model_count: Integer).void }
+        attr_writer :enabled_model_count
+
+        # AIProviderKeyInfo carries server-derived, read-only details about a key, for AI
+        # provider management UIs.
+        sig do
+          params(
+            disabled_model_count: Integer,
+            enabled_model_count: Integer
+          ).returns(T.attached_class)
+        end
+        def self.new(
+          # Number of disabled models provisioned on this key.
+          disabled_model_count: nil,
+          # Number of enabled models provisioned on this key.
+          enabled_model_count: nil
+        )
+        end
+
+        sig do
+          override.returns(
+            { disabled_model_count: Integer, enabled_model_count: Integer }
+          )
+        end
+        def to_hash
+        end
       end
     end
   end

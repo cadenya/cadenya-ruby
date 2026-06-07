@@ -9,8 +9,10 @@ module Cadenya
 
       def list: (
         String workspace_id,
+        ?ai_provider_key_id: String,
         ?bundle_key: String,
         ?cursor: String,
+        ?include_info: bool,
         ?limit: Integer,
         ?prefix: String,
         ?query: String,

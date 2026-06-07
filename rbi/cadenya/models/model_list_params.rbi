@@ -14,6 +14,14 @@ module Cadenya
       sig { returns(String) }
       attr_accessor :workspace_id
 
+      # Filter to models provisioned on a specific AI provider key. Accepts the key's id
+      # or an "external_id:"-prefixed slug.
+      sig { returns(T.nilable(String)) }
+      attr_reader :ai_provider_key_id
+
+      sig { params(ai_provider_key_id: String).void }
+      attr_writer :ai_provider_key_id
+
       # Filter by bundle_key — return only resources owned by this bundle.
       sig { returns(T.nilable(String)) }
       attr_reader :bundle_key
@@ -27,6 +35,14 @@ module Cadenya
 
       sig { params(cursor: String).void }
       attr_writer :cursor
+
+      # When true, populate each item's info (e.g. the AI provider), at the cost of
+      # extra lookups.
+      sig { returns(T.nilable(T::Boolean)) }
+      attr_reader :include_info
+
+      sig { params(include_info: T::Boolean).void }
+      attr_writer :include_info
 
       # Maximum number of results to return
       sig { returns(T.nilable(Integer)) }
@@ -66,8 +82,10 @@ module Cadenya
       sig do
         params(
           workspace_id: String,
+          ai_provider_key_id: String,
           bundle_key: String,
           cursor: String,
+          include_info: T::Boolean,
           limit: Integer,
           prefix: String,
           query: String,
@@ -78,10 +96,16 @@ module Cadenya
       end
       def self.new(
         workspace_id:,
+        # Filter to models provisioned on a specific AI provider key. Accepts the key's id
+        # or an "external_id:"-prefixed slug.
+        ai_provider_key_id: nil,
         # Filter by bundle_key — return only resources owned by this bundle.
         bundle_key: nil,
         # Pagination cursor from previous response
         cursor: nil,
+        # When true, populate each item's info (e.g. the AI provider), at the cost of
+        # extra lookups.
+        include_info: nil,
         # Maximum number of results to return
         limit: nil,
         # Filter by name prefix
@@ -100,8 +124,10 @@ module Cadenya
         override.returns(
           {
             workspace_id: String,
+            ai_provider_key_id: String,
             bundle_key: String,
             cursor: String,
+            include_info: T::Boolean,
             limit: Integer,
             prefix: String,
             query: String,

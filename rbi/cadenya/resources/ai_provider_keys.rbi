@@ -75,6 +75,7 @@ module Cadenya
         params(
           workspace_id: String,
           cursor: String,
+          include_info: T::Boolean,
           limit: Integer,
           prefix: String,
           query: String,
@@ -87,6 +88,9 @@ module Cadenya
         workspace_id,
         # Pagination cursor from previous response
         cursor: nil,
+        # When true, populate each item's info (model counts), at the cost of extra
+        # lookups.
+        include_info: nil,
         # Maximum number of results to return
         limit: nil,
         # Filter expression (query param: prefix)

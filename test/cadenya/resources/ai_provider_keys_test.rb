@@ -15,7 +15,8 @@ class Cadenya::Test::Resources::AIProviderKeysTest < Cadenya::Test::ResourceTest
     assert_pattern do
       response => {
         metadata: Cadenya::ResourceMetadata,
-        spec: Cadenya::AIProviderKeySpec
+        spec: Cadenya::AIProviderKeySpec,
+        info: Cadenya::AIProviderKey::Info | nil
       }
     end
   end
@@ -32,7 +33,8 @@ class Cadenya::Test::Resources::AIProviderKeysTest < Cadenya::Test::ResourceTest
     assert_pattern do
       response => {
         metadata: Cadenya::ResourceMetadata,
-        spec: Cadenya::AIProviderKeySpec
+        spec: Cadenya::AIProviderKeySpec,
+        info: Cadenya::AIProviderKey::Info | nil
       }
     end
   end
@@ -49,7 +51,8 @@ class Cadenya::Test::Resources::AIProviderKeysTest < Cadenya::Test::ResourceTest
     assert_pattern do
       response => {
         metadata: Cadenya::ResourceMetadata,
-        spec: Cadenya::AIProviderKeySpec
+        spec: Cadenya::AIProviderKeySpec,
+        info: Cadenya::AIProviderKey::Info | nil
       }
     end
   end
@@ -73,7 +76,8 @@ class Cadenya::Test::Resources::AIProviderKeysTest < Cadenya::Test::ResourceTest
     assert_pattern do
       row => {
         metadata: Cadenya::ResourceMetadata,
-        spec: Cadenya::AIProviderKeySpec
+        spec: Cadenya::AIProviderKeySpec,
+        info: Cadenya::AIProviderKey::Info | nil
       }
     end
   end
