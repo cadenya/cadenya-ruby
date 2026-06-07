@@ -139,6 +139,8 @@ module Cadenya
 
   class ModelSpec = Cadenya::Models::ModelSpec
 
+  class ModelSwapParams = Cadenya::Models::ModelSwapParams
+
   class Objective = Cadenya::Models::Objective
 
   class ObjectiveCancelParams = Cadenya::Models::ObjectiveCancelParams

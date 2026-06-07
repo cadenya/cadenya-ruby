@@ -86,6 +86,24 @@ module Cadenya
       )
       end
 
+      # Reassigns agent variations from one model to another in bulk. Runs
+      # asynchronously and returns immediately.
+      sig do
+        params(
+          workspace_id: String,
+          model_swaps: T::Array[Cadenya::ModelSwapParams::ModelSwap::OrHash],
+          request_options: Cadenya::RequestOptions::OrHash
+        ).returns(T.anything)
+      end
+      def swap(
+        # Workspace ID.
+        workspace_id,
+        # The swaps to perform.
+        model_swaps: nil,
+        request_options: {}
+      )
+      end
+
       # @api private
       sig { params(client: Cadenya::Client).returns(T.attached_class) }
       def self.new(client:)
