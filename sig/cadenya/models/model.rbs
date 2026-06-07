@@ -31,7 +31,7 @@ module Cadenya
       type info =
         {
           agent_variation_count: Integer,
-          ai_provider_key: Cadenya::BareMetadata,
+          ai_provider_key: Cadenya::ResourceMetadata,
           provider: Cadenya::Models::Model::Info::provider
         }
 
@@ -40,9 +40,11 @@ module Cadenya
 
         def agent_variation_count=: (Integer) -> Integer
 
-        attr_reader ai_provider_key: Cadenya::BareMetadata?
+        attr_reader ai_provider_key: Cadenya::ResourceMetadata?
 
-        def ai_provider_key=: (Cadenya::BareMetadata) -> Cadenya::BareMetadata
+        def ai_provider_key=: (
+          Cadenya::ResourceMetadata
+        ) -> Cadenya::ResourceMetadata
 
         attr_reader provider: Cadenya::Models::Model::Info::provider?
 
@@ -52,13 +54,13 @@ module Cadenya
 
         def initialize: (
           ?agent_variation_count: Integer,
-          ?ai_provider_key: Cadenya::BareMetadata,
+          ?ai_provider_key: Cadenya::ResourceMetadata,
           ?provider: Cadenya::Models::Model::Info::provider
         ) -> void
 
         def to_hash: -> {
           agent_variation_count: Integer,
-          ai_provider_key: Cadenya::BareMetadata,
+          ai_provider_key: Cadenya::ResourceMetadata,
           provider: Cadenya::Models::Model::Info::provider
         }
 
