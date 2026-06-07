@@ -11,7 +11,7 @@ GIT
 PATH
   remote: .
   specs:
-    cadenya (0.3.0)
+    cadenya (0.4.0)
       cgi
       connection_pool
       standardwebhooks
