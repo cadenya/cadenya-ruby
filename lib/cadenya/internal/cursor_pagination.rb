@@ -10,8 +10,8 @@ module Cadenya
     #   end
     #
     # @example
-    #   cursor_pagination.auto_paging_each do |agent|
-    #     puts(agent)
+    #   cursor_pagination.auto_paging_each do |ai_provider_key|
+    #     puts(ai_provider_key)
     #   end
     class CursorPagination
       include Cadenya::Internal::Type::BasePage

@@ -12,6 +12,8 @@ module Cadenya
 
     attr_reader webhook_key: String?
 
+    attr_reader ai_provider_keys: Cadenya::Resources::AIProviderKeys
+
     attr_reader account: Cadenya::Resources::Account
 
     attr_reader agents: Cadenya::Resources::Agents

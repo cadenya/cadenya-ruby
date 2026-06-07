@@ -21,6 +21,9 @@ module Cadenya
     # @return [String, nil]
     attr_reader :webhook_key
 
+    # @return [Cadenya::Resources::AIProviderKeys]
+    attr_reader :ai_provider_keys
+
     # Manage the authenticated account. Accounts are the top-level organizational unit
     # and contain one or more workspaces.
     # @return [Cadenya::Resources::Account]
@@ -163,6 +166,7 @@ module Cadenya
         headers: headers
       )
 
+      @ai_provider_keys = Cadenya::Resources::AIProviderKeys.new(client: self)
       @account = Cadenya::Resources::Account.new(client: self)
       @agents = Cadenya::Resources::Agents.new(client: self)
       @objectives = Cadenya::Resources::Objectives.new(client: self)

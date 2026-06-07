@@ -53,15 +53,15 @@ List methods in the Cadenya API are paginated.
 This library provides auto-paginating iterators with each list response, so you do not have to request successive pages manually:
 
 ```ruby
-page = cadenya.agents.list
+page = cadenya.ai_provider_keys.list
 
 # Fetch single item from page.
-agent = page.items[0]
-puts(agent.metadata)
+ai_provider_key = page.items[0]
+puts(ai_provider_key.metadata)
 
 # Automatically fetches more pages as needed.
-page.auto_paging_each do |agent|
-  puts(agent.metadata)
+page.auto_paging_each do |ai_provider_key|
+  puts(ai_provider_key.metadata)
 end
 ```
 
