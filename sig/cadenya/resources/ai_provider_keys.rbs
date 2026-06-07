@@ -1,0 +1,45 @@
+module Cadenya
+  module Resources
+    class AIProviderKeys
+      def create: (
+        String workspace_id,
+        metadata: Cadenya::CreateResourceMetadata,
+        spec: Cadenya::AIProviderKeySpec,
+        ?request_options: Cadenya::request_opts
+      ) -> Cadenya::AIProviderKey
+
+      def retrieve: (
+        String id,
+        workspace_id: String,
+        ?request_options: Cadenya::request_opts
+      ) -> Cadenya::AIProviderKey
+
+      def update: (
+        String id,
+        workspace_id: String,
+        ?metadata: Cadenya::UpdateResourceMetadata,
+        ?spec: Cadenya::AIProviderKeySpec,
+        ?update_mask: String,
+        ?request_options: Cadenya::request_opts
+      ) -> Cadenya::AIProviderKey
+
+      def list: (
+        String workspace_id,
+        ?cursor: String,
+        ?limit: Integer,
+        ?prefix: String,
+        ?query: String,
+        ?sort_order: String,
+        ?request_options: Cadenya::request_opts
+      ) -> Cadenya::Internal::CursorPagination[Cadenya::AIProviderKey]
+
+      def delete: (
+        String id,
+        workspace_id: String,
+        ?request_options: Cadenya::request_opts
+      ) -> nil
+
+      def initialize: (client: Cadenya::Client) -> void
+    end
+  end
+end

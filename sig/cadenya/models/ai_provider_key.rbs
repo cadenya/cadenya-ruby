@@ -1,0 +1,22 @@
+module Cadenya
+  module Models
+    type ai_provider_key =
+      { metadata: Cadenya::ResourceMetadata, spec: Cadenya::AIProviderKeySpec }
+
+    class AIProviderKey < Cadenya::Internal::Type::BaseModel
+      attr_accessor metadata: Cadenya::ResourceMetadata
+
+      attr_accessor spec: Cadenya::AIProviderKeySpec
+
+      def initialize: (
+        metadata: Cadenya::ResourceMetadata,
+        spec: Cadenya::AIProviderKeySpec
+      ) -> void
+
+      def to_hash: -> {
+        metadata: Cadenya::ResourceMetadata,
+        spec: Cadenya::AIProviderKeySpec
+      }
+    end
+  end
+end
