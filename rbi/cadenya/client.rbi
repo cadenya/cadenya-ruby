@@ -16,6 +16,9 @@ module Cadenya
     sig { returns(T.nilable(String)) }
     attr_reader :webhook_key
 
+    sig { returns(Cadenya::Resources::AIProviderKeys) }
+    attr_reader :ai_provider_keys
+
     # Manage the authenticated account. Accounts are the top-level organizational unit
     # and contain one or more workspaces.
     sig { returns(Cadenya::Resources::Account) }

@@ -75,6 +75,20 @@ module Cadenya
 
   AgentVariationEntry = Cadenya::Models::AgentVariationEntry
 
+  AIProviderKey = Cadenya::Models::AIProviderKey
+
+  AIProviderKeyCreateParams = Cadenya::Models::AIProviderKeyCreateParams
+
+  AIProviderKeyDeleteParams = Cadenya::Models::AIProviderKeyDeleteParams
+
+  AIProviderKeyListParams = Cadenya::Models::AIProviderKeyListParams
+
+  AIProviderKeyRetrieveParams = Cadenya::Models::AIProviderKeyRetrieveParams
+
+  AIProviderKeySpec = Cadenya::Models::AIProviderKeySpec
+
+  AIProviderKeyUpdateParams = Cadenya::Models::AIProviderKeyUpdateParams
+
   APIKey = Cadenya::Models::APIKey
 
   APIKeyCreateParams = Cadenya::Models::APIKeyCreateParams
