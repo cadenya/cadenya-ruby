@@ -1,0 +1,54 @@
+module Cadenya
+  module Models
+    type model_swap_params =
+      {
+        workspace_id: String,
+        model_swaps: ::Array[Cadenya::ModelSwapParams::ModelSwap]
+      }
+      & Cadenya::Internal::Type::request_parameters
+
+    class ModelSwapParams < Cadenya::Internal::Type::BaseModel
+      extend Cadenya::Internal::Type::RequestParameters::Converter
+      include Cadenya::Internal::Type::RequestParameters
+
+      attr_accessor workspace_id: String
+
+      attr_reader model_swaps: ::Array[Cadenya::ModelSwapParams::ModelSwap]?
+
+      def model_swaps=: (
+        ::Array[Cadenya::ModelSwapParams::ModelSwap]
+      ) -> ::Array[Cadenya::ModelSwapParams::ModelSwap]
+
+      def initialize: (
+        workspace_id: String,
+        ?model_swaps: ::Array[Cadenya::ModelSwapParams::ModelSwap],
+        ?request_options: Cadenya::request_opts
+      ) -> void
+
+      def to_hash: -> {
+        workspace_id: String,
+        model_swaps: ::Array[Cadenya::ModelSwapParams::ModelSwap],
+        request_options: Cadenya::RequestOptions
+      }
+
+      type model_swap = { current_model_id: String, next_model_id: String }
+
+      class ModelSwap < Cadenya::Internal::Type::BaseModel
+        attr_reader current_model_id: String?
+
+        def current_model_id=: (String) -> String
+
+        attr_reader next_model_id: String?
+
+        def next_model_id=: (String) -> String
+
+        def initialize: (
+          ?current_model_id: String,
+          ?next_model_id: String
+        ) -> void
+
+        def to_hash: -> { current_model_id: String, next_model_id: String }
+      end
+    end
+  end
+end

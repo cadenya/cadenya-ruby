@@ -63,4 +63,14 @@ class Cadenya::Test::Resources::ModelsTest < Cadenya::Test::ResourceTest
       }
     end
   end
+
+  def test_swap
+    skip("Mock server tests are disabled")
+
+    response = @cadenya.models.swap("workspaceId")
+
+    assert_pattern do
+      response => Cadenya::Internal::Type::Unknown
+    end
+  end
 end

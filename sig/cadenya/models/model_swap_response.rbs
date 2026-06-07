@@ -1,0 +1,5 @@
+module Cadenya
+  module Models
+    ModelSwapResponse: Cadenya::Internal::Type::Converter
+  end
+end

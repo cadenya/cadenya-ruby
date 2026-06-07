@@ -37,6 +37,13 @@ module Cadenya
       # @see Cadenya::Models::Model#info
       class Info < Cadenya::Internal::Type::BaseModel
         response_only do
+          # @!attribute agent_variation_count
+          #   Number of agent variations currently provisioned on this model. Useful for
+          #   previewing how many variations a swap would affect.
+          #
+          #   @return [Integer, nil]
+          optional :agent_variation_count, Integer, api_name: :agentVariationCount
+
           # @!attribute ai_provider_key
           #   BareMetadata contains the minimal metadata for a resource: the ID and an
           #   optional human-readable name. These are used for reference fields where the full
@@ -55,11 +62,13 @@ module Cadenya
           optional :provider, enum: -> { Cadenya::Model::Info::Provider }
         end
 
-        # @!method initialize(ai_provider_key: nil, provider: nil)
+        # @!method initialize(agent_variation_count: nil, ai_provider_key: nil, provider: nil)
         #   Some parameter documentations has been truncated, see
         #   {Cadenya::Models::Model::Info} for more details.
         #
         #   ModelInfo carries server-derived, read-only details about a model.
+        #
+        #   @param agent_variation_count [Integer] Number of agent variations currently provisioned on this model. Useful for
         #
         #   @param ai_provider_key [Cadenya::Models::BareMetadata] BareMetadata contains the minimal metadata for a resource: the ID and an
         #

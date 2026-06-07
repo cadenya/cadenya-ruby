@@ -28,6 +28,12 @@ module Cadenya
         ?request_options: Cadenya::request_opts
       ) -> Cadenya::Model
 
+      def swap: (
+        String workspace_id,
+        ?model_swaps: ::Array[Cadenya::ModelSwapParams::ModelSwap],
+        ?request_options: Cadenya::request_opts
+      ) -> top
+
       def initialize: (client: Cadenya::Client) -> void
     end
   end
