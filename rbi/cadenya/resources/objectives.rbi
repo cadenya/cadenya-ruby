@@ -20,8 +20,11 @@ module Cadenya
         params(
           workspace_id: String,
           agent_id: String,
-          data: Cadenya::ObjectiveData::OrHash,
+          data: T::Hash[Symbol, T.anything],
+          initial_message: String,
+          memory_stack: T::Array[Cadenya::MemoryReference::OrHash],
           metadata: Cadenya::CreateOperationMetadata::OrHash,
+          secrets: T::Array[Cadenya::ObjectiveCreateParams::Secret::OrHash],
           variation_id: String,
           request_options: Cadenya::RequestOptions::OrHash
         ).returns(Cadenya::Objective)
@@ -29,11 +32,36 @@ module Cadenya
       def create(
         workspace_id,
         agent_id:,
+        # Arbitrary data for the objective. May be used in liquid templates for prompts
+        # configured on the agent variation
         data:,
+        # Optional override for initial message sent to the agent. This becomes the first
+        # user message in the LLM chat history. The agent variation is used to set this if
+        # not present.
+        initial_message: nil,
+        # Memory layers/entries to push onto this objective's memory stack on top of the
+        # baseline stack inherited from the selected variation.
+        #
+        # Array order is push order: the first element sits lower in the objective's
+        # contribution to the stack; the LAST element ends up on top of the effective
+        # stack. Entries pinned via memory_entry_id behave as single-entry layers at their
+        # position.
+        #
+        # System-managed layers (e.g., episodic) cannot be referenced here; they attach
+        # themselves automatically based on episodic_key.
+        #
+        # Stack size cap: the TOTAL effective stack (variation's memory layers
+        #
+        # - this field) must not exceed 10 entries. A request that would produce an
+        #   effective stack larger than 10 is rejected with InvalidArgument.
+        memory_stack: nil,
         # CreateOperationMetadata contains the user-provided fields for creating an
         # operation. Read-only fields (id, account_id, workspace_id, created_at,
         # profile_id) are excluded since they are set by the server.
         metadata: nil,
+        # Secrets that can be used in the headers for tool calls using the secret
+        # interpolation format.
+        secrets: nil,
         # Optional explicit variation selection. Overrides the agent's
         # variation_selection_mode.
         variation_id: nil,

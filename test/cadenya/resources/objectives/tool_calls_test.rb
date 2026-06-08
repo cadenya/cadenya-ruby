@@ -22,9 +22,9 @@ class Cadenya::Test::Resources::Objectives::ToolCallsTest < Cadenya::Test::Resou
     assert_pattern do
       row => {
         data: Cadenya::Objectives::ObjectiveToolCallData,
+        execution_status: Cadenya::Objectives::ObjectiveToolCall::ExecutionStatus,
         metadata: Cadenya::OperationMetadata,
         status: Cadenya::Objectives::ObjectiveToolCall::Status,
-        execution_status: Cadenya::Objectives::ObjectiveToolCall::ExecutionStatus | nil,
         info: Cadenya::Objectives::ObjectiveToolCallInfo | nil
       }
     end
@@ -47,9 +47,9 @@ class Cadenya::Test::Resources::Objectives::ToolCallsTest < Cadenya::Test::Resou
     assert_pattern do
       response => {
         data: Cadenya::Objectives::ObjectiveToolCallData,
+        execution_status: Cadenya::Objectives::ObjectiveToolCall::ExecutionStatus,
         metadata: Cadenya::OperationMetadata,
         status: Cadenya::Objectives::ObjectiveToolCall::Status,
-        execution_status: Cadenya::Objectives::ObjectiveToolCall::ExecutionStatus | nil,
         info: Cadenya::Objectives::ObjectiveToolCallInfo | nil
       }
     end
@@ -72,9 +72,9 @@ class Cadenya::Test::Resources::Objectives::ToolCallsTest < Cadenya::Test::Resou
     assert_pattern do
       response => {
         data: Cadenya::Objectives::ObjectiveToolCallData,
+        execution_status: Cadenya::Objectives::ObjectiveToolCall::ExecutionStatus,
         metadata: Cadenya::OperationMetadata,
         status: Cadenya::Objectives::ObjectiveToolCall::Status,
-        execution_status: Cadenya::Objectives::ObjectiveToolCall::ExecutionStatus | nil,
         info: Cadenya::Objectives::ObjectiveToolCallInfo | nil
       }
     end

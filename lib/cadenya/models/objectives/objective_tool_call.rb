@@ -31,13 +31,13 @@ module Cadenya
         response_only do
           # @!attribute execution_status
           #
-          #   @return [Symbol, Cadenya::Models::Objectives::ObjectiveToolCall::ExecutionStatus, nil]
-          optional :execution_status,
+          #   @return [Symbol, Cadenya::Models::Objectives::ObjectiveToolCall::ExecutionStatus]
+          required :execution_status,
                    enum: -> { Cadenya::Objectives::ObjectiveToolCall::ExecutionStatus },
                    api_name: :executionStatus
         end
 
-        # @!method initialize(data:, metadata:, status:, execution_status: nil, info: nil)
+        # @!method initialize(data:, execution_status:, metadata:, status:, info: nil)
         #   Some parameter documentations has been truncated, see
         #   {Cadenya::Models::Objectives::ObjectiveToolCall} for more details.
         #
@@ -47,13 +47,27 @@ module Cadenya
         #
         #   @param data [Cadenya::Models::Objectives::ObjectiveToolCallData]
         #
+        #   @param execution_status [Symbol, Cadenya::Models::Objectives::ObjectiveToolCall::ExecutionStatus]
+        #
         #   @param metadata [Cadenya::Models::OperationMetadata] Metadata for ephemeral operations and activities (e.g., objectives, executions,
         #
         #   @param status [Symbol, Cadenya::Models::Objectives::ObjectiveToolCall::Status] Current status of the tool call
         #
-        #   @param execution_status [Symbol, Cadenya::Models::Objectives::ObjectiveToolCall::ExecutionStatus]
-        #
         #   @param info [Cadenya::Models::Objectives::ObjectiveToolCallInfo]
+
+        # @see Cadenya::Models::Objectives::ObjectiveToolCall#execution_status
+        module ExecutionStatus
+          extend Cadenya::Internal::Type::Enum
+
+          TOOL_CALL_EXECUTION_STATUS_UNSPECIFIED = :TOOL_CALL_EXECUTION_STATUS_UNSPECIFIED
+          TOOL_CALL_EXECUTION_STATUS_PENDING = :TOOL_CALL_EXECUTION_STATUS_PENDING
+          TOOL_CALL_EXECUTION_STATUS_RUNNING = :TOOL_CALL_EXECUTION_STATUS_RUNNING
+          TOOL_CALL_EXECUTION_STATUS_COMPLETED = :TOOL_CALL_EXECUTION_STATUS_COMPLETED
+          TOOL_CALL_EXECUTION_STATUS_ERRORED = :TOOL_CALL_EXECUTION_STATUS_ERRORED
+
+          # @!method self.values
+          #   @return [Array<Symbol>]
+        end
 
         # Current status of the tool call
         #
@@ -66,20 +80,6 @@ module Cadenya
           TOOL_CALL_STATUS_WAITING_FOR_APPROVAL = :TOOL_CALL_STATUS_WAITING_FOR_APPROVAL
           TOOL_CALL_STATUS_APPROVED = :TOOL_CALL_STATUS_APPROVED
           TOOL_CALL_STATUS_DENIED = :TOOL_CALL_STATUS_DENIED
-
-          # @!method self.values
-          #   @return [Array<Symbol>]
-        end
-
-        # @see Cadenya::Models::Objectives::ObjectiveToolCall#execution_status
-        module ExecutionStatus
-          extend Cadenya::Internal::Type::Enum
-
-          TOOL_CALL_EXECUTION_STATUS_UNSPECIFIED = :TOOL_CALL_EXECUTION_STATUS_UNSPECIFIED
-          TOOL_CALL_EXECUTION_STATUS_PENDING = :TOOL_CALL_EXECUTION_STATUS_PENDING
-          TOOL_CALL_EXECUTION_STATUS_RUNNING = :TOOL_CALL_EXECUTION_STATUS_RUNNING
-          TOOL_CALL_EXECUTION_STATUS_COMPLETED = :TOOL_CALL_EXECUTION_STATUS_COMPLETED
-          TOOL_CALL_EXECUTION_STATUS_ERRORED = :TOOL_CALL_EXECUTION_STATUS_ERRORED
 
           # @!method self.values
           #   @return [Array<Symbol>]

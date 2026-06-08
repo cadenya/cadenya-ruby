@@ -6,9 +6,9 @@ module Cadenya
       type objective_tool_call =
         {
           data: Cadenya::Objectives::ObjectiveToolCallData,
+          execution_status: Cadenya::Models::Objectives::ObjectiveToolCall::execution_status,
           metadata: Cadenya::OperationMetadata,
           status: Cadenya::Models::Objectives::ObjectiveToolCall::status,
-          execution_status: Cadenya::Models::Objectives::ObjectiveToolCall::execution_status,
           info: Cadenya::Objectives::ObjectiveToolCallInfo
         }
 
@@ -25,46 +25,23 @@ module Cadenya
           Cadenya::Objectives::ObjectiveToolCallInfo
         ) -> Cadenya::Objectives::ObjectiveToolCallInfo
 
-        attr_reader execution_status: Cadenya::Models::Objectives::ObjectiveToolCall::execution_status?
-
-        def execution_status=: (
-          Cadenya::Models::Objectives::ObjectiveToolCall::execution_status
-        ) -> Cadenya::Models::Objectives::ObjectiveToolCall::execution_status
+        attr_accessor execution_status: Cadenya::Models::Objectives::ObjectiveToolCall::execution_status
 
         def initialize: (
           data: Cadenya::Objectives::ObjectiveToolCallData,
+          execution_status: Cadenya::Models::Objectives::ObjectiveToolCall::execution_status,
           metadata: Cadenya::OperationMetadata,
           status: Cadenya::Models::Objectives::ObjectiveToolCall::status,
-          ?execution_status: Cadenya::Models::Objectives::ObjectiveToolCall::execution_status,
           ?info: Cadenya::Objectives::ObjectiveToolCallInfo
         ) -> void
 
         def to_hash: -> {
           data: Cadenya::Objectives::ObjectiveToolCallData,
+          execution_status: Cadenya::Models::Objectives::ObjectiveToolCall::execution_status,
           metadata: Cadenya::OperationMetadata,
           status: Cadenya::Models::Objectives::ObjectiveToolCall::status,
-          execution_status: Cadenya::Models::Objectives::ObjectiveToolCall::execution_status,
           info: Cadenya::Objectives::ObjectiveToolCallInfo
         }
-
-        type status =
-          :TOOL_CALL_STATUS_UNSPECIFIED
-          | :TOOL_CALL_STATUS_AUTO_APPROVED
-          | :TOOL_CALL_STATUS_WAITING_FOR_APPROVAL
-          | :TOOL_CALL_STATUS_APPROVED
-          | :TOOL_CALL_STATUS_DENIED
-
-        module Status
-          extend Cadenya::Internal::Type::Enum
-
-          TOOL_CALL_STATUS_UNSPECIFIED: :TOOL_CALL_STATUS_UNSPECIFIED
-          TOOL_CALL_STATUS_AUTO_APPROVED: :TOOL_CALL_STATUS_AUTO_APPROVED
-          TOOL_CALL_STATUS_WAITING_FOR_APPROVAL: :TOOL_CALL_STATUS_WAITING_FOR_APPROVAL
-          TOOL_CALL_STATUS_APPROVED: :TOOL_CALL_STATUS_APPROVED
-          TOOL_CALL_STATUS_DENIED: :TOOL_CALL_STATUS_DENIED
-
-          def self?.values: -> ::Array[Cadenya::Models::Objectives::ObjectiveToolCall::status]
-        end
 
         type execution_status =
           :TOOL_CALL_EXECUTION_STATUS_UNSPECIFIED
@@ -83,6 +60,25 @@ module Cadenya
           TOOL_CALL_EXECUTION_STATUS_ERRORED: :TOOL_CALL_EXECUTION_STATUS_ERRORED
 
           def self?.values: -> ::Array[Cadenya::Models::Objectives::ObjectiveToolCall::execution_status]
+        end
+
+        type status =
+          :TOOL_CALL_STATUS_UNSPECIFIED
+          | :TOOL_CALL_STATUS_AUTO_APPROVED
+          | :TOOL_CALL_STATUS_WAITING_FOR_APPROVAL
+          | :TOOL_CALL_STATUS_APPROVED
+          | :TOOL_CALL_STATUS_DENIED
+
+        module Status
+          extend Cadenya::Internal::Type::Enum
+
+          TOOL_CALL_STATUS_UNSPECIFIED: :TOOL_CALL_STATUS_UNSPECIFIED
+          TOOL_CALL_STATUS_AUTO_APPROVED: :TOOL_CALL_STATUS_AUTO_APPROVED
+          TOOL_CALL_STATUS_WAITING_FOR_APPROVAL: :TOOL_CALL_STATUS_WAITING_FOR_APPROVAL
+          TOOL_CALL_STATUS_APPROVED: :TOOL_CALL_STATUS_APPROVED
+          TOOL_CALL_STATUS_DENIED: :TOOL_CALL_STATUS_DENIED
+
+          def self?.values: -> ::Array[Cadenya::Models::Objectives::ObjectiveToolCall::status]
         end
       end
     end

@@ -6,7 +6,7 @@ class Cadenya::Test::Resources::ObjectivesTest < Cadenya::Test::ResourceTest
   def test_create_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.objectives.create("workspaceId", agent_id: "agentId", data: {})
+    response = @cadenya.objectives.create("workspaceId", agent_id: "agentId", data: {foo: "bar"})
 
     assert_pattern do
       response => Cadenya::Objective
@@ -14,11 +14,18 @@ class Cadenya::Test::Resources::ObjectivesTest < Cadenya::Test::ResourceTest
 
     assert_pattern do
       response => {
-        data: Cadenya::ObjectiveData,
+        config_snapshot: Cadenya::ObjectiveConfigSnapshot,
+        initial_message: String,
         metadata: Cadenya::OperationMetadata,
-        status: Cadenya::ObjectiveStatus,
+        state: Cadenya::Objective::State,
+        system_prompt: String,
+        data: ^(Cadenya::Internal::Type::HashOf[Cadenya::Internal::Type::Unknown]) | nil,
         info: Cadenya::ObjectiveInfo | nil,
-        last_five_windows: ^(Cadenya::Internal::Type::ArrayOf[Cadenya::ObjectiveContextWindow]) | nil
+        memory_stack: ^(Cadenya::Internal::Type::ArrayOf[Cadenya::MemoryReference]) | nil,
+        output: ^(Cadenya::Internal::Type::HashOf[Cadenya::Internal::Type::Unknown]) | nil,
+        parent_objective_id: String | nil,
+        secrets: ^(Cadenya::Internal::Type::ArrayOf[Cadenya::ObjectiveSecret]) | nil,
+        state_message: String | nil
       }
     end
   end
@@ -34,11 +41,18 @@ class Cadenya::Test::Resources::ObjectivesTest < Cadenya::Test::ResourceTest
 
     assert_pattern do
       response => {
-        data: Cadenya::ObjectiveData,
+        config_snapshot: Cadenya::ObjectiveConfigSnapshot,
+        initial_message: String,
         metadata: Cadenya::OperationMetadata,
-        status: Cadenya::ObjectiveStatus,
+        state: Cadenya::Objective::State,
+        system_prompt: String,
+        data: ^(Cadenya::Internal::Type::HashOf[Cadenya::Internal::Type::Unknown]) | nil,
         info: Cadenya::ObjectiveInfo | nil,
-        last_five_windows: ^(Cadenya::Internal::Type::ArrayOf[Cadenya::ObjectiveContextWindow]) | nil
+        memory_stack: ^(Cadenya::Internal::Type::ArrayOf[Cadenya::MemoryReference]) | nil,
+        output: ^(Cadenya::Internal::Type::HashOf[Cadenya::Internal::Type::Unknown]) | nil,
+        parent_objective_id: String | nil,
+        secrets: ^(Cadenya::Internal::Type::ArrayOf[Cadenya::ObjectiveSecret]) | nil,
+        state_message: String | nil
       }
     end
   end
@@ -61,11 +75,18 @@ class Cadenya::Test::Resources::ObjectivesTest < Cadenya::Test::ResourceTest
 
     assert_pattern do
       row => {
-        data: Cadenya::ObjectiveData,
+        config_snapshot: Cadenya::ObjectiveConfigSnapshot,
+        initial_message: String,
         metadata: Cadenya::OperationMetadata,
-        status: Cadenya::ObjectiveStatus,
+        state: Cadenya::Objective::State,
+        system_prompt: String,
+        data: ^(Cadenya::Internal::Type::HashOf[Cadenya::Internal::Type::Unknown]) | nil,
         info: Cadenya::ObjectiveInfo | nil,
-        last_five_windows: ^(Cadenya::Internal::Type::ArrayOf[Cadenya::ObjectiveContextWindow]) | nil
+        memory_stack: ^(Cadenya::Internal::Type::ArrayOf[Cadenya::MemoryReference]) | nil,
+        output: ^(Cadenya::Internal::Type::HashOf[Cadenya::Internal::Type::Unknown]) | nil,
+        parent_objective_id: String | nil,
+        secrets: ^(Cadenya::Internal::Type::ArrayOf[Cadenya::ObjectiveSecret]) | nil,
+        state_message: String | nil
       }
     end
   end
@@ -81,11 +102,18 @@ class Cadenya::Test::Resources::ObjectivesTest < Cadenya::Test::ResourceTest
 
     assert_pattern do
       response => {
-        data: Cadenya::ObjectiveData,
+        config_snapshot: Cadenya::ObjectiveConfigSnapshot,
+        initial_message: String,
         metadata: Cadenya::OperationMetadata,
-        status: Cadenya::ObjectiveStatus,
+        state: Cadenya::Objective::State,
+        system_prompt: String,
+        data: ^(Cadenya::Internal::Type::HashOf[Cadenya::Internal::Type::Unknown]) | nil,
         info: Cadenya::ObjectiveInfo | nil,
-        last_five_windows: ^(Cadenya::Internal::Type::ArrayOf[Cadenya::ObjectiveContextWindow]) | nil
+        memory_stack: ^(Cadenya::Internal::Type::ArrayOf[Cadenya::MemoryReference]) | nil,
+        output: ^(Cadenya::Internal::Type::HashOf[Cadenya::Internal::Type::Unknown]) | nil,
+        parent_objective_id: String | nil,
+        secrets: ^(Cadenya::Internal::Type::ArrayOf[Cadenya::ObjectiveSecret]) | nil,
+        state_message: String | nil
       }
     end
   end

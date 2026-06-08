@@ -147,6 +147,8 @@ module Cadenya
 
   class ObjectiveCompactParams = Cadenya::Models::ObjectiveCompactParams
 
+  class ObjectiveConfigSnapshot = Cadenya::Models::ObjectiveConfigSnapshot
+
   class ObjectiveContextWindow = Cadenya::Models::ObjectiveContextWindow
 
   class ObjectiveContextWindowData = Cadenya::Models::ObjectiveContextWindowData
@@ -154,10 +156,6 @@ module Cadenya
   class ObjectiveContinueParams = Cadenya::Models::ObjectiveContinueParams
 
   class ObjectiveCreateParams = Cadenya::Models::ObjectiveCreateParams
-
-  class ObjectiveData = Cadenya::Models::ObjectiveData
-
-  class ObjectiveDataSecret = Cadenya::Models::ObjectiveDataSecret
 
   class ObjectiveError = Cadenya::Models::ObjectiveError
 
@@ -179,7 +177,7 @@ module Cadenya
 
   module Objectives = Cadenya::Models::Objectives
 
-  class ObjectiveStatus = Cadenya::Models::ObjectiveStatus
+  class ObjectiveSecret = Cadenya::Models::ObjectiveSecret
 
   class OperationMetadata = Cadenya::Models::OperationMetadata
 
