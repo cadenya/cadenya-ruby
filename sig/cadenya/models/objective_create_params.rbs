@@ -4,8 +4,11 @@ module Cadenya
       {
         workspace_id: String,
         agent_id: String,
-        data: Cadenya::ObjectiveData,
+        data: ::Hash[Symbol, top],
+        initial_message: String,
+        memory_stack: ::Array[Cadenya::MemoryReference],
         metadata: Cadenya::CreateOperationMetadata,
+        secrets: ::Array[Cadenya::ObjectiveCreateParams::Secret],
         variation_id: String
       }
       & Cadenya::Internal::Type::request_parameters
@@ -18,13 +21,29 @@ module Cadenya
 
       attr_accessor agent_id: String
 
-      attr_accessor data: Cadenya::ObjectiveData
+      attr_accessor data: ::Hash[Symbol, top]
+
+      attr_reader initial_message: String?
+
+      def initial_message=: (String) -> String
+
+      attr_reader memory_stack: ::Array[Cadenya::MemoryReference]?
+
+      def memory_stack=: (
+        ::Array[Cadenya::MemoryReference]
+      ) -> ::Array[Cadenya::MemoryReference]
 
       attr_reader metadata: Cadenya::CreateOperationMetadata?
 
       def metadata=: (
         Cadenya::CreateOperationMetadata
       ) -> Cadenya::CreateOperationMetadata
+
+      attr_reader secrets: ::Array[Cadenya::ObjectiveCreateParams::Secret]?
+
+      def secrets=: (
+        ::Array[Cadenya::ObjectiveCreateParams::Secret]
+      ) -> ::Array[Cadenya::ObjectiveCreateParams::Secret]
 
       attr_reader variation_id: String?
 
@@ -33,8 +52,11 @@ module Cadenya
       def initialize: (
         workspace_id: String,
         agent_id: String,
-        data: Cadenya::ObjectiveData,
+        data: ::Hash[Symbol, top],
+        ?initial_message: String,
+        ?memory_stack: ::Array[Cadenya::MemoryReference],
         ?metadata: Cadenya::CreateOperationMetadata,
+        ?secrets: ::Array[Cadenya::ObjectiveCreateParams::Secret],
         ?variation_id: String,
         ?request_options: Cadenya::request_opts
       ) -> void
@@ -42,11 +64,30 @@ module Cadenya
       def to_hash: -> {
         workspace_id: String,
         agent_id: String,
-        data: Cadenya::ObjectiveData,
+        data: ::Hash[Symbol, top],
+        initial_message: String,
+        memory_stack: ::Array[Cadenya::MemoryReference],
         metadata: Cadenya::CreateOperationMetadata,
+        secrets: ::Array[Cadenya::ObjectiveCreateParams::Secret],
         variation_id: String,
         request_options: Cadenya::RequestOptions
       }
+
+      type secret = { name: String, value: String }
+
+      class Secret < Cadenya::Internal::Type::BaseModel
+        attr_reader name: String?
+
+        def name=: (String) -> String
+
+        attr_reader value: String?
+
+        def value=: (String) -> String
+
+        def initialize: (?name: String, ?value: String) -> void
+
+        def to_hash: -> { name: String, value: String }
+      end
     end
   end
 end

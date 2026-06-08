@@ -2,45 +2,115 @@ module Cadenya
   module Models
     type objective =
       {
-        data: Cadenya::ObjectiveData,
+        config_snapshot: Cadenya::ObjectiveConfigSnapshot,
+        initial_message: String,
         metadata: Cadenya::OperationMetadata,
-        status: Cadenya::ObjectiveStatus,
+        state: Cadenya::Models::Objective::state,
+        system_prompt: String,
+        data: ::Hash[Symbol, top],
         info: Cadenya::ObjectiveInfo,
-        last_five_windows: ::Array[Cadenya::ObjectiveContextWindow]
+        memory_stack: ::Array[Cadenya::MemoryReference],
+        output: ::Hash[Symbol, top],
+        parent_objective_id: String,
+        secrets: ::Array[Cadenya::ObjectiveSecret],
+        state_message: String
       }
 
     class Objective < Cadenya::Internal::Type::BaseModel
-      attr_accessor data: Cadenya::ObjectiveData
+      attr_accessor initial_message: String
 
       attr_accessor metadata: Cadenya::OperationMetadata
 
-      attr_accessor status: Cadenya::ObjectiveStatus
+      attr_reader memory_stack: ::Array[Cadenya::MemoryReference]?
+
+      def memory_stack=: (
+        ::Array[Cadenya::MemoryReference]
+      ) -> ::Array[Cadenya::MemoryReference]
+
+      attr_reader secrets: ::Array[Cadenya::ObjectiveSecret]?
+
+      def secrets=: (
+        ::Array[Cadenya::ObjectiveSecret]
+      ) -> ::Array[Cadenya::ObjectiveSecret]
+
+      attr_accessor config_snapshot: Cadenya::ObjectiveConfigSnapshot
+
+      attr_accessor state: Cadenya::Models::Objective::state
+
+      attr_accessor system_prompt: String
+
+      attr_reader data: ::Hash[Symbol, top]?
+
+      def data=: (::Hash[Symbol, top]) -> ::Hash[Symbol, top]
 
       attr_reader info: Cadenya::ObjectiveInfo?
 
       def info=: (Cadenya::ObjectiveInfo) -> Cadenya::ObjectiveInfo
 
-      attr_reader last_five_windows: ::Array[Cadenya::ObjectiveContextWindow]?
+      attr_reader output: ::Hash[Symbol, top]?
 
-      def last_five_windows=: (
-        ::Array[Cadenya::ObjectiveContextWindow]
-      ) -> ::Array[Cadenya::ObjectiveContextWindow]
+      def output=: (::Hash[Symbol, top]) -> ::Hash[Symbol, top]
+
+      attr_reader parent_objective_id: String?
+
+      def parent_objective_id=: (String) -> String
+
+      attr_reader state_message: String?
+
+      def state_message=: (String) -> String
 
       def initialize: (
-        data: Cadenya::ObjectiveData,
+        config_snapshot: Cadenya::ObjectiveConfigSnapshot,
+        initial_message: String,
         metadata: Cadenya::OperationMetadata,
-        status: Cadenya::ObjectiveStatus,
+        state: Cadenya::Models::Objective::state,
+        system_prompt: String,
+        ?data: ::Hash[Symbol, top],
         ?info: Cadenya::ObjectiveInfo,
-        ?last_five_windows: ::Array[Cadenya::ObjectiveContextWindow]
+        ?memory_stack: ::Array[Cadenya::MemoryReference],
+        ?output: ::Hash[Symbol, top],
+        ?parent_objective_id: String,
+        ?secrets: ::Array[Cadenya::ObjectiveSecret],
+        ?state_message: String
       ) -> void
 
       def to_hash: -> {
-        data: Cadenya::ObjectiveData,
+        config_snapshot: Cadenya::ObjectiveConfigSnapshot,
+        initial_message: String,
         metadata: Cadenya::OperationMetadata,
-        status: Cadenya::ObjectiveStatus,
+        state: Cadenya::Models::Objective::state,
+        system_prompt: String,
+        data: ::Hash[Symbol, top],
         info: Cadenya::ObjectiveInfo,
-        last_five_windows: ::Array[Cadenya::ObjectiveContextWindow]
+        memory_stack: ::Array[Cadenya::MemoryReference],
+        output: ::Hash[Symbol, top],
+        parent_objective_id: String,
+        secrets: ::Array[Cadenya::ObjectiveSecret],
+        state_message: String
       }
+
+      type state =
+        :STATE_UNSPECIFIED
+        | :STATE_PENDING
+        | :STATE_RUNNING
+        | :STATE_WAITING
+        | :STATE_FAILED
+        | :STATE_CANCELLED
+        | :STATE_FINALIZED
+
+      module State
+        extend Cadenya::Internal::Type::Enum
+
+        STATE_UNSPECIFIED: :STATE_UNSPECIFIED
+        STATE_PENDING: :STATE_PENDING
+        STATE_RUNNING: :STATE_RUNNING
+        STATE_WAITING: :STATE_WAITING
+        STATE_FAILED: :STATE_FAILED
+        STATE_CANCELLED: :STATE_CANCELLED
+        STATE_FINALIZED: :STATE_FINALIZED
+
+        def self?.values: -> ::Array[Cadenya::Models::Objective::state]
+      end
     end
   end
 end

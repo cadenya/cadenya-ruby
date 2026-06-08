@@ -1,0 +1,40 @@
+module Cadenya
+  module Models
+    type objective_config_snapshot =
+      {
+        agent: Cadenya::Agent,
+        agent_schedule: Cadenya::Agents::AgentSchedule,
+        agent_variation: Cadenya::Agents::AgentVariation
+      }
+
+    class ObjectiveConfigSnapshot < Cadenya::Internal::Type::BaseModel
+      attr_reader agent: Cadenya::Agent?
+
+      def agent=: (Cadenya::Agent) -> Cadenya::Agent
+
+      attr_reader agent_schedule: Cadenya::Agents::AgentSchedule?
+
+      def agent_schedule=: (
+        Cadenya::Agents::AgentSchedule
+      ) -> Cadenya::Agents::AgentSchedule
+
+      attr_reader agent_variation: Cadenya::Agents::AgentVariation?
+
+      def agent_variation=: (
+        Cadenya::Agents::AgentVariation
+      ) -> Cadenya::Agents::AgentVariation
+
+      def initialize: (
+        ?agent: Cadenya::Agent,
+        ?agent_schedule: Cadenya::Agents::AgentSchedule,
+        ?agent_variation: Cadenya::Agents::AgentVariation
+      ) -> void
+
+      def to_hash: -> {
+        agent: Cadenya::Agent,
+        agent_schedule: Cadenya::Agents::AgentSchedule,
+        agent_variation: Cadenya::Agents::AgentVariation
+      }
+    end
+  end
+end
