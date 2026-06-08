@@ -7,7 +7,7 @@ module Cadenya
         T.type_alias { T.any(Cadenya::ProfileSpec, Cadenya::Internal::AnyHash) }
 
       # Whether this profile represents a human user, an API key, or a system principal.
-      sig { returns(Cadenya::ProfileSpec::Type::OrSymbol) }
+      sig { returns(Cadenya::ProfileSpec::Type::TaggedSymbol) }
       attr_accessor :type
 
       # Email address of the profile. Required and unique within an account for user
@@ -47,7 +47,7 @@ module Cadenya
       sig do
         override.returns(
           {
-            type: Cadenya::ProfileSpec::Type::OrSymbol,
+            type: Cadenya::ProfileSpec::Type::TaggedSymbol,
             email: String,
             name: String
           }

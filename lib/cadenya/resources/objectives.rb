@@ -20,15 +20,21 @@ module Cadenya
       #
       # Creates a new objective in the workspace
       #
-      # @overload create(workspace_id, agent_id:, data:, metadata: nil, variation_id: nil, request_options: {})
+      # @overload create(workspace_id, agent_id:, data:, initial_message: nil, memory_stack: nil, metadata: nil, secrets: nil, variation_id: nil, request_options: {})
       #
       # @param workspace_id [String]
       #
       # @param agent_id [String]
       #
-      # @param data [Cadenya::Models::ObjectiveData]
+      # @param data [Hash{Symbol=>Object}] Arbitrary data for the objective. May be used in liquid templates for prompts co
+      #
+      # @param initial_message [String] Optional override for initial message sent to the agent. This becomes the first
+      #
+      # @param memory_stack [Array<Cadenya::Models::MemoryReference>] Memory layers/entries to push onto this objective's memory stack on
       #
       # @param metadata [Cadenya::Models::CreateOperationMetadata] CreateOperationMetadata contains the user-provided fields for creating
+      #
+      # @param secrets [Array<Cadenya::Models::ObjectiveCreateParams::Secret>] Secrets that can be used in the headers for tool calls using the secret interpol
       #
       # @param variation_id [String] Optional explicit variation selection. Overrides the agent's variation_selection
       #
@@ -152,7 +158,7 @@ module Cadenya
           end
         @client.request(
           method: :post,
-          path: ["v1/workspaces/%1$s/objectives/%2$s/cancel", workspace_id, objective_id],
+          path: ["v1/workspaces/%1$s/objectives/%2$s:cancel", workspace_id, objective_id],
           body: parsed,
           model: Cadenya::Objective,
           options: options
@@ -186,7 +192,7 @@ module Cadenya
           end
         @client.request(
           method: :post,
-          path: ["v1/workspaces/%1$s/objectives/%2$s/compact", workspace_id, objective_id],
+          path: ["v1/workspaces/%1$s/objectives/%2$s:compact", workspace_id, objective_id],
           body: parsed,
           model: Cadenya::Models::ObjectiveCompactResponse,
           options: options
@@ -223,7 +229,7 @@ module Cadenya
           end
         @client.request(
           method: :post,
-          path: ["v1/workspaces/%1$s/objectives/%2$s/continue", workspace_id, objective_id],
+          path: ["v1/workspaces/%1$s/objectives/%2$s:continue", workspace_id, objective_id],
           body: parsed,
           model: Cadenya::Models::ObjectiveContinueResponse,
           options: options

@@ -46,20 +46,10 @@ module Cadenya
 
         sig do
           returns(
-            T.nilable(
-              Cadenya::Objectives::ObjectiveToolCall::ExecutionStatus::TaggedSymbol
-            )
+            Cadenya::Objectives::ObjectiveToolCall::ExecutionStatus::TaggedSymbol
           )
         end
-        attr_reader :execution_status
-
-        sig do
-          params(
-            execution_status:
-              Cadenya::Objectives::ObjectiveToolCall::ExecutionStatus::OrSymbol
-          ).void
-        end
-        attr_writer :execution_status
+        attr_accessor :execution_status
 
         # ObjectiveToolCall is a record of a tool call made during an objective's
         # execution. Tool calls are mutable — their status changes as they are approved,
@@ -67,21 +57,21 @@ module Cadenya
         sig do
           params(
             data: Cadenya::Objectives::ObjectiveToolCallData::OrHash,
-            metadata: Cadenya::OperationMetadata::OrHash,
-            status: Cadenya::Objectives::ObjectiveToolCall::Status::OrSymbol,
             execution_status:
               Cadenya::Objectives::ObjectiveToolCall::ExecutionStatus::OrSymbol,
+            metadata: Cadenya::OperationMetadata::OrHash,
+            status: Cadenya::Objectives::ObjectiveToolCall::Status::OrSymbol,
             info: Cadenya::Objectives::ObjectiveToolCallInfo::OrHash
           ).returns(T.attached_class)
         end
         def self.new(
           data:,
+          execution_status:,
           # Metadata for ephemeral operations and activities (e.g., objectives, executions,
           # runs)
           metadata:,
           # Current status of the tool call
           status:,
-          execution_status: nil,
           info: nil
         )
         end
@@ -90,63 +80,16 @@ module Cadenya
           override.returns(
             {
               data: Cadenya::Objectives::ObjectiveToolCallData,
+              execution_status:
+                Cadenya::Objectives::ObjectiveToolCall::ExecutionStatus::TaggedSymbol,
               metadata: Cadenya::OperationMetadata,
               status:
                 Cadenya::Objectives::ObjectiveToolCall::Status::TaggedSymbol,
-              execution_status:
-                Cadenya::Objectives::ObjectiveToolCall::ExecutionStatus::TaggedSymbol,
               info: Cadenya::Objectives::ObjectiveToolCallInfo
             }
           )
         end
         def to_hash
-        end
-
-        # Current status of the tool call
-        module Status
-          extend Cadenya::Internal::Type::Enum
-
-          TaggedSymbol =
-            T.type_alias do
-              T.all(Symbol, Cadenya::Objectives::ObjectiveToolCall::Status)
-            end
-          OrSymbol = T.type_alias { T.any(Symbol, String) }
-
-          TOOL_CALL_STATUS_UNSPECIFIED =
-            T.let(
-              :TOOL_CALL_STATUS_UNSPECIFIED,
-              Cadenya::Objectives::ObjectiveToolCall::Status::TaggedSymbol
-            )
-          TOOL_CALL_STATUS_AUTO_APPROVED =
-            T.let(
-              :TOOL_CALL_STATUS_AUTO_APPROVED,
-              Cadenya::Objectives::ObjectiveToolCall::Status::TaggedSymbol
-            )
-          TOOL_CALL_STATUS_WAITING_FOR_APPROVAL =
-            T.let(
-              :TOOL_CALL_STATUS_WAITING_FOR_APPROVAL,
-              Cadenya::Objectives::ObjectiveToolCall::Status::TaggedSymbol
-            )
-          TOOL_CALL_STATUS_APPROVED =
-            T.let(
-              :TOOL_CALL_STATUS_APPROVED,
-              Cadenya::Objectives::ObjectiveToolCall::Status::TaggedSymbol
-            )
-          TOOL_CALL_STATUS_DENIED =
-            T.let(
-              :TOOL_CALL_STATUS_DENIED,
-              Cadenya::Objectives::ObjectiveToolCall::Status::TaggedSymbol
-            )
-
-          sig do
-            override.returns(
-              T::Array[
-                Cadenya::Objectives::ObjectiveToolCall::Status::TaggedSymbol
-              ]
-            )
-          end
-          def self.values
-          end
         end
 
         module ExecutionStatus
@@ -191,6 +134,53 @@ module Cadenya
             override.returns(
               T::Array[
                 Cadenya::Objectives::ObjectiveToolCall::ExecutionStatus::TaggedSymbol
+              ]
+            )
+          end
+          def self.values
+          end
+        end
+
+        # Current status of the tool call
+        module Status
+          extend Cadenya::Internal::Type::Enum
+
+          TaggedSymbol =
+            T.type_alias do
+              T.all(Symbol, Cadenya::Objectives::ObjectiveToolCall::Status)
+            end
+          OrSymbol = T.type_alias { T.any(Symbol, String) }
+
+          TOOL_CALL_STATUS_UNSPECIFIED =
+            T.let(
+              :TOOL_CALL_STATUS_UNSPECIFIED,
+              Cadenya::Objectives::ObjectiveToolCall::Status::TaggedSymbol
+            )
+          TOOL_CALL_STATUS_AUTO_APPROVED =
+            T.let(
+              :TOOL_CALL_STATUS_AUTO_APPROVED,
+              Cadenya::Objectives::ObjectiveToolCall::Status::TaggedSymbol
+            )
+          TOOL_CALL_STATUS_WAITING_FOR_APPROVAL =
+            T.let(
+              :TOOL_CALL_STATUS_WAITING_FOR_APPROVAL,
+              Cadenya::Objectives::ObjectiveToolCall::Status::TaggedSymbol
+            )
+          TOOL_CALL_STATUS_APPROVED =
+            T.let(
+              :TOOL_CALL_STATUS_APPROVED,
+              Cadenya::Objectives::ObjectiveToolCall::Status::TaggedSymbol
+            )
+          TOOL_CALL_STATUS_DENIED =
+            T.let(
+              :TOOL_CALL_STATUS_DENIED,
+              Cadenya::Objectives::ObjectiveToolCall::Status::TaggedSymbol
+            )
+
+          sig do
+            override.returns(
+              T::Array[
+                Cadenya::Objectives::ObjectiveToolCall::Status::TaggedSymbol
               ]
             )
           end

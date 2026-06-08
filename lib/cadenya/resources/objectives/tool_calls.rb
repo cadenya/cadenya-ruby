@@ -69,9 +69,9 @@ module Cadenya
               raise ArgumentError.new("missing required path argument #{_1}")
             end
           @client.request(
-            method: :put,
+            method: :post,
             path: [
-              "v1/workspaces/%1$s/objectives/%2$s/tool_calls/%3$s/approve",
+              "v1/workspaces/%1$s/objectives/%2$s/tool_calls/%3$s:approve",
               workspace_id,
               objective_id,
               tool_call_id
@@ -114,9 +114,9 @@ module Cadenya
               raise ArgumentError.new("missing required path argument #{_1}")
             end
           @client.request(
-            method: :put,
+            method: :post,
             path: [
-              "v1/workspaces/%1$s/objectives/%2$s/tool_calls/%3$s/deny",
+              "v1/workspaces/%1$s/objectives/%2$s/tool_calls/%3$s:deny",
               workspace_id,
               objective_id,
               tool_call_id
