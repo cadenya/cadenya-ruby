@@ -4,6 +4,7 @@ module Cadenya
       {
         metadata: Cadenya::ResourceMetadata,
         spec: Cadenya::AgentSpec,
+        state: Cadenya::Models::Agent::state,
         info: Cadenya::AgentInfo
       }
 
@@ -12,6 +13,8 @@ module Cadenya
 
       attr_accessor spec: Cadenya::AgentSpec
 
+      attr_accessor state: Cadenya::Models::Agent::state
+
       attr_reader info: Cadenya::AgentInfo?
 
       def info=: (Cadenya::AgentInfo) -> Cadenya::AgentInfo
@@ -19,14 +22,30 @@ module Cadenya
       def initialize: (
         metadata: Cadenya::ResourceMetadata,
         spec: Cadenya::AgentSpec,
+        state: Cadenya::Models::Agent::state,
         ?info: Cadenya::AgentInfo
       ) -> void
 
       def to_hash: -> {
         metadata: Cadenya::ResourceMetadata,
         spec: Cadenya::AgentSpec,
+        state: Cadenya::Models::Agent::state,
         info: Cadenya::AgentInfo
       }
+
+      type state =
+        :STATE_UNSPECIFIED | :STATE_DRAFT | :STATE_PUBLISHED | :STATE_ARCHIVED
+
+      module State
+        extend Cadenya::Internal::Type::Enum
+
+        STATE_UNSPECIFIED: :STATE_UNSPECIFIED
+        STATE_DRAFT: :STATE_DRAFT
+        STATE_PUBLISHED: :STATE_PUBLISHED
+        STATE_ARCHIVED: :STATE_ARCHIVED
+
+        def self?.values: -> ::Array[Cadenya::Models::Agent::state]
+      end
     end
   end
 end

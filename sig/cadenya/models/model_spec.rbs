@@ -7,8 +7,7 @@ module Cadenya
         max_input_tokens: Integer,
         max_output_tokens: Integer,
         output_price_per_million_tokens: String,
-        provider: String,
-        status: Cadenya::Models::ModelSpec::status
+        provider: String
       }
 
     class ModelSpec < Cadenya::Internal::Type::BaseModel
@@ -36,20 +35,13 @@ module Cadenya
 
       def provider=: (String) -> String
 
-      attr_reader status: Cadenya::Models::ModelSpec::status?
-
-      def status=: (
-        Cadenya::Models::ModelSpec::status
-      ) -> Cadenya::Models::ModelSpec::status
-
       def initialize: (
         ?family: String,
         ?input_price_per_million_tokens: String,
         ?max_input_tokens: Integer,
         ?max_output_tokens: Integer,
         ?output_price_per_million_tokens: String,
-        ?provider: String,
-        ?status: Cadenya::Models::ModelSpec::status
+        ?provider: String
       ) -> void
 
       def to_hash: -> {
@@ -58,24 +50,8 @@ module Cadenya
         max_input_tokens: Integer,
         max_output_tokens: Integer,
         output_price_per_million_tokens: String,
-        provider: String,
-        status: Cadenya::Models::ModelSpec::status
+        provider: String
       }
-
-      type status =
-        :MODEL_STATUS_UNSPECIFIED
-        | :MODEL_STATUS_ENABLED
-        | :MODEL_STATUS_DISABLED
-
-      module Status
-        extend Cadenya::Internal::Type::Enum
-
-        MODEL_STATUS_UNSPECIFIED: :MODEL_STATUS_UNSPECIFIED
-        MODEL_STATUS_ENABLED: :MODEL_STATUS_ENABLED
-        MODEL_STATUS_DISABLED: :MODEL_STATUS_DISABLED
-
-        def self?.values: -> ::Array[Cadenya::Models::ModelSpec::status]
-      end
     end
   end
 end

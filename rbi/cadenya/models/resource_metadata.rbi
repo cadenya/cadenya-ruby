@@ -58,6 +58,13 @@ module Cadenya
       sig { returns(String) }
       attr_accessor :workspace_id
 
+      # Timestamp when this resource was last updated
+      sig { returns(T.nilable(Time)) }
+      attr_reader :updated_at
+
+      sig { params(updated_at: Time).void }
+      attr_writer :updated_at
+
       # Standard metadata for persistent, named resources (e.g., agents, tools, prompts)
       sig do
         params(
@@ -69,7 +76,8 @@ module Cadenya
           workspace_id: String,
           bundle_key: String,
           external_id: String,
-          labels: T::Hash[Symbol, String]
+          labels: T::Hash[Symbol, String],
+          updated_at: Time
         ).returns(T.attached_class)
       end
       def self.new(
@@ -95,7 +103,9 @@ module Cadenya
         external_id: nil,
         # Arbitrary key-value pairs for categorization and filtering Examples:
         # {"environment": "production", "team": "platform", "version": "v2"}
-        labels: nil
+        labels: nil,
+        # Timestamp when this resource was last updated
+        updated_at: nil
       )
       end
 
@@ -110,7 +120,8 @@ module Cadenya
             workspace_id: String,
             bundle_key: String,
             external_id: String,
-            labels: T::Hash[Symbol, String]
+            labels: T::Hash[Symbol, String],
+            updated_at: Time
           }
         )
       end

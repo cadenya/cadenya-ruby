@@ -17,6 +17,13 @@ module Cadenya
       required :spec, -> { Cadenya::ModelSpec }
 
       response_only do
+        # @!attribute state
+        #   Whether the model is usable in this workspace. Output only. Use the :enable and
+        #   :disable actions to transition.
+        #
+        #   @return [Symbol, Cadenya::Models::Model::State]
+        required :state, enum: -> { Cadenya::Model::State }
+
         # @!attribute info
         #   ModelInfo carries server-derived, read-only details about a model.
         #
@@ -24,7 +31,7 @@ module Cadenya
         optional :info, -> { Cadenya::Model::Info }
       end
 
-      # @!method initialize(metadata:, spec:, info: nil)
+      # @!method initialize(metadata:, spec:, state:, info: nil)
       #   Some parameter documentations has been truncated, see {Cadenya::Models::Model}
       #   for more details.
       #
@@ -32,7 +39,24 @@ module Cadenya
       #
       #   @param spec [Cadenya::Models::ModelSpec] Model specification
       #
+      #   @param state [Symbol, Cadenya::Models::Model::State] Whether the model is usable in this workspace. Output only. Use the
+      #
       #   @param info [Cadenya::Models::Model::Info] ModelInfo carries server-derived, read-only details about a model.
+
+      # Whether the model is usable in this workspace. Output only. Use the :enable and
+      # :disable actions to transition.
+      #
+      # @see Cadenya::Models::Model#state
+      module State
+        extend Cadenya::Internal::Type::Enum
+
+        STATE_UNSPECIFIED = :STATE_UNSPECIFIED
+        STATE_ENABLED = :STATE_ENABLED
+        STATE_DISABLED = :STATE_DISABLED
+
+        # @!method self.values
+        #   @return [Array<Symbol>]
+      end
 
       # @see Cadenya::Models::Model#info
       class Info < Cadenya::Internal::Type::BaseModel

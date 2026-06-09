@@ -41,7 +41,7 @@ module Cadenya
         ?prefix: String,
         ?query: String,
         ?sort_order: String,
-        ?status: Cadenya::Models::AgentListParams::status,
+        ?state: Cadenya::Models::AgentListParams::state,
         ?variation_selection_mode: Cadenya::Models::AgentListParams::variation_selection_mode,
         ?request_options: Cadenya::request_opts
       ) -> Cadenya::Internal::CursorPagination[Cadenya::Agent]
@@ -51,6 +51,30 @@ module Cadenya
         workspace_id: String,
         ?request_options: Cadenya::request_opts
       ) -> nil
+
+      def archive: (
+        String id,
+        workspace_id: String,
+        ?request_options: Cadenya::request_opts
+      ) -> Cadenya::Agent
+
+      def publish: (
+        String id,
+        workspace_id: String,
+        ?request_options: Cadenya::request_opts
+      ) -> Cadenya::Agent
+
+      def unarchive: (
+        String id,
+        workspace_id: String,
+        ?request_options: Cadenya::request_opts
+      ) -> Cadenya::Agent
+
+      def unpublish: (
+        String id,
+        workspace_id: String,
+        ?request_options: Cadenya::request_opts
+      ) -> Cadenya::Agent
 
       def initialize: (client: Cadenya::Client) -> void
     end

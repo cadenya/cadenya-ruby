@@ -36,7 +36,7 @@ module Cadenya
       def rotate_webhook_signing_key(params = {})
         @client.request(
           method: :post,
-          path: "v1/account/rotate_webhook_signing_key",
+          path: "v1/account:rotateWebhookSigningKey",
           model: Cadenya::RotateWebhookSigningKeyResponse,
           options: params[:request_options]
         )

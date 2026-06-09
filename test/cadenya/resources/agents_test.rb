@@ -10,10 +10,7 @@ class Cadenya::Test::Resources::AgentsTest < Cadenya::Test::ResourceTest
       @cadenya.agents.create(
         "workspaceId",
         metadata: {name: "name"},
-        spec: {
-          status: :AGENT_STATUS_UNSPECIFIED,
-          variationSelectionMode: :VARIATION_SELECTION_MODE_UNSPECIFIED
-        }
+        spec: {variationSelectionMode: :VARIATION_SELECTION_MODE_UNSPECIFIED}
       )
 
     assert_pattern do
@@ -24,6 +21,7 @@ class Cadenya::Test::Resources::AgentsTest < Cadenya::Test::ResourceTest
       response => {
         metadata: Cadenya::ResourceMetadata,
         spec: Cadenya::AgentSpec,
+        state: Cadenya::Agent::State,
         info: Cadenya::AgentInfo | nil
       }
     end
@@ -42,6 +40,7 @@ class Cadenya::Test::Resources::AgentsTest < Cadenya::Test::ResourceTest
       response => {
         metadata: Cadenya::ResourceMetadata,
         spec: Cadenya::AgentSpec,
+        state: Cadenya::Agent::State,
         info: Cadenya::AgentInfo | nil
       }
     end
@@ -60,6 +59,7 @@ class Cadenya::Test::Resources::AgentsTest < Cadenya::Test::ResourceTest
       response => {
         metadata: Cadenya::ResourceMetadata,
         spec: Cadenya::AgentSpec,
+        state: Cadenya::Agent::State,
         info: Cadenya::AgentInfo | nil
       }
     end
@@ -85,6 +85,7 @@ class Cadenya::Test::Resources::AgentsTest < Cadenya::Test::ResourceTest
       row => {
         metadata: Cadenya::ResourceMetadata,
         spec: Cadenya::AgentSpec,
+        state: Cadenya::Agent::State,
         info: Cadenya::AgentInfo | nil
       }
     end
@@ -97,6 +98,82 @@ class Cadenya::Test::Resources::AgentsTest < Cadenya::Test::ResourceTest
 
     assert_pattern do
       response => nil
+    end
+  end
+
+  def test_archive_required_params
+    skip("Mock server tests are disabled")
+
+    response = @cadenya.agents.archive("id", workspace_id: "workspaceId")
+
+    assert_pattern do
+      response => Cadenya::Agent
+    end
+
+    assert_pattern do
+      response => {
+        metadata: Cadenya::ResourceMetadata,
+        spec: Cadenya::AgentSpec,
+        state: Cadenya::Agent::State,
+        info: Cadenya::AgentInfo | nil
+      }
+    end
+  end
+
+  def test_publish_required_params
+    skip("Mock server tests are disabled")
+
+    response = @cadenya.agents.publish("id", workspace_id: "workspaceId")
+
+    assert_pattern do
+      response => Cadenya::Agent
+    end
+
+    assert_pattern do
+      response => {
+        metadata: Cadenya::ResourceMetadata,
+        spec: Cadenya::AgentSpec,
+        state: Cadenya::Agent::State,
+        info: Cadenya::AgentInfo | nil
+      }
+    end
+  end
+
+  def test_unarchive_required_params
+    skip("Mock server tests are disabled")
+
+    response = @cadenya.agents.unarchive("id", workspace_id: "workspaceId")
+
+    assert_pattern do
+      response => Cadenya::Agent
+    end
+
+    assert_pattern do
+      response => {
+        metadata: Cadenya::ResourceMetadata,
+        spec: Cadenya::AgentSpec,
+        state: Cadenya::Agent::State,
+        info: Cadenya::AgentInfo | nil
+      }
+    end
+  end
+
+  def test_unpublish_required_params
+    skip("Mock server tests are disabled")
+
+    response = @cadenya.agents.unpublish("id", workspace_id: "workspaceId")
+
+    assert_pattern do
+      response => Cadenya::Agent
+    end
+
+    assert_pattern do
+      response => {
+        metadata: Cadenya::ResourceMetadata,
+        spec: Cadenya::AgentSpec,
+        state: Cadenya::Agent::State,
+        info: Cadenya::AgentInfo | nil
+      }
     end
   end
 end

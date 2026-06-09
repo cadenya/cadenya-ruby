@@ -22,6 +22,7 @@ class Cadenya::Test::Resources::Agents::SchedulesTest < Cadenya::Test::ResourceT
       response => {
         metadata: Cadenya::ResourceMetadata,
         spec: Cadenya::Agents::AgentScheduleSpec,
+        state: Cadenya::Agents::AgentSchedule::State,
         info: Cadenya::Agents::AgentScheduleInfo | nil
       }
     end
@@ -40,6 +41,7 @@ class Cadenya::Test::Resources::Agents::SchedulesTest < Cadenya::Test::ResourceT
       response => {
         metadata: Cadenya::ResourceMetadata,
         spec: Cadenya::Agents::AgentScheduleSpec,
+        state: Cadenya::Agents::AgentSchedule::State,
         info: Cadenya::Agents::AgentScheduleInfo | nil
       }
     end
@@ -58,6 +60,7 @@ class Cadenya::Test::Resources::Agents::SchedulesTest < Cadenya::Test::ResourceT
       response => {
         metadata: Cadenya::ResourceMetadata,
         spec: Cadenya::Agents::AgentScheduleSpec,
+        state: Cadenya::Agents::AgentSchedule::State,
         info: Cadenya::Agents::AgentScheduleInfo | nil
       }
     end
@@ -83,6 +86,7 @@ class Cadenya::Test::Resources::Agents::SchedulesTest < Cadenya::Test::ResourceT
       row => {
         metadata: Cadenya::ResourceMetadata,
         spec: Cadenya::Agents::AgentScheduleSpec,
+        state: Cadenya::Agents::AgentSchedule::State,
         info: Cadenya::Agents::AgentScheduleInfo | nil
       }
     end
@@ -95,6 +99,63 @@ class Cadenya::Test::Resources::Agents::SchedulesTest < Cadenya::Test::ResourceT
 
     assert_pattern do
       response => nil
+    end
+  end
+
+  def test_archive_required_params
+    skip("Mock server tests are disabled")
+
+    response = @cadenya.agents.schedules.archive("id", workspace_id: "workspaceId", agent_id: "agentId")
+
+    assert_pattern do
+      response => Cadenya::Agents::AgentSchedule
+    end
+
+    assert_pattern do
+      response => {
+        metadata: Cadenya::ResourceMetadata,
+        spec: Cadenya::Agents::AgentScheduleSpec,
+        state: Cadenya::Agents::AgentSchedule::State,
+        info: Cadenya::Agents::AgentScheduleInfo | nil
+      }
+    end
+  end
+
+  def test_pause_required_params
+    skip("Mock server tests are disabled")
+
+    response = @cadenya.agents.schedules.pause("id", workspace_id: "workspaceId", agent_id: "agentId")
+
+    assert_pattern do
+      response => Cadenya::Agents::AgentSchedule
+    end
+
+    assert_pattern do
+      response => {
+        metadata: Cadenya::ResourceMetadata,
+        spec: Cadenya::Agents::AgentScheduleSpec,
+        state: Cadenya::Agents::AgentSchedule::State,
+        info: Cadenya::Agents::AgentScheduleInfo | nil
+      }
+    end
+  end
+
+  def test_resume_required_params
+    skip("Mock server tests are disabled")
+
+    response = @cadenya.agents.schedules.resume("id", workspace_id: "workspaceId", agent_id: "agentId")
+
+    assert_pattern do
+      response => Cadenya::Agents::AgentSchedule
+    end
+
+    assert_pattern do
+      response => {
+        metadata: Cadenya::ResourceMetadata,
+        spec: Cadenya::Agents::AgentScheduleSpec,
+        state: Cadenya::Agents::AgentSchedule::State,
+        info: Cadenya::Agents::AgentScheduleInfo | nil
+      }
     end
   end
 end

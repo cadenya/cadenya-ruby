@@ -153,6 +153,76 @@ module Cadenya
         )
         end
 
+        # Transitions a schedule to STATE_ARCHIVED and removes its underlying timer.
+        # Archiving is terminal: archived schedules never fire and cannot be reactivated;
+        # create a new schedule instead.
+        sig do
+          params(
+            id: String,
+            workspace_id: String,
+            agent_id: String,
+            request_options: Cadenya::RequestOptions::OrHash
+          ).returns(Cadenya::Agents::AgentSchedule)
+        end
+        def archive(
+          # Schedule ID. Accepts the canonical `as_…` form or the `external_id:<value>`
+          # form.
+          id,
+          # Workspace ID.
+          workspace_id:,
+          # Agent ID. Accepts the canonical `agent_…` form or the `external_id:<value>`
+          # form.
+          agent_id:,
+          request_options: {}
+        )
+        end
+
+        # Transitions a schedule to STATE_PAUSED. Paused schedules retain history but do
+        # not fire.
+        sig do
+          params(
+            id: String,
+            workspace_id: String,
+            agent_id: String,
+            request_options: Cadenya::RequestOptions::OrHash
+          ).returns(Cadenya::Agents::AgentSchedule)
+        end
+        def pause(
+          # Schedule ID. Accepts the canonical `as_…` form or the `external_id:<value>`
+          # form.
+          id,
+          # Workspace ID.
+          workspace_id:,
+          # Agent ID. Accepts the canonical `agent_…` form or the `external_id:<value>`
+          # form.
+          agent_id:,
+          request_options: {}
+        )
+        end
+
+        # Transitions a paused schedule back to STATE_ACTIVE so it fires on its cadence
+        # again. Archived schedules cannot be resumed.
+        sig do
+          params(
+            id: String,
+            workspace_id: String,
+            agent_id: String,
+            request_options: Cadenya::RequestOptions::OrHash
+          ).returns(Cadenya::Agents::AgentSchedule)
+        end
+        def resume(
+          # Schedule ID. Accepts the canonical `as_…` form or the `external_id:<value>`
+          # form.
+          id,
+          # Workspace ID.
+          workspace_id:,
+          # Agent ID. Accepts the canonical `agent_…` form or the `external_id:<value>`
+          # form.
+          agent_id:,
+          request_options: {}
+        )
+        end
+
         # @api private
         sig { params(client: Cadenya::Client).returns(T.attached_class) }
         def self.new(client:)

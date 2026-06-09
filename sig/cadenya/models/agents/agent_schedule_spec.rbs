@@ -9,7 +9,6 @@ module Cadenya
           schedule: Cadenya::Agents::AgentScheduleSpecSchedule,
           data: top,
           overlap_policy: Cadenya::Models::Agents::AgentScheduleSpec::overlap_policy,
-          status: Cadenya::Models::Agents::AgentScheduleSpec::status,
           variation_id: String
         }
 
@@ -28,12 +27,6 @@ module Cadenya
           Cadenya::Models::Agents::AgentScheduleSpec::overlap_policy
         ) -> Cadenya::Models::Agents::AgentScheduleSpec::overlap_policy
 
-        attr_reader status: Cadenya::Models::Agents::AgentScheduleSpec::status?
-
-        def status=: (
-          Cadenya::Models::Agents::AgentScheduleSpec::status
-        ) -> Cadenya::Models::Agents::AgentScheduleSpec::status
-
         attr_reader variation_id: String?
 
         def variation_id=: (String) -> String
@@ -43,7 +36,6 @@ module Cadenya
           schedule: Cadenya::Agents::AgentScheduleSpecSchedule,
           ?data: top,
           ?overlap_policy: Cadenya::Models::Agents::AgentScheduleSpec::overlap_policy,
-          ?status: Cadenya::Models::Agents::AgentScheduleSpec::status,
           ?variation_id: String
         ) -> void
 
@@ -52,7 +44,6 @@ module Cadenya
           schedule: Cadenya::Agents::AgentScheduleSpecSchedule,
           data: top,
           overlap_policy: Cadenya::Models::Agents::AgentScheduleSpec::overlap_policy,
-          status: Cadenya::Models::Agents::AgentScheduleSpec::status,
           variation_id: String
         }
 
@@ -69,23 +60,6 @@ module Cadenya
           OVERLAP_POLICY_SKIP: :OVERLAP_POLICY_SKIP
 
           def self?.values: -> ::Array[Cadenya::Models::Agents::AgentScheduleSpec::overlap_policy]
-        end
-
-        type status =
-          :AGENT_SCHEDULE_STATUS_UNSPECIFIED
-          | :AGENT_SCHEDULE_STATUS_ACTIVE
-          | :AGENT_SCHEDULE_STATUS_PAUSED
-          | :AGENT_SCHEDULE_STATUS_ARCHIVED
-
-        module Status
-          extend Cadenya::Internal::Type::Enum
-
-          AGENT_SCHEDULE_STATUS_UNSPECIFIED: :AGENT_SCHEDULE_STATUS_UNSPECIFIED
-          AGENT_SCHEDULE_STATUS_ACTIVE: :AGENT_SCHEDULE_STATUS_ACTIVE
-          AGENT_SCHEDULE_STATUS_PAUSED: :AGENT_SCHEDULE_STATUS_PAUSED
-          AGENT_SCHEDULE_STATUS_ARCHIVED: :AGENT_SCHEDULE_STATUS_ARCHIVED
-
-          def self?.values: -> ::Array[Cadenya::Models::Agents::AgentScheduleSpec::status]
         end
       end
     end

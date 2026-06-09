@@ -16,6 +16,14 @@ module Cadenya
       required :spec, -> { Cadenya::ToolSetSpec }
 
       response_only do
+        # @!attribute state
+        #   The current lifecycle state of the tool set. Output only. Tool sets are created
+        #   STATE_ACTIVE; use the :archive and :unarchive actions to transition between
+        #   states.
+        #
+        #   @return [Symbol, Cadenya::Models::ToolSet::State]
+        required :state, enum: -> { Cadenya::ToolSet::State }
+
         # @!attribute info
         #   Tool set information
         #
@@ -23,7 +31,7 @@ module Cadenya
         optional :info, -> { Cadenya::ToolSetInfo }
       end
 
-      # @!method initialize(metadata:, spec:, info: nil)
+      # @!method initialize(metadata:, spec:, state:, info: nil)
       #   Some parameter documentations has been truncated, see {Cadenya::Models::ToolSet}
       #   for more details.
       #
@@ -31,7 +39,25 @@ module Cadenya
       #
       #   @param spec [Cadenya::Models::ToolSetSpec]
       #
+      #   @param state [Symbol, Cadenya::Models::ToolSet::State] The current lifecycle state of the tool set. Output only. Tool sets are
+      #
       #   @param info [Cadenya::Models::ToolSetInfo] Tool set information
+
+      # The current lifecycle state of the tool set. Output only. Tool sets are created
+      # STATE_ACTIVE; use the :archive and :unarchive actions to transition between
+      # states.
+      #
+      # @see Cadenya::Models::ToolSet#state
+      module State
+        extend Cadenya::Internal::Type::Enum
+
+        STATE_UNSPECIFIED = :STATE_UNSPECIFIED
+        STATE_ACTIVE = :STATE_ACTIVE
+        STATE_ARCHIVED = :STATE_ARCHIVED
+
+        # @!method self.values
+        #   @return [Array<Symbol>]
+      end
     end
   end
 end

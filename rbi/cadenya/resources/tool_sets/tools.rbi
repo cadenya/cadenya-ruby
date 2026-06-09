@@ -104,8 +104,8 @@ module Cadenya
             query: String,
             requires_approval: T::Boolean,
             sort_order: String,
-            statuses:
-              T::Array[Cadenya::ToolSets::ToolListParams::Status::OrSymbol],
+            states:
+              T::Array[Cadenya::ToolSets::ToolListParams::State::OrSymbol],
             request_options: Cadenya::RequestOptions::OrHash
           ).returns(
             Cadenya::Internal::CursorPagination[Cadenya::ToolSets::Tool]
@@ -137,8 +137,8 @@ module Cadenya
           requires_approval: nil,
           # Query param: Sort order for results (asc or desc by creation time)
           sort_order: nil,
-          # Query param: Filter by tool status. Multiple values are OR'd together.
-          statuses: nil,
+          # Query param: Filter by tool state. Multiple values are OR'd together.
+          states: nil,
           request_options: {}
         )
         end
@@ -153,6 +153,48 @@ module Cadenya
           ).void
         end
         def delete(
+          # Tool ID. Accepts the canonical tool\_… form or the external_id:<value> form.
+          id,
+          # Workspace ID.
+          workspace_id:,
+          # Tool set ID. Accepts the canonical ts\_… form or the external_id:<value> form.
+          tool_set_id:,
+          request_options: {}
+        )
+        end
+
+        # Transitions a tool to STATE_OMITTED, excluding it from agent use. Fails if the
+        # tool is currently assigned to agent variations.
+        sig do
+          params(
+            id: String,
+            workspace_id: String,
+            tool_set_id: String,
+            request_options: Cadenya::RequestOptions::OrHash
+          ).returns(Cadenya::ToolSets::Tool)
+        end
+        def omit(
+          # Tool ID. Accepts the canonical tool\_… form or the external_id:<value> form.
+          id,
+          # Workspace ID.
+          workspace_id:,
+          # Tool set ID. Accepts the canonical ts\_… form or the external_id:<value> form.
+          tool_set_id:,
+          request_options: {}
+        )
+        end
+
+        # Transitions an omitted tool back to STATE_AVAILABLE. For managed tool sets, the
+        # next sync may omit the tool again if its filters still exclude it.
+        sig do
+          params(
+            id: String,
+            workspace_id: String,
+            tool_set_id: String,
+            request_options: Cadenya::RequestOptions::OrHash
+          ).returns(Cadenya::ToolSets::Tool)
+        end
+        def restore(
           # Tool ID. Accepts the canonical tool\_… form or the external_id:<value> form.
           id,
           # Workspace ID.

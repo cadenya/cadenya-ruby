@@ -34,6 +34,7 @@ module Cadenya
         ?prefix: String,
         ?query: String,
         ?sort_order: String,
+        ?state: Cadenya::Models::ToolSetListParams::state,
         ?request_options: Cadenya::request_opts
       ) -> Cadenya::Internal::CursorPagination[Cadenya::ToolSet]
 
@@ -42,6 +43,12 @@ module Cadenya
         workspace_id: String,
         ?request_options: Cadenya::request_opts
       ) -> nil
+
+      def archive: (
+        String id,
+        workspace_id: String,
+        ?request_options: Cadenya::request_opts
+      ) -> Cadenya::ToolSet
 
       def get_openapi_spec: (
         String tool_set_id,
@@ -58,6 +65,12 @@ module Cadenya
         ?sort_order: String,
         ?request_options: Cadenya::request_opts
       ) -> Cadenya::Internal::CursorPagination[Cadenya::ToolSetEvent]
+
+      def unarchive: (
+        String id,
+        workspace_id: String,
+        ?request_options: Cadenya::request_opts
+      ) -> Cadenya::ToolSet
 
       def initialize: (client: Cadenya::Client) -> void
     end

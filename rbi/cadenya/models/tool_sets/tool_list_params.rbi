@@ -82,23 +82,22 @@ module Cadenya
         sig { params(sort_order: String).void }
         attr_writer :sort_order
 
-        # Filter by tool status. Multiple values are OR'd together.
+        # Filter by tool state. Multiple values are OR'd together.
         sig do
           returns(
             T.nilable(
-              T::Array[Cadenya::ToolSets::ToolListParams::Status::OrSymbol]
+              T::Array[Cadenya::ToolSets::ToolListParams::State::OrSymbol]
             )
           )
         end
-        attr_reader :statuses
+        attr_reader :states
 
         sig do
           params(
-            statuses:
-              T::Array[Cadenya::ToolSets::ToolListParams::Status::OrSymbol]
+            states: T::Array[Cadenya::ToolSets::ToolListParams::State::OrSymbol]
           ).void
         end
-        attr_writer :statuses
+        attr_writer :states
 
         sig do
           params(
@@ -113,8 +112,8 @@ module Cadenya
             query: String,
             requires_approval: T::Boolean,
             sort_order: String,
-            statuses:
-              T::Array[Cadenya::ToolSets::ToolListParams::Status::OrSymbol],
+            states:
+              T::Array[Cadenya::ToolSets::ToolListParams::State::OrSymbol],
             request_options: Cadenya::RequestOptions::OrHash
           ).returns(T.attached_class)
         end
@@ -140,8 +139,8 @@ module Cadenya
           requires_approval: nil,
           # Sort order for results (asc or desc by creation time)
           sort_order: nil,
-          # Filter by tool status. Multiple values are OR'd together.
-          statuses: nil,
+          # Filter by tool state. Multiple values are OR'd together.
+          states: nil,
           request_options: {}
         )
         end
@@ -160,8 +159,8 @@ module Cadenya
               query: String,
               requires_approval: T::Boolean,
               sort_order: String,
-              statuses:
-                T::Array[Cadenya::ToolSets::ToolListParams::Status::OrSymbol],
+              states:
+                T::Array[Cadenya::ToolSets::ToolListParams::State::OrSymbol],
               request_options: Cadenya::RequestOptions
             }
           )
@@ -169,39 +168,39 @@ module Cadenya
         def to_hash
         end
 
-        module Status
+        module State
           extend Cadenya::Internal::Type::Enum
 
           TaggedSymbol =
             T.type_alias do
-              T.all(Symbol, Cadenya::ToolSets::ToolListParams::Status)
+              T.all(Symbol, Cadenya::ToolSets::ToolListParams::State)
             end
           OrSymbol = T.type_alias { T.any(Symbol, String) }
 
-          TOOL_STATUS_UNSPECIFIED =
+          STATE_UNSPECIFIED =
             T.let(
-              :TOOL_STATUS_UNSPECIFIED,
-              Cadenya::ToolSets::ToolListParams::Status::TaggedSymbol
+              :STATE_UNSPECIFIED,
+              Cadenya::ToolSets::ToolListParams::State::TaggedSymbol
             )
-          TOOL_STATUS_AVAILABLE =
+          STATE_AVAILABLE =
             T.let(
-              :TOOL_STATUS_AVAILABLE,
-              Cadenya::ToolSets::ToolListParams::Status::TaggedSymbol
+              :STATE_AVAILABLE,
+              Cadenya::ToolSets::ToolListParams::State::TaggedSymbol
             )
-          TOOL_STATUS_OMITTED =
+          STATE_OMITTED =
             T.let(
-              :TOOL_STATUS_OMITTED,
-              Cadenya::ToolSets::ToolListParams::Status::TaggedSymbol
+              :STATE_OMITTED,
+              Cadenya::ToolSets::ToolListParams::State::TaggedSymbol
             )
-          TOOL_STATUS_ARCHIVED =
+          STATE_ARCHIVED =
             T.let(
-              :TOOL_STATUS_ARCHIVED,
-              Cadenya::ToolSets::ToolListParams::Status::TaggedSymbol
+              :STATE_ARCHIVED,
+              Cadenya::ToolSets::ToolListParams::State::TaggedSymbol
             )
 
           sig do
             override.returns(
-              T::Array[Cadenya::ToolSets::ToolListParams::Status::TaggedSymbol]
+              T::Array[Cadenya::ToolSets::ToolListParams::State::TaggedSymbol]
             )
           end
           def self.values

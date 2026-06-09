@@ -34,12 +34,6 @@ module Cadenya
                  enum: -> { Cadenya::Agents::AgentScheduleSpec::OverlapPolicy },
                  api_name: :overlapPolicy
 
-        # @!attribute status
-        #   Lifecycle. Defaults to ACTIVE on create when unspecified.
-        #
-        #   @return [Symbol, Cadenya::Models::Agents::AgentScheduleSpec::Status, nil]
-        optional :status, enum: -> { Cadenya::Agents::AgentScheduleSpec::Status }
-
         # @!attribute variation_id
         #   Optional explicit variation. When unset, the agent's variation_selection_mode
         #   chooses per fire.
@@ -47,7 +41,7 @@ module Cadenya
         #   @return [String, nil]
         optional :variation_id, String, api_name: :variationId
 
-        # @!method initialize(initial_message:, schedule:, data: nil, overlap_policy: nil, status: nil, variation_id: nil)
+        # @!method initialize(initial_message:, schedule:, data: nil, overlap_policy: nil, variation_id: nil)
         #   Some parameter documentations has been truncated, see
         #   {Cadenya::Models::Agents::AgentScheduleSpec} for more details.
         #
@@ -61,8 +55,6 @@ module Cadenya
         #
         #   @param overlap_policy [Symbol, Cadenya::Models::Agents::AgentScheduleSpec::OverlapPolicy] What to do when the previous run is still in flight. Defaults to SKIP.
         #
-        #   @param status [Symbol, Cadenya::Models::Agents::AgentScheduleSpec::Status] Lifecycle. Defaults to ACTIVE on create when unspecified.
-        #
         #   @param variation_id [String] Optional explicit variation. When unset, the agent's variation_selection_mode
 
         # What to do when the previous run is still in flight. Defaults to SKIP.
@@ -74,21 +66,6 @@ module Cadenya
           OVERLAP_POLICY_UNSPECIFIED = :OVERLAP_POLICY_UNSPECIFIED
           OVERLAP_POLICY_ALLOW = :OVERLAP_POLICY_ALLOW
           OVERLAP_POLICY_SKIP = :OVERLAP_POLICY_SKIP
-
-          # @!method self.values
-          #   @return [Array<Symbol>]
-        end
-
-        # Lifecycle. Defaults to ACTIVE on create when unspecified.
-        #
-        # @see Cadenya::Models::Agents::AgentScheduleSpec#status
-        module Status
-          extend Cadenya::Internal::Type::Enum
-
-          AGENT_SCHEDULE_STATUS_UNSPECIFIED = :AGENT_SCHEDULE_STATUS_UNSPECIFIED
-          AGENT_SCHEDULE_STATUS_ACTIVE = :AGENT_SCHEDULE_STATUS_ACTIVE
-          AGENT_SCHEDULE_STATUS_PAUSED = :AGENT_SCHEDULE_STATUS_PAUSED
-          AGENT_SCHEDULE_STATUS_ARCHIVED = :AGENT_SCHEDULE_STATUS_ARCHIVED
 
           # @!method self.values
           #   @return [Array<Symbol>]

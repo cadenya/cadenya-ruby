@@ -47,6 +47,27 @@ module Cadenya
           ?request_options: Cadenya::request_opts
         ) -> nil
 
+        def archive: (
+          String id,
+          workspace_id: String,
+          agent_id: String,
+          ?request_options: Cadenya::request_opts
+        ) -> Cadenya::Agents::AgentSchedule
+
+        def pause: (
+          String id,
+          workspace_id: String,
+          agent_id: String,
+          ?request_options: Cadenya::request_opts
+        ) -> Cadenya::Agents::AgentSchedule
+
+        def resume: (
+          String id,
+          workspace_id: String,
+          agent_id: String,
+          ?request_options: Cadenya::request_opts
+        ) -> Cadenya::Agents::AgentSchedule
+
         def initialize: (client: Cadenya::Client) -> void
       end
     end

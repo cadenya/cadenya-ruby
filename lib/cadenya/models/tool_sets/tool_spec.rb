@@ -22,17 +22,12 @@ module Cadenya
         #   @return [Hash{Symbol=>Object}]
         required :parameters, Cadenya::Internal::Type::HashOf[Cadenya::Internal::Type::Unknown]
 
-        # @!attribute status
-        #
-        #   @return [Symbol, Cadenya::Models::ToolSets::ToolSpec::Status]
-        required :status, enum: -> { Cadenya::ToolSets::ToolSpec::Status }
-
         # @!attribute requires_approval
         #
-        #   @return [Boolean, nil]
-        optional :requires_approval, Cadenya::Internal::Type::Boolean, api_name: :requiresApproval
+        #   @return [Boolean]
+        required :requires_approval, Cadenya::Internal::Type::Boolean, api_name: :requiresApproval
 
-        # @!method initialize(config:, description:, parameters:, status:, requires_approval: nil)
+        # @!method initialize(config:, description:, parameters:, requires_approval:)
         #   Some parameter documentations has been truncated, see
         #   {Cadenya::Models::ToolSets::ToolSpec} for more details.
         #
@@ -42,22 +37,7 @@ module Cadenya
         #
         #   @param parameters [Hash{Symbol=>Object}]
         #
-        #   @param status [Symbol, Cadenya::Models::ToolSets::ToolSpec::Status]
-        #
         #   @param requires_approval [Boolean]
-
-        # @see Cadenya::Models::ToolSets::ToolSpec#status
-        module Status
-          extend Cadenya::Internal::Type::Enum
-
-          TOOL_STATUS_UNSPECIFIED = :TOOL_STATUS_UNSPECIFIED
-          TOOL_STATUS_AVAILABLE = :TOOL_STATUS_AVAILABLE
-          TOOL_STATUS_OMITTED = :TOOL_STATUS_OMITTED
-          TOOL_STATUS_ARCHIVED = :TOOL_STATUS_ARCHIVED
-
-          # @!method self.values
-          #   @return [Array<Symbol>]
-        end
       end
     end
   end

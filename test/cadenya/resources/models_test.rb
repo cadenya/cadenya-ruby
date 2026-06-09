@@ -16,6 +16,7 @@ class Cadenya::Test::Resources::ModelsTest < Cadenya::Test::ResourceTest
       response => {
         metadata: Cadenya::ResourceMetadata,
         spec: Cadenya::ModelSpec,
+        state: Cadenya::Model::State,
         info: Cadenya::Model::Info | nil
       }
     end
@@ -41,15 +42,16 @@ class Cadenya::Test::Resources::ModelsTest < Cadenya::Test::ResourceTest
       row => {
         metadata: Cadenya::ResourceMetadata,
         spec: Cadenya::ModelSpec,
+        state: Cadenya::Model::State,
         info: Cadenya::Model::Info | nil
       }
     end
   end
 
-  def test_set_status_required_params
+  def test_disable_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.models.set_status("id", workspace_id: "workspaceId")
+    response = @cadenya.models.disable("id", workspace_id: "workspaceId")
 
     assert_pattern do
       response => Cadenya::Model
@@ -59,6 +61,26 @@ class Cadenya::Test::Resources::ModelsTest < Cadenya::Test::ResourceTest
       response => {
         metadata: Cadenya::ResourceMetadata,
         spec: Cadenya::ModelSpec,
+        state: Cadenya::Model::State,
+        info: Cadenya::Model::Info | nil
+      }
+    end
+  end
+
+  def test_enable_required_params
+    skip("Mock server tests are disabled")
+
+    response = @cadenya.models.enable("id", workspace_id: "workspaceId")
+
+    assert_pattern do
+      response => Cadenya::Model
+    end
+
+    assert_pattern do
+      response => {
+        metadata: Cadenya::ResourceMetadata,
+        spec: Cadenya::ModelSpec,
+        state: Cadenya::Model::State,
         info: Cadenya::Model::Info | nil
       }
     end

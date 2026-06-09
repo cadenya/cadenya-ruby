@@ -62,9 +62,15 @@ module Cadenya
         #
         #   @return [String]
         required :workspace_id, String, api_name: :workspaceId
+
+        # @!attribute updated_at
+        #   Timestamp when this resource was last updated
+        #
+        #   @return [Time, nil]
+        optional :updated_at, Time, api_name: :updatedAt
       end
 
-      # @!method initialize(id:, account_id:, created_at:, name:, profile_id:, workspace_id:, bundle_key: nil, external_id: nil, labels: nil)
+      # @!method initialize(id:, account_id:, created_at:, name:, profile_id:, workspace_id:, bundle_key: nil, external_id: nil, labels: nil, updated_at: nil)
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::ResourceMetadata} for more details.
       #
@@ -87,6 +93,8 @@ module Cadenya
       #   @param external_id [String] External ID for the resource (e.g., a workflow ID from an external system)
       #
       #   @param labels [Hash{Symbol=>String}] Arbitrary key-value pairs for categorization and filtering
+      #
+      #   @param updated_at [Time] Timestamp when this resource was last updated
     end
   end
 end

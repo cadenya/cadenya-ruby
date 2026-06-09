@@ -10,7 +10,7 @@ module Cadenya
         prefix: String,
         query: String,
         sort_order: String,
-        status: Cadenya::Models::AgentListParams::status,
+        state: Cadenya::Models::AgentListParams::state,
         variation_selection_mode: Cadenya::Models::AgentListParams::variation_selection_mode
       }
       & Cadenya::Internal::Type::request_parameters
@@ -49,11 +49,11 @@ module Cadenya
 
       def sort_order=: (String) -> String
 
-      attr_reader status: Cadenya::Models::AgentListParams::status?
+      attr_reader state: Cadenya::Models::AgentListParams::state?
 
-      def status=: (
-        Cadenya::Models::AgentListParams::status
-      ) -> Cadenya::Models::AgentListParams::status
+      def state=: (
+        Cadenya::Models::AgentListParams::state
+      ) -> Cadenya::Models::AgentListParams::state
 
       attr_reader variation_selection_mode: Cadenya::Models::AgentListParams::variation_selection_mode?
 
@@ -70,7 +70,7 @@ module Cadenya
         ?prefix: String,
         ?query: String,
         ?sort_order: String,
-        ?status: Cadenya::Models::AgentListParams::status,
+        ?state: Cadenya::Models::AgentListParams::state,
         ?variation_selection_mode: Cadenya::Models::AgentListParams::variation_selection_mode,
         ?request_options: Cadenya::request_opts
       ) -> void
@@ -84,26 +84,23 @@ module Cadenya
         prefix: String,
         query: String,
         sort_order: String,
-        status: Cadenya::Models::AgentListParams::status,
+        state: Cadenya::Models::AgentListParams::state,
         variation_selection_mode: Cadenya::Models::AgentListParams::variation_selection_mode,
         request_options: Cadenya::RequestOptions
       }
 
-      type status =
-        :AGENT_STATUS_UNSPECIFIED
-        | :AGENT_STATUS_DRAFT
-        | :AGENT_STATUS_PUBLISHED
-        | :AGENT_STATUS_ARCHIVED
+      type state =
+        :STATE_UNSPECIFIED | :STATE_DRAFT | :STATE_PUBLISHED | :STATE_ARCHIVED
 
-      module Status
+      module State
         extend Cadenya::Internal::Type::Enum
 
-        AGENT_STATUS_UNSPECIFIED: :AGENT_STATUS_UNSPECIFIED
-        AGENT_STATUS_DRAFT: :AGENT_STATUS_DRAFT
-        AGENT_STATUS_PUBLISHED: :AGENT_STATUS_PUBLISHED
-        AGENT_STATUS_ARCHIVED: :AGENT_STATUS_ARCHIVED
+        STATE_UNSPECIFIED: :STATE_UNSPECIFIED
+        STATE_DRAFT: :STATE_DRAFT
+        STATE_PUBLISHED: :STATE_PUBLISHED
+        STATE_ARCHIVED: :STATE_ARCHIVED
 
-        def self?.values: -> ::Array[Cadenya::Models::AgentListParams::status]
+        def self?.values: -> ::Array[Cadenya::Models::AgentListParams::state]
       end
 
       type variation_selection_mode =

@@ -4,7 +4,8 @@ module Cadenya
       {
         name: String,
         spec: Cadenya::Agents::AgentScheduleSpec,
-        labels: ::Hash[Symbol, String]
+        labels: ::Hash[Symbol, String],
+        state: Cadenya::Models::AgentScheduleEntry::state
       }
 
     class AgentScheduleEntry < Cadenya::Internal::Type::BaseModel
@@ -16,17 +17,39 @@ module Cadenya
 
       def labels=: (::Hash[Symbol, String]) -> ::Hash[Symbol, String]
 
+      attr_reader state: Cadenya::Models::AgentScheduleEntry::state?
+
+      def state=: (
+        Cadenya::Models::AgentScheduleEntry::state
+      ) -> Cadenya::Models::AgentScheduleEntry::state
+
       def initialize: (
         name: String,
         spec: Cadenya::Agents::AgentScheduleSpec,
-        ?labels: ::Hash[Symbol, String]
+        ?labels: ::Hash[Symbol, String],
+        ?state: Cadenya::Models::AgentScheduleEntry::state
       ) -> void
 
       def to_hash: -> {
         name: String,
         spec: Cadenya::Agents::AgentScheduleSpec,
-        labels: ::Hash[Symbol, String]
+        labels: ::Hash[Symbol, String],
+        state: Cadenya::Models::AgentScheduleEntry::state
       }
+
+      type state =
+        :STATE_UNSPECIFIED | :STATE_ACTIVE | :STATE_PAUSED | :STATE_ARCHIVED
+
+      module State
+        extend Cadenya::Internal::Type::Enum
+
+        STATE_UNSPECIFIED: :STATE_UNSPECIFIED
+        STATE_ACTIVE: :STATE_ACTIVE
+        STATE_PAUSED: :STATE_PAUSED
+        STATE_ARCHIVED: :STATE_ARCHIVED
+
+        def self?.values: -> ::Array[Cadenya::Models::AgentScheduleEntry::state]
+      end
     end
   end
 end

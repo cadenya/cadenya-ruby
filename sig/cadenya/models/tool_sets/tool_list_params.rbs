@@ -14,7 +14,7 @@ module Cadenya
           query: String,
           requires_approval: bool,
           sort_order: String,
-          statuses: ::Array[Cadenya::Models::ToolSets::ToolListParams::status]
+          states: ::Array[Cadenya::Models::ToolSets::ToolListParams::state]
         }
         & Cadenya::Internal::Type::request_parameters
 
@@ -62,11 +62,11 @@ module Cadenya
 
         def sort_order=: (String) -> String
 
-        attr_reader statuses: ::Array[Cadenya::Models::ToolSets::ToolListParams::status]?
+        attr_reader states: ::Array[Cadenya::Models::ToolSets::ToolListParams::state]?
 
-        def statuses=: (
-          ::Array[Cadenya::Models::ToolSets::ToolListParams::status]
-        ) -> ::Array[Cadenya::Models::ToolSets::ToolListParams::status]
+        def states=: (
+          ::Array[Cadenya::Models::ToolSets::ToolListParams::state]
+        ) -> ::Array[Cadenya::Models::ToolSets::ToolListParams::state]
 
         def initialize: (
           workspace_id: String,
@@ -80,7 +80,7 @@ module Cadenya
           ?query: String,
           ?requires_approval: bool,
           ?sort_order: String,
-          ?statuses: ::Array[Cadenya::Models::ToolSets::ToolListParams::status],
+          ?states: ::Array[Cadenya::Models::ToolSets::ToolListParams::state],
           ?request_options: Cadenya::request_opts
         ) -> void
 
@@ -96,25 +96,25 @@ module Cadenya
           query: String,
           requires_approval: bool,
           sort_order: String,
-          statuses: ::Array[Cadenya::Models::ToolSets::ToolListParams::status],
+          states: ::Array[Cadenya::Models::ToolSets::ToolListParams::state],
           request_options: Cadenya::RequestOptions
         }
 
-        type status =
-          :TOOL_STATUS_UNSPECIFIED
-          | :TOOL_STATUS_AVAILABLE
-          | :TOOL_STATUS_OMITTED
-          | :TOOL_STATUS_ARCHIVED
+        type state =
+          :STATE_UNSPECIFIED
+          | :STATE_AVAILABLE
+          | :STATE_OMITTED
+          | :STATE_ARCHIVED
 
-        module Status
+        module State
           extend Cadenya::Internal::Type::Enum
 
-          TOOL_STATUS_UNSPECIFIED: :TOOL_STATUS_UNSPECIFIED
-          TOOL_STATUS_AVAILABLE: :TOOL_STATUS_AVAILABLE
-          TOOL_STATUS_OMITTED: :TOOL_STATUS_OMITTED
-          TOOL_STATUS_ARCHIVED: :TOOL_STATUS_ARCHIVED
+          STATE_UNSPECIFIED: :STATE_UNSPECIFIED
+          STATE_AVAILABLE: :STATE_AVAILABLE
+          STATE_OMITTED: :STATE_OMITTED
+          STATE_ARCHIVED: :STATE_ARCHIVED
 
-          def self?.values: -> ::Array[Cadenya::Models::ToolSets::ToolListParams::status]
+          def self?.values: -> ::Array[Cadenya::Models::ToolSets::ToolListParams::state]
         end
       end
     end

@@ -16,6 +16,7 @@ class Cadenya::Test::Resources::ToolSetsTest < Cadenya::Test::ResourceTest
       response => {
         metadata: Cadenya::ResourceMetadata,
         spec: Cadenya::ToolSetSpec,
+        state: Cadenya::ToolSet::State,
         info: Cadenya::ToolSetInfo | nil
       }
     end
@@ -34,6 +35,7 @@ class Cadenya::Test::Resources::ToolSetsTest < Cadenya::Test::ResourceTest
       response => {
         metadata: Cadenya::ResourceMetadata,
         spec: Cadenya::ToolSetSpec,
+        state: Cadenya::ToolSet::State,
         info: Cadenya::ToolSetInfo | nil
       }
     end
@@ -52,6 +54,7 @@ class Cadenya::Test::Resources::ToolSetsTest < Cadenya::Test::ResourceTest
       response => {
         metadata: Cadenya::ResourceMetadata,
         spec: Cadenya::ToolSetSpec,
+        state: Cadenya::ToolSet::State,
         info: Cadenya::ToolSetInfo | nil
       }
     end
@@ -77,6 +80,7 @@ class Cadenya::Test::Resources::ToolSetsTest < Cadenya::Test::ResourceTest
       row => {
         metadata: Cadenya::ResourceMetadata,
         spec: Cadenya::ToolSetSpec,
+        state: Cadenya::ToolSet::State,
         info: Cadenya::ToolSetInfo | nil
       }
     end
@@ -89,6 +93,25 @@ class Cadenya::Test::Resources::ToolSetsTest < Cadenya::Test::ResourceTest
 
     assert_pattern do
       response => nil
+    end
+  end
+
+  def test_archive_required_params
+    skip("Mock server tests are disabled")
+
+    response = @cadenya.tool_sets.archive("id", workspace_id: "workspaceId")
+
+    assert_pattern do
+      response => Cadenya::ToolSet
+    end
+
+    assert_pattern do
+      response => {
+        metadata: Cadenya::ResourceMetadata,
+        spec: Cadenya::ToolSetSpec,
+        state: Cadenya::ToolSet::State,
+        info: Cadenya::ToolSetInfo | nil
+      }
     end
   end
 
@@ -130,6 +153,25 @@ class Cadenya::Test::Resources::ToolSetsTest < Cadenya::Test::ResourceTest
         event: Cadenya::ToolSetEventData | nil,
         info: Cadenya::ToolSetEvent::Info | nil,
         tool_set_id: String | nil
+      }
+    end
+  end
+
+  def test_unarchive_required_params
+    skip("Mock server tests are disabled")
+
+    response = @cadenya.tool_sets.unarchive("id", workspace_id: "workspaceId")
+
+    assert_pattern do
+      response => Cadenya::ToolSet
+    end
+
+    assert_pattern do
+      response => {
+        metadata: Cadenya::ResourceMetadata,
+        spec: Cadenya::ToolSetSpec,
+        state: Cadenya::ToolSet::State,
+        info: Cadenya::ToolSetInfo | nil
       }
     end
   end

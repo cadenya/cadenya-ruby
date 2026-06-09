@@ -48,13 +48,6 @@ module Cadenya
       sig { params(provider: String).void }
       attr_writer :provider
 
-      # The status of the model in the workspace
-      sig { returns(T.nilable(Cadenya::ModelSpec::Status::TaggedSymbol)) }
-      attr_reader :status
-
-      sig { params(status: Cadenya::ModelSpec::Status::OrSymbol).void }
-      attr_writer :status
-
       sig do
         params(
           family: String,
@@ -62,8 +55,7 @@ module Cadenya
           max_input_tokens: Integer,
           max_output_tokens: Integer,
           output_price_per_million_tokens: String,
-          provider: String,
-          status: Cadenya::ModelSpec::Status::OrSymbol
+          provider: String
         ).returns(T.attached_class)
       end
       def self.new(
@@ -78,9 +70,7 @@ module Cadenya
         # Cost per million output tokens in cents (e.g., 1500 = $15.00)
         output_price_per_million_tokens: nil,
         # The model provider (e.g., "anthropic", "openai", "google")
-        provider: nil,
-        # The status of the model in the workspace
-        status: nil
+        provider: nil
       )
       end
 
@@ -92,40 +82,11 @@ module Cadenya
             max_input_tokens: Integer,
             max_output_tokens: Integer,
             output_price_per_million_tokens: String,
-            provider: String,
-            status: Cadenya::ModelSpec::Status::TaggedSymbol
+            provider: String
           }
         )
       end
       def to_hash
-      end
-
-      # The status of the model in the workspace
-      module Status
-        extend Cadenya::Internal::Type::Enum
-
-        TaggedSymbol =
-          T.type_alias { T.all(Symbol, Cadenya::ModelSpec::Status) }
-        OrSymbol = T.type_alias { T.any(Symbol, String) }
-
-        MODEL_STATUS_UNSPECIFIED =
-          T.let(
-            :MODEL_STATUS_UNSPECIFIED,
-            Cadenya::ModelSpec::Status::TaggedSymbol
-          )
-        MODEL_STATUS_ENABLED =
-          T.let(:MODEL_STATUS_ENABLED, Cadenya::ModelSpec::Status::TaggedSymbol)
-        MODEL_STATUS_DISABLED =
-          T.let(
-            :MODEL_STATUS_DISABLED,
-            Cadenya::ModelSpec::Status::TaggedSymbol
-          )
-
-        sig do
-          override.returns(T::Array[Cadenya::ModelSpec::Status::TaggedSymbol])
-        end
-        def self.values
-        end
       end
     end
   end

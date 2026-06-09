@@ -11,12 +11,7 @@ class Cadenya::Test::Resources::ToolSets::ToolsTest < Cadenya::Test::ResourceTes
         "toolSetId",
         workspace_id: "workspaceId",
         metadata: {name: "name"},
-        spec: {
-          config: {},
-          description: "description",
-          parameters: {foo: "bar"},
-          status: :TOOL_STATUS_UNSPECIFIED
-        }
+        spec: {config: {}, description: "description", parameters: {foo: "bar"}, requiresApproval: true}
       )
 
     assert_pattern do
@@ -27,6 +22,7 @@ class Cadenya::Test::Resources::ToolSets::ToolsTest < Cadenya::Test::ResourceTes
       response => {
         metadata: Cadenya::ResourceMetadata,
         spec: Cadenya::ToolSets::ToolSpec,
+        state: Cadenya::ToolSets::Tool::State,
         info: Cadenya::ToolSets::ToolInfo | nil
       }
     end
@@ -45,6 +41,7 @@ class Cadenya::Test::Resources::ToolSets::ToolsTest < Cadenya::Test::ResourceTes
       response => {
         metadata: Cadenya::ResourceMetadata,
         spec: Cadenya::ToolSets::ToolSpec,
+        state: Cadenya::ToolSets::Tool::State,
         info: Cadenya::ToolSets::ToolInfo | nil
       }
     end
@@ -63,6 +60,7 @@ class Cadenya::Test::Resources::ToolSets::ToolsTest < Cadenya::Test::ResourceTes
       response => {
         metadata: Cadenya::ResourceMetadata,
         spec: Cadenya::ToolSets::ToolSpec,
+        state: Cadenya::ToolSets::Tool::State,
         info: Cadenya::ToolSets::ToolInfo | nil
       }
     end
@@ -88,6 +86,7 @@ class Cadenya::Test::Resources::ToolSets::ToolsTest < Cadenya::Test::ResourceTes
       row => {
         metadata: Cadenya::ResourceMetadata,
         spec: Cadenya::ToolSets::ToolSpec,
+        state: Cadenya::ToolSets::Tool::State,
         info: Cadenya::ToolSets::ToolInfo | nil
       }
     end
@@ -100,6 +99,44 @@ class Cadenya::Test::Resources::ToolSets::ToolsTest < Cadenya::Test::ResourceTes
 
     assert_pattern do
       response => nil
+    end
+  end
+
+  def test_omit_required_params
+    skip("Mock server tests are disabled")
+
+    response = @cadenya.tool_sets.tools.omit("id", workspace_id: "workspaceId", tool_set_id: "toolSetId")
+
+    assert_pattern do
+      response => Cadenya::ToolSets::Tool
+    end
+
+    assert_pattern do
+      response => {
+        metadata: Cadenya::ResourceMetadata,
+        spec: Cadenya::ToolSets::ToolSpec,
+        state: Cadenya::ToolSets::Tool::State,
+        info: Cadenya::ToolSets::ToolInfo | nil
+      }
+    end
+  end
+
+  def test_restore_required_params
+    skip("Mock server tests are disabled")
+
+    response = @cadenya.tool_sets.tools.restore("id", workspace_id: "workspaceId", tool_set_id: "toolSetId")
+
+    assert_pattern do
+      response => Cadenya::ToolSets::Tool
+    end
+
+    assert_pattern do
+      response => {
+        metadata: Cadenya::ResourceMetadata,
+        spec: Cadenya::ToolSets::ToolSpec,
+        state: Cadenya::ToolSets::Tool::State,
+        info: Cadenya::ToolSets::ToolInfo | nil
+      }
     end
   end
 end
