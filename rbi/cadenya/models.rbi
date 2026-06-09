@@ -16,6 +16,8 @@ module Cadenya
 
   Agent = Cadenya::Models::Agent
 
+  AgentArchiveParams = Cadenya::Models::AgentArchiveParams
+
   AgentCreateParams = Cadenya::Models::AgentCreateParams
 
   AgentDeleteParams = Cadenya::Models::AgentDeleteParams
@@ -26,6 +28,8 @@ module Cadenya
 
   AgentListParams = Cadenya::Models::AgentListParams
 
+  AgentPublishParams = Cadenya::Models::AgentPublishParams
+
   AgentRetrieveParams = Cadenya::Models::AgentRetrieveParams
 
   Agents = Cadenya::Models::Agents
@@ -33,6 +37,10 @@ module Cadenya
   AgentScheduleEntry = Cadenya::Models::AgentScheduleEntry
 
   AgentSpec = Cadenya::Models::AgentSpec
+
+  AgentUnarchiveParams = Cadenya::Models::AgentUnarchiveParams
+
+  AgentUnpublishParams = Cadenya::Models::AgentUnpublishParams
 
   AgentUpdateParams = Cadenya::Models::AgentUpdateParams
 
@@ -137,11 +145,13 @@ module Cadenya
 
   Model = Cadenya::Models::Model
 
+  ModelDisableParams = Cadenya::Models::ModelDisableParams
+
+  ModelEnableParams = Cadenya::Models::ModelEnableParams
+
   ModelListParams = Cadenya::Models::ModelListParams
 
   ModelRetrieveParams = Cadenya::Models::ModelRetrieveParams
-
-  ModelSetStatusParams = Cadenya::Models::ModelSetStatusParams
 
   ModelSpec = Cadenya::Models::ModelSpec
 
@@ -240,6 +250,8 @@ module Cadenya
 
   ToolSetAdapterOpenAPI = Cadenya::Models::ToolSetAdapterOpenAPI
 
+  ToolSetArchiveParams = Cadenya::Models::ToolSetArchiveParams
+
   ToolSetCreateParams = Cadenya::Models::ToolSetCreateParams
 
   ToolSetDeleteParams = Cadenya::Models::ToolSetDeleteParams
@@ -263,6 +275,8 @@ module Cadenya
   ToolSets = Cadenya::Models::ToolSets
 
   ToolSetSpec = Cadenya::Models::ToolSetSpec
+
+  ToolSetUnarchiveParams = Cadenya::Models::ToolSetUnarchiveParams
 
   ToolSetUpdateParams = Cadenya::Models::ToolSetUpdateParams
 

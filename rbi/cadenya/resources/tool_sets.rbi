@@ -95,6 +95,7 @@ module Cadenya
           prefix: String,
           query: String,
           sort_order: String,
+          state: Cadenya::ToolSetListParams::State::OrSymbol,
           request_options: Cadenya::RequestOptions::OrHash
         ).returns(Cadenya::Internal::CursorPagination[Cadenya::ToolSet])
       end
@@ -115,6 +116,9 @@ module Cadenya
         query: nil,
         # Sort order for results (asc or desc by creation time)
         sort_order: nil,
+        # Filter by tool set lifecycle state. Defaults to STATE_ACTIVE when unspecified;
+        # pass STATE_ARCHIVED to list archived tool sets.
+        state: nil,
         request_options: {}
       )
       end
@@ -128,6 +132,27 @@ module Cadenya
         ).void
       end
       def delete(
+        # Tool set ID. Accepts the canonical ts\_… form or the external_id:<value> form.
+        id,
+        # Workspace ID.
+        workspace_id:,
+        request_options: {}
+      )
+      end
+
+      # Transitions a tool set to STATE_ARCHIVED. Syncing stops, the tool set is hidden
+      # from list results, its tools are no longer offered to objectives, and new
+      # variation assignments are rejected. Existing assignments are retained, and
+      # history is preserved — unlike delete, archiving works while the tool set is
+      # still assigned to agent variations.
+      sig do
+        params(
+          id: String,
+          workspace_id: String,
+          request_options: Cadenya::RequestOptions::OrHash
+        ).returns(Cadenya::ToolSet)
+      end
+      def archive(
         # Tool set ID. Accepts the canonical ts\_… form or the external_id:<value> form.
         id,
         # Workspace ID.
@@ -180,6 +205,25 @@ module Cadenya
         limit: nil,
         # Query param: Sort order for results (asc or desc by creation time)
         sort_order: nil,
+        request_options: {}
+      )
+      end
+
+      # Transitions an archived tool set back to STATE_ACTIVE. Managed tool sets resume
+      # syncing on their next cycle and their tools become available to objectives
+      # again.
+      sig do
+        params(
+          id: String,
+          workspace_id: String,
+          request_options: Cadenya::RequestOptions::OrHash
+        ).returns(Cadenya::ToolSet)
+      end
+      def unarchive(
+        # Tool set ID. Accepts the canonical ts\_… form or the external_id:<value> form.
+        id,
+        # Workspace ID.
+        workspace_id:,
         request_options: {}
       )
       end

@@ -17,14 +17,19 @@ module Cadenya
         ?prefix: String,
         ?query: String,
         ?sort_order: String,
-        ?status: Cadenya::Models::ModelListParams::status,
+        ?state: Cadenya::Models::ModelListParams::state,
         ?request_options: Cadenya::request_opts
       ) -> Cadenya::Internal::CursorPagination[Cadenya::Model]
 
-      def set_status: (
+      def disable: (
         String id,
         workspace_id: String,
-        ?status: Cadenya::Models::ModelSetStatusParams::status,
+        ?request_options: Cadenya::request_opts
+      ) -> Cadenya::Model
+
+      def enable: (
+        String id,
+        workspace_id: String,
         ?request_options: Cadenya::request_opts
       ) -> Cadenya::Model
 

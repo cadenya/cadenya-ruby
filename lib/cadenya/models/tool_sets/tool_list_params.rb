@@ -73,14 +73,13 @@ module Cadenya
         #   @return [String, nil]
         optional :sort_order, String
 
-        # @!attribute statuses
-        #   Filter by tool status. Multiple values are OR'd together.
+        # @!attribute states
+        #   Filter by tool state. Multiple values are OR'd together.
         #
-        #   @return [Array<Symbol, Cadenya::Models::ToolSets::ToolListParams::Status>, nil]
-        optional :statuses,
-                 -> { Cadenya::Internal::Type::ArrayOf[enum: Cadenya::ToolSets::ToolListParams::Status] }
+        #   @return [Array<Symbol, Cadenya::Models::ToolSets::ToolListParams::State>, nil]
+        optional :states, -> { Cadenya::Internal::Type::ArrayOf[enum: Cadenya::ToolSets::ToolListParams::State] }
 
-        # @!method initialize(workspace_id:, tool_set_id:, bundle_key: nil, cursor: nil, include_info: nil, limit: nil, names: nil, prefix: nil, query: nil, requires_approval: nil, sort_order: nil, statuses: nil, request_options: {})
+        # @!method initialize(workspace_id:, tool_set_id:, bundle_key: nil, cursor: nil, include_info: nil, limit: nil, names: nil, prefix: nil, query: nil, requires_approval: nil, sort_order: nil, states: nil, request_options: {})
         #   Some parameter documentations has been truncated, see
         #   {Cadenya::Models::ToolSets::ToolListParams} for more details.
         #
@@ -106,17 +105,17 @@ module Cadenya
         #
         #   @param sort_order [String] Sort order for results (asc or desc by creation time)
         #
-        #   @param statuses [Array<Symbol, Cadenya::Models::ToolSets::ToolListParams::Status>] Filter by tool status. Multiple values are OR'd together.
+        #   @param states [Array<Symbol, Cadenya::Models::ToolSets::ToolListParams::State>] Filter by tool state. Multiple values are OR'd together.
         #
         #   @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}]
 
-        module Status
+        module State
           extend Cadenya::Internal::Type::Enum
 
-          TOOL_STATUS_UNSPECIFIED = :TOOL_STATUS_UNSPECIFIED
-          TOOL_STATUS_AVAILABLE = :TOOL_STATUS_AVAILABLE
-          TOOL_STATUS_OMITTED = :TOOL_STATUS_OMITTED
-          TOOL_STATUS_ARCHIVED = :TOOL_STATUS_ARCHIVED
+          STATE_UNSPECIFIED = :STATE_UNSPECIFIED
+          STATE_AVAILABLE = :STATE_AVAILABLE
+          STATE_OMITTED = :STATE_OMITTED
+          STATE_ARCHIVED = :STATE_ARCHIVED
 
           # @!method self.values
           #   @return [Array<Symbol>]

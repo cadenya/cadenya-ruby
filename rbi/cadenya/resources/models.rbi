@@ -35,7 +35,7 @@ module Cadenya
           prefix: String,
           query: String,
           sort_order: String,
-          status: Cadenya::ModelListParams::Status::OrSymbol,
+          state: Cadenya::ModelListParams::State::OrSymbol,
           request_options: Cadenya::RequestOptions::OrHash
         ).returns(Cadenya::Internal::CursorPagination[Cadenya::Model])
       end
@@ -60,28 +60,44 @@ module Cadenya
         query: nil,
         # Sort order for results (asc or desc by creation time)
         sort_order: nil,
-        # Filter by model status
-        status: nil,
+        # Filter by model state
+        state: nil,
         request_options: {}
       )
       end
 
-      # Enables or disables a model in the workspace
+      # Transitions a model to STATE_DISABLED. Fails while agent variations are still
+      # provisioned on the model; use :swapModelOnVariations to move them first.
       sig do
         params(
           id: String,
           workspace_id: String,
-          status: Cadenya::ModelSetStatusParams::Status::OrSymbol,
           request_options: Cadenya::RequestOptions::OrHash
         ).returns(Cadenya::Model)
       end
-      def set_status(
-        # Path param: Model ID
+      def disable(
+        # Model ID
         id,
-        # Path param: Workspace ID.
+        # Workspace ID.
         workspace_id:,
-        # Body param: The new status for the model
-        status: nil,
+        request_options: {}
+      )
+      end
+
+      # Transitions a model to STATE_ENABLED, making it available for agent variations
+      # in the workspace
+      sig do
+        params(
+          id: String,
+          workspace_id: String,
+          request_options: Cadenya::RequestOptions::OrHash
+        ).returns(Cadenya::Model)
+      end
+      def enable(
+        # Model ID
+        id,
+        # Workspace ID.
+        workspace_id:,
         request_options: {}
       )
       end

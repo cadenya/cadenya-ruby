@@ -7,6 +7,7 @@ module Cadenya
         {
           metadata: Cadenya::ResourceMetadata,
           spec: Cadenya::Agents::AgentScheduleSpec,
+          state: Cadenya::Models::Agents::AgentSchedule::state,
           info: Cadenya::Agents::AgentScheduleInfo
         }
 
@@ -21,17 +22,35 @@ module Cadenya
           Cadenya::Agents::AgentScheduleInfo
         ) -> Cadenya::Agents::AgentScheduleInfo
 
+        attr_accessor state: Cadenya::Models::Agents::AgentSchedule::state
+
         def initialize: (
           metadata: Cadenya::ResourceMetadata,
           spec: Cadenya::Agents::AgentScheduleSpec,
+          state: Cadenya::Models::Agents::AgentSchedule::state,
           ?info: Cadenya::Agents::AgentScheduleInfo
         ) -> void
 
         def to_hash: -> {
           metadata: Cadenya::ResourceMetadata,
           spec: Cadenya::Agents::AgentScheduleSpec,
+          state: Cadenya::Models::Agents::AgentSchedule::state,
           info: Cadenya::Agents::AgentScheduleInfo
         }
+
+        type state =
+          :STATE_UNSPECIFIED | :STATE_ACTIVE | :STATE_PAUSED | :STATE_ARCHIVED
+
+        module State
+          extend Cadenya::Internal::Type::Enum
+
+          STATE_UNSPECIFIED: :STATE_UNSPECIFIED
+          STATE_ACTIVE: :STATE_ACTIVE
+          STATE_PAUSED: :STATE_PAUSED
+          STATE_ARCHIVED: :STATE_ARCHIVED
+
+          def self?.values: -> ::Array[Cadenya::Models::Agents::AgentSchedule::state]
+        end
       end
     end
   end

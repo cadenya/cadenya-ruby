@@ -38,7 +38,7 @@ module Cadenya
       #
       # Lists all models in the workspace
       #
-      # @overload list(workspace_id, ai_provider_key_id: nil, bundle_key: nil, cursor: nil, include_info: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, status: nil, request_options: {})
+      # @overload list(workspace_id, ai_provider_key_id: nil, bundle_key: nil, cursor: nil, include_info: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, state: nil, request_options: {})
       #
       # @param workspace_id [String] Workspace ID.
       #
@@ -58,7 +58,7 @@ module Cadenya
       #
       # @param sort_order [String] Sort order for results (asc or desc by creation time)
       #
-      # @param status [Symbol, Cadenya::Models::ModelListParams::Status] Filter by model status
+      # @param state [Symbol, Cadenya::Models::ModelListParams::State] Filter by model state
       #
       # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
       #
@@ -83,31 +83,57 @@ module Cadenya
         )
       end
 
-      # Enables or disables a model in the workspace
+      # Transitions a model to STATE_DISABLED. Fails while agent variations are still
+      # provisioned on the model; use :swapModelOnVariations to move them first.
       #
-      # @overload set_status(id, workspace_id:, status: nil, request_options: {})
+      # @overload disable(id, workspace_id:, request_options: {})
       #
-      # @param id [String] Path param: Model ID
+      # @param id [String] Model ID
       #
-      # @param workspace_id [String] Path param: Workspace ID.
-      #
-      # @param status [Symbol, Cadenya::Models::ModelSetStatusParams::Status] Body param: The new status for the model
+      # @param workspace_id [String] Workspace ID.
       #
       # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
       #
       # @return [Cadenya::Models::Model]
       #
-      # @see Cadenya::Models::ModelSetStatusParams
-      def set_status(id, params)
-        parsed, options = Cadenya::ModelSetStatusParams.dump_request(params)
+      # @see Cadenya::Models::ModelDisableParams
+      def disable(id, params)
+        parsed, options = Cadenya::ModelDisableParams.dump_request(params)
         workspace_id =
           parsed.delete(:workspace_id) do
             raise ArgumentError.new("missing required path argument #{_1}")
           end
         @client.request(
-          method: :put,
-          path: ["v1/workspaces/%1$s/models/%2$s/status", workspace_id, id],
-          body: parsed,
+          method: :post,
+          path: ["v1/workspaces/%1$s/models/%2$s:disable", workspace_id, id],
+          model: Cadenya::Model,
+          options: options
+        )
+      end
+
+      # Transitions a model to STATE_ENABLED, making it available for agent variations
+      # in the workspace
+      #
+      # @overload enable(id, workspace_id:, request_options: {})
+      #
+      # @param id [String] Model ID
+      #
+      # @param workspace_id [String] Workspace ID.
+      #
+      # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
+      #
+      # @return [Cadenya::Models::Model]
+      #
+      # @see Cadenya::Models::ModelEnableParams
+      def enable(id, params)
+        parsed, options = Cadenya::ModelEnableParams.dump_request(params)
+        workspace_id =
+          parsed.delete(:workspace_id) do
+            raise ArgumentError.new("missing required path argument #{_1}")
+          end
+        @client.request(
+          method: :post,
+          path: ["v1/workspaces/%1$s/models/%2$s:enable", workspace_id, id],
           model: Cadenya::Model,
           options: options
         )

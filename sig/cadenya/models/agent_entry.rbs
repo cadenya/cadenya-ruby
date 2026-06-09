@@ -6,6 +6,7 @@ module Cadenya
         spec: Cadenya::AgentSpec,
         labels: ::Hash[Symbol, String],
         schedules: ::Hash[Symbol, Cadenya::AgentScheduleEntry],
+        state: Cadenya::Models::AgentEntry::state,
         variations: ::Hash[Symbol, Cadenya::AgentVariationEntry]
       }
 
@@ -24,6 +25,12 @@ module Cadenya
         ::Hash[Symbol, Cadenya::AgentScheduleEntry]
       ) -> ::Hash[Symbol, Cadenya::AgentScheduleEntry]
 
+      attr_reader state: Cadenya::Models::AgentEntry::state?
+
+      def state=: (
+        Cadenya::Models::AgentEntry::state
+      ) -> Cadenya::Models::AgentEntry::state
+
       attr_reader variations: ::Hash[Symbol, Cadenya::AgentVariationEntry]?
 
       def variations=: (
@@ -35,6 +42,7 @@ module Cadenya
         spec: Cadenya::AgentSpec,
         ?labels: ::Hash[Symbol, String],
         ?schedules: ::Hash[Symbol, Cadenya::AgentScheduleEntry],
+        ?state: Cadenya::Models::AgentEntry::state,
         ?variations: ::Hash[Symbol, Cadenya::AgentVariationEntry]
       ) -> void
 
@@ -43,8 +51,23 @@ module Cadenya
         spec: Cadenya::AgentSpec,
         labels: ::Hash[Symbol, String],
         schedules: ::Hash[Symbol, Cadenya::AgentScheduleEntry],
+        state: Cadenya::Models::AgentEntry::state,
         variations: ::Hash[Symbol, Cadenya::AgentVariationEntry]
       }
+
+      type state =
+        :STATE_UNSPECIFIED | :STATE_DRAFT | :STATE_PUBLISHED | :STATE_ARCHIVED
+
+      module State
+        extend Cadenya::Internal::Type::Enum
+
+        STATE_UNSPECIFIED: :STATE_UNSPECIFIED
+        STATE_DRAFT: :STATE_DRAFT
+        STATE_PUBLISHED: :STATE_PUBLISHED
+        STATE_ARCHIVED: :STATE_ARCHIVED
+
+        def self?.values: -> ::Array[Cadenya::Models::AgentEntry::state]
+      end
     end
   end
 end

@@ -24,21 +24,14 @@ module Cadenya
         sig { returns(T::Hash[Symbol, T.anything]) }
         attr_accessor :parameters
 
-        sig { returns(Cadenya::ToolSets::ToolSpec::Status::OrSymbol) }
-        attr_accessor :status
-
-        sig { returns(T.nilable(T::Boolean)) }
-        attr_reader :requires_approval
-
-        sig { params(requires_approval: T::Boolean).void }
-        attr_writer :requires_approval
+        sig { returns(T::Boolean) }
+        attr_accessor :requires_approval
 
         sig do
           params(
             config: Cadenya::ToolSets::ToolSpecConfig::OrHash,
             description: String,
             parameters: T::Hash[Symbol, T.anything],
-            status: Cadenya::ToolSets::ToolSpec::Status::OrSymbol,
             requires_approval: T::Boolean
           ).returns(T.attached_class)
         end
@@ -49,8 +42,7 @@ module Cadenya
           config:,
           description:,
           parameters:,
-          status:,
-          requires_approval: nil
+          requires_approval:
         )
         end
 
@@ -60,49 +52,11 @@ module Cadenya
               config: Cadenya::ToolSets::ToolSpecConfig,
               description: String,
               parameters: T::Hash[Symbol, T.anything],
-              status: Cadenya::ToolSets::ToolSpec::Status::OrSymbol,
               requires_approval: T::Boolean
             }
           )
         end
         def to_hash
-        end
-
-        module Status
-          extend Cadenya::Internal::Type::Enum
-
-          TaggedSymbol =
-            T.type_alias { T.all(Symbol, Cadenya::ToolSets::ToolSpec::Status) }
-          OrSymbol = T.type_alias { T.any(Symbol, String) }
-
-          TOOL_STATUS_UNSPECIFIED =
-            T.let(
-              :TOOL_STATUS_UNSPECIFIED,
-              Cadenya::ToolSets::ToolSpec::Status::TaggedSymbol
-            )
-          TOOL_STATUS_AVAILABLE =
-            T.let(
-              :TOOL_STATUS_AVAILABLE,
-              Cadenya::ToolSets::ToolSpec::Status::TaggedSymbol
-            )
-          TOOL_STATUS_OMITTED =
-            T.let(
-              :TOOL_STATUS_OMITTED,
-              Cadenya::ToolSets::ToolSpec::Status::TaggedSymbol
-            )
-          TOOL_STATUS_ARCHIVED =
-            T.let(
-              :TOOL_STATUS_ARCHIVED,
-              Cadenya::ToolSets::ToolSpec::Status::TaggedSymbol
-            )
-
-          sig do
-            override.returns(
-              T::Array[Cadenya::ToolSets::ToolSpec::Status::TaggedSymbol]
-            )
-          end
-          def self.values
-          end
         end
       end
     end

@@ -104,7 +104,7 @@ module Cadenya
             raise ArgumentError.new("missing required path argument #{_1}")
           end
         @client.request(
-          method: :put,
+          method: :patch,
           path: ["v1/workspaces/%1$s/tool_sets/%2$s", workspace_id, id],
           body: parsed,
           model: Cadenya::ToolSet,
@@ -112,9 +112,12 @@ module Cadenya
         )
       end
 
+      # Some parameter documentations has been truncated, see
+      # {Cadenya::Models::ToolSetListParams} for more details.
+      #
       # Lists all tool sets in the workspace
       #
-      # @overload list(workspace_id, bundle_key: nil, cursor: nil, include_info: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, request_options: {})
+      # @overload list(workspace_id, bundle_key: nil, cursor: nil, include_info: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, state: nil, request_options: {})
       #
       # @param workspace_id [String] Workspace ID.
       #
@@ -131,6 +134,8 @@ module Cadenya
       # @param query [String] Free-form search query
       #
       # @param sort_order [String] Sort order for results (asc or desc by creation time)
+      #
+      # @param state [Symbol, Cadenya::Models::ToolSetListParams::State] Filter by tool set lifecycle state. Defaults to STATE_ACTIVE when
       #
       # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
       #
@@ -180,6 +185,40 @@ module Cadenya
           method: :delete,
           path: ["v1/workspaces/%1$s/tool_sets/%2$s", workspace_id, id],
           model: NilClass,
+          options: options
+        )
+      end
+
+      # Some parameter documentations has been truncated, see
+      # {Cadenya::Models::ToolSetArchiveParams} for more details.
+      #
+      # Transitions a tool set to STATE_ARCHIVED. Syncing stops, the tool set is hidden
+      # from list results, its tools are no longer offered to objectives, and new
+      # variation assignments are rejected. Existing assignments are retained, and
+      # history is preserved — unlike delete, archiving works while the tool set is
+      # still assigned to agent variations.
+      #
+      # @overload archive(id, workspace_id:, request_options: {})
+      #
+      # @param id [String] Tool set ID. Accepts the canonical ts\_… form or the
+      #
+      # @param workspace_id [String] Workspace ID.
+      #
+      # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
+      #
+      # @return [Cadenya::Models::ToolSet]
+      #
+      # @see Cadenya::Models::ToolSetArchiveParams
+      def archive(id, params)
+        parsed, options = Cadenya::ToolSetArchiveParams.dump_request(params)
+        workspace_id =
+          parsed.delete(:workspace_id) do
+            raise ArgumentError.new("missing required path argument #{_1}")
+          end
+        @client.request(
+          method: :post,
+          path: ["v1/workspaces/%1$s/tool_sets/%2$s:archive", workspace_id, id],
+          model: Cadenya::ToolSet,
           options: options
         )
       end
@@ -252,6 +291,38 @@ module Cadenya
           query: query.transform_keys(include_info: "includeInfo", sort_order: "sortOrder"),
           page: Cadenya::Internal::CursorPagination,
           model: Cadenya::ToolSetEvent,
+          options: options
+        )
+      end
+
+      # Some parameter documentations has been truncated, see
+      # {Cadenya::Models::ToolSetUnarchiveParams} for more details.
+      #
+      # Transitions an archived tool set back to STATE_ACTIVE. Managed tool sets resume
+      # syncing on their next cycle and their tools become available to objectives
+      # again.
+      #
+      # @overload unarchive(id, workspace_id:, request_options: {})
+      #
+      # @param id [String] Tool set ID. Accepts the canonical ts\_… form or the
+      #
+      # @param workspace_id [String] Workspace ID.
+      #
+      # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
+      #
+      # @return [Cadenya::Models::ToolSet]
+      #
+      # @see Cadenya::Models::ToolSetUnarchiveParams
+      def unarchive(id, params)
+        parsed, options = Cadenya::ToolSetUnarchiveParams.dump_request(params)
+        workspace_id =
+          parsed.delete(:workspace_id) do
+            raise ArgumentError.new("missing required path argument #{_1}")
+          end
+        @client.request(
+          method: :post,
+          path: ["v1/workspaces/%1$s/tool_sets/%2$s:unarchive", workspace_id, id],
+          model: Cadenya::ToolSet,
           options: options
         )
       end

@@ -107,7 +107,7 @@ module Cadenya
           prefix: String,
           query: String,
           sort_order: String,
-          status: Cadenya::AgentListParams::Status::OrSymbol,
+          state: Cadenya::AgentListParams::State::OrSymbol,
           variation_selection_mode:
             Cadenya::AgentListParams::VariationSelectionMode::OrSymbol,
           request_options: Cadenya::RequestOptions::OrHash
@@ -131,8 +131,8 @@ module Cadenya
         query: nil,
         # Sort order for results (asc or desc by creation time)
         sort_order: nil,
-        # Filter by agent publication status
-        status: nil,
+        # Filter by agent lifecycle state
+        state: nil,
         # Filter by variation selection mode
         variation_selection_mode: nil,
         request_options: {}
@@ -148,6 +148,82 @@ module Cadenya
         ).void
       end
       def delete(
+        # Agent ID. Accepts the canonical `agent_…` form or the `external_id:<value>`
+        # form.
+        id,
+        # Workspace ID.
+        workspace_id:,
+        request_options: {}
+      )
+      end
+
+      # Transitions an agent to STATE_ARCHIVED. Archived agents are hidden from list
+      # results and cannot be used for objectives; active schedules are paused.
+      sig do
+        params(
+          id: String,
+          workspace_id: String,
+          request_options: Cadenya::RequestOptions::OrHash
+        ).returns(Cadenya::Agent)
+      end
+      def archive(
+        # Agent ID. Accepts the canonical `agent_…` form or the `external_id:<value>`
+        # form.
+        id,
+        # Workspace ID.
+        workspace_id:,
+        request_options: {}
+      )
+      end
+
+      # Transitions an agent to STATE_PUBLISHED, making it available for objectives. The
+      # agent must have at least one variation.
+      sig do
+        params(
+          id: String,
+          workspace_id: String,
+          request_options: Cadenya::RequestOptions::OrHash
+        ).returns(Cadenya::Agent)
+      end
+      def publish(
+        # Agent ID. Accepts the canonical `agent_…` form or the `external_id:<value>`
+        # form.
+        id,
+        # Workspace ID.
+        workspace_id:,
+        request_options: {}
+      )
+      end
+
+      # Transitions an archived agent back to STATE_DRAFT. Publish the agent again to
+      # make it available for objectives.
+      sig do
+        params(
+          id: String,
+          workspace_id: String,
+          request_options: Cadenya::RequestOptions::OrHash
+        ).returns(Cadenya::Agent)
+      end
+      def unarchive(
+        # Agent ID. Accepts the canonical `agent_…` form or the `external_id:<value>`
+        # form.
+        id,
+        # Workspace ID.
+        workspace_id:,
+        request_options: {}
+      )
+      end
+
+      # Transitions a published agent back to STATE_DRAFT. Active schedules for the
+      # agent are paused until it is published again.
+      sig do
+        params(
+          id: String,
+          workspace_id: String,
+          request_options: Cadenya::RequestOptions::OrHash
+        ).returns(Cadenya::Agent)
+      end
+      def unpublish(
         # Agent ID. Accepts the canonical `agent_…` form or the `external_id:<value>`
         # form.
         id,

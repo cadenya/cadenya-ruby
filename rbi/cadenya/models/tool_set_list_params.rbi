@@ -63,6 +63,14 @@ module Cadenya
       sig { params(sort_order: String).void }
       attr_writer :sort_order
 
+      # Filter by tool set lifecycle state. Defaults to STATE_ACTIVE when unspecified;
+      # pass STATE_ARCHIVED to list archived tool sets.
+      sig { returns(T.nilable(Cadenya::ToolSetListParams::State::OrSymbol)) }
+      attr_reader :state
+
+      sig { params(state: Cadenya::ToolSetListParams::State::OrSymbol).void }
+      attr_writer :state
+
       sig do
         params(
           workspace_id: String,
@@ -73,6 +81,7 @@ module Cadenya
           prefix: String,
           query: String,
           sort_order: String,
+          state: Cadenya::ToolSetListParams::State::OrSymbol,
           request_options: Cadenya::RequestOptions::OrHash
         ).returns(T.attached_class)
       end
@@ -92,6 +101,9 @@ module Cadenya
         query: nil,
         # Sort order for results (asc or desc by creation time)
         sort_order: nil,
+        # Filter by tool set lifecycle state. Defaults to STATE_ACTIVE when unspecified;
+        # pass STATE_ARCHIVED to list archived tool sets.
+        state: nil,
         request_options: {}
       )
       end
@@ -107,11 +119,43 @@ module Cadenya
             prefix: String,
             query: String,
             sort_order: String,
+            state: Cadenya::ToolSetListParams::State::OrSymbol,
             request_options: Cadenya::RequestOptions
           }
         )
       end
       def to_hash
+      end
+
+      # Filter by tool set lifecycle state. Defaults to STATE_ACTIVE when unspecified;
+      # pass STATE_ARCHIVED to list archived tool sets.
+      module State
+        extend Cadenya::Internal::Type::Enum
+
+        TaggedSymbol =
+          T.type_alias { T.all(Symbol, Cadenya::ToolSetListParams::State) }
+        OrSymbol = T.type_alias { T.any(Symbol, String) }
+
+        STATE_UNSPECIFIED =
+          T.let(
+            :STATE_UNSPECIFIED,
+            Cadenya::ToolSetListParams::State::TaggedSymbol
+          )
+        STATE_ACTIVE =
+          T.let(:STATE_ACTIVE, Cadenya::ToolSetListParams::State::TaggedSymbol)
+        STATE_ARCHIVED =
+          T.let(
+            :STATE_ARCHIVED,
+            Cadenya::ToolSetListParams::State::TaggedSymbol
+          )
+
+        sig do
+          override.returns(
+            T::Array[Cadenya::ToolSetListParams::State::TaggedSymbol]
+          )
+        end
+        def self.values
+        end
       end
     end
   end

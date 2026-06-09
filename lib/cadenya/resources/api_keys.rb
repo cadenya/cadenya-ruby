@@ -171,8 +171,8 @@ module Cadenya
       # @see Cadenya::Models::APIKeyRotateParams
       def rotate(id, params = {})
         @client.request(
-          method: :put,
-          path: ["v1/account/api_keys/%1$s/rotate", id],
+          method: :post,
+          path: ["v1/account/api_keys/%1$s:rotate", id],
           model: Cadenya::APIKey,
           options: params[:request_options]
         )

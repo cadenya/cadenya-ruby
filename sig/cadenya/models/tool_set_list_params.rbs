@@ -9,7 +9,8 @@ module Cadenya
         limit: Integer,
         prefix: String,
         query: String,
-        sort_order: String
+        sort_order: String,
+        state: Cadenya::Models::ToolSetListParams::state
       }
       & Cadenya::Internal::Type::request_parameters
 
@@ -47,6 +48,12 @@ module Cadenya
 
       def sort_order=: (String) -> String
 
+      attr_reader state: Cadenya::Models::ToolSetListParams::state?
+
+      def state=: (
+        Cadenya::Models::ToolSetListParams::state
+      ) -> Cadenya::Models::ToolSetListParams::state
+
       def initialize: (
         workspace_id: String,
         ?bundle_key: String,
@@ -56,6 +63,7 @@ module Cadenya
         ?prefix: String,
         ?query: String,
         ?sort_order: String,
+        ?state: Cadenya::Models::ToolSetListParams::state,
         ?request_options: Cadenya::request_opts
       ) -> void
 
@@ -68,8 +76,21 @@ module Cadenya
         prefix: String,
         query: String,
         sort_order: String,
+        state: Cadenya::Models::ToolSetListParams::state,
         request_options: Cadenya::RequestOptions
       }
+
+      type state = :STATE_UNSPECIFIED | :STATE_ACTIVE | :STATE_ARCHIVED
+
+      module State
+        extend Cadenya::Internal::Type::Enum
+
+        STATE_UNSPECIFIED: :STATE_UNSPECIFIED
+        STATE_ACTIVE: :STATE_ACTIVE
+        STATE_ARCHIVED: :STATE_ARCHIVED
+
+        def self?.values: -> ::Array[Cadenya::Models::ToolSetListParams::state]
+      end
     end
   end
 end
