@@ -224,11 +224,11 @@ cadenya.account.retrieve(**params)
 Since this library does not depend on `sorbet-runtime`, it cannot provide [`T::Enum`](https://sorbet.org/docs/tenum) instances. Instead, we provide "tagged symbols" instead, which is always a primitive at runtime:
 
 ```ruby
-# :AGENT_STATUS_UNSPECIFIED
-puts(Cadenya::AgentListParams::Status::AGENT_STATUS_UNSPECIFIED)
+# :STATE_UNSPECIFIED
+puts(Cadenya::AgentListParams::State::STATE_UNSPECIFIED)
 
-# Revealed type: `T.all(Cadenya::AgentListParams::Status, Symbol)`
-T.reveal_type(Cadenya::AgentListParams::Status::AGENT_STATUS_UNSPECIFIED)
+# Revealed type: `T.all(Cadenya::AgentListParams::State, Symbol)`
+T.reveal_type(Cadenya::AgentListParams::State::STATE_UNSPECIFIED)
 ```
 
 Enum parameters have a "relaxed" type, so you can either pass in enum constants or their literal value:
@@ -236,13 +236,13 @@ Enum parameters have a "relaxed" type, so you can either pass in enum constants 
 ```ruby
 # Using the enum constants preserves the tagged type information:
 cadenya.agents.list(
-  status: Cadenya::AgentListParams::Status::AGENT_STATUS_UNSPECIFIED,
+  state: Cadenya::AgentListParams::State::STATE_UNSPECIFIED,
   # …
 )
 
 # Literal values are also permissible:
 cadenya.agents.list(
-  status: :AGENT_STATUS_UNSPECIFIED,
+  state: :STATE_UNSPECIFIED,
   # …
 )
 ```

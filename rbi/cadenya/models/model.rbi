@@ -20,6 +20,11 @@ module Cadenya
       sig { params(spec: Cadenya::ModelSpec::OrHash).void }
       attr_writer :spec
 
+      # Whether the model is usable in this workspace. Output only. Use the :enable and
+      # :disable actions to transition.
+      sig { returns(Cadenya::Model::State::TaggedSymbol) }
+      attr_accessor :state
+
       # ModelInfo carries server-derived, read-only details about a model.
       sig { returns(T.nilable(Cadenya::Model::Info)) }
       attr_reader :info
@@ -31,6 +36,7 @@ module Cadenya
         params(
           metadata: Cadenya::ResourceMetadata::OrHash,
           spec: Cadenya::ModelSpec::OrHash,
+          state: Cadenya::Model::State::OrSymbol,
           info: Cadenya::Model::Info::OrHash
         ).returns(T.attached_class)
       end
@@ -39,6 +45,9 @@ module Cadenya
         metadata:,
         # Model specification
         spec:,
+        # Whether the model is usable in this workspace. Output only. Use the :enable and
+        # :disable actions to transition.
+        state:,
         # ModelInfo carries server-derived, read-only details about a model.
         info: nil
       )
@@ -49,11 +58,32 @@ module Cadenya
           {
             metadata: Cadenya::ResourceMetadata,
             spec: Cadenya::ModelSpec,
+            state: Cadenya::Model::State::TaggedSymbol,
             info: Cadenya::Model::Info
           }
         )
       end
       def to_hash
+      end
+
+      # Whether the model is usable in this workspace. Output only. Use the :enable and
+      # :disable actions to transition.
+      module State
+        extend Cadenya::Internal::Type::Enum
+
+        TaggedSymbol = T.type_alias { T.all(Symbol, Cadenya::Model::State) }
+        OrSymbol = T.type_alias { T.any(Symbol, String) }
+
+        STATE_UNSPECIFIED =
+          T.let(:STATE_UNSPECIFIED, Cadenya::Model::State::TaggedSymbol)
+        STATE_ENABLED =
+          T.let(:STATE_ENABLED, Cadenya::Model::State::TaggedSymbol)
+        STATE_DISABLED =
+          T.let(:STATE_DISABLED, Cadenya::Model::State::TaggedSymbol)
+
+        sig { override.returns(T::Array[Cadenya::Model::State::TaggedSymbol]) }
+        def self.values
+        end
       end
 
       class Info < Cadenya::Internal::Type::BaseModel

@@ -64,12 +64,12 @@ module Cadenya
       sig { params(sort_order: String).void }
       attr_writer :sort_order
 
-      # Filter by agent publication status
-      sig { returns(T.nilable(Cadenya::AgentListParams::Status::OrSymbol)) }
-      attr_reader :status
+      # Filter by agent lifecycle state
+      sig { returns(T.nilable(Cadenya::AgentListParams::State::OrSymbol)) }
+      attr_reader :state
 
-      sig { params(status: Cadenya::AgentListParams::Status::OrSymbol).void }
-      attr_writer :status
+      sig { params(state: Cadenya::AgentListParams::State::OrSymbol).void }
+      attr_writer :state
 
       # Filter by variation selection mode
       sig do
@@ -97,7 +97,7 @@ module Cadenya
           prefix: String,
           query: String,
           sort_order: String,
-          status: Cadenya::AgentListParams::Status::OrSymbol,
+          state: Cadenya::AgentListParams::State::OrSymbol,
           variation_selection_mode:
             Cadenya::AgentListParams::VariationSelectionMode::OrSymbol,
           request_options: Cadenya::RequestOptions::OrHash
@@ -120,8 +120,8 @@ module Cadenya
         query: nil,
         # Sort order for results (asc or desc by creation time)
         sort_order: nil,
-        # Filter by agent publication status
-        status: nil,
+        # Filter by agent lifecycle state
+        state: nil,
         # Filter by variation selection mode
         variation_selection_mode: nil,
         request_options: {}
@@ -139,7 +139,7 @@ module Cadenya
             prefix: String,
             query: String,
             sort_order: String,
-            status: Cadenya::AgentListParams::Status::OrSymbol,
+            state: Cadenya::AgentListParams::State::OrSymbol,
             variation_selection_mode:
               Cadenya::AgentListParams::VariationSelectionMode::OrSymbol,
             request_options: Cadenya::RequestOptions
@@ -149,38 +149,29 @@ module Cadenya
       def to_hash
       end
 
-      # Filter by agent publication status
-      module Status
+      # Filter by agent lifecycle state
+      module State
         extend Cadenya::Internal::Type::Enum
 
         TaggedSymbol =
-          T.type_alias { T.all(Symbol, Cadenya::AgentListParams::Status) }
+          T.type_alias { T.all(Symbol, Cadenya::AgentListParams::State) }
         OrSymbol = T.type_alias { T.any(Symbol, String) }
 
-        AGENT_STATUS_UNSPECIFIED =
+        STATE_UNSPECIFIED =
           T.let(
-            :AGENT_STATUS_UNSPECIFIED,
-            Cadenya::AgentListParams::Status::TaggedSymbol
+            :STATE_UNSPECIFIED,
+            Cadenya::AgentListParams::State::TaggedSymbol
           )
-        AGENT_STATUS_DRAFT =
-          T.let(
-            :AGENT_STATUS_DRAFT,
-            Cadenya::AgentListParams::Status::TaggedSymbol
-          )
-        AGENT_STATUS_PUBLISHED =
-          T.let(
-            :AGENT_STATUS_PUBLISHED,
-            Cadenya::AgentListParams::Status::TaggedSymbol
-          )
-        AGENT_STATUS_ARCHIVED =
-          T.let(
-            :AGENT_STATUS_ARCHIVED,
-            Cadenya::AgentListParams::Status::TaggedSymbol
-          )
+        STATE_DRAFT =
+          T.let(:STATE_DRAFT, Cadenya::AgentListParams::State::TaggedSymbol)
+        STATE_PUBLISHED =
+          T.let(:STATE_PUBLISHED, Cadenya::AgentListParams::State::TaggedSymbol)
+        STATE_ARCHIVED =
+          T.let(:STATE_ARCHIVED, Cadenya::AgentListParams::State::TaggedSymbol)
 
         sig do
           override.returns(
-            T::Array[Cadenya::AgentListParams::Status::TaggedSymbol]
+            T::Array[Cadenya::AgentListParams::State::TaggedSymbol]
           )
         end
         def self.values

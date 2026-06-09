@@ -54,7 +54,17 @@ module Cadenya
       #   @return [String, nil]
       optional :sort_order, String
 
-      # @!method initialize(workspace_id:, bundle_key: nil, cursor: nil, include_info: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, request_options: {})
+      # @!attribute state
+      #   Filter by tool set lifecycle state. Defaults to STATE_ACTIVE when unspecified;
+      #   pass STATE_ARCHIVED to list archived tool sets.
+      #
+      #   @return [Symbol, Cadenya::Models::ToolSetListParams::State, nil]
+      optional :state, enum: -> { Cadenya::ToolSetListParams::State }
+
+      # @!method initialize(workspace_id:, bundle_key: nil, cursor: nil, include_info: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, state: nil, request_options: {})
+      #   Some parameter documentations has been truncated, see
+      #   {Cadenya::Models::ToolSetListParams} for more details.
+      #
       #   @param workspace_id [String]
       #
       #   @param bundle_key [String] Filter by bundle_key — return only resources owned by this bundle.
@@ -71,7 +81,22 @@ module Cadenya
       #
       #   @param sort_order [String] Sort order for results (asc or desc by creation time)
       #
+      #   @param state [Symbol, Cadenya::Models::ToolSetListParams::State] Filter by tool set lifecycle state. Defaults to STATE_ACTIVE when
+      #
       #   @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}]
+
+      # Filter by tool set lifecycle state. Defaults to STATE_ACTIVE when unspecified;
+      # pass STATE_ARCHIVED to list archived tool sets.
+      module State
+        extend Cadenya::Internal::Type::Enum
+
+        STATE_UNSPECIFIED = :STATE_UNSPECIFIED
+        STATE_ACTIVE = :STATE_ACTIVE
+        STATE_ARCHIVED = :STATE_ARCHIVED
+
+        # @!method self.values
+        #   @return [Array<Symbol>]
+      end
     end
   end
 end

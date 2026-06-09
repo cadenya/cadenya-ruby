@@ -6,7 +6,6 @@ module Cadenya
           config: Cadenya::ToolSets::ToolSpecConfig,
           description: String,
           parameters: ::Hash[Symbol, top],
-          status: Cadenya::Models::ToolSets::ToolSpec::status,
           requires_approval: bool
         }
 
@@ -17,44 +16,21 @@ module Cadenya
 
         attr_accessor parameters: ::Hash[Symbol, top]
 
-        attr_accessor status: Cadenya::Models::ToolSets::ToolSpec::status
-
-        attr_reader requires_approval: bool?
-
-        def requires_approval=: (bool) -> bool
+        attr_accessor requires_approval: bool
 
         def initialize: (
           config: Cadenya::ToolSets::ToolSpecConfig,
           description: String,
           parameters: ::Hash[Symbol, top],
-          status: Cadenya::Models::ToolSets::ToolSpec::status,
-          ?requires_approval: bool
+          requires_approval: bool
         ) -> void
 
         def to_hash: -> {
           config: Cadenya::ToolSets::ToolSpecConfig,
           description: String,
           parameters: ::Hash[Symbol, top],
-          status: Cadenya::Models::ToolSets::ToolSpec::status,
           requires_approval: bool
         }
-
-        type status =
-          :TOOL_STATUS_UNSPECIFIED
-          | :TOOL_STATUS_AVAILABLE
-          | :TOOL_STATUS_OMITTED
-          | :TOOL_STATUS_ARCHIVED
-
-        module Status
-          extend Cadenya::Internal::Type::Enum
-
-          TOOL_STATUS_UNSPECIFIED: :TOOL_STATUS_UNSPECIFIED
-          TOOL_STATUS_AVAILABLE: :TOOL_STATUS_AVAILABLE
-          TOOL_STATUS_OMITTED: :TOOL_STATUS_OMITTED
-          TOOL_STATUS_ARCHIVED: :TOOL_STATUS_ARCHIVED
-
-          def self?.values: -> ::Array[Cadenya::Models::ToolSets::ToolSpec::status]
-        end
       end
     end
   end

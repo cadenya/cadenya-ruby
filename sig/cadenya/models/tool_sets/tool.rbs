@@ -5,6 +5,7 @@ module Cadenya
         {
           metadata: Cadenya::ResourceMetadata,
           spec: Cadenya::ToolSets::ToolSpec,
+          state: Cadenya::Models::ToolSets::Tool::state,
           info: Cadenya::ToolSets::ToolInfo
         }
 
@@ -17,17 +18,38 @@ module Cadenya
 
         def info=: (Cadenya::ToolSets::ToolInfo) -> Cadenya::ToolSets::ToolInfo
 
+        attr_accessor state: Cadenya::Models::ToolSets::Tool::state
+
         def initialize: (
           metadata: Cadenya::ResourceMetadata,
           spec: Cadenya::ToolSets::ToolSpec,
+          state: Cadenya::Models::ToolSets::Tool::state,
           ?info: Cadenya::ToolSets::ToolInfo
         ) -> void
 
         def to_hash: -> {
           metadata: Cadenya::ResourceMetadata,
           spec: Cadenya::ToolSets::ToolSpec,
+          state: Cadenya::Models::ToolSets::Tool::state,
           info: Cadenya::ToolSets::ToolInfo
         }
+
+        type state =
+          :STATE_UNSPECIFIED
+          | :STATE_AVAILABLE
+          | :STATE_OMITTED
+          | :STATE_ARCHIVED
+
+        module State
+          extend Cadenya::Internal::Type::Enum
+
+          STATE_UNSPECIFIED: :STATE_UNSPECIFIED
+          STATE_AVAILABLE: :STATE_AVAILABLE
+          STATE_OMITTED: :STATE_OMITTED
+          STATE_ARCHIVED: :STATE_ARCHIVED
+
+          def self?.values: -> ::Array[Cadenya::Models::ToolSets::Tool::state]
+        end
       end
     end
   end

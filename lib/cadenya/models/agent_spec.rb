@@ -3,12 +3,6 @@
 module Cadenya
   module Models
     class AgentSpec < Cadenya::Internal::Type::BaseModel
-      # @!attribute status
-      #   Status of the agent
-      #
-      #   @return [Symbol, Cadenya::Models::AgentSpec::Status]
-      required :status, enum: -> { Cadenya::AgentSpec::Status }
-
       # @!attribute variation_selection_mode
       #   Controls how variations are automatically selected when creating objectives
       #   Defaults to RANDOM when unspecified
@@ -53,13 +47,11 @@ module Cadenya
       #   @return [String, nil]
       optional :webhook_events_url, String, api_name: :webhookEventsUrl
 
-      # @!method initialize(status:, variation_selection_mode:, description: nil, input_data_schema: nil, output_definition: nil, webhook_events_url: nil)
+      # @!method initialize(variation_selection_mode:, description: nil, input_data_schema: nil, output_definition: nil, webhook_events_url: nil)
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::AgentSpec} for more details.
       #
       #   Agent specification (user-provided configuration)
-      #
-      #   @param status [Symbol, Cadenya::Models::AgentSpec::Status] Status of the agent
       #
       #   @param variation_selection_mode [Symbol, Cadenya::Models::AgentSpec::VariationSelectionMode] Controls how variations are automatically selected when creating objectives
       #
@@ -70,21 +62,6 @@ module Cadenya
       #   @param output_definition [Hash{Symbol=>Object}] Optional output definition for objectives created for this agent.
       #
       #   @param webhook_events_url [String] The URL that Cadenya will send events for any objective assigned to the agent.
-
-      # Status of the agent
-      #
-      # @see Cadenya::Models::AgentSpec#status
-      module Status
-        extend Cadenya::Internal::Type::Enum
-
-        AGENT_STATUS_UNSPECIFIED = :AGENT_STATUS_UNSPECIFIED
-        AGENT_STATUS_DRAFT = :AGENT_STATUS_DRAFT
-        AGENT_STATUS_PUBLISHED = :AGENT_STATUS_PUBLISHED
-        AGENT_STATUS_ARCHIVED = :AGENT_STATUS_ARCHIVED
-
-        # @!method self.values
-        #   @return [Array<Symbol>]
-      end
 
       # Controls how variations are automatically selected when creating objectives
       # Defaults to RANDOM when unspecified

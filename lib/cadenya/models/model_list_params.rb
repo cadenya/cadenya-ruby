@@ -62,13 +62,13 @@ module Cadenya
       #   @return [String, nil]
       optional :sort_order, String
 
-      # @!attribute status
-      #   Filter by model status
+      # @!attribute state
+      #   Filter by model state
       #
-      #   @return [Symbol, Cadenya::Models::ModelListParams::Status, nil]
-      optional :status, enum: -> { Cadenya::ModelListParams::Status }
+      #   @return [Symbol, Cadenya::Models::ModelListParams::State, nil]
+      optional :state, enum: -> { Cadenya::ModelListParams::State }
 
-      # @!method initialize(workspace_id:, ai_provider_key_id: nil, bundle_key: nil, cursor: nil, include_info: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, status: nil, request_options: {})
+      # @!method initialize(workspace_id:, ai_provider_key_id: nil, bundle_key: nil, cursor: nil, include_info: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, state: nil, request_options: {})
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::ModelListParams} for more details.
       #
@@ -90,17 +90,17 @@ module Cadenya
       #
       #   @param sort_order [String] Sort order for results (asc or desc by creation time)
       #
-      #   @param status [Symbol, Cadenya::Models::ModelListParams::Status] Filter by model status
+      #   @param state [Symbol, Cadenya::Models::ModelListParams::State] Filter by model state
       #
       #   @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}]
 
-      # Filter by model status
-      module Status
+      # Filter by model state
+      module State
         extend Cadenya::Internal::Type::Enum
 
-        MODEL_STATUS_UNSPECIFIED = :MODEL_STATUS_UNSPECIFIED
-        MODEL_STATUS_ENABLED = :MODEL_STATUS_ENABLED
-        MODEL_STATUS_DISABLED = :MODEL_STATUS_DISABLED
+        STATE_UNSPECIFIED = :STATE_UNSPECIFIED
+        STATE_ENABLED = :STATE_ENABLED
+        STATE_DISABLED = :STATE_DISABLED
 
         # @!method self.values
         #   @return [Array<Symbol>]

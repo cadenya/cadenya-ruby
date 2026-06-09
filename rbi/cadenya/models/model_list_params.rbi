@@ -72,12 +72,12 @@ module Cadenya
       sig { params(sort_order: String).void }
       attr_writer :sort_order
 
-      # Filter by model status
-      sig { returns(T.nilable(Cadenya::ModelListParams::Status::OrSymbol)) }
-      attr_reader :status
+      # Filter by model state
+      sig { returns(T.nilable(Cadenya::ModelListParams::State::OrSymbol)) }
+      attr_reader :state
 
-      sig { params(status: Cadenya::ModelListParams::Status::OrSymbol).void }
-      attr_writer :status
+      sig { params(state: Cadenya::ModelListParams::State::OrSymbol).void }
+      attr_writer :state
 
       sig do
         params(
@@ -90,7 +90,7 @@ module Cadenya
           prefix: String,
           query: String,
           sort_order: String,
-          status: Cadenya::ModelListParams::Status::OrSymbol,
+          state: Cadenya::ModelListParams::State::OrSymbol,
           request_options: Cadenya::RequestOptions::OrHash
         ).returns(T.attached_class)
       end
@@ -114,8 +114,8 @@ module Cadenya
         query: nil,
         # Sort order for results (asc or desc by creation time)
         sort_order: nil,
-        # Filter by model status
-        status: nil,
+        # Filter by model state
+        state: nil,
         request_options: {}
       )
       end
@@ -132,7 +132,7 @@ module Cadenya
             prefix: String,
             query: String,
             sort_order: String,
-            status: Cadenya::ModelListParams::Status::OrSymbol,
+            state: Cadenya::ModelListParams::State::OrSymbol,
             request_options: Cadenya::RequestOptions
           }
         )
@@ -140,33 +140,27 @@ module Cadenya
       def to_hash
       end
 
-      # Filter by model status
-      module Status
+      # Filter by model state
+      module State
         extend Cadenya::Internal::Type::Enum
 
         TaggedSymbol =
-          T.type_alias { T.all(Symbol, Cadenya::ModelListParams::Status) }
+          T.type_alias { T.all(Symbol, Cadenya::ModelListParams::State) }
         OrSymbol = T.type_alias { T.any(Symbol, String) }
 
-        MODEL_STATUS_UNSPECIFIED =
+        STATE_UNSPECIFIED =
           T.let(
-            :MODEL_STATUS_UNSPECIFIED,
-            Cadenya::ModelListParams::Status::TaggedSymbol
+            :STATE_UNSPECIFIED,
+            Cadenya::ModelListParams::State::TaggedSymbol
           )
-        MODEL_STATUS_ENABLED =
-          T.let(
-            :MODEL_STATUS_ENABLED,
-            Cadenya::ModelListParams::Status::TaggedSymbol
-          )
-        MODEL_STATUS_DISABLED =
-          T.let(
-            :MODEL_STATUS_DISABLED,
-            Cadenya::ModelListParams::Status::TaggedSymbol
-          )
+        STATE_ENABLED =
+          T.let(:STATE_ENABLED, Cadenya::ModelListParams::State::TaggedSymbol)
+        STATE_DISABLED =
+          T.let(:STATE_DISABLED, Cadenya::ModelListParams::State::TaggedSymbol)
 
         sig do
           override.returns(
-            T::Array[Cadenya::ModelListParams::Status::TaggedSymbol]
+            T::Array[Cadenya::ModelListParams::State::TaggedSymbol]
           )
         end
         def self.values

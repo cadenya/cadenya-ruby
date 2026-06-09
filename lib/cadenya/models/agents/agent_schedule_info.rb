@@ -39,7 +39,7 @@ module Cadenya
 
           # @!attribute next_fire_at
           #   When the schedule will next fire. Computed from the spec; absent when the
-          #   schedule is PAUSED/ARCHIVED or has no future fire times.
+          #   schedule is STATE_PAUSED/STATE_ARCHIVED or has no future fire times.
           #
           #   @return [Time, nil]
           optional :next_fire_at, Time, api_name: :nextFireAt

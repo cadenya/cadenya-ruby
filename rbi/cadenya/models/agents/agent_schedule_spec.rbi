@@ -58,21 +58,6 @@ module Cadenya
         end
         attr_writer :overlap_policy
 
-        # Lifecycle. Defaults to ACTIVE on create when unspecified.
-        sig do
-          returns(
-            T.nilable(Cadenya::Agents::AgentScheduleSpec::Status::OrSymbol)
-          )
-        end
-        attr_reader :status
-
-        sig do
-          params(
-            status: Cadenya::Agents::AgentScheduleSpec::Status::OrSymbol
-          ).void
-        end
-        attr_writer :status
-
         # Optional explicit variation. When unset, the agent's variation_selection_mode
         # chooses per fire.
         sig { returns(T.nilable(String)) }
@@ -89,7 +74,6 @@ module Cadenya
             data: T.anything,
             overlap_policy:
               Cadenya::Agents::AgentScheduleSpec::OverlapPolicy::OrSymbol,
-            status: Cadenya::Agents::AgentScheduleSpec::Status::OrSymbol,
             variation_id: String
           ).returns(T.attached_class)
         end
@@ -106,8 +90,6 @@ module Cadenya
           data: nil,
           # What to do when the previous run is still in flight. Defaults to SKIP.
           overlap_policy: nil,
-          # Lifecycle. Defaults to ACTIVE on create when unspecified.
-          status: nil,
           # Optional explicit variation. When unset, the agent's variation_selection_mode
           # chooses per fire.
           variation_id: nil
@@ -122,7 +104,6 @@ module Cadenya
               data: T.anything,
               overlap_policy:
                 Cadenya::Agents::AgentScheduleSpec::OverlapPolicy::OrSymbol,
-              status: Cadenya::Agents::AgentScheduleSpec::Status::OrSymbol,
               variation_id: String
             }
           )
@@ -161,46 +142,6 @@ module Cadenya
               T::Array[
                 Cadenya::Agents::AgentScheduleSpec::OverlapPolicy::TaggedSymbol
               ]
-            )
-          end
-          def self.values
-          end
-        end
-
-        # Lifecycle. Defaults to ACTIVE on create when unspecified.
-        module Status
-          extend Cadenya::Internal::Type::Enum
-
-          TaggedSymbol =
-            T.type_alias do
-              T.all(Symbol, Cadenya::Agents::AgentScheduleSpec::Status)
-            end
-          OrSymbol = T.type_alias { T.any(Symbol, String) }
-
-          AGENT_SCHEDULE_STATUS_UNSPECIFIED =
-            T.let(
-              :AGENT_SCHEDULE_STATUS_UNSPECIFIED,
-              Cadenya::Agents::AgentScheduleSpec::Status::TaggedSymbol
-            )
-          AGENT_SCHEDULE_STATUS_ACTIVE =
-            T.let(
-              :AGENT_SCHEDULE_STATUS_ACTIVE,
-              Cadenya::Agents::AgentScheduleSpec::Status::TaggedSymbol
-            )
-          AGENT_SCHEDULE_STATUS_PAUSED =
-            T.let(
-              :AGENT_SCHEDULE_STATUS_PAUSED,
-              Cadenya::Agents::AgentScheduleSpec::Status::TaggedSymbol
-            )
-          AGENT_SCHEDULE_STATUS_ARCHIVED =
-            T.let(
-              :AGENT_SCHEDULE_STATUS_ARCHIVED,
-              Cadenya::Agents::AgentScheduleSpec::Status::TaggedSymbol
-            )
-
-          sig do
-            override.returns(
-              T::Array[Cadenya::Agents::AgentScheduleSpec::Status::TaggedSymbol]
             )
           end
           def self.values

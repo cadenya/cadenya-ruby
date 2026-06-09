@@ -6,10 +6,6 @@ module Cadenya
       OrHash =
         T.type_alias { T.any(Cadenya::AgentSpec, Cadenya::Internal::AnyHash) }
 
-      # Status of the agent
-      sig { returns(Cadenya::AgentSpec::Status::OrSymbol) }
-      attr_accessor :status
-
       # Controls how variations are automatically selected when creating objectives
       # Defaults to RANDOM when unspecified
       sig { returns(Cadenya::AgentSpec::VariationSelectionMode::OrSymbol) }
@@ -53,7 +49,6 @@ module Cadenya
       # Agent specification (user-provided configuration)
       sig do
         params(
-          status: Cadenya::AgentSpec::Status::OrSymbol,
           variation_selection_mode:
             Cadenya::AgentSpec::VariationSelectionMode::OrSymbol,
           description: String,
@@ -63,8 +58,6 @@ module Cadenya
         ).returns(T.attached_class)
       end
       def self.new(
-        # Status of the agent
-        status:,
         # Controls how variations are automatically selected when creating objectives
         # Defaults to RANDOM when unspecified
         variation_selection_mode:,
@@ -89,7 +82,6 @@ module Cadenya
       sig do
         override.returns(
           {
-            status: Cadenya::AgentSpec::Status::OrSymbol,
             variation_selection_mode:
               Cadenya::AgentSpec::VariationSelectionMode::OrSymbol,
             description: String,
@@ -100,39 +92,6 @@ module Cadenya
         )
       end
       def to_hash
-      end
-
-      # Status of the agent
-      module Status
-        extend Cadenya::Internal::Type::Enum
-
-        TaggedSymbol =
-          T.type_alias { T.all(Symbol, Cadenya::AgentSpec::Status) }
-        OrSymbol = T.type_alias { T.any(Symbol, String) }
-
-        AGENT_STATUS_UNSPECIFIED =
-          T.let(
-            :AGENT_STATUS_UNSPECIFIED,
-            Cadenya::AgentSpec::Status::TaggedSymbol
-          )
-        AGENT_STATUS_DRAFT =
-          T.let(:AGENT_STATUS_DRAFT, Cadenya::AgentSpec::Status::TaggedSymbol)
-        AGENT_STATUS_PUBLISHED =
-          T.let(
-            :AGENT_STATUS_PUBLISHED,
-            Cadenya::AgentSpec::Status::TaggedSymbol
-          )
-        AGENT_STATUS_ARCHIVED =
-          T.let(
-            :AGENT_STATUS_ARCHIVED,
-            Cadenya::AgentSpec::Status::TaggedSymbol
-          )
-
-        sig do
-          override.returns(T::Array[Cadenya::AgentSpec::Status::TaggedSymbol])
-        end
-        def self.values
-        end
       end
 
       # Controls how variations are automatically selected when creating objectives

@@ -52,7 +52,7 @@ module Cadenya
         attr_writer :last_skip_reason
 
         # When the schedule will next fire. Computed from the spec; absent when the
-        # schedule is PAUSED/ARCHIVED or has no future fire times.
+        # schedule is STATE_PAUSED/STATE_ARCHIVED or has no future fire times.
         sig { returns(T.nilable(Time)) }
         attr_reader :next_fire_at
 
@@ -92,7 +92,7 @@ module Cadenya
           # Reason for the most recent skip (e.g. "previous objective still running").
           last_skip_reason: nil,
           # When the schedule will next fire. Computed from the spec; absent when the
-          # schedule is PAUSED/ARCHIVED or has no future fire times.
+          # schedule is STATE_PAUSED/STATE_ARCHIVED or has no future fire times.
           next_fire_at: nil,
           # Lifetime count of objectives created by this schedule.
           total_fires: nil

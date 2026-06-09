@@ -11,7 +11,7 @@ module Cadenya
         prefix: String,
         query: String,
         sort_order: String,
-        status: Cadenya::Models::ModelListParams::status
+        state: Cadenya::Models::ModelListParams::state
       }
       & Cadenya::Internal::Type::request_parameters
 
@@ -53,11 +53,11 @@ module Cadenya
 
       def sort_order=: (String) -> String
 
-      attr_reader status: Cadenya::Models::ModelListParams::status?
+      attr_reader state: Cadenya::Models::ModelListParams::state?
 
-      def status=: (
-        Cadenya::Models::ModelListParams::status
-      ) -> Cadenya::Models::ModelListParams::status
+      def state=: (
+        Cadenya::Models::ModelListParams::state
+      ) -> Cadenya::Models::ModelListParams::state
 
       def initialize: (
         workspace_id: String,
@@ -69,7 +69,7 @@ module Cadenya
         ?prefix: String,
         ?query: String,
         ?sort_order: String,
-        ?status: Cadenya::Models::ModelListParams::status,
+        ?state: Cadenya::Models::ModelListParams::state,
         ?request_options: Cadenya::request_opts
       ) -> void
 
@@ -83,23 +83,20 @@ module Cadenya
         prefix: String,
         query: String,
         sort_order: String,
-        status: Cadenya::Models::ModelListParams::status,
+        state: Cadenya::Models::ModelListParams::state,
         request_options: Cadenya::RequestOptions
       }
 
-      type status =
-        :MODEL_STATUS_UNSPECIFIED
-        | :MODEL_STATUS_ENABLED
-        | :MODEL_STATUS_DISABLED
+      type state = :STATE_UNSPECIFIED | :STATE_ENABLED | :STATE_DISABLED
 
-      module Status
+      module State
         extend Cadenya::Internal::Type::Enum
 
-        MODEL_STATUS_UNSPECIFIED: :MODEL_STATUS_UNSPECIFIED
-        MODEL_STATUS_ENABLED: :MODEL_STATUS_ENABLED
-        MODEL_STATUS_DISABLED: :MODEL_STATUS_DISABLED
+        STATE_UNSPECIFIED: :STATE_UNSPECIFIED
+        STATE_ENABLED: :STATE_ENABLED
+        STATE_DISABLED: :STATE_DISABLED
 
-        def self?.values: -> ::Array[Cadenya::Models::ModelListParams::status]
+        def self?.values: -> ::Array[Cadenya::Models::ModelListParams::state]
       end
     end
   end

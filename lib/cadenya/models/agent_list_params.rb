@@ -55,11 +55,11 @@ module Cadenya
       #   @return [String, nil]
       optional :sort_order, String
 
-      # @!attribute status
-      #   Filter by agent publication status
+      # @!attribute state
+      #   Filter by agent lifecycle state
       #
-      #   @return [Symbol, Cadenya::Models::AgentListParams::Status, nil]
-      optional :status, enum: -> { Cadenya::AgentListParams::Status }
+      #   @return [Symbol, Cadenya::Models::AgentListParams::State, nil]
+      optional :state, enum: -> { Cadenya::AgentListParams::State }
 
       # @!attribute variation_selection_mode
       #   Filter by variation selection mode
@@ -67,7 +67,7 @@ module Cadenya
       #   @return [Symbol, Cadenya::Models::AgentListParams::VariationSelectionMode, nil]
       optional :variation_selection_mode, enum: -> { Cadenya::AgentListParams::VariationSelectionMode }
 
-      # @!method initialize(workspace_id:, bundle_key: nil, cursor: nil, include_info: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, status: nil, variation_selection_mode: nil, request_options: {})
+      # @!method initialize(workspace_id:, bundle_key: nil, cursor: nil, include_info: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, state: nil, variation_selection_mode: nil, request_options: {})
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::AgentListParams} for more details.
       #
@@ -87,20 +87,20 @@ module Cadenya
       #
       #   @param sort_order [String] Sort order for results (asc or desc by creation time)
       #
-      #   @param status [Symbol, Cadenya::Models::AgentListParams::Status] Filter by agent publication status
+      #   @param state [Symbol, Cadenya::Models::AgentListParams::State] Filter by agent lifecycle state
       #
       #   @param variation_selection_mode [Symbol, Cadenya::Models::AgentListParams::VariationSelectionMode] Filter by variation selection mode
       #
       #   @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}]
 
-      # Filter by agent publication status
-      module Status
+      # Filter by agent lifecycle state
+      module State
         extend Cadenya::Internal::Type::Enum
 
-        AGENT_STATUS_UNSPECIFIED = :AGENT_STATUS_UNSPECIFIED
-        AGENT_STATUS_DRAFT = :AGENT_STATUS_DRAFT
-        AGENT_STATUS_PUBLISHED = :AGENT_STATUS_PUBLISHED
-        AGENT_STATUS_ARCHIVED = :AGENT_STATUS_ARCHIVED
+        STATE_UNSPECIFIED = :STATE_UNSPECIFIED
+        STATE_DRAFT = :STATE_DRAFT
+        STATE_PUBLISHED = :STATE_PUBLISHED
+        STATE_ARCHIVED = :STATE_ARCHIVED
 
         # @!method self.values
         #   @return [Array<Symbol>]

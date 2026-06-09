@@ -125,7 +125,7 @@ module Cadenya
       #
       # Lists all agents in the workspace
       #
-      # @overload list(workspace_id, bundle_key: nil, cursor: nil, include_info: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, status: nil, variation_selection_mode: nil, request_options: {})
+      # @overload list(workspace_id, bundle_key: nil, cursor: nil, include_info: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, state: nil, variation_selection_mode: nil, request_options: {})
       #
       # @param workspace_id [String] Workspace ID.
       #
@@ -143,7 +143,7 @@ module Cadenya
       #
       # @param sort_order [String] Sort order for results (asc or desc by creation time)
       #
-      # @param status [Symbol, Cadenya::Models::AgentListParams::Status] Filter by agent publication status
+      # @param state [Symbol, Cadenya::Models::AgentListParams::State] Filter by agent lifecycle state
       #
       # @param variation_selection_mode [Symbol, Cadenya::Models::AgentListParams::VariationSelectionMode] Filter by variation selection mode
       #
@@ -196,6 +196,130 @@ module Cadenya
           method: :delete,
           path: ["v1/workspaces/%1$s/agents/%2$s", workspace_id, id],
           model: NilClass,
+          options: options
+        )
+      end
+
+      # Some parameter documentations has been truncated, see
+      # {Cadenya::Models::AgentArchiveParams} for more details.
+      #
+      # Transitions an agent to STATE_ARCHIVED. Archived agents are hidden from list
+      # results and cannot be used for objectives; active schedules are paused.
+      #
+      # @overload archive(id, workspace_id:, request_options: {})
+      #
+      # @param id [String] Agent ID. Accepts the canonical `agent_…` form or the `external_id:<value>` form
+      #
+      # @param workspace_id [String] Workspace ID.
+      #
+      # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
+      #
+      # @return [Cadenya::Models::Agent]
+      #
+      # @see Cadenya::Models::AgentArchiveParams
+      def archive(id, params)
+        parsed, options = Cadenya::AgentArchiveParams.dump_request(params)
+        workspace_id =
+          parsed.delete(:workspace_id) do
+            raise ArgumentError.new("missing required path argument #{_1}")
+          end
+        @client.request(
+          method: :post,
+          path: ["v1/workspaces/%1$s/agents/%2$s:archive", workspace_id, id],
+          model: Cadenya::Agent,
+          options: options
+        )
+      end
+
+      # Some parameter documentations has been truncated, see
+      # {Cadenya::Models::AgentPublishParams} for more details.
+      #
+      # Transitions an agent to STATE_PUBLISHED, making it available for objectives. The
+      # agent must have at least one variation.
+      #
+      # @overload publish(id, workspace_id:, request_options: {})
+      #
+      # @param id [String] Agent ID. Accepts the canonical `agent_…` form or the `external_id:<value>` form
+      #
+      # @param workspace_id [String] Workspace ID.
+      #
+      # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
+      #
+      # @return [Cadenya::Models::Agent]
+      #
+      # @see Cadenya::Models::AgentPublishParams
+      def publish(id, params)
+        parsed, options = Cadenya::AgentPublishParams.dump_request(params)
+        workspace_id =
+          parsed.delete(:workspace_id) do
+            raise ArgumentError.new("missing required path argument #{_1}")
+          end
+        @client.request(
+          method: :post,
+          path: ["v1/workspaces/%1$s/agents/%2$s:publish", workspace_id, id],
+          model: Cadenya::Agent,
+          options: options
+        )
+      end
+
+      # Some parameter documentations has been truncated, see
+      # {Cadenya::Models::AgentUnarchiveParams} for more details.
+      #
+      # Transitions an archived agent back to STATE_DRAFT. Publish the agent again to
+      # make it available for objectives.
+      #
+      # @overload unarchive(id, workspace_id:, request_options: {})
+      #
+      # @param id [String] Agent ID. Accepts the canonical `agent_…` form or the `external_id:<value>` form
+      #
+      # @param workspace_id [String] Workspace ID.
+      #
+      # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
+      #
+      # @return [Cadenya::Models::Agent]
+      #
+      # @see Cadenya::Models::AgentUnarchiveParams
+      def unarchive(id, params)
+        parsed, options = Cadenya::AgentUnarchiveParams.dump_request(params)
+        workspace_id =
+          parsed.delete(:workspace_id) do
+            raise ArgumentError.new("missing required path argument #{_1}")
+          end
+        @client.request(
+          method: :post,
+          path: ["v1/workspaces/%1$s/agents/%2$s:unarchive", workspace_id, id],
+          model: Cadenya::Agent,
+          options: options
+        )
+      end
+
+      # Some parameter documentations has been truncated, see
+      # {Cadenya::Models::AgentUnpublishParams} for more details.
+      #
+      # Transitions a published agent back to STATE_DRAFT. Active schedules for the
+      # agent are paused until it is published again.
+      #
+      # @overload unpublish(id, workspace_id:, request_options: {})
+      #
+      # @param id [String] Agent ID. Accepts the canonical `agent_…` form or the `external_id:<value>` form
+      #
+      # @param workspace_id [String] Workspace ID.
+      #
+      # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
+      #
+      # @return [Cadenya::Models::Agent]
+      #
+      # @see Cadenya::Models::AgentUnpublishParams
+      def unpublish(id, params)
+        parsed, options = Cadenya::AgentUnpublishParams.dump_request(params)
+        workspace_id =
+          parsed.delete(:workspace_id) do
+            raise ArgumentError.new("missing required path argument #{_1}")
+          end
+        @client.request(
+          method: :post,
+          path: ["v1/workspaces/%1$s/agents/%2$s:unpublish", workspace_id, id],
+          model: Cadenya::Agent,
           options: options
         )
       end

@@ -10,7 +10,8 @@ module Cadenya
         workspace_id: String,
         bundle_key: String,
         external_id: String,
-        labels: ::Hash[Symbol, String]
+        labels: ::Hash[Symbol, String],
+        updated_at: Time
       }
 
     class ResourceMetadata < Cadenya::Internal::Type::BaseModel
@@ -38,6 +39,10 @@ module Cadenya
 
       attr_accessor workspace_id: String
 
+      attr_reader updated_at: Time?
+
+      def updated_at=: (Time) -> Time
+
       def initialize: (
         id: String,
         account_id: String,
@@ -47,7 +52,8 @@ module Cadenya
         workspace_id: String,
         ?bundle_key: String,
         ?external_id: String,
-        ?labels: ::Hash[Symbol, String]
+        ?labels: ::Hash[Symbol, String],
+        ?updated_at: Time
       ) -> void
 
       def to_hash: -> {
@@ -59,7 +65,8 @@ module Cadenya
         workspace_id: String,
         bundle_key: String,
         external_id: String,
-        labels: ::Hash[Symbol, String]
+        labels: ::Hash[Symbol, String],
+        updated_at: Time
       }
     end
   end

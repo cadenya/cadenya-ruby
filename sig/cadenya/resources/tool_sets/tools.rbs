@@ -39,7 +39,7 @@ module Cadenya
           ?query: String,
           ?requires_approval: bool,
           ?sort_order: String,
-          ?statuses: ::Array[Cadenya::Models::ToolSets::ToolListParams::status],
+          ?states: ::Array[Cadenya::Models::ToolSets::ToolListParams::state],
           ?request_options: Cadenya::request_opts
         ) -> Cadenya::Internal::CursorPagination[Cadenya::ToolSets::Tool]
 
@@ -49,6 +49,20 @@ module Cadenya
           tool_set_id: String,
           ?request_options: Cadenya::request_opts
         ) -> nil
+
+        def omit: (
+          String id,
+          workspace_id: String,
+          tool_set_id: String,
+          ?request_options: Cadenya::request_opts
+        ) -> Cadenya::ToolSets::Tool
+
+        def restore: (
+          String id,
+          workspace_id: String,
+          tool_set_id: String,
+          ?request_options: Cadenya::request_opts
+        ) -> Cadenya::ToolSets::Tool
 
         def initialize: (client: Cadenya::Client) -> void
       end
