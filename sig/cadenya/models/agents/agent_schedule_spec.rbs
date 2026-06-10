@@ -5,21 +5,24 @@ module Cadenya
     module Agents
       type agent_schedule_spec =
         {
-          initial_message: String,
           schedule: Cadenya::Agents::AgentScheduleSpecSchedule,
           data: top,
+          initial_message: String,
           overlap_policy: Cadenya::Models::Agents::AgentScheduleSpec::overlap_policy,
+          user_data: top,
           variation_id: String
         }
 
       class AgentScheduleSpec < Cadenya::Internal::Type::BaseModel
-        attr_accessor initial_message: String
-
         attr_accessor schedule: Cadenya::Agents::AgentScheduleSpecSchedule
 
         attr_reader data: top?
 
         def data=: (top) -> top
+
+        attr_reader initial_message: String?
+
+        def initial_message=: (String) -> String
 
         attr_reader overlap_policy: Cadenya::Models::Agents::AgentScheduleSpec::overlap_policy?
 
@@ -27,23 +30,29 @@ module Cadenya
           Cadenya::Models::Agents::AgentScheduleSpec::overlap_policy
         ) -> Cadenya::Models::Agents::AgentScheduleSpec::overlap_policy
 
+        attr_reader user_data: top?
+
+        def user_data=: (top) -> top
+
         attr_reader variation_id: String?
 
         def variation_id=: (String) -> String
 
         def initialize: (
-          initial_message: String,
           schedule: Cadenya::Agents::AgentScheduleSpecSchedule,
           ?data: top,
+          ?initial_message: String,
           ?overlap_policy: Cadenya::Models::Agents::AgentScheduleSpec::overlap_policy,
+          ?user_data: top,
           ?variation_id: String
         ) -> void
 
         def to_hash: -> {
-          initial_message: String,
           schedule: Cadenya::Agents::AgentScheduleSpecSchedule,
           data: top,
+          initial_message: String,
           overlap_policy: Cadenya::Models::Agents::AgentScheduleSpec::overlap_policy,
+          user_data: top,
           variation_id: String
         }
 

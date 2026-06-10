@@ -11,7 +11,7 @@ class Cadenya::Test::Resources::Agents::SchedulesTest < Cadenya::Test::ResourceT
         "agentId",
         workspace_id: "workspaceId",
         metadata: {name: "name"},
-        spec: {initialMessage: "initialMessage", schedule: {}}
+        spec: {schedule: {}}
       )
 
     assert_pattern do

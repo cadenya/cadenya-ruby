@@ -17,6 +17,7 @@ module Cadenya
         ?memory_stack: ::Array[Cadenya::MemoryReference],
         ?metadata: Cadenya::CreateOperationMetadata,
         ?secrets: ::Array[Cadenya::ObjectiveCreateParams::Secret],
+        ?user_data: ::Hash[Symbol, top],
         ?variation_id: String,
         ?request_options: Cadenya::request_opts
       ) -> Cadenya::Objective

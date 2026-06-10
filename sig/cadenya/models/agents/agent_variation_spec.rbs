@@ -12,7 +12,8 @@ module Cadenya
           episodic_memory_ttl: Integer,
           model_config: Cadenya::Agents::AgentVariationSpecModelConfig,
           progressive_discovery: Cadenya::Agents::AgentVariationSpecProgressiveDiscovery,
-          prompt: String,
+          system_prompt_template: String,
+          user_message_template: String,
           weight: Integer
         }
 
@@ -53,9 +54,13 @@ module Cadenya
           Cadenya::Agents::AgentVariationSpecProgressiveDiscovery
         ) -> Cadenya::Agents::AgentVariationSpecProgressiveDiscovery
 
-        attr_reader prompt: String?
+        attr_reader system_prompt_template: String?
 
-        def prompt=: (String) -> String
+        def system_prompt_template=: (String) -> String
+
+        attr_reader user_message_template: String?
+
+        def user_message_template=: (String) -> String
 
         attr_reader weight: Integer?
 
@@ -69,7 +74,8 @@ module Cadenya
           ?episodic_memory_ttl: Integer,
           ?model_config: Cadenya::Agents::AgentVariationSpecModelConfig,
           ?progressive_discovery: Cadenya::Agents::AgentVariationSpecProgressiveDiscovery,
-          ?prompt: String,
+          ?system_prompt_template: String,
+          ?user_message_template: String,
           ?weight: Integer
         ) -> void
 
@@ -81,7 +87,8 @@ module Cadenya
           episodic_memory_ttl: Integer,
           model_config: Cadenya::Agents::AgentVariationSpecModelConfig,
           progressive_discovery: Cadenya::Agents::AgentVariationSpecProgressiveDiscovery,
-          prompt: String,
+          system_prompt_template: String,
+          user_message_template: String,
           weight: Integer
         }
       end
