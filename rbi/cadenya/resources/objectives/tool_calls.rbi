@@ -4,6 +4,26 @@ module Cadenya
   module Resources
     class Objectives
       class ToolCalls
+        # Retrieves a single tool call, including the content the tool returned. Media
+        # content (images, audio) is served as short-lived signed URLs.
+        sig do
+          params(
+            tool_call_id: String,
+            workspace_id: String,
+            objective_id: String,
+            request_options: Cadenya::RequestOptions::OrHash
+          ).returns(Cadenya::Objectives::ObjectiveToolCallWithResult)
+        end
+        def retrieve(
+          # The ID of the tool call to retrieve
+          tool_call_id,
+          workspace_id:,
+          # The ID of the objective. Supports "external_id:" prefix for external IDs.
+          objective_id:,
+          request_options: {}
+        )
+        end
+
         # Lists all tool calls for an objective
         sig do
           params(

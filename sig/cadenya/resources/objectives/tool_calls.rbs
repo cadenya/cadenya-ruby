@@ -2,6 +2,13 @@ module Cadenya
   module Resources
     class Objectives
       class ToolCalls
+        def retrieve: (
+          String tool_call_id,
+          workspace_id: String,
+          objective_id: String,
+          ?request_options: Cadenya::request_opts
+        ) -> Cadenya::Objectives::ObjectiveToolCallWithResult
+
         def list: (
           String objective_id,
           workspace_id: String,

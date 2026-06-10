@@ -38,13 +38,6 @@ module Cadenya
         sig { params(memo: String).void }
         attr_writer :memo
 
-        # The result content returned by the tool after execution
-        sig { returns(T.nilable(String)) }
-        attr_reader :result
-
-        sig { params(result: String).void }
-        attr_writer :result
-
         # A profile identifies a user or non-human principal (such as an API key) at the
         # account level. Profiles are account-scoped and can be granted access to multiple
         # workspaces.
@@ -59,7 +52,6 @@ module Cadenya
             callable: Cadenya::CallableTool::OrHash,
             arguments: T::Hash[Symbol, T.anything],
             memo: String,
-            result: String,
             status_changed_by: Cadenya::Profile::OrHash
           ).returns(T.attached_class)
         end
@@ -73,8 +65,6 @@ module Cadenya
           arguments: nil,
           # A memo supplied by the reviewer when denying the tool call
           memo: nil,
-          # The result content returned by the tool after execution
-          result: nil,
           # A profile identifies a user or non-human principal (such as an API key) at the
           # account level. Profiles are account-scoped and can be granted access to multiple
           # workspaces.
@@ -88,7 +78,6 @@ module Cadenya
               callable: Cadenya::CallableTool,
               arguments: T::Hash[Symbol, T.anything],
               memo: String,
-              result: String,
               status_changed_by: Cadenya::Profile
             }
           )

@@ -1,0 +1,34 @@
+module Cadenya
+  module Models
+    class ObjectiveToolCallResultAudioBlock = Objectives::ObjectiveToolCallResultAudioBlock
+
+    module Objectives
+      type objective_tool_call_result_audio_block =
+        { expires_at: Time, mime_type: String, size_bytes: String, url: String }
+
+      class ObjectiveToolCallResultAudioBlock < Cadenya::Internal::Type::BaseModel
+        attr_accessor expires_at: Time
+
+        attr_accessor mime_type: String
+
+        attr_accessor size_bytes: String
+
+        attr_accessor url: String
+
+        def initialize: (
+          expires_at: Time,
+          mime_type: String,
+          size_bytes: String,
+          url: String
+        ) -> void
+
+        def to_hash: -> {
+          expires_at: Time,
+          mime_type: String,
+          size_bytes: String,
+          url: String
+        }
+      end
+    end
+  end
+end
