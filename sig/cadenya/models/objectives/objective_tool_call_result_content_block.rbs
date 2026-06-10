@@ -1,0 +1,46 @@
+module Cadenya
+  module Models
+    class ObjectiveToolCallResultContentBlock = Objectives::ObjectiveToolCallResultContentBlock
+
+    module Objectives
+      type objective_tool_call_result_content_block =
+        {
+          audio: Cadenya::Objectives::ObjectiveToolCallResultAudioBlock,
+          image: Cadenya::Objectives::ObjectiveToolCallResultImageBlock,
+          text: Cadenya::Objectives::ObjectiveToolCallResultTextBlock
+        }
+
+      class ObjectiveToolCallResultContentBlock < Cadenya::Internal::Type::BaseModel
+        attr_reader audio: Cadenya::Objectives::ObjectiveToolCallResultAudioBlock?
+
+        def audio=: (
+          Cadenya::Objectives::ObjectiveToolCallResultAudioBlock
+        ) -> Cadenya::Objectives::ObjectiveToolCallResultAudioBlock
+
+        attr_reader image: Cadenya::Objectives::ObjectiveToolCallResultImageBlock?
+
+        def image=: (
+          Cadenya::Objectives::ObjectiveToolCallResultImageBlock
+        ) -> Cadenya::Objectives::ObjectiveToolCallResultImageBlock
+
+        attr_reader text: Cadenya::Objectives::ObjectiveToolCallResultTextBlock?
+
+        def text=: (
+          Cadenya::Objectives::ObjectiveToolCallResultTextBlock
+        ) -> Cadenya::Objectives::ObjectiveToolCallResultTextBlock
+
+        def initialize: (
+          ?audio: Cadenya::Objectives::ObjectiveToolCallResultAudioBlock,
+          ?image: Cadenya::Objectives::ObjectiveToolCallResultImageBlock,
+          ?text: Cadenya::Objectives::ObjectiveToolCallResultTextBlock
+        ) -> void
+
+        def to_hash: -> {
+          audio: Cadenya::Objectives::ObjectiveToolCallResultAudioBlock,
+          image: Cadenya::Objectives::ObjectiveToolCallResultImageBlock,
+          text: Cadenya::Objectives::ObjectiveToolCallResultTextBlock
+        }
+      end
+    end
+  end
+end

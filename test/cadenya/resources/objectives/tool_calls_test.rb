@@ -3,6 +3,32 @@
 require_relative "../../test_helper"
 
 class Cadenya::Test::Resources::Objectives::ToolCallsTest < Cadenya::Test::ResourceTest
+  def test_retrieve_required_params
+    skip("Mock server tests are disabled")
+
+    response =
+      @cadenya.objectives.tool_calls.retrieve(
+        "toolCallId",
+        workspace_id: "workspaceId",
+        objective_id: "objectiveId"
+      )
+
+    assert_pattern do
+      response => Cadenya::Objectives::ObjectiveToolCallWithResult
+    end
+
+    assert_pattern do
+      response => {
+        data: Cadenya::Objectives::ObjectiveToolCallData,
+        execution_status: Cadenya::Objectives::ObjectiveToolCallWithResult::ExecutionStatus,
+        info: Cadenya::Objectives::ObjectiveToolCallInfo,
+        metadata: Cadenya::OperationMetadata,
+        status: Cadenya::Objectives::ObjectiveToolCallWithResult::Status,
+        result: Cadenya::Objectives::ObjectiveToolCallResult | nil
+      }
+    end
+  end
+
   def test_list_required_params
     skip("Mock server tests are disabled")
 
