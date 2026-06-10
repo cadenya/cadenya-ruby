@@ -103,12 +103,24 @@ module Cadenya
         end
         attr_writer :progressive_discovery
 
-        # The system prompt for this variation
+        # Liquid template for the system prompt of objectives using this variation.
+        # Rendered with CreateObjectiveRequest.data into Objective.system_prompt.
         sig { returns(T.nilable(String)) }
-        attr_reader :prompt
+        attr_reader :system_prompt_template
 
-        sig { params(prompt: String).void }
-        attr_writer :prompt
+        sig { params(system_prompt_template: String).void }
+        attr_writer :system_prompt_template
+
+        # Liquid template for the initial user message of objectives using this variation.
+        # Rendered with CreateObjectiveRequest.user_data and becomes the first user
+        # message in the LLM chat history. CreateObjectiveRequest.initial_message, when
+        # set, overrides the rendered result. If neither this template nor initial_message
+        # is present, objective creation is rejected with InvalidArgument.
+        sig { returns(T.nilable(String)) }
+        attr_reader :user_message_template
+
+        sig { params(user_message_template: String).void }
+        attr_writer :user_message_template
 
         # Weight for weighted random selection (>= 0). P(v) = v.weight / sum(all_weights).
         # Only used when the agent's variation_selection_mode is WEIGHTED. A weight of 0
@@ -133,7 +145,8 @@ module Cadenya
               Cadenya::Agents::AgentVariationSpecModelConfig::OrHash,
             progressive_discovery:
               Cadenya::Agents::AgentVariationSpecProgressiveDiscovery::OrHash,
-            prompt: String,
+            system_prompt_template: String,
+            user_message_template: String,
             weight: Integer
           ).returns(T.attached_class)
         end
@@ -162,8 +175,15 @@ module Cadenya
           # tool search. These are used in conjunction with the context-aware tool search
           # and can help select the best tools for the task.
           progressive_discovery: nil,
-          # The system prompt for this variation
-          prompt: nil,
+          # Liquid template for the system prompt of objectives using this variation.
+          # Rendered with CreateObjectiveRequest.data into Objective.system_prompt.
+          system_prompt_template: nil,
+          # Liquid template for the initial user message of objectives using this variation.
+          # Rendered with CreateObjectiveRequest.user_data and becomes the first user
+          # message in the LLM chat history. CreateObjectiveRequest.initial_message, when
+          # set, overrides the rendered result. If neither this template nor initial_message
+          # is present, objective creation is rejected with InvalidArgument.
+          user_message_template: nil,
           # Weight for weighted random selection (>= 0). P(v) = v.weight / sum(all_weights).
           # Only used when the agent's variation_selection_mode is WEIGHTED. A weight of 0
           # means never auto-selected, but can still be chosen explicitly via variation_id
@@ -184,7 +204,8 @@ module Cadenya
               model_config: Cadenya::Agents::AgentVariationSpecModelConfig,
               progressive_discovery:
                 Cadenya::Agents::AgentVariationSpecProgressiveDiscovery,
-              prompt: String,
+              system_prompt_template: String,
+              user_message_template: String,
               weight: Integer
             }
           )

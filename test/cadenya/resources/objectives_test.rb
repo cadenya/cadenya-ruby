@@ -25,7 +25,8 @@ class Cadenya::Test::Resources::ObjectivesTest < Cadenya::Test::ResourceTest
         output: ^(Cadenya::Internal::Type::HashOf[Cadenya::Internal::Type::Unknown]) | nil,
         parent_objective_id: String | nil,
         secrets: ^(Cadenya::Internal::Type::ArrayOf[Cadenya::ObjectiveSecret]) | nil,
-        state_message: String | nil
+        state_message: String | nil,
+        user_data: ^(Cadenya::Internal::Type::HashOf[Cadenya::Internal::Type::Unknown]) | nil
       }
     end
   end
@@ -52,7 +53,8 @@ class Cadenya::Test::Resources::ObjectivesTest < Cadenya::Test::ResourceTest
         output: ^(Cadenya::Internal::Type::HashOf[Cadenya::Internal::Type::Unknown]) | nil,
         parent_objective_id: String | nil,
         secrets: ^(Cadenya::Internal::Type::ArrayOf[Cadenya::ObjectiveSecret]) | nil,
-        state_message: String | nil
+        state_message: String | nil,
+        user_data: ^(Cadenya::Internal::Type::HashOf[Cadenya::Internal::Type::Unknown]) | nil
       }
     end
   end
@@ -86,7 +88,8 @@ class Cadenya::Test::Resources::ObjectivesTest < Cadenya::Test::ResourceTest
         output: ^(Cadenya::Internal::Type::HashOf[Cadenya::Internal::Type::Unknown]) | nil,
         parent_objective_id: String | nil,
         secrets: ^(Cadenya::Internal::Type::ArrayOf[Cadenya::ObjectiveSecret]) | nil,
-        state_message: String | nil
+        state_message: String | nil,
+        user_data: ^(Cadenya::Internal::Type::HashOf[Cadenya::Internal::Type::Unknown]) | nil
       }
     end
   end
@@ -113,7 +116,8 @@ class Cadenya::Test::Resources::ObjectivesTest < Cadenya::Test::ResourceTest
         output: ^(Cadenya::Internal::Type::HashOf[Cadenya::Internal::Type::Unknown]) | nil,
         parent_objective_id: String | nil,
         secrets: ^(Cadenya::Internal::Type::ArrayOf[Cadenya::ObjectiveSecret]) | nil,
-        state_message: String | nil
+        state_message: String | nil,
+        user_data: ^(Cadenya::Internal::Type::HashOf[Cadenya::Internal::Type::Unknown]) | nil
       }
     end
   end

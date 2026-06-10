@@ -20,7 +20,7 @@ module Cadenya
       #
       # Creates a new objective in the workspace
       #
-      # @overload create(workspace_id, agent_id:, data:, initial_message: nil, memory_stack: nil, metadata: nil, secrets: nil, variation_id: nil, request_options: {})
+      # @overload create(workspace_id, agent_id:, data:, initial_message: nil, memory_stack: nil, metadata: nil, secrets: nil, user_data: nil, variation_id: nil, request_options: {})
       #
       # @param workspace_id [String]
       #
@@ -28,13 +28,15 @@ module Cadenya
       #
       # @param data [Hash{Symbol=>Object}] Arbitrary data for the objective. May be used in liquid templates for prompts co
       #
-      # @param initial_message [String] Optional override for initial message sent to the agent. This becomes the first
+      # @param initial_message [String] Optional override for the initial message sent to the agent. This becomes the fi
       #
       # @param memory_stack [Array<Cadenya::Models::MemoryReference>] Memory layers/entries to push onto this objective's memory stack on
       #
       # @param metadata [Cadenya::Models::CreateOperationMetadata] CreateOperationMetadata contains the user-provided fields for creating
       #
       # @param secrets [Array<Cadenya::Models::ObjectiveCreateParams::Secret>] Secrets that can be used in the headers for tool calls using the secret interpol
+      #
+      # @param user_data [Hash{Symbol=>Object}] Arbitrary data rendered into the selected variation's user_message_template
       #
       # @param variation_id [String] Optional explicit variation selection. Overrides the agent's variation_selection
       #

@@ -100,9 +100,17 @@ module Cadenya
         #
         #   @return [String, nil]
         optional :state_message, String, api_name: :stateMessage
+
+        # @!attribute user_data
+        #   Arbitrary data used to render the variation's user_message_template
+        #
+        #   @return [Hash{Symbol=>Object}, nil]
+        optional :user_data,
+                 Cadenya::Internal::Type::HashOf[Cadenya::Internal::Type::Unknown],
+                 api_name: :userData
       end
 
-      # @!method initialize(config_snapshot:, initial_message:, metadata:, state:, system_prompt:, data: nil, info: nil, memory_stack: nil, output: nil, parent_objective_id: nil, secrets: nil, state_message: nil)
+      # @!method initialize(config_snapshot:, initial_message:, metadata:, state:, system_prompt:, data: nil, info: nil, memory_stack: nil, output: nil, parent_objective_id: nil, secrets: nil, state_message: nil, user_data: nil)
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::Objective} for more details.
       #
@@ -133,6 +141,8 @@ module Cadenya
       #   @param secrets [Array<Cadenya::Models::ObjectiveSecret>] Secrets that can be used in the headers for tool calls using the secret interpol
       #
       #   @param state_message [String] Optional human-readable detail about the current state (e.g. a failure reason).
+      #
+      #   @param user_data [Hash{Symbol=>Object}] Arbitrary data used to render the variation's user_message_template
 
       # The current lifecycle state of the objective.
       #

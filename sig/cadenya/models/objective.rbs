@@ -13,7 +13,8 @@ module Cadenya
         output: ::Hash[Symbol, top],
         parent_objective_id: String,
         secrets: ::Array[Cadenya::ObjectiveSecret],
-        state_message: String
+        state_message: String,
+        user_data: ::Hash[Symbol, top]
       }
 
     class Objective < Cadenya::Internal::Type::BaseModel
@@ -59,6 +60,10 @@ module Cadenya
 
       def state_message=: (String) -> String
 
+      attr_reader user_data: ::Hash[Symbol, top]?
+
+      def user_data=: (::Hash[Symbol, top]) -> ::Hash[Symbol, top]
+
       def initialize: (
         config_snapshot: Cadenya::ObjectiveConfigSnapshot,
         initial_message: String,
@@ -71,7 +76,8 @@ module Cadenya
         ?output: ::Hash[Symbol, top],
         ?parent_objective_id: String,
         ?secrets: ::Array[Cadenya::ObjectiveSecret],
-        ?state_message: String
+        ?state_message: String,
+        ?user_data: ::Hash[Symbol, top]
       ) -> void
 
       def to_hash: -> {
@@ -86,7 +92,8 @@ module Cadenya
         output: ::Hash[Symbol, top],
         parent_objective_id: String,
         secrets: ::Array[Cadenya::ObjectiveSecret],
-        state_message: String
+        state_message: String,
+        user_data: ::Hash[Symbol, top]
       }
 
       type state =
