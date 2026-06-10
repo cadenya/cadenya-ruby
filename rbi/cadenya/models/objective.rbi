@@ -107,6 +107,13 @@ module Cadenya
       sig { params(state_message: String).void }
       attr_writer :state_message
 
+      # Arbitrary data used to render the variation's user_message_template
+      sig { returns(T.nilable(T::Hash[Symbol, T.anything])) }
+      attr_reader :user_data
+
+      sig { params(user_data: T::Hash[Symbol, T.anything]).void }
+      attr_writer :user_data
+
       # Objective is the data for an objective. It contains the snapshotted fields for
       # the selected agent and variation. Secrets are returned only with their names,
       # and the output definition is copied from the agent's configuration.
@@ -123,7 +130,8 @@ module Cadenya
           output: T::Hash[Symbol, T.anything],
           parent_objective_id: String,
           secrets: T::Array[Cadenya::ObjectiveSecret::OrHash],
-          state_message: String
+          state_message: String,
+          user_data: T::Hash[Symbol, T.anything]
         ).returns(T.attached_class)
       end
       def self.new(
@@ -172,7 +180,9 @@ module Cadenya
         # interpolation format.
         secrets: nil,
         # Optional human-readable detail about the current state (e.g. a failure reason).
-        state_message: nil
+        state_message: nil,
+        # Arbitrary data used to render the variation's user_message_template
+        user_data: nil
       )
       end
 
@@ -190,7 +200,8 @@ module Cadenya
             output: T::Hash[Symbol, T.anything],
             parent_objective_id: String,
             secrets: T::Array[Cadenya::ObjectiveSecret],
-            state_message: String
+            state_message: String,
+            user_data: T::Hash[Symbol, T.anything]
           }
         )
       end

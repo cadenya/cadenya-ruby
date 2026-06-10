@@ -9,6 +9,7 @@ module Cadenya
         memory_stack: ::Array[Cadenya::MemoryReference],
         metadata: Cadenya::CreateOperationMetadata,
         secrets: ::Array[Cadenya::ObjectiveCreateParams::Secret],
+        user_data: ::Hash[Symbol, top],
         variation_id: String
       }
       & Cadenya::Internal::Type::request_parameters
@@ -45,6 +46,10 @@ module Cadenya
         ::Array[Cadenya::ObjectiveCreateParams::Secret]
       ) -> ::Array[Cadenya::ObjectiveCreateParams::Secret]
 
+      attr_reader user_data: ::Hash[Symbol, top]?
+
+      def user_data=: (::Hash[Symbol, top]) -> ::Hash[Symbol, top]
+
       attr_reader variation_id: String?
 
       def variation_id=: (String) -> String
@@ -57,6 +62,7 @@ module Cadenya
         ?memory_stack: ::Array[Cadenya::MemoryReference],
         ?metadata: Cadenya::CreateOperationMetadata,
         ?secrets: ::Array[Cadenya::ObjectiveCreateParams::Secret],
+        ?user_data: ::Hash[Symbol, top],
         ?variation_id: String,
         ?request_options: Cadenya::request_opts
       ) -> void
@@ -69,6 +75,7 @@ module Cadenya
         memory_stack: ::Array[Cadenya::MemoryReference],
         metadata: Cadenya::CreateOperationMetadata,
         secrets: ::Array[Cadenya::ObjectiveCreateParams::Secret],
+        user_data: ::Hash[Symbol, top],
         variation_id: String,
         request_options: Cadenya::RequestOptions
       }

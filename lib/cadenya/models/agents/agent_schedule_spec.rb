@@ -4,13 +4,6 @@ module Cadenya
   module Models
     module Agents
       class AgentScheduleSpec < Cadenya::Internal::Type::BaseModel
-        # @!attribute initial_message
-        #   The initial message passed to CreateObjective on each fire. Becomes the first
-        #   user message in the objective's chat history.
-        #
-        #   @return [String]
-        required :initial_message, String, api_name: :initialMessage
-
         # @!attribute schedule
         #   Schedule defines WHEN the schedule fires. Temporal-style structured form: a list
         #   of calendar rules (wall-clock) and/or interval rules (duration), OR'd together.
@@ -26,6 +19,14 @@ module Cadenya
         #   @return [Object, nil]
         optional :data, Cadenya::Internal::Type::Unknown
 
+        # @!attribute initial_message
+        #   Optional initial message passed to CreateObjective on each fire. Becomes the
+        #   first user message in the objective's chat history. When unset, the fired
+        #   objective defers to the selected variation's user_message_template.
+        #
+        #   @return [String, nil]
+        optional :initial_message, String, api_name: :initialMessage
+
         # @!attribute overlap_policy
         #   What to do when the previous run is still in flight. Defaults to SKIP.
         #
@@ -34,6 +35,14 @@ module Cadenya
                  enum: -> { Cadenya::Agents::AgentScheduleSpec::OverlapPolicy },
                  api_name: :overlapPolicy
 
+        # @!attribute user_data
+        #   Optional data rendered into the variation's user_message_template when each
+        #   fired objective is created. Separate from `data`, which renders the system
+        #   prompt template.
+        #
+        #   @return [Object, nil]
+        optional :user_data, Cadenya::Internal::Type::Unknown, api_name: :userData
+
         # @!attribute variation_id
         #   Optional explicit variation. When unset, the agent's variation_selection_mode
         #   chooses per fire.
@@ -41,19 +50,21 @@ module Cadenya
         #   @return [String, nil]
         optional :variation_id, String, api_name: :variationId
 
-        # @!method initialize(initial_message:, schedule:, data: nil, overlap_policy: nil, variation_id: nil)
+        # @!method initialize(schedule:, data: nil, initial_message: nil, overlap_policy: nil, user_data: nil, variation_id: nil)
         #   Some parameter documentations has been truncated, see
         #   {Cadenya::Models::Agents::AgentScheduleSpec} for more details.
         #
         #   AgentScheduleSpec is the user-provided configuration for a schedule.
         #
-        #   @param initial_message [String] The initial message passed to CreateObjective on each fire. Becomes the
-        #
         #   @param schedule [Cadenya::Models::Agents::AgentScheduleSpecSchedule] Schedule defines WHEN the schedule fires. Temporal-style structured form:
         #
         #   @param data [Object] Optional input data passed to the objective. If the agent has an
         #
+        #   @param initial_message [String] Optional initial message passed to CreateObjective on each fire. Becomes the
+        #
         #   @param overlap_policy [Symbol, Cadenya::Models::Agents::AgentScheduleSpec::OverlapPolicy] What to do when the previous run is still in flight. Defaults to SKIP.
+        #
+        #   @param user_data [Object] Optional data rendered into the variation's user_message_template when each
         #
         #   @param variation_id [String] Optional explicit variation. When unset, the agent's variation_selection_mode
 

@@ -60,11 +60,22 @@ module Cadenya
                  -> { Cadenya::Agents::AgentVariationSpecProgressiveDiscovery },
                  api_name: :progressiveDiscovery
 
-        # @!attribute prompt
-        #   The system prompt for this variation
+        # @!attribute system_prompt_template
+        #   Liquid template for the system prompt of objectives using this variation.
+        #   Rendered with CreateObjectiveRequest.data into Objective.system_prompt.
         #
         #   @return [String, nil]
-        optional :prompt, String
+        optional :system_prompt_template, String, api_name: :systemPromptTemplate
+
+        # @!attribute user_message_template
+        #   Liquid template for the initial user message of objectives using this variation.
+        #   Rendered with CreateObjectiveRequest.user_data and becomes the first user
+        #   message in the LLM chat history. CreateObjectiveRequest.initial_message, when
+        #   set, overrides the rendered result. If neither this template nor initial_message
+        #   is present, objective creation is rejected with InvalidArgument.
+        #
+        #   @return [String, nil]
+        optional :user_message_template, String, api_name: :userMessageTemplate
 
         # @!attribute weight
         #   Weight for weighted random selection (>= 0). P(v) = v.weight / sum(all_weights).
@@ -75,7 +86,7 @@ module Cadenya
         #   @return [Integer, nil]
         optional :weight, Integer
 
-        # @!method initialize(compaction_config: nil, constraints: nil, description: nil, enable_episodic_memory: nil, episodic_memory_ttl: nil, model_config: nil, progressive_discovery: nil, prompt: nil, weight: nil)
+        # @!method initialize(compaction_config: nil, constraints: nil, description: nil, enable_episodic_memory: nil, episodic_memory_ttl: nil, model_config: nil, progressive_discovery: nil, system_prompt_template: nil, user_message_template: nil, weight: nil)
         #   Some parameter documentations has been truncated, see
         #   {Cadenya::Models::Agents::AgentVariationSpec} for more details.
         #
@@ -95,7 +106,9 @@ module Cadenya
         #
         #   @param progressive_discovery [Cadenya::Models::Agents::AgentVariationSpecProgressiveDiscovery] ProgressiveDiscovery is used to indicate that the agent should automatically dis
         #
-        #   @param prompt [String] The system prompt for this variation
+        #   @param system_prompt_template [String] Liquid template for the system prompt of objectives using this variation.
+        #
+        #   @param user_message_template [String] Liquid template for the initial user message of objectives using this variation.
         #
         #   @param weight [Integer] Weight for weighted random selection (>= 0). P(v) = v.weight / sum(all_weights).
       end
