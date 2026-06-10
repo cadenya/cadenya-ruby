@@ -4,6 +4,45 @@ module Cadenya
   module Resources
     class Objectives
       class ToolCalls
+        # Retrieves a single tool call, including the content the tool returned. Media
+        # content (images, audio) is served as short-lived signed URLs.
+        #
+        # @overload retrieve(tool_call_id, workspace_id:, objective_id:, request_options: {})
+        #
+        # @param tool_call_id [String] The ID of the tool call to retrieve
+        #
+        # @param workspace_id [String]
+        #
+        # @param objective_id [String] The ID of the objective. Supports "external_id:" prefix for external IDs.
+        #
+        # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
+        #
+        # @return [Cadenya::Models::Objectives::ObjectiveToolCallWithResult]
+        #
+        # @see Cadenya::Models::Objectives::ToolCallRetrieveParams
+        def retrieve(tool_call_id, params)
+          parsed, options = Cadenya::Objectives::ToolCallRetrieveParams.dump_request(params)
+          workspace_id =
+            parsed.delete(:workspace_id) do
+              raise ArgumentError.new("missing required path argument #{_1}")
+            end
+          objective_id =
+            parsed.delete(:objective_id) do
+              raise ArgumentError.new("missing required path argument #{_1}")
+            end
+          @client.request(
+            method: :get,
+            path: [
+              "v1/workspaces/%1$s/objectives/%2$s/tool_calls/%3$s",
+              workspace_id,
+              objective_id,
+              tool_call_id
+            ],
+            model: Cadenya::Objectives::ObjectiveToolCallWithResult,
+            options: options
+          )
+        end
+
         # Lists all tool calls for an objective
         #
         # @overload list(objective_id, workspace_id:, cursor: nil, include_info: nil, limit: nil, status: nil, request_options: {})
