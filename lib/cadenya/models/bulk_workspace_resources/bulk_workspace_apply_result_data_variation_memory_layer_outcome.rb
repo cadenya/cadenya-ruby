@@ -24,8 +24,8 @@ module Cadenya
 
         # @!attribute resource
         #   VariationMemoryLayerAssignment attaches a single MemoryLayer to a variation at a
-        #   given position in the variation's baseline memory stack. A variation has at most
-        #   one assignment per memory_layer_id.
+        #   given position in the variation's baseline memory cascade. A variation has at
+        #   most one assignment per memory_layer_id.
         #
         #   Variations only support whole-layer attachments — entry pinning is an
         #   objective-level capability.

@@ -36,7 +36,8 @@ module Cadenya
 
           # @!attribute memory_layer_assignments
           #   Read-only list of memory layer assignments for this variation, returned in
-          #   ascending `position` (bottom → top). Capped at 10 entries.
+          #   ascending `position` (most specific first — resolution order). Capped at 10
+          #   entries.
           #
           #   @return [Array<Cadenya::Models::Agents::VariationMemoryLayerAssignment>, nil]
           optional :memory_layer_assignments,

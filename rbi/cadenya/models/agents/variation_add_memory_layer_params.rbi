@@ -32,7 +32,8 @@ module Cadenya
         sig { params(memory_layer_id: String).void }
         attr_writer :memory_layer_id
 
-        # Position in the stack. If omitted, server appends (max existing position + 1).
+        # Position in the baseline cascade (lower = more specific). If omitted, the server
+        # appends at the most general end (max existing position + 1).
         sig { returns(T.nilable(Integer)) }
         attr_reader :position
 
@@ -56,7 +57,8 @@ module Cadenya
           # Layer to attach. Accepts the canonical `memlyr_…` form or the
           # `external_id:<value>` form.
           memory_layer_id: nil,
-          # Position in the stack. If omitted, server appends (max existing position + 1).
+          # Position in the baseline cascade (lower = more specific). If omitted, the server
+          # appends at the most general end (max existing position + 1).
           position: nil,
           request_options: {}
         )

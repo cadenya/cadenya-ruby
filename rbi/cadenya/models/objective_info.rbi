@@ -36,12 +36,14 @@ module Cadenya
       sig { returns(String) }
       attr_accessor :current_context_window_id
 
-      # The effective memory stack at objective creation time, flattened from the
-      # variation's baseline plus Objective.memory_stack. Order is push order (last =
-      # top). Returned on reads so clients can see exactly what stack the objective is
-      # using without having to re-join variation state.
+      # The effective memory cascade at objective creation time: the episodic layer
+      # (when present), then Objective.memory_cascade, then the variation's baseline
+      # layers by ascending position. Order is resolution order — index 0 is the most
+      # specific and is consulted first; the first layer containing a key wins. Returned
+      # on reads so clients can see exactly what the objective resolves against without
+      # re-joining variation state.
       sig { returns(T::Array[Cadenya::MemoryReference]) }
-      attr_accessor :effective_memory_stack
+      attr_accessor :effective_memory_cascade
 
       # Total number of context windows that this objective has generated
       sig { returns(Integer) }
@@ -76,7 +78,7 @@ module Cadenya
           agent_variation: Cadenya::ResourceMetadata::OrHash,
           created_by: Cadenya::Profile::OrHash,
           current_context_window_id: String,
-          effective_memory_stack: T::Array[Cadenya::MemoryReference::OrHash],
+          effective_memory_cascade: T::Array[Cadenya::MemoryReference::OrHash],
           total_context_windows: Integer,
           total_events: Integer,
           total_input_tokens: Integer,
@@ -97,11 +99,13 @@ module Cadenya
         # ID of the objective's current (most recent) context window. Hydrated on demand;
         # empty when the objective has not yet produced a context window.
         current_context_window_id:,
-        # The effective memory stack at objective creation time, flattened from the
-        # variation's baseline plus Objective.memory_stack. Order is push order (last =
-        # top). Returned on reads so clients can see exactly what stack the objective is
-        # using without having to re-join variation state.
-        effective_memory_stack:,
+        # The effective memory cascade at objective creation time: the episodic layer
+        # (when present), then Objective.memory_cascade, then the variation's baseline
+        # layers by ascending position. Order is resolution order — index 0 is the most
+        # specific and is consulted first; the first layer containing a key wins. Returned
+        # on reads so clients can see exactly what the objective resolves against without
+        # re-joining variation state.
+        effective_memory_cascade:,
         # Total number of context windows that this objective has generated
         total_context_windows:,
         # Total number of events generated during this objective's execution
@@ -125,7 +129,7 @@ module Cadenya
             agent_variation: Cadenya::ResourceMetadata,
             created_by: Cadenya::Profile,
             current_context_window_id: String,
-            effective_memory_stack: T::Array[Cadenya::MemoryReference],
+            effective_memory_cascade: T::Array[Cadenya::MemoryReference],
             total_context_windows: Integer,
             total_events: Integer,
             total_input_tokens: Integer,

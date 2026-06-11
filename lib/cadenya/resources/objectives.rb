@@ -20,7 +20,7 @@ module Cadenya
       #
       # Creates a new objective in the workspace
       #
-      # @overload create(workspace_id, agent_id:, data:, episodic_memory: nil, initial_message: nil, memory_stack: nil, metadata: nil, secrets: nil, user_data: nil, variation_id: nil, request_options: {})
+      # @overload create(workspace_id, agent_id:, data:, episodic_memory: nil, initial_message: nil, memory_cascade: nil, metadata: nil, secrets: nil, user_data: nil, variation_id: nil, request_options: {})
       #
       # @param workspace_id [String]
       #
@@ -32,7 +32,7 @@ module Cadenya
       #
       # @param initial_message [String] Optional override for the initial message sent to the agent. This becomes the fi
       #
-      # @param memory_stack [Array<Cadenya::Models::MemoryReference>] Memory layers/entries to push onto this objective's memory stack on
+      # @param memory_cascade [Array<Cadenya::Models::MemoryReference>] Memory layers/entries layered over the baseline cascade inherited
       #
       # @param metadata [Cadenya::Models::CreateOperationMetadata] CreateOperationMetadata contains the user-provided fields for creating
       #

@@ -6,7 +6,7 @@ module Cadenya
         agent_variation: Cadenya::ResourceMetadata,
         created_by: Cadenya::Profile,
         current_context_window_id: String,
-        effective_memory_stack: ::Array[Cadenya::MemoryReference],
+        effective_memory_cascade: ::Array[Cadenya::MemoryReference],
         total_context_windows: Integer,
         total_events: Integer,
         total_input_tokens: Integer,
@@ -24,7 +24,7 @@ module Cadenya
 
       attr_accessor current_context_window_id: String
 
-      attr_accessor effective_memory_stack: ::Array[Cadenya::MemoryReference]
+      attr_accessor effective_memory_cascade: ::Array[Cadenya::MemoryReference]
 
       attr_accessor total_context_windows: Integer
 
@@ -43,7 +43,7 @@ module Cadenya
         agent_variation: Cadenya::ResourceMetadata,
         created_by: Cadenya::Profile,
         current_context_window_id: String,
-        effective_memory_stack: ::Array[Cadenya::MemoryReference],
+        effective_memory_cascade: ::Array[Cadenya::MemoryReference],
         total_context_windows: Integer,
         total_events: Integer,
         total_input_tokens: Integer,
@@ -57,7 +57,7 @@ module Cadenya
         agent_variation: Cadenya::ResourceMetadata,
         created_by: Cadenya::Profile,
         current_context_window_id: String,
-        effective_memory_stack: ::Array[Cadenya::MemoryReference],
+        effective_memory_cascade: ::Array[Cadenya::MemoryReference],
         total_context_windows: Integer,
         total_events: Integer,
         total_input_tokens: Integer,

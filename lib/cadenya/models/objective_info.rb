@@ -31,16 +31,18 @@ module Cadenya
         #   @return [String]
         required :current_context_window_id, String, api_name: :currentContextWindowId
 
-        # @!attribute effective_memory_stack
-        #   The effective memory stack at objective creation time, flattened from the
-        #   variation's baseline plus Objective.memory_stack. Order is push order (last =
-        #   top). Returned on reads so clients can see exactly what stack the objective is
-        #   using without having to re-join variation state.
+        # @!attribute effective_memory_cascade
+        #   The effective memory cascade at objective creation time: the episodic layer
+        #   (when present), then Objective.memory_cascade, then the variation's baseline
+        #   layers by ascending position. Order is resolution order — index 0 is the most
+        #   specific and is consulted first; the first layer containing a key wins. Returned
+        #   on reads so clients can see exactly what the objective resolves against without
+        #   re-joining variation state.
         #
         #   @return [Array<Cadenya::Models::MemoryReference>]
-        required :effective_memory_stack,
+        required :effective_memory_cascade,
                  -> { Cadenya::Internal::Type::ArrayOf[Cadenya::MemoryReference] },
-                 api_name: :effectiveMemoryStack
+                 api_name: :effectiveMemoryCascade
 
         # @!attribute total_context_windows
         #   Total number of context windows that this objective has generated
@@ -80,7 +82,7 @@ module Cadenya
         required :total_tool_calls, Integer, api_name: :totalToolCalls
       end
 
-      # @!method initialize(agent:, agent_variation:, created_by:, current_context_window_id:, effective_memory_stack:, total_context_windows:, total_events:, total_input_tokens:, total_iterations:, total_output_tokens:, total_tool_calls:)
+      # @!method initialize(agent:, agent_variation:, created_by:, current_context_window_id:, effective_memory_cascade:, total_context_windows:, total_events:, total_input_tokens:, total_iterations:, total_output_tokens:, total_tool_calls:)
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::ObjectiveInfo} for more details.
       #
@@ -95,7 +97,7 @@ module Cadenya
       #
       #   @param current_context_window_id [String] ID of the objective's current (most recent) context window. Hydrated on
       #
-      #   @param effective_memory_stack [Array<Cadenya::Models::MemoryReference>] The effective memory stack at objective creation time, flattened
+      #   @param effective_memory_cascade [Array<Cadenya::Models::MemoryReference>] The effective memory cascade at objective creation time: the
       #
       #   @param total_context_windows [Integer] Total number of context windows that this objective has generated
       #

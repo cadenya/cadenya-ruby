@@ -31,7 +31,8 @@ module Cadenya
         optional :memory_layer_id, String, api_name: :memoryLayerId
 
         # @!attribute position
-        #   Position in the stack. If omitted, server appends (max existing position + 1).
+        #   Position in the baseline cascade (lower = more specific). If omitted, the server
+        #   appends at the most general end (max existing position + 1).
         #
         #   @return [Integer, nil]
         optional :position, Integer
@@ -48,7 +49,7 @@ module Cadenya
         #
         #   @param memory_layer_id [String] Layer to attach. Accepts the canonical `memlyr_…` form or the `external_id:<valu
         #
-        #   @param position [Integer] Position in the stack. If omitted, server appends
+        #   @param position [Integer] Position in the baseline cascade (lower = more specific). If
         #
         #   @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}]
       end
