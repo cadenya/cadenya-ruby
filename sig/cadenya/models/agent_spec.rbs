@@ -4,6 +4,8 @@ module Cadenya
       {
         variation_selection_mode: Cadenya::Models::AgentSpec::variation_selection_mode,
         description: String,
+        enable_episodic_memory: bool,
+        episodic_memory_ttl: Integer,
         input_data_schema: ::Hash[Symbol, top],
         output_definition: ::Hash[Symbol, top],
         webhook_events_url: String
@@ -15,6 +17,14 @@ module Cadenya
       attr_reader description: String?
 
       def description=: (String) -> String
+
+      attr_reader enable_episodic_memory: bool?
+
+      def enable_episodic_memory=: (bool) -> bool
+
+      attr_reader episodic_memory_ttl: Integer?
+
+      def episodic_memory_ttl=: (Integer) -> Integer
 
       attr_reader input_data_schema: ::Hash[Symbol, top]?
 
@@ -31,6 +41,8 @@ module Cadenya
       def initialize: (
         variation_selection_mode: Cadenya::Models::AgentSpec::variation_selection_mode,
         ?description: String,
+        ?enable_episodic_memory: bool,
+        ?episodic_memory_ttl: Integer,
         ?input_data_schema: ::Hash[Symbol, top],
         ?output_definition: ::Hash[Symbol, top],
         ?webhook_events_url: String
@@ -39,6 +51,8 @@ module Cadenya
       def to_hash: -> {
         variation_selection_mode: Cadenya::Models::AgentSpec::variation_selection_mode,
         description: String,
+        enable_episodic_memory: bool,
+        episodic_memory_ttl: Integer,
         input_data_schema: ::Hash[Symbol, top],
         output_definition: ::Hash[Symbol, top],
         webhook_events_url: String

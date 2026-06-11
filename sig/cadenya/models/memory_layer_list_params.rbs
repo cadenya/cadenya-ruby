@@ -3,8 +3,10 @@ module Cadenya
     type memory_layer_list_params =
       {
         workspace_id: String,
+        agent_id: String,
         bundle_key: String,
         cursor: String,
+        episodic_key_prefix: String,
         include_info: bool,
         limit: Integer,
         prefix: String,
@@ -20,6 +22,10 @@ module Cadenya
 
       attr_accessor workspace_id: String
 
+      attr_reader agent_id: String?
+
+      def agent_id=: (String) -> String
+
       attr_reader bundle_key: String?
 
       def bundle_key=: (String) -> String
@@ -27,6 +33,10 @@ module Cadenya
       attr_reader cursor: String?
 
       def cursor=: (String) -> String
+
+      attr_reader episodic_key_prefix: String?
+
+      def episodic_key_prefix=: (String) -> String
 
       attr_reader include_info: bool?
 
@@ -56,8 +66,10 @@ module Cadenya
 
       def initialize: (
         workspace_id: String,
+        ?agent_id: String,
         ?bundle_key: String,
         ?cursor: String,
+        ?episodic_key_prefix: String,
         ?include_info: bool,
         ?limit: Integer,
         ?prefix: String,
@@ -69,8 +81,10 @@ module Cadenya
 
       def to_hash: -> {
         workspace_id: String,
+        agent_id: String,
         bundle_key: String,
         cursor: String,
+        episodic_key_prefix: String,
         include_info: bool,
         limit: Integer,
         prefix: String,

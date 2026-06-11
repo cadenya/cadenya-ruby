@@ -21,6 +21,8 @@ module Cadenya
           workspace_id: String,
           agent_id: String,
           data: T::Hash[Symbol, T.anything],
+          episodic_memory:
+            Cadenya::ObjectiveCreateParams::EpisodicMemory::OrHash,
           initial_message: String,
           memory_stack: T::Array[Cadenya::MemoryReference::OrHash],
           metadata: Cadenya::CreateOperationMetadata::OrHash,
@@ -36,6 +38,8 @@ module Cadenya
         # Arbitrary data for the objective. May be used in liquid templates for prompts
         # configured on the agent variation
         data:,
+        # Episodic is used to configure the episodic memory for the objective
+        episodic_memory: nil,
         # Optional override for the initial message sent to the agent. This becomes the
         # first user message in the LLM chat history. When not set, the selected
         # variation's user_message_template is rendered with user_data instead. If neither

@@ -8,6 +8,7 @@ module Cadenya
         state: Cadenya::Models::Objective::state,
         system_prompt: String,
         data: ::Hash[Symbol, top],
+        episodic_memory: Cadenya::Objective::EpisodicMemory,
         info: Cadenya::ObjectiveInfo,
         memory_stack: ::Array[Cadenya::MemoryReference],
         output: ::Hash[Symbol, top],
@@ -21,6 +22,12 @@ module Cadenya
       attr_accessor initial_message: String
 
       attr_accessor metadata: Cadenya::OperationMetadata
+
+      attr_reader episodic_memory: Cadenya::Objective::EpisodicMemory?
+
+      def episodic_memory=: (
+        Cadenya::Objective::EpisodicMemory
+      ) -> Cadenya::Objective::EpisodicMemory
 
       attr_reader memory_stack: ::Array[Cadenya::MemoryReference]?
 
@@ -71,6 +78,7 @@ module Cadenya
         state: Cadenya::Models::Objective::state,
         system_prompt: String,
         ?data: ::Hash[Symbol, top],
+        ?episodic_memory: Cadenya::Objective::EpisodicMemory,
         ?info: Cadenya::ObjectiveInfo,
         ?memory_stack: ::Array[Cadenya::MemoryReference],
         ?output: ::Hash[Symbol, top],
@@ -87,6 +95,7 @@ module Cadenya
         state: Cadenya::Models::Objective::state,
         system_prompt: String,
         data: ::Hash[Symbol, top],
+        episodic_memory: Cadenya::Objective::EpisodicMemory,
         info: Cadenya::ObjectiveInfo,
         memory_stack: ::Array[Cadenya::MemoryReference],
         output: ::Hash[Symbol, top],
@@ -117,6 +126,22 @@ module Cadenya
         STATE_FINALIZED: :STATE_FINALIZED
 
         def self?.values: -> ::Array[Cadenya::Models::Objective::state]
+      end
+
+      type episodic_memory = { key: String, memory_layer_id: String }
+
+      class EpisodicMemory < Cadenya::Internal::Type::BaseModel
+        attr_reader key: String?
+
+        def key=: (String) -> String
+
+        attr_reader memory_layer_id: String?
+
+        def memory_layer_id=: (String) -> String
+
+        def initialize: (?key: String, ?memory_layer_id: String) -> void
+
+        def to_hash: -> { key: String, memory_layer_id: String }
       end
     end
   end

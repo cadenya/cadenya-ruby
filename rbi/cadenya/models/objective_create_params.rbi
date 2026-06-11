@@ -22,6 +22,18 @@ module Cadenya
       sig { returns(T::Hash[Symbol, T.anything]) }
       attr_accessor :data
 
+      # Episodic is used to configure the episodic memory for the objective
+      sig { returns(T.nilable(Cadenya::ObjectiveCreateParams::EpisodicMemory)) }
+      attr_reader :episodic_memory
+
+      sig do
+        params(
+          episodic_memory:
+            Cadenya::ObjectiveCreateParams::EpisodicMemory::OrHash
+        ).void
+      end
+      attr_writer :episodic_memory
+
       # Optional override for the initial message sent to the agent. This becomes the
       # first user message in the LLM chat history. When not set, the selected
       # variation's user_message_template is rendered with user_data instead. If neither
@@ -101,6 +113,8 @@ module Cadenya
           workspace_id: String,
           agent_id: String,
           data: T::Hash[Symbol, T.anything],
+          episodic_memory:
+            Cadenya::ObjectiveCreateParams::EpisodicMemory::OrHash,
           initial_message: String,
           memory_stack: T::Array[Cadenya::MemoryReference::OrHash],
           metadata: Cadenya::CreateOperationMetadata::OrHash,
@@ -116,6 +130,8 @@ module Cadenya
         # Arbitrary data for the objective. May be used in liquid templates for prompts
         # configured on the agent variation
         data:,
+        # Episodic is used to configure the episodic memory for the objective
+        episodic_memory: nil,
         # Optional override for the initial message sent to the agent. This becomes the
         # first user message in the LLM chat history. When not set, the selected
         # variation's user_message_template is rendered with user_data instead. If neither
@@ -162,6 +178,7 @@ module Cadenya
             workspace_id: String,
             agent_id: String,
             data: T::Hash[Symbol, T.anything],
+            episodic_memory: Cadenya::ObjectiveCreateParams::EpisodicMemory,
             initial_message: String,
             memory_stack: T::Array[Cadenya::MemoryReference],
             metadata: Cadenya::CreateOperationMetadata,
@@ -173,6 +190,37 @@ module Cadenya
         )
       end
       def to_hash
+      end
+
+      class EpisodicMemory < Cadenya::Internal::Type::BaseModel
+        OrHash =
+          T.type_alias do
+            T.any(
+              Cadenya::ObjectiveCreateParams::EpisodicMemory,
+              Cadenya::Internal::AnyHash
+            )
+          end
+
+        # The caller-supplied episodic key. Objectives created with the same key (for the
+        # same agent) share one episodic memory layer.
+        sig { returns(T.nilable(String)) }
+        attr_reader :key
+
+        sig { params(key: String).void }
+        attr_writer :key
+
+        # Episodic is used to configure the episodic memory for the objective
+        sig { params(key: String).returns(T.attached_class) }
+        def self.new(
+          # The caller-supplied episodic key. Objectives created with the same key (for the
+          # same agent) share one episodic memory layer.
+          key: nil
+        )
+        end
+
+        sig { override.returns({ key: String, memory_layer_id: String }) }
+        def to_hash
+        end
       end
 
       class Secret < Cadenya::Internal::Type::BaseModel

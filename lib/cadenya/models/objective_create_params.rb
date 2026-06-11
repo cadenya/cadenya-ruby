@@ -24,6 +24,14 @@ module Cadenya
       #   @return [Hash{Symbol=>Object}]
       required :data, Cadenya::Internal::Type::HashOf[Cadenya::Internal::Type::Unknown]
 
+      # @!attribute episodic_memory
+      #   Episodic is used to configure the episodic memory for the objective
+      #
+      #   @return [Cadenya::Models::ObjectiveCreateParams::EpisodicMemory, nil]
+      optional :episodic_memory,
+               -> { Cadenya::ObjectiveCreateParams::EpisodicMemory },
+               api_name: :episodicMemory
+
       # @!attribute initial_message
       #   Optional override for the initial message sent to the agent. This becomes the
       #   first user message in the LLM chat history. When not set, the selected
@@ -88,7 +96,7 @@ module Cadenya
       #   @return [String, nil]
       optional :variation_id, String, api_name: :variationId
 
-      # @!method initialize(workspace_id:, agent_id:, data:, initial_message: nil, memory_stack: nil, metadata: nil, secrets: nil, user_data: nil, variation_id: nil, request_options: {})
+      # @!method initialize(workspace_id:, agent_id:, data:, episodic_memory: nil, initial_message: nil, memory_stack: nil, metadata: nil, secrets: nil, user_data: nil, variation_id: nil, request_options: {})
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::ObjectiveCreateParams} for more details.
       #
@@ -97,6 +105,8 @@ module Cadenya
       #   @param agent_id [String]
       #
       #   @param data [Hash{Symbol=>Object}] Arbitrary data for the objective. May be used in liquid templates for prompts co
+      #
+      #   @param episodic_memory [Cadenya::Models::ObjectiveCreateParams::EpisodicMemory] Episodic is used to configure the episodic memory for the objective
       #
       #   @param initial_message [String] Optional override for the initial message sent to the agent. This becomes the fi
       #
@@ -111,6 +121,23 @@ module Cadenya
       #   @param variation_id [String] Optional explicit variation selection. Overrides the agent's variation_selection
       #
       #   @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}]
+
+      class EpisodicMemory < Cadenya::Internal::Type::BaseModel
+        # @!attribute key
+        #   The caller-supplied episodic key. Objectives created with the same key (for the
+        #   same agent) share one episodic memory layer.
+        #
+        #   @return [String, nil]
+        optional :key, String
+
+        # @!method initialize(key: nil)
+        #   Some parameter documentations has been truncated, see
+        #   {Cadenya::Models::ObjectiveCreateParams::EpisodicMemory} for more details.
+        #
+        #   Episodic is used to configure the episodic memory for the objective
+        #
+        #   @param key [String] The caller-supplied episodic key. Objectives created with the same key
+      end
 
       class Secret < Cadenya::Internal::Type::BaseModel
         # @!attribute name

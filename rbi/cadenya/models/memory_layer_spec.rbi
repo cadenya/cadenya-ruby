@@ -19,6 +19,22 @@ module Cadenya
       sig { params(description: String).void }
       attr_writer :description
 
+      # Server-set on episodic layers: the agent this layer belongs to. Unset for
+      # non-episodic layers.
+      sig { returns(T.nilable(String)) }
+      attr_reader :agent_id
+
+      sig { params(agent_id: String).void }
+      attr_writer :agent_id
+
+      # Server-set on episodic layers: the caller-supplied episodic key the layer was
+      # created for. Unset for non-episodic layers.
+      sig { returns(T.nilable(String)) }
+      attr_reader :episodic_key
+
+      sig { params(episodic_key: String).void }
+      attr_writer :episodic_key
+
       # For layers with a finite lifetime (e.g., episodic), the time at which the layer
       # becomes eligible for cleanup. Set by the system; unset for persistent layers.
       sig { returns(T.nilable(Time)) }
@@ -40,16 +56,24 @@ module Cadenya
       sig do
         params(
           type: Cadenya::MemoryLayerSpec::Type::OrSymbol,
+          agent_id: String,
           description: String,
+          episodic_key: String,
           expires_at: Time,
           system_managed: T::Boolean
         ).returns(T.attached_class)
       end
       def self.new(
         type:,
+        # Server-set on episodic layers: the agent this layer belongs to. Unset for
+        # non-episodic layers.
+        agent_id: nil,
         # Human-readable description of the layer's purpose. Encouraged for user-created
         # layers; system-managed layers may have a generated description.
         description: nil,
+        # Server-set on episodic layers: the caller-supplied episodic key the layer was
+        # created for. Unset for non-episodic layers.
+        episodic_key: nil,
         # For layers with a finite lifetime (e.g., episodic), the time at which the layer
         # becomes eligible for cleanup. Set by the system; unset for persistent layers.
         expires_at: nil,
@@ -65,7 +89,9 @@ module Cadenya
         override.returns(
           {
             type: Cadenya::MemoryLayerSpec::Type::OrSymbol,
+            agent_id: String,
             description: String,
+            episodic_key: String,
             expires_at: Time,
             system_managed: T::Boolean
           }

@@ -8,8 +8,6 @@ module Cadenya
           compaction_config: Cadenya::Agents::AgentVariationSpecCompactionConfig,
           constraints: Cadenya::Agents::AgentVariationSpecConstraints,
           description: String,
-          enable_episodic_memory: bool,
-          episodic_memory_ttl: Integer,
           model_config: Cadenya::Agents::AgentVariationSpecModelConfig,
           progressive_discovery: Cadenya::Agents::AgentVariationSpecProgressiveDiscovery,
           system_prompt_template: String,
@@ -33,14 +31,6 @@ module Cadenya
         attr_reader description: String?
 
         def description=: (String) -> String
-
-        attr_reader enable_episodic_memory: bool?
-
-        def enable_episodic_memory=: (bool) -> bool
-
-        attr_reader episodic_memory_ttl: Integer?
-
-        def episodic_memory_ttl=: (Integer) -> Integer
 
         attr_reader model_config: Cadenya::Agents::AgentVariationSpecModelConfig?
 
@@ -70,8 +60,6 @@ module Cadenya
           ?compaction_config: Cadenya::Agents::AgentVariationSpecCompactionConfig,
           ?constraints: Cadenya::Agents::AgentVariationSpecConstraints,
           ?description: String,
-          ?enable_episodic_memory: bool,
-          ?episodic_memory_ttl: Integer,
           ?model_config: Cadenya::Agents::AgentVariationSpecModelConfig,
           ?progressive_discovery: Cadenya::Agents::AgentVariationSpecProgressiveDiscovery,
           ?system_prompt_template: String,
@@ -83,8 +71,6 @@ module Cadenya
           compaction_config: Cadenya::Agents::AgentVariationSpecCompactionConfig,
           constraints: Cadenya::Agents::AgentVariationSpecConstraints,
           description: String,
-          enable_episodic_memory: bool,
-          episodic_memory_ttl: Integer,
           model_config: Cadenya::Agents::AgentVariationSpecModelConfig,
           progressive_discovery: Cadenya::Agents::AgentVariationSpecProgressiveDiscovery,
           system_prompt_template: String,
