@@ -45,7 +45,7 @@ module Cadenya
 
       # Server-set. True for layers managed by the system (e.g., episodic layers created
       # automatically when an objective uses an episodic_key). System-managed layers
-      # cannot be assigned to objective stacks via the API and cannot be mutated by
+      # cannot be assigned to objective cascades via the API and cannot be mutated by
       # clients — their lifecycle is controlled entirely by the runtime.
       sig { returns(T.nilable(T::Boolean)) }
       attr_reader :system_managed
@@ -79,7 +79,7 @@ module Cadenya
         expires_at: nil,
         # Server-set. True for layers managed by the system (e.g., episodic layers created
         # automatically when an objective uses an episodic_key). System-managed layers
-        # cannot be assigned to objective stacks via the API and cannot be mutated by
+        # cannot be assigned to objective cascades via the API and cannot be mutated by
         # clients — their lifecycle is controlled entirely by the runtime.
         system_managed: nil
       )

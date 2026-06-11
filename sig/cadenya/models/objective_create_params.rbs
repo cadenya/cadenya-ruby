@@ -7,7 +7,7 @@ module Cadenya
         data: ::Hash[Symbol, top],
         episodic_memory: Cadenya::ObjectiveCreateParams::EpisodicMemory,
         initial_message: String,
-        memory_stack: ::Array[Cadenya::MemoryReference],
+        memory_cascade: ::Array[Cadenya::MemoryReference],
         metadata: Cadenya::CreateOperationMetadata,
         secrets: ::Array[Cadenya::ObjectiveCreateParams::Secret],
         user_data: ::Hash[Symbol, top],
@@ -35,9 +35,9 @@ module Cadenya
 
       def initial_message=: (String) -> String
 
-      attr_reader memory_stack: ::Array[Cadenya::MemoryReference]?
+      attr_reader memory_cascade: ::Array[Cadenya::MemoryReference]?
 
-      def memory_stack=: (
+      def memory_cascade=: (
         ::Array[Cadenya::MemoryReference]
       ) -> ::Array[Cadenya::MemoryReference]
 
@@ -67,7 +67,7 @@ module Cadenya
         data: ::Hash[Symbol, top],
         ?episodic_memory: Cadenya::ObjectiveCreateParams::EpisodicMemory,
         ?initial_message: String,
-        ?memory_stack: ::Array[Cadenya::MemoryReference],
+        ?memory_cascade: ::Array[Cadenya::MemoryReference],
         ?metadata: Cadenya::CreateOperationMetadata,
         ?secrets: ::Array[Cadenya::ObjectiveCreateParams::Secret],
         ?user_data: ::Hash[Symbol, top],
@@ -81,7 +81,7 @@ module Cadenya
         data: ::Hash[Symbol, top],
         episodic_memory: Cadenya::ObjectiveCreateParams::EpisodicMemory,
         initial_message: String,
-        memory_stack: ::Array[Cadenya::MemoryReference],
+        memory_cascade: ::Array[Cadenya::MemoryReference],
         metadata: Cadenya::CreateOperationMetadata,
         secrets: ::Array[Cadenya::ObjectiveCreateParams::Secret],
         user_data: ::Hash[Symbol, top],

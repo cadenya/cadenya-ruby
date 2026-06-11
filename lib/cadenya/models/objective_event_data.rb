@@ -38,8 +38,8 @@ module Cadenya
 
       # @!attribute memory_read
       #   MemoryRead is emitted each time the agent resolves a key against the memory
-      #   stack and loads an entry. Lookups that miss (key not found in any layer) do not
-      #   emit this event.
+      #   cascade and loads an entry. Lookups that miss (key not found in any layer) do
+      #   not emit this event.
       #
       #   @return [Cadenya::Models::MemoryRead, nil]
       optional :memory_read, -> { Cadenya::MemoryRead }, api_name: :memoryRead

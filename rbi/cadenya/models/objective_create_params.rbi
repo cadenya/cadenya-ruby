@@ -45,28 +45,26 @@ module Cadenya
       sig { params(initial_message: String).void }
       attr_writer :initial_message
 
-      # Memory layers/entries to push onto this objective's memory stack on top of the
-      # baseline stack inherited from the selected variation.
+      # Memory layers/entries layered over the baseline cascade inherited from the
+      # selected variation — element-level rules over inherited styles, in CSS terms.
       #
-      # Array order is push order: the first element sits lower in the objective's
-      # contribution to the stack; the LAST element ends up on top of the effective
-      # stack. Entries pinned via memory_entry_id behave as single-entry layers at their
-      # position.
+      # Array order is resolution order: EARLIER elements are more specific and are
+      # consulted first. Entries pinned via memory_entry_id behave as single-entry
+      # layers at their position.
       #
       # System-managed layers (e.g., episodic) cannot be referenced here; they attach
-      # themselves automatically based on episodic_key.
+      # themselves automatically based on the episodic key.
       #
-      # Stack size cap: the TOTAL effective stack (variation's memory layers
-      #
-      # - this field) must not exceed 10 entries. A request that would produce an
-      #   effective stack larger than 10 is rejected with InvalidArgument.
+      # Size cap: the TOTAL effective cascade (this field + the variation's memory layer
+      # assignments) must not exceed 10 entries. A request that would produce a larger
+      # cascade is rejected with InvalidArgument.
       sig { returns(T.nilable(T::Array[Cadenya::MemoryReference])) }
-      attr_reader :memory_stack
+      attr_reader :memory_cascade
 
       sig do
-        params(memory_stack: T::Array[Cadenya::MemoryReference::OrHash]).void
+        params(memory_cascade: T::Array[Cadenya::MemoryReference::OrHash]).void
       end
-      attr_writer :memory_stack
+      attr_writer :memory_cascade
 
       # CreateOperationMetadata contains the user-provided fields for creating an
       # operation. Read-only fields (id, account_id, workspace_id, created_at,
@@ -116,7 +114,7 @@ module Cadenya
           episodic_memory:
             Cadenya::ObjectiveCreateParams::EpisodicMemory::OrHash,
           initial_message: String,
-          memory_stack: T::Array[Cadenya::MemoryReference::OrHash],
+          memory_cascade: T::Array[Cadenya::MemoryReference::OrHash],
           metadata: Cadenya::CreateOperationMetadata::OrHash,
           secrets: T::Array[Cadenya::ObjectiveCreateParams::Secret::OrHash],
           user_data: T::Hash[Symbol, T.anything],
@@ -138,22 +136,20 @@ module Cadenya
         # this field nor a user_message_template is present, the request is rejected with
         # InvalidArgument.
         initial_message: nil,
-        # Memory layers/entries to push onto this objective's memory stack on top of the
-        # baseline stack inherited from the selected variation.
+        # Memory layers/entries layered over the baseline cascade inherited from the
+        # selected variation — element-level rules over inherited styles, in CSS terms.
         #
-        # Array order is push order: the first element sits lower in the objective's
-        # contribution to the stack; the LAST element ends up on top of the effective
-        # stack. Entries pinned via memory_entry_id behave as single-entry layers at their
-        # position.
+        # Array order is resolution order: EARLIER elements are more specific and are
+        # consulted first. Entries pinned via memory_entry_id behave as single-entry
+        # layers at their position.
         #
         # System-managed layers (e.g., episodic) cannot be referenced here; they attach
-        # themselves automatically based on episodic_key.
+        # themselves automatically based on the episodic key.
         #
-        # Stack size cap: the TOTAL effective stack (variation's memory layers
-        #
-        # - this field) must not exceed 10 entries. A request that would produce an
-        #   effective stack larger than 10 is rejected with InvalidArgument.
-        memory_stack: nil,
+        # Size cap: the TOTAL effective cascade (this field + the variation's memory layer
+        # assignments) must not exceed 10 entries. A request that would produce a larger
+        # cascade is rejected with InvalidArgument.
+        memory_cascade: nil,
         # CreateOperationMetadata contains the user-provided fields for creating an
         # operation. Read-only fields (id, account_id, workspace_id, created_at,
         # profile_id) are excluded since they are set by the server.
@@ -180,7 +176,7 @@ module Cadenya
             data: T::Hash[Symbol, T.anything],
             episodic_memory: Cadenya::ObjectiveCreateParams::EpisodicMemory,
             initial_message: String,
-            memory_stack: T::Array[Cadenya::MemoryReference],
+            memory_cascade: T::Array[Cadenya::MemoryReference],
             metadata: Cadenya::CreateOperationMetadata,
             secrets: T::Array[Cadenya::ObjectiveCreateParams::Secret],
             user_data: T::Hash[Symbol, T.anything],

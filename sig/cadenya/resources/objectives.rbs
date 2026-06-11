@@ -15,7 +15,7 @@ module Cadenya
         data: ::Hash[Symbol, top],
         ?episodic_memory: Cadenya::ObjectiveCreateParams::EpisodicMemory,
         ?initial_message: String,
-        ?memory_stack: ::Array[Cadenya::MemoryReference],
+        ?memory_cascade: ::Array[Cadenya::MemoryReference],
         ?metadata: Cadenya::CreateOperationMetadata,
         ?secrets: ::Array[Cadenya::ObjectiveCreateParams::Secret],
         ?user_data: ::Hash[Symbol, top],

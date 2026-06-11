@@ -40,7 +40,7 @@ module Cadenya
         # @!attribute system_managed
         #   Server-set. True for layers managed by the system (e.g., episodic layers created
         #   automatically when an objective uses an episodic_key). System-managed layers
-        #   cannot be assigned to objective stacks via the API and cannot be mutated by
+        #   cannot be assigned to objective cascades via the API and cannot be mutated by
         #   clients — their lifecycle is controlled entirely by the runtime.
         #
         #   @return [Boolean, nil]

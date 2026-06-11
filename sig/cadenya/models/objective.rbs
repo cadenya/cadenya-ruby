@@ -10,7 +10,7 @@ module Cadenya
         data: ::Hash[Symbol, top],
         episodic_memory: Cadenya::Objective::EpisodicMemory,
         info: Cadenya::ObjectiveInfo,
-        memory_stack: ::Array[Cadenya::MemoryReference],
+        memory_cascade: ::Array[Cadenya::MemoryReference],
         output: ::Hash[Symbol, top],
         parent_objective_id: String,
         secrets: ::Array[Cadenya::ObjectiveSecret],
@@ -29,9 +29,9 @@ module Cadenya
         Cadenya::Objective::EpisodicMemory
       ) -> Cadenya::Objective::EpisodicMemory
 
-      attr_reader memory_stack: ::Array[Cadenya::MemoryReference]?
+      attr_reader memory_cascade: ::Array[Cadenya::MemoryReference]?
 
-      def memory_stack=: (
+      def memory_cascade=: (
         ::Array[Cadenya::MemoryReference]
       ) -> ::Array[Cadenya::MemoryReference]
 
@@ -80,7 +80,7 @@ module Cadenya
         ?data: ::Hash[Symbol, top],
         ?episodic_memory: Cadenya::Objective::EpisodicMemory,
         ?info: Cadenya::ObjectiveInfo,
-        ?memory_stack: ::Array[Cadenya::MemoryReference],
+        ?memory_cascade: ::Array[Cadenya::MemoryReference],
         ?output: ::Hash[Symbol, top],
         ?parent_objective_id: String,
         ?secrets: ::Array[Cadenya::ObjectiveSecret],
@@ -97,7 +97,7 @@ module Cadenya
         data: ::Hash[Symbol, top],
         episodic_memory: Cadenya::Objective::EpisodicMemory,
         info: Cadenya::ObjectiveInfo,
-        memory_stack: ::Array[Cadenya::MemoryReference],
+        memory_cascade: ::Array[Cadenya::MemoryReference],
         output: ::Hash[Symbol, top],
         parent_objective_id: String,
         secrets: ::Array[Cadenya::ObjectiveSecret],

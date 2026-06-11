@@ -59,11 +59,11 @@ module Cadenya
         attr_writer :external_id
 
         # MemoryLayer is a named container of memory entries that can be composed into an
-        # objective's memory stack. Layers are workspace-scoped resources. The layer type
-        # controls how its entries participate in the agent loop — see MemoryLayerType for
-        # details.
+        # objective's memory cascade. Layers are workspace-scoped resources. The layer
+        # type controls how its entries participate in the agent loop — see
+        # MemoryLayerType for details.
         #
-        # See "Memory stack composition" above for how layers compose at lookup time.
+        # See "Memory cascade composition" above for how layers compose at lookup time.
         sig { returns(T.nilable(Cadenya::MemoryLayer)) }
         attr_reader :resource
 
@@ -91,11 +91,11 @@ module Cadenya
           error: nil,
           external_id: nil,
           # MemoryLayer is a named container of memory entries that can be composed into an
-          # objective's memory stack. Layers are workspace-scoped resources. The layer type
-          # controls how its entries participate in the agent loop — see MemoryLayerType for
-          # details.
+          # objective's memory cascade. Layers are workspace-scoped resources. The layer
+          # type controls how its entries participate in the agent loop — see
+          # MemoryLayerType for details.
           #
-          # See "Memory stack composition" above for how layers compose at lookup time.
+          # See "Memory cascade composition" above for how layers compose at lookup time.
           resource: nil
         )
         end
