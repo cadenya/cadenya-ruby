@@ -1,12 +1,21 @@
 module Cadenya
   module Models
     type memory_layer_info =
-      { created_by: Cadenya::Profile, entry_count: Integer, last_used_at: Time }
+      {
+        agent: Cadenya::ResourceMetadata,
+        created_by: Cadenya::Profile,
+        entry_count: Integer,
+        last_used_at: Time
+      }
 
     class MemoryLayerInfo < Cadenya::Internal::Type::BaseModel
       attr_reader created_by: Cadenya::Profile?
 
       def created_by=: (Cadenya::Profile) -> Cadenya::Profile
+
+      attr_reader agent: Cadenya::ResourceMetadata?
+
+      def agent=: (Cadenya::ResourceMetadata) -> Cadenya::ResourceMetadata
 
       attr_reader entry_count: Integer?
 
@@ -17,12 +26,14 @@ module Cadenya
       def last_used_at=: (Time) -> Time
 
       def initialize: (
+        ?agent: Cadenya::ResourceMetadata,
         ?created_by: Cadenya::Profile,
         ?entry_count: Integer,
         ?last_used_at: Time
       ) -> void
 
       def to_hash: -> {
+        agent: Cadenya::ResourceMetadata,
         created_by: Cadenya::Profile,
         entry_count: Integer,
         last_used_at: Time
