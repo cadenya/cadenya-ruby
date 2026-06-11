@@ -256,7 +256,7 @@ module Cadenya
         # {Cadenya::Models::Agents::VariationAddMemoryLayerParams} for more details.
         #
         # Attaches a memory layer to a variation at a given position in the variation's
-        # baseline memory stack.
+        # baseline memory cascade.
         #
         # @overload add_memory_layer(variation_id, workspace_id:, agent_id:, memory_layer_id: nil, position: nil, request_options: {})
         #
@@ -268,7 +268,7 @@ module Cadenya
         #
         # @param memory_layer_id [String] Body param: Layer to attach. Accepts the canonical `memlyr_…` form or the `exter
         #
-        # @param position [Integer] Body param: Position in the stack. If omitted, server appends
+        # @param position [Integer] Body param: Position in the baseline cascade (lower = more specific). If
         #
         # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
         #

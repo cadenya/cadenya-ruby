@@ -32,8 +32,8 @@ module Cadenya
       attr_writer :message
 
       # MemoryRead is emitted each time the agent resolves a key against the memory
-      # stack and loads an entry. Lookups that miss (key not found in any layer) do not
-      # emit this event.
+      # cascade and loads an entry. Lookups that miss (key not found in any layer) do
+      # not emit this event.
       sig do
         params(
           memory_entry_id: String,

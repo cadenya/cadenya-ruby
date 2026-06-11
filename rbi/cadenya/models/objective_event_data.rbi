@@ -53,8 +53,8 @@ module Cadenya
       attr_writer :finalized
 
       # MemoryRead is emitted each time the agent resolves a key against the memory
-      # stack and loads an entry. Lookups that miss (key not found in any layer) do not
-      # emit this event.
+      # cascade and loads an entry. Lookups that miss (key not found in any layer) do
+      # not emit this event.
       sig { returns(T.nilable(Cadenya::MemoryRead)) }
       attr_reader :memory_read
 
@@ -158,8 +158,8 @@ module Cadenya
         # compaction, or continuation are permitted.
         finalized: nil,
         # MemoryRead is emitted each time the agent resolves a key against the memory
-        # stack and loads an entry. Lookups that miss (key not found in any layer) do not
-        # emit this event.
+        # cascade and loads an entry. Lookups that miss (key not found in any layer) do
+        # not emit this event.
         memory_read: nil,
         sub_agent_spawned: nil,
         sub_agent_updated: nil,

@@ -182,7 +182,7 @@ module Cadenya
         end
 
         # Attaches a memory layer to a variation at a given position in the variation's
-        # baseline memory stack.
+        # baseline memory cascade.
         sig do
           params(
             variation_id: String,
@@ -205,8 +205,8 @@ module Cadenya
           # Body param: Layer to attach. Accepts the canonical `memlyr_…` form or the
           # `external_id:<value>` form.
           memory_layer_id: nil,
-          # Body param: Position in the stack. If omitted, server appends (max existing
-          # position + 1).
+          # Body param: Position in the baseline cascade (lower = more specific). If
+          # omitted, the server appends at the most general end (max existing position + 1).
           position: nil,
           request_options: {}
         )

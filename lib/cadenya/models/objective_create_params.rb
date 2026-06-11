@@ -42,27 +42,25 @@ module Cadenya
       #   @return [String, nil]
       optional :initial_message, String, api_name: :initialMessage
 
-      # @!attribute memory_stack
-      #   Memory layers/entries to push onto this objective's memory stack on top of the
-      #   baseline stack inherited from the selected variation.
+      # @!attribute memory_cascade
+      #   Memory layers/entries layered over the baseline cascade inherited from the
+      #   selected variation — element-level rules over inherited styles, in CSS terms.
       #
-      #   Array order is push order: the first element sits lower in the objective's
-      #   contribution to the stack; the LAST element ends up on top of the effective
-      #   stack. Entries pinned via memory_entry_id behave as single-entry layers at their
-      #   position.
+      #   Array order is resolution order: EARLIER elements are more specific and are
+      #   consulted first. Entries pinned via memory_entry_id behave as single-entry
+      #   layers at their position.
       #
       #   System-managed layers (e.g., episodic) cannot be referenced here; they attach
-      #   themselves automatically based on episodic_key.
+      #   themselves automatically based on the episodic key.
       #
-      #   Stack size cap: the TOTAL effective stack (variation's memory layers
-      #
-      #   - this field) must not exceed 10 entries. A request that would produce an
-      #     effective stack larger than 10 is rejected with InvalidArgument.
+      #   Size cap: the TOTAL effective cascade (this field + the variation's memory layer
+      #   assignments) must not exceed 10 entries. A request that would produce a larger
+      #   cascade is rejected with InvalidArgument.
       #
       #   @return [Array<Cadenya::Models::MemoryReference>, nil]
-      optional :memory_stack,
+      optional :memory_cascade,
                -> { Cadenya::Internal::Type::ArrayOf[Cadenya::MemoryReference] },
-               api_name: :memoryStack
+               api_name: :memoryCascade
 
       # @!attribute metadata
       #   CreateOperationMetadata contains the user-provided fields for creating an
@@ -96,7 +94,7 @@ module Cadenya
       #   @return [String, nil]
       optional :variation_id, String, api_name: :variationId
 
-      # @!method initialize(workspace_id:, agent_id:, data:, episodic_memory: nil, initial_message: nil, memory_stack: nil, metadata: nil, secrets: nil, user_data: nil, variation_id: nil, request_options: {})
+      # @!method initialize(workspace_id:, agent_id:, data:, episodic_memory: nil, initial_message: nil, memory_cascade: nil, metadata: nil, secrets: nil, user_data: nil, variation_id: nil, request_options: {})
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::ObjectiveCreateParams} for more details.
       #
@@ -110,7 +108,7 @@ module Cadenya
       #
       #   @param initial_message [String] Optional override for the initial message sent to the agent. This becomes the fi
       #
-      #   @param memory_stack [Array<Cadenya::Models::MemoryReference>] Memory layers/entries to push onto this objective's memory stack on
+      #   @param memory_cascade [Array<Cadenya::Models::MemoryReference>] Memory layers/entries layered over the baseline cascade inherited
       #
       #   @param metadata [Cadenya::Models::CreateOperationMetadata] CreateOperationMetadata contains the user-provided fields for creating
       #

@@ -54,7 +54,8 @@ module Cadenya
         attr_writer :assignments
 
         # Read-only list of memory layer assignments for this variation, returned in
-        # ascending `position` (bottom → top). Capped at 10 entries.
+        # ascending `position` (most specific first — resolution order). Capped at 10
+        # entries.
         sig do
           returns(
             T.nilable(T::Array[Cadenya::Agents::VariationMemoryLayerAssignment])
@@ -133,7 +134,8 @@ module Cadenya
           # Total number of objective feedbacks received for this variation
           feedback_count: nil,
           # Read-only list of memory layer assignments for this variation, returned in
-          # ascending `position` (bottom → top). Capped at 10 entries.
+          # ascending `position` (most specific first — resolution order). Capped at 10
+          # entries.
           memory_layer_assignments: nil,
           # Count of memory layer assignments.
           memory_layer_count: nil,
