@@ -25,23 +25,6 @@ module Cadenya
         #   @return [String, nil]
         optional :description, String
 
-        # @!attribute enable_episodic_memory
-        #   Enable episodic memory for objectives using this variation. When true, the
-        #   system automatically creates a document namespace for each objective using the
-        #   objective's episodic_key as the external_id, allowing the agent to store and
-        #   retrieve documents specific to that episode.
-        #
-        #   @return [Boolean, nil]
-        optional :enable_episodic_memory, Cadenya::Internal::Type::Boolean, api_name: :enableEpisodicMemory
-
-        # @!attribute episodic_memory_ttl
-        #   How long episodic memories should be retained. After this duration, episodic
-        #   document namespaces can be automatically cleaned up. If not set, episodic
-        #   memories are retained indefinitely.
-        #
-        #   @return [Integer, nil]
-        optional :episodic_memory_ttl, Integer, api_name: :episodicMemoryTtl
-
         # @!attribute model_config
         #   ModelConfig defines the model configuration for a variation
         #
@@ -86,7 +69,7 @@ module Cadenya
         #   @return [Integer, nil]
         optional :weight, Integer
 
-        # @!method initialize(compaction_config: nil, constraints: nil, description: nil, enable_episodic_memory: nil, episodic_memory_ttl: nil, model_config: nil, progressive_discovery: nil, system_prompt_template: nil, user_message_template: nil, weight: nil)
+        # @!method initialize(compaction_config: nil, constraints: nil, description: nil, model_config: nil, progressive_discovery: nil, system_prompt_template: nil, user_message_template: nil, weight: nil)
         #   Some parameter documentations has been truncated, see
         #   {Cadenya::Models::Agents::AgentVariationSpec} for more details.
         #
@@ -97,10 +80,6 @@ module Cadenya
         #   @param constraints [Cadenya::Models::Agents::AgentVariationSpecConstraints] Execution constraints
         #
         #   @param description [String] Human-readable description of what this variation does or when it should be used
-        #
-        #   @param enable_episodic_memory [Boolean] Enable episodic memory for objectives using this variation.
-        #
-        #   @param episodic_memory_ttl [Integer] How long episodic memories should be retained.
         #
         #   @param model_config [Cadenya::Models::Agents::AgentVariationSpecModelConfig] ModelConfig defines the model configuration for a variation
         #

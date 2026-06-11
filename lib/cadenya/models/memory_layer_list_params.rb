@@ -12,6 +12,12 @@ module Cadenya
       #   @return [String]
       required :workspace_id, String
 
+      # @!attribute agent_id
+      #   Filter to episodic layers belonging to this agent.
+      #
+      #   @return [String, nil]
+      optional :agent_id, String
+
       # @!attribute bundle_key
       #   Filter by bundle_key — return only resources owned by this bundle.
       #
@@ -23,6 +29,14 @@ module Cadenya
       #
       #   @return [String, nil]
       optional :cursor, String
+
+      # @!attribute episodic_key_prefix
+      #   Filter to episodic layers whose episodic key starts with this prefix (e.g.
+      #   "customer/" matches "customer/42" and "customer/43"). Useful for namespaced
+      #   keys, similar to a redis key scan.
+      #
+      #   @return [String, nil]
+      optional :episodic_key_prefix, String
 
       # @!attribute include_info
       #   When set to true you may use more of your alloted API rate-limit
@@ -60,12 +74,19 @@ module Cadenya
       #   @return [Symbol, Cadenya::Models::MemoryLayerListParams::Type, nil]
       optional :type, enum: -> { Cadenya::MemoryLayerListParams::Type }
 
-      # @!method initialize(workspace_id:, bundle_key: nil, cursor: nil, include_info: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, type: nil, request_options: {})
+      # @!method initialize(workspace_id:, agent_id: nil, bundle_key: nil, cursor: nil, episodic_key_prefix: nil, include_info: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, type: nil, request_options: {})
+      #   Some parameter documentations has been truncated, see
+      #   {Cadenya::Models::MemoryLayerListParams} for more details.
+      #
       #   @param workspace_id [String]
+      #
+      #   @param agent_id [String] Filter to episodic layers belonging to this agent.
       #
       #   @param bundle_key [String] Filter by bundle_key — return only resources owned by this bundle.
       #
       #   @param cursor [String] Pagination cursor from previous response
+      #
+      #   @param episodic_key_prefix [String] Filter to episodic layers whose episodic key starts with this prefix
       #
       #   @param include_info [Boolean] When set to true you may use more of your alloted API rate-limit
       #

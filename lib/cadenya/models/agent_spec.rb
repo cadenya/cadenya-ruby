@@ -18,6 +18,24 @@ module Cadenya
       #   @return [String, nil]
       optional :description, String
 
+      # @!attribute enable_episodic_memory
+      #   Enable episodic memory for objectives created for this agent. When true,
+      #   objective creation requires an episodic_memory key and the system finds or
+      #   creates a memory layer for that (agent, key) pair, letting the agent store and
+      #   retrieve memories across objectives that share the key. Memory is agent-level so
+      #   all variations of the agent share the same layers.
+      #
+      #   @return [Boolean, nil]
+      optional :enable_episodic_memory, Cadenya::Internal::Type::Boolean, api_name: :enableEpisodicMemory
+
+      # @!attribute episodic_memory_ttl
+      #   How long episodic memories should be retained. Each new objective slides the
+      #   layer's expiry forward by this duration, and stored entries expire this long
+      #   after they are written. If not set, episodic memories are retained indefinitely.
+      #
+      #   @return [Integer, nil]
+      optional :episodic_memory_ttl, Integer, api_name: :episodicMemoryTtl
+
       # @!attribute input_data_schema
       #   InputDataSchema is used for enforcing a data input when objectives are created.
       #   This is valuable when using liquid formatting in agent variation prompts. Input
@@ -47,7 +65,7 @@ module Cadenya
       #   @return [String, nil]
       optional :webhook_events_url, String, api_name: :webhookEventsUrl
 
-      # @!method initialize(variation_selection_mode:, description: nil, input_data_schema: nil, output_definition: nil, webhook_events_url: nil)
+      # @!method initialize(variation_selection_mode:, description: nil, enable_episodic_memory: nil, episodic_memory_ttl: nil, input_data_schema: nil, output_definition: nil, webhook_events_url: nil)
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::AgentSpec} for more details.
       #
@@ -56,6 +74,10 @@ module Cadenya
       #   @param variation_selection_mode [Symbol, Cadenya::Models::AgentSpec::VariationSelectionMode] Controls how variations are automatically selected when creating objectives
       #
       #   @param description [String] Description of the agent's purpose
+      #
+      #   @param enable_episodic_memory [Boolean] Enable episodic memory for objectives created for this agent.
+      #
+      #   @param episodic_memory_ttl [Integer] How long episodic memories should be retained.
       #
       #   @param input_data_schema [Hash{Symbol=>Object}] InputDataSchema is used for enforcing a data input when objectives are created.
       #
