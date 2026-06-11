@@ -17,6 +17,13 @@ module Cadenya
       sig { params(created_by: Cadenya::Profile::OrHash).void }
       attr_writer :created_by
 
+      # Standard metadata for persistent, named resources (e.g., agents, tools, prompts)
+      sig { returns(T.nilable(Cadenya::ResourceMetadata)) }
+      attr_reader :agent
+
+      sig { params(agent: Cadenya::ResourceMetadata::OrHash).void }
+      attr_writer :agent
+
       # Number of entries currently in this layer.
       sig { returns(T.nilable(Integer)) }
       attr_reader :entry_count
@@ -34,12 +41,15 @@ module Cadenya
 
       sig do
         params(
+          agent: Cadenya::ResourceMetadata::OrHash,
           created_by: Cadenya::Profile::OrHash,
           entry_count: Integer,
           last_used_at: Time
         ).returns(T.attached_class)
       end
       def self.new(
+        # Standard metadata for persistent, named resources (e.g., agents, tools, prompts)
+        agent: nil,
         # A profile identifies a user or non-human principal (such as an API key) at the
         # account level. Profiles are account-scoped and can be granted access to multiple
         # workspaces.
@@ -55,6 +65,7 @@ module Cadenya
       sig do
         override.returns(
           {
+            agent: Cadenya::ResourceMetadata,
             created_by: Cadenya::Profile,
             entry_count: Integer,
             last_used_at: Time
