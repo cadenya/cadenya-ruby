@@ -84,8 +84,10 @@ module Cadenya
       sig do
         params(
           workspace_id: String,
+          agent_id: String,
           bundle_key: String,
           cursor: String,
+          episodic_key_prefix: String,
           include_info: T::Boolean,
           limit: Integer,
           prefix: String,
@@ -97,10 +99,16 @@ module Cadenya
       end
       def list(
         workspace_id,
+        # Filter to episodic layers belonging to this agent.
+        agent_id: nil,
         # Filter by bundle_key — return only resources owned by this bundle.
         bundle_key: nil,
         # Pagination cursor from previous response
         cursor: nil,
+        # Filter to episodic layers whose episodic key starts with this prefix (e.g.
+        # "customer/" matches "customer/42" and "customer/43"). Useful for namespaced
+        # keys, similar to a redis key scan.
+        episodic_key_prefix: nil,
         # When set to true you may use more of your alloted API rate-limit
         include_info: nil,
         # Maximum number of results to return

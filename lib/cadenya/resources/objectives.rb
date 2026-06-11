@@ -20,13 +20,15 @@ module Cadenya
       #
       # Creates a new objective in the workspace
       #
-      # @overload create(workspace_id, agent_id:, data:, initial_message: nil, memory_stack: nil, metadata: nil, secrets: nil, user_data: nil, variation_id: nil, request_options: {})
+      # @overload create(workspace_id, agent_id:, data:, episodic_memory: nil, initial_message: nil, memory_stack: nil, metadata: nil, secrets: nil, user_data: nil, variation_id: nil, request_options: {})
       #
       # @param workspace_id [String]
       #
       # @param agent_id [String]
       #
       # @param data [Hash{Symbol=>Object}] Arbitrary data for the objective. May be used in liquid templates for prompts co
+      #
+      # @param episodic_memory [Cadenya::Models::ObjectiveCreateParams::EpisodicMemory] Episodic is used to configure the episodic memory for the objective
       #
       # @param initial_message [String] Optional override for the initial message sent to the agent. This becomes the fi
       #

@@ -16,6 +16,20 @@ module Cadenya
       optional :description, String
 
       response_only do
+        # @!attribute agent_id
+        #   Server-set on episodic layers: the agent this layer belongs to. Unset for
+        #   non-episodic layers.
+        #
+        #   @return [String, nil]
+        optional :agent_id, String, api_name: :agentId
+
+        # @!attribute episodic_key
+        #   Server-set on episodic layers: the caller-supplied episodic key the layer was
+        #   created for. Unset for non-episodic layers.
+        #
+        #   @return [String, nil]
+        optional :episodic_key, String, api_name: :episodicKey
+
         # @!attribute expires_at
         #   For layers with a finite lifetime (e.g., episodic), the time at which the layer
         #   becomes eligible for cleanup. Set by the system; unset for persistent layers.
@@ -33,13 +47,17 @@ module Cadenya
         optional :system_managed, Cadenya::Internal::Type::Boolean, api_name: :systemManaged
       end
 
-      # @!method initialize(type:, description: nil, expires_at: nil, system_managed: nil)
+      # @!method initialize(type:, agent_id: nil, description: nil, episodic_key: nil, expires_at: nil, system_managed: nil)
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::MemoryLayerSpec} for more details.
       #
       #   @param type [Symbol, Cadenya::Models::MemoryLayerSpec::Type]
       #
+      #   @param agent_id [String] Server-set on episodic layers: the agent this layer belongs to. Unset for
+      #
       #   @param description [String] Human-readable description of the layer's purpose. Encouraged for
+      #
+      #   @param episodic_key [String] Server-set on episodic layers: the caller-supplied episodic key the layer
       #
       #   @param expires_at [Time] For layers with a finite lifetime (e.g., episodic), the time at which the
       #

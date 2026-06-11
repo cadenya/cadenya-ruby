@@ -19,6 +19,15 @@ module Cadenya
       sig { params(metadata: Cadenya::OperationMetadata::OrHash).void }
       attr_writer :metadata
 
+      # Episodic is used to configure the episodic memory for the objective
+      sig { returns(T.nilable(Cadenya::Objective::EpisodicMemory)) }
+      attr_reader :episodic_memory
+
+      sig do
+        params(episodic_memory: Cadenya::Objective::EpisodicMemory::OrHash).void
+      end
+      attr_writer :episodic_memory
+
       # Memory layers/entries to push onto this objective's memory stack on top of the
       # baseline stack inherited from the selected variation.
       #
@@ -125,6 +134,7 @@ module Cadenya
           state: Cadenya::Objective::State::OrSymbol,
           system_prompt: String,
           data: T::Hash[Symbol, T.anything],
+          episodic_memory: Cadenya::Objective::EpisodicMemory::OrHash,
           info: Cadenya::ObjectiveInfo::OrHash,
           memory_stack: T::Array[Cadenya::MemoryReference::OrHash],
           output: T::Hash[Symbol, T.anything],
@@ -150,6 +160,8 @@ module Cadenya
         system_prompt:,
         # Arbitrary data for the objective
         data: nil,
+        # Episodic is used to configure the episodic memory for the objective
+        episodic_memory: nil,
         # ObjectiveInfo provides read-only aggregated statistics about an objective's
         # execution
         info: nil,
@@ -195,6 +207,7 @@ module Cadenya
             state: Cadenya::Objective::State::TaggedSymbol,
             system_prompt: String,
             data: T::Hash[Symbol, T.anything],
+            episodic_memory: Cadenya::Objective::EpisodicMemory,
             info: Cadenya::ObjectiveInfo,
             memory_stack: T::Array[Cadenya::MemoryReference],
             output: T::Hash[Symbol, T.anything],
@@ -234,6 +247,50 @@ module Cadenya
           override.returns(T::Array[Cadenya::Objective::State::TaggedSymbol])
         end
         def self.values
+        end
+      end
+
+      class EpisodicMemory < Cadenya::Internal::Type::BaseModel
+        OrHash =
+          T.type_alias do
+            T.any(
+              Cadenya::Objective::EpisodicMemory,
+              Cadenya::Internal::AnyHash
+            )
+          end
+
+        # The caller-supplied episodic key. Objectives created with the same key (for the
+        # same agent) share one episodic memory layer.
+        sig { returns(T.nilable(String)) }
+        attr_reader :key
+
+        sig { params(key: String).void }
+        attr_writer :key
+
+        # The episodic memory layer resolved (created or reused) for this objective's key.
+        # Populated by the system at objective creation.
+        sig { returns(T.nilable(String)) }
+        attr_reader :memory_layer_id
+
+        sig { params(memory_layer_id: String).void }
+        attr_writer :memory_layer_id
+
+        # Episodic is used to configure the episodic memory for the objective
+        sig do
+          params(key: String, memory_layer_id: String).returns(T.attached_class)
+        end
+        def self.new(
+          # The caller-supplied episodic key. Objectives created with the same key (for the
+          # same agent) share one episodic memory layer.
+          key: nil,
+          # The episodic memory layer resolved (created or reused) for this objective's key.
+          # Populated by the system at objective creation.
+          memory_layer_id: nil
+        )
+        end
+
+        sig { override.returns({ key: String, memory_layer_id: String }) }
+        def to_hash
         end
       end
     end

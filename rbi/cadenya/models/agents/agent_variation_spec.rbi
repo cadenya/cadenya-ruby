@@ -51,25 +51,6 @@ module Cadenya
         sig { params(description: String).void }
         attr_writer :description
 
-        # Enable episodic memory for objectives using this variation. When true, the
-        # system automatically creates a document namespace for each objective using the
-        # objective's episodic_key as the external_id, allowing the agent to store and
-        # retrieve documents specific to that episode.
-        sig { returns(T.nilable(T::Boolean)) }
-        attr_reader :enable_episodic_memory
-
-        sig { params(enable_episodic_memory: T::Boolean).void }
-        attr_writer :enable_episodic_memory
-
-        # How long episodic memories should be retained. After this duration, episodic
-        # document namespaces can be automatically cleaned up. If not set, episodic
-        # memories are retained indefinitely.
-        sig { returns(T.nilable(Integer)) }
-        attr_reader :episodic_memory_ttl
-
-        sig { params(episodic_memory_ttl: Integer).void }
-        attr_writer :episodic_memory_ttl
-
         # ModelConfig defines the model configuration for a variation
         sig do
           returns(T.nilable(Cadenya::Agents::AgentVariationSpecModelConfig))
@@ -139,8 +120,6 @@ module Cadenya
               Cadenya::Agents::AgentVariationSpecCompactionConfig::OrHash,
             constraints: Cadenya::Agents::AgentVariationSpecConstraints::OrHash,
             description: String,
-            enable_episodic_memory: T::Boolean,
-            episodic_memory_ttl: Integer,
             model_config:
               Cadenya::Agents::AgentVariationSpecModelConfig::OrHash,
             progressive_discovery:
@@ -158,15 +137,6 @@ module Cadenya
           constraints: nil,
           # Human-readable description of what this variation does or when it should be used
           description: nil,
-          # Enable episodic memory for objectives using this variation. When true, the
-          # system automatically creates a document namespace for each objective using the
-          # objective's episodic_key as the external_id, allowing the agent to store and
-          # retrieve documents specific to that episode.
-          enable_episodic_memory: nil,
-          # How long episodic memories should be retained. After this duration, episodic
-          # document namespaces can be automatically cleaned up. If not set, episodic
-          # memories are retained indefinitely.
-          episodic_memory_ttl: nil,
           # ModelConfig defines the model configuration for a variation
           model_config: nil,
           # ProgressiveDiscovery is used to indicate that the agent should automatically
@@ -199,8 +169,6 @@ module Cadenya
                 Cadenya::Agents::AgentVariationSpecCompactionConfig,
               constraints: Cadenya::Agents::AgentVariationSpecConstraints,
               description: String,
-              enable_episodic_memory: T::Boolean,
-              episodic_memory_ttl: Integer,
               model_config: Cadenya::Agents::AgentVariationSpecModelConfig,
               progressive_discovery:
                 Cadenya::Agents::AgentVariationSpecProgressiveDiscovery,

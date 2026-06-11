@@ -13,6 +13,7 @@ module Cadenya
         String workspace_id,
         agent_id: String,
         data: ::Hash[Symbol, top],
+        ?episodic_memory: Cadenya::ObjectiveCreateParams::EpisodicMemory,
         ?initial_message: String,
         ?memory_stack: ::Array[Cadenya::MemoryReference],
         ?metadata: Cadenya::CreateOperationMetadata,

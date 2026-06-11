@@ -5,6 +5,7 @@ module Cadenya
         workspace_id: String,
         agent_id: String,
         data: ::Hash[Symbol, top],
+        episodic_memory: Cadenya::ObjectiveCreateParams::EpisodicMemory,
         initial_message: String,
         memory_stack: ::Array[Cadenya::MemoryReference],
         metadata: Cadenya::CreateOperationMetadata,
@@ -23,6 +24,12 @@ module Cadenya
       attr_accessor agent_id: String
 
       attr_accessor data: ::Hash[Symbol, top]
+
+      attr_reader episodic_memory: Cadenya::ObjectiveCreateParams::EpisodicMemory?
+
+      def episodic_memory=: (
+        Cadenya::ObjectiveCreateParams::EpisodicMemory
+      ) -> Cadenya::ObjectiveCreateParams::EpisodicMemory
 
       attr_reader initial_message: String?
 
@@ -58,6 +65,7 @@ module Cadenya
         workspace_id: String,
         agent_id: String,
         data: ::Hash[Symbol, top],
+        ?episodic_memory: Cadenya::ObjectiveCreateParams::EpisodicMemory,
         ?initial_message: String,
         ?memory_stack: ::Array[Cadenya::MemoryReference],
         ?metadata: Cadenya::CreateOperationMetadata,
@@ -71,6 +79,7 @@ module Cadenya
         workspace_id: String,
         agent_id: String,
         data: ::Hash[Symbol, top],
+        episodic_memory: Cadenya::ObjectiveCreateParams::EpisodicMemory,
         initial_message: String,
         memory_stack: ::Array[Cadenya::MemoryReference],
         metadata: Cadenya::CreateOperationMetadata,
@@ -79,6 +88,18 @@ module Cadenya
         variation_id: String,
         request_options: Cadenya::RequestOptions
       }
+
+      type episodic_memory = { key: String, memory_layer_id: String }
+
+      class EpisodicMemory < Cadenya::Internal::Type::BaseModel
+        attr_reader key: String?
+
+        def key=: (String) -> String
+
+        def initialize: (?key: String) -> void
+
+        def to_hash: -> { key: String, memory_layer_id: String }
+      end
 
       type secret = { name: String, value: String }
 

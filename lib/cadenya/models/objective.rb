@@ -18,6 +18,12 @@ module Cadenya
       #   @return [Cadenya::Models::OperationMetadata]
       required :metadata, -> { Cadenya::OperationMetadata }
 
+      # @!attribute episodic_memory
+      #   Episodic is used to configure the episodic memory for the objective
+      #
+      #   @return [Cadenya::Models::Objective::EpisodicMemory, nil]
+      optional :episodic_memory, -> { Cadenya::Objective::EpisodicMemory }, api_name: :episodicMemory
+
       # @!attribute memory_stack
       #   Memory layers/entries to push onto this objective's memory stack on top of the
       #   baseline stack inherited from the selected variation.
@@ -110,7 +116,7 @@ module Cadenya
                  api_name: :userData
       end
 
-      # @!method initialize(config_snapshot:, initial_message:, metadata:, state:, system_prompt:, data: nil, info: nil, memory_stack: nil, output: nil, parent_objective_id: nil, secrets: nil, state_message: nil, user_data: nil)
+      # @!method initialize(config_snapshot:, initial_message:, metadata:, state:, system_prompt:, data: nil, episodic_memory: nil, info: nil, memory_stack: nil, output: nil, parent_objective_id: nil, secrets: nil, state_message: nil, user_data: nil)
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::Objective} for more details.
       #
@@ -129,6 +135,8 @@ module Cadenya
       #   @param system_prompt [String] system_prompt is read-only, derived from the selected variation's prompt
       #
       #   @param data [Hash{Symbol=>Object}] Arbitrary data for the objective
+      #
+      #   @param episodic_memory [Cadenya::Models::Objective::EpisodicMemory] Episodic is used to configure the episodic memory for the objective
       #
       #   @param info [Cadenya::Models::ObjectiveInfo] ObjectiveInfo provides read-only aggregated statistics about an objective's exec
       #
@@ -160,6 +168,35 @@ module Cadenya
 
         # @!method self.values
         #   @return [Array<Symbol>]
+      end
+
+      # @see Cadenya::Models::Objective#episodic_memory
+      class EpisodicMemory < Cadenya::Internal::Type::BaseModel
+        # @!attribute key
+        #   The caller-supplied episodic key. Objectives created with the same key (for the
+        #   same agent) share one episodic memory layer.
+        #
+        #   @return [String, nil]
+        optional :key, String
+
+        response_only do
+          # @!attribute memory_layer_id
+          #   The episodic memory layer resolved (created or reused) for this objective's key.
+          #   Populated by the system at objective creation.
+          #
+          #   @return [String, nil]
+          optional :memory_layer_id, String, api_name: :memoryLayerId
+        end
+
+        # @!method initialize(key: nil, memory_layer_id: nil)
+        #   Some parameter documentations has been truncated, see
+        #   {Cadenya::Models::Objective::EpisodicMemory} for more details.
+        #
+        #   Episodic is used to configure the episodic memory for the objective
+        #
+        #   @param key [String] The caller-supplied episodic key. Objectives created with the same key
+        #
+        #   @param memory_layer_id [String] The episodic memory layer resolved (created or reused) for this
       end
     end
   end
