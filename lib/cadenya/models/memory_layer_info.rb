@@ -12,6 +12,12 @@ module Cadenya
       optional :created_by, -> { Cadenya::Profile }, api_name: :createdBy
 
       response_only do
+        # @!attribute agent
+        #   Standard metadata for persistent, named resources (e.g., agents, tools, prompts)
+        #
+        #   @return [Cadenya::Models::ResourceMetadata, nil]
+        optional :agent, -> { Cadenya::ResourceMetadata }
+
         # @!attribute entry_count
         #   Number of entries currently in this layer.
         #
@@ -26,9 +32,11 @@ module Cadenya
         optional :last_used_at, Time, api_name: :lastUsedAt
       end
 
-      # @!method initialize(created_by: nil, entry_count: nil, last_used_at: nil)
+      # @!method initialize(agent: nil, created_by: nil, entry_count: nil, last_used_at: nil)
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::MemoryLayerInfo} for more details.
+      #
+      #   @param agent [Cadenya::Models::ResourceMetadata] Standard metadata for persistent, named resources (e.g., agents, tools, prompts)
       #
       #   @param created_by [Cadenya::Models::Profile] A profile identifies a user or non-human principal (such as an API key)
       #
