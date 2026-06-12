@@ -38,7 +38,7 @@ module Cadenya
       #
       # Lists all models in the workspace
       #
-      # @overload list(workspace_id, ai_provider_key_id: nil, bundle_key: nil, cursor: nil, include_info: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, state: nil, request_options: {})
+      # @overload list(workspace_id, ai_provider_key_id: nil, bundle_key: nil, cursor: nil, include_info: nil, is_assigned: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, state: nil, request_options: {})
       #
       # @param workspace_id [String] Workspace ID.
       #
@@ -49,6 +49,8 @@ module Cadenya
       # @param cursor [String] Pagination cursor from previous response
       #
       # @param include_info [Boolean] When true, populate each item's info (e.g. the AI provider), at the cost of
+      #
+      # @param is_assigned [Boolean] Filter models to only ones assigned to an active agent variation/agent.
       #
       # @param limit [Integer] Maximum number of results to return
       #
@@ -75,6 +77,7 @@ module Cadenya
             ai_provider_key_id: "aiProviderKeyId",
             bundle_key: "bundleKey",
             include_info: "includeInfo",
+            is_assigned: "isAssigned",
             sort_order: "sortOrder"
           ),
           page: Cadenya::Internal::CursorPagination,

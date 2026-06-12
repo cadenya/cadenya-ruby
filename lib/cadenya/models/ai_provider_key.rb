@@ -28,8 +28,10 @@ module Cadenya
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::AIProviderKey} for more details.
       #
-      #   AIProviderKey is a customer-provided (BYOK) credential for an AI provider,
-      #   scoped to a workspace. The secret value is never returned in responses.
+      #   AIProviderKey is a credential for an AI provider, scoped to a workspace. Most
+      #   keys are customer-provided (BYOK); Cadenya also provisions promotional keys (see
+      #   AIProviderKeyInfo.is_promotional), which cannot be modified or deleted by
+      #   account administrators. The secret value is never returned in responses.
       #
       #   @param metadata [Cadenya::Models::ResourceMetadata] Standard metadata for persistent, named resources (e.g., agents, tools, prompts)
       #
@@ -51,15 +53,27 @@ module Cadenya
           #
           #   @return [Integer, nil]
           optional :enabled_model_count, Integer, api_name: :enabledModelCount
+
+          # @!attribute is_promotional
+          #   Cadenya includes promotional keys (one for onboarding, and potentially more in
+          #   the future). These are not added or maintained by account administrators.
+          #
+          #   @return [Boolean, nil]
+          optional :is_promotional, Cadenya::Internal::Type::Boolean, api_name: :isPromotional
         end
 
-        # @!method initialize(disabled_model_count: nil, enabled_model_count: nil)
+        # @!method initialize(disabled_model_count: nil, enabled_model_count: nil, is_promotional: nil)
+        #   Some parameter documentations has been truncated, see
+        #   {Cadenya::Models::AIProviderKey::Info} for more details.
+        #
         #   AIProviderKeyInfo carries server-derived, read-only details about a key, for AI
         #   provider management UIs.
         #
         #   @param disabled_model_count [Integer] Number of disabled models provisioned on this key.
         #
         #   @param enabled_model_count [Integer] Number of enabled models provisioned on this key.
+        #
+        #   @param is_promotional [Boolean] Cadenya includes promotional keys (one for onboarding, and potentially more in t
       end
     end
   end

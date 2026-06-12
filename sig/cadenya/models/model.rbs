@@ -48,8 +48,8 @@ module Cadenya
       type info =
         {
           agent_variation_count: Integer,
-          ai_provider_key: Cadenya::ResourceMetadata,
-          provider: Cadenya::Models::Model::Info::provider
+          ai_provider_key: Cadenya::AIProviderKey,
+          last_used_at: Time
         }
 
       class Info < Cadenya::Internal::Type::BaseModel
@@ -57,40 +57,25 @@ module Cadenya
 
         def agent_variation_count=: (Integer) -> Integer
 
-        attr_reader ai_provider_key: Cadenya::ResourceMetadata?
+        attr_reader ai_provider_key: Cadenya::AIProviderKey?
 
-        def ai_provider_key=: (
-          Cadenya::ResourceMetadata
-        ) -> Cadenya::ResourceMetadata
+        def ai_provider_key=: (Cadenya::AIProviderKey) -> Cadenya::AIProviderKey
 
-        attr_reader provider: Cadenya::Models::Model::Info::provider?
+        attr_reader last_used_at: Time?
 
-        def provider=: (
-          Cadenya::Models::Model::Info::provider
-        ) -> Cadenya::Models::Model::Info::provider
+        def last_used_at=: (Time) -> Time
 
         def initialize: (
           ?agent_variation_count: Integer,
-          ?ai_provider_key: Cadenya::ResourceMetadata,
-          ?provider: Cadenya::Models::Model::Info::provider
+          ?ai_provider_key: Cadenya::AIProviderKey,
+          ?last_used_at: Time
         ) -> void
 
         def to_hash: -> {
           agent_variation_count: Integer,
-          ai_provider_key: Cadenya::ResourceMetadata,
-          provider: Cadenya::Models::Model::Info::provider
+          ai_provider_key: Cadenya::AIProviderKey,
+          last_used_at: Time
         }
-
-        type provider = :AI_PROVIDER_UNSPECIFIED | :AI_PROVIDER_OPENROUTER
-
-        module Provider
-          extend Cadenya::Internal::Type::Enum
-
-          AI_PROVIDER_UNSPECIFIED: :AI_PROVIDER_UNSPECIFIED
-          AI_PROVIDER_OPENROUTER: :AI_PROVIDER_OPENROUTER
-
-          def self?.values: -> ::Array[Cadenya::Models::Model::Info::provider]
-        end
       end
     end
   end

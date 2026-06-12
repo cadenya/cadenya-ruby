@@ -38,6 +38,14 @@ module Cadenya
       #   @return [Boolean, nil]
       optional :include_info, Cadenya::Internal::Type::Boolean
 
+      # @!attribute is_assigned
+      #   Filter models to only ones assigned to an active agent variation/agent. Draft
+      #   agents count as assigned; archived agents do not. Assignment does not imply
+      #   recent traffic — see ModelInfo.last_used_at for that.
+      #
+      #   @return [Boolean, nil]
+      optional :is_assigned, Cadenya::Internal::Type::Boolean
+
       # @!attribute limit
       #   Maximum number of results to return
       #
@@ -68,7 +76,7 @@ module Cadenya
       #   @return [Symbol, Cadenya::Models::ModelListParams::State, nil]
       optional :state, enum: -> { Cadenya::ModelListParams::State }
 
-      # @!method initialize(workspace_id:, ai_provider_key_id: nil, bundle_key: nil, cursor: nil, include_info: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, state: nil, request_options: {})
+      # @!method initialize(workspace_id:, ai_provider_key_id: nil, bundle_key: nil, cursor: nil, include_info: nil, is_assigned: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, state: nil, request_options: {})
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::ModelListParams} for more details.
       #
@@ -81,6 +89,8 @@ module Cadenya
       #   @param cursor [String] Pagination cursor from previous response
       #
       #   @param include_info [Boolean] When true, populate each item's info (e.g. the AI provider), at the cost of
+      #
+      #   @param is_assigned [Boolean] Filter models to only ones assigned to an active agent variation/agent.
       #
       #   @param limit [Integer] Maximum number of results to return
       #

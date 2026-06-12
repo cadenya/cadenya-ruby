@@ -7,6 +7,7 @@ module Cadenya
         include_info: bool,
         limit: Integer,
         prefix: String,
+        promotional: bool,
         query: String,
         sort_order: String
       }
@@ -34,6 +35,10 @@ module Cadenya
 
       def prefix=: (String) -> String
 
+      attr_reader promotional: bool?
+
+      def promotional=: (bool) -> bool
+
       attr_reader query: String?
 
       def query=: (String) -> String
@@ -48,6 +53,7 @@ module Cadenya
         ?include_info: bool,
         ?limit: Integer,
         ?prefix: String,
+        ?promotional: bool,
         ?query: String,
         ?sort_order: String,
         ?request_options: Cadenya::request_opts
@@ -59,6 +65,7 @@ module Cadenya
         include_info: bool,
         limit: Integer,
         prefix: String,
+        promotional: bool,
         query: String,
         sort_order: String,
         request_options: Cadenya::RequestOptions

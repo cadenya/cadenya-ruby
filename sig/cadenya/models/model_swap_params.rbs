@@ -31,12 +31,21 @@ module Cadenya
         request_options: Cadenya::RequestOptions
       }
 
-      type model_swap = { current_model_id: String, next_model_id: String }
+      type model_swap =
+        {
+          current_model_id: String,
+          disable_current_after_swap: bool,
+          next_model_id: String
+        }
 
       class ModelSwap < Cadenya::Internal::Type::BaseModel
         attr_reader current_model_id: String?
 
         def current_model_id=: (String) -> String
+
+        attr_reader disable_current_after_swap: bool?
+
+        def disable_current_after_swap=: (bool) -> bool
 
         attr_reader next_model_id: String?
 
@@ -44,10 +53,15 @@ module Cadenya
 
         def initialize: (
           ?current_model_id: String,
+          ?disable_current_after_swap: bool,
           ?next_model_id: String
         ) -> void
 
-        def to_hash: -> { current_model_id: String, next_model_id: String }
+        def to_hash: -> {
+          current_model_id: String,
+          disable_current_after_swap: bool,
+          next_model_id: String
+        }
       end
     end
   end
