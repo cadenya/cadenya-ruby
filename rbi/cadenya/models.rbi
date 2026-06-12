@@ -204,6 +204,8 @@ module Cadenya
 
   ProfileSpec = Cadenya::Models::ProfileSpec
 
+  ProfileWhoamiParams = Cadenya::Models::ProfileWhoamiParams
+
   ResourceMetadata = Cadenya::Models::ResourceMetadata
 
   RotateWebhookSigningKeyResponse =

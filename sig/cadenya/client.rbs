@@ -16,6 +16,8 @@ module Cadenya
 
     attr_reader account: Cadenya::Resources::Account
 
+    attr_reader profiles: Cadenya::Resources::Profiles
+
     attr_reader agents: Cadenya::Resources::Agents
 
     attr_reader objectives: Cadenya::Resources::Objectives
