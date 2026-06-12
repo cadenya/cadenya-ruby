@@ -24,6 +24,11 @@ module Cadenya
     sig { returns(Cadenya::Resources::Account) }
     attr_reader :account
 
+    # Operations on profiles, the account-level principals (users, API keys, system)
+    # that authenticate against the API.
+    sig { returns(Cadenya::Resources::Profiles) }
+    attr_reader :profiles
+
     # Manage AI agents within a workspace. Agents define AI behavior and tool access.
     sig { returns(Cadenya::Resources::Agents) }
     attr_reader :agents
