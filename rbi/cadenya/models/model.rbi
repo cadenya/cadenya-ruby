@@ -100,36 +100,42 @@ module Cadenya
         sig { params(agent_variation_count: Integer).void }
         attr_writer :agent_variation_count
 
-        # Standard metadata for persistent, named resources (e.g., agents, tools, prompts)
-        sig { returns(T.nilable(Cadenya::ResourceMetadata)) }
+        # AIProviderKey is a credential for an AI provider, scoped to a workspace. Most
+        # keys are customer-provided (BYOK); Cadenya also provisions promotional keys (see
+        # AIProviderKeyInfo.is_promotional), which cannot be modified or deleted by
+        # account administrators. The secret value is never returned in responses.
+        sig { returns(T.nilable(Cadenya::AIProviderKey)) }
         attr_reader :ai_provider_key
 
-        sig { params(ai_provider_key: Cadenya::ResourceMetadata::OrHash).void }
+        sig { params(ai_provider_key: Cadenya::AIProviderKey::OrHash).void }
         attr_writer :ai_provider_key
 
-        # The AI provider this model routes through (via its provider key).
-        sig { returns(T.nilable(Cadenya::Model::Info::Provider::TaggedSymbol)) }
-        attr_reader :provider
+        # Represents the last time this model was used in an agent objective
+        sig { returns(T.nilable(Time)) }
+        attr_reader :last_used_at
 
-        sig { params(provider: Cadenya::Model::Info::Provider::OrSymbol).void }
-        attr_writer :provider
+        sig { params(last_used_at: Time).void }
+        attr_writer :last_used_at
 
         # ModelInfo carries server-derived, read-only details about a model.
         sig do
           params(
             agent_variation_count: Integer,
-            ai_provider_key: Cadenya::ResourceMetadata::OrHash,
-            provider: Cadenya::Model::Info::Provider::OrSymbol
+            ai_provider_key: Cadenya::AIProviderKey::OrHash,
+            last_used_at: Time
           ).returns(T.attached_class)
         end
         def self.new(
           # Number of agent variations currently provisioned on this model. Useful for
           # previewing how many variations a swap would affect.
           agent_variation_count: nil,
-          # Standard metadata for persistent, named resources (e.g., agents, tools, prompts)
+          # AIProviderKey is a credential for an AI provider, scoped to a workspace. Most
+          # keys are customer-provided (BYOK); Cadenya also provisions promotional keys (see
+          # AIProviderKeyInfo.is_promotional), which cannot be modified or deleted by
+          # account administrators. The secret value is never returned in responses.
           ai_provider_key: nil,
-          # The AI provider this model routes through (via its provider key).
-          provider: nil
+          # Represents the last time this model was used in an agent objective
+          last_used_at: nil
         )
         end
 
@@ -137,40 +143,12 @@ module Cadenya
           override.returns(
             {
               agent_variation_count: Integer,
-              ai_provider_key: Cadenya::ResourceMetadata,
-              provider: Cadenya::Model::Info::Provider::TaggedSymbol
+              ai_provider_key: Cadenya::AIProviderKey,
+              last_used_at: Time
             }
           )
         end
         def to_hash
-        end
-
-        # The AI provider this model routes through (via its provider key).
-        module Provider
-          extend Cadenya::Internal::Type::Enum
-
-          TaggedSymbol =
-            T.type_alias { T.all(Symbol, Cadenya::Model::Info::Provider) }
-          OrSymbol = T.type_alias { T.any(Symbol, String) }
-
-          AI_PROVIDER_UNSPECIFIED =
-            T.let(
-              :AI_PROVIDER_UNSPECIFIED,
-              Cadenya::Model::Info::Provider::TaggedSymbol
-            )
-          AI_PROVIDER_OPENROUTER =
-            T.let(
-              :AI_PROVIDER_OPENROUTER,
-              Cadenya::Model::Info::Provider::TaggedSymbol
-            )
-
-          sig do
-            override.returns(
-              T::Array[Cadenya::Model::Info::Provider::TaggedSymbol]
-            )
-          end
-          def self.values
-          end
         end
       end
     end

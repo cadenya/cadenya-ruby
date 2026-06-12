@@ -29,7 +29,11 @@ module Cadenya
       }
 
       type info =
-        { disabled_model_count: Integer, enabled_model_count: Integer }
+        {
+          disabled_model_count: Integer,
+          enabled_model_count: Integer,
+          is_promotional: bool
+        }
 
       class Info < Cadenya::Internal::Type::BaseModel
         attr_reader disabled_model_count: Integer?
@@ -40,14 +44,20 @@ module Cadenya
 
         def enabled_model_count=: (Integer) -> Integer
 
+        attr_reader is_promotional: bool?
+
+        def is_promotional=: (bool) -> bool
+
         def initialize: (
           ?disabled_model_count: Integer,
-          ?enabled_model_count: Integer
+          ?enabled_model_count: Integer,
+          ?is_promotional: bool
         ) -> void
 
         def to_hash: -> {
           disabled_model_count: Integer,
-          enabled_model_count: Integer
+          enabled_model_count: Integer,
+          is_promotional: bool
         }
       end
     end

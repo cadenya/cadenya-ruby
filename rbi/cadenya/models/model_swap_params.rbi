@@ -68,6 +68,13 @@ module Cadenya
         sig { params(current_model_id: String).void }
         attr_writer :current_model_id
 
+        # Whether to disable the current model after the swap.
+        sig { returns(T.nilable(T::Boolean)) }
+        attr_reader :disable_current_after_swap
+
+        sig { params(disable_current_after_swap: T::Boolean).void }
+        attr_writer :disable_current_after_swap
+
         # The model to move variations to. Accepts an id or "external_id:" slug.
         sig { returns(T.nilable(String)) }
         attr_reader :next_model_id
@@ -76,20 +83,30 @@ module Cadenya
         attr_writer :next_model_id
 
         sig do
-          params(current_model_id: String, next_model_id: String).returns(
-            T.attached_class
-          )
+          params(
+            current_model_id: String,
+            disable_current_after_swap: T::Boolean,
+            next_model_id: String
+          ).returns(T.attached_class)
         end
         def self.new(
           # The model variations are currently on. Accepts an id or "external_id:" slug.
           current_model_id: nil,
+          # Whether to disable the current model after the swap.
+          disable_current_after_swap: nil,
           # The model to move variations to. Accepts an id or "external_id:" slug.
           next_model_id: nil
         )
         end
 
         sig do
-          override.returns({ current_model_id: String, next_model_id: String })
+          override.returns(
+            {
+              current_model_id: String,
+              disable_current_after_swap: T::Boolean,
+              next_model_id: String
+            }
+          )
         end
         def to_hash
         end

@@ -37,6 +37,14 @@ module Cadenya
       #   @return [String, nil]
       optional :prefix, String
 
+      # @!attribute promotional
+      #   When true, return only promotional keys (provided by Cadenya, e.g. for
+      #   onboarding). Defaults to returning all keys, customer-provided and promotional
+      #   alike.
+      #
+      #   @return [Boolean, nil]
+      optional :promotional, Cadenya::Internal::Type::Boolean
+
       # @!attribute query
       #   Free-form search query
       #
@@ -49,7 +57,7 @@ module Cadenya
       #   @return [String, nil]
       optional :sort_order, String
 
-      # @!method initialize(workspace_id:, cursor: nil, include_info: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, request_options: {})
+      # @!method initialize(workspace_id:, cursor: nil, include_info: nil, limit: nil, prefix: nil, promotional: nil, query: nil, sort_order: nil, request_options: {})
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::AIProviderKeyListParams} for more details.
       #
@@ -62,6 +70,8 @@ module Cadenya
       #   @param limit [Integer] Maximum number of results to return
       #
       #   @param prefix [String] Filter expression (query param: prefix)
+      #
+      #   @param promotional [Boolean] When true, return only promotional keys (provided by Cadenya, e.g. for
       #
       #   @param query [String] Free-form search query
       #

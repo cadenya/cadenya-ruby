@@ -34,14 +34,24 @@ module Cadenya
         #   @return [String, nil]
         optional :current_model_id, String, api_name: :currentModelId
 
+        # @!attribute disable_current_after_swap
+        #   Whether to disable the current model after the swap.
+        #
+        #   @return [Boolean, nil]
+        optional :disable_current_after_swap,
+                 Cadenya::Internal::Type::Boolean,
+                 api_name: :disableCurrentAfterSwap
+
         # @!attribute next_model_id
         #   The model to move variations to. Accepts an id or "external_id:" slug.
         #
         #   @return [String, nil]
         optional :next_model_id, String, api_name: :nextModelId
 
-        # @!method initialize(current_model_id: nil, next_model_id: nil)
+        # @!method initialize(current_model_id: nil, disable_current_after_swap: nil, next_model_id: nil)
         #   @param current_model_id [String] The model variations are currently on. Accepts an id or "external_id:" slug.
+        #
+        #   @param disable_current_after_swap [Boolean] Whether to disable the current model after the swap.
         #
         #   @param next_model_id [String] The model to move variations to. Accepts an id or "external_id:" slug.
       end
