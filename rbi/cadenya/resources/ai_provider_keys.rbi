@@ -78,6 +78,7 @@ module Cadenya
           include_info: T::Boolean,
           limit: Integer,
           prefix: String,
+          promotional: T::Boolean,
           query: String,
           sort_order: String,
           request_options: Cadenya::RequestOptions::OrHash
@@ -95,6 +96,10 @@ module Cadenya
         limit: nil,
         # Filter expression (query param: prefix)
         prefix: nil,
+        # When true, return only promotional keys (provided by Cadenya, e.g. for
+        # onboarding). Defaults to returning all keys, customer-provided and promotional
+        # alike.
+        promotional: nil,
         # Free-form search query
         query: nil,
         # Sort order for results (asc or desc by creation time)

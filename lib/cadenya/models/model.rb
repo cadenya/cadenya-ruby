@@ -69,19 +69,22 @@ module Cadenya
           optional :agent_variation_count, Integer, api_name: :agentVariationCount
 
           # @!attribute ai_provider_key
-          #   Standard metadata for persistent, named resources (e.g., agents, tools, prompts)
+          #   AIProviderKey is a credential for an AI provider, scoped to a workspace. Most
+          #   keys are customer-provided (BYOK); Cadenya also provisions promotional keys (see
+          #   AIProviderKeyInfo.is_promotional), which cannot be modified or deleted by
+          #   account administrators. The secret value is never returned in responses.
           #
-          #   @return [Cadenya::Models::ResourceMetadata, nil]
-          optional :ai_provider_key, -> { Cadenya::ResourceMetadata }, api_name: :aiProviderKey
+          #   @return [Cadenya::Models::AIProviderKey, nil]
+          optional :ai_provider_key, -> { Cadenya::AIProviderKey }, api_name: :aiProviderKey
 
-          # @!attribute provider
-          #   The AI provider this model routes through (via its provider key).
+          # @!attribute last_used_at
+          #   Represents the last time this model was used in an agent objective
           #
-          #   @return [Symbol, Cadenya::Models::Model::Info::Provider, nil]
-          optional :provider, enum: -> { Cadenya::Model::Info::Provider }
+          #   @return [Time, nil]
+          optional :last_used_at, Time, api_name: :lastUsedAt
         end
 
-        # @!method initialize(agent_variation_count: nil, ai_provider_key: nil, provider: nil)
+        # @!method initialize(agent_variation_count: nil, ai_provider_key: nil, last_used_at: nil)
         #   Some parameter documentations has been truncated, see
         #   {Cadenya::Models::Model::Info} for more details.
         #
@@ -89,22 +92,9 @@ module Cadenya
         #
         #   @param agent_variation_count [Integer] Number of agent variations currently provisioned on this model. Useful for
         #
-        #   @param ai_provider_key [Cadenya::Models::ResourceMetadata] Standard metadata for persistent, named resources (e.g., agents, tools, prompts)
+        #   @param ai_provider_key [Cadenya::Models::AIProviderKey] AIProviderKey is a credential for an AI provider, scoped to a workspace.
         #
-        #   @param provider [Symbol, Cadenya::Models::Model::Info::Provider] The AI provider this model routes through (via its provider key).
-
-        # The AI provider this model routes through (via its provider key).
-        #
-        # @see Cadenya::Models::Model::Info#provider
-        module Provider
-          extend Cadenya::Internal::Type::Enum
-
-          AI_PROVIDER_UNSPECIFIED = :AI_PROVIDER_UNSPECIFIED
-          AI_PROVIDER_OPENROUTER = :AI_PROVIDER_OPENROUTER
-
-          # @!method self.values
-          #   @return [Array<Symbol>]
-        end
+        #   @param last_used_at [Time] Represents the last time this model was used in an agent objective
       end
     end
   end

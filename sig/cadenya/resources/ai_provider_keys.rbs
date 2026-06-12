@@ -29,6 +29,7 @@ module Cadenya
         ?include_info: bool,
         ?limit: Integer,
         ?prefix: String,
+        ?promotional: bool,
         ?query: String,
         ?sort_order: String,
         ?request_options: Cadenya::request_opts

@@ -13,6 +13,7 @@ module Cadenya
         ?bundle_key: String,
         ?cursor: String,
         ?include_info: bool,
+        ?is_assigned: bool,
         ?limit: Integer,
         ?prefix: String,
         ?query: String,

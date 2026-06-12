@@ -44,6 +44,15 @@ module Cadenya
       sig { params(include_info: T::Boolean).void }
       attr_writer :include_info
 
+      # Filter models to only ones assigned to an active agent variation/agent. Draft
+      # agents count as assigned; archived agents do not. Assignment does not imply
+      # recent traffic — see ModelInfo.last_used_at for that.
+      sig { returns(T.nilable(T::Boolean)) }
+      attr_reader :is_assigned
+
+      sig { params(is_assigned: T::Boolean).void }
+      attr_writer :is_assigned
+
       # Maximum number of results to return
       sig { returns(T.nilable(Integer)) }
       attr_reader :limit
@@ -86,6 +95,7 @@ module Cadenya
           bundle_key: String,
           cursor: String,
           include_info: T::Boolean,
+          is_assigned: T::Boolean,
           limit: Integer,
           prefix: String,
           query: String,
@@ -106,6 +116,10 @@ module Cadenya
         # When true, populate each item's info (e.g. the AI provider), at the cost of
         # extra lookups.
         include_info: nil,
+        # Filter models to only ones assigned to an active agent variation/agent. Draft
+        # agents count as assigned; archived agents do not. Assignment does not imply
+        # recent traffic — see ModelInfo.last_used_at for that.
+        is_assigned: nil,
         # Maximum number of results to return
         limit: nil,
         # Filter by name prefix
@@ -128,6 +142,7 @@ module Cadenya
             bundle_key: String,
             cursor: String,
             include_info: T::Boolean,
+            is_assigned: T::Boolean,
             limit: Integer,
             prefix: String,
             query: String,
