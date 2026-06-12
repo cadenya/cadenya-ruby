@@ -29,6 +29,11 @@ module Cadenya
     # @return [Cadenya::Resources::Account]
     attr_reader :account
 
+    # Operations on profiles, the account-level principals (users, API keys, system)
+    # that authenticate against the API.
+    # @return [Cadenya::Resources::Profiles]
+    attr_reader :profiles
+
     # Manage AI agents within a workspace. Agents define AI behavior and tool access.
     # @return [Cadenya::Resources::Agents]
     attr_reader :agents
@@ -168,6 +173,7 @@ module Cadenya
 
       @ai_provider_keys = Cadenya::Resources::AIProviderKeys.new(client: self)
       @account = Cadenya::Resources::Account.new(client: self)
+      @profiles = Cadenya::Resources::Profiles.new(client: self)
       @agents = Cadenya::Resources::Agents.new(client: self)
       @objectives = Cadenya::Resources::Objectives.new(client: self)
       @memory_layers = Cadenya::Resources::MemoryLayers.new(client: self)
