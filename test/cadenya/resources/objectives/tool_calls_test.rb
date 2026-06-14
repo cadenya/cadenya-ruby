@@ -24,6 +24,7 @@ class Cadenya::Test::Resources::Objectives::ToolCallsTest < Cadenya::Test::Resou
         info: Cadenya::Objectives::ObjectiveToolCallInfo,
         metadata: Cadenya::OperationMetadata,
         status: Cadenya::Objectives::ObjectiveToolCallWithResult::Status,
+        resolved_secrets: ^(Cadenya::Internal::Type::ArrayOf[Cadenya::Objectives::ResolvedSecret]) | nil,
         result: Cadenya::Objectives::ObjectiveToolCallResult | nil
       }
     end

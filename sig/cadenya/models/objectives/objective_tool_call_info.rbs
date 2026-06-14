@@ -4,7 +4,12 @@ module Cadenya
 
     module Objectives
       type objective_tool_call_info =
-        { created_by: Cadenya::Profile, objective: Cadenya::OperationMetadata }
+        {
+          created_by: Cadenya::Profile,
+          objective: Cadenya::OperationMetadata,
+          tool: Cadenya::BareMetadata,
+          tool_set: Cadenya::BareMetadata
+        }
 
       class ObjectiveToolCallInfo < Cadenya::Internal::Type::BaseModel
         attr_reader created_by: Cadenya::Profile?
@@ -17,14 +22,26 @@ module Cadenya
           Cadenya::OperationMetadata
         ) -> Cadenya::OperationMetadata
 
+        attr_reader tool: Cadenya::BareMetadata?
+
+        def tool=: (Cadenya::BareMetadata) -> Cadenya::BareMetadata
+
+        attr_reader tool_set: Cadenya::BareMetadata?
+
+        def tool_set=: (Cadenya::BareMetadata) -> Cadenya::BareMetadata
+
         def initialize: (
           ?created_by: Cadenya::Profile,
-          ?objective: Cadenya::OperationMetadata
+          ?objective: Cadenya::OperationMetadata,
+          ?tool: Cadenya::BareMetadata,
+          ?tool_set: Cadenya::BareMetadata
         ) -> void
 
         def to_hash: -> {
           created_by: Cadenya::Profile,
-          objective: Cadenya::OperationMetadata
+          objective: Cadenya::OperationMetadata,
+          tool: Cadenya::BareMetadata,
+          tool_set: Cadenya::BareMetadata
         }
       end
     end
