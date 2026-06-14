@@ -16,6 +16,14 @@ module Cadenya
       sig { returns(Cadenya::Resources::ToolSets::Tools) }
       attr_reader :tools
 
+      # Manage tool sets and the tools they contain. Tool sets group related tools, and
+      # tools define specific capabilities available to agents.
+      #
+      # When a tool set is managed, only API key actors can modify its tools; human
+      # (profile) actors cannot.
+      sig { returns(Cadenya::Resources::ToolSets::Secrets) }
+      attr_reader :secrets
+
       # Creates a new tool set in the workspace
       sig do
         params(

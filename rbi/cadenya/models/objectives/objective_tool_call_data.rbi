@@ -38,6 +38,20 @@ module Cadenya
         sig { params(memo: String).void }
         attr_writer :memo
 
+        # List of resolved secrets used by the tool call
+        sig do
+          returns(T.nilable(T::Array[Cadenya::Objectives::ResolvedSecret]))
+        end
+        attr_reader :resolved_secrets
+
+        sig do
+          params(
+            resolved_secrets:
+              T::Array[Cadenya::Objectives::ResolvedSecret::OrHash]
+          ).void
+        end
+        attr_writer :resolved_secrets
+
         # A profile identifies a user or non-human principal (such as an API key) at the
         # account level. Profiles are account-scoped and can be granted access to multiple
         # workspaces.
@@ -52,6 +66,8 @@ module Cadenya
             callable: Cadenya::CallableTool::OrHash,
             arguments: T::Hash[Symbol, T.anything],
             memo: String,
+            resolved_secrets:
+              T::Array[Cadenya::Objectives::ResolvedSecret::OrHash],
             status_changed_by: Cadenya::Profile::OrHash
           ).returns(T.attached_class)
         end
@@ -65,6 +81,8 @@ module Cadenya
           arguments: nil,
           # A memo supplied by the reviewer when denying the tool call
           memo: nil,
+          # List of resolved secrets used by the tool call
+          resolved_secrets: nil,
           # A profile identifies a user or non-human principal (such as an API key) at the
           # account level. Profiles are account-scoped and can be granted access to multiple
           # workspaces.
@@ -78,6 +96,7 @@ module Cadenya
               callable: Cadenya::CallableTool,
               arguments: T::Hash[Symbol, T.anything],
               memo: String,
+              resolved_secrets: T::Array[Cadenya::Objectives::ResolvedSecret],
               status_changed_by: Cadenya::Profile
             }
           )
