@@ -26,6 +26,14 @@ module Cadenya
         optional :memo, String
 
         response_only do
+          # @!attribute resolved_secrets
+          #   List of resolved secrets used by the tool call
+          #
+          #   @return [Array<Cadenya::Models::Objectives::ResolvedSecret>, nil]
+          optional :resolved_secrets,
+                   -> { Cadenya::Internal::Type::ArrayOf[Cadenya::Objectives::ResolvedSecret] },
+                   api_name: :resolvedSecrets
+
           # @!attribute status_changed_by
           #   A profile identifies a user or non-human principal (such as an API key) at the
           #   account level. Profiles are account-scoped and can be granted access to multiple
@@ -35,7 +43,7 @@ module Cadenya
           optional :status_changed_by, -> { Cadenya::Profile }, api_name: :statusChangedBy
         end
 
-        # @!method initialize(callable:, arguments: nil, memo: nil, status_changed_by: nil)
+        # @!method initialize(callable:, arguments: nil, memo: nil, resolved_secrets: nil, status_changed_by: nil)
         #   Some parameter documentations has been truncated, see
         #   {Cadenya::Models::Objectives::ObjectiveToolCallData} for more details.
         #
@@ -44,6 +52,8 @@ module Cadenya
         #   @param arguments [Hash{Symbol=>Object}] The arguments passed to the tool
         #
         #   @param memo [String] A memo supplied by the reviewer when denying the tool call
+        #
+        #   @param resolved_secrets [Array<Cadenya::Models::Objectives::ResolvedSecret>] List of resolved secrets used by the tool call
         #
         #   @param status_changed_by [Cadenya::Models::Profile] A profile identifies a user or non-human principal (such as an API key)
       end

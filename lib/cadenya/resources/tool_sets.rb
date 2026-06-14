@@ -16,6 +16,14 @@ module Cadenya
       # @return [Cadenya::Resources::ToolSets::Tools]
       attr_reader :tools
 
+      # Manage tool sets and the tools they contain. Tool sets group related tools, and
+      # tools define specific capabilities available to agents.
+      #
+      # When a tool set is managed, only API key actors can modify its tools; human
+      # (profile) actors cannot.
+      # @return [Cadenya::Resources::ToolSets::Secrets]
+      attr_reader :secrets
+
       # Some parameter documentations has been truncated, see
       # {Cadenya::Models::ToolSetCreateParams} for more details.
       #
@@ -333,6 +341,7 @@ module Cadenya
       def initialize(client:)
         @client = client
         @tools = Cadenya::Resources::ToolSets::Tools.new(client: client)
+        @secrets = Cadenya::Resources::ToolSets::Secrets.new(client: client)
       end
     end
   end

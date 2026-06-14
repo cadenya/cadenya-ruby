@@ -3,6 +3,8 @@ module Cadenya
     class ToolSets
       attr_reader tools: Cadenya::Resources::ToolSets::Tools
 
+      attr_reader secrets: Cadenya::Resources::ToolSets::Secrets
+
       def create: (
         String workspace_id,
         metadata: Cadenya::CreateResourceMetadata,

@@ -8,6 +8,7 @@ module Cadenya
           callable: Cadenya::CallableTool,
           arguments: ::Hash[Symbol, top],
           memo: String,
+          resolved_secrets: ::Array[Cadenya::Objectives::ResolvedSecret],
           status_changed_by: Cadenya::Profile
         }
 
@@ -22,6 +23,12 @@ module Cadenya
 
         def memo=: (String) -> String
 
+        attr_reader resolved_secrets: ::Array[Cadenya::Objectives::ResolvedSecret]?
+
+        def resolved_secrets=: (
+          ::Array[Cadenya::Objectives::ResolvedSecret]
+        ) -> ::Array[Cadenya::Objectives::ResolvedSecret]
+
         attr_reader status_changed_by: Cadenya::Profile?
 
         def status_changed_by=: (Cadenya::Profile) -> Cadenya::Profile
@@ -30,6 +37,7 @@ module Cadenya
           callable: Cadenya::CallableTool,
           ?arguments: ::Hash[Symbol, top],
           ?memo: String,
+          ?resolved_secrets: ::Array[Cadenya::Objectives::ResolvedSecret],
           ?status_changed_by: Cadenya::Profile
         ) -> void
 
@@ -37,6 +45,7 @@ module Cadenya
           callable: Cadenya::CallableTool,
           arguments: ::Hash[Symbol, top],
           memo: String,
+          resolved_secrets: ::Array[Cadenya::Objectives::ResolvedSecret],
           status_changed_by: Cadenya::Profile
         }
       end

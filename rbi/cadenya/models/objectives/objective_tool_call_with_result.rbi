@@ -53,6 +53,20 @@ module Cadenya
         end
         attr_accessor :execution_status
 
+        # List of resolved secrets used by the tool call
+        sig do
+          returns(T.nilable(T::Array[Cadenya::Objectives::ResolvedSecret]))
+        end
+        attr_reader :resolved_secrets
+
+        sig do
+          params(
+            resolved_secrets:
+              T::Array[Cadenya::Objectives::ResolvedSecret::OrHash]
+          ).void
+        end
+        attr_writer :resolved_secrets
+
         # ObjectiveToolCallResult is the content a tool returned after execution. Tools
         # can return multiple content blocks, and blocks can be multi-modal (text, image,
         # audio). Media blocks are stored by Cadenya and served as short-lived signed URLs
@@ -78,6 +92,8 @@ module Cadenya
             metadata: Cadenya::OperationMetadata::OrHash,
             status:
               Cadenya::Objectives::ObjectiveToolCallWithResult::Status::OrSymbol,
+            resolved_secrets:
+              T::Array[Cadenya::Objectives::ResolvedSecret::OrHash],
             result: Cadenya::Objectives::ObjectiveToolCallResult::OrHash
           ).returns(T.attached_class)
         end
@@ -90,6 +106,8 @@ module Cadenya
           metadata:,
           # Current status of the tool call
           status:,
+          # List of resolved secrets used by the tool call
+          resolved_secrets: nil,
           # ObjectiveToolCallResult is the content a tool returned after execution. Tools
           # can return multiple content blocks, and blocks can be multi-modal (text, image,
           # audio). Media blocks are stored by Cadenya and served as short-lived signed URLs
@@ -108,6 +126,7 @@ module Cadenya
               metadata: Cadenya::OperationMetadata,
               status:
                 Cadenya::Objectives::ObjectiveToolCallWithResult::Status::TaggedSymbol,
+              resolved_secrets: T::Array[Cadenya::Objectives::ResolvedSecret],
               result: Cadenya::Objectives::ObjectiveToolCallResult
             }
           )

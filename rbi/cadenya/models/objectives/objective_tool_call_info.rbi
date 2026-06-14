@@ -31,10 +31,36 @@ module Cadenya
         sig { params(objective: Cadenya::OperationMetadata::OrHash).void }
         attr_writer :objective
 
+        # BareMetadata contains the minimal metadata for a resource: the ID and an
+        # optional human-readable name. These are used for reference fields where the full
+        # metadata (account scoping, timestamps, labels, external IDs) is not needed —
+        # e.g., the tool references inside an agent variation spec or the tools assigned
+        # to an objective. Both fields are server-populated; clients provide IDs through
+        # sibling fields rather than by constructing a BareMetadata themselves.
+        sig { returns(T.nilable(Cadenya::BareMetadata)) }
+        attr_reader :tool
+
+        sig { params(tool: Cadenya::BareMetadata::OrHash).void }
+        attr_writer :tool
+
+        # BareMetadata contains the minimal metadata for a resource: the ID and an
+        # optional human-readable name. These are used for reference fields where the full
+        # metadata (account scoping, timestamps, labels, external IDs) is not needed —
+        # e.g., the tool references inside an agent variation spec or the tools assigned
+        # to an objective. Both fields are server-populated; clients provide IDs through
+        # sibling fields rather than by constructing a BareMetadata themselves.
+        sig { returns(T.nilable(Cadenya::BareMetadata)) }
+        attr_reader :tool_set
+
+        sig { params(tool_set: Cadenya::BareMetadata::OrHash).void }
+        attr_writer :tool_set
+
         sig do
           params(
             created_by: Cadenya::Profile::OrHash,
-            objective: Cadenya::OperationMetadata::OrHash
+            objective: Cadenya::OperationMetadata::OrHash,
+            tool: Cadenya::BareMetadata::OrHash,
+            tool_set: Cadenya::BareMetadata::OrHash
           ).returns(T.attached_class)
         end
         def self.new(
@@ -44,7 +70,21 @@ module Cadenya
           created_by: nil,
           # Metadata for ephemeral operations and activities (e.g., objectives, executions,
           # runs)
-          objective: nil
+          objective: nil,
+          # BareMetadata contains the minimal metadata for a resource: the ID and an
+          # optional human-readable name. These are used for reference fields where the full
+          # metadata (account scoping, timestamps, labels, external IDs) is not needed —
+          # e.g., the tool references inside an agent variation spec or the tools assigned
+          # to an objective. Both fields are server-populated; clients provide IDs through
+          # sibling fields rather than by constructing a BareMetadata themselves.
+          tool: nil,
+          # BareMetadata contains the minimal metadata for a resource: the ID and an
+          # optional human-readable name. These are used for reference fields where the full
+          # metadata (account scoping, timestamps, labels, external IDs) is not needed —
+          # e.g., the tool references inside an agent variation spec or the tools assigned
+          # to an objective. Both fields are server-populated; clients provide IDs through
+          # sibling fields rather than by constructing a BareMetadata themselves.
+          tool_set: nil
         )
         end
 
@@ -52,7 +92,9 @@ module Cadenya
           override.returns(
             {
               created_by: Cadenya::Profile,
-              objective: Cadenya::OperationMetadata
+              objective: Cadenya::OperationMetadata,
+              tool: Cadenya::BareMetadata,
+              tool_set: Cadenya::BareMetadata
             }
           )
         end
