@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.18.1 (2026-06-17)
+
+Full Changelog: [v0.18.0...v0.18.1](https://github.com/cadenya/cadenya-ruby/compare/v0.18.0...v0.18.1)
+
+### Bug Fixes
+
+* **client:** send content-type header for requests with an omitted optional body ([bce5290](https://github.com/cadenya/cadenya-ruby/commit/bce5290ac8151e23ce159a2f3557ca1cd1073cf5))
+
 ## 0.18.0 (2026-06-14)
 
 Full Changelog: [v0.17.0...v0.18.0](https://github.com/cadenya/cadenya-ruby/compare/v0.17.0...v0.18.0)
