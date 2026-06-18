@@ -43,15 +43,6 @@ module Cadenya
         sig { params(request_body_template: String).void }
         attr_writer :request_body_template
 
-        # The tool name (commonly an "operation id" in OpenAPI specs) to call on the HTTP
-        # adapter. This is used to match the tool spec to the correct endpoint on the HTTP
-        # adapter. it will be derived from the name of the tool if not provided.
-        sig { returns(T.nilable(String)) }
-        attr_reader :tool_name
-
-        sig { params(tool_name: String).void }
-        attr_writer :tool_name
-
         sig do
           params(
             request_method:
@@ -60,8 +51,7 @@ module Cadenya
             path: String,
             query: String,
             request_body_content_type: String,
-            request_body_template: String,
-            tool_name: String
+            request_body_template: String
           ).returns(T.attached_class)
         end
         def self.new(
@@ -71,11 +61,7 @@ module Cadenya
           query: nil,
           request_body_content_type: nil,
           # These are only used when the request method is a POST, PUT, or PATCH
-          request_body_template: nil,
-          # The tool name (commonly an "operation id" in OpenAPI specs) to call on the HTTP
-          # adapter. This is used to match the tool spec to the correct endpoint on the HTTP
-          # adapter. it will be derived from the name of the tool if not provided.
-          tool_name: nil
+          request_body_template: nil
         )
         end
 
@@ -88,8 +74,7 @@ module Cadenya
               path: String,
               query: String,
               request_body_content_type: String,
-              request_body_template: String,
-              tool_name: String
+              request_body_template: String
             }
           )
         end

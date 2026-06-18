@@ -6,7 +6,8 @@ module Cadenya
           config: Cadenya::ToolSets::ToolSpecConfig,
           description: String,
           parameters: ::Hash[Symbol, top],
-          requires_approval: bool
+          requires_approval: bool,
+          llm_tool_name: String
         }
 
       class ToolSpec < Cadenya::Internal::Type::BaseModel
@@ -18,18 +19,24 @@ module Cadenya
 
         attr_accessor requires_approval: bool
 
+        attr_reader llm_tool_name: String?
+
+        def llm_tool_name=: (String) -> String
+
         def initialize: (
           config: Cadenya::ToolSets::ToolSpecConfig,
           description: String,
           parameters: ::Hash[Symbol, top],
-          requires_approval: bool
+          requires_approval: bool,
+          ?llm_tool_name: String
         ) -> void
 
         def to_hash: -> {
           config: Cadenya::ToolSets::ToolSpecConfig,
           description: String,
           parameters: ::Hash[Symbol, top],
-          requires_approval: bool
+          requires_approval: bool,
+          llm_tool_name: String
         }
       end
     end

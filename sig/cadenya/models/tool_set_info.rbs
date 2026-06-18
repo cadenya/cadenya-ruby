@@ -3,15 +3,25 @@ module Cadenya
     type tool_set_info =
       {
         agent_count: Integer,
+        available_tools: Integer,
         created_by: Cadenya::Profile,
         last_sync: Time,
+        omitted_tools: Integer,
         tool_count: Integer
       }
 
     class ToolSetInfo < Cadenya::Internal::Type::BaseModel
+      attr_reader available_tools: Integer?
+
+      def available_tools=: (Integer) -> Integer
+
       attr_reader created_by: Cadenya::Profile?
 
       def created_by=: (Cadenya::Profile) -> Cadenya::Profile
+
+      attr_reader omitted_tools: Integer?
+
+      def omitted_tools=: (Integer) -> Integer
 
       attr_reader agent_count: Integer?
 
@@ -27,15 +37,19 @@ module Cadenya
 
       def initialize: (
         ?agent_count: Integer,
+        ?available_tools: Integer,
         ?created_by: Cadenya::Profile,
         ?last_sync: Time,
+        ?omitted_tools: Integer,
         ?tool_count: Integer
       ) -> void
 
       def to_hash: -> {
         agent_count: Integer,
+        available_tools: Integer,
         created_by: Cadenya::Profile,
         last_sync: Time,
+        omitted_tools: Integer,
         tool_count: Integer
       }
     end

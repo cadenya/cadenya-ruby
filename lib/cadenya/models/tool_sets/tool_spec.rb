@@ -27,7 +27,16 @@ module Cadenya
         #   @return [Boolean]
         required :requires_approval, Cadenya::Internal::Type::Boolean, api_name: :requiresApproval
 
-        # @!method initialize(config:, description:, parameters:, requires_approval:)
+        # @!attribute llm_tool_name
+        #   The name provided to the LLM, which may differ from the metadata.name on the
+        #   tool. LLMs have specific length and format requirements, and tool set sources
+        #   may not comply with them, so Cadenya does its best to format names into a usable
+        #   format.
+        #
+        #   @return [String, nil]
+        optional :llm_tool_name, String, api_name: :llmToolName
+
+        # @!method initialize(config:, description:, parameters:, requires_approval:, llm_tool_name: nil)
         #   Some parameter documentations has been truncated, see
         #   {Cadenya::Models::ToolSets::ToolSpec} for more details.
         #
@@ -38,6 +47,8 @@ module Cadenya
         #   @param parameters [Hash{Symbol=>Object}]
         #
         #   @param requires_approval [Boolean]
+        #
+        #   @param llm_tool_name [String] The name provided to the LLM, which may differ from the metadata.name on the too
       end
     end
   end
