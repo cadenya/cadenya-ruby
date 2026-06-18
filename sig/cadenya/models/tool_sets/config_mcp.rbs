@@ -1,34 +1,7 @@
 module Cadenya
   module Models
     module ToolSets
-      type config_mcp =
-        { tool_description: String, tool_name: String, tool_title: String }
-
-      class ConfigMcp < Cadenya::Internal::Type::BaseModel
-        attr_reader tool_description: String?
-
-        def tool_description=: (String) -> String
-
-        attr_reader tool_name: String?
-
-        def tool_name=: (String) -> String
-
-        attr_reader tool_title: String?
-
-        def tool_title=: (String) -> String
-
-        def initialize: (
-          ?tool_description: String,
-          ?tool_name: String,
-          ?tool_title: String
-        ) -> void
-
-        def to_hash: -> {
-          tool_description: String,
-          tool_name: String,
-          tool_title: String
-        }
-      end
+      ConfigMcp: Cadenya::Internal::Type::Converter
     end
   end
 end

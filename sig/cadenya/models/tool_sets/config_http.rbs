@@ -8,8 +8,7 @@ module Cadenya
           path: String,
           query: String,
           request_body_content_type: String,
-          request_body_template: String,
-          tool_name: String
+          request_body_template: String
         }
 
       class ConfigHTTP < Cadenya::Internal::Type::BaseModel
@@ -35,18 +34,13 @@ module Cadenya
 
         def request_body_template=: (String) -> String
 
-        attr_reader tool_name: String?
-
-        def tool_name=: (String) -> String
-
         def initialize: (
           request_method: Cadenya::Models::ToolSets::ConfigHTTP::request_method,
           ?headers: ::Hash[Symbol, String],
           ?path: String,
           ?query: String,
           ?request_body_content_type: String,
-          ?request_body_template: String,
-          ?tool_name: String
+          ?request_body_template: String
         ) -> void
 
         def to_hash: -> {
@@ -55,8 +49,7 @@ module Cadenya
           path: String,
           query: String,
           request_body_content_type: String,
-          request_body_template: String,
-          tool_name: String
+          request_body_template: String
         }
 
         type request_method =

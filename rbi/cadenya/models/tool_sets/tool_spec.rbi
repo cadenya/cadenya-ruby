@@ -27,12 +27,23 @@ module Cadenya
         sig { returns(T::Boolean) }
         attr_accessor :requires_approval
 
+        # The name provided to the LLM, which may differ from the metadata.name on the
+        # tool. LLMs have specific length and format requirements, and tool set sources
+        # may not comply with them, so Cadenya does its best to format names into a usable
+        # format.
+        sig { returns(T.nilable(String)) }
+        attr_reader :llm_tool_name
+
+        sig { params(llm_tool_name: String).void }
+        attr_writer :llm_tool_name
+
         sig do
           params(
             config: Cadenya::ToolSets::ToolSpecConfig::OrHash,
             description: String,
             parameters: T::Hash[Symbol, T.anything],
-            requires_approval: T::Boolean
+            requires_approval: T::Boolean,
+            llm_tool_name: String
           ).returns(T.attached_class)
         end
         def self.new(
@@ -42,7 +53,12 @@ module Cadenya
           config:,
           description:,
           parameters:,
-          requires_approval:
+          requires_approval:,
+          # The name provided to the LLM, which may differ from the metadata.name on the
+          # tool. LLMs have specific length and format requirements, and tool set sources
+          # may not comply with them, so Cadenya does its best to format names into a usable
+          # format.
+          llm_tool_name: nil
         )
         end
 
@@ -52,7 +68,8 @@ module Cadenya
               config: Cadenya::ToolSets::ToolSpecConfig,
               description: String,
               parameters: T::Hash[Symbol, T.anything],
-              requires_approval: T::Boolean
+              requires_approval: T::Boolean,
+              llm_tool_name: String
             }
           )
         end
