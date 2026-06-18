@@ -3,6 +3,11 @@
 module Cadenya
   module Models
     class ToolSetInfo < Cadenya::Internal::Type::BaseModel
+      # @!attribute available_tools
+      #
+      #   @return [Integer, nil]
+      optional :available_tools, Integer, api_name: :availableTools
+
       # @!attribute created_by
       #   A profile identifies a user or non-human principal (such as an API key) at the
       #   account level. Profiles are account-scoped and can be granted access to multiple
@@ -10,6 +15,11 @@ module Cadenya
       #
       #   @return [Cadenya::Models::Profile, nil]
       optional :created_by, -> { Cadenya::Profile }, api_name: :createdBy
+
+      # @!attribute omitted_tools
+      #
+      #   @return [Integer, nil]
+      optional :omitted_tools, Integer, api_name: :omittedTools
 
       response_only do
         # @!attribute agent_count
@@ -28,15 +38,19 @@ module Cadenya
         optional :tool_count, Integer, api_name: :toolCount
       end
 
-      # @!method initialize(agent_count: nil, created_by: nil, last_sync: nil, tool_count: nil)
+      # @!method initialize(agent_count: nil, available_tools: nil, created_by: nil, last_sync: nil, omitted_tools: nil, tool_count: nil)
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::ToolSetInfo} for more details.
       #
       #   @param agent_count [Integer]
       #
+      #   @param available_tools [Integer]
+      #
       #   @param created_by [Cadenya::Models::Profile] A profile identifies a user or non-human principal (such as an API key)
       #
       #   @param last_sync [Time]
+      #
+      #   @param omitted_tools [Integer]
       #
       #   @param tool_count [Integer]
     end
