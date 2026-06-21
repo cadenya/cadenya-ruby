@@ -39,6 +39,12 @@ module Cadenya
       sig { returns(String) }
       attr_accessor :profile_id
 
+      sig { returns(T.nilable(Time)) }
+      attr_reader :created_at
+
+      sig { params(created_at: Time).void }
+      attr_writer :created_at
+
       # AccountResourceMetadata is used to represent a resource that is associated to an
       # account but not to a workspace.
       sig do
@@ -47,6 +53,7 @@ module Cadenya
           account_id: String,
           name: String,
           profile_id: String,
+          created_at: Time,
           external_id: String,
           labels: T::Hash[Symbol, String]
         ).returns(T.attached_class)
@@ -60,6 +67,7 @@ module Cadenya
         # Tool") Required for resources that users interact with directly
         name:,
         profile_id:,
+        created_at: nil,
         # External ID for the resource (e.g., a workflow ID from an external system)
         external_id: nil,
         # Arbitrary key-value pairs for categorization and filtering Examples:
@@ -75,6 +83,7 @@ module Cadenya
             account_id: String,
             name: String,
             profile_id: String,
+            created_at: Time,
             external_id: String,
             labels: T::Hash[Symbol, String]
           }

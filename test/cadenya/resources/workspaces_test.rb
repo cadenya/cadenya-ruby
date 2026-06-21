@@ -23,6 +23,7 @@ class Cadenya::Test::Resources::WorkspacesTest < Cadenya::Test::ResourceTest
       row => {
         metadata: Cadenya::AccountResourceMetadata,
         spec: Cadenya::WorkspaceSpec,
+        info: Cadenya::Workspace::Info | nil,
         status: Cadenya::Workspace::Status | nil
       }
     end
@@ -41,6 +42,7 @@ class Cadenya::Test::Resources::WorkspacesTest < Cadenya::Test::ResourceTest
       response => {
         metadata: Cadenya::AccountResourceMetadata,
         spec: Cadenya::WorkspaceSpec,
+        info: Cadenya::Workspace::Info | nil,
         status: Cadenya::Workspace::Status | nil
       }
     end
