@@ -4,6 +4,7 @@ module Cadenya
       {
         metadata: Cadenya::AccountResourceMetadata,
         spec: Cadenya::WorkspaceSpec,
+        info: Cadenya::Workspace::Info,
         status: Cadenya::Models::Workspace::status
       }
 
@@ -11,6 +12,10 @@ module Cadenya
       attr_accessor metadata: Cadenya::AccountResourceMetadata
 
       attr_accessor spec: Cadenya::WorkspaceSpec
+
+      attr_reader info: Cadenya::Workspace::Info?
+
+      def info=: (Cadenya::Workspace::Info) -> Cadenya::Workspace::Info
 
       attr_reader status: Cadenya::Models::Workspace::status?
 
@@ -21,14 +26,56 @@ module Cadenya
       def initialize: (
         metadata: Cadenya::AccountResourceMetadata,
         spec: Cadenya::WorkspaceSpec,
+        ?info: Cadenya::Workspace::Info,
         ?status: Cadenya::Models::Workspace::status
       ) -> void
 
       def to_hash: -> {
         metadata: Cadenya::AccountResourceMetadata,
         spec: Cadenya::WorkspaceSpec,
+        info: Cadenya::Workspace::Info,
         status: Cadenya::Models::Workspace::status
       }
+
+      type info =
+        {
+          total_agents: Integer,
+          total_agent_variations: Integer,
+          total_available_tools: Integer,
+          total_memory_entries: Integer
+        }
+
+      class Info < Cadenya::Internal::Type::BaseModel
+        attr_reader total_agents: Integer?
+
+        def total_agents=: (Integer) -> Integer
+
+        attr_reader total_agent_variations: Integer?
+
+        def total_agent_variations=: (Integer) -> Integer
+
+        attr_reader total_available_tools: Integer?
+
+        def total_available_tools=: (Integer) -> Integer
+
+        attr_reader total_memory_entries: Integer?
+
+        def total_memory_entries=: (Integer) -> Integer
+
+        def initialize: (
+          ?total_agents: Integer,
+          ?total_agent_variations: Integer,
+          ?total_available_tools: Integer,
+          ?total_memory_entries: Integer
+        ) -> void
+
+        def to_hash: -> {
+          total_agents: Integer,
+          total_agent_variations: Integer,
+          total_available_tools: Integer,
+          total_memory_entries: Integer
+        }
+      end
 
       type status = :STATUS_ENABLED | :STATUS_DISABLED | :STATUS_ARCHIVED
 
