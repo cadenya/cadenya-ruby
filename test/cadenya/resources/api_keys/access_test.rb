@@ -23,6 +23,7 @@ class Cadenya::Test::Resources::APIKeys::AccessTest < Cadenya::Test::ResourceTes
       row => {
         metadata: Cadenya::AccountResourceMetadata,
         spec: Cadenya::WorkspaceSpec,
+        info: Cadenya::Workspace::Info | nil,
         status: Cadenya::Workspace::Status | nil
       }
     end

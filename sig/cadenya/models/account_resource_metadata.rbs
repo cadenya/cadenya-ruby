@@ -6,6 +6,7 @@ module Cadenya
         account_id: String,
         name: String,
         profile_id: String,
+        created_at: Time,
         external_id: String,
         labels: ::Hash[Symbol, String]
       }
@@ -27,11 +28,16 @@ module Cadenya
 
       attr_accessor profile_id: String
 
+      attr_reader created_at: Time?
+
+      def created_at=: (Time) -> Time
+
       def initialize: (
         id: String,
         account_id: String,
         name: String,
         profile_id: String,
+        ?created_at: Time,
         ?external_id: String,
         ?labels: ::Hash[Symbol, String]
       ) -> void
@@ -41,6 +47,7 @@ module Cadenya
         account_id: String,
         name: String,
         profile_id: String,
+        created_at: Time,
         external_id: String,
         labels: ::Hash[Symbol, String]
       }

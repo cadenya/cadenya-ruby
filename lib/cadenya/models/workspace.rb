@@ -17,6 +17,12 @@ module Cadenya
       required :spec, -> { Cadenya::WorkspaceSpec }
 
       response_only do
+        # @!attribute info
+        #   WorkspaceInfo returns counts
+        #
+        #   @return [Cadenya::Models::Workspace::Info, nil]
+        optional :info, -> { Cadenya::Workspace::Info }
+
         # @!attribute status
         #   Lifecycle status of the workspace. Archived workspaces reject all requests
         #   scoped to them. Server-populated.
@@ -25,7 +31,7 @@ module Cadenya
         optional :status, enum: -> { Cadenya::Workspace::Status }
       end
 
-      # @!method initialize(metadata:, spec:, status: nil)
+      # @!method initialize(metadata:, spec:, info: nil, status: nil)
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::Workspace} for more details.
       #
@@ -33,7 +39,40 @@ module Cadenya
       #
       #   @param spec [Cadenya::Models::WorkspaceSpec]
       #
+      #   @param info [Cadenya::Models::Workspace::Info] WorkspaceInfo returns counts
+      #
       #   @param status [Symbol, Cadenya::Models::Workspace::Status] Lifecycle status of the workspace. Archived workspaces reject all
+
+      # @see Cadenya::Models::Workspace#info
+      class Info < Cadenya::Internal::Type::BaseModel
+        # @!attribute total_agents
+        #
+        #   @return [Integer, nil]
+        optional :total_agents, Integer, api_name: :totalAgents
+
+        # @!attribute total_agent_variations
+        #
+        #   @return [Integer, nil]
+        optional :total_agent_variations, Integer, api_name: :totalAgentVariations
+
+        # @!attribute total_available_tools
+        #
+        #   @return [Integer, nil]
+        optional :total_available_tools, Integer, api_name: :totalAvailableTools
+
+        # @!attribute total_memory_entries
+        #
+        #   @return [Integer, nil]
+        optional :total_memory_entries, Integer, api_name: :totalMemoryEntries
+
+        # @!method initialize(total_agents: nil, total_agent_variations: nil, total_available_tools: nil, total_memory_entries: nil)
+        #   WorkspaceInfo returns counts
+        #
+        #   @param total_agents [Integer]
+        #   @param total_agent_variations [Integer]
+        #   @param total_available_tools [Integer]
+        #   @param total_memory_entries [Integer]
+      end
 
       # Lifecycle status of the workspace. Archived workspaces reject all requests
       # scoped to them. Server-populated.

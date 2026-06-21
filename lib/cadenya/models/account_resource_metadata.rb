@@ -40,9 +40,14 @@ module Cadenya
         #
         #   @return [String]
         required :profile_id, String, api_name: :profileId
+
+        # @!attribute created_at
+        #
+        #   @return [Time, nil]
+        optional :created_at, Time, api_name: :createdAt
       end
 
-      # @!method initialize(id:, account_id:, name:, profile_id:, external_id: nil, labels: nil)
+      # @!method initialize(id:, account_id:, name:, profile_id:, created_at: nil, external_id: nil, labels: nil)
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::AccountResourceMetadata} for more details.
       #
@@ -56,6 +61,8 @@ module Cadenya
       #   @param name [String] Human-readable name for the resource (e.g., "Customer Support Agent", "Email Too
       #
       #   @param profile_id [String]
+      #
+      #   @param created_at [Time]
       #
       #   @param external_id [String] External ID for the resource (e.g., a workflow ID from an external system)
       #
