@@ -21,13 +21,6 @@ module Cadenya
         sig { returns(String) }
         attr_accessor :tool_set_id
 
-        # Filter by bundle_key — return only resources owned by this bundle.
-        sig { returns(T.nilable(String)) }
-        attr_reader :bundle_key
-
-        sig { params(bundle_key: String).void }
-        attr_writer :bundle_key
-
         # Pagination cursor from previous response
         sig { returns(T.nilable(String)) }
         attr_reader :cursor
@@ -74,7 +67,6 @@ module Cadenya
           params(
             workspace_id: String,
             tool_set_id: String,
-            bundle_key: String,
             cursor: String,
             include_info: T::Boolean,
             limit: Integer,
@@ -87,8 +79,6 @@ module Cadenya
         def self.new(
           workspace_id:,
           tool_set_id:,
-          # Filter by bundle_key — return only resources owned by this bundle.
-          bundle_key: nil,
           # Pagination cursor from previous response
           cursor: nil,
           # When set to true you may use more of your alloted API rate-limit
@@ -110,7 +100,6 @@ module Cadenya
             {
               workspace_id: String,
               tool_set_id: String,
-              bundle_key: String,
               cursor: String,
               include_info: T::Boolean,
               limit: Integer,

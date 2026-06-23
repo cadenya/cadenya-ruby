@@ -21,13 +21,6 @@ module Cadenya
         sig { returns(String) }
         attr_accessor :agent_id
 
-        # Filter by bundle_key — return only resources owned by this bundle.
-        sig { returns(T.nilable(String)) }
-        attr_reader :bundle_key
-
-        sig { params(bundle_key: String).void }
-        attr_writer :bundle_key
-
         # Pagination cursor from previous response.
         sig { returns(T.nilable(String)) }
         attr_reader :cursor
@@ -75,7 +68,6 @@ module Cadenya
           params(
             workspace_id: String,
             agent_id: String,
-            bundle_key: String,
             cursor: String,
             include_info: T::Boolean,
             limit: Integer,
@@ -88,8 +80,6 @@ module Cadenya
         def self.new(
           workspace_id:,
           agent_id:,
-          # Filter by bundle_key — return only resources owned by this bundle.
-          bundle_key: nil,
           # Pagination cursor from previous response.
           cursor: nil,
           # When true, the `info` field on each returned schedule is populated. Requests
@@ -112,7 +102,6 @@ module Cadenya
             {
               workspace_id: String,
               agent_id: String,
-              bundle_key: String,
               cursor: String,
               include_info: T::Boolean,
               limit: Integer,

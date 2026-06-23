@@ -5,7 +5,6 @@ module Cadenya
         {
           workspace_id: String,
           tool_set_id: String,
-          bundle_key: String,
           cursor: String,
           include_info: bool,
           limit: Integer,
@@ -25,10 +24,6 @@ module Cadenya
         attr_accessor workspace_id: String
 
         attr_accessor tool_set_id: String
-
-        attr_reader bundle_key: String?
-
-        def bundle_key=: (String) -> String
 
         attr_reader cursor: String?
 
@@ -71,7 +66,6 @@ module Cadenya
         def initialize: (
           workspace_id: String,
           tool_set_id: String,
-          ?bundle_key: String,
           ?cursor: String,
           ?include_info: bool,
           ?limit: Integer,
@@ -87,7 +81,6 @@ module Cadenya
         def to_hash: -> {
           workspace_id: String,
           tool_set_id: String,
-          bundle_key: String,
           cursor: String,
           include_info: bool,
           limit: Integer,

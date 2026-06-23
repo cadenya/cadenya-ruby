@@ -30,7 +30,6 @@ module Cadenya
         def list: (
           String memory_layer_id,
           workspace_id: String,
-          ?bundle_key: String,
           ?cursor: String,
           ?include_info: bool,
           ?limit: Integer,

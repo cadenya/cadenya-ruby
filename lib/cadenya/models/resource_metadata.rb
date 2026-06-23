@@ -10,15 +10,6 @@ module Cadenya
       #   @return [String]
       required :name, String
 
-      # @!attribute bundle_key
-      #   Optional bundle ownership key. When set, indicates the resource is managed by a
-      #   configuration bundle identified by this key. Used by
-      #   BulkWorkspaceResources.Apply to track which resources belong to which bundle for
-      #   reconciliation / soft-delete on re-apply.
-      #
-      #   @return [String, nil]
-      optional :bundle_key, String, api_name: :bundleKey
-
       # @!attribute external_id
       #   External ID for the resource (e.g., a workflow ID from an external system)
       #
@@ -70,7 +61,7 @@ module Cadenya
         optional :updated_at, Time, api_name: :updatedAt
       end
 
-      # @!method initialize(id:, account_id:, created_at:, name:, profile_id:, workspace_id:, bundle_key: nil, external_id: nil, labels: nil, updated_at: nil)
+      # @!method initialize(id:, account_id:, created_at:, name:, profile_id:, workspace_id:, external_id: nil, labels: nil, updated_at: nil)
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::ResourceMetadata} for more details.
       #
@@ -87,8 +78,6 @@ module Cadenya
       #   @param profile_id [String] ID of the actor (user or service account) that created this resource
       #
       #   @param workspace_id [String] Workspace this resource belongs to for organizational grouping (prefixed ULID)
-      #
-      #   @param bundle_key [String] Optional bundle ownership key. When set, indicates the resource is
       #
       #   @param external_id [String] External ID for the resource (e.g., a workflow ID from an external system)
       #

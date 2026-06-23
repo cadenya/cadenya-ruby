@@ -28,7 +28,6 @@ module Cadenya
       def list: (
         String workspace_id,
         ?agent_id: String,
-        ?bundle_key: String,
         ?cursor: String,
         ?episodic_key_prefix: String,
         ?include_info: bool,

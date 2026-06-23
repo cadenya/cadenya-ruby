@@ -13,13 +13,6 @@ module Cadenya
       sig { returns(String) }
       attr_accessor :name
 
-      # Optional bundle ownership key. See ResourceMetadata.bundle_key.
-      sig { returns(T.nilable(String)) }
-      attr_reader :bundle_key
-
-      sig { params(bundle_key: String).void }
-      attr_writer :bundle_key
-
       # External ID for the resource (e.g., a workflow ID from an external system)
       sig { returns(T.nilable(String)) }
       attr_reader :external_id
@@ -41,7 +34,6 @@ module Cadenya
       sig do
         params(
           name: String,
-          bundle_key: String,
           external_id: String,
           labels: T::Hash[Symbol, String]
         ).returns(T.attached_class)
@@ -50,8 +42,6 @@ module Cadenya
         # Human-readable name for the resource (e.g., "Customer Support Agent", "Email
         # Tool")
         name:,
-        # Optional bundle ownership key. See ResourceMetadata.bundle_key.
-        bundle_key: nil,
         # External ID for the resource (e.g., a workflow ID from an external system)
         external_id: nil,
         # Arbitrary key-value pairs for categorization and filtering Examples:
@@ -62,12 +52,7 @@ module Cadenya
 
       sig do
         override.returns(
-          {
-            name: String,
-            bundle_key: String,
-            external_id: String,
-            labels: T::Hash[Symbol, String]
-          }
+          { name: String, external_id: String, labels: T::Hash[Symbol, String] }
         )
       end
       def to_hash

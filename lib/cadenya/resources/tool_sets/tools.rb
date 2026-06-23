@@ -128,13 +128,11 @@ module Cadenya
         #
         # Lists all tools in the tool set
         #
-        # @overload list(tool_set_id, workspace_id:, bundle_key: nil, cursor: nil, include_info: nil, limit: nil, names: nil, prefix: nil, query: nil, requires_approval: nil, sort_order: nil, states: nil, request_options: {})
+        # @overload list(tool_set_id, workspace_id:, cursor: nil, include_info: nil, limit: nil, names: nil, prefix: nil, query: nil, requires_approval: nil, sort_order: nil, states: nil, request_options: {})
         #
         # @param tool_set_id [String] Path param: Tool set ID. Accepts the canonical ts\_… form or the
         #
         # @param workspace_id [String] Path param: Workspace ID.
-        #
-        # @param bundle_key [String] Query param: Filter by bundle_key — return only resources owned by this bundle.
         #
         # @param cursor [String] Query param: Pagination cursor from previous response
         #
@@ -170,7 +168,6 @@ module Cadenya
             method: :get,
             path: ["v1/workspaces/%1$s/tool_sets/%2$s/tools", workspace_id, tool_set_id],
             query: query.transform_keys(
-              bundle_key: "bundleKey",
               include_info: "includeInfo",
               requires_approval: "requiresApproval",
               sort_order: "sortOrder"

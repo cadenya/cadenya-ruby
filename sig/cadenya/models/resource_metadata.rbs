@@ -8,7 +8,6 @@ module Cadenya
         name: String,
         profile_id: String,
         workspace_id: String,
-        bundle_key: String,
         external_id: String,
         labels: ::Hash[Symbol, String],
         updated_at: Time
@@ -16,10 +15,6 @@ module Cadenya
 
     class ResourceMetadata < Cadenya::Internal::Type::BaseModel
       attr_accessor name: String
-
-      attr_reader bundle_key: String?
-
-      def bundle_key=: (String) -> String
 
       attr_reader external_id: String?
 
@@ -50,7 +45,6 @@ module Cadenya
         name: String,
         profile_id: String,
         workspace_id: String,
-        ?bundle_key: String,
         ?external_id: String,
         ?labels: ::Hash[Symbol, String],
         ?updated_at: Time
@@ -63,7 +57,6 @@ module Cadenya
         name: String,
         profile_id: String,
         workspace_id: String,
-        bundle_key: String,
         external_id: String,
         labels: ::Hash[Symbol, String],
         updated_at: Time

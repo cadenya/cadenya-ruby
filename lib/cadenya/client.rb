@@ -100,12 +100,6 @@ module Cadenya
     # @return [Cadenya::Resources::Webhooks]
     attr_reader :webhooks
 
-    # Apply a declarative bundle of workspace resources — tool sets, memory layers,
-    # agents, variations, assignments, and schedules — in a single asynchronous
-    # operation.
-    # @return [Cadenya::Resources::BulkWorkspaceResources]
-    attr_reader :bulk_workspace_resources
-
     # @api private
     #
     # @return [Hash{String=>String}]
@@ -186,7 +180,6 @@ module Cadenya
       @workspaces = Cadenya::Resources::Workspaces.new(client: self)
       @workspace_admin = Cadenya::Resources::WorkspaceAdmin.new(client: self)
       @webhooks = Cadenya::Resources::Webhooks.new(client: self)
-      @bulk_workspace_resources = Cadenya::Resources::BulkWorkspaceResources.new(client: self)
     end
   end
 end

@@ -59,8 +59,6 @@ module Cadenya
 
   AgentDeleteParams = Cadenya::Models::AgentDeleteParams
 
-  AgentEntry = Cadenya::Models::AgentEntry
-
   AgentInfo = Cadenya::Models::AgentInfo
 
   AgentListParams = Cadenya::Models::AgentListParams
@@ -71,8 +69,6 @@ module Cadenya
 
   Agents = Cadenya::Models::Agents
 
-  AgentScheduleEntry = Cadenya::Models::AgentScheduleEntry
-
   AgentSpec = Cadenya::Models::AgentSpec
 
   AgentUnarchiveParams = Cadenya::Models::AgentUnarchiveParams
@@ -80,8 +76,6 @@ module Cadenya
   AgentUnpublishParams = Cadenya::Models::AgentUnpublishParams
 
   AgentUpdateParams = Cadenya::Models::AgentUpdateParams
-
-  AgentVariationEntry = Cadenya::Models::AgentVariationEntry
 
   AIProviderKey = Cadenya::Models::AIProviderKey
 
@@ -127,22 +121,6 @@ module Cadenya
 
   BareMetadata = Cadenya::Models::BareMetadata
 
-  BulkWorkspaceApply = Cadenya::Models::BulkWorkspaceApply
-
-  BulkWorkspaceApplyData = Cadenya::Models::BulkWorkspaceApplyData
-
-  BulkWorkspaceApplyInfo = Cadenya::Models::BulkWorkspaceApplyInfo
-
-  BulkWorkspaceApplyStatus = Cadenya::Models::BulkWorkspaceApplyStatus
-
-  BulkWorkspaceResourceApplyParams = Cadenya::Models::BulkWorkspaceResourceApplyParams
-
-  BulkWorkspaceResourceListParams = Cadenya::Models::BulkWorkspaceResourceListParams
-
-  BulkWorkspaceResourceRetrieveParams = Cadenya::Models::BulkWorkspaceResourceRetrieveParams
-
-  BulkWorkspaceResources = Cadenya::Models::BulkWorkspaceResources
-
   CallableTool = Cadenya::Models::CallableTool
 
   ContextWindowCompacted = Cadenya::Models::ContextWindowCompacted
@@ -151,15 +129,11 @@ module Cadenya
 
   CreateResourceMetadata = Cadenya::Models::CreateResourceMetadata
 
-  MemoryEntryItem = Cadenya::Models::MemoryEntryItem
-
   MemoryLayer = Cadenya::Models::MemoryLayer
 
   MemoryLayerCreateParams = Cadenya::Models::MemoryLayerCreateParams
 
   MemoryLayerDeleteParams = Cadenya::Models::MemoryLayerDeleteParams
-
-  MemoryLayerEntry = Cadenya::Models::MemoryLayerEntry
 
   MemoryLayerInfo = Cadenya::Models::MemoryLayerInfo
 
@@ -265,8 +239,6 @@ module Cadenya
 
   ToolDenied = Cadenya::Models::ToolDenied
 
-  ToolEntry = Cadenya::Models::ToolEntry
-
   ToolError = Cadenya::Models::ToolError
 
   ToolFilter = Cadenya::Models::ToolFilter
@@ -288,8 +260,6 @@ module Cadenya
   ToolSetCreateParams = Cadenya::Models::ToolSetCreateParams
 
   ToolSetDeleteParams = Cadenya::Models::ToolSetDeleteParams
-
-  ToolSetEntry = Cadenya::Models::ToolSetEntry
 
   ToolSetEvent = Cadenya::Models::ToolSetEvent
 
@@ -330,10 +300,6 @@ module Cadenya
   UploadSpec = Cadenya::Models::UploadSpec
 
   UserMessage = Cadenya::Models::UserMessage
-
-  VariationAssignmentEntry = Cadenya::Models::VariationAssignmentEntry
-
-  VariationMemoryLayerEntry = Cadenya::Models::VariationMemoryLayerEntry
 
   WebhookUnsafeUnwrapParams = Cadenya::Models::WebhookUnsafeUnwrapParams
 

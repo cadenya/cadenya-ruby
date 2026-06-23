@@ -18,12 +18,6 @@ module Cadenya
         #   @return [String]
         required :agent_id, String
 
-        # @!attribute bundle_key
-        #   Filter by bundle_key — return only resources owned by this bundle.
-        #
-        #   @return [String, nil]
-        optional :bundle_key, String
-
         # @!attribute cursor
         #   Pagination cursor from previous response
         #
@@ -49,15 +43,13 @@ module Cadenya
         #   @return [String, nil]
         optional :sort_order, String
 
-        # @!method initialize(workspace_id:, agent_id:, bundle_key: nil, cursor: nil, include_info: nil, limit: nil, sort_order: nil, request_options: {})
+        # @!method initialize(workspace_id:, agent_id:, cursor: nil, include_info: nil, limit: nil, sort_order: nil, request_options: {})
         #   Some parameter documentations has been truncated, see
         #   {Cadenya::Models::Agents::VariationListParams} for more details.
         #
         #   @param workspace_id [String]
         #
         #   @param agent_id [String]
-        #
-        #   @param bundle_key [String] Filter by bundle_key — return only resources owned by this bundle.
         #
         #   @param cursor [String] Pagination cursor from previous response
         #
