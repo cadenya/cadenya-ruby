@@ -125,13 +125,11 @@ module Cadenya
         #
         # Lists all schedules for an agent
         #
-        # @overload list(agent_id, workspace_id:, bundle_key: nil, cursor: nil, include_info: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, request_options: {})
+        # @overload list(agent_id, workspace_id:, cursor: nil, include_info: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, request_options: {})
         #
         # @param agent_id [String] Path param: Agent ID. Accepts the canonical `agent_…` form or the `external_id:<
         #
         # @param workspace_id [String] Path param: Workspace ID.
-        #
-        # @param bundle_key [String] Query param: Filter by bundle_key — return only resources owned by this bundle.
         #
         # @param cursor [String] Query param: Pagination cursor from previous response.
         #
@@ -160,11 +158,7 @@ module Cadenya
           @client.request(
             method: :get,
             path: ["v1/workspaces/%1$s/agents/%2$s/schedules", workspace_id, agent_id],
-            query: query.transform_keys(
-              bundle_key: "bundleKey",
-              include_info: "includeInfo",
-              sort_order: "sortOrder"
-            ),
+            query: query.transform_keys(include_info: "includeInfo", sort_order: "sortOrder"),
             page: Cadenya::Internal::CursorPagination,
             model: Cadenya::Agents::AgentSchedule,
             options: options

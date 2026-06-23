@@ -19,8 +19,6 @@ module Cadenya
 
   class AgentDeleteParams = Cadenya::Models::AgentDeleteParams
 
-  class AgentEntry = Cadenya::Models::AgentEntry
-
   class AgentInfo = Cadenya::Models::AgentInfo
 
   class AgentListParams = Cadenya::Models::AgentListParams
@@ -31,8 +29,6 @@ module Cadenya
 
   module Agents = Cadenya::Models::Agents
 
-  class AgentScheduleEntry = Cadenya::Models::AgentScheduleEntry
-
   class AgentSpec = Cadenya::Models::AgentSpec
 
   class AgentUnarchiveParams = Cadenya::Models::AgentUnarchiveParams
@@ -40,8 +36,6 @@ module Cadenya
   class AgentUnpublishParams = Cadenya::Models::AgentUnpublishParams
 
   class AgentUpdateParams = Cadenya::Models::AgentUpdateParams
-
-  class AgentVariationEntry = Cadenya::Models::AgentVariationEntry
 
   class AIProviderKey = Cadenya::Models::AIProviderKey
 
@@ -87,22 +81,6 @@ module Cadenya
 
   class BareMetadata = Cadenya::Models::BareMetadata
 
-  class BulkWorkspaceApply = Cadenya::Models::BulkWorkspaceApply
-
-  class BulkWorkspaceApplyData = Cadenya::Models::BulkWorkspaceApplyData
-
-  class BulkWorkspaceApplyInfo = Cadenya::Models::BulkWorkspaceApplyInfo
-
-  class BulkWorkspaceApplyStatus = Cadenya::Models::BulkWorkspaceApplyStatus
-
-  class BulkWorkspaceResourceApplyParams = Cadenya::Models::BulkWorkspaceResourceApplyParams
-
-  class BulkWorkspaceResourceListParams = Cadenya::Models::BulkWorkspaceResourceListParams
-
-  class BulkWorkspaceResourceRetrieveParams = Cadenya::Models::BulkWorkspaceResourceRetrieveParams
-
-  module BulkWorkspaceResources = Cadenya::Models::BulkWorkspaceResources
-
   class CallableTool = Cadenya::Models::CallableTool
 
   class ContextWindowCompacted = Cadenya::Models::ContextWindowCompacted
@@ -111,15 +89,11 @@ module Cadenya
 
   class CreateResourceMetadata = Cadenya::Models::CreateResourceMetadata
 
-  class MemoryEntryItem = Cadenya::Models::MemoryEntryItem
-
   class MemoryLayer = Cadenya::Models::MemoryLayer
 
   class MemoryLayerCreateParams = Cadenya::Models::MemoryLayerCreateParams
 
   class MemoryLayerDeleteParams = Cadenya::Models::MemoryLayerDeleteParams
-
-  class MemoryLayerEntry = Cadenya::Models::MemoryLayerEntry
 
   class MemoryLayerInfo = Cadenya::Models::MemoryLayerInfo
 
@@ -225,8 +199,6 @@ module Cadenya
 
   class ToolDenied = Cadenya::Models::ToolDenied
 
-  class ToolEntry = Cadenya::Models::ToolEntry
-
   class ToolError = Cadenya::Models::ToolError
 
   class ToolFilter = Cadenya::Models::ToolFilter
@@ -248,8 +220,6 @@ module Cadenya
   class ToolSetCreateParams = Cadenya::Models::ToolSetCreateParams
 
   class ToolSetDeleteParams = Cadenya::Models::ToolSetDeleteParams
-
-  class ToolSetEntry = Cadenya::Models::ToolSetEntry
 
   class ToolSetEvent = Cadenya::Models::ToolSetEvent
 
@@ -290,10 +260,6 @@ module Cadenya
   class UploadSpec = Cadenya::Models::UploadSpec
 
   class UserMessage = Cadenya::Models::UserMessage
-
-  class VariationAssignmentEntry = Cadenya::Models::VariationAssignmentEntry
-
-  class VariationMemoryLayerEntry = Cadenya::Models::VariationMemoryLayerEntry
 
   class WebhookUnsafeUnwrapParams = Cadenya::Models::WebhookUnsafeUnwrapParams
 

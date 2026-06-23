@@ -18,12 +18,6 @@ module Cadenya
         #   @return [String]
         required :tool_set_id, String
 
-        # @!attribute bundle_key
-        #   Filter by bundle_key — return only resources owned by this bundle.
-        #
-        #   @return [String, nil]
-        optional :bundle_key, String
-
         # @!attribute cursor
         #   Pagination cursor from previous response
         #
@@ -60,12 +54,10 @@ module Cadenya
         #   @return [String, nil]
         optional :sort_order, String
 
-        # @!method initialize(workspace_id:, tool_set_id:, bundle_key: nil, cursor: nil, include_info: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, request_options: {})
+        # @!method initialize(workspace_id:, tool_set_id:, cursor: nil, include_info: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, request_options: {})
         #   @param workspace_id [String]
         #
         #   @param tool_set_id [String]
-        #
-        #   @param bundle_key [String] Filter by bundle_key — return only resources owned by this bundle.
         #
         #   @param cursor [String] Pagination cursor from previous response
         #

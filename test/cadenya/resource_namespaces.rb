@@ -9,9 +9,6 @@ module Cadenya
       module APIKeys
       end
 
-      module BulkWorkspaceResources
-      end
-
       module MemoryLayers
       end
 

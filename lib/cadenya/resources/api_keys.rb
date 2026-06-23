@@ -96,9 +96,7 @@ module Cadenya
       #
       # Lists all API keys on the account.
       #
-      # @overload list(bundle_key: nil, cursor: nil, include_info: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, request_options: {})
-      #
-      # @param bundle_key [String] Filter by bundle_key — return only resources owned by this bundle.
+      # @overload list(cursor: nil, include_info: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, request_options: {})
       #
       # @param cursor [String] Pagination cursor from previous response.
       #
@@ -123,11 +121,7 @@ module Cadenya
         @client.request(
           method: :get,
           path: "v1/account/api_keys",
-          query: query.transform_keys(
-            bundle_key: "bundleKey",
-            include_info: "includeInfo",
-            sort_order: "sortOrder"
-          ),
+          query: query.transform_keys(include_info: "includeInfo", sort_order: "sortOrder"),
           page: Cadenya::Internal::CursorPagination,
           model: Cadenya::APIKey,
           options: options

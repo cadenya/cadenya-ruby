@@ -14,13 +14,6 @@ module Cadenya
       sig { returns(String) }
       attr_accessor :workspace_id
 
-      # Filter by bundle_key — return only resources owned by this bundle.
-      sig { returns(T.nilable(String)) }
-      attr_reader :bundle_key
-
-      sig { params(bundle_key: String).void }
-      attr_writer :bundle_key
-
       # Pagination cursor from previous response
       sig { returns(T.nilable(String)) }
       attr_reader :cursor
@@ -90,7 +83,6 @@ module Cadenya
       sig do
         params(
           workspace_id: String,
-          bundle_key: String,
           cursor: String,
           include_info: T::Boolean,
           limit: Integer,
@@ -105,8 +97,6 @@ module Cadenya
       end
       def self.new(
         workspace_id:,
-        # Filter by bundle_key — return only resources owned by this bundle.
-        bundle_key: nil,
         # Pagination cursor from previous response
         cursor: nil,
         # When true, the `info` field on each returned agent is populated. Requests with
@@ -132,7 +122,6 @@ module Cadenya
         override.returns(
           {
             workspace_id: String,
-            bundle_key: String,
             cursor: String,
             include_info: T::Boolean,
             limit: Integer,

@@ -95,12 +95,6 @@ module Cadenya
     sig { returns(Cadenya::Resources::Webhooks) }
     attr_reader :webhooks
 
-    # Apply a declarative bundle of workspace resources — tool sets, memory layers,
-    # agents, variations, assignments, and schedules — in a single asynchronous
-    # operation.
-    sig { returns(Cadenya::Resources::BulkWorkspaceResources) }
-    attr_reader :bulk_workspace_resources
-
     # @api private
     sig { override.returns(T::Hash[String, String]) }
     private def auth_headers

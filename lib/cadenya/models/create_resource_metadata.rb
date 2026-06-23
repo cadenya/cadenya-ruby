@@ -10,12 +10,6 @@ module Cadenya
       #   @return [String]
       required :name, String
 
-      # @!attribute bundle_key
-      #   Optional bundle ownership key. See ResourceMetadata.bundle_key.
-      #
-      #   @return [String, nil]
-      optional :bundle_key, String, api_name: :bundleKey
-
       # @!attribute external_id
       #   External ID for the resource (e.g., a workflow ID from an external system)
       #
@@ -29,7 +23,7 @@ module Cadenya
       #   @return [Hash{Symbol=>String}, nil]
       optional :labels, Cadenya::Internal::Type::HashOf[String]
 
-      # @!method initialize(name:, bundle_key: nil, external_id: nil, labels: nil)
+      # @!method initialize(name:, external_id: nil, labels: nil)
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::CreateResourceMetadata} for more details.
       #
@@ -38,8 +32,6 @@ module Cadenya
       #   profile_id, created_at) are excluded since they are set by the server.
       #
       #   @param name [String] Human-readable name for the resource (e.g., "Customer Support Agent", "Email Too
-      #
-      #   @param bundle_key [String] Optional bundle ownership key. See ResourceMetadata.bundle_key.
       #
       #   @param external_id [String] External ID for the resource (e.g., a workflow ID from an external system)
       #

@@ -18,12 +18,6 @@ module Cadenya
         #   @return [String]
         required :tool_set_id, String
 
-        # @!attribute bundle_key
-        #   Filter by bundle_key — return only resources owned by this bundle.
-        #
-        #   @return [String, nil]
-        optional :bundle_key, String
-
         # @!attribute cursor
         #   Pagination cursor from previous response
         #
@@ -79,15 +73,13 @@ module Cadenya
         #   @return [Array<Symbol, Cadenya::Models::ToolSets::ToolListParams::State>, nil]
         optional :states, -> { Cadenya::Internal::Type::ArrayOf[enum: Cadenya::ToolSets::ToolListParams::State] }
 
-        # @!method initialize(workspace_id:, tool_set_id:, bundle_key: nil, cursor: nil, include_info: nil, limit: nil, names: nil, prefix: nil, query: nil, requires_approval: nil, sort_order: nil, states: nil, request_options: {})
+        # @!method initialize(workspace_id:, tool_set_id:, cursor: nil, include_info: nil, limit: nil, names: nil, prefix: nil, query: nil, requires_approval: nil, sort_order: nil, states: nil, request_options: {})
         #   Some parameter documentations has been truncated, see
         #   {Cadenya::Models::ToolSets::ToolListParams} for more details.
         #
         #   @param workspace_id [String]
         #
         #   @param tool_set_id [String]
-        #
-        #   @param bundle_key [String] Filter by bundle_key — return only resources owned by this bundle.
         #
         #   @param cursor [String] Pagination cursor from previous response
         #

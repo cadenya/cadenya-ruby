@@ -85,7 +85,6 @@ module Cadenya
         params(
           workspace_id: String,
           agent_id: String,
-          bundle_key: String,
           cursor: String,
           episodic_key_prefix: String,
           include_info: T::Boolean,
@@ -101,8 +100,6 @@ module Cadenya
         workspace_id,
         # Filter to episodic layers belonging to this agent.
         agent_id: nil,
-        # Filter by bundle_key — return only resources owned by this bundle.
-        bundle_key: nil,
         # Pagination cursor from previous response
         cursor: nil,
         # Filter to episodic layers whose episodic key starts with this prefix (e.g.

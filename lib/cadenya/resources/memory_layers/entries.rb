@@ -129,14 +129,12 @@ module Cadenya
         #
         # Lists all entries in a memory layer
         #
-        # @overload list(memory_layer_id, workspace_id:, bundle_key: nil, cursor: nil, include_info: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, request_options: {})
+        # @overload list(memory_layer_id, workspace_id:, cursor: nil, include_info: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, request_options: {})
         #
         # @param memory_layer_id [String] Path param: Memory layer ID. Accepts canonical memlyr\_… form or
         # external_id:<val
         #
         # @param workspace_id [String] Path param
-        #
-        # @param bundle_key [String] Query param: Filter by bundle_key — return only resources owned by this bundle.
         #
         # @param cursor [String] Query param: Pagination cursor from previous response
         #
@@ -165,11 +163,7 @@ module Cadenya
           @client.request(
             method: :get,
             path: ["v1/workspaces/%1$s/memory_layers/%2$s/entries", workspace_id, memory_layer_id],
-            query: query.transform_keys(
-              bundle_key: "bundleKey",
-              include_info: "includeInfo",
-              sort_order: "sortOrder"
-            ),
+            query: query.transform_keys(include_info: "includeInfo", sort_order: "sortOrder"),
             page: Cadenya::Internal::CursorPagination,
             model: Cadenya::MemoryLayers::MemoryEntry,
             options: options

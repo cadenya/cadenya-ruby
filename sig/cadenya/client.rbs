@@ -42,8 +42,6 @@ module Cadenya
 
     attr_reader webhooks: Cadenya::Resources::Webhooks
 
-    attr_reader bulk_workspace_resources: Cadenya::Resources::BulkWorkspaceResources
-
     private def auth_headers: -> ::Hash[String, String]
 
     def initialize: (

@@ -19,12 +19,6 @@ module Cadenya
       #   @return [String, nil]
       optional :ai_provider_key_id, String
 
-      # @!attribute bundle_key
-      #   Filter by bundle_key — return only resources owned by this bundle.
-      #
-      #   @return [String, nil]
-      optional :bundle_key, String
-
       # @!attribute cursor
       #   Pagination cursor from previous response
       #
@@ -76,15 +70,13 @@ module Cadenya
       #   @return [Symbol, Cadenya::Models::ModelListParams::State, nil]
       optional :state, enum: -> { Cadenya::ModelListParams::State }
 
-      # @!method initialize(workspace_id:, ai_provider_key_id: nil, bundle_key: nil, cursor: nil, include_info: nil, is_assigned: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, state: nil, request_options: {})
+      # @!method initialize(workspace_id:, ai_provider_key_id: nil, cursor: nil, include_info: nil, is_assigned: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, state: nil, request_options: {})
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::ModelListParams} for more details.
       #
       #   @param workspace_id [String]
       #
       #   @param ai_provider_key_id [String] Filter to models provisioned on a specific AI provider key. Accepts the
-      #
-      #   @param bundle_key [String] Filter by bundle_key — return only resources owned by this bundle.
       #
       #   @param cursor [String] Pagination cursor from previous response
       #
