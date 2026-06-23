@@ -94,7 +94,6 @@ module Cadenya
           params(
             agent_id: String,
             workspace_id: String,
-            bundle_key: String,
             cursor: String,
             include_info: T::Boolean,
             limit: Integer,
@@ -112,8 +111,6 @@ module Cadenya
           agent_id,
           # Path param: Workspace ID.
           workspace_id:,
-          # Query param: Filter by bundle_key — return only resources owned by this bundle.
-          bundle_key: nil,
           # Query param: Pagination cursor from previous response.
           cursor: nil,
           # Query param: When true, the `info` field on each returned schedule is populated.

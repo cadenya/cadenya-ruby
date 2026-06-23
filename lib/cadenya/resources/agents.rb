@@ -125,11 +125,9 @@ module Cadenya
       #
       # Lists all agents in the workspace
       #
-      # @overload list(workspace_id, bundle_key: nil, cursor: nil, include_info: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, state: nil, variation_selection_mode: nil, request_options: {})
+      # @overload list(workspace_id, cursor: nil, include_info: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, state: nil, variation_selection_mode: nil, request_options: {})
       #
       # @param workspace_id [String] Workspace ID.
-      #
-      # @param bundle_key [String] Filter by bundle_key — return only resources owned by this bundle.
       #
       # @param cursor [String] Pagination cursor from previous response
       #
@@ -159,7 +157,6 @@ module Cadenya
           method: :get,
           path: ["v1/workspaces/%1$s/agents", workspace_id],
           query: query.transform_keys(
-            bundle_key: "bundleKey",
             include_info: "includeInfo",
             sort_order: "sortOrder",
             variation_selection_mode: "variationSelectionMode"

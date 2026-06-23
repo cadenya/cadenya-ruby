@@ -38,13 +38,11 @@ module Cadenya
       #
       # Lists all models in the workspace
       #
-      # @overload list(workspace_id, ai_provider_key_id: nil, bundle_key: nil, cursor: nil, include_info: nil, is_assigned: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, state: nil, request_options: {})
+      # @overload list(workspace_id, ai_provider_key_id: nil, cursor: nil, include_info: nil, is_assigned: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, state: nil, request_options: {})
       #
       # @param workspace_id [String] Workspace ID.
       #
       # @param ai_provider_key_id [String] Filter to models provisioned on a specific AI provider key. Accepts the
-      #
-      # @param bundle_key [String] Filter by bundle_key — return only resources owned by this bundle.
       #
       # @param cursor [String] Pagination cursor from previous response
       #
@@ -75,7 +73,6 @@ module Cadenya
           path: ["v1/workspaces/%1$s/models", workspace_id],
           query: query.transform_keys(
             ai_provider_key_id: "aiProviderKeyId",
-            bundle_key: "bundleKey",
             include_info: "includeInfo",
             is_assigned: "isAssigned",
             sort_order: "sortOrder"

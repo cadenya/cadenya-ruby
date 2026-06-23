@@ -129,14 +129,12 @@ module Cadenya
         #
         # Lists all secrets scoped to the tool set
         #
-        # @overload list(tool_set_id, workspace_id:, bundle_key: nil, cursor: nil, include_info: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, request_options: {})
+        # @overload list(tool_set_id, workspace_id:, cursor: nil, include_info: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, request_options: {})
         #
         # @param tool_set_id [String] Path param: The tool set whose secrets will be listed. Accepts the canonical
         # ts\_
         #
         # @param workspace_id [String] Path param: The workspace that owns the tool set.
-        #
-        # @param bundle_key [String] Query param: Filter by bundle_key — return only resources owned by this bundle.
         #
         # @param cursor [String] Query param: Pagination cursor from previous response
         #
@@ -165,11 +163,7 @@ module Cadenya
           @client.request(
             method: :get,
             path: ["v1/workspaces/%1$s/tool_sets/%2$s/secrets", workspace_id, tool_set_id],
-            query: query.transform_keys(
-              bundle_key: "bundleKey",
-              include_info: "includeInfo",
-              sort_order: "sortOrder"
-            ),
+            query: query.transform_keys(include_info: "includeInfo", sort_order: "sortOrder"),
             page: Cadenya::Internal::CursorPagination,
             model: Cadenya::ToolSets::ToolSetSecret,
             options: options

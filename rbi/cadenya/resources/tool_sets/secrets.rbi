@@ -95,7 +95,6 @@ module Cadenya
           params(
             tool_set_id: String,
             workspace_id: String,
-            bundle_key: String,
             cursor: String,
             include_info: T::Boolean,
             limit: Integer,
@@ -115,8 +114,6 @@ module Cadenya
           tool_set_id,
           # Path param: The workspace that owns the tool set.
           workspace_id:,
-          # Query param: Filter by bundle_key — return only resources owned by this bundle.
-          bundle_key: nil,
           # Query param: Pagination cursor from previous response
           cursor: nil,
           # Query param: When set to true you may use more of your alloted API rate-limit

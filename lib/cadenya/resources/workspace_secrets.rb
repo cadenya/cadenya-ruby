@@ -98,11 +98,9 @@ module Cadenya
 
       # Lists all workspace secrets in the workspace
       #
-      # @overload list(workspace_id, bundle_key: nil, cursor: nil, include_info: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, request_options: {})
+      # @overload list(workspace_id, cursor: nil, include_info: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, request_options: {})
       #
       # @param workspace_id [String] The workspace whose secrets will be listed.
-      #
-      # @param bundle_key [String] Filter by bundle_key — return only resources owned by this bundle.
       #
       # @param cursor [String] Pagination cursor from previous response
       #
@@ -127,11 +125,7 @@ module Cadenya
         @client.request(
           method: :get,
           path: ["v1/workspaces/%1$s/workspace_secrets", workspace_id],
-          query: query.transform_keys(
-            bundle_key: "bundleKey",
-            include_info: "includeInfo",
-            sort_order: "sortOrder"
-          ),
+          query: query.transform_keys(include_info: "includeInfo", sort_order: "sortOrder"),
           page: Cadenya::Internal::CursorPagination,
           model: Cadenya::WorkspaceSecret,
           options: options

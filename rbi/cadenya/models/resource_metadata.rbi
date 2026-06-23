@@ -13,16 +13,6 @@ module Cadenya
       sig { returns(String) }
       attr_accessor :name
 
-      # Optional bundle ownership key. When set, indicates the resource is managed by a
-      # configuration bundle identified by this key. Used by
-      # BulkWorkspaceResources.Apply to track which resources belong to which bundle for
-      # reconciliation / soft-delete on re-apply.
-      sig { returns(T.nilable(String)) }
-      attr_reader :bundle_key
-
-      sig { params(bundle_key: String).void }
-      attr_writer :bundle_key
-
       # External ID for the resource (e.g., a workflow ID from an external system)
       sig { returns(T.nilable(String)) }
       attr_reader :external_id
@@ -74,7 +64,6 @@ module Cadenya
           name: String,
           profile_id: String,
           workspace_id: String,
-          bundle_key: String,
           external_id: String,
           labels: T::Hash[Symbol, String],
           updated_at: Time
@@ -94,11 +83,6 @@ module Cadenya
         profile_id:,
         # Workspace this resource belongs to for organizational grouping (prefixed ULID)
         workspace_id:,
-        # Optional bundle ownership key. When set, indicates the resource is managed by a
-        # configuration bundle identified by this key. Used by
-        # BulkWorkspaceResources.Apply to track which resources belong to which bundle for
-        # reconciliation / soft-delete on re-apply.
-        bundle_key: nil,
         # External ID for the resource (e.g., a workflow ID from an external system)
         external_id: nil,
         # Arbitrary key-value pairs for categorization and filtering Examples:
@@ -118,7 +102,6 @@ module Cadenya
             name: String,
             profile_id: String,
             workspace_id: String,
-            bundle_key: String,
             external_id: String,
             labels: T::Hash[Symbol, String],
             updated_at: Time

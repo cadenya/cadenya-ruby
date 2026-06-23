@@ -21,13 +21,6 @@ module Cadenya
       sig { params(agent_id: String).void }
       attr_writer :agent_id
 
-      # Filter by bundle_key — return only resources owned by this bundle.
-      sig { returns(T.nilable(String)) }
-      attr_reader :bundle_key
-
-      sig { params(bundle_key: String).void }
-      attr_writer :bundle_key
-
       # Pagination cursor from previous response
       sig { returns(T.nilable(String)) }
       attr_reader :cursor
@@ -90,7 +83,6 @@ module Cadenya
         params(
           workspace_id: String,
           agent_id: String,
-          bundle_key: String,
           cursor: String,
           episodic_key_prefix: String,
           include_info: T::Boolean,
@@ -106,8 +98,6 @@ module Cadenya
         workspace_id:,
         # Filter to episodic layers belonging to this agent.
         agent_id: nil,
-        # Filter by bundle_key — return only resources owned by this bundle.
-        bundle_key: nil,
         # Pagination cursor from previous response
         cursor: nil,
         # Filter to episodic layers whose episodic key starts with this prefix (e.g.
@@ -135,7 +125,6 @@ module Cadenya
           {
             workspace_id: String,
             agent_id: String,
-            bundle_key: String,
             cursor: String,
             episodic_key_prefix: String,
             include_info: T::Boolean,

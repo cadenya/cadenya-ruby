@@ -76,7 +76,6 @@ module Cadenya
       # Lists all API keys on the account.
       sig do
         params(
-          bundle_key: String,
           cursor: String,
           include_info: T::Boolean,
           limit: Integer,
@@ -87,8 +86,6 @@ module Cadenya
         ).returns(Cadenya::Internal::CursorPagination[Cadenya::APIKey])
       end
       def list(
-        # Filter by bundle_key — return only resources owned by this bundle.
-        bundle_key: nil,
         # Pagination cursor from previous response.
         cursor: nil,
         # When true, included info fields are populated. Requests with this flag count

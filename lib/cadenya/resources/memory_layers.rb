@@ -113,13 +113,11 @@ module Cadenya
       #
       # Lists all memory layers in the workspace
       #
-      # @overload list(workspace_id, agent_id: nil, bundle_key: nil, cursor: nil, episodic_key_prefix: nil, include_info: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, type: nil, request_options: {})
+      # @overload list(workspace_id, agent_id: nil, cursor: nil, episodic_key_prefix: nil, include_info: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, type: nil, request_options: {})
       #
       # @param workspace_id [String]
       #
       # @param agent_id [String] Filter to episodic layers belonging to this agent.
-      #
-      # @param bundle_key [String] Filter by bundle_key — return only resources owned by this bundle.
       #
       # @param cursor [String] Pagination cursor from previous response
       #
@@ -150,7 +148,6 @@ module Cadenya
           path: ["v1/workspaces/%1$s/memory_layers", workspace_id],
           query: query.transform_keys(
             agent_id: "agentId",
-            bundle_key: "bundleKey",
             episodic_key_prefix: "episodicKeyPrefix",
             include_info: "includeInfo",
             sort_order: "sortOrder"

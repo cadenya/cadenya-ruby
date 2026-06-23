@@ -18,12 +18,6 @@ module Cadenya
       #   @return [String, nil]
       optional :agent_id, String
 
-      # @!attribute bundle_key
-      #   Filter by bundle_key — return only resources owned by this bundle.
-      #
-      #   @return [String, nil]
-      optional :bundle_key, String
-
       # @!attribute cursor
       #   Pagination cursor from previous response
       #
@@ -74,15 +68,13 @@ module Cadenya
       #   @return [Symbol, Cadenya::Models::MemoryLayerListParams::Type, nil]
       optional :type, enum: -> { Cadenya::MemoryLayerListParams::Type }
 
-      # @!method initialize(workspace_id:, agent_id: nil, bundle_key: nil, cursor: nil, episodic_key_prefix: nil, include_info: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, type: nil, request_options: {})
+      # @!method initialize(workspace_id:, agent_id: nil, cursor: nil, episodic_key_prefix: nil, include_info: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, type: nil, request_options: {})
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::MemoryLayerListParams} for more details.
       #
       #   @param workspace_id [String]
       #
       #   @param agent_id [String] Filter to episodic layers belonging to this agent.
-      #
-      #   @param bundle_key [String] Filter by bundle_key — return only resources owned by this bundle.
       #
       #   @param cursor [String] Pagination cursor from previous response
       #

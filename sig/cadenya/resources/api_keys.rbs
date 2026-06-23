@@ -24,7 +24,6 @@ module Cadenya
       ) -> Cadenya::APIKey
 
       def list: (
-        ?bundle_key: String,
         ?cursor: String,
         ?include_info: bool,
         ?limit: Integer,

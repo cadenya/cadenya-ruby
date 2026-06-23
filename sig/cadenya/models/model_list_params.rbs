@@ -4,7 +4,6 @@ module Cadenya
       {
         workspace_id: String,
         ai_provider_key_id: String,
-        bundle_key: String,
         cursor: String,
         include_info: bool,
         is_assigned: bool,
@@ -25,10 +24,6 @@ module Cadenya
       attr_reader ai_provider_key_id: String?
 
       def ai_provider_key_id=: (String) -> String
-
-      attr_reader bundle_key: String?
-
-      def bundle_key=: (String) -> String
 
       attr_reader cursor: String?
 
@@ -67,7 +62,6 @@ module Cadenya
       def initialize: (
         workspace_id: String,
         ?ai_provider_key_id: String,
-        ?bundle_key: String,
         ?cursor: String,
         ?include_info: bool,
         ?is_assigned: bool,
@@ -82,7 +76,6 @@ module Cadenya
       def to_hash: -> {
         workspace_id: String,
         ai_provider_key_id: String,
-        bundle_key: String,
         cursor: String,
         include_info: bool,
         is_assigned: bool,

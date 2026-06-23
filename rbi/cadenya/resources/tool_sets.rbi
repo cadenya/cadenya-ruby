@@ -96,7 +96,6 @@ module Cadenya
       sig do
         params(
           workspace_id: String,
-          bundle_key: String,
           cursor: String,
           include_info: T::Boolean,
           limit: Integer,
@@ -110,8 +109,6 @@ module Cadenya
       def list(
         # Workspace ID.
         workspace_id,
-        # Filter by bundle_key — return only resources owned by this bundle.
-        bundle_key: nil,
         # Pagination cursor from previous response
         cursor: nil,
         # When set to true you may use more of your alloted API rate-limit
