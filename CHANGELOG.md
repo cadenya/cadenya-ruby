@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.22.0 (2026-07-01)
+
+Full Changelog: [v0.21.0...v0.22.0](https://github.com/cadenya/cadenya-ruby/compare/v0.21.0...v0.22.0)
+
+### Features
+
+* **api:** api update ([a404982](https://github.com/cadenya/cadenya-ruby/commit/a404982d0148f371941a061fea37944c023ba468))
+
+
+### Chores
+
+* **internal:** bound formatter parallelism to CPU count ([4281afd](https://github.com/cadenya/cadenya-ruby/commit/4281afd2bbd62bf02641c4fab953bda782c221fb))
+
 ## 0.21.0 (2026-06-23)
 
 Full Changelog: [v0.20.0...v0.21.0](https://github.com/cadenya/cadenya-ruby/compare/v0.20.0...v0.21.0)
