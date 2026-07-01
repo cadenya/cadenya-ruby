@@ -2,23 +2,19 @@ module Cadenya
   module Models
     type ai_provider_key_spec =
       {
-        config: Cadenya::AIProviderKeySpec::Config,
-        credentials: Cadenya::AIProviderKeySpec::Credentials,
+        api_key: String,
+        openrouter: top,
         provider: Cadenya::Models::AIProviderKeySpec::provider
       }
 
     class AIProviderKeySpec < Cadenya::Internal::Type::BaseModel
-      attr_reader config: Cadenya::AIProviderKeySpec::Config?
+      attr_reader api_key: String?
 
-      def config=: (
-        Cadenya::AIProviderKeySpec::Config
-      ) -> Cadenya::AIProviderKeySpec::Config
+      def api_key=: (String) -> String
 
-      attr_reader credentials: Cadenya::AIProviderKeySpec::Credentials?
+      attr_reader openrouter: top?
 
-      def credentials=: (
-        Cadenya::AIProviderKeySpec::Credentials
-      ) -> Cadenya::AIProviderKeySpec::Credentials
+      def openrouter=: (top) -> top
 
       attr_reader provider: Cadenya::Models::AIProviderKeySpec::provider?
 
@@ -27,170 +23,24 @@ module Cadenya
       ) -> Cadenya::Models::AIProviderKeySpec::provider
 
       def initialize: (
-        ?config: Cadenya::AIProviderKeySpec::Config,
-        ?credentials: Cadenya::AIProviderKeySpec::Credentials,
+        ?api_key: String,
+        ?openrouter: top,
         ?provider: Cadenya::Models::AIProviderKeySpec::provider
       ) -> void
 
       def to_hash: -> {
-        config: Cadenya::AIProviderKeySpec::Config,
-        credentials: Cadenya::AIProviderKeySpec::Credentials,
+        api_key: String,
+        openrouter: top,
         provider: Cadenya::Models::AIProviderKeySpec::provider
       }
 
-      type config =
-        {
-          openai: Cadenya::AIProviderKeySpec::Config::OpenAI,
-          openai_compatible: Cadenya::AIProviderKeySpec::Config::OpenAICompatible,
-          openrouter: Cadenya::AIProviderKeySpec::Config::Openrouter
-        }
-
-      class Config < Cadenya::Internal::Type::BaseModel
-        attr_reader openai: Cadenya::AIProviderKeySpec::Config::OpenAI?
-
-        def openai=: (
-          Cadenya::AIProviderKeySpec::Config::OpenAI
-        ) -> Cadenya::AIProviderKeySpec::Config::OpenAI
-
-        attr_reader openai_compatible: Cadenya::AIProviderKeySpec::Config::OpenAICompatible?
-
-        def openai_compatible=: (
-          Cadenya::AIProviderKeySpec::Config::OpenAICompatible
-        ) -> Cadenya::AIProviderKeySpec::Config::OpenAICompatible
-
-        attr_reader openrouter: Cadenya::AIProviderKeySpec::Config::Openrouter?
-
-        def openrouter=: (
-          Cadenya::AIProviderKeySpec::Config::Openrouter
-        ) -> Cadenya::AIProviderKeySpec::Config::Openrouter
-
-        def initialize: (
-          ?openai: Cadenya::AIProviderKeySpec::Config::OpenAI,
-          ?openai_compatible: Cadenya::AIProviderKeySpec::Config::OpenAICompatible,
-          ?openrouter: Cadenya::AIProviderKeySpec::Config::Openrouter
-        ) -> void
-
-        def to_hash: -> {
-          openai: Cadenya::AIProviderKeySpec::Config::OpenAI,
-          openai_compatible: Cadenya::AIProviderKeySpec::Config::OpenAICompatible,
-          openrouter: Cadenya::AIProviderKeySpec::Config::Openrouter
-        }
-
-        type openai = { organization_id: String, project_id: String }
-
-        class OpenAI < Cadenya::Internal::Type::BaseModel
-          attr_reader organization_id: String?
-
-          def organization_id=: (String) -> String
-
-          attr_reader project_id: String?
-
-          def project_id=: (String) -> String
-
-          def initialize: (
-            ?organization_id: String,
-            ?project_id: String
-          ) -> void
-
-          def to_hash: -> { organization_id: String, project_id: String }
-        end
-
-        type openai_compatible = { base_url: String }
-
-        class OpenAICompatible < Cadenya::Internal::Type::BaseModel
-          attr_reader base_url: String?
-
-          def base_url=: (String) -> String
-
-          def initialize: (?base_url: String) -> void
-
-          def to_hash: -> { base_url: String }
-        end
-
-        type openrouter = { region: String }
-
-        class Openrouter < Cadenya::Internal::Type::BaseModel
-          attr_reader region: String?
-
-          def region=: (String) -> String
-
-          def initialize: (?region: String) -> void
-
-          def to_hash: -> { region: String }
-        end
-      end
-
-      type credentials =
-        {
-          api_key: Cadenya::AIProviderKeySpec::Credentials::APIKey,
-          headers: Cadenya::AIProviderKeySpec::Credentials::Headers
-        }
-
-      class Credentials < Cadenya::Internal::Type::BaseModel
-        attr_reader api_key: Cadenya::AIProviderKeySpec::Credentials::APIKey?
-
-        def api_key=: (
-          Cadenya::AIProviderKeySpec::Credentials::APIKey
-        ) -> Cadenya::AIProviderKeySpec::Credentials::APIKey
-
-        attr_reader headers: Cadenya::AIProviderKeySpec::Credentials::Headers?
-
-        def headers=: (
-          Cadenya::AIProviderKeySpec::Credentials::Headers
-        ) -> Cadenya::AIProviderKeySpec::Credentials::Headers
-
-        def initialize: (
-          ?api_key: Cadenya::AIProviderKeySpec::Credentials::APIKey,
-          ?headers: Cadenya::AIProviderKeySpec::Credentials::Headers
-        ) -> void
-
-        def to_hash: -> {
-          api_key: Cadenya::AIProviderKeySpec::Credentials::APIKey,
-          headers: Cadenya::AIProviderKeySpec::Credentials::Headers
-        }
-
-        type api_key = { api_key: String }
-
-        class APIKey < Cadenya::Internal::Type::BaseModel
-          attr_reader api_key: String?
-
-          def api_key=: (String) -> String
-
-          def initialize: (?api_key: String) -> void
-
-          def to_hash: -> { api_key: String }
-        end
-
-        type headers = { headers: ::Hash[Symbol, String] }
-
-        class Headers < Cadenya::Internal::Type::BaseModel
-          attr_reader headers: ::Hash[Symbol, String]?
-
-          def headers=: (::Hash[Symbol, String]) -> ::Hash[Symbol, String]
-
-          def initialize: (?headers: ::Hash[Symbol, String]) -> void
-
-          def to_hash: -> { headers: ::Hash[Symbol, String] }
-        end
-      end
-
-      type provider =
-        :AI_PROVIDER_UNSPECIFIED
-        | :AI_PROVIDER_OPENROUTER
-        | :AI_PROVIDER_OPENAI
-        | :AI_PROVIDER_ANTHROPIC
-        | :AI_PROVIDER_GEMINI
-        | :AI_PROVIDER_OPENAI_COMPATIBLE
+      type provider = :AI_PROVIDER_UNSPECIFIED | :AI_PROVIDER_OPENROUTER
 
       module Provider
         extend Cadenya::Internal::Type::Enum
 
         AI_PROVIDER_UNSPECIFIED: :AI_PROVIDER_UNSPECIFIED
         AI_PROVIDER_OPENROUTER: :AI_PROVIDER_OPENROUTER
-        AI_PROVIDER_OPENAI: :AI_PROVIDER_OPENAI
-        AI_PROVIDER_ANTHROPIC: :AI_PROVIDER_ANTHROPIC
-        AI_PROVIDER_GEMINI: :AI_PROVIDER_GEMINI
-        AI_PROVIDER_OPENAI_COMPATIBLE: :AI_PROVIDER_OPENAI_COMPATIBLE
 
         def self?.values: -> ::Array[Cadenya::Models::AIProviderKeySpec::provider]
       end
