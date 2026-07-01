@@ -31,7 +31,7 @@ module Cadenya
           agent: Cadenya::ResourceMetadata,
           agent_variation: Cadenya::ResourceMetadata,
           objective: Cadenya::OperationMetadata,
-          objective_event: Cadenya::ObjectiveEventWebhookData::Data::ObjectiveEvent
+          objective_event: Cadenya::ObjectiveEvent
         }
 
       class Data < Cadenya::Internal::Type::BaseModel
@@ -41,59 +41,21 @@ module Cadenya
 
         attr_accessor objective: Cadenya::OperationMetadata
 
-        attr_accessor objective_event: Cadenya::ObjectiveEventWebhookData::Data::ObjectiveEvent
+        attr_accessor objective_event: Cadenya::ObjectiveEvent
 
         def initialize: (
           agent: Cadenya::ResourceMetadata,
           agent_variation: Cadenya::ResourceMetadata,
           objective: Cadenya::OperationMetadata,
-          objective_event: Cadenya::ObjectiveEventWebhookData::Data::ObjectiveEvent
+          objective_event: Cadenya::ObjectiveEvent
         ) -> void
 
         def to_hash: -> {
           agent: Cadenya::ResourceMetadata,
           agent_variation: Cadenya::ResourceMetadata,
           objective: Cadenya::OperationMetadata,
-          objective_event: Cadenya::ObjectiveEventWebhookData::Data::ObjectiveEvent
+          objective_event: Cadenya::ObjectiveEvent
         }
-
-        type objective_event =
-          {
-            data: Cadenya::ObjectiveEventData,
-            metadata: Cadenya::OperationMetadata,
-            context_window_id: String,
-            info: Cadenya::ObjectiveEventInfo
-          }
-
-        class ObjectiveEvent < Cadenya::Internal::Type::BaseModel
-          attr_accessor data: Cadenya::ObjectiveEventData
-
-          attr_accessor metadata: Cadenya::OperationMetadata
-
-          attr_reader context_window_id: String?
-
-          def context_window_id=: (String) -> String
-
-          attr_reader info: Cadenya::ObjectiveEventInfo?
-
-          def info=: (
-            Cadenya::ObjectiveEventInfo
-          ) -> Cadenya::ObjectiveEventInfo
-
-          def initialize: (
-            data: Cadenya::ObjectiveEventData,
-            metadata: Cadenya::OperationMetadata,
-            ?context_window_id: String,
-            ?info: Cadenya::ObjectiveEventInfo
-          ) -> void
-
-          def to_hash: -> {
-            data: Cadenya::ObjectiveEventData,
-            metadata: Cadenya::OperationMetadata,
-            context_window_id: String,
-            info: Cadenya::ObjectiveEventInfo
-          }
-        end
       end
     end
   end

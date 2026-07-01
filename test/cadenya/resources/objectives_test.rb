@@ -148,7 +148,7 @@ class Cadenya::Test::Resources::ObjectivesTest < Cadenya::Test::ResourceTest
     response = @cadenya.objectives.continue("objectiveId", workspace_id: "workspaceId")
 
     assert_pattern do
-      response => Cadenya::Models::ObjectiveContinueResponse
+      response => Cadenya::ObjectiveEvent
     end
 
     assert_pattern do
@@ -199,7 +199,7 @@ class Cadenya::Test::Resources::ObjectivesTest < Cadenya::Test::ResourceTest
     return if row.nil?
 
     assert_pattern do
-      row => Cadenya::Models::ObjectiveListEventsResponse
+      row => Cadenya::ObjectiveEvent
     end
 
     assert_pattern do

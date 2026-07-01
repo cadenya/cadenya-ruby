@@ -554,7 +554,7 @@ module Cadenya
                 )
               ),
               page: T.nilable(T::Class[Cadenya::Internal::Type::BasePage[Cadenya::Internal::Type::BaseModel]]),
-              stream: T.nilable(T::Class[T.anything]),
+              stream: T.nilable(T::Class[Cadenya::Internal::Type::BaseStream[T.anything, Cadenya::Internal::Type::BaseModel]]),
               model: T.nilable(Cadenya::Internal::Type::Converter::Input),
               options: T.nilable(Cadenya::RequestOptions::OrHash)
             }
