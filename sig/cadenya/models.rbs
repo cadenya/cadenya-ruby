@@ -143,6 +143,8 @@ module Cadenya
 
   class ObjectiveError = Cadenya::Models::ObjectiveError
 
+  class ObjectiveEvent = Cadenya::Models::ObjectiveEvent
+
   class ObjectiveEventData = Cadenya::Models::ObjectiveEventData
 
   class ObjectiveEventInfo = Cadenya::Models::ObjectiveEventInfo
@@ -162,6 +164,8 @@ module Cadenya
   module Objectives = Cadenya::Models::Objectives
 
   class ObjectiveSecret = Cadenya::Models::ObjectiveSecret
+
+  class ObjectiveStreamEventsParams = Cadenya::Models::ObjectiveStreamEventsParams
 
   class OperationMetadata = Cadenya::Models::OperationMetadata
 

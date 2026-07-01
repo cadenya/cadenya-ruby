@@ -37,6 +37,18 @@ account = cadenya.account.retrieve
 puts(account.info)
 ```
 
+### Streaming
+
+We provide support for streaming responses using Server-Sent Events (SSE).
+
+```ruby
+stream = cadenya.objectives.stream_events_streaming
+
+stream.each do |objective|
+  puts(objective.data)
+end
+```
+
 ### Pagination
 
 List methods in the Cadenya API are paginated.

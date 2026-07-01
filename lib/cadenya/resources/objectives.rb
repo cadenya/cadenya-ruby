@@ -222,7 +222,7 @@ module Cadenya
       #
       # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
       #
-      # @return [Cadenya::Models::ObjectiveContinueResponse]
+      # @return [Cadenya::Models::ObjectiveEvent]
       #
       # @see Cadenya::Models::ObjectiveContinueParams
       def continue(objective_id, params)
@@ -235,7 +235,7 @@ module Cadenya
           method: :post,
           path: ["v1/workspaces/%1$s/objectives/%2$s:continue", workspace_id, objective_id],
           body: parsed,
-          model: Cadenya::Models::ObjectiveContinueResponse,
+          model: Cadenya::ObjectiveEvent,
           options: options
         )
       end
@@ -299,7 +299,7 @@ module Cadenya
       #
       # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
       #
-      # @return [Cadenya::Internal::CursorPagination<Cadenya::Models::ObjectiveListEventsResponse>]
+      # @return [Cadenya::Internal::CursorPagination<Cadenya::Models::ObjectiveEvent>]
       #
       # @see Cadenya::Models::ObjectiveListEventsParams
       def list_events(objective_id, params)
@@ -319,7 +319,34 @@ module Cadenya
             window_id: "windowId"
           ),
           page: Cadenya::Internal::CursorPagination,
-          model: Cadenya::Models::ObjectiveListEventsResponse,
+          model: Cadenya::ObjectiveEvent,
+          options: options
+        )
+      end
+
+      # Streams events for an objective in real-time using server-sent events (SSE)
+      #
+      # @overload stream_events_streaming(objective_id, workspace_id:, request_options: {})
+      #
+      # @param objective_id [String]
+      # @param workspace_id [String]
+      # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
+      #
+      # @return [Cadenya::Internal::Stream<Cadenya::Models::ObjectiveEvent>]
+      #
+      # @see Cadenya::Models::ObjectiveStreamEventsParams
+      def stream_events_streaming(objective_id, params)
+        parsed, options = Cadenya::ObjectiveStreamEventsParams.dump_request(params)
+        workspace_id =
+          parsed.delete(:workspace_id) do
+            raise ArgumentError.new("missing required path argument #{_1}")
+          end
+        @client.request(
+          method: :get,
+          path: ["v1/workspaces/%1$s/objectives/%2$s/events:stream", workspace_id, objective_id],
+          headers: {"accept" => "text/event-stream", "accept-encoding" => "identity"},
+          stream: Cadenya::Internal::Stream,
+          model: Cadenya::ObjectiveEvent,
           options: options
         )
       end

@@ -3,7 +3,7 @@
 module Cadenya
   module Models
     # @see Cadenya::Resources::Objectives#continue
-    class ObjectiveContinueResponse < Cadenya::Internal::Type::BaseModel
+    class ObjectiveEvent < Cadenya::Internal::Type::BaseModel
       # @!attribute data
       #
       #   @return [Cadenya::Models::ObjectiveEventData]
@@ -28,7 +28,7 @@ module Cadenya
 
       # @!method initialize(data:, metadata:, context_window_id: nil, info: nil)
       #   Some parameter documentations has been truncated, see
-      #   {Cadenya::Models::ObjectiveContinueResponse} for more details.
+      #   {Cadenya::Models::ObjectiveEvent} for more details.
       #
       #   @param data [Cadenya::Models::ObjectiveEventData]
       #

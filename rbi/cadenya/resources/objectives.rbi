@@ -184,7 +184,7 @@ module Cadenya
           message: String,
           secrets: T::Array[Cadenya::ObjectiveContinueParams::Secret::OrHash],
           request_options: Cadenya::RequestOptions::OrHash
-        ).returns(Cadenya::Models::ObjectiveContinueResponse)
+        ).returns(Cadenya::ObjectiveEvent)
       end
       def continue(
         # Path param: The ID of the objective. If you have assigned an external ID to the
@@ -248,11 +248,7 @@ module Cadenya
           sort_order: String,
           window_id: String,
           request_options: Cadenya::RequestOptions::OrHash
-        ).returns(
-          Cadenya::Internal::CursorPagination[
-            Cadenya::Models::ObjectiveListEventsResponse
-          ]
-        )
+        ).returns(Cadenya::Internal::CursorPagination[Cadenya::ObjectiveEvent])
       end
       def list_events(
         # Path param: Objective ID for filtering
@@ -271,6 +267,21 @@ module Cadenya
         sort_order: nil,
         # Query param: Optional context window ID to filter events by
         window_id: nil,
+        request_options: {}
+      )
+      end
+
+      # Streams events for an objective in real-time using server-sent events (SSE)
+      sig do
+        params(
+          objective_id: String,
+          workspace_id: String,
+          request_options: Cadenya::RequestOptions::OrHash
+        ).returns(Cadenya::Internal::Stream[Cadenya::ObjectiveEvent])
+      end
+      def stream_events_streaming(
+        objective_id,
+        workspace_id:,
         request_options: {}
       )
       end
