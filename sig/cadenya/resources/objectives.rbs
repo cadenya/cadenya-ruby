@@ -64,7 +64,7 @@ module Cadenya
         ?message: String,
         ?secrets: ::Array[Cadenya::ObjectiveContinueParams::Secret],
         ?request_options: Cadenya::request_opts
-      ) -> Cadenya::Models::ObjectiveContinueResponse
+      ) -> Cadenya::ObjectiveEvent
 
       def list_context_windows: (
         String objective_id,
@@ -85,7 +85,13 @@ module Cadenya
         ?sort_order: String,
         ?window_id: String,
         ?request_options: Cadenya::request_opts
-      ) -> Cadenya::Internal::CursorPagination[Cadenya::Models::ObjectiveListEventsResponse]
+      ) -> Cadenya::Internal::CursorPagination[Cadenya::ObjectiveEvent]
+
+      def stream_events_streaming: (
+        String objective_id,
+        workspace_id: String,
+        ?request_options: Cadenya::request_opts
+      ) -> Cadenya::Internal::Stream[Cadenya::ObjectiveEvent]
 
       def initialize: (client: Cadenya::Client) -> void
     end

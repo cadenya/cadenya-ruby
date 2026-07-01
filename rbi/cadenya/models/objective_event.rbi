@@ -2,13 +2,10 @@
 
 module Cadenya
   module Models
-    class ObjectiveContinueResponse < Cadenya::Internal::Type::BaseModel
+    class ObjectiveEvent < Cadenya::Internal::Type::BaseModel
       OrHash =
         T.type_alias do
-          T.any(
-            Cadenya::Models::ObjectiveContinueResponse,
-            Cadenya::Internal::AnyHash
-          )
+          T.any(Cadenya::ObjectiveEvent, Cadenya::Internal::AnyHash)
         end
 
       sig { returns(Cadenya::ObjectiveEventData) }

@@ -58,10 +58,8 @@ module Cadenya
 
         # @!attribute objective_event
         #
-        #   @return [Cadenya::Models::UnwrapWebhookEvent::Data::ObjectiveEvent]
-        required :objective_event,
-                 -> { Cadenya::UnwrapWebhookEvent::Data::ObjectiveEvent },
-                 api_name: :objectiveEvent
+        #   @return [Cadenya::Models::ObjectiveEvent]
+        required :objective_event, -> { Cadenya::ObjectiveEvent }, api_name: :objectiveEvent
 
         # @!method initialize(agent:, agent_variation:, objective:, objective_event:)
         #   Some parameter documentations has been truncated, see
@@ -76,44 +74,7 @@ module Cadenya
         #
         #   @param objective [Cadenya::Models::OperationMetadata] Metadata for ephemeral operations and activities (e.g., objectives, executions,
         #
-        #   @param objective_event [Cadenya::Models::UnwrapWebhookEvent::Data::ObjectiveEvent]
-
-        # @see Cadenya::Models::UnwrapWebhookEvent::Data#objective_event
-        class ObjectiveEvent < Cadenya::Internal::Type::BaseModel
-          # @!attribute data
-          #
-          #   @return [Cadenya::Models::ObjectiveEventData]
-          required :data, -> { Cadenya::ObjectiveEventData }
-
-          # @!attribute metadata
-          #   Metadata for ephemeral operations and activities (e.g., objectives, executions,
-          #   runs)
-          #
-          #   @return [Cadenya::Models::OperationMetadata]
-          required :metadata, -> { Cadenya::OperationMetadata }
-
-          # @!attribute context_window_id
-          #
-          #   @return [String, nil]
-          optional :context_window_id, String, api_name: :contextWindowId
-
-          # @!attribute info
-          #
-          #   @return [Cadenya::Models::ObjectiveEventInfo, nil]
-          optional :info, -> { Cadenya::ObjectiveEventInfo }
-
-          # @!method initialize(data:, metadata:, context_window_id: nil, info: nil)
-          #   Some parameter documentations has been truncated, see
-          #   {Cadenya::Models::UnwrapWebhookEvent::Data::ObjectiveEvent} for more details.
-          #
-          #   @param data [Cadenya::Models::ObjectiveEventData]
-          #
-          #   @param metadata [Cadenya::Models::OperationMetadata] Metadata for ephemeral operations and activities (e.g., objectives, executions,
-          #
-          #   @param context_window_id [String]
-          #
-          #   @param info [Cadenya::Models::ObjectiveEventInfo]
-        end
+        #   @param objective_event [Cadenya::Models::ObjectiveEvent]
       end
     end
   end

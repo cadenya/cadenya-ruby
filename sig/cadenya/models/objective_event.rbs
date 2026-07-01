@@ -1,6 +1,6 @@
 module Cadenya
   module Models
-    type objective_continue_response =
+    type objective_event =
       {
         data: Cadenya::ObjectiveEventData,
         metadata: Cadenya::OperationMetadata,
@@ -8,7 +8,7 @@ module Cadenya
         info: Cadenya::ObjectiveEventInfo
       }
 
-    class ObjectiveContinueResponse < Cadenya::Internal::Type::BaseModel
+    class ObjectiveEvent < Cadenya::Internal::Type::BaseModel
       attr_accessor data: Cadenya::ObjectiveEventData
 
       attr_accessor metadata: Cadenya::OperationMetadata
