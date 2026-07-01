@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.23.0 (2026-07-01)
+
+Full Changelog: [v0.22.0...v0.23.0](https://github.com/cadenya/cadenya-ruby/compare/v0.22.0...v0.23.0)
+
+### Features
+
+* Add SSE streaming endpoint for objective events (ENG-344) ([eec699b](https://github.com/cadenya/cadenya-ruby/commit/eec699b38fee3662e2d07d8ca22b321472d88e93))
+* **api:** api update ([d9ebcf1](https://github.com/cadenya/cadenya-ruby/commit/d9ebcf1e47b6bb392dada1aa8e64d230ca342e42))
+
 ## 0.22.0 (2026-07-01)
 
 Full Changelog: [v0.21.0...v0.22.0](https://github.com/cadenya/cadenya-ruby/compare/v0.21.0...v0.22.0)
