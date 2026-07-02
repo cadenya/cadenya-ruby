@@ -15,10 +15,10 @@ module Cadenya
         sig { params(http: Cadenya::ToolSets::ConfigHTTP::OrHash).void }
         attr_writer :http
 
-        sig { returns(T.nilable(T.anything)) }
+        sig { returns(T.nilable(Cadenya::ToolSets::ConfigMcp)) }
         attr_reader :mcp
 
-        sig { params(mcp: T.anything).void }
+        sig { params(mcp: Cadenya::ToolSets::ConfigMcp::OrHash).void }
         attr_writer :mcp
 
         sig { returns(T.nilable(Cadenya::ToolSets::ConfigOpenAPI)) }
@@ -33,7 +33,7 @@ module Cadenya
         sig do
           params(
             http: Cadenya::ToolSets::ConfigHTTP::OrHash,
-            mcp: T.anything,
+            mcp: Cadenya::ToolSets::ConfigMcp::OrHash,
             openapi: Cadenya::ToolSets::ConfigOpenAPI::OrHash
           ).returns(T.attached_class)
         end
@@ -44,7 +44,7 @@ module Cadenya
           override.returns(
             {
               http: Cadenya::ToolSets::ConfigHTTP,
-              mcp: T.anything,
+              mcp: Cadenya::ToolSets::ConfigMcp,
               openapi: Cadenya::ToolSets::ConfigOpenAPI
             }
           )
