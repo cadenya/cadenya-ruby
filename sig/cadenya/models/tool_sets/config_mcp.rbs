@@ -1,7 +1,21 @@
 module Cadenya
   module Models
     module ToolSets
-      ConfigMcp: Cadenya::Internal::Type::Converter
+      type config_mcp = { annotations: Cadenya::ToolSets::McpAnnotations }
+
+      class ConfigMcp < Cadenya::Internal::Type::BaseModel
+        attr_reader annotations: Cadenya::ToolSets::McpAnnotations?
+
+        def annotations=: (
+          Cadenya::ToolSets::McpAnnotations
+        ) -> Cadenya::ToolSets::McpAnnotations
+
+        def initialize: (
+          ?annotations: Cadenya::ToolSets::McpAnnotations
+        ) -> void
+
+        def to_hash: -> { annotations: Cadenya::ToolSets::McpAnnotations }
+      end
     end
   end
 end

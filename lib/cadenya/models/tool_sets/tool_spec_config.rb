@@ -11,8 +11,8 @@ module Cadenya
 
         # @!attribute mcp
         #
-        #   @return [Object, nil]
-        optional :mcp, Cadenya::Internal::Type::Unknown
+        #   @return [Cadenya::Models::ToolSets::ConfigMcp, nil]
+        optional :mcp, -> { Cadenya::ToolSets::ConfigMcp }
 
         # @!attribute openapi
         #
@@ -25,7 +25,7 @@ module Cadenya
         #   be Http. If the tool is an inline tool, the adapter will be Inline.
         #
         #   @param http [Cadenya::Models::ToolSets::ConfigHTTP]
-        #   @param mcp [Object]
+        #   @param mcp [Cadenya::Models::ToolSets::ConfigMcp]
         #   @param openapi [Cadenya::Models::ToolSets::ConfigOpenAPI]
       end
     end
