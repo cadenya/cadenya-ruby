@@ -18,6 +18,8 @@ module Cadenya
         @iterator ||= Cadenya::Internal::Util.chain_fused(@stream) do |y|
           @stream.each do |msg|
             case msg
+            in {event: "open" | "ping"}
+              next
             in {data: String => data}
               decoded = JSON.parse(data, symbolize_names: true)
               unwrapped = Cadenya::Internal::Util.dig(decoded, @unwrap)
