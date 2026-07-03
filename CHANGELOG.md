@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.27.0 (2026-07-03)
+
+Full Changelog: [v0.26.0...v0.27.0](https://github.com/cadenya/cadenya-ruby/compare/v0.26.0...v0.27.0)
+
+### Features
+
+* **api:** api update ([f407d32](https://github.com/cadenya/cadenya-ruby/commit/f407d328b0177f7048eb6d2a90916bd98351d3d3))
+
 ## 0.26.0 (2026-07-02)
 
 Full Changelog: [v0.25.0...v0.26.0](https://github.com/cadenya/cadenya-ruby/compare/v0.25.0...v0.26.0)
