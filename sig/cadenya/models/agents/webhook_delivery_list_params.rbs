@@ -75,6 +75,7 @@ module Cadenya
           | :OBJECTIVE_EVENT_TYPE_SUB_AGENT_SPAWNED
           | :OBJECTIVE_EVENT_TYPE_SUB_AGENT_UPDATED
           | :OBJECTIVE_EVENT_TYPE_FINALIZED
+          | :OBJECTIVE_EVENT_TYPE_NOTICE
 
         module EventType
           extend Cadenya::Internal::Type::Enum
@@ -95,6 +96,7 @@ module Cadenya
           OBJECTIVE_EVENT_TYPE_SUB_AGENT_SPAWNED: :OBJECTIVE_EVENT_TYPE_SUB_AGENT_SPAWNED
           OBJECTIVE_EVENT_TYPE_SUB_AGENT_UPDATED: :OBJECTIVE_EVENT_TYPE_SUB_AGENT_UPDATED
           OBJECTIVE_EVENT_TYPE_FINALIZED: :OBJECTIVE_EVENT_TYPE_FINALIZED
+          OBJECTIVE_EVENT_TYPE_NOTICE: :OBJECTIVE_EVENT_TYPE_NOTICE
 
           def self?.values: -> ::Array[Cadenya::Models::Agents::WebhookDeliveryListParams::event_type]
         end

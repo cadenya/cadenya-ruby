@@ -62,7 +62,6 @@ module Cadenya
         workspace_id: String,
         ?enqueue: bool,
         ?message: String,
-        ?secrets: ::Array[Cadenya::ObjectiveContinueParams::Secret],
         ?request_options: Cadenya::request_opts
       ) -> Cadenya::ObjectiveEvent
 

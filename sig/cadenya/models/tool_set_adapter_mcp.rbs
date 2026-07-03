@@ -5,6 +5,7 @@ module Cadenya
         exclude_tools: Cadenya::ToolFilter,
         headers: ::Hash[Symbol, String],
         include_tools: Cadenya::ToolFilter,
+        just_in_time: Cadenya::ToolSetAdapterMcp::JustInTime,
         tool_approvals: Cadenya::ApprovalRequirementFilter,
         url: String
       }
@@ -22,6 +23,12 @@ module Cadenya
 
       def include_tools=: (Cadenya::ToolFilter) -> Cadenya::ToolFilter
 
+      attr_reader just_in_time: Cadenya::ToolSetAdapterMcp::JustInTime?
+
+      def just_in_time=: (
+        Cadenya::ToolSetAdapterMcp::JustInTime
+      ) -> Cadenya::ToolSetAdapterMcp::JustInTime
+
       attr_reader tool_approvals: Cadenya::ApprovalRequirementFilter?
 
       def tool_approvals=: (
@@ -36,6 +43,7 @@ module Cadenya
         ?exclude_tools: Cadenya::ToolFilter,
         ?headers: ::Hash[Symbol, String],
         ?include_tools: Cadenya::ToolFilter,
+        ?just_in_time: Cadenya::ToolSetAdapterMcp::JustInTime,
         ?tool_approvals: Cadenya::ApprovalRequirementFilter,
         ?url: String
       ) -> void
@@ -44,9 +52,33 @@ module Cadenya
         exclude_tools: Cadenya::ToolFilter,
         headers: ::Hash[Symbol, String],
         include_tools: Cadenya::ToolFilter,
+        just_in_time: Cadenya::ToolSetAdapterMcp::JustInTime,
         tool_approvals: Cadenya::ApprovalRequirementFilter,
         url: String
       }
+
+      type just_in_time =
+        { enabled: bool, fail_objective_on_tool_list_error: bool }
+
+      class JustInTime < Cadenya::Internal::Type::BaseModel
+        attr_reader enabled: bool?
+
+        def enabled=: (bool) -> bool
+
+        attr_reader fail_objective_on_tool_list_error: bool?
+
+        def fail_objective_on_tool_list_error=: (bool) -> bool
+
+        def initialize: (
+          ?enabled: bool,
+          ?fail_objective_on_tool_list_error: bool
+        ) -> void
+
+        def to_hash: -> {
+          enabled: bool,
+          fail_objective_on_tool_list_error: bool
+        }
+      end
     end
   end
 end
