@@ -5,8 +5,7 @@ module Cadenya
         workspace_id: String,
         objective_id: String,
         enqueue: bool,
-        message: String,
-        secrets: ::Array[Cadenya::ObjectiveContinueParams::Secret]
+        message: String
       }
       & Cadenya::Internal::Type::request_parameters
 
@@ -26,18 +25,11 @@ module Cadenya
 
       def message=: (String) -> String
 
-      attr_reader secrets: ::Array[Cadenya::ObjectiveContinueParams::Secret]?
-
-      def secrets=: (
-        ::Array[Cadenya::ObjectiveContinueParams::Secret]
-      ) -> ::Array[Cadenya::ObjectiveContinueParams::Secret]
-
       def initialize: (
         workspace_id: String,
         objective_id: String,
         ?enqueue: bool,
         ?message: String,
-        ?secrets: ::Array[Cadenya::ObjectiveContinueParams::Secret],
         ?request_options: Cadenya::request_opts
       ) -> void
 
@@ -46,25 +38,8 @@ module Cadenya
         objective_id: String,
         enqueue: bool,
         message: String,
-        secrets: ::Array[Cadenya::ObjectiveContinueParams::Secret],
         request_options: Cadenya::RequestOptions
       }
-
-      type secret = { name: String, value: String }
-
-      class Secret < Cadenya::Internal::Type::BaseModel
-        attr_reader name: String?
-
-        def name=: (String) -> String
-
-        attr_reader value: String?
-
-        def value=: (String) -> String
-
-        def initialize: (?name: String, ?value: String) -> void
-
-        def to_hash: -> { name: String, value: String }
-      end
     end
   end
 end

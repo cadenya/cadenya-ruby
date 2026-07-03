@@ -15,6 +15,16 @@ module Cadenya
       def retrieve(request_options: {})
       end
 
+      # Rotates the challenge token sent in the X-Cadenya-Challenge-Token header on MCP
+      # tools/list requests. Returns only the new token.
+      sig do
+        params(request_options: Cadenya::RequestOptions::OrHash).returns(
+          Cadenya::RotateChallengeTokenResponse
+        )
+      end
+      def rotate_challenge_token(request_options: {})
+      end
+
       # Rotates the webhook signing key for the account. Returns only the new key.
       sig do
         params(request_options: Cadenya::RequestOptions::OrHash).returns(

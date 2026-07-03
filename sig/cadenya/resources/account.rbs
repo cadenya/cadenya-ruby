@@ -5,6 +5,10 @@ module Cadenya
         ?request_options: Cadenya::request_opts
       ) -> Cadenya::AccountAPI
 
+      def rotate_challenge_token: (
+        ?request_options: Cadenya::request_opts
+      ) -> Cadenya::RotateChallengeTokenResponse
+
       def rotate_webhook_signing_key: (
         ?request_options: Cadenya::request_opts
       ) -> Cadenya::RotateWebhookSigningKeyResponse

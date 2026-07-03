@@ -4,6 +4,16 @@ module Cadenya
   module Models
     class AccountInfo < Cadenya::Internal::Type::BaseModel
       response_only do
+        # @!attribute challenge_token
+        #   The challenge token Cadenya sends in the X-Cadenya-Challenge-Token header on
+        #   every MCP tools/list request. Server implementations can accept a valid
+        #   challenge token in place of per-user auth when listing tools, while still
+        #   requiring real auth on tools/call. Rotate with RotateChallengeToken; update any
+        #   servers validating the token before rotating.
+        #
+        #   @return [String, nil]
+        optional :challenge_token, String, api_name: :challengeToken
+
         # @!attribute global_api_key
         #   An API key for the account. Use workspace-association RPCs to grant the key
         #   access to specific workspaces; a key with zero workspaces is valid but cannot
@@ -21,11 +31,13 @@ module Cadenya
         optional :webhook_events_hmac_secret, String, api_name: :webhookEventsHmacSecret
       end
 
-      # @!method initialize(global_api_key: nil, webhook_events_hmac_secret: nil)
+      # @!method initialize(challenge_token: nil, global_api_key: nil, webhook_events_hmac_secret: nil)
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::AccountInfo} for more details.
       #
       #   Server-populated information about the account.
+      #
+      #   @param challenge_token [String] The challenge token Cadenya sends in the X-Cadenya-Challenge-Token header
       #
       #   @param global_api_key [Cadenya::Models::APIKey] An API key for the account. Use workspace-association RPCs to grant the
       #

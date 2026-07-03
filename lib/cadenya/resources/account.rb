@@ -24,6 +24,25 @@ module Cadenya
         )
       end
 
+      # Rotates the challenge token sent in the X-Cadenya-Challenge-Token header on MCP
+      # tools/list requests. Returns only the new token.
+      #
+      # @overload rotate_challenge_token(request_options: {})
+      #
+      # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
+      #
+      # @return [Cadenya::Models::RotateChallengeTokenResponse]
+      #
+      # @see Cadenya::Models::AccountRotateChallengeTokenParams
+      def rotate_challenge_token(params = {})
+        @client.request(
+          method: :post,
+          path: "v1/account:rotateChallengeToken",
+          model: Cadenya::RotateChallengeTokenResponse,
+          options: params[:request_options]
+        )
+      end
+
       # Rotates the webhook signing key for the account. Returns only the new key.
       #
       # @overload rotate_webhook_signing_key(request_options: {})

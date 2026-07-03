@@ -1,9 +1,17 @@
 module Cadenya
   module Models
     type account_info =
-      { global_api_key: Cadenya::APIKey, webhook_events_hmac_secret: String }
+      {
+        challenge_token: String,
+        global_api_key: Cadenya::APIKey,
+        webhook_events_hmac_secret: String
+      }
 
     class AccountInfo < Cadenya::Internal::Type::BaseModel
+      attr_reader challenge_token: String?
+
+      def challenge_token=: (String) -> String
+
       attr_reader global_api_key: Cadenya::APIKey?
 
       def global_api_key=: (Cadenya::APIKey) -> Cadenya::APIKey
@@ -13,11 +21,13 @@ module Cadenya
       def webhook_events_hmac_secret=: (String) -> String
 
       def initialize: (
+        ?challenge_token: String,
         ?global_api_key: Cadenya::APIKey,
         ?webhook_events_hmac_secret: String
       ) -> void
 
       def to_hash: -> {
+        challenge_token: String,
         global_api_key: Cadenya::APIKey,
         webhook_events_hmac_secret: String
       }

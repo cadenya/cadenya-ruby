@@ -6,6 +6,17 @@ module Cadenya
       OrHash =
         T.type_alias { T.any(Cadenya::AccountInfo, Cadenya::Internal::AnyHash) }
 
+      # The challenge token Cadenya sends in the X-Cadenya-Challenge-Token header on
+      # every MCP tools/list request. Server implementations can accept a valid
+      # challenge token in place of per-user auth when listing tools, while still
+      # requiring real auth on tools/call. Rotate with RotateChallengeToken; update any
+      # servers validating the token before rotating.
+      sig { returns(T.nilable(String)) }
+      attr_reader :challenge_token
+
+      sig { params(challenge_token: String).void }
+      attr_writer :challenge_token
+
       # An API key for the account. Use workspace-association RPCs to grant the key
       # access to specific workspaces; a key with zero workspaces is valid but cannot
       # access workspace-scoped resources.
@@ -27,11 +38,18 @@ module Cadenya
       # Server-populated information about the account.
       sig do
         params(
+          challenge_token: String,
           global_api_key: Cadenya::APIKey::OrHash,
           webhook_events_hmac_secret: String
         ).returns(T.attached_class)
       end
       def self.new(
+        # The challenge token Cadenya sends in the X-Cadenya-Challenge-Token header on
+        # every MCP tools/list request. Server implementations can accept a valid
+        # challenge token in place of per-user auth when listing tools, while still
+        # requiring real auth on tools/call. Rotate with RotateChallengeToken; update any
+        # servers validating the token before rotating.
+        challenge_token: nil,
         # An API key for the account. Use workspace-association RPCs to grant the key
         # access to specific workspaces; a key with zero workspaces is valid but cannot
         # access workspace-scoped resources.
@@ -46,6 +64,7 @@ module Cadenya
       sig do
         override.returns(
           {
+            challenge_token: String,
             global_api_key: Cadenya::APIKey,
             webhook_events_hmac_secret: String
           }

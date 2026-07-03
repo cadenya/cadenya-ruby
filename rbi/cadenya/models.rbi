@@ -9,6 +9,9 @@ module Cadenya
 
   AccountRetrieveParams = Cadenya::Models::AccountRetrieveParams
 
+  AccountRotateChallengeTokenParams =
+    Cadenya::Models::AccountRotateChallengeTokenParams
+
   AccountRotateWebhookSigningKeyParams =
     Cadenya::Models::AccountRotateWebhookSigningKeyParams
 
@@ -182,6 +185,8 @@ module Cadenya
   ProfileWhoamiParams = Cadenya::Models::ProfileWhoamiParams
 
   ResourceMetadata = Cadenya::Models::ResourceMetadata
+
+  RotateChallengeTokenResponse = Cadenya::Models::RotateChallengeTokenResponse
 
   RotateWebhookSigningKeyResponse =
     Cadenya::Models::RotateWebhookSigningKeyResponse

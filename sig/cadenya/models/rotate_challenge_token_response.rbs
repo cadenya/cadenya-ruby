@@ -1,0 +1,15 @@
+module Cadenya
+  module Models
+    type rotate_challenge_token_response = { challenge_token: String }
+
+    class RotateChallengeTokenResponse < Cadenya::Internal::Type::BaseModel
+      attr_reader challenge_token: String?
+
+      def challenge_token=: (String) -> String
+
+      def initialize: (?challenge_token: String) -> void
+
+      def to_hash: -> { challenge_token: String }
+    end
+  end
+end

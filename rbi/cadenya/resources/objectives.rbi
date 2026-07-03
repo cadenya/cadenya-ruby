@@ -182,7 +182,6 @@ module Cadenya
           workspace_id: String,
           enqueue: T::Boolean,
           message: String,
-          secrets: T::Array[Cadenya::ObjectiveContinueParams::Secret::OrHash],
           request_options: Cadenya::RequestOptions::OrHash
         ).returns(Cadenya::ObjectiveEvent)
       end
@@ -199,10 +198,6 @@ module Cadenya
         # Body param: The message to continue an objective that has completed (or you are
         # enqueing)
         message: nil,
-        # Body param: Secrets that should be included with the message. Helpful for when
-        # you need to update secrets on the objective (IE: A secret expires and needs to
-        # be refreshed)
-        secrets: nil,
         request_options: {}
       )
       end
