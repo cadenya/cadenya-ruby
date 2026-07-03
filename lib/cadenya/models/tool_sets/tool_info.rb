@@ -18,11 +18,24 @@ module Cadenya
         #   @return [Cadenya::Models::ResourceMetadata, nil]
         optional :tool_set, -> { Cadenya::ResourceMetadata }, api_name: :toolSet
 
-        # @!method initialize(created_by: nil, tool_set: nil)
+        response_only do
+          # @!attribute signature
+          #   Content signature identifying the tool within its tool set: a hash of the
+          #   sanitized llm_tool_name, description, and canonical parameters. Two tools with
+          #   the same llm_tool_name but different parameters or description (as MCP servers
+          #   may return per user) have distinct signatures.
+          #
+          #   @return [String, nil]
+          optional :signature, String
+        end
+
+        # @!method initialize(created_by: nil, signature: nil, tool_set: nil)
         #   Some parameter documentations has been truncated, see
         #   {Cadenya::Models::ToolSets::ToolInfo} for more details.
         #
         #   @param created_by [Cadenya::Models::Profile] A profile identifies a user or non-human principal (such as an API key)
+        #
+        #   @param signature [String] Content signature identifying the tool within its tool set: a hash of the
         #
         #   @param tool_set [Cadenya::Models::ResourceMetadata] Standard metadata for persistent, named resources (e.g., agents, tools, prompts)
       end

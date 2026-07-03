@@ -208,7 +208,7 @@ module Cadenya
       #
       # Continues an objective that has completed
       #
-      # @overload continue(objective_id, workspace_id:, enqueue: nil, message: nil, secrets: nil, request_options: {})
+      # @overload continue(objective_id, workspace_id:, enqueue: nil, message: nil, request_options: {})
       #
       # @param objective_id [String] Path param: The ID of the objective. If you have assigned an external ID to the
       #
@@ -217,8 +217,6 @@ module Cadenya
       # @param enqueue [Boolean] Body param: When set to true, the message will be enqueued for when the agent lo
       #
       # @param message [String] Body param: The message to continue an objective that has completed (or you are
-      #
-      # @param secrets [Array<Cadenya::Models::ObjectiveContinueParams::Secret>] Body param: Secrets that should be included with the message. Helpful for when y
       #
       # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
       #

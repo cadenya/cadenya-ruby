@@ -2,7 +2,11 @@ module Cadenya
   module Models
     module ToolSets
       type tool_info =
-        { created_by: Cadenya::Profile, tool_set: Cadenya::ResourceMetadata }
+        {
+          created_by: Cadenya::Profile,
+          signature: String,
+          tool_set: Cadenya::ResourceMetadata
+        }
 
       class ToolInfo < Cadenya::Internal::Type::BaseModel
         attr_reader created_by: Cadenya::Profile?
@@ -13,13 +17,19 @@ module Cadenya
 
         def tool_set=: (Cadenya::ResourceMetadata) -> Cadenya::ResourceMetadata
 
+        attr_reader signature: String?
+
+        def signature=: (String) -> String
+
         def initialize: (
           ?created_by: Cadenya::Profile,
+          ?signature: String,
           ?tool_set: Cadenya::ResourceMetadata
         ) -> void
 
         def to_hash: -> {
           created_by: Cadenya::Profile,
+          signature: String,
           tool_set: Cadenya::ResourceMetadata
         }
       end

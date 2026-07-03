@@ -8,6 +8,7 @@ module Cadenya
         error: Cadenya::ObjectiveError,
         finalized: Cadenya::ObjectiveEventData::Finalized,
         memory_read: Cadenya::MemoryRead,
+        notice: Cadenya::ObjectiveEventData::Notice,
         sub_agent_spawned: Cadenya::SubAgentSpawned,
         sub_agent_updated: Cadenya::SubAgentUpdated,
         tool_approval_requested: Cadenya::ToolApprovalRequested,
@@ -52,6 +53,12 @@ module Cadenya
       attr_reader memory_read: Cadenya::MemoryRead?
 
       def memory_read=: (Cadenya::MemoryRead) -> Cadenya::MemoryRead
+
+      attr_reader notice: Cadenya::ObjectiveEventData::Notice?
+
+      def notice=: (
+        Cadenya::ObjectiveEventData::Notice
+      ) -> Cadenya::ObjectiveEventData::Notice
 
       attr_reader sub_agent_spawned: Cadenya::SubAgentSpawned?
 
@@ -106,6 +113,7 @@ module Cadenya
         ?error: Cadenya::ObjectiveError,
         ?finalized: Cadenya::ObjectiveEventData::Finalized,
         ?memory_read: Cadenya::MemoryRead,
+        ?notice: Cadenya::ObjectiveEventData::Notice,
         ?sub_agent_spawned: Cadenya::SubAgentSpawned,
         ?sub_agent_updated: Cadenya::SubAgentUpdated,
         ?tool_approval_requested: Cadenya::ToolApprovalRequested,
@@ -125,6 +133,7 @@ module Cadenya
         error: Cadenya::ObjectiveError,
         finalized: Cadenya::ObjectiveEventData::Finalized,
         memory_read: Cadenya::MemoryRead,
+        notice: Cadenya::ObjectiveEventData::Notice,
         sub_agent_spawned: Cadenya::SubAgentSpawned,
         sub_agent_updated: Cadenya::SubAgentUpdated,
         tool_approval_requested: Cadenya::ToolApprovalRequested,
@@ -159,6 +168,53 @@ module Cadenya
         def initialize: (?output: top) -> void
 
         def to_hash: -> { output: top }
+      end
+
+      type notice =
+        {
+          key: String,
+          level: Cadenya::Models::ObjectiveEventData::Notice::level,
+          message: String
+        }
+
+      class Notice < Cadenya::Internal::Type::BaseModel
+        attr_reader key: String?
+
+        def key=: (String) -> String
+
+        attr_reader level: Cadenya::Models::ObjectiveEventData::Notice::level?
+
+        def level=: (
+          Cadenya::Models::ObjectiveEventData::Notice::level
+        ) -> Cadenya::Models::ObjectiveEventData::Notice::level
+
+        attr_reader message: String?
+
+        def message=: (String) -> String
+
+        def initialize: (
+          ?key: String,
+          ?level: Cadenya::Models::ObjectiveEventData::Notice::level,
+          ?message: String
+        ) -> void
+
+        def to_hash: -> {
+          key: String,
+          level: Cadenya::Models::ObjectiveEventData::Notice::level,
+          message: String
+        }
+
+        type level = :LEVEL_UNSPECIFIED | :LEVEL_INFO | :LEVEL_WARN
+
+        module Level
+          extend Cadenya::Internal::Type::Enum
+
+          LEVEL_UNSPECIFIED: :LEVEL_UNSPECIFIED
+          LEVEL_INFO: :LEVEL_INFO
+          LEVEL_WARN: :LEVEL_WARN
+
+          def self?.values: -> ::Array[Cadenya::Models::ObjectiveEventData::Notice::level]
+        end
       end
     end
   end
