@@ -27,22 +27,23 @@ module Cadenya
         end
         attr_writer :schedule
 
-        # Optional input data passed to the objective. If the agent has an
-        # input_data_schema, this must satisfy it.
-        sig { returns(T.nilable(T.anything)) }
-        attr_reader :data
-
-        sig { params(data: T.anything).void }
-        attr_writer :data
-
-        # Optional initial message passed to CreateObjective on each fire. Becomes the
-        # first user message in the objective's chat history. When unset, the fired
-        # objective defers to the selected variation's user_message_template.
+        # Optional explicit first user message passed to CreateObjective on each fire.
+        # Becomes the first user message in the objective's chat history. When unset, the
+        # fired objective defers to the selected variation's first_user_message_template.
         sig { returns(T.nilable(String)) }
-        attr_reader :initial_message
+        attr_reader :first_user_message
 
-        sig { params(initial_message: String).void }
-        attr_writer :initial_message
+        sig { params(first_user_message: String).void }
+        attr_writer :first_user_message
+
+        # Optional data rendered into the variation's first_user_message_template when
+        # each fired objective is created. Separate from `system_prompt_data`, which
+        # renders the system prompt template.
+        sig { returns(T.nilable(T.anything)) }
+        attr_reader :first_user_message_data
+
+        sig { params(first_user_message_data: T.anything).void }
+        attr_writer :first_user_message_data
 
         # What to do when the previous run is still in flight. Defaults to SKIP.
         sig do
@@ -62,14 +63,14 @@ module Cadenya
         end
         attr_writer :overlap_policy
 
-        # Optional data rendered into the variation's user_message_template when each
-        # fired objective is created. Separate from `data`, which renders the system
-        # prompt template.
+        # Optional data rendered into the variation's system_prompt_template when each
+        # fired objective is created. If the agent has a system_prompt_data_schema, this
+        # must satisfy it.
         sig { returns(T.nilable(T.anything)) }
-        attr_reader :user_data
+        attr_reader :system_prompt_data
 
-        sig { params(user_data: T.anything).void }
-        attr_writer :user_data
+        sig { params(system_prompt_data: T.anything).void }
+        attr_writer :system_prompt_data
 
         # Optional explicit variation. When unset, the agent's variation_selection_mode
         # chooses per fire.
@@ -83,11 +84,11 @@ module Cadenya
         sig do
           params(
             schedule: Cadenya::Agents::AgentScheduleSpecSchedule::OrHash,
-            data: T.anything,
-            initial_message: String,
+            first_user_message: String,
+            first_user_message_data: T.anything,
             overlap_policy:
               Cadenya::Agents::AgentScheduleSpec::OverlapPolicy::OrSymbol,
-            user_data: T.anything,
+            system_prompt_data: T.anything,
             variation_id: String
           ).returns(T.attached_class)
         end
@@ -96,19 +97,20 @@ module Cadenya
           # of calendar rules (wall-clock) and/or interval rules (duration), OR'd together.
           # At least one rule is required.
           schedule:,
-          # Optional input data passed to the objective. If the agent has an
-          # input_data_schema, this must satisfy it.
-          data: nil,
-          # Optional initial message passed to CreateObjective on each fire. Becomes the
-          # first user message in the objective's chat history. When unset, the fired
-          # objective defers to the selected variation's user_message_template.
-          initial_message: nil,
+          # Optional explicit first user message passed to CreateObjective on each fire.
+          # Becomes the first user message in the objective's chat history. When unset, the
+          # fired objective defers to the selected variation's first_user_message_template.
+          first_user_message: nil,
+          # Optional data rendered into the variation's first_user_message_template when
+          # each fired objective is created. Separate from `system_prompt_data`, which
+          # renders the system prompt template.
+          first_user_message_data: nil,
           # What to do when the previous run is still in flight. Defaults to SKIP.
           overlap_policy: nil,
-          # Optional data rendered into the variation's user_message_template when each
-          # fired objective is created. Separate from `data`, which renders the system
-          # prompt template.
-          user_data: nil,
+          # Optional data rendered into the variation's system_prompt_template when each
+          # fired objective is created. If the agent has a system_prompt_data_schema, this
+          # must satisfy it.
+          system_prompt_data: nil,
           # Optional explicit variation. When unset, the agent's variation_selection_mode
           # chooses per fire.
           variation_id: nil
@@ -119,11 +121,11 @@ module Cadenya
           override.returns(
             {
               schedule: Cadenya::Agents::AgentScheduleSpecSchedule,
-              data: T.anything,
-              initial_message: String,
+              first_user_message: String,
+              first_user_message_data: T.anything,
               overlap_policy:
                 Cadenya::Agents::AgentScheduleSpec::OverlapPolicy::OrSymbol,
-              user_data: T.anything,
+              system_prompt_data: T.anything,
               variation_id: String
             }
           )

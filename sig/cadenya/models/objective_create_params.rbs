@@ -4,13 +4,13 @@ module Cadenya
       {
         workspace_id: String,
         agent_id: String,
-        data: ::Hash[Symbol, top],
+        system_prompt_data: ::Hash[Symbol, top],
         episodic_memory: Cadenya::ObjectiveCreateParams::EpisodicMemory,
-        initial_message: String,
+        first_user_message: String,
+        first_user_message_data: ::Hash[Symbol, top],
         memory_cascade: ::Array[Cadenya::MemoryReference],
         metadata: Cadenya::CreateOperationMetadata,
         secrets: ::Array[Cadenya::ObjectiveCreateParams::Secret],
-        user_data: ::Hash[Symbol, top],
         variation_id: String
       }
       & Cadenya::Internal::Type::request_parameters
@@ -23,7 +23,7 @@ module Cadenya
 
       attr_accessor agent_id: String
 
-      attr_accessor data: ::Hash[Symbol, top]
+      attr_accessor system_prompt_data: ::Hash[Symbol, top]
 
       attr_reader episodic_memory: Cadenya::ObjectiveCreateParams::EpisodicMemory?
 
@@ -31,9 +31,13 @@ module Cadenya
         Cadenya::ObjectiveCreateParams::EpisodicMemory
       ) -> Cadenya::ObjectiveCreateParams::EpisodicMemory
 
-      attr_reader initial_message: String?
+      attr_reader first_user_message: String?
 
-      def initial_message=: (String) -> String
+      def first_user_message=: (String) -> String
+
+      attr_reader first_user_message_data: ::Hash[Symbol, top]?
+
+      def first_user_message_data=: (::Hash[Symbol, top]) -> ::Hash[Symbol, top]
 
       attr_reader memory_cascade: ::Array[Cadenya::MemoryReference]?
 
@@ -53,10 +57,6 @@ module Cadenya
         ::Array[Cadenya::ObjectiveCreateParams::Secret]
       ) -> ::Array[Cadenya::ObjectiveCreateParams::Secret]
 
-      attr_reader user_data: ::Hash[Symbol, top]?
-
-      def user_data=: (::Hash[Symbol, top]) -> ::Hash[Symbol, top]
-
       attr_reader variation_id: String?
 
       def variation_id=: (String) -> String
@@ -64,13 +64,13 @@ module Cadenya
       def initialize: (
         workspace_id: String,
         agent_id: String,
-        data: ::Hash[Symbol, top],
+        system_prompt_data: ::Hash[Symbol, top],
         ?episodic_memory: Cadenya::ObjectiveCreateParams::EpisodicMemory,
-        ?initial_message: String,
+        ?first_user_message: String,
+        ?first_user_message_data: ::Hash[Symbol, top],
         ?memory_cascade: ::Array[Cadenya::MemoryReference],
         ?metadata: Cadenya::CreateOperationMetadata,
         ?secrets: ::Array[Cadenya::ObjectiveCreateParams::Secret],
-        ?user_data: ::Hash[Symbol, top],
         ?variation_id: String,
         ?request_options: Cadenya::request_opts
       ) -> void
@@ -78,13 +78,13 @@ module Cadenya
       def to_hash: -> {
         workspace_id: String,
         agent_id: String,
-        data: ::Hash[Symbol, top],
+        system_prompt_data: ::Hash[Symbol, top],
         episodic_memory: Cadenya::ObjectiveCreateParams::EpisodicMemory,
-        initial_message: String,
+        first_user_message: String,
+        first_user_message_data: ::Hash[Symbol, top],
         memory_cascade: ::Array[Cadenya::MemoryReference],
         metadata: Cadenya::CreateOperationMetadata,
         secrets: ::Array[Cadenya::ObjectiveCreateParams::Secret],
-        user_data: ::Hash[Symbol, top],
         variation_id: String,
         request_options: Cadenya::RequestOptions
       }

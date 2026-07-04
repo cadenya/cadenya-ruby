@@ -20,25 +20,25 @@ module Cadenya
       #
       # Creates a new objective in the workspace
       #
-      # @overload create(workspace_id, agent_id:, data:, episodic_memory: nil, initial_message: nil, memory_cascade: nil, metadata: nil, secrets: nil, user_data: nil, variation_id: nil, request_options: {})
+      # @overload create(workspace_id, agent_id:, system_prompt_data:, episodic_memory: nil, first_user_message: nil, first_user_message_data: nil, memory_cascade: nil, metadata: nil, secrets: nil, variation_id: nil, request_options: {})
       #
       # @param workspace_id [String]
       #
       # @param agent_id [String]
       #
-      # @param data [Hash{Symbol=>Object}] Arbitrary data for the objective. May be used in liquid templates for prompts co
+      # @param system_prompt_data [Hash{Symbol=>Object}] Arbitrary data rendered into the selected variation's system_prompt_template
       #
       # @param episodic_memory [Cadenya::Models::ObjectiveCreateParams::EpisodicMemory] Episodic is used to configure the episodic memory for the objective
       #
-      # @param initial_message [String] Optional override for the initial message sent to the agent. This becomes the fi
+      # @param first_user_message [String] Optional explicit first user message for the LLM chat history. When not set,
+      #
+      # @param first_user_message_data [Hash{Symbol=>Object}] Arbitrary data rendered into the selected variation's first_user_message_templat
       #
       # @param memory_cascade [Array<Cadenya::Models::MemoryReference>] Memory layers/entries layered over the baseline cascade inherited
       #
       # @param metadata [Cadenya::Models::CreateOperationMetadata] CreateOperationMetadata contains the user-provided fields for creating
       #
       # @param secrets [Array<Cadenya::Models::ObjectiveCreateParams::Secret>] Secrets that can be used in the headers for tool calls using the secret interpol
-      #
-      # @param user_data [Hash{Symbol=>Object}] Arbitrary data rendered into the selected variation's user_message_template
       #
       # @param variation_id [String] Optional explicit variation selection. Overrides the agent's variation_selection
       #

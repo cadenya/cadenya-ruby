@@ -6,10 +6,10 @@ module Cadenya
       OrHash =
         T.type_alias { T.any(Cadenya::Objective, Cadenya::Internal::AnyHash) }
 
-      # The initial message sent to the agent. This becomes the first user message in
-      # the LLM chat history.
+      # The first user message in the LLM chat history, either provided explicitly at
+      # creation or rendered from the variation's first_user_message_template.
       sig { returns(String) }
-      attr_accessor :initial_message
+      attr_accessor :first_user_message
 
       # Metadata for ephemeral operations and activities (e.g., objectives, executions,
       # runs)
@@ -75,12 +75,12 @@ module Cadenya
       sig { returns(String) }
       attr_accessor :system_prompt
 
-      # Arbitrary data for the objective
+      # Arbitrary data rendered into the variation's first_user_message_template
       sig { returns(T.nilable(T::Hash[Symbol, T.anything])) }
-      attr_reader :data
+      attr_reader :first_user_message_data
 
-      sig { params(data: T::Hash[Symbol, T.anything]).void }
-      attr_writer :data
+      sig { params(first_user_message_data: T::Hash[Symbol, T.anything]).void }
+      attr_writer :first_user_message_data
 
       # ObjectiveInfo provides read-only aggregated statistics about an objective's
       # execution
@@ -114,12 +114,12 @@ module Cadenya
       sig { params(state_message: String).void }
       attr_writer :state_message
 
-      # Arbitrary data used to render the variation's user_message_template
+      # Arbitrary data rendered into the variation's system_prompt_template
       sig { returns(T.nilable(T::Hash[Symbol, T.anything])) }
-      attr_reader :user_data
+      attr_reader :system_prompt_data
 
-      sig { params(user_data: T::Hash[Symbol, T.anything]).void }
-      attr_writer :user_data
+      sig { params(system_prompt_data: T::Hash[Symbol, T.anything]).void }
+      attr_writer :system_prompt_data
 
       # Objective is the data for an objective. It contains the snapshotted fields for
       # the selected agent and variation. Secrets are returned only with their names,
@@ -127,28 +127,28 @@ module Cadenya
       sig do
         params(
           config_snapshot: Cadenya::ObjectiveConfigSnapshot::OrHash,
-          initial_message: String,
+          first_user_message: String,
           metadata: Cadenya::OperationMetadata::OrHash,
           state: Cadenya::Objective::State::OrSymbol,
           system_prompt: String,
-          data: T::Hash[Symbol, T.anything],
           episodic_memory: Cadenya::Objective::EpisodicMemory::OrHash,
+          first_user_message_data: T::Hash[Symbol, T.anything],
           info: Cadenya::ObjectiveInfo::OrHash,
           memory_cascade: T::Array[Cadenya::MemoryReference::OrHash],
           output: T::Hash[Symbol, T.anything],
           parent_objective_id: String,
           secrets: T::Array[Cadenya::ObjectiveSecret::OrHash],
           state_message: String,
-          user_data: T::Hash[Symbol, T.anything]
+          system_prompt_data: T::Hash[Symbol, T.anything]
         ).returns(T.attached_class)
       end
       def self.new(
         # ObjectiveConfigSnapshot is the point-in-time snapshot of the agent, variation,
         # and (when applicable) schedule that an objective was started with.
         config_snapshot:,
-        # The initial message sent to the agent. This becomes the first user message in
-        # the LLM chat history.
-        initial_message:,
+        # The first user message in the LLM chat history, either provided explicitly at
+        # creation or rendered from the variation's first_user_message_template.
+        first_user_message:,
         # Metadata for ephemeral operations and activities (e.g., objectives, executions,
         # runs)
         metadata:,
@@ -156,10 +156,10 @@ module Cadenya
         state:,
         # system_prompt is read-only, derived from the selected variation's prompt
         system_prompt:,
-        # Arbitrary data for the objective
-        data: nil,
         # Episodic is used to configure the episodic memory for the objective
         episodic_memory: nil,
+        # Arbitrary data rendered into the variation's first_user_message_template
+        first_user_message_data: nil,
         # ObjectiveInfo provides read-only aggregated statistics about an objective's
         # execution
         info: nil,
@@ -189,8 +189,8 @@ module Cadenya
         secrets: nil,
         # Optional human-readable detail about the current state (e.g. a failure reason).
         state_message: nil,
-        # Arbitrary data used to render the variation's user_message_template
-        user_data: nil
+        # Arbitrary data rendered into the variation's system_prompt_template
+        system_prompt_data: nil
       )
       end
 
@@ -198,19 +198,19 @@ module Cadenya
         override.returns(
           {
             config_snapshot: Cadenya::ObjectiveConfigSnapshot,
-            initial_message: String,
+            first_user_message: String,
             metadata: Cadenya::OperationMetadata,
             state: Cadenya::Objective::State::TaggedSymbol,
             system_prompt: String,
-            data: T::Hash[Symbol, T.anything],
             episodic_memory: Cadenya::Objective::EpisodicMemory,
+            first_user_message_data: T::Hash[Symbol, T.anything],
             info: Cadenya::ObjectiveInfo,
             memory_cascade: T::Array[Cadenya::MemoryReference],
             output: T::Hash[Symbol, T.anything],
             parent_objective_id: String,
             secrets: T::Array[Cadenya::ObjectiveSecret],
             state_message: String,
-            user_data: T::Hash[Symbol, T.anything]
+            system_prompt_data: T::Hash[Symbol, T.anything]
           }
         )
       end

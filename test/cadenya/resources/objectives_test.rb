@@ -6,7 +6,8 @@ class Cadenya::Test::Resources::ObjectivesTest < Cadenya::Test::ResourceTest
   def test_create_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.objectives.create("workspaceId", agent_id: "agentId", data: {foo: "bar"})
+    response =
+      @cadenya.objectives.create("workspaceId", agent_id: "agentId", system_prompt_data: {foo: "bar"})
 
     assert_pattern do
       response => Cadenya::Objective
@@ -15,19 +16,19 @@ class Cadenya::Test::Resources::ObjectivesTest < Cadenya::Test::ResourceTest
     assert_pattern do
       response => {
         config_snapshot: Cadenya::ObjectiveConfigSnapshot,
-        initial_message: String,
+        first_user_message: String,
         metadata: Cadenya::OperationMetadata,
         state: Cadenya::Objective::State,
         system_prompt: String,
-        data: ^(Cadenya::Internal::Type::HashOf[Cadenya::Internal::Type::Unknown]) | nil,
         episodic_memory: Cadenya::Objective::EpisodicMemory | nil,
+        first_user_message_data: ^(Cadenya::Internal::Type::HashOf[Cadenya::Internal::Type::Unknown]) | nil,
         info: Cadenya::ObjectiveInfo | nil,
         memory_cascade: ^(Cadenya::Internal::Type::ArrayOf[Cadenya::MemoryReference]) | nil,
         output: ^(Cadenya::Internal::Type::HashOf[Cadenya::Internal::Type::Unknown]) | nil,
         parent_objective_id: String | nil,
         secrets: ^(Cadenya::Internal::Type::ArrayOf[Cadenya::ObjectiveSecret]) | nil,
         state_message: String | nil,
-        user_data: ^(Cadenya::Internal::Type::HashOf[Cadenya::Internal::Type::Unknown]) | nil
+        system_prompt_data: ^(Cadenya::Internal::Type::HashOf[Cadenya::Internal::Type::Unknown]) | nil
       }
     end
   end
@@ -44,19 +45,19 @@ class Cadenya::Test::Resources::ObjectivesTest < Cadenya::Test::ResourceTest
     assert_pattern do
       response => {
         config_snapshot: Cadenya::ObjectiveConfigSnapshot,
-        initial_message: String,
+        first_user_message: String,
         metadata: Cadenya::OperationMetadata,
         state: Cadenya::Objective::State,
         system_prompt: String,
-        data: ^(Cadenya::Internal::Type::HashOf[Cadenya::Internal::Type::Unknown]) | nil,
         episodic_memory: Cadenya::Objective::EpisodicMemory | nil,
+        first_user_message_data: ^(Cadenya::Internal::Type::HashOf[Cadenya::Internal::Type::Unknown]) | nil,
         info: Cadenya::ObjectiveInfo | nil,
         memory_cascade: ^(Cadenya::Internal::Type::ArrayOf[Cadenya::MemoryReference]) | nil,
         output: ^(Cadenya::Internal::Type::HashOf[Cadenya::Internal::Type::Unknown]) | nil,
         parent_objective_id: String | nil,
         secrets: ^(Cadenya::Internal::Type::ArrayOf[Cadenya::ObjectiveSecret]) | nil,
         state_message: String | nil,
-        user_data: ^(Cadenya::Internal::Type::HashOf[Cadenya::Internal::Type::Unknown]) | nil
+        system_prompt_data: ^(Cadenya::Internal::Type::HashOf[Cadenya::Internal::Type::Unknown]) | nil
       }
     end
   end
@@ -80,19 +81,19 @@ class Cadenya::Test::Resources::ObjectivesTest < Cadenya::Test::ResourceTest
     assert_pattern do
       row => {
         config_snapshot: Cadenya::ObjectiveConfigSnapshot,
-        initial_message: String,
+        first_user_message: String,
         metadata: Cadenya::OperationMetadata,
         state: Cadenya::Objective::State,
         system_prompt: String,
-        data: ^(Cadenya::Internal::Type::HashOf[Cadenya::Internal::Type::Unknown]) | nil,
         episodic_memory: Cadenya::Objective::EpisodicMemory | nil,
+        first_user_message_data: ^(Cadenya::Internal::Type::HashOf[Cadenya::Internal::Type::Unknown]) | nil,
         info: Cadenya::ObjectiveInfo | nil,
         memory_cascade: ^(Cadenya::Internal::Type::ArrayOf[Cadenya::MemoryReference]) | nil,
         output: ^(Cadenya::Internal::Type::HashOf[Cadenya::Internal::Type::Unknown]) | nil,
         parent_objective_id: String | nil,
         secrets: ^(Cadenya::Internal::Type::ArrayOf[Cadenya::ObjectiveSecret]) | nil,
         state_message: String | nil,
-        user_data: ^(Cadenya::Internal::Type::HashOf[Cadenya::Internal::Type::Unknown]) | nil
+        system_prompt_data: ^(Cadenya::Internal::Type::HashOf[Cadenya::Internal::Type::Unknown]) | nil
       }
     end
   end
@@ -109,19 +110,19 @@ class Cadenya::Test::Resources::ObjectivesTest < Cadenya::Test::ResourceTest
     assert_pattern do
       response => {
         config_snapshot: Cadenya::ObjectiveConfigSnapshot,
-        initial_message: String,
+        first_user_message: String,
         metadata: Cadenya::OperationMetadata,
         state: Cadenya::Objective::State,
         system_prompt: String,
-        data: ^(Cadenya::Internal::Type::HashOf[Cadenya::Internal::Type::Unknown]) | nil,
         episodic_memory: Cadenya::Objective::EpisodicMemory | nil,
+        first_user_message_data: ^(Cadenya::Internal::Type::HashOf[Cadenya::Internal::Type::Unknown]) | nil,
         info: Cadenya::ObjectiveInfo | nil,
         memory_cascade: ^(Cadenya::Internal::Type::ArrayOf[Cadenya::MemoryReference]) | nil,
         output: ^(Cadenya::Internal::Type::HashOf[Cadenya::Internal::Type::Unknown]) | nil,
         parent_objective_id: String | nil,
         secrets: ^(Cadenya::Internal::Type::ArrayOf[Cadenya::ObjectiveSecret]) | nil,
         state_message: String | nil,
-        user_data: ^(Cadenya::Internal::Type::HashOf[Cadenya::Internal::Type::Unknown]) | nil
+        system_prompt_data: ^(Cadenya::Internal::Type::HashOf[Cadenya::Internal::Type::Unknown]) | nil
       }
     end
   end

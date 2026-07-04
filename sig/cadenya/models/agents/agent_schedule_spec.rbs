@@ -6,23 +6,23 @@ module Cadenya
       type agent_schedule_spec =
         {
           schedule: Cadenya::Agents::AgentScheduleSpecSchedule,
-          data: top,
-          initial_message: String,
+          first_user_message: String,
+          first_user_message_data: top,
           overlap_policy: Cadenya::Models::Agents::AgentScheduleSpec::overlap_policy,
-          user_data: top,
+          system_prompt_data: top,
           variation_id: String
         }
 
       class AgentScheduleSpec < Cadenya::Internal::Type::BaseModel
         attr_accessor schedule: Cadenya::Agents::AgentScheduleSpecSchedule
 
-        attr_reader data: top?
+        attr_reader first_user_message: String?
 
-        def data=: (top) -> top
+        def first_user_message=: (String) -> String
 
-        attr_reader initial_message: String?
+        attr_reader first_user_message_data: top?
 
-        def initial_message=: (String) -> String
+        def first_user_message_data=: (top) -> top
 
         attr_reader overlap_policy: Cadenya::Models::Agents::AgentScheduleSpec::overlap_policy?
 
@@ -30,9 +30,9 @@ module Cadenya
           Cadenya::Models::Agents::AgentScheduleSpec::overlap_policy
         ) -> Cadenya::Models::Agents::AgentScheduleSpec::overlap_policy
 
-        attr_reader user_data: top?
+        attr_reader system_prompt_data: top?
 
-        def user_data=: (top) -> top
+        def system_prompt_data=: (top) -> top
 
         attr_reader variation_id: String?
 
@@ -40,19 +40,19 @@ module Cadenya
 
         def initialize: (
           schedule: Cadenya::Agents::AgentScheduleSpecSchedule,
-          ?data: top,
-          ?initial_message: String,
+          ?first_user_message: String,
+          ?first_user_message_data: top,
           ?overlap_policy: Cadenya::Models::Agents::AgentScheduleSpec::overlap_policy,
-          ?user_data: top,
+          ?system_prompt_data: top,
           ?variation_id: String
         ) -> void
 
         def to_hash: -> {
           schedule: Cadenya::Agents::AgentScheduleSpecSchedule,
-          data: top,
-          initial_message: String,
+          first_user_message: String,
+          first_user_message_data: top,
           overlap_policy: Cadenya::Models::Agents::AgentScheduleSpec::overlap_policy,
-          user_data: top,
+          system_prompt_data: top,
           variation_id: String
         }
 
