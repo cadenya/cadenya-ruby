@@ -3,23 +3,23 @@ module Cadenya
     type objective =
       {
         config_snapshot: Cadenya::ObjectiveConfigSnapshot,
-        initial_message: String,
+        first_user_message: String,
         metadata: Cadenya::OperationMetadata,
         state: Cadenya::Models::Objective::state,
         system_prompt: String,
-        data: ::Hash[Symbol, top],
         episodic_memory: Cadenya::Objective::EpisodicMemory,
+        first_user_message_data: ::Hash[Symbol, top],
         info: Cadenya::ObjectiveInfo,
         memory_cascade: ::Array[Cadenya::MemoryReference],
         output: ::Hash[Symbol, top],
         parent_objective_id: String,
         secrets: ::Array[Cadenya::ObjectiveSecret],
         state_message: String,
-        user_data: ::Hash[Symbol, top]
+        system_prompt_data: ::Hash[Symbol, top]
       }
 
     class Objective < Cadenya::Internal::Type::BaseModel
-      attr_accessor initial_message: String
+      attr_accessor first_user_message: String
 
       attr_accessor metadata: Cadenya::OperationMetadata
 
@@ -47,9 +47,9 @@ module Cadenya
 
       attr_accessor system_prompt: String
 
-      attr_reader data: ::Hash[Symbol, top]?
+      attr_reader first_user_message_data: ::Hash[Symbol, top]?
 
-      def data=: (::Hash[Symbol, top]) -> ::Hash[Symbol, top]
+      def first_user_message_data=: (::Hash[Symbol, top]) -> ::Hash[Symbol, top]
 
       attr_reader info: Cadenya::ObjectiveInfo?
 
@@ -67,42 +67,42 @@ module Cadenya
 
       def state_message=: (String) -> String
 
-      attr_reader user_data: ::Hash[Symbol, top]?
+      attr_reader system_prompt_data: ::Hash[Symbol, top]?
 
-      def user_data=: (::Hash[Symbol, top]) -> ::Hash[Symbol, top]
+      def system_prompt_data=: (::Hash[Symbol, top]) -> ::Hash[Symbol, top]
 
       def initialize: (
         config_snapshot: Cadenya::ObjectiveConfigSnapshot,
-        initial_message: String,
+        first_user_message: String,
         metadata: Cadenya::OperationMetadata,
         state: Cadenya::Models::Objective::state,
         system_prompt: String,
-        ?data: ::Hash[Symbol, top],
         ?episodic_memory: Cadenya::Objective::EpisodicMemory,
+        ?first_user_message_data: ::Hash[Symbol, top],
         ?info: Cadenya::ObjectiveInfo,
         ?memory_cascade: ::Array[Cadenya::MemoryReference],
         ?output: ::Hash[Symbol, top],
         ?parent_objective_id: String,
         ?secrets: ::Array[Cadenya::ObjectiveSecret],
         ?state_message: String,
-        ?user_data: ::Hash[Symbol, top]
+        ?system_prompt_data: ::Hash[Symbol, top]
       ) -> void
 
       def to_hash: -> {
         config_snapshot: Cadenya::ObjectiveConfigSnapshot,
-        initial_message: String,
+        first_user_message: String,
         metadata: Cadenya::OperationMetadata,
         state: Cadenya::Models::Objective::state,
         system_prompt: String,
-        data: ::Hash[Symbol, top],
         episodic_memory: Cadenya::Objective::EpisodicMemory,
+        first_user_message_data: ::Hash[Symbol, top],
         info: Cadenya::ObjectiveInfo,
         memory_cascade: ::Array[Cadenya::MemoryReference],
         output: ::Hash[Symbol, top],
         parent_objective_id: String,
         secrets: ::Array[Cadenya::ObjectiveSecret],
         state_message: String,
-        user_data: ::Hash[Symbol, top]
+        system_prompt_data: ::Hash[Symbol, top]
       }
 
       type state =

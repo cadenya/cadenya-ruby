@@ -36,18 +36,6 @@ module Cadenya
       #   @return [Integer, nil]
       optional :episodic_memory_ttl, Integer, api_name: :episodicMemoryTtl
 
-      # @!attribute input_data_schema
-      #   InputDataSchema is used for enforcing a data input when objectives are created.
-      #   This is valuable when using liquid formatting in agent variation prompts. Input
-      #   data schema is also valuable when using an agent as a sub-agent, as the schema
-      #   is used as the tool's input parameter schema. If omitted, the sub-agent schema
-      #   will be loaded with a simple "prompt" free text string as its schema.
-      #
-      #   @return [Hash{Symbol=>Object}, nil]
-      optional :input_data_schema,
-               Cadenya::Internal::Type::HashOf[Cadenya::Internal::Type::Unknown],
-               api_name: :inputDataSchema
-
       # @!attribute output_definition
       #   Optional output definition for objectives created for this agent. When provided,
       #   Cadenya will append a tool to that will be called by the LLM in use by the
@@ -59,13 +47,26 @@ module Cadenya
                Cadenya::Internal::Type::HashOf[Cadenya::Internal::Type::Unknown],
                api_name: :outputDefinition
 
+      # @!attribute system_prompt_data_schema
+      #   SystemPromptDataSchema enforces the shape of system_prompt_data when objectives
+      #   are created. This is valuable when using liquid formatting in agent variation
+      #   system prompt templates. The schema is also used when the agent is attached as a
+      #   sub-agent, as it becomes the tool's input parameter schema. If omitted, the
+      #   sub-agent schema will be loaded with a simple "prompt" free text string as its
+      #   schema.
+      #
+      #   @return [Hash{Symbol=>Object}, nil]
+      optional :system_prompt_data_schema,
+               Cadenya::Internal::Type::HashOf[Cadenya::Internal::Type::Unknown],
+               api_name: :systemPromptDataSchema
+
       # @!attribute webhook_events_url
       #   The URL that Cadenya will send events for any objective assigned to the agent.
       #
       #   @return [String, nil]
       optional :webhook_events_url, String, api_name: :webhookEventsUrl
 
-      # @!method initialize(variation_selection_mode:, description: nil, enable_episodic_memory: nil, episodic_memory_ttl: nil, input_data_schema: nil, output_definition: nil, webhook_events_url: nil)
+      # @!method initialize(variation_selection_mode:, description: nil, enable_episodic_memory: nil, episodic_memory_ttl: nil, output_definition: nil, system_prompt_data_schema: nil, webhook_events_url: nil)
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::AgentSpec} for more details.
       #
@@ -79,9 +80,9 @@ module Cadenya
       #
       #   @param episodic_memory_ttl [Integer] How long episodic memories should be retained.
       #
-      #   @param input_data_schema [Hash{Symbol=>Object}] InputDataSchema is used for enforcing a data input when objectives are created.
-      #
       #   @param output_definition [Hash{Symbol=>Object}] Optional output definition for objectives created for this agent.
+      #
+      #   @param system_prompt_data_schema [Hash{Symbol=>Object}] SystemPromptDataSchema enforces the shape of system_prompt_data when objectives
       #
       #   @param webhook_events_url [String] The URL that Cadenya will send events for any objective assigned to the agent.
 

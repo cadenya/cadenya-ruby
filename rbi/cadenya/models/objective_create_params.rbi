@@ -17,10 +17,11 @@ module Cadenya
       sig { returns(String) }
       attr_accessor :agent_id
 
-      # Arbitrary data for the objective. May be used in liquid templates for prompts
-      # configured on the agent variation
+      # Arbitrary data rendered into the selected variation's system_prompt_template
+      # (liquid) to produce the objective's system prompt. If the agent has a
+      # system_prompt_data_schema, this must satisfy it.
       sig { returns(T::Hash[Symbol, T.anything]) }
-      attr_accessor :data
+      attr_accessor :system_prompt_data
 
       # Episodic is used to configure the episodic memory for the objective
       sig { returns(T.nilable(Cadenya::ObjectiveCreateParams::EpisodicMemory)) }
@@ -34,16 +35,25 @@ module Cadenya
       end
       attr_writer :episodic_memory
 
-      # Optional override for the initial message sent to the agent. This becomes the
-      # first user message in the LLM chat history. When not set, the selected
-      # variation's user_message_template is rendered with user_data instead. If neither
-      # this field nor a user_message_template is present, the request is rejected with
+      # Optional explicit first user message for the LLM chat history. When not set, the
+      # selected variation's first_user_message_template is rendered with
+      # first_user_message_data instead. If neither this field nor a
+      # first_user_message_template is present, the request is rejected with
       # InvalidArgument.
       sig { returns(T.nilable(String)) }
-      attr_reader :initial_message
+      attr_reader :first_user_message
 
-      sig { params(initial_message: String).void }
-      attr_writer :initial_message
+      sig { params(first_user_message: String).void }
+      attr_writer :first_user_message
+
+      # Arbitrary data rendered into the selected variation's
+      # first_user_message_template (liquid) to produce the first user message. Separate
+      # from `system_prompt_data`, which renders the system prompt template.
+      sig { returns(T.nilable(T::Hash[Symbol, T.anything])) }
+      attr_reader :first_user_message_data
+
+      sig { params(first_user_message_data: T::Hash[Symbol, T.anything]).void }
+      attr_writer :first_user_message_data
 
       # Memory layers/entries layered over the baseline cascade inherited from the
       # selected variation — element-level rules over inherited styles, in CSS terms.
@@ -89,15 +99,6 @@ module Cadenya
       end
       attr_writer :secrets
 
-      # Arbitrary data rendered into the selected variation's user_message_template
-      # (liquid) to produce the initial user message. Separate from `data`, which
-      # renders the system prompt template.
-      sig { returns(T.nilable(T::Hash[Symbol, T.anything])) }
-      attr_reader :user_data
-
-      sig { params(user_data: T::Hash[Symbol, T.anything]).void }
-      attr_writer :user_data
-
       # Optional explicit variation selection. Overrides the agent's
       # variation_selection_mode.
       sig { returns(T.nilable(String)) }
@@ -110,14 +111,14 @@ module Cadenya
         params(
           workspace_id: String,
           agent_id: String,
-          data: T::Hash[Symbol, T.anything],
+          system_prompt_data: T::Hash[Symbol, T.anything],
           episodic_memory:
             Cadenya::ObjectiveCreateParams::EpisodicMemory::OrHash,
-          initial_message: String,
+          first_user_message: String,
+          first_user_message_data: T::Hash[Symbol, T.anything],
           memory_cascade: T::Array[Cadenya::MemoryReference::OrHash],
           metadata: Cadenya::CreateOperationMetadata::OrHash,
           secrets: T::Array[Cadenya::ObjectiveCreateParams::Secret::OrHash],
-          user_data: T::Hash[Symbol, T.anything],
           variation_id: String,
           request_options: Cadenya::RequestOptions::OrHash
         ).returns(T.attached_class)
@@ -125,17 +126,22 @@ module Cadenya
       def self.new(
         workspace_id:,
         agent_id:,
-        # Arbitrary data for the objective. May be used in liquid templates for prompts
-        # configured on the agent variation
-        data:,
+        # Arbitrary data rendered into the selected variation's system_prompt_template
+        # (liquid) to produce the objective's system prompt. If the agent has a
+        # system_prompt_data_schema, this must satisfy it.
+        system_prompt_data:,
         # Episodic is used to configure the episodic memory for the objective
         episodic_memory: nil,
-        # Optional override for the initial message sent to the agent. This becomes the
-        # first user message in the LLM chat history. When not set, the selected
-        # variation's user_message_template is rendered with user_data instead. If neither
-        # this field nor a user_message_template is present, the request is rejected with
+        # Optional explicit first user message for the LLM chat history. When not set, the
+        # selected variation's first_user_message_template is rendered with
+        # first_user_message_data instead. If neither this field nor a
+        # first_user_message_template is present, the request is rejected with
         # InvalidArgument.
-        initial_message: nil,
+        first_user_message: nil,
+        # Arbitrary data rendered into the selected variation's
+        # first_user_message_template (liquid) to produce the first user message. Separate
+        # from `system_prompt_data`, which renders the system prompt template.
+        first_user_message_data: nil,
         # Memory layers/entries layered over the baseline cascade inherited from the
         # selected variation — element-level rules over inherited styles, in CSS terms.
         #
@@ -157,10 +163,6 @@ module Cadenya
         # Secrets that can be used in the headers for tool calls using the secret
         # interpolation format.
         secrets: nil,
-        # Arbitrary data rendered into the selected variation's user_message_template
-        # (liquid) to produce the initial user message. Separate from `data`, which
-        # renders the system prompt template.
-        user_data: nil,
         # Optional explicit variation selection. Overrides the agent's
         # variation_selection_mode.
         variation_id: nil,
@@ -173,13 +175,13 @@ module Cadenya
           {
             workspace_id: String,
             agent_id: String,
-            data: T::Hash[Symbol, T.anything],
+            system_prompt_data: T::Hash[Symbol, T.anything],
             episodic_memory: Cadenya::ObjectiveCreateParams::EpisodicMemory,
-            initial_message: String,
+            first_user_message: String,
+            first_user_message_data: T::Hash[Symbol, T.anything],
             memory_cascade: T::Array[Cadenya::MemoryReference],
             metadata: Cadenya::CreateOperationMetadata,
             secrets: T::Array[Cadenya::ObjectiveCreateParams::Secret],
-            user_data: T::Hash[Symbol, T.anything],
             variation_id: String,
             request_options: Cadenya::RequestOptions
           }

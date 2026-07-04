@@ -6,8 +6,8 @@ module Cadenya
         description: String,
         enable_episodic_memory: bool,
         episodic_memory_ttl: Integer,
-        input_data_schema: ::Hash[Symbol, top],
         output_definition: ::Hash[Symbol, top],
+        system_prompt_data_schema: ::Hash[Symbol, top],
         webhook_events_url: String
       }
 
@@ -26,13 +26,15 @@ module Cadenya
 
       def episodic_memory_ttl=: (Integer) -> Integer
 
-      attr_reader input_data_schema: ::Hash[Symbol, top]?
-
-      def input_data_schema=: (::Hash[Symbol, top]) -> ::Hash[Symbol, top]
-
       attr_reader output_definition: ::Hash[Symbol, top]?
 
       def output_definition=: (::Hash[Symbol, top]) -> ::Hash[Symbol, top]
+
+      attr_reader system_prompt_data_schema: ::Hash[Symbol, top]?
+
+      def system_prompt_data_schema=: (
+        ::Hash[Symbol, top]
+      ) -> ::Hash[Symbol, top]
 
       attr_reader webhook_events_url: String?
 
@@ -43,8 +45,8 @@ module Cadenya
         ?description: String,
         ?enable_episodic_memory: bool,
         ?episodic_memory_ttl: Integer,
-        ?input_data_schema: ::Hash[Symbol, top],
         ?output_definition: ::Hash[Symbol, top],
+        ?system_prompt_data_schema: ::Hash[Symbol, top],
         ?webhook_events_url: String
       ) -> void
 
@@ -53,8 +55,8 @@ module Cadenya
         description: String,
         enable_episodic_memory: bool,
         episodic_memory_ttl: Integer,
-        input_data_schema: ::Hash[Symbol, top],
         output_definition: ::Hash[Symbol, top],
+        system_prompt_data_schema: ::Hash[Symbol, top],
         webhook_events_url: String
       }
 
