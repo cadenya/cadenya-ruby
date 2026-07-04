@@ -8,10 +8,10 @@ module Cadenya
           compaction_config: Cadenya::Agents::AgentVariationSpecCompactionConfig,
           constraints: Cadenya::Agents::AgentVariationSpecConstraints,
           description: String,
+          first_user_message_template: String,
           model_config: Cadenya::Agents::AgentVariationSpecModelConfig,
           progressive_discovery: Cadenya::Agents::AgentVariationSpecProgressiveDiscovery,
           system_prompt_template: String,
-          user_message_template: String,
           weight: Integer
         }
 
@@ -32,6 +32,10 @@ module Cadenya
 
         def description=: (String) -> String
 
+        attr_reader first_user_message_template: String?
+
+        def first_user_message_template=: (String) -> String
+
         attr_reader model_config: Cadenya::Agents::AgentVariationSpecModelConfig?
 
         def model_config=: (
@@ -48,10 +52,6 @@ module Cadenya
 
         def system_prompt_template=: (String) -> String
 
-        attr_reader user_message_template: String?
-
-        def user_message_template=: (String) -> String
-
         attr_reader weight: Integer?
 
         def weight=: (Integer) -> Integer
@@ -60,10 +60,10 @@ module Cadenya
           ?compaction_config: Cadenya::Agents::AgentVariationSpecCompactionConfig,
           ?constraints: Cadenya::Agents::AgentVariationSpecConstraints,
           ?description: String,
+          ?first_user_message_template: String,
           ?model_config: Cadenya::Agents::AgentVariationSpecModelConfig,
           ?progressive_discovery: Cadenya::Agents::AgentVariationSpecProgressiveDiscovery,
           ?system_prompt_template: String,
-          ?user_message_template: String,
           ?weight: Integer
         ) -> void
 
@@ -71,10 +71,10 @@ module Cadenya
           compaction_config: Cadenya::Agents::AgentVariationSpecCompactionConfig,
           constraints: Cadenya::Agents::AgentVariationSpecConstraints,
           description: String,
+          first_user_message_template: String,
           model_config: Cadenya::Agents::AgentVariationSpecModelConfig,
           progressive_discovery: Cadenya::Agents::AgentVariationSpecProgressiveDiscovery,
           system_prompt_template: String,
-          user_message_template: String,
           weight: Integer
         }
       end

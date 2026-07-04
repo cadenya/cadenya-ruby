@@ -17,12 +17,15 @@ module Cadenya
       #   @return [String]
       required :agent_id, String, api_name: :agentId
 
-      # @!attribute data
-      #   Arbitrary data for the objective. May be used in liquid templates for prompts
-      #   configured on the agent variation
+      # @!attribute system_prompt_data
+      #   Arbitrary data rendered into the selected variation's system_prompt_template
+      #   (liquid) to produce the objective's system prompt. If the agent has a
+      #   system_prompt_data_schema, this must satisfy it.
       #
       #   @return [Hash{Symbol=>Object}]
-      required :data, Cadenya::Internal::Type::HashOf[Cadenya::Internal::Type::Unknown]
+      required :system_prompt_data,
+               Cadenya::Internal::Type::HashOf[Cadenya::Internal::Type::Unknown],
+               api_name: :systemPromptData
 
       # @!attribute episodic_memory
       #   Episodic is used to configure the episodic memory for the objective
@@ -32,15 +35,25 @@ module Cadenya
                -> { Cadenya::ObjectiveCreateParams::EpisodicMemory },
                api_name: :episodicMemory
 
-      # @!attribute initial_message
-      #   Optional override for the initial message sent to the agent. This becomes the
-      #   first user message in the LLM chat history. When not set, the selected
-      #   variation's user_message_template is rendered with user_data instead. If neither
-      #   this field nor a user_message_template is present, the request is rejected with
+      # @!attribute first_user_message
+      #   Optional explicit first user message for the LLM chat history. When not set, the
+      #   selected variation's first_user_message_template is rendered with
+      #   first_user_message_data instead. If neither this field nor a
+      #   first_user_message_template is present, the request is rejected with
       #   InvalidArgument.
       #
       #   @return [String, nil]
-      optional :initial_message, String, api_name: :initialMessage
+      optional :first_user_message, String, api_name: :firstUserMessage
+
+      # @!attribute first_user_message_data
+      #   Arbitrary data rendered into the selected variation's
+      #   first_user_message_template (liquid) to produce the first user message. Separate
+      #   from `system_prompt_data`, which renders the system prompt template.
+      #
+      #   @return [Hash{Symbol=>Object}, nil]
+      optional :first_user_message_data,
+               Cadenya::Internal::Type::HashOf[Cadenya::Internal::Type::Unknown],
+               api_name: :firstUserMessageData
 
       # @!attribute memory_cascade
       #   Memory layers/entries layered over the baseline cascade inherited from the
@@ -77,16 +90,6 @@ module Cadenya
       #   @return [Array<Cadenya::Models::ObjectiveCreateParams::Secret>, nil]
       optional :secrets, -> { Cadenya::Internal::Type::ArrayOf[Cadenya::ObjectiveCreateParams::Secret] }
 
-      # @!attribute user_data
-      #   Arbitrary data rendered into the selected variation's user_message_template
-      #   (liquid) to produce the initial user message. Separate from `data`, which
-      #   renders the system prompt template.
-      #
-      #   @return [Hash{Symbol=>Object}, nil]
-      optional :user_data,
-               Cadenya::Internal::Type::HashOf[Cadenya::Internal::Type::Unknown],
-               api_name: :userData
-
       # @!attribute variation_id
       #   Optional explicit variation selection. Overrides the agent's
       #   variation_selection_mode.
@@ -94,7 +97,7 @@ module Cadenya
       #   @return [String, nil]
       optional :variation_id, String, api_name: :variationId
 
-      # @!method initialize(workspace_id:, agent_id:, data:, episodic_memory: nil, initial_message: nil, memory_cascade: nil, metadata: nil, secrets: nil, user_data: nil, variation_id: nil, request_options: {})
+      # @!method initialize(workspace_id:, agent_id:, system_prompt_data:, episodic_memory: nil, first_user_message: nil, first_user_message_data: nil, memory_cascade: nil, metadata: nil, secrets: nil, variation_id: nil, request_options: {})
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::ObjectiveCreateParams} for more details.
       #
@@ -102,19 +105,19 @@ module Cadenya
       #
       #   @param agent_id [String]
       #
-      #   @param data [Hash{Symbol=>Object}] Arbitrary data for the objective. May be used in liquid templates for prompts co
+      #   @param system_prompt_data [Hash{Symbol=>Object}] Arbitrary data rendered into the selected variation's system_prompt_template
       #
       #   @param episodic_memory [Cadenya::Models::ObjectiveCreateParams::EpisodicMemory] Episodic is used to configure the episodic memory for the objective
       #
-      #   @param initial_message [String] Optional override for the initial message sent to the agent. This becomes the fi
+      #   @param first_user_message [String] Optional explicit first user message for the LLM chat history. When not set,
+      #
+      #   @param first_user_message_data [Hash{Symbol=>Object}] Arbitrary data rendered into the selected variation's first_user_message_templat
       #
       #   @param memory_cascade [Array<Cadenya::Models::MemoryReference>] Memory layers/entries layered over the baseline cascade inherited
       #
       #   @param metadata [Cadenya::Models::CreateOperationMetadata] CreateOperationMetadata contains the user-provided fields for creating
       #
       #   @param secrets [Array<Cadenya::Models::ObjectiveCreateParams::Secret>] Secrets that can be used in the headers for tool calls using the secret interpol
-      #
-      #   @param user_data [Hash{Symbol=>Object}] Arbitrary data rendered into the selected variation's user_message_template
       #
       #   @param variation_id [String] Optional explicit variation selection. Overrides the agent's variation_selection
       #

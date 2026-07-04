@@ -4,12 +4,12 @@ module Cadenya
   module Models
     # @see Cadenya::Resources::Objectives#create
     class Objective < Cadenya::Internal::Type::BaseModel
-      # @!attribute initial_message
-      #   The initial message sent to the agent. This becomes the first user message in
-      #   the LLM chat history.
+      # @!attribute first_user_message
+      #   The first user message in the LLM chat history, either provided explicitly at
+      #   creation or rendered from the variation's first_user_message_template.
       #
       #   @return [String]
-      required :initial_message, String, api_name: :initialMessage
+      required :first_user_message, String, api_name: :firstUserMessage
 
       # @!attribute metadata
       #   Metadata for ephemeral operations and activities (e.g., objectives, executions,
@@ -71,11 +71,13 @@ module Cadenya
         #   @return [String]
         required :system_prompt, String, api_name: :systemPrompt
 
-        # @!attribute data
-        #   Arbitrary data for the objective
+        # @!attribute first_user_message_data
+        #   Arbitrary data rendered into the variation's first_user_message_template
         #
         #   @return [Hash{Symbol=>Object}, nil]
-        optional :data, Cadenya::Internal::Type::HashOf[Cadenya::Internal::Type::Unknown]
+        optional :first_user_message_data,
+                 Cadenya::Internal::Type::HashOf[Cadenya::Internal::Type::Unknown],
+                 api_name: :firstUserMessageData
 
         # @!attribute info
         #   ObjectiveInfo provides read-only aggregated statistics about an objective's
@@ -105,16 +107,16 @@ module Cadenya
         #   @return [String, nil]
         optional :state_message, String, api_name: :stateMessage
 
-        # @!attribute user_data
-        #   Arbitrary data used to render the variation's user_message_template
+        # @!attribute system_prompt_data
+        #   Arbitrary data rendered into the variation's system_prompt_template
         #
         #   @return [Hash{Symbol=>Object}, nil]
-        optional :user_data,
+        optional :system_prompt_data,
                  Cadenya::Internal::Type::HashOf[Cadenya::Internal::Type::Unknown],
-                 api_name: :userData
+                 api_name: :systemPromptData
       end
 
-      # @!method initialize(config_snapshot:, initial_message:, metadata:, state:, system_prompt:, data: nil, episodic_memory: nil, info: nil, memory_cascade: nil, output: nil, parent_objective_id: nil, secrets: nil, state_message: nil, user_data: nil)
+      # @!method initialize(config_snapshot:, first_user_message:, metadata:, state:, system_prompt:, episodic_memory: nil, first_user_message_data: nil, info: nil, memory_cascade: nil, output: nil, parent_objective_id: nil, secrets: nil, state_message: nil, system_prompt_data: nil)
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::Objective} for more details.
       #
@@ -124,7 +126,7 @@ module Cadenya
       #
       #   @param config_snapshot [Cadenya::Models::ObjectiveConfigSnapshot] ObjectiveConfigSnapshot is the point-in-time snapshot of the agent, variation, a
       #
-      #   @param initial_message [String] The initial message sent to the agent. This becomes the first user message in th
+      #   @param first_user_message [String] The first user message in the LLM chat history, either provided explicitly at
       #
       #   @param metadata [Cadenya::Models::OperationMetadata] Metadata for ephemeral operations and activities (e.g., objectives, executions,
       #
@@ -132,9 +134,9 @@ module Cadenya
       #
       #   @param system_prompt [String] system_prompt is read-only, derived from the selected variation's prompt
       #
-      #   @param data [Hash{Symbol=>Object}] Arbitrary data for the objective
-      #
       #   @param episodic_memory [Cadenya::Models::Objective::EpisodicMemory] Episodic is used to configure the episodic memory for the objective
+      #
+      #   @param first_user_message_data [Hash{Symbol=>Object}] Arbitrary data rendered into the variation's first_user_message_template
       #
       #   @param info [Cadenya::Models::ObjectiveInfo] ObjectiveInfo provides read-only aggregated statistics about an objective's exec
       #
@@ -148,7 +150,7 @@ module Cadenya
       #
       #   @param state_message [String] Optional human-readable detail about the current state (e.g. a failure reason).
       #
-      #   @param user_data [Hash{Symbol=>Object}] Arbitrary data used to render the variation's user_message_template
+      #   @param system_prompt_data [Hash{Symbol=>Object}] Arbitrary data rendered into the variation's system_prompt_template
 
       # The current lifecycle state of the objective.
       #

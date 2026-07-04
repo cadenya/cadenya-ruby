@@ -51,6 +51,18 @@ module Cadenya
         sig { params(description: String).void }
         attr_writer :description
 
+        # Liquid template for the first user message of objectives using this variation.
+        # Rendered with CreateObjectiveRequest.first_user_message_data into
+        # Objective.first_user_message, the first user message in the LLM chat history.
+        # CreateObjectiveRequest.first_user_message, when set, overrides the rendered
+        # result. If neither this template nor first_user_message is present, objective
+        # creation is rejected with InvalidArgument.
+        sig { returns(T.nilable(String)) }
+        attr_reader :first_user_message_template
+
+        sig { params(first_user_message_template: String).void }
+        attr_writer :first_user_message_template
+
         # ModelConfig defines the model configuration for a variation
         sig do
           returns(T.nilable(Cadenya::Agents::AgentVariationSpecModelConfig))
@@ -85,23 +97,13 @@ module Cadenya
         attr_writer :progressive_discovery
 
         # Liquid template for the system prompt of objectives using this variation.
-        # Rendered with CreateObjectiveRequest.data into Objective.system_prompt.
+        # Rendered with CreateObjectiveRequest.system_prompt_data into
+        # Objective.system_prompt.
         sig { returns(T.nilable(String)) }
         attr_reader :system_prompt_template
 
         sig { params(system_prompt_template: String).void }
         attr_writer :system_prompt_template
-
-        # Liquid template for the initial user message of objectives using this variation.
-        # Rendered with CreateObjectiveRequest.user_data and becomes the first user
-        # message in the LLM chat history. CreateObjectiveRequest.initial_message, when
-        # set, overrides the rendered result. If neither this template nor initial_message
-        # is present, objective creation is rejected with InvalidArgument.
-        sig { returns(T.nilable(String)) }
-        attr_reader :user_message_template
-
-        sig { params(user_message_template: String).void }
-        attr_writer :user_message_template
 
         # Weight for weighted random selection (>= 0). P(v) = v.weight / sum(all_weights).
         # Only used when the agent's variation_selection_mode is WEIGHTED. A weight of 0
@@ -120,12 +122,12 @@ module Cadenya
               Cadenya::Agents::AgentVariationSpecCompactionConfig::OrHash,
             constraints: Cadenya::Agents::AgentVariationSpecConstraints::OrHash,
             description: String,
+            first_user_message_template: String,
             model_config:
               Cadenya::Agents::AgentVariationSpecModelConfig::OrHash,
             progressive_discovery:
               Cadenya::Agents::AgentVariationSpecProgressiveDiscovery::OrHash,
             system_prompt_template: String,
-            user_message_template: String,
             weight: Integer
           ).returns(T.attached_class)
         end
@@ -137,6 +139,13 @@ module Cadenya
           constraints: nil,
           # Human-readable description of what this variation does or when it should be used
           description: nil,
+          # Liquid template for the first user message of objectives using this variation.
+          # Rendered with CreateObjectiveRequest.first_user_message_data into
+          # Objective.first_user_message, the first user message in the LLM chat history.
+          # CreateObjectiveRequest.first_user_message, when set, overrides the rendered
+          # result. If neither this template nor first_user_message is present, objective
+          # creation is rejected with InvalidArgument.
+          first_user_message_template: nil,
           # ModelConfig defines the model configuration for a variation
           model_config: nil,
           # ProgressiveDiscovery is used to indicate that the agent should automatically
@@ -146,14 +155,9 @@ module Cadenya
           # and can help select the best tools for the task.
           progressive_discovery: nil,
           # Liquid template for the system prompt of objectives using this variation.
-          # Rendered with CreateObjectiveRequest.data into Objective.system_prompt.
+          # Rendered with CreateObjectiveRequest.system_prompt_data into
+          # Objective.system_prompt.
           system_prompt_template: nil,
-          # Liquid template for the initial user message of objectives using this variation.
-          # Rendered with CreateObjectiveRequest.user_data and becomes the first user
-          # message in the LLM chat history. CreateObjectiveRequest.initial_message, when
-          # set, overrides the rendered result. If neither this template nor initial_message
-          # is present, objective creation is rejected with InvalidArgument.
-          user_message_template: nil,
           # Weight for weighted random selection (>= 0). P(v) = v.weight / sum(all_weights).
           # Only used when the agent's variation_selection_mode is WEIGHTED. A weight of 0
           # means never auto-selected, but can still be chosen explicitly via variation_id
@@ -169,11 +173,11 @@ module Cadenya
                 Cadenya::Agents::AgentVariationSpecCompactionConfig,
               constraints: Cadenya::Agents::AgentVariationSpecConstraints,
               description: String,
+              first_user_message_template: String,
               model_config: Cadenya::Agents::AgentVariationSpecModelConfig,
               progressive_discovery:
                 Cadenya::Agents::AgentVariationSpecProgressiveDiscovery,
               system_prompt_template: String,
-              user_message_template: String,
               weight: Integer
             }
           )
