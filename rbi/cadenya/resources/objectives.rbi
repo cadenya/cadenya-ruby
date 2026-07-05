@@ -267,6 +267,25 @@ module Cadenya
       )
       end
 
+      # Returns the context-usage breakdown measured for the objective's most recent
+      # iteration: character lengths per context component (system prompt, memory
+      # appendices, tool definitions, messages by role) alongside the iteration's input
+      # token counts.
+      sig do
+        params(
+          objective_id: String,
+          workspace_id: String,
+          request_options: Cadenya::RequestOptions::OrHash
+        ).returns(Cadenya::Models::ObjectiveRetrieveDiagnosticsResponse)
+      end
+      def retrieve_diagnostics(
+        # The ID of the objective. Supports "external_id:" prefix for external IDs.
+        objective_id,
+        workspace_id:,
+        request_options: {}
+      )
+      end
+
       # Streams events for an objective in real-time using server-sent events (SSE)
       sig do
         params(

@@ -1,0 +1,14 @@
+module Cadenya
+  module Models
+    type objective_retrieve_diagnostics_response =
+      { diagnostics: Cadenya::ObjectiveDiagnostics }
+
+    class ObjectiveRetrieveDiagnosticsResponse < Cadenya::Internal::Type::BaseModel
+      attr_accessor diagnostics: Cadenya::ObjectiveDiagnostics
+
+      def initialize: (diagnostics: Cadenya::ObjectiveDiagnostics) -> void
+
+      def to_hash: -> { diagnostics: Cadenya::ObjectiveDiagnostics }
+    end
+  end
+end

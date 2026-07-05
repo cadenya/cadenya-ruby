@@ -85,6 +85,8 @@ module Cadenya
 
   class CallableTool = Cadenya::Models::CallableTool
 
+  class ContextLengths = Cadenya::Models::ContextLengths
+
   class ContextWindowCompacted = Cadenya::Models::ContextWindowCompacted
 
   class CreateOperationMetadata = Cadenya::Models::CreateOperationMetadata
@@ -143,6 +145,8 @@ module Cadenya
 
   class ObjectiveCreateParams = Cadenya::Models::ObjectiveCreateParams
 
+  class ObjectiveDiagnostics = Cadenya::Models::ObjectiveDiagnostics
+
   class ObjectiveError = Cadenya::Models::ObjectiveError
 
   class ObjectiveEvent = Cadenya::Models::ObjectiveEvent
@@ -160,6 +164,8 @@ module Cadenya
   class ObjectiveListEventsParams = Cadenya::Models::ObjectiveListEventsParams
 
   class ObjectiveListParams = Cadenya::Models::ObjectiveListParams
+
+  class ObjectiveRetrieveDiagnosticsParams = Cadenya::Models::ObjectiveRetrieveDiagnosticsParams
 
   class ObjectiveRetrieveParams = Cadenya::Models::ObjectiveRetrieveParams
 
