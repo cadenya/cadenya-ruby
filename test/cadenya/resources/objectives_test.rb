@@ -212,4 +212,20 @@ class Cadenya::Test::Resources::ObjectivesTest < Cadenya::Test::ResourceTest
       }
     end
   end
+
+  def test_retrieve_diagnostics_required_params
+    skip("Mock server tests are disabled")
+
+    response = @cadenya.objectives.retrieve_diagnostics("objectiveId", workspace_id: "workspaceId")
+
+    assert_pattern do
+      response => Cadenya::Models::ObjectiveRetrieveDiagnosticsResponse
+    end
+
+    assert_pattern do
+      response => {
+        diagnostics: Cadenya::ObjectiveDiagnostics
+      }
+    end
+  end
 end
