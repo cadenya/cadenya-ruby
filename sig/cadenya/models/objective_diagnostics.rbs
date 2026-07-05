@@ -1,0 +1,30 @@
+module Cadenya
+  module Models
+    type objective_diagnostics =
+      {
+        cached_input_tokens: Integer,
+        context_lengths: Cadenya::ContextLengths,
+        input_tokens: Integer
+      }
+
+    class ObjectiveDiagnostics < Cadenya::Internal::Type::BaseModel
+      attr_accessor cached_input_tokens: Integer
+
+      attr_accessor context_lengths: Cadenya::ContextLengths
+
+      attr_accessor input_tokens: Integer
+
+      def initialize: (
+        cached_input_tokens: Integer,
+        context_lengths: Cadenya::ContextLengths,
+        input_tokens: Integer
+      ) -> void
+
+      def to_hash: -> {
+        cached_input_tokens: Integer,
+        context_lengths: Cadenya::ContextLengths,
+        input_tokens: Integer
+      }
+    end
+  end
+end

@@ -322,6 +322,36 @@ module Cadenya
         )
       end
 
+      # Returns the context-usage breakdown measured for the objective's most recent
+      # iteration: character lengths per context component (system prompt, memory
+      # appendices, tool definitions, messages by role) alongside the iteration's input
+      # token counts.
+      #
+      # @overload retrieve_diagnostics(objective_id, workspace_id:, request_options: {})
+      #
+      # @param objective_id [String] The ID of the objective. Supports "external_id:" prefix for external IDs.
+      #
+      # @param workspace_id [String]
+      #
+      # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
+      #
+      # @return [Cadenya::Models::ObjectiveRetrieveDiagnosticsResponse]
+      #
+      # @see Cadenya::Models::ObjectiveRetrieveDiagnosticsParams
+      def retrieve_diagnostics(objective_id, params)
+        parsed, options = Cadenya::ObjectiveRetrieveDiagnosticsParams.dump_request(params)
+        workspace_id =
+          parsed.delete(:workspace_id) do
+            raise ArgumentError.new("missing required path argument #{_1}")
+          end
+        @client.request(
+          method: :get,
+          path: ["v1/workspaces/%1$s/objectives/%2$s/diagnostics", workspace_id, objective_id],
+          model: Cadenya::Models::ObjectiveRetrieveDiagnosticsResponse,
+          options: options
+        )
+      end
+
       # Streams events for an objective in real-time using server-sent events (SSE)
       #
       # @overload stream_events_streaming(objective_id, workspace_id:, request_options: {})

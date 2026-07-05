@@ -1,0 +1,55 @@
+module Cadenya
+  module Models
+    type context_lengths =
+      {
+        assistant_messages: Integer,
+        available_tools: Integer,
+        episodic_memory: Integer,
+        skills_memory: Integer,
+        system_prompt: Integer,
+        tool_definitions: Integer,
+        tool_results: Integer,
+        user_messages: Integer
+      }
+
+    class ContextLengths < Cadenya::Internal::Type::BaseModel
+      attr_accessor assistant_messages: Integer
+
+      attr_accessor available_tools: Integer
+
+      attr_accessor episodic_memory: Integer
+
+      attr_accessor skills_memory: Integer
+
+      attr_accessor system_prompt: Integer
+
+      attr_accessor tool_definitions: Integer
+
+      attr_accessor tool_results: Integer
+
+      attr_accessor user_messages: Integer
+
+      def initialize: (
+        assistant_messages: Integer,
+        available_tools: Integer,
+        episodic_memory: Integer,
+        skills_memory: Integer,
+        system_prompt: Integer,
+        tool_definitions: Integer,
+        tool_results: Integer,
+        user_messages: Integer
+      ) -> void
+
+      def to_hash: -> {
+        assistant_messages: Integer,
+        available_tools: Integer,
+        episodic_memory: Integer,
+        skills_memory: Integer,
+        system_prompt: Integer,
+        tool_definitions: Integer,
+        tool_results: Integer,
+        user_messages: Integer
+      }
+    end
+  end
+end

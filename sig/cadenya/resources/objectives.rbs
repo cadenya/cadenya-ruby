@@ -86,6 +86,12 @@ module Cadenya
         ?request_options: Cadenya::request_opts
       ) -> Cadenya::Internal::CursorPagination[Cadenya::ObjectiveEvent]
 
+      def retrieve_diagnostics: (
+        String objective_id,
+        workspace_id: String,
+        ?request_options: Cadenya::request_opts
+      ) -> Cadenya::Models::ObjectiveRetrieveDiagnosticsResponse
+
       def stream_events_streaming: (
         String objective_id,
         workspace_id: String,
