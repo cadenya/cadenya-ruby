@@ -106,4 +106,30 @@ class Cadenya::Test::Resources::Objectives::ToolCallsTest < Cadenya::Test::Resou
       }
     end
   end
+
+  def test_set_content_required_params
+    skip("Mock server tests are disabled")
+
+    response =
+      @cadenya.objectives.tool_calls.set_content(
+        "toolCallId",
+        workspace_id: "workspaceId",
+        objective_id: "objectiveId",
+        content: [{}]
+      )
+
+    assert_pattern do
+      response => Cadenya::Objectives::ObjectiveToolCall
+    end
+
+    assert_pattern do
+      response => {
+        data: Cadenya::Objectives::ObjectiveToolCallData,
+        execution_status: Cadenya::Objectives::ObjectiveToolCall::ExecutionStatus,
+        metadata: Cadenya::OperationMetadata,
+        status: Cadenya::Objectives::ObjectiveToolCall::Status,
+        info: Cadenya::Objectives::ObjectiveToolCallInfo | nil
+      }
+    end
+  end
 end

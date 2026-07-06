@@ -1,0 +1,43 @@
+module Cadenya
+  module Models
+    module Objectives
+      type tool_call_set_content_params =
+        {
+          workspace_id: String,
+          objective_id: String,
+          tool_call_id: String,
+          content: ::Array[Cadenya::Objectives::SetToolCallContentRequestContentBlock]
+        }
+        & Cadenya::Internal::Type::request_parameters
+
+      class ToolCallSetContentParams < Cadenya::Internal::Type::BaseModel
+        extend Cadenya::Internal::Type::RequestParameters::Converter
+        include Cadenya::Internal::Type::RequestParameters
+
+        attr_accessor workspace_id: String
+
+        attr_accessor objective_id: String
+
+        attr_accessor tool_call_id: String
+
+        attr_accessor content: ::Array[Cadenya::Objectives::SetToolCallContentRequestContentBlock]
+
+        def initialize: (
+          workspace_id: String,
+          objective_id: String,
+          tool_call_id: String,
+          content: ::Array[Cadenya::Objectives::SetToolCallContentRequestContentBlock],
+          ?request_options: Cadenya::request_opts
+        ) -> void
+
+        def to_hash: -> {
+          workspace_id: String,
+          objective_id: String,
+          tool_call_id: String,
+          content: ::Array[Cadenya::Objectives::SetToolCallContentRequestContentBlock],
+          request_options: Cadenya::RequestOptions
+        }
+      end
+    end
+  end
+end

@@ -171,6 +171,11 @@ module Cadenya
               :TOOL_CALL_EXECUTION_STATUS_ERRORED,
               Cadenya::Objectives::ObjectiveToolCallWithResult::ExecutionStatus::TaggedSymbol
             )
+          TOOL_CALL_EXECUTION_STATUS_WAITING_FOR_CONTENT =
+            T.let(
+              :TOOL_CALL_EXECUTION_STATUS_WAITING_FOR_CONTENT,
+              Cadenya::Objectives::ObjectiveToolCallWithResult::ExecutionStatus::TaggedSymbol
+            )
 
           sig do
             override.returns(

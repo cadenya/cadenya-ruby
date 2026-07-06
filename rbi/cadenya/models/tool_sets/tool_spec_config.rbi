@@ -9,6 +9,15 @@ module Cadenya
             T.any(Cadenya::ToolSets::ToolSpecConfig, Cadenya::Internal::AnyHash)
           end
 
+        # Marks the tool as bare: it has no execution adapter of its own and relies on the
+        # parent tool set being a Bare tool set. Present so a webhook consumer can tell a
+        # tool is bare from the tool data alone, without cross-referencing the tool set.
+        sig { returns(T.nilable(Cadenya::ToolSets::ConfigBare)) }
+        attr_reader :bare
+
+        sig { params(bare: Cadenya::ToolSets::ConfigBare::OrHash).void }
+        attr_writer :bare
+
         sig { returns(T.nilable(Cadenya::ToolSets::ConfigHTTP)) }
         attr_reader :http
 
@@ -32,17 +41,27 @@ module Cadenya
         # be Http. If the tool is an inline tool, the adapter will be Inline.
         sig do
           params(
+            bare: Cadenya::ToolSets::ConfigBare::OrHash,
             http: Cadenya::ToolSets::ConfigHTTP::OrHash,
             mcp: Cadenya::ToolSets::ConfigMcp::OrHash,
             openapi: Cadenya::ToolSets::ConfigOpenAPI::OrHash
           ).returns(T.attached_class)
         end
-        def self.new(http: nil, mcp: nil, openapi: nil)
+        def self.new(
+          # Marks the tool as bare: it has no execution adapter of its own and relies on the
+          # parent tool set being a Bare tool set. Present so a webhook consumer can tell a
+          # tool is bare from the tool data alone, without cross-referencing the tool set.
+          bare: nil,
+          http: nil,
+          mcp: nil,
+          openapi: nil
+        )
         end
 
         sig do
           override.returns(
             {
+              bare: Cadenya::ToolSets::ConfigBare,
               http: Cadenya::ToolSets::ConfigHTTP,
               mcp: Cadenya::ToolSets::ConfigMcp,
               openapi: Cadenya::ToolSets::ConfigOpenAPI
