@@ -6,6 +6,7 @@ module Cadenya
           workspace_id: String,
           objective_id: String,
           cursor: String,
+          execution_status: Cadenya::Models::Objectives::ToolCallListParams::execution_status,
           include_info: bool,
           limit: Integer,
           status: Cadenya::Models::Objectives::ToolCallListParams::status
@@ -23,6 +24,12 @@ module Cadenya
         attr_reader cursor: String?
 
         def cursor=: (String) -> String
+
+        attr_reader execution_status: Cadenya::Models::Objectives::ToolCallListParams::execution_status?
+
+        def execution_status=: (
+          Cadenya::Models::Objectives::ToolCallListParams::execution_status
+        ) -> Cadenya::Models::Objectives::ToolCallListParams::execution_status
 
         attr_reader include_info: bool?
 
@@ -42,6 +49,7 @@ module Cadenya
           workspace_id: String,
           objective_id: String,
           ?cursor: String,
+          ?execution_status: Cadenya::Models::Objectives::ToolCallListParams::execution_status,
           ?include_info: bool,
           ?limit: Integer,
           ?status: Cadenya::Models::Objectives::ToolCallListParams::status,
@@ -52,11 +60,33 @@ module Cadenya
           workspace_id: String,
           objective_id: String,
           cursor: String,
+          execution_status: Cadenya::Models::Objectives::ToolCallListParams::execution_status,
           include_info: bool,
           limit: Integer,
           status: Cadenya::Models::Objectives::ToolCallListParams::status,
           request_options: Cadenya::RequestOptions
         }
+
+        type execution_status =
+          :TOOL_CALL_EXECUTION_STATUS_UNSPECIFIED
+          | :TOOL_CALL_EXECUTION_STATUS_PENDING
+          | :TOOL_CALL_EXECUTION_STATUS_RUNNING
+          | :TOOL_CALL_EXECUTION_STATUS_COMPLETED
+          | :TOOL_CALL_EXECUTION_STATUS_ERRORED
+          | :TOOL_CALL_EXECUTION_STATUS_WAITING_FOR_CONTENT
+
+        module ExecutionStatus
+          extend Cadenya::Internal::Type::Enum
+
+          TOOL_CALL_EXECUTION_STATUS_UNSPECIFIED: :TOOL_CALL_EXECUTION_STATUS_UNSPECIFIED
+          TOOL_CALL_EXECUTION_STATUS_PENDING: :TOOL_CALL_EXECUTION_STATUS_PENDING
+          TOOL_CALL_EXECUTION_STATUS_RUNNING: :TOOL_CALL_EXECUTION_STATUS_RUNNING
+          TOOL_CALL_EXECUTION_STATUS_COMPLETED: :TOOL_CALL_EXECUTION_STATUS_COMPLETED
+          TOOL_CALL_EXECUTION_STATUS_ERRORED: :TOOL_CALL_EXECUTION_STATUS_ERRORED
+          TOOL_CALL_EXECUTION_STATUS_WAITING_FOR_CONTENT: :TOOL_CALL_EXECUTION_STATUS_WAITING_FOR_CONTENT
+
+          def self?.values: -> ::Array[Cadenya::Models::Objectives::ToolCallListParams::execution_status]
+        end
 
         type status =
           :TOOL_CALL_STATUS_UNSPECIFIED

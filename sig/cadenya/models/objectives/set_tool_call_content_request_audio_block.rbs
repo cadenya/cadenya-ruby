@@ -1,0 +1,18 @@
+module Cadenya
+  module Models
+    module Objectives
+      type set_tool_call_content_request_audio_block =
+        { data: String, mime_type: String }
+
+      class SetToolCallContentRequestAudioBlock < Cadenya::Internal::Type::BaseModel
+        attr_accessor data: String
+
+        attr_accessor mime_type: String
+
+        def initialize: (data: String, mime_type: String) -> void
+
+        def to_hash: -> { data: String, mime_type: String }
+      end
+    end
+  end
+end

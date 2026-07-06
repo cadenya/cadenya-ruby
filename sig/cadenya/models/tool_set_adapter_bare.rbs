@@ -1,0 +1,15 @@
+module Cadenya
+  module Models
+    type tool_set_adapter_bare = { content_timeout: Integer }
+
+    class ToolSetAdapterBare < Cadenya::Internal::Type::BaseModel
+      attr_reader content_timeout: Integer?
+
+      def content_timeout=: (Integer) -> Integer
+
+      def initialize: (?content_timeout: Integer) -> void
+
+      def to_hash: -> { content_timeout: Integer }
+    end
+  end
+end

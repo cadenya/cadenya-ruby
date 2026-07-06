@@ -28,6 +28,26 @@ module Cadenya
         sig { params(cursor: String).void }
         attr_writer :cursor
 
+        # Filter by tool call execution status. Useful for reverse-harness polling of bare
+        # tool calls waiting for externally supplied content
+        # (TOOL_CALL_EXECUTION_STATUS_WAITING_FOR_CONTENT).
+        sig do
+          returns(
+            T.nilable(
+              Cadenya::Objectives::ToolCallListParams::ExecutionStatus::OrSymbol
+            )
+          )
+        end
+        attr_reader :execution_status
+
+        sig do
+          params(
+            execution_status:
+              Cadenya::Objectives::ToolCallListParams::ExecutionStatus::OrSymbol
+          ).void
+        end
+        attr_writer :execution_status
+
         # When set to true you may use more of your alloted API rate-limit
         sig { returns(T.nilable(T::Boolean)) }
         attr_reader :include_info
@@ -62,6 +82,8 @@ module Cadenya
             workspace_id: String,
             objective_id: String,
             cursor: String,
+            execution_status:
+              Cadenya::Objectives::ToolCallListParams::ExecutionStatus::OrSymbol,
             include_info: T::Boolean,
             limit: Integer,
             status: Cadenya::Objectives::ToolCallListParams::Status::OrSymbol,
@@ -73,6 +95,10 @@ module Cadenya
           objective_id:,
           # Pagination cursor from previous response
           cursor: nil,
+          # Filter by tool call execution status. Useful for reverse-harness polling of bare
+          # tool calls waiting for externally supplied content
+          # (TOOL_CALL_EXECUTION_STATUS_WAITING_FOR_CONTENT).
+          execution_status: nil,
           # When set to true you may use more of your alloted API rate-limit
           include_info: nil,
           # Maximum number of results to return
@@ -89,6 +115,8 @@ module Cadenya
               workspace_id: String,
               objective_id: String,
               cursor: String,
+              execution_status:
+                Cadenya::Objectives::ToolCallListParams::ExecutionStatus::OrSymbol,
               include_info: T::Boolean,
               limit: Integer,
               status: Cadenya::Objectives::ToolCallListParams::Status::OrSymbol,
@@ -97,6 +125,63 @@ module Cadenya
           )
         end
         def to_hash
+        end
+
+        # Filter by tool call execution status. Useful for reverse-harness polling of bare
+        # tool calls waiting for externally supplied content
+        # (TOOL_CALL_EXECUTION_STATUS_WAITING_FOR_CONTENT).
+        module ExecutionStatus
+          extend Cadenya::Internal::Type::Enum
+
+          TaggedSymbol =
+            T.type_alias do
+              T.all(
+                Symbol,
+                Cadenya::Objectives::ToolCallListParams::ExecutionStatus
+              )
+            end
+          OrSymbol = T.type_alias { T.any(Symbol, String) }
+
+          TOOL_CALL_EXECUTION_STATUS_UNSPECIFIED =
+            T.let(
+              :TOOL_CALL_EXECUTION_STATUS_UNSPECIFIED,
+              Cadenya::Objectives::ToolCallListParams::ExecutionStatus::TaggedSymbol
+            )
+          TOOL_CALL_EXECUTION_STATUS_PENDING =
+            T.let(
+              :TOOL_CALL_EXECUTION_STATUS_PENDING,
+              Cadenya::Objectives::ToolCallListParams::ExecutionStatus::TaggedSymbol
+            )
+          TOOL_CALL_EXECUTION_STATUS_RUNNING =
+            T.let(
+              :TOOL_CALL_EXECUTION_STATUS_RUNNING,
+              Cadenya::Objectives::ToolCallListParams::ExecutionStatus::TaggedSymbol
+            )
+          TOOL_CALL_EXECUTION_STATUS_COMPLETED =
+            T.let(
+              :TOOL_CALL_EXECUTION_STATUS_COMPLETED,
+              Cadenya::Objectives::ToolCallListParams::ExecutionStatus::TaggedSymbol
+            )
+          TOOL_CALL_EXECUTION_STATUS_ERRORED =
+            T.let(
+              :TOOL_CALL_EXECUTION_STATUS_ERRORED,
+              Cadenya::Objectives::ToolCallListParams::ExecutionStatus::TaggedSymbol
+            )
+          TOOL_CALL_EXECUTION_STATUS_WAITING_FOR_CONTENT =
+            T.let(
+              :TOOL_CALL_EXECUTION_STATUS_WAITING_FOR_CONTENT,
+              Cadenya::Objectives::ToolCallListParams::ExecutionStatus::TaggedSymbol
+            )
+
+          sig do
+            override.returns(
+              T::Array[
+                Cadenya::Objectives::ToolCallListParams::ExecutionStatus::TaggedSymbol
+              ]
+            )
+          end
+          def self.values
+          end
         end
 
         # Filter by tool call status

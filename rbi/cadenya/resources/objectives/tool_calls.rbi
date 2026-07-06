@@ -30,6 +30,8 @@ module Cadenya
             objective_id: String,
             workspace_id: String,
             cursor: String,
+            execution_status:
+              Cadenya::Objectives::ToolCallListParams::ExecutionStatus::OrSymbol,
             include_info: T::Boolean,
             limit: Integer,
             status: Cadenya::Objectives::ToolCallListParams::Status::OrSymbol,
@@ -47,6 +49,10 @@ module Cadenya
           workspace_id:,
           # Query param: Pagination cursor from previous response
           cursor: nil,
+          # Query param: Filter by tool call execution status. Useful for reverse-harness
+          # polling of bare tool calls waiting for externally supplied content
+          # (TOOL_CALL_EXECUTION_STATUS_WAITING_FOR_CONTENT).
+          execution_status: nil,
           # Query param: When set to true you may use more of your alloted API rate-limit
           include_info: nil,
           # Query param: Maximum number of results to return
@@ -100,6 +106,37 @@ module Cadenya
           # Body param: A memo to associate to the tool call denial. Use a memo to steer the
           # LLM to a different decision or usage of the tool.
           memo: nil,
+          request_options: {}
+        )
+        end
+
+        # For bare tool calls (tool sets with no execution adapter), sets the content an
+        # external API consumer supplies for the call — used for human-in-the-loop tools
+        # and reverse harnesses that execute tools locally and report results back.
+        sig do
+          params(
+            tool_call_id: String,
+            workspace_id: String,
+            objective_id: String,
+            content:
+              T::Array[
+                Cadenya::Objectives::SetToolCallContentRequestContentBlock::OrHash
+              ],
+            request_options: Cadenya::RequestOptions::OrHash
+          ).returns(Cadenya::Objectives::ObjectiveToolCall)
+        end
+        def set_content(
+          # Path param: The ID of the tool call to set content for
+          tool_call_id,
+          # Path param
+          workspace_id:,
+          # Path param: The ID of the objective. Supports "external_id:" prefix for external
+          # IDs.
+          objective_id:,
+          # Body param: The content to set on the tool call. Mirrors
+          # ObjectiveToolCallResult.ContentBlock but writable: media blocks carry raw data
+          # on input where the result-side carries a signed url on output.
+          content:,
           request_options: {}
         )
         end
