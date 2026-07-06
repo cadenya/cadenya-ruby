@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.30.0 (2026-07-06)
+
+Full Changelog: [v0.29.0...v0.30.0](https://github.com/cadenya/cadenya-ruby/compare/v0.29.0...v0.30.0)
+
+### Features
+
+* Bare toolset proto contract: Bare adapter, SetToolCallContent, WAITING_FOR_CONTENT (ENG-385) ([075baa7](https://github.com/cadenya/cadenya-ruby/commit/075baa7b039c12f2f097c7b688935f3e14d4f98f))
+
 ## 0.29.0 (2026-07-05)
 
 Full Changelog: [v0.28.0...v0.29.0](https://github.com/cadenya/cadenya-ruby/compare/v0.28.0...v0.29.0)
