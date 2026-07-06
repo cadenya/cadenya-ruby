@@ -263,6 +263,8 @@ module Cadenya
 
   ToolSetAdapter = Cadenya::Models::ToolSetAdapter
 
+  ToolSetAdapterBare = Cadenya::Models::ToolSetAdapterBare
+
   ToolSetAdapterHTTP = Cadenya::Models::ToolSetAdapterHTTP
 
   ToolSetAdapterMcp = Cadenya::Models::ToolSetAdapterMcp
