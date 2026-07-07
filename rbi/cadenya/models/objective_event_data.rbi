@@ -84,6 +84,20 @@ module Cadenya
       sig { params(sub_agent_updated: Cadenya::SubAgentUpdated::OrHash).void }
       attr_writer :sub_agent_updated
 
+      # ObjectiveTimedOut is the terminal event written when an objective is finalized
+      # by the inactivity sweep because it saw no activity (no user messages, no LLM
+      # calls) within its variation's inactivity timeout — or the system-wide 24 hour
+      # maximum when no timeout is configured. The objective produces no output. After
+      # this event, the objective is super-terminal: no further iterations, compaction,
+      # or continuation are permitted.
+      sig { returns(T.nilable(Cadenya::ObjectiveEventData::TimedOut)) }
+      attr_reader :timed_out
+
+      sig do
+        params(timed_out: Cadenya::ObjectiveEventData::TimedOut::OrHash).void
+      end
+      attr_writer :timed_out
+
       sig { returns(T.nilable(Cadenya::ToolApprovalRequested)) }
       attr_reader :tool_approval_requested
 
@@ -147,6 +161,7 @@ module Cadenya
           notice: Cadenya::ObjectiveEventData::Notice::OrHash,
           sub_agent_spawned: Cadenya::SubAgentSpawned::OrHash,
           sub_agent_updated: Cadenya::SubAgentUpdated::OrHash,
+          timed_out: Cadenya::ObjectiveEventData::TimedOut::OrHash,
           tool_approval_requested: Cadenya::ToolApprovalRequested::OrHash,
           tool_approved: Cadenya::ToolApproved::OrHash,
           tool_called: Cadenya::ToolCalled::OrHash,
@@ -181,6 +196,13 @@ module Cadenya
         notice: nil,
         sub_agent_spawned: nil,
         sub_agent_updated: nil,
+        # ObjectiveTimedOut is the terminal event written when an objective is finalized
+        # by the inactivity sweep because it saw no activity (no user messages, no LLM
+        # calls) within its variation's inactivity timeout — or the system-wide 24 hour
+        # maximum when no timeout is configured. The objective produces no output. After
+        # this event, the objective is super-terminal: no further iterations, compaction,
+        # or continuation are permitted.
+        timed_out: nil,
         tool_approval_requested: nil,
         tool_approved: nil,
         tool_called: nil,
@@ -204,6 +226,7 @@ module Cadenya
             notice: Cadenya::ObjectiveEventData::Notice,
             sub_agent_spawned: Cadenya::SubAgentSpawned,
             sub_agent_updated: Cadenya::SubAgentUpdated,
+            timed_out: Cadenya::ObjectiveEventData::TimedOut,
             tool_approval_requested: Cadenya::ToolApprovalRequested,
             tool_approved: Cadenya::ToolApproved,
             tool_called: Cadenya::ToolCalled,
@@ -394,6 +417,42 @@ module Cadenya
           end
           def self.values
           end
+        end
+      end
+
+      class TimedOut < Cadenya::Internal::Type::BaseModel
+        OrHash =
+          T.type_alias do
+            T.any(
+              Cadenya::ObjectiveEventData::TimedOut,
+              Cadenya::Internal::AnyHash
+            )
+          end
+
+        # Human-readable note recorded at timeout time (e.g. "Timed out after 2h of
+        # inactivity").
+        sig { returns(T.nilable(String)) }
+        attr_reader :message
+
+        sig { params(message: String).void }
+        attr_writer :message
+
+        # ObjectiveTimedOut is the terminal event written when an objective is finalized
+        # by the inactivity sweep because it saw no activity (no user messages, no LLM
+        # calls) within its variation's inactivity timeout — or the system-wide 24 hour
+        # maximum when no timeout is configured. The objective produces no output. After
+        # this event, the objective is super-terminal: no further iterations, compaction,
+        # or continuation are permitted.
+        sig { params(message: String).returns(T.attached_class) }
+        def self.new(
+          # Human-readable note recorded at timeout time (e.g. "Timed out after 2h of
+          # inactivity").
+          message: nil
+        )
+        end
+
+        sig { override.returns({ message: String }) }
+        def to_hash
         end
       end
     end

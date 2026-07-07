@@ -202,6 +202,11 @@ module Cadenya
               :OBJECTIVE_EVENT_TYPE_NOTICE,
               Cadenya::Agents::WebhookDeliveryListParams::EventType::TaggedSymbol
             )
+          OBJECTIVE_EVENT_TYPE_TIMED_OUT =
+            T.let(
+              :OBJECTIVE_EVENT_TYPE_TIMED_OUT,
+              Cadenya::Agents::WebhookDeliveryListParams::EventType::TaggedSymbol
+            )
 
           sig do
             override.returns(
