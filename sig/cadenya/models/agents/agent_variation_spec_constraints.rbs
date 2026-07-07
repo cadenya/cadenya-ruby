@@ -4,9 +4,17 @@ module Cadenya
 
     module Agents
       type agent_variation_spec_constraints =
-        { max_sub_objectives: Integer, max_tool_calls: Integer }
+        {
+          inactivity_timeout: Integer,
+          max_sub_objectives: Integer,
+          max_tool_calls: Integer
+        }
 
       class AgentVariationSpecConstraints < Cadenya::Internal::Type::BaseModel
+        attr_reader inactivity_timeout: Integer?
+
+        def inactivity_timeout=: (Integer) -> Integer
+
         attr_reader max_sub_objectives: Integer?
 
         def max_sub_objectives=: (Integer) -> Integer
@@ -16,11 +24,16 @@ module Cadenya
         def max_tool_calls=: (Integer) -> Integer
 
         def initialize: (
+          ?inactivity_timeout: Integer,
           ?max_sub_objectives: Integer,
           ?max_tool_calls: Integer
         ) -> void
 
-        def to_hash: -> { max_sub_objectives: Integer, max_tool_calls: Integer }
+        def to_hash: -> {
+          inactivity_timeout: Integer,
+          max_sub_objectives: Integer,
+          max_tool_calls: Integer
+        }
       end
     end
   end

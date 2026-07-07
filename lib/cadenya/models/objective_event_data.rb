@@ -64,6 +64,17 @@ module Cadenya
       #   @return [Cadenya::Models::SubAgentUpdated, nil]
       optional :sub_agent_updated, -> { Cadenya::SubAgentUpdated }, api_name: :subAgentUpdated
 
+      # @!attribute timed_out
+      #   ObjectiveTimedOut is the terminal event written when an objective is finalized
+      #   by the inactivity sweep because it saw no activity (no user messages, no LLM
+      #   calls) within its variation's inactivity timeout — or the system-wide 24 hour
+      #   maximum when no timeout is configured. The objective produces no output. After
+      #   this event, the objective is super-terminal: no further iterations, compaction,
+      #   or continuation are permitted.
+      #
+      #   @return [Cadenya::Models::ObjectiveEventData::TimedOut, nil]
+      optional :timed_out, -> { Cadenya::ObjectiveEventData::TimedOut }, api_name: :timedOut
+
       # @!attribute tool_approval_requested
       #
       #   @return [Cadenya::Models::ToolApprovalRequested, nil]
@@ -108,7 +119,7 @@ module Cadenya
       #   @return [Cadenya::Models::UserMessage, nil]
       optional :user_message, -> { Cadenya::UserMessage }, api_name: :userMessage
 
-      # @!method initialize(assistant_message: nil, cancelled: nil, context_window_compacted: nil, error: nil, finalized: nil, memory_read: nil, notice: nil, sub_agent_spawned: nil, sub_agent_updated: nil, tool_approval_requested: nil, tool_approved: nil, tool_called: nil, tool_denied: nil, tool_error: nil, tool_result: nil, type: nil, user_message: nil)
+      # @!method initialize(assistant_message: nil, cancelled: nil, context_window_compacted: nil, error: nil, finalized: nil, memory_read: nil, notice: nil, sub_agent_spawned: nil, sub_agent_updated: nil, timed_out: nil, tool_approval_requested: nil, tool_approved: nil, tool_called: nil, tool_denied: nil, tool_error: nil, tool_result: nil, type: nil, user_message: nil)
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::ObjectiveEventData} for more details.
       #
@@ -129,6 +140,8 @@ module Cadenya
       #   @param sub_agent_spawned [Cadenya::Models::SubAgentSpawned]
       #
       #   @param sub_agent_updated [Cadenya::Models::SubAgentUpdated]
+      #
+      #   @param timed_out [Cadenya::Models::ObjectiveEventData::TimedOut] ObjectiveTimedOut is the terminal event written when an objective is
       #
       #   @param tool_approval_requested [Cadenya::Models::ToolApprovalRequested]
       #
@@ -236,6 +249,29 @@ module Cadenya
           # @!method self.values
           #   @return [Array<Symbol>]
         end
+      end
+
+      # @see Cadenya::Models::ObjectiveEventData#timed_out
+      class TimedOut < Cadenya::Internal::Type::BaseModel
+        # @!attribute message
+        #   Human-readable note recorded at timeout time (e.g. "Timed out after 2h of
+        #   inactivity").
+        #
+        #   @return [String, nil]
+        optional :message, String
+
+        # @!method initialize(message: nil)
+        #   Some parameter documentations has been truncated, see
+        #   {Cadenya::Models::ObjectiveEventData::TimedOut} for more details.
+        #
+        #   ObjectiveTimedOut is the terminal event written when an objective is finalized
+        #   by the inactivity sweep because it saw no activity (no user messages, no LLM
+        #   calls) within its variation's inactivity timeout — or the system-wide 24 hour
+        #   maximum when no timeout is configured. The objective produces no output. After
+        #   this event, the objective is super-terminal: no further iterations, compaction,
+        #   or continuation are permitted.
+        #
+        #   @param message [String] Human-readable note recorded at timeout time (e.g. "Timed out after 2h
       end
     end
   end
