@@ -238,6 +238,8 @@ module Cadenya
           T.let(:STATE_CANCELLED, Cadenya::Objective::State::TaggedSymbol)
         STATE_FINALIZED =
           T.let(:STATE_FINALIZED, Cadenya::Objective::State::TaggedSymbol)
+        STATE_TIMED_OUT =
+          T.let(:STATE_TIMED_OUT, Cadenya::Objective::State::TaggedSymbol)
 
         sig do
           override.returns(T::Array[Cadenya::Objective::State::TaggedSymbol])

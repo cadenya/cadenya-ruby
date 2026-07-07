@@ -103,6 +103,7 @@ module Cadenya
         STATE_FAILED = :STATE_FAILED
         STATE_CANCELLED = :STATE_CANCELLED
         STATE_FINALIZED = :STATE_FINALIZED
+        STATE_TIMED_OUT = :STATE_TIMED_OUT
 
         # @!method self.values
         #   @return [Array<Symbol>]

@@ -11,6 +11,7 @@ module Cadenya
         notice: Cadenya::ObjectiveEventData::Notice,
         sub_agent_spawned: Cadenya::SubAgentSpawned,
         sub_agent_updated: Cadenya::SubAgentUpdated,
+        timed_out: Cadenya::ObjectiveEventData::TimedOut,
         tool_approval_requested: Cadenya::ToolApprovalRequested,
         tool_approved: Cadenya::ToolApproved,
         tool_called: Cadenya::ToolCalled,
@@ -72,6 +73,12 @@ module Cadenya
         Cadenya::SubAgentUpdated
       ) -> Cadenya::SubAgentUpdated
 
+      attr_reader timed_out: Cadenya::ObjectiveEventData::TimedOut?
+
+      def timed_out=: (
+        Cadenya::ObjectiveEventData::TimedOut
+      ) -> Cadenya::ObjectiveEventData::TimedOut
+
       attr_reader tool_approval_requested: Cadenya::ToolApprovalRequested?
 
       def tool_approval_requested=: (
@@ -116,6 +123,7 @@ module Cadenya
         ?notice: Cadenya::ObjectiveEventData::Notice,
         ?sub_agent_spawned: Cadenya::SubAgentSpawned,
         ?sub_agent_updated: Cadenya::SubAgentUpdated,
+        ?timed_out: Cadenya::ObjectiveEventData::TimedOut,
         ?tool_approval_requested: Cadenya::ToolApprovalRequested,
         ?tool_approved: Cadenya::ToolApproved,
         ?tool_called: Cadenya::ToolCalled,
@@ -136,6 +144,7 @@ module Cadenya
         notice: Cadenya::ObjectiveEventData::Notice,
         sub_agent_spawned: Cadenya::SubAgentSpawned,
         sub_agent_updated: Cadenya::SubAgentUpdated,
+        timed_out: Cadenya::ObjectiveEventData::TimedOut,
         tool_approval_requested: Cadenya::ToolApprovalRequested,
         tool_approved: Cadenya::ToolApproved,
         tool_called: Cadenya::ToolCalled,
@@ -215,6 +224,18 @@ module Cadenya
 
           def self?.values: -> ::Array[Cadenya::Models::ObjectiveEventData::Notice::level]
         end
+      end
+
+      type timed_out = { message: String }
+
+      class TimedOut < Cadenya::Internal::Type::BaseModel
+        attr_reader message: String?
+
+        def message=: (String) -> String
+
+        def initialize: (?message: String) -> void
+
+        def to_hash: -> { message: String }
       end
     end
   end

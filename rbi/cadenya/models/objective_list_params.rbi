@@ -179,6 +179,11 @@ module Cadenya
             :STATE_FINALIZED,
             Cadenya::ObjectiveListParams::State::TaggedSymbol
           )
+        STATE_TIMED_OUT =
+          T.let(
+            :STATE_TIMED_OUT,
+            Cadenya::ObjectiveListParams::State::TaggedSymbol
+          )
 
         sig do
           override.returns(
