@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.41.0 (2026-07-08)
+
+Full Changelog: [v0.40.0...v0.41.0](https://github.com/cadenya/cadenya-ruby/compare/v0.40.0...v0.41.0)
+
+### Features
+
+* Remove the GetCurrentWorkspace RPC and /v1/workspaces/current (ENG-436) ([d1934ae](https://github.com/cadenya/cadenya-ruby/commit/d1934aea0f43d65f542f15cddc7c8e039883e2dc))
+
 ## 0.40.0 (2026-07-08)
 
 Full Changelog: [v0.39.0...v0.40.0](https://github.com/cadenya/cadenya-ruby/compare/v0.39.0...v0.40.0)
