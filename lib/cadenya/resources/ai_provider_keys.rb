@@ -101,13 +101,15 @@ module Cadenya
       #
       # Lists all customer-provided AI provider keys in the workspace
       #
-      # @overload list(workspace_id, cursor: nil, include_info: nil, limit: nil, prefix: nil, promotional: nil, query: nil, sort_order: nil, request_options: {})
+      # @overload list(workspace_id, cursor: nil, include_info: nil, labels: nil, limit: nil, prefix: nil, promotional: nil, query: nil, sort_order: nil, request_options: {})
       #
       # @param workspace_id [String] The workspace whose keys will be listed.
       #
       # @param cursor [String] Pagination cursor from previous response
       #
       # @param include_info [Boolean] When true, populate each item's info (model counts), at the cost of extra
+      #
+      # @param labels [String] Filters by metadata labels. Comma-separated key=value pairs,
       #
       # @param limit [Integer] Maximum number of results to return
       #

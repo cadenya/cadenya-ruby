@@ -129,7 +129,7 @@ module Cadenya
         #
         # Lists all entries in a memory layer
         #
-        # @overload list(memory_layer_id, workspace_id:, cursor: nil, include_info: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, request_options: {})
+        # @overload list(memory_layer_id, workspace_id:, cursor: nil, include_info: nil, labels: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, request_options: {})
         #
         # @param memory_layer_id [String] Path param: Memory layer ID. Accepts canonical memlyr\_… form or
         # external_id:<val
@@ -139,6 +139,8 @@ module Cadenya
         # @param cursor [String] Query param: Pagination cursor from previous response
         #
         # @param include_info [Boolean] Query param: When set to true you may use more of your alloted API rate-limit
+        #
+        # @param labels [String] Query param: Filters by metadata labels. Comma-separated key=value pairs,
         #
         # @param limit [Integer] Query param: Maximum number of results to return
         #

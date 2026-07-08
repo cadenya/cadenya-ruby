@@ -38,6 +38,14 @@ module Cadenya
         #   @return [Boolean, nil]
         optional :include_info, Cadenya::Internal::Type::Boolean
 
+        # @!attribute labels
+        #   Filters by metadata labels. Comma-separated key=value pairs, e.g.
+        #   "env=prod,team=ai". A resource matches only if every pair matches exactly (AND
+        #   semantics).
+        #
+        #   @return [String, nil]
+        optional :labels, String
+
         # @!attribute limit
         #   Maximum number of results to return
         #
@@ -50,7 +58,7 @@ module Cadenya
         #   @return [Symbol, Cadenya::Models::Objectives::ToolCallListParams::Status, nil]
         optional :status, enum: -> { Cadenya::Objectives::ToolCallListParams::Status }
 
-        # @!method initialize(workspace_id:, objective_id:, cursor: nil, execution_status: nil, include_info: nil, limit: nil, status: nil, request_options: {})
+        # @!method initialize(workspace_id:, objective_id:, cursor: nil, execution_status: nil, include_info: nil, labels: nil, limit: nil, status: nil, request_options: {})
         #   Some parameter documentations has been truncated, see
         #   {Cadenya::Models::Objectives::ToolCallListParams} for more details.
         #
@@ -63,6 +71,8 @@ module Cadenya
         #   @param execution_status [Symbol, Cadenya::Models::Objectives::ToolCallListParams::ExecutionStatus] Filter by tool call execution status. Useful for reverse-harness
         #
         #   @param include_info [Boolean] When set to true you may use more of your alloted API rate-limit
+        #
+        #   @param labels [String] Filters by metadata labels. Comma-separated key=value pairs,
         #
         #   @param limit [Integer] Maximum number of results to return
         #

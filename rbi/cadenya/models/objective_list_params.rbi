@@ -43,6 +43,15 @@ module Cadenya
       sig { params(include_info: T::Boolean).void }
       attr_writer :include_info
 
+      # Filters by metadata labels. Comma-separated key=value pairs, e.g.
+      # "env=prod,team=ai". A resource matches only if every pair matches exactly (AND
+      # semantics).
+      sig { returns(T.nilable(String)) }
+      attr_reader :labels
+
+      sig { params(labels: String).void }
+      attr_writer :labels
+
       # Maximum number of results to return
       sig { returns(T.nilable(Integer)) }
       attr_reader :limit
@@ -84,6 +93,7 @@ module Cadenya
           agent_schedule_id: String,
           cursor: String,
           include_info: T::Boolean,
+          labels: String,
           limit: Integer,
           parent_objective_id: String,
           profile_id: String,
@@ -103,6 +113,10 @@ module Cadenya
         cursor: nil,
         # When set to true you may use more of your alloted API rate-limit
         include_info: nil,
+        # Filters by metadata labels. Comma-separated key=value pairs, e.g.
+        # "env=prod,team=ai". A resource matches only if every pair matches exactly (AND
+        # semantics).
+        labels: nil,
         # Maximum number of results to return
         limit: nil,
         # Optional filters
@@ -124,6 +138,7 @@ module Cadenya
             agent_schedule_id: String,
             cursor: String,
             include_info: T::Boolean,
+            labels: String,
             limit: Integer,
             parent_objective_id: String,
             profile_id: String,

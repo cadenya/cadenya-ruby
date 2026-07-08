@@ -1,7 +1,7 @@
 module Cadenya
   module Models
     type workspace_admin_list_params =
-      { cursor: String, include_archived: bool, limit: Integer }
+      { cursor: String, include_archived: bool, labels: String, limit: Integer }
       & Cadenya::Internal::Type::request_parameters
 
     class WorkspaceAdminListParams < Cadenya::Internal::Type::BaseModel
@@ -16,6 +16,10 @@ module Cadenya
 
       def include_archived=: (bool) -> bool
 
+      attr_reader labels: String?
+
+      def labels=: (String) -> String
+
       attr_reader limit: Integer?
 
       def limit=: (Integer) -> Integer
@@ -23,6 +27,7 @@ module Cadenya
       def initialize: (
         ?cursor: String,
         ?include_archived: bool,
+        ?labels: String,
         ?limit: Integer,
         ?request_options: Cadenya::request_opts
       ) -> void
@@ -30,6 +35,7 @@ module Cadenya
       def to_hash: -> {
         cursor: String,
         include_archived: bool,
+        labels: String,
         limit: Integer,
         request_options: Cadenya::RequestOptions
       }

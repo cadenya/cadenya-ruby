@@ -125,13 +125,15 @@ module Cadenya
       #
       # Lists all agents in the workspace
       #
-      # @overload list(workspace_id, cursor: nil, include_info: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, state: nil, variation_selection_mode: nil, request_options: {})
+      # @overload list(workspace_id, cursor: nil, include_info: nil, labels: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, state: nil, variation_selection_mode: nil, request_options: {})
       #
       # @param workspace_id [String] Workspace ID.
       #
       # @param cursor [String] Pagination cursor from previous response
       #
       # @param include_info [Boolean] When true, the `info` field on each returned agent is populated. Requests
+      #
+      # @param labels [String] Filters by metadata labels. Comma-separated key=value pairs,
       #
       # @param limit [Integer] Maximum number of results to return
       #

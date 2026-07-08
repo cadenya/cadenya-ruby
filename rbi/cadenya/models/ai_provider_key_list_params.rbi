@@ -29,6 +29,15 @@ module Cadenya
       sig { params(include_info: T::Boolean).void }
       attr_writer :include_info
 
+      # Filters by metadata labels. Comma-separated key=value pairs, e.g.
+      # "env=prod,team=ai". A resource matches only if every pair matches exactly (AND
+      # semantics).
+      sig { returns(T.nilable(String)) }
+      attr_reader :labels
+
+      sig { params(labels: String).void }
+      attr_writer :labels
+
       # Maximum number of results to return
       sig { returns(T.nilable(Integer)) }
       attr_reader :limit
@@ -71,6 +80,7 @@ module Cadenya
           workspace_id: String,
           cursor: String,
           include_info: T::Boolean,
+          labels: String,
           limit: Integer,
           prefix: String,
           promotional: T::Boolean,
@@ -86,6 +96,10 @@ module Cadenya
         # When true, populate each item's info (model counts), at the cost of extra
         # lookups.
         include_info: nil,
+        # Filters by metadata labels. Comma-separated key=value pairs, e.g.
+        # "env=prod,team=ai". A resource matches only if every pair matches exactly (AND
+        # semantics).
+        labels: nil,
         # Maximum number of results to return
         limit: nil,
         # Filter expression (query param: prefix)
@@ -108,6 +122,7 @@ module Cadenya
             workspace_id: String,
             cursor: String,
             include_info: T::Boolean,
+            labels: String,
             limit: Integer,
             prefix: String,
             promotional: T::Boolean,

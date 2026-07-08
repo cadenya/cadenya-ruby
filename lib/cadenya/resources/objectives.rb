@@ -88,7 +88,7 @@ module Cadenya
       #
       # Lists all objectives in the workspace
       #
-      # @overload list(workspace_id, agent_id: nil, agent_schedule_id: nil, cursor: nil, include_info: nil, limit: nil, parent_objective_id: nil, profile_id: nil, sort_order: nil, state: nil, request_options: {})
+      # @overload list(workspace_id, agent_id: nil, agent_schedule_id: nil, cursor: nil, include_info: nil, labels: nil, limit: nil, parent_objective_id: nil, profile_id: nil, sort_order: nil, state: nil, request_options: {})
       #
       # @param workspace_id [String]
       #
@@ -99,6 +99,8 @@ module Cadenya
       # @param cursor [String] Pagination cursor from previous response
       #
       # @param include_info [Boolean] When set to true you may use more of your alloted API rate-limit
+      #
+      # @param labels [String] Filters by metadata labels. Comma-separated key=value pairs,
       #
       # @param limit [Integer] Maximum number of results to return
       #
@@ -238,10 +240,13 @@ module Cadenya
         )
       end
 
+      # Some parameter documentations has been truncated, see
+      # {Cadenya::Models::ObjectiveListContextWindowsParams} for more details.
+      #
       # Read-only list of the last five windows of execution for this objective, ordered
       # by most recent first
       #
-      # @overload list_context_windows(objective_id, workspace_id:, cursor: nil, include_info: nil, limit: nil, request_options: {})
+      # @overload list_context_windows(objective_id, workspace_id:, cursor: nil, include_info: nil, labels: nil, limit: nil, request_options: {})
       #
       # @param objective_id [String] Path param: The objective ID to return windows for
       #
@@ -250,6 +255,8 @@ module Cadenya
       # @param cursor [String] Query param: Pagination cursor from previous response
       #
       # @param include_info [Boolean] Query param: When set to true you may use more of your alloted API rate-limit
+      #
+      # @param labels [String] Query param: Filters by metadata labels. Comma-separated key=value pairs,
       #
       # @param limit [Integer] Query param: Maximum number of results to return
       #
@@ -275,9 +282,12 @@ module Cadenya
         )
       end
 
+      # Some parameter documentations has been truncated, see
+      # {Cadenya::Models::ObjectiveListEventsParams} for more details.
+      #
       # Lists all events for an objective
       #
-      # @overload list_events(objective_id, workspace_id:, cursor: nil, include_info: nil, limit: nil, since_event_id: nil, sort_order: nil, window_id: nil, request_options: {})
+      # @overload list_events(objective_id, workspace_id:, cursor: nil, include_info: nil, labels: nil, limit: nil, since_event_id: nil, sort_order: nil, window_id: nil, request_options: {})
       #
       # @param objective_id [String] Path param: Objective ID for filtering
       #
@@ -286,6 +296,8 @@ module Cadenya
       # @param cursor [String] Query param: Pagination cursor from previous response
       #
       # @param include_info [Boolean] Query param: When set to true you may use more of your alloted API rate-limit
+      #
+      # @param labels [String] Query param: Filters by metadata labels. Comma-separated key=value pairs,
       #
       # @param limit [Integer] Query param: Maximum number of results to return
       #

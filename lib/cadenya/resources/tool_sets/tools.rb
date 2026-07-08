@@ -128,7 +128,7 @@ module Cadenya
         #
         # Lists all tools in the tool set
         #
-        # @overload list(tool_set_id, workspace_id:, cursor: nil, include_info: nil, limit: nil, names: nil, prefix: nil, query: nil, requires_approval: nil, sort_order: nil, states: nil, request_options: {})
+        # @overload list(tool_set_id, workspace_id:, cursor: nil, include_info: nil, labels: nil, limit: nil, names: nil, prefix: nil, query: nil, requires_approval: nil, sort_order: nil, states: nil, request_options: {})
         #
         # @param tool_set_id [String] Path param: Tool set ID. Accepts the canonical ts\_… form or the
         #
@@ -137,6 +137,8 @@ module Cadenya
         # @param cursor [String] Query param: Pagination cursor from previous response
         #
         # @param include_info [Boolean] Query param: When set to true you may use more of your alloted API rate-limit
+        #
+        # @param labels [String] Query param: Filters by metadata labels. Comma-separated key=value pairs,
         #
         # @param limit [Integer] Query param: Maximum number of results to return
         #

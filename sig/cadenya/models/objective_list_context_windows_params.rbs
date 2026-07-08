@@ -6,6 +6,7 @@ module Cadenya
         objective_id: String,
         cursor: String,
         include_info: bool,
+        labels: String,
         limit: Integer
       }
       & Cadenya::Internal::Type::request_parameters
@@ -26,6 +27,10 @@ module Cadenya
 
       def include_info=: (bool) -> bool
 
+      attr_reader labels: String?
+
+      def labels=: (String) -> String
+
       attr_reader limit: Integer?
 
       def limit=: (Integer) -> Integer
@@ -35,6 +40,7 @@ module Cadenya
         objective_id: String,
         ?cursor: String,
         ?include_info: bool,
+        ?labels: String,
         ?limit: Integer,
         ?request_options: Cadenya::request_opts
       ) -> void
@@ -44,6 +50,7 @@ module Cadenya
         objective_id: String,
         cursor: String,
         include_info: bool,
+        labels: String,
         limit: Integer,
         request_options: Cadenya::RequestOptions
       }

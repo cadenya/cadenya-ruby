@@ -19,16 +19,29 @@ module Cadenya
         #   @return [String, nil]
         optional :cursor, String
 
+        # @!attribute labels
+        #   Filters by metadata labels. Comma-separated key=value pairs, e.g.
+        #   "env=prod,team=ai". A resource matches only if every pair matches exactly (AND
+        #   semantics).
+        #
+        #   @return [String, nil]
+        optional :labels, String
+
         # @!attribute limit
         #   Maximum number of results to return.
         #
         #   @return [Integer, nil]
         optional :limit, Integer
 
-        # @!method initialize(id:, cursor: nil, limit: nil, request_options: {})
+        # @!method initialize(id:, cursor: nil, labels: nil, limit: nil, request_options: {})
+        #   Some parameter documentations has been truncated, see
+        #   {Cadenya::Models::APIKeys::AccessListParams} for more details.
+        #
         #   @param id [String]
         #
         #   @param cursor [String] Pagination cursor from previous response.
+        #
+        #   @param labels [String] Filters by metadata labels. Comma-separated key=value pairs,
         #
         #   @param limit [Integer] Maximum number of results to return.
         #

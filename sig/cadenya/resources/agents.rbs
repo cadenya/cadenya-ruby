@@ -36,6 +36,7 @@ module Cadenya
         String workspace_id,
         ?cursor: String,
         ?include_info: bool,
+        ?labels: String,
         ?limit: Integer,
         ?prefix: String,
         ?query: String,

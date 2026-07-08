@@ -46,6 +46,15 @@ module Cadenya
         end
         attr_writer :event_type
 
+        # Filters by metadata labels. Comma-separated key=value pairs, e.g.
+        # "env=prod,team=ai". A resource matches only if every pair matches exactly (AND
+        # semantics).
+        sig { returns(T.nilable(String)) }
+        attr_reader :labels
+
+        sig { params(labels: String).void }
+        attr_writer :labels
+
         # Maximum number of results to return
         sig { returns(T.nilable(Integer)) }
         attr_reader :limit
@@ -67,6 +76,7 @@ module Cadenya
             cursor: String,
             event_type:
               Cadenya::Agents::WebhookDeliveryListParams::EventType::OrSymbol,
+            labels: String,
             limit: Integer,
             objective_id: String,
             request_options: Cadenya::RequestOptions::OrHash
@@ -79,6 +89,10 @@ module Cadenya
           cursor: nil,
           # Optional filter by event type
           event_type: nil,
+          # Filters by metadata labels. Comma-separated key=value pairs, e.g.
+          # "env=prod,team=ai". A resource matches only if every pair matches exactly (AND
+          # semantics).
+          labels: nil,
           # Maximum number of results to return
           limit: nil,
           # Optional filter by objective ID
@@ -95,6 +109,7 @@ module Cadenya
               cursor: String,
               event_type:
                 Cadenya::Agents::WebhookDeliveryListParams::EventType::OrSymbol,
+              labels: String,
               limit: Integer,
               objective_id: String,
               request_options: Cadenya::RequestOptions

@@ -5,6 +5,7 @@ module Cadenya
         def list: (
           String id,
           ?cursor: String,
+          ?labels: String,
           ?limit: Integer,
           ?request_options: Cadenya::request_opts
         ) -> Cadenya::Internal::CursorPagination[Cadenya::Workspace]

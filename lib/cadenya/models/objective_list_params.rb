@@ -37,6 +37,14 @@ module Cadenya
       #   @return [Boolean, nil]
       optional :include_info, Cadenya::Internal::Type::Boolean
 
+      # @!attribute labels
+      #   Filters by metadata labels. Comma-separated key=value pairs, e.g.
+      #   "env=prod,team=ai". A resource matches only if every pair matches exactly (AND
+      #   semantics).
+      #
+      #   @return [String, nil]
+      optional :labels, String
+
       # @!attribute limit
       #   Maximum number of results to return
       #
@@ -66,7 +74,7 @@ module Cadenya
       #   @return [Symbol, Cadenya::Models::ObjectiveListParams::State, nil]
       optional :state, enum: -> { Cadenya::ObjectiveListParams::State }
 
-      # @!method initialize(workspace_id:, agent_id: nil, agent_schedule_id: nil, cursor: nil, include_info: nil, limit: nil, parent_objective_id: nil, profile_id: nil, sort_order: nil, state: nil, request_options: {})
+      # @!method initialize(workspace_id:, agent_id: nil, agent_schedule_id: nil, cursor: nil, include_info: nil, labels: nil, limit: nil, parent_objective_id: nil, profile_id: nil, sort_order: nil, state: nil, request_options: {})
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::ObjectiveListParams} for more details.
       #
@@ -79,6 +87,8 @@ module Cadenya
       #   @param cursor [String] Pagination cursor from previous response
       #
       #   @param include_info [Boolean] When set to true you may use more of your alloted API rate-limit
+      #
+      #   @param labels [String] Filters by metadata labels. Comma-separated key=value pairs,
       #
       #   @param limit [Integer] Maximum number of results to return
       #
