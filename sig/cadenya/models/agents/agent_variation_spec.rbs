@@ -11,8 +11,7 @@ module Cadenya
           first_user_message_template: String,
           model_config: Cadenya::Agents::AgentVariationSpecModelConfig,
           progressive_discovery: Cadenya::Agents::AgentVariationSpecProgressiveDiscovery,
-          system_prompt_template: String,
-          weight: Integer
+          system_prompt_template: String
         }
 
       class AgentVariationSpec < Cadenya::Internal::Type::BaseModel
@@ -52,10 +51,6 @@ module Cadenya
 
         def system_prompt_template=: (String) -> String
 
-        attr_reader weight: Integer?
-
-        def weight=: (Integer) -> Integer
-
         def initialize: (
           ?compaction_config: Cadenya::Agents::AgentVariationSpecCompactionConfig,
           ?constraints: Cadenya::Agents::AgentVariationSpecConstraints,
@@ -63,8 +58,7 @@ module Cadenya
           ?first_user_message_template: String,
           ?model_config: Cadenya::Agents::AgentVariationSpecModelConfig,
           ?progressive_discovery: Cadenya::Agents::AgentVariationSpecProgressiveDiscovery,
-          ?system_prompt_template: String,
-          ?weight: Integer
+          ?system_prompt_template: String
         ) -> void
 
         def to_hash: -> {
@@ -74,8 +68,7 @@ module Cadenya
           first_user_message_template: String,
           model_config: Cadenya::Agents::AgentVariationSpecModelConfig,
           progressive_discovery: Cadenya::Agents::AgentVariationSpecProgressiveDiscovery,
-          system_prompt_template: String,
-          weight: Integer
+          system_prompt_template: String
         }
       end
     end
