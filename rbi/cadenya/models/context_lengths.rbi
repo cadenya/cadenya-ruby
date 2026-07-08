@@ -8,36 +8,38 @@ module Cadenya
           T.any(Cadenya::ContextLengths, Cadenya::Internal::AnyHash)
         end
 
-      # Chat history messages with the assistant role.
+      # Character length of the chat history messages with the assistant role.
       sig { returns(Integer) }
       attr_accessor :assistant_messages
 
-      # The discoverable/available-tools appendix attached to the system prompt.
+      # Character length of the discoverable/available-tools appendix attached to the
+      # system prompt.
       sig { returns(Integer) }
       attr_accessor :available_tools
 
-      # The episodic memory appendix attached to the system prompt.
+      # Character length of the episodic memory appendix attached to the system prompt.
       sig { returns(Integer) }
       attr_accessor :episodic_memory
 
-      # The skills memory appendix attached to the system prompt.
+      # Character length of the skills memory appendix attached to the system prompt.
       sig { returns(Integer) }
       attr_accessor :skills_memory
 
-      # The objective's base system prompt (rendered variation template).
+      # Character length of the objective's base system prompt (rendered variation
+      # template). Not tokens -- see the message comment.
       sig { returns(Integer) }
       attr_accessor :system_prompt
 
-      # Serialized tool definitions sent with the completion request (names,
-      # descriptions, and JSON-schema parameters).
+      # Character length of the serialized tool definitions sent with the completion
+      # request (names, descriptions, and JSON-schema parameters).
       sig { returns(Integer) }
       attr_accessor :tool_definitions
 
-      # Tool results present in the chat history.
+      # Character length of the tool results present in the chat history.
       sig { returns(Integer) }
       attr_accessor :tool_results
 
-      # Chat history messages with the user role.
+      # Character length of the chat history messages with the user role.
       sig { returns(Integer) }
       attr_accessor :user_messages
 
@@ -62,22 +64,24 @@ module Cadenya
         ).returns(T.attached_class)
       end
       def self.new(
-        # Chat history messages with the assistant role.
+        # Character length of the chat history messages with the assistant role.
         assistant_messages:,
-        # The discoverable/available-tools appendix attached to the system prompt.
+        # Character length of the discoverable/available-tools appendix attached to the
+        # system prompt.
         available_tools:,
-        # The episodic memory appendix attached to the system prompt.
+        # Character length of the episodic memory appendix attached to the system prompt.
         episodic_memory:,
-        # The skills memory appendix attached to the system prompt.
+        # Character length of the skills memory appendix attached to the system prompt.
         skills_memory:,
-        # The objective's base system prompt (rendered variation template).
+        # Character length of the objective's base system prompt (rendered variation
+        # template). Not tokens -- see the message comment.
         system_prompt:,
-        # Serialized tool definitions sent with the completion request (names,
-        # descriptions, and JSON-schema parameters).
+        # Character length of the serialized tool definitions sent with the completion
+        # request (names, descriptions, and JSON-schema parameters).
         tool_definitions:,
-        # Tool results present in the chat history.
+        # Character length of the tool results present in the chat history.
         tool_results:,
-        # Chat history messages with the user role.
+        # Character length of the chat history messages with the user role.
         user_messages:
       )
       end
