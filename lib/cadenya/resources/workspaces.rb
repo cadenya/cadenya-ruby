@@ -44,25 +44,6 @@ module Cadenya
         )
       end
 
-      # Retrieves the workspace associated with the current API token. Useful for
-      # workspace-scoped tokens to identify which workspace they belong to.
-      #
-      # @overload get(request_options: {})
-      #
-      # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
-      #
-      # @return [Cadenya::Models::Workspace]
-      #
-      # @see Cadenya::Models::WorkspaceGetParams
-      def get(params = {})
-        @client.request(
-          method: :get,
-          path: "v1/workspaces/current",
-          model: Cadenya::Workspace,
-          options: params[:request_options]
-        )
-      end
-
       # @api private
       #
       # @param client [Cadenya::Client]

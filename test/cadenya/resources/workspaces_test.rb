@@ -28,23 +28,4 @@ class Cadenya::Test::Resources::WorkspacesTest < Cadenya::Test::ResourceTest
       }
     end
   end
-
-  def test_get
-    skip("Mock server tests are disabled")
-
-    response = @cadenya.workspaces.get
-
-    assert_pattern do
-      response => Cadenya::Workspace
-    end
-
-    assert_pattern do
-      response => {
-        metadata: Cadenya::AccountResourceMetadata,
-        spec: Cadenya::WorkspaceSpec,
-        info: Cadenya::Workspace::Info | nil,
-        status: Cadenya::Workspace::Status | nil
-      }
-    end
-  end
 end
