@@ -15,8 +15,11 @@ module Cadenya
       sig { params(external_id: String).void }
       attr_writer :external_id
 
-      # Arbitrary key-value pairs for categorization and filtering Examples:
-      # {"priority": "high", "source": "api", "workflow": "onboarding"}
+      # Key-value pairs for categorization and filtering. Values are 0-63 alphanumeric
+      # characters with "-", "\_", or "." allowed between; keys follow the same shape
+      # and additionally accept an optional DNS-subdomain prefix (e.g. "cadenya.com/")
+      # of at most 253 characters. Examples: {"priority": "high", "source": "api",
+      # "workflow": "onboarding"}
       sig { returns(T.nilable(T::Hash[Symbol, String])) }
       attr_reader :labels
 
@@ -71,8 +74,11 @@ module Cadenya
         workspace_id:,
         # External ID for the operation (e.g., a workflow ID from an external system)
         external_id: nil,
-        # Arbitrary key-value pairs for categorization and filtering Examples:
-        # {"priority": "high", "source": "api", "workflow": "onboarding"}
+        # Key-value pairs for categorization and filtering. Values are 0-63 alphanumeric
+        # characters with "-", "\_", or "." allowed between; keys follow the same shape
+        # and additionally accept an optional DNS-subdomain prefix (e.g. "cadenya.com/")
+        # of at most 253 characters. Examples: {"priority": "high", "source": "api",
+        # "workflow": "onboarding"}
         labels: nil
       )
       end
