@@ -105,16 +105,6 @@ module Cadenya
         sig { params(system_prompt_template: String).void }
         attr_writer :system_prompt_template
 
-        # Weight for weighted random selection (>= 0). P(v) = v.weight / sum(all_weights).
-        # Only used when the agent's variation_selection_mode is WEIGHTED. A weight of 0
-        # means never auto-selected, but can still be chosen explicitly via variation_id
-        # on CreateObjectiveRequest.
-        sig { returns(T.nilable(Integer)) }
-        attr_reader :weight
-
-        sig { params(weight: Integer).void }
-        attr_writer :weight
-
         # AgentVariationSpec defines the operational configuration for a variation
         sig do
           params(
@@ -127,8 +117,7 @@ module Cadenya
               Cadenya::Agents::AgentVariationSpecModelConfig::OrHash,
             progressive_discovery:
               Cadenya::Agents::AgentVariationSpecProgressiveDiscovery::OrHash,
-            system_prompt_template: String,
-            weight: Integer
+            system_prompt_template: String
           ).returns(T.attached_class)
         end
         def self.new(
@@ -157,12 +146,7 @@ module Cadenya
           # Liquid template for the system prompt of objectives using this variation.
           # Rendered with CreateObjectiveRequest.system_prompt_data into
           # Objective.system_prompt.
-          system_prompt_template: nil,
-          # Weight for weighted random selection (>= 0). P(v) = v.weight / sum(all_weights).
-          # Only used when the agent's variation_selection_mode is WEIGHTED. A weight of 0
-          # means never auto-selected, but can still be chosen explicitly via variation_id
-          # on CreateObjectiveRequest.
-          weight: nil
+          system_prompt_template: nil
         )
         end
 
@@ -177,8 +161,7 @@ module Cadenya
               model_config: Cadenya::Agents::AgentVariationSpecModelConfig,
               progressive_discovery:
                 Cadenya::Agents::AgentVariationSpecProgressiveDiscovery,
-              system_prompt_template: String,
-              weight: Integer
+              system_prompt_template: String
             }
           )
         end
