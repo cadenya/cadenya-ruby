@@ -15,28 +15,24 @@ module Cadenya
             )
           end
 
+        # Free-text guidance appended to the discoverable-tools appendix in the system
+        # prompt. Hints steer the model's choice of tool names; they do not filter or rank
+        # anything, because tool_search matches names exactly rather than searching.
         sig { returns(T.nilable(T::Array[String])) }
         attr_reader :hints
 
         sig { params(hints: T::Array[String]).void }
         attr_writer :hints
 
+        # The most tool names tool_search will load in a single call. Requesting more than
+        # this returns an error telling the model to retry in smaller batches -- it is a
+        # per-call batch limit, not a ceiling on how many tools an objective may end up
+        # with.
         sig { returns(T.nilable(Integer)) }
         attr_reader :max_tools
 
         sig { params(max_tools: Integer).void }
         attr_writer :max_tools
-
-        # Rerank Threshold is an optional value that instructs whether or not to run a
-        # search result through a embedding/reranker process which can improve performance
-        # and reduce context bloat when tools reach the configured threshold. If a tool
-        # match must exceed 0.8, for example, the tool very closely match the query the
-        # tool search performed.
-        sig { returns(T.nilable(Float)) }
-        attr_reader :rerank_threshold
-
-        sig { params(rerank_threshold: Float).void }
-        attr_writer :rerank_threshold
 
         # ProgressiveDiscovery is used to indicate that the agent should automatically
         # discover tools that are not explicitly assigned to it. Max tools is the maximum
@@ -44,32 +40,25 @@ module Cadenya
         # tool search. These are used in conjunction with the context-aware tool search
         # and can help select the best tools for the task.
         sig do
-          params(
-            hints: T::Array[String],
-            max_tools: Integer,
-            rerank_threshold: Float
-          ).returns(T.attached_class)
+          params(hints: T::Array[String], max_tools: Integer).returns(
+            T.attached_class
+          )
         end
         def self.new(
+          # Free-text guidance appended to the discoverable-tools appendix in the system
+          # prompt. Hints steer the model's choice of tool names; they do not filter or rank
+          # anything, because tool_search matches names exactly rather than searching.
           hints: nil,
-          max_tools: nil,
-          # Rerank Threshold is an optional value that instructs whether or not to run a
-          # search result through a embedding/reranker process which can improve performance
-          # and reduce context bloat when tools reach the configured threshold. If a tool
-          # match must exceed 0.8, for example, the tool very closely match the query the
-          # tool search performed.
-          rerank_threshold: nil
+          # The most tool names tool_search will load in a single call. Requesting more than
+          # this returns an error telling the model to retry in smaller batches -- it is a
+          # per-call batch limit, not a ceiling on how many tools an objective may end up
+          # with.
+          max_tools: nil
         )
         end
 
         sig do
-          override.returns(
-            {
-              hints: T::Array[String],
-              max_tools: Integer,
-              rerank_threshold: Float
-            }
-          )
+          override.returns({ hints: T::Array[String], max_tools: Integer })
         end
         def to_hash
         end
