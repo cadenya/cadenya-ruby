@@ -4,6 +4,7 @@ module Cadenya
       class Profiles
         def list: (
           ?cursor: String,
+          ?labels: String,
           ?limit: Integer,
           ?query: String,
           ?request_options: Cadenya::request_opts

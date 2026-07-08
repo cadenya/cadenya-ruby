@@ -2,7 +2,7 @@ module Cadenya
   module Models
     module WorkspaceAdmin
       type profile_list_params =
-        { cursor: String, limit: Integer, query: String }
+        { cursor: String, labels: String, limit: Integer, query: String }
         & Cadenya::Internal::Type::request_parameters
 
       class ProfileListParams < Cadenya::Internal::Type::BaseModel
@@ -12,6 +12,10 @@ module Cadenya
         attr_reader cursor: String?
 
         def cursor=: (String) -> String
+
+        attr_reader labels: String?
+
+        def labels=: (String) -> String
 
         attr_reader limit: Integer?
 
@@ -23,6 +27,7 @@ module Cadenya
 
         def initialize: (
           ?cursor: String,
+          ?labels: String,
           ?limit: Integer,
           ?query: String,
           ?request_options: Cadenya::request_opts
@@ -30,6 +35,7 @@ module Cadenya
 
         def to_hash: -> {
           cursor: String,
+          labels: String,
           limit: Integer,
           query: String,
           request_options: Cadenya::RequestOptions

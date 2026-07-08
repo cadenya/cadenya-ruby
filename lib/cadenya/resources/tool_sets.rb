@@ -125,13 +125,15 @@ module Cadenya
       #
       # Lists all tool sets in the workspace
       #
-      # @overload list(workspace_id, cursor: nil, include_info: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, state: nil, request_options: {})
+      # @overload list(workspace_id, cursor: nil, include_info: nil, labels: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, state: nil, request_options: {})
       #
       # @param workspace_id [String] Workspace ID.
       #
       # @param cursor [String] Pagination cursor from previous response
       #
       # @param include_info [Boolean] When set to true you may use more of your alloted API rate-limit
+      #
+      # @param labels [String] Filters by metadata labels. Comma-separated key=value pairs,
       #
       # @param limit [Integer] Maximum number of results to return
       #
@@ -261,7 +263,7 @@ module Cadenya
       #
       # Lists all events (including sync status) for a tool set
       #
-      # @overload list_events(tool_set_id, workspace_id:, cursor: nil, include_info: nil, limit: nil, sort_order: nil, request_options: {})
+      # @overload list_events(tool_set_id, workspace_id:, cursor: nil, include_info: nil, labels: nil, limit: nil, sort_order: nil, request_options: {})
       #
       # @param tool_set_id [String] Path param: Tool set ID. Accepts the canonical ts\_… form or the
       #
@@ -270,6 +272,8 @@ module Cadenya
       # @param cursor [String] Query param: Pagination cursor from previous response
       #
       # @param include_info [Boolean] Query param: When set to true you may use more of your alloted API rate-limit
+      #
+      # @param labels [String] Query param: Filters by metadata labels. Comma-separated key=value pairs,
       #
       # @param limit [Integer] Query param: Maximum number of results to return
       #

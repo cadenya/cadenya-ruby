@@ -98,6 +98,7 @@ module Cadenya
           workspace_id: String,
           cursor: String,
           include_info: T::Boolean,
+          labels: String,
           limit: Integer,
           prefix: String,
           query: String,
@@ -113,6 +114,10 @@ module Cadenya
         cursor: nil,
         # When set to true you may use more of your alloted API rate-limit
         include_info: nil,
+        # Filters by metadata labels. Comma-separated key=value pairs, e.g.
+        # "env=prod,team=ai". A resource matches only if every pair matches exactly (AND
+        # semantics).
+        labels: nil,
         # Maximum number of results to return
         limit: nil,
         # Filter expression (query param: prefix)
@@ -191,6 +196,7 @@ module Cadenya
           workspace_id: String,
           cursor: String,
           include_info: T::Boolean,
+          labels: String,
           limit: Integer,
           sort_order: String,
           request_options: Cadenya::RequestOptions::OrHash
@@ -206,6 +212,10 @@ module Cadenya
         cursor: nil,
         # Query param: When set to true you may use more of your alloted API rate-limit
         include_info: nil,
+        # Query param: Filters by metadata labels. Comma-separated key=value pairs, e.g.
+        # "env=prod,team=ai". A resource matches only if every pair matches exactly (AND
+        # semantics).
+        labels: nil,
         # Query param: Maximum number of results to return
         limit: nil,
         # Query param: Sort order for results (asc or desc by creation time)

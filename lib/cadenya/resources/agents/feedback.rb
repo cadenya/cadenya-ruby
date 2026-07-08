@@ -12,7 +12,7 @@ module Cadenya
         # search by comment, sentiment filter, agent variation filter, and creation date
         # range. Results are ordered by creation time, newest first.
         #
-        # @overload list(agent_id, workspace_id:, agent_variation_id: nil, created_after: nil, created_before: nil, cursor: nil, include_info: nil, limit: nil, query: nil, sentiment: nil, request_options: {})
+        # @overload list(agent_id, workspace_id:, agent_variation_id: nil, created_after: nil, created_before: nil, cursor: nil, include_info: nil, labels: nil, limit: nil, query: nil, sentiment: nil, request_options: {})
         #
         # @param agent_id [String] Path param: The ID of the agent. Supports "external_id:" prefix for external IDs
         #
@@ -27,6 +27,8 @@ module Cadenya
         # @param cursor [String] Query param: Pagination cursor from previous response.
         #
         # @param include_info [Boolean] Query param: When set to true you may use more of your alloted API rate-limit
+        #
+        # @param labels [String] Query param: Filters by metadata labels. Comma-separated key=value pairs,
         #
         # @param limit [Integer] Query param: Maximum number of results to return.
         #

@@ -113,7 +113,7 @@ module Cadenya
       #
       # Lists all memory layers in the workspace
       #
-      # @overload list(workspace_id, agent_id: nil, cursor: nil, episodic_key_prefix: nil, include_info: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, type: nil, request_options: {})
+      # @overload list(workspace_id, agent_id: nil, cursor: nil, episodic_key_prefix: nil, include_info: nil, labels: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, type: nil, request_options: {})
       #
       # @param workspace_id [String]
       #
@@ -124,6 +124,8 @@ module Cadenya
       # @param episodic_key_prefix [String] Filter to episodic layers whose episodic key starts with this prefix
       #
       # @param include_info [Boolean] When set to true you may use more of your alloted API rate-limit
+      #
+      # @param labels [String] Filters by metadata labels. Comma-separated key=value pairs,
       #
       # @param limit [Integer] Maximum number of results to return
       #

@@ -5,6 +5,7 @@ module Cadenya
         workspace_id: String,
         cursor: String,
         include_info: bool,
+        labels: String,
         limit: Integer,
         prefix: String,
         promotional: bool,
@@ -26,6 +27,10 @@ module Cadenya
       attr_reader include_info: bool?
 
       def include_info=: (bool) -> bool
+
+      attr_reader labels: String?
+
+      def labels=: (String) -> String
 
       attr_reader limit: Integer?
 
@@ -51,6 +56,7 @@ module Cadenya
         workspace_id: String,
         ?cursor: String,
         ?include_info: bool,
+        ?labels: String,
         ?limit: Integer,
         ?prefix: String,
         ?promotional: bool,
@@ -63,6 +69,7 @@ module Cadenya
         workspace_id: String,
         cursor: String,
         include_info: bool,
+        labels: String,
         limit: Integer,
         prefix: String,
         promotional: bool,

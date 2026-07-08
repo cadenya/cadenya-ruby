@@ -14,6 +14,7 @@ module Cadenya
           String objective_id,
           workspace_id: String,
           ?cursor: String,
+          ?labels: String,
           ?limit: Integer,
           ?request_options: Cadenya::request_opts
         ) -> Cadenya::Internal::CursorPagination[Cadenya::Objectives::ObjectiveFeedback]

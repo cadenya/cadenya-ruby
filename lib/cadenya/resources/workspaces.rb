@@ -9,13 +9,18 @@ module Cadenya
     # (create / archive workspaces, manage members) live in WorkspaceAdminService
     # under /v1/account/workspaces and require the admin role.
     class Workspaces
+      # Some parameter documentations has been truncated, see
+      # {Cadenya::Models::WorkspaceListParams} for more details.
+      #
       # Lists all workspaces for the current account
       #
-      # @overload list(cursor: nil, include_info: nil, limit: nil, sort_order: nil, request_options: {})
+      # @overload list(cursor: nil, include_info: nil, labels: nil, limit: nil, sort_order: nil, request_options: {})
       #
       # @param cursor [String] Pagination cursor from previous response
       #
       # @param include_info [Boolean] When set to true you may use more of your alloted API rate-limit
+      #
+      # @param labels [String] Filters by metadata labels. Comma-separated key=value pairs,
       #
       # @param limit [Integer] Maximum number of results to return
       #

@@ -16,9 +16,11 @@ module Cadenya
         # Searches the account's profiles for a member picker, with free-form name/email
         # search and an optional type filter. Account-scoped; admin only.
         #
-        # @overload list(cursor: nil, limit: nil, query: nil, request_options: {})
+        # @overload list(cursor: nil, labels: nil, limit: nil, query: nil, request_options: {})
         #
         # @param cursor [String] Pagination cursor from previous response
+        #
+        # @param labels [String] Filters by metadata labels. Comma-separated key=value pairs,
         #
         # @param limit [Integer] Maximum number of results to return
         #

@@ -5,9 +5,12 @@ module Cadenya
     class Agents
       # Manage AI agents within a workspace. Agents define AI behavior and tool access.
       class WebhookDeliveries
+        # Some parameter documentations has been truncated, see
+        # {Cadenya::Models::Agents::WebhookDeliveryListParams} for more details.
+        #
         # Lists all webhook deliveries for an agent
         #
-        # @overload list(agent_id, workspace_id:, cursor: nil, event_type: nil, limit: nil, objective_id: nil, request_options: {})
+        # @overload list(agent_id, workspace_id:, cursor: nil, event_type: nil, labels: nil, limit: nil, objective_id: nil, request_options: {})
         #
         # @param agent_id [String] Path param
         #
@@ -16,6 +19,8 @@ module Cadenya
         # @param cursor [String] Query param: Pagination cursor from previous response
         #
         # @param event_type [Symbol, Cadenya::Models::Agents::WebhookDeliveryListParams::EventType] Query param: Optional filter by event type
+        #
+        # @param labels [String] Query param: Filters by metadata labels. Comma-separated key=value pairs,
         #
         # @param limit [Integer] Query param: Maximum number of results to return
         #

@@ -15,6 +15,7 @@ module Cadenya
         sig do
           params(
             cursor: String,
+            labels: String,
             limit: Integer,
             query: String,
             request_options: Cadenya::RequestOptions::OrHash
@@ -23,6 +24,10 @@ module Cadenya
         def list(
           # Pagination cursor from previous response
           cursor: nil,
+          # Filters by metadata labels. Comma-separated key=value pairs, e.g.
+          # "env=prod,team=ai". A resource matches only if every pair matches exactly (AND
+          # semantics).
+          labels: nil,
           # Maximum number of results to return
           limit: nil,
           # Free-form search over profile name and email. Case-insensitive substring match;

@@ -96,11 +96,13 @@ module Cadenya
       #
       # Lists all API keys on the account.
       #
-      # @overload list(cursor: nil, include_info: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, request_options: {})
+      # @overload list(cursor: nil, include_info: nil, labels: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, request_options: {})
       #
       # @param cursor [String] Pagination cursor from previous response.
       #
       # @param include_info [Boolean] When true, included info fields are populated. Requests with this
+      #
+      # @param labels [String] Filters by metadata labels. Comma-separated key=value pairs,
       #
       # @param limit [Integer] Maximum number of results to return.
       #

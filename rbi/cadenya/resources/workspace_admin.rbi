@@ -89,6 +89,7 @@ module Cadenya
         params(
           cursor: String,
           include_archived: T::Boolean,
+          labels: String,
           limit: Integer,
           request_options: Cadenya::RequestOptions::OrHash
         ).returns(Cadenya::Internal::CursorPagination[Cadenya::Workspace])
@@ -99,6 +100,10 @@ module Cadenya
         # When true, archived workspaces are included in the results. Defaults to false
         # (active workspaces only).
         include_archived: nil,
+        # Filters by metadata labels. Comma-separated key=value pairs, e.g.
+        # "env=prod,team=ai". A resource matches only if every pair matches exactly (AND
+        # semantics).
+        labels: nil,
         # Maximum number of results to return
         limit: nil,
         request_options: {}

@@ -29,6 +29,14 @@ module Cadenya
       #   @return [Boolean, nil]
       optional :include_info, Cadenya::Internal::Type::Boolean
 
+      # @!attribute labels
+      #   Filters by metadata labels. Comma-separated key=value pairs, e.g.
+      #   "env=prod,team=ai". A resource matches only if every pair matches exactly (AND
+      #   semantics).
+      #
+      #   @return [String, nil]
+      optional :labels, String
+
       # @!attribute limit
       #   Maximum number of results to return
       #
@@ -53,7 +61,10 @@ module Cadenya
       #   @return [String, nil]
       optional :window_id, String
 
-      # @!method initialize(workspace_id:, objective_id:, cursor: nil, include_info: nil, limit: nil, since_event_id: nil, sort_order: nil, window_id: nil, request_options: {})
+      # @!method initialize(workspace_id:, objective_id:, cursor: nil, include_info: nil, labels: nil, limit: nil, since_event_id: nil, sort_order: nil, window_id: nil, request_options: {})
+      #   Some parameter documentations has been truncated, see
+      #   {Cadenya::Models::ObjectiveListEventsParams} for more details.
+      #
       #   @param workspace_id [String]
       #
       #   @param objective_id [String]
@@ -61,6 +72,8 @@ module Cadenya
       #   @param cursor [String] Pagination cursor from previous response
       #
       #   @param include_info [Boolean] When set to true you may use more of your alloted API rate-limit
+      #
+      #   @param labels [String] Filters by metadata labels. Comma-separated key=value pairs,
       #
       #   @param limit [Integer] Maximum number of results to return
       #

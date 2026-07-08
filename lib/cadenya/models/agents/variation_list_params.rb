@@ -31,6 +31,14 @@ module Cadenya
         #   @return [Boolean, nil]
         optional :include_info, Cadenya::Internal::Type::Boolean
 
+        # @!attribute labels
+        #   Filters by metadata labels. Comma-separated key=value pairs, e.g.
+        #   "env=prod,team=ai". A resource matches only if every pair matches exactly (AND
+        #   semantics).
+        #
+        #   @return [String, nil]
+        optional :labels, String
+
         # @!attribute limit
         #   Maximum number of results to return
         #
@@ -43,7 +51,7 @@ module Cadenya
         #   @return [String, nil]
         optional :sort_order, String
 
-        # @!method initialize(workspace_id:, agent_id:, cursor: nil, include_info: nil, limit: nil, sort_order: nil, request_options: {})
+        # @!method initialize(workspace_id:, agent_id:, cursor: nil, include_info: nil, labels: nil, limit: nil, sort_order: nil, request_options: {})
         #   Some parameter documentations has been truncated, see
         #   {Cadenya::Models::Agents::VariationListParams} for more details.
         #
@@ -54,6 +62,8 @@ module Cadenya
         #   @param cursor [String] Pagination cursor from previous response
         #
         #   @param include_info [Boolean] When true, the `info` field on each returned variation is populated.
+        #
+        #   @param labels [String] Filters by metadata labels. Comma-separated key=value pairs,
         #
         #   @param limit [Integer] Maximum number of results to return
         #

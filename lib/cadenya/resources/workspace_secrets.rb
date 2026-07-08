@@ -96,15 +96,20 @@ module Cadenya
         )
       end
 
+      # Some parameter documentations has been truncated, see
+      # {Cadenya::Models::WorkspaceSecretListParams} for more details.
+      #
       # Lists all workspace secrets in the workspace
       #
-      # @overload list(workspace_id, cursor: nil, include_info: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, request_options: {})
+      # @overload list(workspace_id, cursor: nil, include_info: nil, labels: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, request_options: {})
       #
       # @param workspace_id [String] The workspace whose secrets will be listed.
       #
       # @param cursor [String] Pagination cursor from previous response
       #
       # @param include_info [Boolean] When set to true you may use more of your alloted API rate-limit
+      #
+      # @param labels [String] Filters by metadata labels. Comma-separated key=value pairs,
       #
       # @param limit [Integer] Maximum number of results to return
       #

@@ -125,7 +125,7 @@ module Cadenya
         #
         # Lists all variations for an agent
         #
-        # @overload list(agent_id, workspace_id:, cursor: nil, include_info: nil, limit: nil, sort_order: nil, request_options: {})
+        # @overload list(agent_id, workspace_id:, cursor: nil, include_info: nil, labels: nil, limit: nil, sort_order: nil, request_options: {})
         #
         # @param agent_id [String] Path param: Agent ID. Accepts the canonical `agent_…` form or the `external_id:<
         #
@@ -134,6 +134,8 @@ module Cadenya
         # @param cursor [String] Query param: Pagination cursor from previous response
         #
         # @param include_info [Boolean] Query param: When true, the `info` field on each returned variation is populated
+        #
+        # @param labels [String] Query param: Filters by metadata labels. Comma-separated key=value pairs,
         #
         # @param limit [Integer] Query param: Maximum number of results to return
         #
