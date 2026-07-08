@@ -21,6 +21,10 @@ module Cadenya
         sig { returns(String) }
         attr_accessor :description
 
+        # The tool's JSON Schema, as handed to the LLM. Required, but may be the empty
+        # object `{}` for a tool that takes no arguments. Requiring it rather than
+        # defaulting it means a misspelled field name (`inputSchema`, say) is a 400
+        # instead of a silently parameterless tool.
         sig { returns(T::Hash[Symbol, T.anything]) }
         attr_accessor :parameters
 
@@ -52,6 +56,10 @@ module Cadenya
           # be Http. If the tool is an inline tool, the adapter will be Inline.
           config:,
           description:,
+          # The tool's JSON Schema, as handed to the LLM. Required, but may be the empty
+          # object `{}` for a tool that takes no arguments. Requiring it rather than
+          # defaulting it means a misspelled field name (`inputSchema`, say) is a 400
+          # instead of a silently parameterless tool.
           parameters:,
           requires_approval:,
           # The name provided to the LLM, which may differ from the metadata.name on the
