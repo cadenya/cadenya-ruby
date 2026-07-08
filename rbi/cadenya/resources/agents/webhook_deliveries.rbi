@@ -13,6 +13,7 @@ module Cadenya
             cursor: String,
             event_type:
               Cadenya::Agents::WebhookDeliveryListParams::EventType::OrSymbol,
+            labels: String,
             limit: Integer,
             objective_id: String,
             request_options: Cadenya::RequestOptions::OrHash
@@ -31,6 +32,10 @@ module Cadenya
           cursor: nil,
           # Query param: Optional filter by event type
           event_type: nil,
+          # Query param: Filters by metadata labels. Comma-separated key=value pairs, e.g.
+          # "env=prod,team=ai". A resource matches only if every pair matches exactly (AND
+          # semantics).
+          labels: nil,
           # Query param: Maximum number of results to return
           limit: nil,
           # Query param: Optional filter by objective ID

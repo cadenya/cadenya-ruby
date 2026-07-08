@@ -31,6 +31,7 @@ module Cadenya
           cursor: String,
           include_info: T::Boolean,
           is_assigned: T::Boolean,
+          labels: String,
           limit: Integer,
           prefix: String,
           query: String,
@@ -54,6 +55,10 @@ module Cadenya
         # agents count as assigned; archived agents do not. Assignment does not imply
         # recent traffic — see ModelInfo.last_used_at for that.
         is_assigned: nil,
+        # Filters by metadata labels. Comma-separated key=value pairs, e.g.
+        # "env=prod,team=ai". A resource matches only if every pair matches exactly (AND
+        # semantics).
+        labels: nil,
         # Maximum number of results to return
         limit: nil,
         # Filter by name prefix

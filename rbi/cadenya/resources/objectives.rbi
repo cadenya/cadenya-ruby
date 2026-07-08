@@ -98,6 +98,7 @@ module Cadenya
           agent_schedule_id: String,
           cursor: String,
           include_info: T::Boolean,
+          labels: String,
           limit: Integer,
           parent_objective_id: String,
           profile_id: String,
@@ -117,6 +118,10 @@ module Cadenya
         cursor: nil,
         # When set to true you may use more of your alloted API rate-limit
         include_info: nil,
+        # Filters by metadata labels. Comma-separated key=value pairs, e.g.
+        # "env=prod,team=ai". A resource matches only if every pair matches exactly (AND
+        # semantics).
+        labels: nil,
         # Maximum number of results to return
         limit: nil,
         # Optional filters
@@ -211,6 +216,7 @@ module Cadenya
           workspace_id: String,
           cursor: String,
           include_info: T::Boolean,
+          labels: String,
           limit: Integer,
           request_options: Cadenya::RequestOptions::OrHash
         ).returns(
@@ -226,6 +232,10 @@ module Cadenya
         cursor: nil,
         # Query param: When set to true you may use more of your alloted API rate-limit
         include_info: nil,
+        # Query param: Filters by metadata labels. Comma-separated key=value pairs, e.g.
+        # "env=prod,team=ai". A resource matches only if every pair matches exactly (AND
+        # semantics).
+        labels: nil,
         # Query param: Maximum number of results to return
         limit: nil,
         request_options: {}
@@ -239,6 +249,7 @@ module Cadenya
           workspace_id: String,
           cursor: String,
           include_info: T::Boolean,
+          labels: String,
           limit: Integer,
           since_event_id: String,
           sort_order: String,
@@ -255,6 +266,10 @@ module Cadenya
         cursor: nil,
         # Query param: When set to true you may use more of your alloted API rate-limit
         include_info: nil,
+        # Query param: Filters by metadata labels. Comma-separated key=value pairs, e.g.
+        # "env=prod,team=ai". A resource matches only if every pair matches exactly (AND
+        # semantics).
+        labels: nil,
         # Query param: Maximum number of results to return
         limit: nil,
         # Query param: Optional string to fetch events since an ID

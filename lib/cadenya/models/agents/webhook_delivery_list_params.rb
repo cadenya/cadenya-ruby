@@ -30,6 +30,14 @@ module Cadenya
         #   @return [Symbol, Cadenya::Models::Agents::WebhookDeliveryListParams::EventType, nil]
         optional :event_type, enum: -> { Cadenya::Agents::WebhookDeliveryListParams::EventType }
 
+        # @!attribute labels
+        #   Filters by metadata labels. Comma-separated key=value pairs, e.g.
+        #   "env=prod,team=ai". A resource matches only if every pair matches exactly (AND
+        #   semantics).
+        #
+        #   @return [String, nil]
+        optional :labels, String
+
         # @!attribute limit
         #   Maximum number of results to return
         #
@@ -42,7 +50,10 @@ module Cadenya
         #   @return [String, nil]
         optional :objective_id, String
 
-        # @!method initialize(workspace_id:, agent_id:, cursor: nil, event_type: nil, limit: nil, objective_id: nil, request_options: {})
+        # @!method initialize(workspace_id:, agent_id:, cursor: nil, event_type: nil, labels: nil, limit: nil, objective_id: nil, request_options: {})
+        #   Some parameter documentations has been truncated, see
+        #   {Cadenya::Models::Agents::WebhookDeliveryListParams} for more details.
+        #
         #   @param workspace_id [String]
         #
         #   @param agent_id [String]
@@ -50,6 +61,8 @@ module Cadenya
         #   @param cursor [String] Pagination cursor from previous response
         #
         #   @param event_type [Symbol, Cadenya::Models::Agents::WebhookDeliveryListParams::EventType] Optional filter by event type
+        #
+        #   @param labels [String] Filters by metadata labels. Comma-separated key=value pairs,
         #
         #   @param limit [Integer] Maximum number of results to return
         #

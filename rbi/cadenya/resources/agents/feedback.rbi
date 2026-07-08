@@ -17,6 +17,7 @@ module Cadenya
             created_before: Time,
             cursor: String,
             include_info: T::Boolean,
+            labels: String,
             limit: Integer,
             query: String,
             sentiment: Cadenya::Agents::FeedbackListParams::Sentiment::OrSymbol,
@@ -44,6 +45,10 @@ module Cadenya
           cursor: nil,
           # Query param: When set to true you may use more of your alloted API rate-limit
           include_info: nil,
+          # Query param: Filters by metadata labels. Comma-separated key=value pairs, e.g.
+          # "env=prod,team=ai". A resource matches only if every pair matches exactly (AND
+          # semantics).
+          labels: nil,
           # Query param: Maximum number of results to return.
           limit: nil,
           # Query param: Free-text search applied to the feedback comment. Case-insensitive

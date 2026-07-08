@@ -6,6 +6,7 @@ module Cadenya
         objective_id: String,
         cursor: String,
         include_info: bool,
+        labels: String,
         limit: Integer,
         since_event_id: String,
         sort_order: String,
@@ -29,6 +30,10 @@ module Cadenya
 
       def include_info=: (bool) -> bool
 
+      attr_reader labels: String?
+
+      def labels=: (String) -> String
+
       attr_reader limit: Integer?
 
       def limit=: (Integer) -> Integer
@@ -50,6 +55,7 @@ module Cadenya
         objective_id: String,
         ?cursor: String,
         ?include_info: bool,
+        ?labels: String,
         ?limit: Integer,
         ?since_event_id: String,
         ?sort_order: String,
@@ -62,6 +68,7 @@ module Cadenya
         objective_id: String,
         cursor: String,
         include_info: bool,
+        labels: String,
         limit: Integer,
         since_event_id: String,
         sort_order: String,

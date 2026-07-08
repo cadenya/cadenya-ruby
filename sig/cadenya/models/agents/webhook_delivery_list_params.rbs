@@ -7,6 +7,7 @@ module Cadenya
           agent_id: String,
           cursor: String,
           event_type: Cadenya::Models::Agents::WebhookDeliveryListParams::event_type,
+          labels: String,
           limit: Integer,
           objective_id: String
         }
@@ -30,6 +31,10 @@ module Cadenya
           Cadenya::Models::Agents::WebhookDeliveryListParams::event_type
         ) -> Cadenya::Models::Agents::WebhookDeliveryListParams::event_type
 
+        attr_reader labels: String?
+
+        def labels=: (String) -> String
+
         attr_reader limit: Integer?
 
         def limit=: (Integer) -> Integer
@@ -43,6 +48,7 @@ module Cadenya
           agent_id: String,
           ?cursor: String,
           ?event_type: Cadenya::Models::Agents::WebhookDeliveryListParams::event_type,
+          ?labels: String,
           ?limit: Integer,
           ?objective_id: String,
           ?request_options: Cadenya::request_opts
@@ -53,6 +59,7 @@ module Cadenya
           agent_id: String,
           cursor: String,
           event_type: Cadenya::Models::Agents::WebhookDeliveryListParams::event_type,
+          labels: String,
           limit: Integer,
           objective_id: String,
           request_options: Cadenya::RequestOptions

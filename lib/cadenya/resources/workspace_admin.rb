@@ -111,11 +111,13 @@ module Cadenya
       # Lists every workspace in the account, optionally including archived ones. Admin
       # only.
       #
-      # @overload list(cursor: nil, include_archived: nil, limit: nil, request_options: {})
+      # @overload list(cursor: nil, include_archived: nil, labels: nil, limit: nil, request_options: {})
       #
       # @param cursor [String] Pagination cursor from previous response
       #
       # @param include_archived [Boolean] When true, archived workspaces are included in the results. Defaults to
+      #
+      # @param labels [String] Filters by metadata labels. Comma-separated key=value pairs,
       #
       # @param limit [Integer] Maximum number of results to return
       #

@@ -35,6 +35,7 @@ module Cadenya
         ?agent_schedule_id: String,
         ?cursor: String,
         ?include_info: bool,
+        ?labels: String,
         ?limit: Integer,
         ?parent_objective_id: String,
         ?profile_id: String,
@@ -70,6 +71,7 @@ module Cadenya
         workspace_id: String,
         ?cursor: String,
         ?include_info: bool,
+        ?labels: String,
         ?limit: Integer,
         ?request_options: Cadenya::request_opts
       ) -> Cadenya::Internal::CursorPagination[Cadenya::ObjectiveContextWindow]
@@ -79,6 +81,7 @@ module Cadenya
         workspace_id: String,
         ?cursor: String,
         ?include_info: bool,
+        ?labels: String,
         ?limit: Integer,
         ?since_event_id: String,
         ?sort_order: String,

@@ -96,6 +96,7 @@ module Cadenya
             workspace_id: String,
             cursor: String,
             include_info: T::Boolean,
+            labels: String,
             limit: Integer,
             prefix: String,
             query: String,
@@ -116,6 +117,10 @@ module Cadenya
           # Query param: When true, the `info` field on each returned schedule is populated.
           # Requests with this flag count more against your rate limit.
           include_info: nil,
+          # Query param: Filters by metadata labels. Comma-separated key=value pairs, e.g.
+          # "env=prod,team=ai". A resource matches only if every pair matches exactly (AND
+          # semantics).
+          labels: nil,
           # Query param: Maximum number of results to return.
           limit: nil,
           # Query param: Filter expression (query param: prefix).

@@ -48,7 +48,7 @@ module Cadenya
         #
         # Lists all tool calls for an objective
         #
-        # @overload list(objective_id, workspace_id:, cursor: nil, execution_status: nil, include_info: nil, limit: nil, status: nil, request_options: {})
+        # @overload list(objective_id, workspace_id:, cursor: nil, execution_status: nil, include_info: nil, labels: nil, limit: nil, status: nil, request_options: {})
         #
         # @param objective_id [String] Path param: The objective ID to return tool calls for
         #
@@ -59,6 +59,8 @@ module Cadenya
         # @param execution_status [Symbol, Cadenya::Models::Objectives::ToolCallListParams::ExecutionStatus] Query param: Filter by tool call execution status. Useful for reverse-harness
         #
         # @param include_info [Boolean] Query param: When set to true you may use more of your alloted API rate-limit
+        #
+        # @param labels [String] Query param: Filters by metadata labels. Comma-separated key=value pairs,
         #
         # @param limit [Integer] Query param: Maximum number of results to return
         #

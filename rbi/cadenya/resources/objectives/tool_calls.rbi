@@ -33,6 +33,7 @@ module Cadenya
             execution_status:
               Cadenya::Objectives::ToolCallListParams::ExecutionStatus::OrSymbol,
             include_info: T::Boolean,
+            labels: String,
             limit: Integer,
             status: Cadenya::Objectives::ToolCallListParams::Status::OrSymbol,
             request_options: Cadenya::RequestOptions::OrHash
@@ -55,6 +56,10 @@ module Cadenya
           execution_status: nil,
           # Query param: When set to true you may use more of your alloted API rate-limit
           include_info: nil,
+          # Query param: Filters by metadata labels. Comma-separated key=value pairs, e.g.
+          # "env=prod,team=ai". A resource matches only if every pair matches exactly (AND
+          # semantics).
+          labels: nil,
           # Query param: Maximum number of results to return
           limit: nil,
           # Query param: Filter by tool call status

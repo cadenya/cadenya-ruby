@@ -11,6 +11,7 @@ module Cadenya
           params(
             id: String,
             cursor: String,
+            labels: String,
             limit: Integer,
             request_options: Cadenya::RequestOptions::OrHash
           ).returns(Cadenya::Internal::CursorPagination[Cadenya::Workspace])
@@ -20,6 +21,10 @@ module Cadenya
           id,
           # Pagination cursor from previous response.
           cursor: nil,
+          # Filters by metadata labels. Comma-separated key=value pairs, e.g.
+          # "env=prod,team=ai". A resource matches only if every pair matches exactly (AND
+          # semantics).
+          labels: nil,
           # Maximum number of results to return.
           limit: nil,
           request_options: {}

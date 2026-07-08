@@ -6,13 +6,18 @@ module Cadenya
       # Issue, rotate, and revoke API keys for the account, and grant or revoke each
       # key's access to individual workspaces.
       class Access
+        # Some parameter documentations has been truncated, see
+        # {Cadenya::Models::APIKeys::AccessListParams} for more details.
+        #
         # Lists the workspaces this API key has access to. Cursor-paginated.
         #
-        # @overload list(id, cursor: nil, limit: nil, request_options: {})
+        # @overload list(id, cursor: nil, labels: nil, limit: nil, request_options: {})
         #
         # @param id [String] The API key whose workspace associations will be listed.
         #
         # @param cursor [String] Pagination cursor from previous response.
+        #
+        # @param labels [String] Filters by metadata labels. Comma-separated key=value pairs,
         #
         # @param limit [Integer] Maximum number of results to return.
         #

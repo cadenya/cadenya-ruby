@@ -78,6 +78,7 @@ module Cadenya
         params(
           cursor: String,
           include_info: T::Boolean,
+          labels: String,
           limit: Integer,
           prefix: String,
           query: String,
@@ -91,6 +92,10 @@ module Cadenya
         # When true, included info fields are populated. Requests with this flag count
         # more against your rate limit.
         include_info: nil,
+        # Filters by metadata labels. Comma-separated key=value pairs, e.g.
+        # "env=prod,team=ai". A resource matches only if every pair matches exactly (AND
+        # semantics).
+        labels: nil,
         # Maximum number of results to return.
         limit: nil,
         # Filter by ID prefix.

@@ -10,6 +10,7 @@ module Cadenya
           ?created_before: Time,
           ?cursor: String,
           ?include_info: bool,
+          ?labels: String,
           ?limit: Integer,
           ?query: String,
           ?sentiment: Cadenya::Models::Agents::FeedbackListParams::sentiment,

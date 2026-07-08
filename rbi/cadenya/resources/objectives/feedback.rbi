@@ -37,6 +37,7 @@ module Cadenya
             objective_id: String,
             workspace_id: String,
             cursor: String,
+            labels: String,
             limit: Integer,
             request_options: Cadenya::RequestOptions::OrHash
           ).returns(
@@ -53,6 +54,10 @@ module Cadenya
           workspace_id:,
           # Query param: Pagination cursor from previous response
           cursor: nil,
+          # Query param: Filters by metadata labels. Comma-separated key=value pairs, e.g.
+          # "env=prod,team=ai". A resource matches only if every pair matches exactly (AND
+          # semantics).
+          labels: nil,
           # Query param: Maximum number of results to return
           limit: nil,
           request_options: {}

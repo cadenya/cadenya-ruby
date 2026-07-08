@@ -7,6 +7,7 @@ module Cadenya
           agent_id: String,
           cursor: String,
           include_info: bool,
+          labels: String,
           limit: Integer,
           sort_order: String
         }
@@ -28,6 +29,10 @@ module Cadenya
 
         def include_info=: (bool) -> bool
 
+        attr_reader labels: String?
+
+        def labels=: (String) -> String
+
         attr_reader limit: Integer?
 
         def limit=: (Integer) -> Integer
@@ -41,6 +46,7 @@ module Cadenya
           agent_id: String,
           ?cursor: String,
           ?include_info: bool,
+          ?labels: String,
           ?limit: Integer,
           ?sort_order: String,
           ?request_options: Cadenya::request_opts
@@ -51,6 +57,7 @@ module Cadenya
           agent_id: String,
           cursor: String,
           include_info: bool,
+          labels: String,
           limit: Integer,
           sort_order: String,
           request_options: Cadenya::RequestOptions

@@ -45,13 +45,15 @@ module Cadenya
         #
         # Lists all feedback submitted for an objective
         #
-        # @overload list(objective_id, workspace_id:, cursor: nil, limit: nil, request_options: {})
+        # @overload list(objective_id, workspace_id:, cursor: nil, labels: nil, limit: nil, request_options: {})
         #
         # @param objective_id [String] Path param: The ID of the objective. Supports "external_id:" prefix for external
         #
         # @param workspace_id [String] Path param
         #
         # @param cursor [String] Query param: Pagination cursor from previous response
+        #
+        # @param labels [String] Query param: Filters by metadata labels. Comma-separated key=value pairs,
         #
         # @param limit [Integer] Query param: Maximum number of results to return
         #

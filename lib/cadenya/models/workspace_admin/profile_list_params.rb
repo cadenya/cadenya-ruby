@@ -14,6 +14,14 @@ module Cadenya
         #   @return [String, nil]
         optional :cursor, String
 
+        # @!attribute labels
+        #   Filters by metadata labels. Comma-separated key=value pairs, e.g.
+        #   "env=prod,team=ai". A resource matches only if every pair matches exactly (AND
+        #   semantics).
+        #
+        #   @return [String, nil]
+        optional :labels, String
+
         # @!attribute limit
         #   Maximum number of results to return
         #
@@ -27,11 +35,13 @@ module Cadenya
         #   @return [String, nil]
         optional :query, String
 
-        # @!method initialize(cursor: nil, limit: nil, query: nil, request_options: {})
+        # @!method initialize(cursor: nil, labels: nil, limit: nil, query: nil, request_options: {})
         #   Some parameter documentations has been truncated, see
         #   {Cadenya::Models::WorkspaceAdmin::ProfileListParams} for more details.
         #
         #   @param cursor [String] Pagination cursor from previous response
+        #
+        #   @param labels [String] Filters by metadata labels. Comma-separated key=value pairs,
         #
         #   @param limit [Integer] Maximum number of results to return
         #

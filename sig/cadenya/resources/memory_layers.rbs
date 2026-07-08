@@ -31,6 +31,7 @@ module Cadenya
         ?cursor: String,
         ?episodic_key_prefix: String,
         ?include_info: bool,
+        ?labels: String,
         ?limit: Integer,
         ?prefix: String,
         ?query: String,

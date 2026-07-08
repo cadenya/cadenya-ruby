@@ -22,6 +22,15 @@ module Cadenya
         sig { params(cursor: String).void }
         attr_writer :cursor
 
+        # Filters by metadata labels. Comma-separated key=value pairs, e.g.
+        # "env=prod,team=ai". A resource matches only if every pair matches exactly (AND
+        # semantics).
+        sig { returns(T.nilable(String)) }
+        attr_reader :labels
+
+        sig { params(labels: String).void }
+        attr_writer :labels
+
         # Maximum number of results to return
         sig { returns(T.nilable(Integer)) }
         attr_reader :limit
@@ -40,6 +49,7 @@ module Cadenya
         sig do
           params(
             cursor: String,
+            labels: String,
             limit: Integer,
             query: String,
             request_options: Cadenya::RequestOptions::OrHash
@@ -48,6 +58,10 @@ module Cadenya
         def self.new(
           # Pagination cursor from previous response
           cursor: nil,
+          # Filters by metadata labels. Comma-separated key=value pairs, e.g.
+          # "env=prod,team=ai". A resource matches only if every pair matches exactly (AND
+          # semantics).
+          labels: nil,
           # Maximum number of results to return
           limit: nil,
           # Free-form search over profile name and email. Case-insensitive substring match;
@@ -61,6 +75,7 @@ module Cadenya
           override.returns(
             {
               cursor: String,
+              labels: String,
               limit: Integer,
               query: String,
               request_options: Cadenya::RequestOptions

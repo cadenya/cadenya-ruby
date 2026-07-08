@@ -10,6 +10,7 @@ module Cadenya
           created_before: Time,
           cursor: String,
           include_info: bool,
+          labels: String,
           limit: Integer,
           query: String,
           sentiment: Cadenya::Models::Agents::FeedbackListParams::sentiment
@@ -44,6 +45,10 @@ module Cadenya
 
         def include_info=: (bool) -> bool
 
+        attr_reader labels: String?
+
+        def labels=: (String) -> String
+
         attr_reader limit: Integer?
 
         def limit=: (Integer) -> Integer
@@ -66,6 +71,7 @@ module Cadenya
           ?created_before: Time,
           ?cursor: String,
           ?include_info: bool,
+          ?labels: String,
           ?limit: Integer,
           ?query: String,
           ?sentiment: Cadenya::Models::Agents::FeedbackListParams::sentiment,
@@ -80,6 +86,7 @@ module Cadenya
           created_before: Time,
           cursor: String,
           include_info: bool,
+          labels: String,
           limit: Integer,
           query: String,
           sentiment: Cadenya::Models::Agents::FeedbackListParams::sentiment,

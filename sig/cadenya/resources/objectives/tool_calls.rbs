@@ -15,6 +15,7 @@ module Cadenya
           ?cursor: String,
           ?execution_status: Cadenya::Models::Objectives::ToolCallListParams::execution_status,
           ?include_info: bool,
+          ?labels: String,
           ?limit: Integer,
           ?status: Cadenya::Models::Objectives::ToolCallListParams::status,
           ?request_options: Cadenya::request_opts

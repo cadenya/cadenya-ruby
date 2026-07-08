@@ -7,6 +7,7 @@ module Cadenya
           memory_layer_id: String,
           cursor: String,
           include_info: bool,
+          labels: String,
           limit: Integer,
           prefix: String,
           query: String,
@@ -30,6 +31,10 @@ module Cadenya
 
         def include_info=: (bool) -> bool
 
+        attr_reader labels: String?
+
+        def labels=: (String) -> String
+
         attr_reader limit: Integer?
 
         def limit=: (Integer) -> Integer
@@ -51,6 +56,7 @@ module Cadenya
           memory_layer_id: String,
           ?cursor: String,
           ?include_info: bool,
+          ?labels: String,
           ?limit: Integer,
           ?prefix: String,
           ?query: String,
@@ -63,6 +69,7 @@ module Cadenya
           memory_layer_id: String,
           cursor: String,
           include_info: bool,
+          labels: String,
           limit: Integer,
           prefix: String,
           query: String,
