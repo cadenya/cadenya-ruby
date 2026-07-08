@@ -5,26 +5,23 @@ module Cadenya
     module Agents
       class AgentVariationSpecProgressiveDiscovery < Cadenya::Internal::Type::BaseModel
         # @!attribute hints
+        #   Free-text guidance appended to the discoverable-tools appendix in the system
+        #   prompt. Hints steer the model's choice of tool names; they do not filter or rank
+        #   anything, because tool_search matches names exactly rather than searching.
         #
         #   @return [Array<String>, nil]
         optional :hints, Cadenya::Internal::Type::ArrayOf[String]
 
         # @!attribute max_tools
+        #   The most tool names tool_search will load in a single call. Requesting more than
+        #   this returns an error telling the model to retry in smaller batches -- it is a
+        #   per-call batch limit, not a ceiling on how many tools an objective may end up
+        #   with.
         #
         #   @return [Integer, nil]
         optional :max_tools, Integer, api_name: :maxTools
 
-        # @!attribute rerank_threshold
-        #   Rerank Threshold is an optional value that instructs whether or not to run a
-        #   search result through a embedding/reranker process which can improve performance
-        #   and reduce context bloat when tools reach the configured threshold. If a tool
-        #   match must exceed 0.8, for example, the tool very closely match the query the
-        #   tool search performed.
-        #
-        #   @return [Float, nil]
-        optional :rerank_threshold, Float, api_name: :rerankThreshold
-
-        # @!method initialize(hints: nil, max_tools: nil, rerank_threshold: nil)
+        # @!method initialize(hints: nil, max_tools: nil)
         #   Some parameter documentations has been truncated, see
         #   {Cadenya::Models::Agents::AgentVariationSpecProgressiveDiscovery} for more
         #   details.
@@ -35,11 +32,9 @@ module Cadenya
         #   tool search. These are used in conjunction with the context-aware tool search
         #   and can help select the best tools for the task.
         #
-        #   @param hints [Array<String>]
+        #   @param hints [Array<String>] Free-text guidance appended to the discoverable-tools appendix in the
         #
-        #   @param max_tools [Integer]
-        #
-        #   @param rerank_threshold [Float] Rerank Threshold is an optional value that instructs whether or not to run a sea
+        #   @param max_tools [Integer] The most tool names tool_search will load in a single call. Requesting more
       end
     end
 
