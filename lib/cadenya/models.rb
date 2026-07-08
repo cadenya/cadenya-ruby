@@ -335,8 +335,6 @@ module Cadenya
 
   WorkspaceAdminUpdateParams = Cadenya::Models::WorkspaceAdminUpdateParams
 
-  WorkspaceGetParams = Cadenya::Models::WorkspaceGetParams
-
   WorkspaceListParams = Cadenya::Models::WorkspaceListParams
 
   WorkspaceMember = Cadenya::Models::WorkspaceMember
