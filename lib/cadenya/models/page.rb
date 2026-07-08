@@ -8,14 +8,12 @@ module Cadenya
       #   @return [String, nil]
       optional :next_cursor, String, api_name: :nextCursor
 
-      # @!attribute total
+      # @!method initialize(next_cursor: nil)
+      #   Page carries cursor-based pagination state. There is no total: the cursor walks
+      #   the result set without ever counting it, and a count would cost a second query
+      #   on every list.
       #
-      #   @return [Integer, nil]
-      optional :total, Integer
-
-      # @!method initialize(next_cursor: nil, total: nil)
       #   @param next_cursor [String]
-      #   @param total [Integer]
     end
   end
 end

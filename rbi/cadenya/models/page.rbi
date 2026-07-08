@@ -11,19 +11,14 @@ module Cadenya
       sig { params(next_cursor: String).void }
       attr_writer :next_cursor
 
-      sig { returns(T.nilable(Integer)) }
-      attr_reader :total
-
-      sig { params(total: Integer).void }
-      attr_writer :total
-
-      sig do
-        params(next_cursor: String, total: Integer).returns(T.attached_class)
-      end
-      def self.new(next_cursor: nil, total: nil)
+      # Page carries cursor-based pagination state. There is no total: the cursor walks
+      # the result set without ever counting it, and a count would cost a second query
+      # on every list.
+      sig { params(next_cursor: String).returns(T.attached_class) }
+      def self.new(next_cursor: nil)
       end
 
-      sig { override.returns({ next_cursor: String, total: Integer }) }
+      sig { override.returns({ next_cursor: String }) }
       def to_hash
       end
     end
