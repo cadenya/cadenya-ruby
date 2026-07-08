@@ -18,6 +18,10 @@ module Cadenya
         required :description, String
 
         # @!attribute parameters
+        #   The tool's JSON Schema, as handed to the LLM. Required, but may be the empty
+        #   object `{}` for a tool that takes no arguments. Requiring it rather than
+        #   defaulting it means a misspelled field name (`inputSchema`, say) is a 400
+        #   instead of a silently parameterless tool.
         #
         #   @return [Hash{Symbol=>Object}]
         required :parameters, Cadenya::Internal::Type::HashOf[Cadenya::Internal::Type::Unknown]
@@ -44,7 +48,7 @@ module Cadenya
         #
         #   @param description [String]
         #
-        #   @param parameters [Hash{Symbol=>Object}]
+        #   @param parameters [Hash{Symbol=>Object}] The tool's JSON Schema, as handed to the LLM. Required, but may be the
         #
         #   @param requires_approval [Boolean]
         #
