@@ -62,16 +62,7 @@ module Cadenya
         #   @return [String, nil]
         optional :system_prompt_template, String, api_name: :systemPromptTemplate
 
-        # @!attribute weight
-        #   Weight for weighted random selection (>= 0). P(v) = v.weight / sum(all_weights).
-        #   Only used when the agent's variation_selection_mode is WEIGHTED. A weight of 0
-        #   means never auto-selected, but can still be chosen explicitly via variation_id
-        #   on CreateObjectiveRequest.
-        #
-        #   @return [Integer, nil]
-        optional :weight, Integer
-
-        # @!method initialize(compaction_config: nil, constraints: nil, description: nil, first_user_message_template: nil, model_config: nil, progressive_discovery: nil, system_prompt_template: nil, weight: nil)
+        # @!method initialize(compaction_config: nil, constraints: nil, description: nil, first_user_message_template: nil, model_config: nil, progressive_discovery: nil, system_prompt_template: nil)
         #   Some parameter documentations has been truncated, see
         #   {Cadenya::Models::Agents::AgentVariationSpec} for more details.
         #
@@ -90,8 +81,6 @@ module Cadenya
         #   @param progressive_discovery [Cadenya::Models::Agents::AgentVariationSpecProgressiveDiscovery] ProgressiveDiscovery is used to indicate that the agent should automatically dis
         #
         #   @param system_prompt_template [String] Liquid template for the system prompt of objectives using this variation.
-        #
-        #   @param weight [Integer] Weight for weighted random selection (>= 0). P(v) = v.weight / sum(all_weights).
       end
     end
 
