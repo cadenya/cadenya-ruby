@@ -15,13 +15,19 @@ module Cadenya
           end
 
         # How long an objective may sit with no activity (no user messages, no LLM calls)
-        # before it is finalized as timed out. Between 1 minute and 24 hours. When not
-        # set, objectives are still swept at the system-wide 24 hour maximum — every
-        # objective eventually reaches a terminal state.
-        sig { returns(T.nilable(Integer)) }
+        # before it is finalized as timed out. Between 1 minute and 24 hours, expressed as
+        # a duration string in seconds (e.g. "7200s"). When not set, objectives are still
+        # swept at the system-wide 24 hour maximum — every objective eventually reaches a
+        # terminal state.
+        #
+        # Note: no gnostic integer hint here on purpose. The Envoy gRPC-JSON transcoder
+        # only accepts the canonical protobuf JSON form for Durations — a "<seconds>s"
+        # string — so the SDKs must type this as a string (like AgentScheduleSpec.every),
+        # not an integer.
+        sig { returns(T.nilable(String)) }
         attr_reader :inactivity_timeout
 
-        sig { params(inactivity_timeout: Integer).void }
+        sig { params(inactivity_timeout: String).void }
         attr_writer :inactivity_timeout
 
         # The maximum number of sub-objectives that can be created. 0 means no limit.
@@ -40,16 +46,22 @@ module Cadenya
 
         sig do
           params(
-            inactivity_timeout: Integer,
+            inactivity_timeout: String,
             max_sub_objectives: Integer,
             max_tool_calls: Integer
           ).returns(T.attached_class)
         end
         def self.new(
           # How long an objective may sit with no activity (no user messages, no LLM calls)
-          # before it is finalized as timed out. Between 1 minute and 24 hours. When not
-          # set, objectives are still swept at the system-wide 24 hour maximum — every
-          # objective eventually reaches a terminal state.
+          # before it is finalized as timed out. Between 1 minute and 24 hours, expressed as
+          # a duration string in seconds (e.g. "7200s"). When not set, objectives are still
+          # swept at the system-wide 24 hour maximum — every objective eventually reaches a
+          # terminal state.
+          #
+          # Note: no gnostic integer hint here on purpose. The Envoy gRPC-JSON transcoder
+          # only accepts the canonical protobuf JSON form for Durations — a "<seconds>s"
+          # string — so the SDKs must type this as a string (like AgentScheduleSpec.every),
+          # not an integer.
           inactivity_timeout: nil,
           # The maximum number of sub-objectives that can be created. 0 means no limit.
           max_sub_objectives: nil,
@@ -61,7 +73,7 @@ module Cadenya
         sig do
           override.returns(
             {
-              inactivity_timeout: Integer,
+              inactivity_timeout: String,
               max_sub_objectives: Integer,
               max_tool_calls: Integer
             }
