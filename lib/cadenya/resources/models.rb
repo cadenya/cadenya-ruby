@@ -54,7 +54,7 @@ module Cadenya
       #
       # @param limit [Integer] Maximum number of results to return
       #
-      # @param prefix [String] Filter by name prefix
+      # @param prefix [String] Filter by a prefix of the model's display name, external id, or id
       #
       # @param query [String] Free-form search query
       #
