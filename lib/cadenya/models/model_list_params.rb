@@ -55,7 +55,9 @@ module Cadenya
       optional :limit, Integer
 
       # @!attribute prefix
-      #   Filter by name prefix
+      #   Filter by a prefix of the model's display name, external id, or id
+      #   (case-insensitive). A model's external id is the form used in
+      #   modelConfig.modelId, so a caller holding that can narrow the list by it.
       #
       #   @return [String, nil]
       optional :prefix, String
@@ -96,7 +98,7 @@ module Cadenya
       #
       #   @param limit [Integer] Maximum number of results to return
       #
-      #   @param prefix [String] Filter by name prefix
+      #   @param prefix [String] Filter by a prefix of the model's display name, external id, or id
       #
       #   @param query [String] Free-form search query
       #
