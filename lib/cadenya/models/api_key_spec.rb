@@ -10,9 +10,16 @@ module Cadenya
       optional :description, String
 
       # @!attribute permissions
-      #   Permissions granted to this key. Each entry is a colon-separated verb:resource
-      #   string (e.g. "manage:agents"). Currently has no enforced effect; reserved for
-      #   future fine-grained authorization.
+      #   Scopes granted to this key. Each entry is a colon-separated resource:verb string
+      #   (e.g. "objectives:manage").
+      #
+      #   Resources: agents, objectives, tools, memory, secrets, account. Verbs: read and
+      #   manage, where manage implies read — a stored scope set is normalized to drop
+      #   "x:read" when "x:manage" is present. The secrets and account resources support
+      #   only manage. "\*" is an explicit full-access grant.
+      #
+      #   An empty list grants full access (grandfathered legacy behavior); new keys
+      #   should be created with explicit scopes.
       #
       #   @return [Array<String>, nil]
       optional :permissions, Cadenya::Internal::Type::ArrayOf[String]
@@ -43,7 +50,7 @@ module Cadenya
       #
       #   @param description [String] Free-form description of what this API key is used for.
       #
-      #   @param permissions [Array<String>] Permissions granted to this key. Each entry is a colon-separated
+      #   @param permissions [Array<String>] Scopes granted to this key. Each entry is a colon-separated
       #
       #   @param system_ [Boolean] True when this key is managed by the system (e.g. the auto-provisioned
     end
