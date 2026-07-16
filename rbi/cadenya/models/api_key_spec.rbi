@@ -21,8 +21,8 @@ module Cadenya
       # "x:read" when "x:manage" is present. The secrets and account resources support
       # only manage. "\*" is an explicit full-access grant.
       #
-      # An empty list grants full access (grandfathered legacy behavior); new keys
-      # should be created with explicit scopes.
+      # Scopes are deny-by-default: a key with an empty list can call only scope-free
+      # endpoints. Full access is always an explicit "\*" grant.
       sig { returns(T.nilable(T::Array[String])) }
       attr_reader :permissions
 
@@ -68,8 +68,8 @@ module Cadenya
         # "x:read" when "x:manage" is present. The secrets and account resources support
         # only manage. "\*" is an explicit full-access grant.
         #
-        # An empty list grants full access (grandfathered legacy behavior); new keys
-        # should be created with explicit scopes.
+        # Scopes are deny-by-default: a key with an empty list can call only scope-free
+        # endpoints. Full access is always an explicit "\*" grant.
         permissions: nil,
         # True when this key is managed by the system (e.g. the auto-provisioned global
         # account key). System keys cannot be deleted but can be rotated.
