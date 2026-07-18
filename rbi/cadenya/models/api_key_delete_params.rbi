@@ -12,20 +12,28 @@ module Cadenya
         end
 
       sig { returns(String) }
+      attr_accessor :workspace_id
+
+      sig { returns(String) }
       attr_accessor :id
 
       sig do
         params(
+          workspace_id: String,
           id: String,
           request_options: Cadenya::RequestOptions::OrHash
         ).returns(T.attached_class)
       end
-      def self.new(id:, request_options: {})
+      def self.new(workspace_id:, id:, request_options: {})
       end
 
       sig do
         override.returns(
-          { id: String, request_options: Cadenya::RequestOptions }
+          {
+            workspace_id: String,
+            id: String,
+            request_options: Cadenya::RequestOptions
+          }
         )
       end
       def to_hash

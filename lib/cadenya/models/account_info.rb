@@ -15,9 +15,10 @@ module Cadenya
         optional :challenge_token, String, api_name: :challengeToken
 
         # @!attribute global_api_key
-        #   An API key for the account. Use workspace-association RPCs to grant the key
-        #   access to specific workspaces; a key with zero workspaces is valid but cannot
-        #   access workspace-scoped resources.
+        #   An API key. Every key belongs to exactly one workspace and is managed via the
+        #   workspace-scoped API key routes. The only exception is the system-managed global
+        #   account key, which spans all workspaces and is managed via the account
+        #   global_api_key routes.
         #
         #   @return [Cadenya::Models::APIKey, nil]
         optional :global_api_key, -> { Cadenya::APIKey }, api_name: :globalApiKey
@@ -39,7 +40,7 @@ module Cadenya
       #
       #   @param challenge_token [String] The challenge token Cadenya sends in the X-Cadenya-Challenge-Token header
       #
-      #   @param global_api_key [Cadenya::Models::APIKey] An API key for the account. Use workspace-association RPCs to grant the
+      #   @param global_api_key [Cadenya::Models::APIKey] An API key. Every key belongs to exactly one workspace and is managed via
       #
       #   @param webhook_events_hmac_secret [String] The generated secret that will sign all webhooks that are sent to your configure
     end

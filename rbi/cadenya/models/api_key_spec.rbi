@@ -37,7 +37,7 @@ module Cadenya
       sig { params(token: String).void }
       attr_writer :token
 
-      # True when this key is managed by the system (e.g. the auto-provisioned global
+      # True when this key is managed by the system (i.e. the auto-provisioned global
       # account key). System keys cannot be deleted but can be rotated.
       sig { returns(T.nilable(T::Boolean)) }
       attr_reader :system_
@@ -71,7 +71,7 @@ module Cadenya
         # Scopes are deny-by-default: a key with an empty list can call only scope-free
         # endpoints. Full access is always an explicit "\*" grant.
         permissions: nil,
-        # True when this key is managed by the system (e.g. the auto-provisioned global
+        # True when this key is managed by the system (i.e. the auto-provisioned global
         # account key). System keys cannot be deleted but can be rotated.
         system_: nil
       )

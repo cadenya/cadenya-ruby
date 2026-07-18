@@ -1,10 +1,10 @@
 module Cadenya
   module Models
-    type api_key_rotate_params =
+    type api_key_disable_params =
       { workspace_id: String, id: String }
       & Cadenya::Internal::Type::request_parameters
 
-    class APIKeyRotateParams < Cadenya::Internal::Type::BaseModel
+    class APIKeyDisableParams < Cadenya::Internal::Type::BaseModel
       extend Cadenya::Internal::Type::RequestParameters::Converter
       include Cadenya::Internal::Type::RequestParameters
 

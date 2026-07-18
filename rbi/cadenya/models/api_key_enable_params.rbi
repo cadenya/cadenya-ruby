@@ -2,13 +2,13 @@
 
 module Cadenya
   module Models
-    class APIKeyRotateParams < Cadenya::Internal::Type::BaseModel
+    class APIKeyEnableParams < Cadenya::Internal::Type::BaseModel
       extend Cadenya::Internal::Type::RequestParameters::Converter
       include Cadenya::Internal::Type::RequestParameters
 
       OrHash =
         T.type_alias do
-          T.any(Cadenya::APIKeyRotateParams, Cadenya::Internal::AnyHash)
+          T.any(Cadenya::APIKeyEnableParams, Cadenya::Internal::AnyHash)
         end
 
       sig { returns(String) }

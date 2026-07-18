@@ -12,6 +12,9 @@ module Cadenya
         end
 
       sig { returns(String) }
+      attr_accessor :workspace_id
+
+      sig { returns(String) }
       attr_accessor :id
 
       # UpdateAccountResourceMetadata contains the user-provided fields for updating an
@@ -41,6 +44,7 @@ module Cadenya
 
       sig do
         params(
+          workspace_id: String,
           id: String,
           metadata: Cadenya::APIKeyUpdateParams::Metadata::OrHash,
           spec: Cadenya::APIKeySpec::OrHash,
@@ -49,6 +53,7 @@ module Cadenya
         ).returns(T.attached_class)
       end
       def self.new(
+        workspace_id:,
         id:,
         # UpdateAccountResourceMetadata contains the user-provided fields for updating an
         # account-scoped resource. Read-only fields (id, account_id, profile_id) are
@@ -65,6 +70,7 @@ module Cadenya
       sig do
         override.returns(
           {
+            workspace_id: String,
             id: String,
             metadata: Cadenya::APIKeyUpdateParams::Metadata,
             spec: Cadenya::APIKeySpec,

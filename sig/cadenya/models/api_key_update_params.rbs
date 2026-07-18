@@ -2,6 +2,7 @@ module Cadenya
   module Models
     type api_key_update_params =
       {
+        workspace_id: String,
         id: String,
         metadata: Cadenya::APIKeyUpdateParams::Metadata,
         spec: Cadenya::APIKeySpec,
@@ -12,6 +13,8 @@ module Cadenya
     class APIKeyUpdateParams < Cadenya::Internal::Type::BaseModel
       extend Cadenya::Internal::Type::RequestParameters::Converter
       include Cadenya::Internal::Type::RequestParameters
+
+      attr_accessor workspace_id: String
 
       attr_accessor id: String
 
@@ -30,6 +33,7 @@ module Cadenya
       def update_mask=: (String) -> String
 
       def initialize: (
+        workspace_id: String,
         id: String,
         ?metadata: Cadenya::APIKeyUpdateParams::Metadata,
         ?spec: Cadenya::APIKeySpec,
@@ -38,6 +42,7 @@ module Cadenya
       ) -> void
 
       def to_hash: -> {
+        workspace_id: String,
         id: String,
         metadata: Cadenya::APIKeyUpdateParams::Metadata,
         spec: Cadenya::APIKeySpec,

@@ -11,6 +11,9 @@ module Cadenya
           T.any(Cadenya::APIKeyCreateParams, Cadenya::Internal::AnyHash)
         end
 
+      sig { returns(String) }
+      attr_accessor :workspace_id
+
       # CreateAccountResourceMetadata contains the user-provided fields for creating an
       # account-scoped resource. Read-only fields (id, account_id, profile_id) are
       # excluded since they are set by the server.
@@ -29,32 +32,22 @@ module Cadenya
       sig { params(spec: Cadenya::APIKeySpec::OrHash).void }
       attr_writer :spec
 
-      # Workspaces this API key will have access to on creation. Optional — a key can be
-      # created with no workspace access and granted later via AddAPIKeyWorkspace.
-      sig { returns(T.nilable(T::Array[String])) }
-      attr_reader :initial_workspace_ids
-
-      sig { params(initial_workspace_ids: T::Array[String]).void }
-      attr_writer :initial_workspace_ids
-
       sig do
         params(
+          workspace_id: String,
           metadata: Cadenya::APIKeyCreateParams::Metadata::OrHash,
           spec: Cadenya::APIKeySpec::OrHash,
-          initial_workspace_ids: T::Array[String],
           request_options: Cadenya::RequestOptions::OrHash
         ).returns(T.attached_class)
       end
       def self.new(
+        workspace_id:,
         # CreateAccountResourceMetadata contains the user-provided fields for creating an
         # account-scoped resource. Read-only fields (id, account_id, profile_id) are
         # excluded since they are set by the server.
         metadata:,
         # Configuration for an API key.
         spec:,
-        # Workspaces this API key will have access to on creation. Optional — a key can be
-        # created with no workspace access and granted later via AddAPIKeyWorkspace.
-        initial_workspace_ids: nil,
         request_options: {}
       )
       end
@@ -62,9 +55,9 @@ module Cadenya
       sig do
         override.returns(
           {
+            workspace_id: String,
             metadata: Cadenya::APIKeyCreateParams::Metadata,
             spec: Cadenya::APIKeySpec,
-            initial_workspace_ids: T::Array[String],
             request_options: Cadenya::RequestOptions
           }
         )

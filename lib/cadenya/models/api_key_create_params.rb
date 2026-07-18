@@ -7,6 +7,11 @@ module Cadenya
       extend Cadenya::Internal::Type::RequestParameters::Converter
       include Cadenya::Internal::Type::RequestParameters
 
+      # @!attribute workspace_id
+      #
+      #   @return [String]
+      required :workspace_id, String
+
       # @!attribute metadata
       #   CreateAccountResourceMetadata contains the user-provided fields for creating an
       #   account-scoped resource. Read-only fields (id, account_id, profile_id) are
@@ -21,24 +26,15 @@ module Cadenya
       #   @return [Cadenya::Models::APIKeySpec]
       required :spec, -> { Cadenya::APIKeySpec }
 
-      # @!attribute initial_workspace_ids
-      #   Workspaces this API key will have access to on creation. Optional — a key can be
-      #   created with no workspace access and granted later via AddAPIKeyWorkspace.
-      #
-      #   @return [Array<String>, nil]
-      optional :initial_workspace_ids,
-               Cadenya::Internal::Type::ArrayOf[String],
-               api_name: :initialWorkspaceIds
-
-      # @!method initialize(metadata:, spec:, initial_workspace_ids: nil, request_options: {})
+      # @!method initialize(workspace_id:, metadata:, spec:, request_options: {})
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::APIKeyCreateParams} for more details.
+      #
+      #   @param workspace_id [String]
       #
       #   @param metadata [Cadenya::Models::APIKeyCreateParams::Metadata] CreateAccountResourceMetadata contains the user-provided fields for creating
       #
       #   @param spec [Cadenya::Models::APIKeySpec] Configuration for an API key.
-      #
-      #   @param initial_workspace_ids [Array<String>] Workspaces this API key will have access to on creation. Optional —
       #
       #   @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}]
 
