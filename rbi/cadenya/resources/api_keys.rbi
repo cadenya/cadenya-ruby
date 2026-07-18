@@ -2,34 +2,28 @@
 
 module Cadenya
   module Resources
-    # Issue, rotate, and revoke API keys for the account, and grant or revoke each
-    # key's access to individual workspaces.
+    # Issue, rotate, disable, and revoke a workspace's API keys. Every key belongs to
+    # exactly one workspace; the system-managed global account key is managed via
+    # GlobalAPIKeyService instead.
     class APIKeys
-      # Issue, rotate, and revoke API keys for the account, and grant or revoke each
-      # key's access to individual workspaces.
-      sig { returns(Cadenya::Resources::APIKeys::Access) }
-      attr_reader :access
-
-      # Creates a new API key on the account. Optionally grants the key access to one or
-      # more workspaces via initial_workspace_ids.
+      # Creates a new API key in the workspace.
       sig do
         params(
+          workspace_id: String,
           metadata: Cadenya::APIKeyCreateParams::Metadata::OrHash,
           spec: Cadenya::APIKeySpec::OrHash,
-          initial_workspace_ids: T::Array[String],
           request_options: Cadenya::RequestOptions::OrHash
         ).returns(Cadenya::APIKey)
       end
       def create(
+        # The workspace this API key belongs to (path).
+        workspace_id,
         # CreateAccountResourceMetadata contains the user-provided fields for creating an
         # account-scoped resource. Read-only fields (id, account_id, profile_id) are
         # excluded since they are set by the server.
         metadata:,
         # Configuration for an API key.
         spec:,
-        # Workspaces this API key will have access to on creation. Optional — a key can be
-        # created with no workspace access and granted later via AddAPIKeyWorkspace.
-        initial_workspace_ids: nil,
         request_options: {}
       )
       end
@@ -38,12 +32,15 @@ module Cadenya
       sig do
         params(
           id: String,
+          workspace_id: String,
           request_options: Cadenya::RequestOptions::OrHash
         ).returns(Cadenya::APIKey)
       end
       def retrieve(
         # The API key to retrieve.
         id,
+        # The workspace the API key belongs to (path).
+        workspace_id:,
         request_options: {}
       )
       end
@@ -52,6 +49,7 @@ module Cadenya
       sig do
         params(
           id: String,
+          workspace_id: String,
           metadata: Cadenya::APIKeyUpdateParams::Metadata::OrHash,
           spec: Cadenya::APIKeySpec::OrHash,
           update_mask: String,
@@ -59,23 +57,26 @@ module Cadenya
         ).returns(Cadenya::APIKey)
       end
       def update(
-        # The API key to update.
+        # Path param: The API key to update.
         id,
-        # UpdateAccountResourceMetadata contains the user-provided fields for updating an
-        # account-scoped resource. Read-only fields (id, account_id, profile_id) are
-        # excluded since they are set by the server.
+        # Path param: The workspace the API key belongs to (path).
+        workspace_id:,
+        # Body param: UpdateAccountResourceMetadata contains the user-provided fields for
+        # updating an account-scoped resource. Read-only fields (id, account_id,
+        # profile_id) are excluded since they are set by the server.
         metadata: nil,
-        # Configuration for an API key.
+        # Body param: Configuration for an API key.
         spec: nil,
-        # Fields to update.
+        # Body param: Fields to update.
         update_mask: nil,
         request_options: {}
       )
       end
 
-      # Lists all API keys on the account.
+      # Lists the workspace's API keys.
       sig do
         params(
+          workspace_id: String,
           cursor: String,
           include_info: T::Boolean,
           labels: String,
@@ -87,6 +88,8 @@ module Cadenya
         ).returns(Cadenya::Internal::CursorPagination[Cadenya::APIKey])
       end
       def list(
+        # The workspace whose API keys will be listed (path).
+        workspace_id,
         # Pagination cursor from previous response.
         cursor: nil,
         # When true, included info fields are populated. Requests with this flag count
@@ -112,12 +115,50 @@ module Cadenya
       sig do
         params(
           id: String,
+          workspace_id: String,
           request_options: Cadenya::RequestOptions::OrHash
         ).void
       end
       def delete(
         # The API key to delete.
         id,
+        # The workspace the API key belongs to (path).
+        workspace_id:,
+        request_options: {}
+      )
+      end
+
+      # Disables an API key. While disabled, presenting the key's token fails
+      # authentication on every endpoint; the key is retained. Idempotent.
+      sig do
+        params(
+          id: String,
+          workspace_id: String,
+          request_options: Cadenya::RequestOptions::OrHash
+        ).returns(Cadenya::APIKey)
+      end
+      def disable(
+        # The API key to disable.
+        id,
+        # The workspace the API key belongs to (path).
+        workspace_id:,
+        request_options: {}
+      )
+      end
+
+      # Re-enables a disabled API key so its token authenticates again. Idempotent.
+      sig do
+        params(
+          id: String,
+          workspace_id: String,
+          request_options: Cadenya::RequestOptions::OrHash
+        ).returns(Cadenya::APIKey)
+      end
+      def enable(
+        # The API key to enable.
+        id,
+        # The workspace the API key belongs to (path).
+        workspace_id:,
         request_options: {}
       )
       end
@@ -127,6 +168,7 @@ module Cadenya
       sig do
         params(
           id: String,
+          workspace_id: String,
           request_options: Cadenya::RequestOptions::OrHash
         ).returns(Cadenya::APIKey)
       end
@@ -134,6 +176,8 @@ module Cadenya
         # The API key to rotate. A new token is issued and any existing token is
         # invalidated.
         id,
+        # The workspace the API key belongs to (path).
+        workspace_id:,
         request_options: {}
       )
       end

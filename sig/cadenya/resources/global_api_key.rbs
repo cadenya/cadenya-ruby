@@ -1,0 +1,15 @@
+module Cadenya
+  module Resources
+    class GlobalAPIKey
+      def retrieve: (?request_options: Cadenya::request_opts) -> Cadenya::APIKey
+
+      def disable: (?request_options: Cadenya::request_opts) -> Cadenya::APIKey
+
+      def enable: (?request_options: Cadenya::request_opts) -> Cadenya::APIKey
+
+      def rotate: (?request_options: Cadenya::request_opts) -> Cadenya::APIKey
+
+      def initialize: (client: Cadenya::Client) -> void
+    end
+  end
+end

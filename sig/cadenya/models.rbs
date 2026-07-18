@@ -59,6 +59,10 @@ module Cadenya
 
   class APIKeyDeleteParams = Cadenya::Models::APIKeyDeleteParams
 
+  class APIKeyDisableParams = Cadenya::Models::APIKeyDisableParams
+
+  class APIKeyEnableParams = Cadenya::Models::APIKeyEnableParams
+
   class APIKeyInfo = Cadenya::Models::APIKeyInfo
 
   class APIKeyListParams = Cadenya::Models::APIKeyListParams
@@ -66,8 +70,6 @@ module Cadenya
   class APIKeyRetrieveParams = Cadenya::Models::APIKeyRetrieveParams
 
   class APIKeyRotateParams = Cadenya::Models::APIKeyRotateParams
-
-  module APIKeys = Cadenya::Models::APIKeys
 
   class APIKeySpec = Cadenya::Models::APIKeySpec
 
@@ -92,6 +94,14 @@ module Cadenya
   class CreateOperationMetadata = Cadenya::Models::CreateOperationMetadata
 
   class CreateResourceMetadata = Cadenya::Models::CreateResourceMetadata
+
+  class GlobalAPIKeyDisableParams = Cadenya::Models::GlobalAPIKeyDisableParams
+
+  class GlobalAPIKeyEnableParams = Cadenya::Models::GlobalAPIKeyEnableParams
+
+  class GlobalAPIKeyRetrieveParams = Cadenya::Models::GlobalAPIKeyRetrieveParams
+
+  class GlobalAPIKeyRotateParams = Cadenya::Models::GlobalAPIKeyRotateParams
 
   class MemoryLayer = Cadenya::Models::MemoryLayer
 

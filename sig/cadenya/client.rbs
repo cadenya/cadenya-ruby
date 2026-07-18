@@ -34,6 +34,8 @@ module Cadenya
 
     attr_reader api_keys: Cadenya::Resources::APIKeys
 
+    attr_reader global_api_key: Cadenya::Resources::GlobalAPIKey
+
     attr_reader workspace_secrets: Cadenya::Resources::WorkspaceSecrets
 
     attr_reader workspaces: Cadenya::Resources::Workspaces

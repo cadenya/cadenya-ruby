@@ -71,10 +71,17 @@ module Cadenya
     # @return [Cadenya::Resources::ToolSets]
     attr_reader :tool_sets
 
-    # Issue, rotate, and revoke API keys for the account, and grant or revoke each
-    # key's access to individual workspaces.
+    # Issue, rotate, disable, and revoke a workspace's API keys. Every key belongs to
+    # exactly one workspace; the system-managed global account key is managed via
+    # GlobalAPIKeyService instead.
     # @return [Cadenya::Resources::APIKeys]
     attr_reader :api_keys
+
+    # Manage the account's system-provisioned global API key. The global key is the
+    # only key that spans every workspace; it is created by the system and cannot be
+    # deleted, so the surface is retrieve, rotate, and the disable/enable kill switch.
+    # @return [Cadenya::Resources::GlobalAPIKey]
+    attr_reader :global_api_key
 
     # @return [Cadenya::Resources::WorkspaceSecrets]
     attr_reader :workspace_secrets
@@ -176,6 +183,7 @@ module Cadenya
       @search = Cadenya::Resources::Search.new(client: self)
       @tool_sets = Cadenya::Resources::ToolSets.new(client: self)
       @api_keys = Cadenya::Resources::APIKeys.new(client: self)
+      @global_api_key = Cadenya::Resources::GlobalAPIKey.new(client: self)
       @workspace_secrets = Cadenya::Resources::WorkspaceSecrets.new(client: self)
       @workspaces = Cadenya::Resources::Workspaces.new(client: self)
       @workspace_admin = Cadenya::Resources::WorkspaceAdmin.new(client: self)

@@ -2,38 +2,33 @@
 
 module Cadenya
   module Resources
-    # Issue, rotate, and revoke API keys for the account, and grant or revoke each
-    # key's access to individual workspaces.
+    # Issue, rotate, disable, and revoke a workspace's API keys. Every key belongs to
+    # exactly one workspace; the system-managed global account key is managed via
+    # GlobalAPIKeyService instead.
     class APIKeys
-      # Issue, rotate, and revoke API keys for the account, and grant or revoke each
-      # key's access to individual workspaces.
-      # @return [Cadenya::Resources::APIKeys::Access]
-      attr_reader :access
-
       # Some parameter documentations has been truncated, see
       # {Cadenya::Models::APIKeyCreateParams} for more details.
       #
-      # Creates a new API key on the account. Optionally grants the key access to one or
-      # more workspaces via initial_workspace_ids.
+      # Creates a new API key in the workspace.
       #
-      # @overload create(metadata:, spec:, initial_workspace_ids: nil, request_options: {})
+      # @overload create(workspace_id, metadata:, spec:, request_options: {})
+      #
+      # @param workspace_id [String] The workspace this API key belongs to (path).
       #
       # @param metadata [Cadenya::Models::APIKeyCreateParams::Metadata] CreateAccountResourceMetadata contains the user-provided fields for creating
       #
       # @param spec [Cadenya::Models::APIKeySpec] Configuration for an API key.
-      #
-      # @param initial_workspace_ids [Array<String>] Workspaces this API key will have access to on creation. Optional —
       #
       # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
       #
       # @return [Cadenya::Models::APIKey]
       #
       # @see Cadenya::Models::APIKeyCreateParams
-      def create(params)
+      def create(workspace_id, params)
         parsed, options = Cadenya::APIKeyCreateParams.dump_request(params)
         @client.request(
           method: :post,
-          path: "v1/account/api_keys",
+          path: ["v1/workspaces/%1$s/api_keys", workspace_id],
           body: parsed,
           model: Cadenya::APIKey,
           options: options
@@ -42,21 +37,28 @@ module Cadenya
 
       # Retrieves an API key by ID.
       #
-      # @overload retrieve(id, request_options: {})
+      # @overload retrieve(id, workspace_id:, request_options: {})
       #
       # @param id [String] The API key to retrieve.
+      #
+      # @param workspace_id [String] The workspace the API key belongs to (path).
       #
       # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
       #
       # @return [Cadenya::Models::APIKey]
       #
       # @see Cadenya::Models::APIKeyRetrieveParams
-      def retrieve(id, params = {})
+      def retrieve(id, params)
+        parsed, options = Cadenya::APIKeyRetrieveParams.dump_request(params)
+        workspace_id =
+          parsed.delete(:workspace_id) do
+            raise ArgumentError.new("missing required path argument #{_1}")
+          end
         @client.request(
           method: :get,
-          path: ["v1/account/api_keys/%1$s", id],
+          path: ["v1/workspaces/%1$s/api_keys/%2$s", workspace_id, id],
           model: Cadenya::APIKey,
-          options: params[:request_options]
+          options: options
         )
       end
 
@@ -65,26 +67,32 @@ module Cadenya
       #
       # Updates an API key.
       #
-      # @overload update(id, metadata: nil, spec: nil, update_mask: nil, request_options: {})
+      # @overload update(id, workspace_id:, metadata: nil, spec: nil, update_mask: nil, request_options: {})
       #
-      # @param id [String] The API key to update.
+      # @param id [String] Path param: The API key to update.
       #
-      # @param metadata [Cadenya::Models::APIKeyUpdateParams::Metadata] UpdateAccountResourceMetadata contains the user-provided fields for updating
+      # @param workspace_id [String] Path param: The workspace the API key belongs to (path).
       #
-      # @param spec [Cadenya::Models::APIKeySpec] Configuration for an API key.
+      # @param metadata [Cadenya::Models::APIKeyUpdateParams::Metadata] Body param: UpdateAccountResourceMetadata contains the user-provided fields for
       #
-      # @param update_mask [String] Fields to update.
+      # @param spec [Cadenya::Models::APIKeySpec] Body param: Configuration for an API key.
+      #
+      # @param update_mask [String] Body param: Fields to update.
       #
       # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
       #
       # @return [Cadenya::Models::APIKey]
       #
       # @see Cadenya::Models::APIKeyUpdateParams
-      def update(id, params = {})
+      def update(id, params)
         parsed, options = Cadenya::APIKeyUpdateParams.dump_request(params)
+        workspace_id =
+          parsed.delete(:workspace_id) do
+            raise ArgumentError.new("missing required path argument #{_1}")
+          end
         @client.request(
           method: :patch,
-          path: ["v1/account/api_keys/%1$s", id],
+          path: ["v1/workspaces/%1$s/api_keys/%2$s", workspace_id, id],
           body: parsed,
           model: Cadenya::APIKey,
           options: options
@@ -94,9 +102,11 @@ module Cadenya
       # Some parameter documentations has been truncated, see
       # {Cadenya::Models::APIKeyListParams} for more details.
       #
-      # Lists all API keys on the account.
+      # Lists the workspace's API keys.
       #
-      # @overload list(cursor: nil, include_info: nil, labels: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, request_options: {})
+      # @overload list(workspace_id, cursor: nil, include_info: nil, labels: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, request_options: {})
+      #
+      # @param workspace_id [String] The workspace whose API keys will be listed (path).
       #
       # @param cursor [String] Pagination cursor from previous response.
       #
@@ -117,12 +127,12 @@ module Cadenya
       # @return [Cadenya::Internal::CursorPagination<Cadenya::Models::APIKey>]
       #
       # @see Cadenya::Models::APIKeyListParams
-      def list(params = {})
+      def list(workspace_id, params = {})
         parsed, options = Cadenya::APIKeyListParams.dump_request(params)
         query = Cadenya::Internal::Util.encode_query_params(parsed)
         @client.request(
           method: :get,
-          path: "v1/account/api_keys",
+          path: ["v1/workspaces/%1$s/api_keys", workspace_id],
           query: query.transform_keys(include_info: "includeInfo", sort_order: "sortOrder"),
           page: Cadenya::Internal::CursorPagination,
           model: Cadenya::APIKey,
@@ -132,21 +142,83 @@ module Cadenya
 
       # Deletes an API key.
       #
-      # @overload delete(id, request_options: {})
+      # @overload delete(id, workspace_id:, request_options: {})
       #
       # @param id [String] The API key to delete.
+      #
+      # @param workspace_id [String] The workspace the API key belongs to (path).
       #
       # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
       #
       # @return [nil]
       #
       # @see Cadenya::Models::APIKeyDeleteParams
-      def delete(id, params = {})
+      def delete(id, params)
+        parsed, options = Cadenya::APIKeyDeleteParams.dump_request(params)
+        workspace_id =
+          parsed.delete(:workspace_id) do
+            raise ArgumentError.new("missing required path argument #{_1}")
+          end
         @client.request(
           method: :delete,
-          path: ["v1/account/api_keys/%1$s", id],
+          path: ["v1/workspaces/%1$s/api_keys/%2$s", workspace_id, id],
           model: NilClass,
-          options: params[:request_options]
+          options: options
+        )
+      end
+
+      # Disables an API key. While disabled, presenting the key's token fails
+      # authentication on every endpoint; the key is retained. Idempotent.
+      #
+      # @overload disable(id, workspace_id:, request_options: {})
+      #
+      # @param id [String] The API key to disable.
+      #
+      # @param workspace_id [String] The workspace the API key belongs to (path).
+      #
+      # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
+      #
+      # @return [Cadenya::Models::APIKey]
+      #
+      # @see Cadenya::Models::APIKeyDisableParams
+      def disable(id, params)
+        parsed, options = Cadenya::APIKeyDisableParams.dump_request(params)
+        workspace_id =
+          parsed.delete(:workspace_id) do
+            raise ArgumentError.new("missing required path argument #{_1}")
+          end
+        @client.request(
+          method: :post,
+          path: ["v1/workspaces/%1$s/api_keys/%2$s:disable", workspace_id, id],
+          model: Cadenya::APIKey,
+          options: options
+        )
+      end
+
+      # Re-enables a disabled API key so its token authenticates again. Idempotent.
+      #
+      # @overload enable(id, workspace_id:, request_options: {})
+      #
+      # @param id [String] The API key to enable.
+      #
+      # @param workspace_id [String] The workspace the API key belongs to (path).
+      #
+      # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
+      #
+      # @return [Cadenya::Models::APIKey]
+      #
+      # @see Cadenya::Models::APIKeyEnableParams
+      def enable(id, params)
+        parsed, options = Cadenya::APIKeyEnableParams.dump_request(params)
+        workspace_id =
+          parsed.delete(:workspace_id) do
+            raise ArgumentError.new("missing required path argument #{_1}")
+          end
+        @client.request(
+          method: :post,
+          path: ["v1/workspaces/%1$s/api_keys/%2$s:enable", workspace_id, id],
+          model: Cadenya::APIKey,
+          options: options
         )
       end
 
@@ -156,21 +228,28 @@ module Cadenya
       # Rotates an API key and returns a new token. All previous tokens for this key are
       # invalidated.
       #
-      # @overload rotate(id, request_options: {})
+      # @overload rotate(id, workspace_id:, request_options: {})
       #
       # @param id [String] The API key to rotate. A new token is issued and any existing token is
+      #
+      # @param workspace_id [String] The workspace the API key belongs to (path).
       #
       # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
       #
       # @return [Cadenya::Models::APIKey]
       #
       # @see Cadenya::Models::APIKeyRotateParams
-      def rotate(id, params = {})
+      def rotate(id, params)
+        parsed, options = Cadenya::APIKeyRotateParams.dump_request(params)
+        workspace_id =
+          parsed.delete(:workspace_id) do
+            raise ArgumentError.new("missing required path argument #{_1}")
+          end
         @client.request(
           method: :post,
-          path: ["v1/account/api_keys/%1$s:rotate", id],
+          path: ["v1/workspaces/%1$s/api_keys/%2$s:rotate", workspace_id, id],
           model: Cadenya::APIKey,
-          options: params[:request_options]
+          options: options
         )
       end
 
@@ -179,7 +258,6 @@ module Cadenya
       # @param client [Cadenya::Client]
       def initialize(client:)
         @client = client
-        @access = Cadenya::Resources::APIKeys::Access.new(client: client)
       end
     end
   end
