@@ -2,9 +2,9 @@ module Cadenya
   module Models
     type api_key_create_params =
       {
+        workspace_id: String,
         metadata: Cadenya::APIKeyCreateParams::Metadata,
-        spec: Cadenya::APIKeySpec,
-        initial_workspace_ids: ::Array[String]
+        spec: Cadenya::APIKeySpec
       }
       & Cadenya::Internal::Type::request_parameters
 
@@ -12,25 +12,23 @@ module Cadenya
       extend Cadenya::Internal::Type::RequestParameters::Converter
       include Cadenya::Internal::Type::RequestParameters
 
+      attr_accessor workspace_id: String
+
       attr_accessor metadata: Cadenya::APIKeyCreateParams::Metadata
 
       attr_accessor spec: Cadenya::APIKeySpec
 
-      attr_reader initial_workspace_ids: ::Array[String]?
-
-      def initial_workspace_ids=: (::Array[String]) -> ::Array[String]
-
       def initialize: (
+        workspace_id: String,
         metadata: Cadenya::APIKeyCreateParams::Metadata,
         spec: Cadenya::APIKeySpec,
-        ?initial_workspace_ids: ::Array[String],
         ?request_options: Cadenya::request_opts
       ) -> void
 
       def to_hash: -> {
+        workspace_id: String,
         metadata: Cadenya::APIKeyCreateParams::Metadata,
         spec: Cadenya::APIKeySpec,
-        initial_workspace_ids: ::Array[String],
         request_options: Cadenya::RequestOptions
       }
 

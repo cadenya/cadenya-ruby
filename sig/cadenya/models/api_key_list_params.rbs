@@ -2,6 +2,7 @@ module Cadenya
   module Models
     type api_key_list_params =
       {
+        workspace_id: String,
         cursor: String,
         include_info: bool,
         labels: String,
@@ -15,6 +16,8 @@ module Cadenya
     class APIKeyListParams < Cadenya::Internal::Type::BaseModel
       extend Cadenya::Internal::Type::RequestParameters::Converter
       include Cadenya::Internal::Type::RequestParameters
+
+      attr_accessor workspace_id: String
 
       attr_reader cursor: String?
 
@@ -45,6 +48,7 @@ module Cadenya
       def sort_order=: (String) -> String
 
       def initialize: (
+        workspace_id: String,
         ?cursor: String,
         ?include_info: bool,
         ?labels: String,
@@ -56,6 +60,7 @@ module Cadenya
       ) -> void
 
       def to_hash: -> {
+        workspace_id: String,
         cursor: String,
         include_info: bool,
         labels: String,

@@ -33,7 +33,7 @@ module Cadenya
         optional :token, String
 
         # @!attribute system_
-        #   True when this key is managed by the system (e.g. the auto-provisioned global
+        #   True when this key is managed by the system (i.e. the auto-provisioned global
         #   account key). System keys cannot be deleted but can be rotated.
         #
         #   @return [Boolean, nil]
@@ -52,7 +52,7 @@ module Cadenya
       #
       #   @param permissions [Array<String>] Scopes granted to this key. Each entry is a colon-separated
       #
-      #   @param system_ [Boolean] True when this key is managed by the system (e.g. the auto-provisioned
+      #   @param system_ [Boolean] True when this key is managed by the system (i.e. the auto-provisioned
     end
   end
 end

@@ -11,6 +11,9 @@ module Cadenya
           T.any(Cadenya::APIKeyListParams, Cadenya::Internal::AnyHash)
         end
 
+      sig { returns(String) }
+      attr_accessor :workspace_id
+
       # Pagination cursor from previous response.
       sig { returns(T.nilable(String)) }
       attr_reader :cursor
@@ -65,6 +68,7 @@ module Cadenya
 
       sig do
         params(
+          workspace_id: String,
           cursor: String,
           include_info: T::Boolean,
           labels: String,
@@ -76,6 +80,7 @@ module Cadenya
         ).returns(T.attached_class)
       end
       def self.new(
+        workspace_id:,
         # Pagination cursor from previous response.
         cursor: nil,
         # When true, included info fields are populated. Requests with this flag count
@@ -100,6 +105,7 @@ module Cadenya
       sig do
         override.returns(
           {
+            workspace_id: String,
             cursor: String,
             include_info: T::Boolean,
             labels: String,

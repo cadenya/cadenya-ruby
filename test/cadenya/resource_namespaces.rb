@@ -6,9 +6,6 @@ module Cadenya
       module Agents
       end
 
-      module APIKeys
-      end
-
       module MemoryLayers
       end
 

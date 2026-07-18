@@ -4,6 +4,7 @@ module Cadenya
       {
         metadata: Cadenya::AccountResourceMetadata,
         spec: Cadenya::APIKeySpec,
+        state: Cadenya::Models::APIKey::state,
         info: Cadenya::APIKeyInfo
       }
 
@@ -16,17 +17,33 @@ module Cadenya
 
       def info=: (Cadenya::APIKeyInfo) -> Cadenya::APIKeyInfo
 
+      attr_accessor state: Cadenya::Models::APIKey::state
+
       def initialize: (
         metadata: Cadenya::AccountResourceMetadata,
         spec: Cadenya::APIKeySpec,
+        state: Cadenya::Models::APIKey::state,
         ?info: Cadenya::APIKeyInfo
       ) -> void
 
       def to_hash: -> {
         metadata: Cadenya::AccountResourceMetadata,
         spec: Cadenya::APIKeySpec,
+        state: Cadenya::Models::APIKey::state,
         info: Cadenya::APIKeyInfo
       }
+
+      type state = :STATE_UNSPECIFIED | :STATE_ENABLED | :STATE_DISABLED
+
+      module State
+        extend Cadenya::Internal::Type::Enum
+
+        STATE_UNSPECIFIED: :STATE_UNSPECIFIED
+        STATE_ENABLED: :STATE_ENABLED
+        STATE_DISABLED: :STATE_DISABLED
+
+        def self?.values: -> ::Array[Cadenya::Models::APIKey::state]
+      end
     end
   end
 end

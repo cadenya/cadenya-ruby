@@ -2,8 +2,8 @@
 
 module Cadenya
   module Models
-    # @see Cadenya::Resources::APIKeys#delete
-    class APIKeyDeleteParams < Cadenya::Internal::Type::BaseModel
+    # @see Cadenya::Resources::APIKeys#disable
+    class APIKeyDisableParams < Cadenya::Internal::Type::BaseModel
       extend Cadenya::Internal::Type::RequestParameters::Converter
       include Cadenya::Internal::Type::RequestParameters
 

@@ -17,9 +17,10 @@ module Cadenya
       sig { params(challenge_token: String).void }
       attr_writer :challenge_token
 
-      # An API key for the account. Use workspace-association RPCs to grant the key
-      # access to specific workspaces; a key with zero workspaces is valid but cannot
-      # access workspace-scoped resources.
+      # An API key. Every key belongs to exactly one workspace and is managed via the
+      # workspace-scoped API key routes. The only exception is the system-managed global
+      # account key, which spans all workspaces and is managed via the account
+      # global_api_key routes.
       sig { returns(T.nilable(Cadenya::APIKey)) }
       attr_reader :global_api_key
 
@@ -50,9 +51,10 @@ module Cadenya
         # requiring real auth on tools/call. Rotate with RotateChallengeToken; update any
         # servers validating the token before rotating.
         challenge_token: nil,
-        # An API key for the account. Use workspace-association RPCs to grant the key
-        # access to specific workspaces; a key with zero workspaces is valid but cannot
-        # access workspace-scoped resources.
+        # An API key. Every key belongs to exactly one workspace and is managed via the
+        # workspace-scoped API key routes. The only exception is the system-managed global
+        # account key, which spans all workspaces and is managed via the account
+        # global_api_key routes.
         global_api_key: nil,
         # The generated secret that will sign all webhooks that are sent to your
         # configured Webhook URL. Formatted as "wh_asdf1234" per the
