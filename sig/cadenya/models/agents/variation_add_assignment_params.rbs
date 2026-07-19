@@ -6,9 +6,7 @@ module Cadenya
           workspace_id: String,
           agent_id: String,
           variation_id: String,
-          sub_agent_id: String,
-          tool_id: String,
-          tool_set_id: String
+          body: Cadenya::Models::Agents::VariationAddAssignmentParams::body
         }
         & Cadenya::Internal::Type::request_parameters
 
@@ -16,31 +14,21 @@ module Cadenya
         extend Cadenya::Internal::Type::RequestParameters::Converter
         include Cadenya::Internal::Type::RequestParameters
 
-        attr_accessor workspace_id: String
+        attr_reader workspace_id: String?
+
+        def workspace_id=: (String) -> String
 
         attr_accessor agent_id: String
 
         attr_accessor variation_id: String
 
-        attr_reader sub_agent_id: String?
-
-        def sub_agent_id=: (String) -> String
-
-        attr_reader tool_id: String?
-
-        def tool_id=: (String) -> String
-
-        attr_reader tool_set_id: String?
-
-        def tool_set_id=: (String) -> String
+        attr_accessor body: Cadenya::Models::Agents::VariationAddAssignmentParams::body
 
         def initialize: (
-          workspace_id: String,
           agent_id: String,
           variation_id: String,
-          ?sub_agent_id: String,
-          ?tool_id: String,
-          ?tool_set_id: String,
+          body: Cadenya::Models::Agents::VariationAddAssignmentParams::body,
+          ?workspace_id: String,
           ?request_options: Cadenya::request_opts
         ) -> void
 
@@ -48,11 +36,20 @@ module Cadenya
           workspace_id: String,
           agent_id: String,
           variation_id: String,
-          sub_agent_id: String,
-          tool_id: String,
-          tool_set_id: String,
+          body: Cadenya::Models::Agents::VariationAddAssignmentParams::body,
           request_options: Cadenya::RequestOptions
         }
+
+        type body =
+          Cadenya::Agents::AddAgentVariationAssignmentRequestToolID
+          | Cadenya::Agents::AddAgentVariationAssignmentRequestToolSetID
+          | Cadenya::Agents::AddAgentVariationAssignmentRequestSubAgentID
+
+        module Body
+          extend Cadenya::Internal::Type::Union
+
+          def self?.variants: -> ::Array[Cadenya::Models::Agents::VariationAddAssignmentParams::body]
+        end
       end
     end
   end

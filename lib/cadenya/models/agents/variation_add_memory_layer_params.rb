@@ -10,8 +10,8 @@ module Cadenya
 
         # @!attribute workspace_id
         #
-        #   @return [String]
-        required :workspace_id, String
+        #   @return [String, nil]
+        optional :workspace_id, String
 
         # @!attribute agent_id
         #
@@ -27,8 +27,8 @@ module Cadenya
         #   Layer to attach. Accepts the canonical `memlyr_…` form or the
         #   `external_id:<value>` form.
         #
-        #   @return [String, nil]
-        optional :memory_layer_id, String, api_name: :memoryLayerId
+        #   @return [String]
+        required :memory_layer_id, String, api_name: :memoryLayerId
 
         # @!attribute position
         #   Position in the baseline cascade (lower = more specific). If omitted, the server
@@ -37,17 +37,17 @@ module Cadenya
         #   @return [Integer, nil]
         optional :position, Integer
 
-        # @!method initialize(workspace_id:, agent_id:, variation_id:, memory_layer_id: nil, position: nil, request_options: {})
+        # @!method initialize(agent_id:, variation_id:, memory_layer_id:, workspace_id: nil, position: nil, request_options: {})
         #   Some parameter documentations has been truncated, see
         #   {Cadenya::Models::Agents::VariationAddMemoryLayerParams} for more details.
-        #
-        #   @param workspace_id [String]
         #
         #   @param agent_id [String]
         #
         #   @param variation_id [String]
         #
         #   @param memory_layer_id [String] Layer to attach. Accepts the canonical `memlyr_…` form or the `external_id:<valu
+        #
+        #   @param workspace_id [String]
         #
         #   @param position [Integer] Position in the baseline cascade (lower = more specific). If
         #

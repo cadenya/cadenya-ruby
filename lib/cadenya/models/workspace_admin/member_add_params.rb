@@ -10,8 +10,8 @@ module Cadenya
 
         # @!attribute workspace_id
         #
-        #   @return [String]
-        required :workspace_id, String
+        #   @return [String, nil]
+        optional :workspace_id, String
 
         # @!attribute email
         #   Email address to add (resolve-or-invite). Mutually exclusive with profile_id.
@@ -25,7 +25,7 @@ module Cadenya
         #   @return [String, nil]
         optional :profile_id, String, api_name: :profileId
 
-        # @!method initialize(workspace_id:, email: nil, profile_id: nil, request_options: {})
+        # @!method initialize(workspace_id: nil, email: nil, profile_id: nil, request_options: {})
         #   @param workspace_id [String]
         #
         #   @param email [String] Email address to add (resolve-or-invite). Mutually exclusive with profile_id.

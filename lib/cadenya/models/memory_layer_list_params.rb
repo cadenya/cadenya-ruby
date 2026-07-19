@@ -9,8 +9,8 @@ module Cadenya
 
       # @!attribute workspace_id
       #
-      #   @return [String]
-      required :workspace_id, String
+      #   @return [String, nil]
+      optional :workspace_id, String
 
       # @!attribute agent_id
       #   Filter to episodic layers belonging to this agent.
@@ -76,7 +76,7 @@ module Cadenya
       #   @return [Symbol, Cadenya::Models::MemoryLayerListParams::Type, nil]
       optional :type, enum: -> { Cadenya::MemoryLayerListParams::Type }
 
-      # @!method initialize(workspace_id:, agent_id: nil, cursor: nil, episodic_key_prefix: nil, include_info: nil, labels: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, type: nil, request_options: {})
+      # @!method initialize(workspace_id: nil, agent_id: nil, cursor: nil, episodic_key_prefix: nil, include_info: nil, labels: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, type: nil, request_options: {})
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::MemoryLayerListParams} for more details.
       #

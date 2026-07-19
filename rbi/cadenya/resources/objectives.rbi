@@ -18,9 +18,9 @@ module Cadenya
       # Creates a new objective in the workspace
       sig do
         params(
-          workspace_id: String,
           agent_id: String,
           system_prompt_data: T::Hash[Symbol, T.anything],
+          workspace_id: String,
           episodic_memory:
             Cadenya::ObjectiveCreateParams::EpisodicMemory::OrHash,
           first_user_message: String,
@@ -33,26 +33,29 @@ module Cadenya
         ).returns(Cadenya::Objective)
       end
       def create(
-        workspace_id,
+        # Body param
         agent_id:,
-        # Arbitrary data rendered into the selected variation's system_prompt_template
-        # (liquid) to produce the objective's system prompt. If the agent has a
-        # system_prompt_data_schema, this must satisfy it.
+        # Body param: Arbitrary data rendered into the selected variation's
+        # system_prompt_template (liquid) to produce the objective's system prompt. If the
+        # agent has a system_prompt_data_schema, this must satisfy it.
         system_prompt_data:,
-        # Episodic is used to configure the episodic memory for the objective
+        # Path param
+        workspace_id: nil,
+        # Body param: Episodic is used to configure the episodic memory for the objective
         episodic_memory: nil,
-        # Optional explicit first user message for the LLM chat history. When not set, the
-        # selected variation's first_user_message_template is rendered with
+        # Body param: Optional explicit first user message for the LLM chat history. When
+        # not set, the selected variation's first_user_message_template is rendered with
         # first_user_message_data instead. If neither this field nor a
         # first_user_message_template is present, the request is rejected with
         # InvalidArgument.
         first_user_message: nil,
-        # Arbitrary data rendered into the selected variation's
+        # Body param: Arbitrary data rendered into the selected variation's
         # first_user_message_template (liquid) to produce the first user message. Separate
         # from `system_prompt_data`, which renders the system prompt template.
         first_user_message_data: nil,
-        # Memory layers/entries layered over the baseline cascade inherited from the
-        # selected variation — element-level rules over inherited styles, in CSS terms.
+        # Body param: Memory layers/entries layered over the baseline cascade inherited
+        # from the selected variation — element-level rules over inherited styles, in CSS
+        # terms.
         #
         # Array order is resolution order: EARLIER elements are more specific and are
         # consulted first. Entries pinned via memory_entry_id behave as single-entry
@@ -65,14 +68,14 @@ module Cadenya
         # assignments) must not exceed 10 entries. A request that would produce a larger
         # cascade is rejected with InvalidArgument.
         memory_cascade: nil,
-        # CreateOperationMetadata contains the user-provided fields for creating an
-        # operation. Read-only fields (id, account_id, workspace_id, created_at,
-        # profile_id) are excluded since they are set by the server.
+        # Body param: CreateOperationMetadata contains the user-provided fields for
+        # creating an operation. Read-only fields (id, account_id, workspace_id,
+        # created_at, profile_id) are excluded since they are set by the server.
         metadata: nil,
-        # Secrets that can be used in the headers for tool calls using the secret
-        # interpolation format.
+        # Body param: Secrets that can be used in the headers for tool calls using the
+        # secret interpolation format.
         secrets: nil,
-        # Optional explicit variation selection. Overrides the agent's
+        # Body param: Optional explicit variation selection. Overrides the agent's
         # variation_selection_mode.
         variation_id: nil,
         request_options: {}
@@ -87,7 +90,7 @@ module Cadenya
           request_options: Cadenya::RequestOptions::OrHash
         ).returns(Cadenya::Objective)
       end
-      def retrieve(id, workspace_id:, request_options: {})
+      def retrieve(id, workspace_id: nil, request_options: {})
       end
 
       # Lists all objectives in the workspace
@@ -108,28 +111,30 @@ module Cadenya
         ).returns(Cadenya::Internal::CursorPagination[Cadenya::Objective])
       end
       def list(
-        workspace_id,
-        # Agent ID for filtering
+        # Path param
+        workspace_id: nil,
+        # Query param: Agent ID for filtering
         agent_id: nil,
-        # Filter to objectives produced by a specific AgentSchedule. Accepts canonical
-        # as\_… form or external_id:<value> form.
+        # Query param: Filter to objectives produced by a specific AgentSchedule. Accepts
+        # canonical as\_… form or external_id:<value> form.
         agent_schedule_id: nil,
-        # Pagination cursor from previous response
+        # Query param: Pagination cursor from previous response
         cursor: nil,
-        # When set to true you may use more of your alloted API rate-limit
+        # Query param: When set to true you may use more of your alloted API rate-limit
         include_info: nil,
-        # Filters by metadata labels. Comma-separated key=value pairs, e.g.
+        # Query param: Filters by metadata labels. Comma-separated key=value pairs, e.g.
         # "env=prod,team=ai". A resource matches only if every pair matches exactly (AND
         # semantics).
         labels: nil,
-        # Maximum number of results to return
+        # Query param: Maximum number of results to return
         limit: nil,
-        # Optional filters
+        # Query param: Optional filters
         parent_objective_id: nil,
+        # Query param
         profile_id: nil,
-        # Sort order for results (asc or desc by creation time)
+        # Query param: Sort order for results (asc or desc by creation time)
         sort_order: nil,
-        # Filter by state
+        # Query param: Filter by state
         state: nil,
         request_options: {}
       )
@@ -150,7 +155,7 @@ module Cadenya
         # IDs.
         objective_id,
         # Path param
-        workspace_id:,
+        workspace_id: nil,
         # Body param: Optional reason for cancellation
         reason: nil,
         request_options: {}
@@ -173,7 +178,7 @@ module Cadenya
         # IDs.
         objective_id,
         # Path param
-        workspace_id:,
+        workspace_id: nil,
         # Body param: CompactionConfig defines how context window compaction behaves for
         # objectives using this variation.
         compaction_config: nil,
@@ -185,9 +190,9 @@ module Cadenya
       sig do
         params(
           objective_id: String,
+          message: String,
           workspace_id: String,
           enqueue: T::Boolean,
-          message: String,
           request_options: Cadenya::RequestOptions::OrHash
         ).returns(Cadenya::ObjectiveEvent)
       end
@@ -196,14 +201,14 @@ module Cadenya
         # objective, you can prefix the ID with "external_id:". For example,
         # "external_id:1234567890". Otherwise, the ID assigned by Cadenya should be used.
         objective_id,
+        # Body param: The message to continue an objective that has completed (or you are
+        # enqueing)
+        message:,
         # Path param
-        workspace_id:,
+        workspace_id: nil,
         # Body param: When set to true, the message will be enqueued for when the agent
         # loop is available to process it.
         enqueue: nil,
-        # Body param: The message to continue an objective that has completed (or you are
-        # enqueing)
-        message: nil,
         request_options: {}
       )
       end
@@ -227,7 +232,7 @@ module Cadenya
         # Path param: The objective ID to return windows for
         objective_id,
         # Path param
-        workspace_id:,
+        workspace_id: nil,
         # Query param: Pagination cursor from previous response
         cursor: nil,
         # Query param: When set to true you may use more of your alloted API rate-limit
@@ -261,7 +266,7 @@ module Cadenya
         # Path param: Objective ID for filtering
         objective_id,
         # Path param
-        workspace_id:,
+        workspace_id: nil,
         # Query param: Pagination cursor from previous response
         cursor: nil,
         # Query param: When set to true you may use more of your alloted API rate-limit
@@ -296,7 +301,7 @@ module Cadenya
       def retrieve_diagnostics(
         # The ID of the objective. Supports "external_id:" prefix for external IDs.
         objective_id,
-        workspace_id:,
+        workspace_id: nil,
         request_options: {}
       )
       end
@@ -311,7 +316,7 @@ module Cadenya
       end
       def stream_events_streaming(
         objective_id,
-        workspace_id:,
+        workspace_id: nil,
         request_options: {}
       )
       end

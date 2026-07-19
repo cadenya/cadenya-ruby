@@ -8,7 +8,7 @@ module Cadenya
     class Models
       # Retrieves a model by ID from the workspace
       #
-      # @overload retrieve(id, workspace_id:, request_options: {})
+      # @overload retrieve(id, workspace_id: nil, request_options: {})
       #
       # @param id [String] Model ID
       #
@@ -19,11 +19,11 @@ module Cadenya
       # @return [Cadenya::Models::Model]
       #
       # @see Cadenya::Models::ModelRetrieveParams
-      def retrieve(id, params)
+      def retrieve(id, params = {})
         parsed, options = Cadenya::ModelRetrieveParams.dump_request(params)
         workspace_id =
           parsed.delete(:workspace_id) do
-            raise ArgumentError.new("missing required path argument #{_1}")
+            @client.workspace_id
           end
         @client.request(
           method: :get,
@@ -38,38 +38,42 @@ module Cadenya
       #
       # Lists all models in the workspace
       #
-      # @overload list(workspace_id, ai_provider_key_id: nil, cursor: nil, include_info: nil, is_assigned: nil, labels: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, state: nil, request_options: {})
+      # @overload list(workspace_id: nil, ai_provider_key_id: nil, cursor: nil, include_info: nil, is_assigned: nil, labels: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, state: nil, request_options: {})
       #
-      # @param workspace_id [String] Workspace ID.
+      # @param workspace_id [String] Path param: Workspace ID.
       #
-      # @param ai_provider_key_id [String] Filter to models provisioned on a specific AI provider key. Accepts the
+      # @param ai_provider_key_id [String] Query param: Filter to models provisioned on a specific AI provider key. Accepts
       #
-      # @param cursor [String] Pagination cursor from previous response
+      # @param cursor [String] Query param: Pagination cursor from previous response
       #
-      # @param include_info [Boolean] When true, populate each item's info (e.g. the AI provider), at the cost of
+      # @param include_info [Boolean] Query param: When true, populate each item's info (e.g. the AI provider), at the
       #
-      # @param is_assigned [Boolean] Filter models to only ones assigned to an active agent variation/agent.
+      # @param is_assigned [Boolean] Query param: Filter models to only ones assigned to an active agent variation/ag
       #
-      # @param labels [String] Filters by metadata labels. Comma-separated key=value pairs,
+      # @param labels [String] Query param: Filters by metadata labels. Comma-separated key=value pairs,
       #
-      # @param limit [Integer] Maximum number of results to return
+      # @param limit [Integer] Query param: Maximum number of results to return
       #
-      # @param prefix [String] Filter by a prefix of the model's display name, external id, or id
+      # @param prefix [String] Query param: Filter by a prefix of the model's display name, external id, or id
       #
-      # @param query [String] Free-form search query
+      # @param query [String] Query param: Free-form search query
       #
-      # @param sort_order [String] Sort order for results (asc or desc by creation time)
+      # @param sort_order [String] Query param: Sort order for results (asc or desc by creation time)
       #
-      # @param state [Symbol, Cadenya::Models::ModelListParams::State] Filter by model state
+      # @param state [Symbol, Cadenya::Models::ModelListParams::State] Query param: Filter by model state
       #
       # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
       #
       # @return [Cadenya::Internal::CursorPagination<Cadenya::Models::Model>]
       #
       # @see Cadenya::Models::ModelListParams
-      def list(workspace_id, params = {})
+      def list(params = {})
         parsed, options = Cadenya::ModelListParams.dump_request(params)
         query = Cadenya::Internal::Util.encode_query_params(parsed)
+        workspace_id =
+          parsed.delete(:workspace_id) do
+            @client.workspace_id
+          end
         @client.request(
           method: :get,
           path: ["v1/workspaces/%1$s/models", workspace_id],
@@ -88,7 +92,7 @@ module Cadenya
       # Transitions a model to STATE_DISABLED. Fails while agent variations are still
       # provisioned on the model; use :swapModelOnVariations to move them first.
       #
-      # @overload disable(id, workspace_id:, request_options: {})
+      # @overload disable(id, workspace_id: nil, request_options: {})
       #
       # @param id [String] Model ID
       #
@@ -99,11 +103,11 @@ module Cadenya
       # @return [Cadenya::Models::Model]
       #
       # @see Cadenya::Models::ModelDisableParams
-      def disable(id, params)
+      def disable(id, params = {})
         parsed, options = Cadenya::ModelDisableParams.dump_request(params)
         workspace_id =
           parsed.delete(:workspace_id) do
-            raise ArgumentError.new("missing required path argument #{_1}")
+            @client.workspace_id
           end
         @client.request(
           method: :post,
@@ -116,7 +120,7 @@ module Cadenya
       # Transitions a model to STATE_ENABLED, making it available for agent variations
       # in the workspace
       #
-      # @overload enable(id, workspace_id:, request_options: {})
+      # @overload enable(id, workspace_id: nil, request_options: {})
       #
       # @param id [String] Model ID
       #
@@ -127,11 +131,11 @@ module Cadenya
       # @return [Cadenya::Models::Model]
       #
       # @see Cadenya::Models::ModelEnableParams
-      def enable(id, params)
+      def enable(id, params = {})
         parsed, options = Cadenya::ModelEnableParams.dump_request(params)
         workspace_id =
           parsed.delete(:workspace_id) do
-            raise ArgumentError.new("missing required path argument #{_1}")
+            @client.workspace_id
           end
         @client.request(
           method: :post,
@@ -144,19 +148,23 @@ module Cadenya
       # Reassigns agent variations from one model to another in bulk. Runs
       # asynchronously and returns immediately.
       #
-      # @overload swap(workspace_id, model_swaps: nil, request_options: {})
+      # @overload swap(workspace_id: nil, model_swaps: nil, request_options: {})
       #
-      # @param workspace_id [String] Workspace ID.
+      # @param workspace_id [String] Path param: Workspace ID.
       #
-      # @param model_swaps [Array<Cadenya::Models::ModelSwapParams::ModelSwap>] The swaps to perform.
+      # @param model_swaps [Array<Cadenya::Models::ModelSwapParams::ModelSwap>] Body param: The swaps to perform.
       #
       # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
       #
       # @return [Object]
       #
       # @see Cadenya::Models::ModelSwapParams
-      def swap(workspace_id, params = {})
+      def swap(params = {})
         parsed, options = Cadenya::ModelSwapParams.dump_request(params)
+        workspace_id =
+          parsed.delete(:workspace_id) do
+            @client.workspace_id
+          end
         @client.request(
           method: :post,
           path: ["v1/workspaces/%1$s/models:swapModelOnVariations", workspace_id],

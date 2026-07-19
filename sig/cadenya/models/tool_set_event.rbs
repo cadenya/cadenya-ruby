@@ -3,7 +3,7 @@ module Cadenya
     type tool_set_event =
       {
         metadata: Cadenya::OperationMetadata,
-        event: Cadenya::ToolSetEventData,
+        event: Cadenya::Models::tool_set_event_data,
         info: Cadenya::ToolSetEvent::Info,
         tool_set_id: String
       }
@@ -11,9 +11,11 @@ module Cadenya
     class ToolSetEvent < Cadenya::Internal::Type::BaseModel
       attr_accessor metadata: Cadenya::OperationMetadata
 
-      attr_reader event: Cadenya::ToolSetEventData?
+      attr_reader event: Cadenya::Models::tool_set_event_data?
 
-      def event=: (Cadenya::ToolSetEventData) -> Cadenya::ToolSetEventData
+      def event=: (
+        Cadenya::Models::tool_set_event_data
+      ) -> Cadenya::Models::tool_set_event_data
 
       attr_reader info: Cadenya::ToolSetEvent::Info?
 
@@ -25,14 +27,14 @@ module Cadenya
 
       def initialize: (
         metadata: Cadenya::OperationMetadata,
-        ?event: Cadenya::ToolSetEventData,
+        ?event: Cadenya::Models::tool_set_event_data,
         ?info: Cadenya::ToolSetEvent::Info,
         ?tool_set_id: String
       ) -> void
 
       def to_hash: -> {
         metadata: Cadenya::OperationMetadata,
-        event: Cadenya::ToolSetEventData,
+        event: Cadenya::Models::tool_set_event_data,
         info: Cadenya::ToolSetEvent::Info,
         tool_set_id: String
       }

@@ -1,43 +1,14 @@
 module Cadenya
   module Models
     type tool_set_event_data =
-      {
-        sync_completed: Cadenya::SyncCompleted,
-        sync_failed: Cadenya::SyncFailed,
-        sync_started: Cadenya::SyncStarted,
-        type: String
-      }
+      Cadenya::ToolSetEventDataSyncStarted
+      | Cadenya::ToolSetEventDataSyncCompleted
+      | Cadenya::ToolSetEventDataSyncFailed
 
-    class ToolSetEventData < Cadenya::Internal::Type::BaseModel
-      attr_reader sync_completed: Cadenya::SyncCompleted?
+    module ToolSetEventData
+      extend Cadenya::Internal::Type::Union
 
-      def sync_completed=: (Cadenya::SyncCompleted) -> Cadenya::SyncCompleted
-
-      attr_reader sync_failed: Cadenya::SyncFailed?
-
-      def sync_failed=: (Cadenya::SyncFailed) -> Cadenya::SyncFailed
-
-      attr_reader sync_started: Cadenya::SyncStarted?
-
-      def sync_started=: (Cadenya::SyncStarted) -> Cadenya::SyncStarted
-
-      attr_reader type: String?
-
-      def type=: (String) -> String
-
-      def initialize: (
-        ?sync_completed: Cadenya::SyncCompleted,
-        ?sync_failed: Cadenya::SyncFailed,
-        ?sync_started: Cadenya::SyncStarted,
-        ?type: String
-      ) -> void
-
-      def to_hash: -> {
-        sync_completed: Cadenya::SyncCompleted,
-        sync_failed: Cadenya::SyncFailed,
-        sync_started: Cadenya::SyncStarted,
-        type: String
-      }
+      def self?.variants: -> ::Array[Cadenya::Models::tool_set_event_data]
     end
   end
 end

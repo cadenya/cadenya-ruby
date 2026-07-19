@@ -8,9 +8,9 @@ class Cadenya::Test::Resources::Objectives::ToolCallsTest < Cadenya::Test::Resou
 
     response =
       @cadenya.objectives.tool_calls.retrieve(
-        "toolCallId",
-        workspace_id: "workspaceId",
-        objective_id: "objectiveId"
+        "obj_01HXKD2E5NQM3T9AYWCFQAZGFV",
+        "toolcall_01HXKD2E5NQM3T9AYWCFTANFGV",
+        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
       )
 
     assert_pattern do
@@ -33,7 +33,11 @@ class Cadenya::Test::Resources::Objectives::ToolCallsTest < Cadenya::Test::Resou
   def test_list_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.objectives.tool_calls.list("objectiveId", workspace_id: "workspaceId")
+    response =
+      @cadenya.objectives.tool_calls.list(
+        "obj_01HXKD2E5NQM3T9AYWCFQAZGFV",
+        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
+      )
 
     assert_pattern do
       response => Cadenya::Internal::CursorPagination
@@ -62,9 +66,9 @@ class Cadenya::Test::Resources::Objectives::ToolCallsTest < Cadenya::Test::Resou
 
     response =
       @cadenya.objectives.tool_calls.approve(
-        "toolCallId",
-        workspace_id: "workspaceId",
-        objective_id: "objectiveId"
+        "obj_01HXKD2E5NQM3T9AYWCFQAZGFV",
+        "toolcall_01HXKD2E5NQM3T9AYWCFTANFGV",
+        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
       )
 
     assert_pattern do
@@ -87,9 +91,9 @@ class Cadenya::Test::Resources::Objectives::ToolCallsTest < Cadenya::Test::Resou
 
     response =
       @cadenya.objectives.tool_calls.deny(
-        "toolCallId",
-        workspace_id: "workspaceId",
-        objective_id: "objectiveId"
+        "obj_01HXKD2E5NQM3T9AYWCFQAZGFV",
+        "toolcall_01HXKD2E5NQM3T9AYWCFTANFGV",
+        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
       )
 
     assert_pattern do
@@ -112,10 +116,10 @@ class Cadenya::Test::Resources::Objectives::ToolCallsTest < Cadenya::Test::Resou
 
     response =
       @cadenya.objectives.tool_calls.set_content(
-        "toolCallId",
-        workspace_id: "workspaceId",
-        objective_id: "objectiveId",
-        content: [{}]
+        "obj_01HXKD2E5NQM3T9AYWCFQAZGFV",
+        "toolcall_01HXKD2E5NQM3T9AYWCFTANFGV",
+        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q",
+        content: [{text: {text: "text"}, type: :text}]
       )
 
     assert_pattern do

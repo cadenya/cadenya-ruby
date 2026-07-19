@@ -2,21 +2,21 @@ module Cadenya
   module Resources
     class AIProviderKeys
       def create: (
-        String workspace_id,
         metadata: Cadenya::CreateResourceMetadata,
         spec: Cadenya::AIProviderKeySpec,
+        ?workspace_id: String,
         ?request_options: Cadenya::request_opts
       ) -> Cadenya::AIProviderKey
 
       def retrieve: (
         String id,
-        workspace_id: String,
+        ?workspace_id: String,
         ?request_options: Cadenya::request_opts
       ) -> Cadenya::AIProviderKey
 
       def update: (
         String id,
-        workspace_id: String,
+        ?workspace_id: String,
         ?metadata: Cadenya::UpdateResourceMetadata,
         ?spec: Cadenya::AIProviderKeySpec,
         ?update_mask: String,
@@ -24,7 +24,7 @@ module Cadenya
       ) -> Cadenya::AIProviderKey
 
       def list: (
-        String workspace_id,
+        ?workspace_id: String,
         ?cursor: String,
         ?include_info: bool,
         ?labels: String,
@@ -38,7 +38,7 @@ module Cadenya
 
       def delete: (
         String id,
-        workspace_id: String,
+        ?workspace_id: String,
         ?request_options: Cadenya::request_opts
       ) -> nil
 

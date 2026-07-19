@@ -15,8 +15,11 @@ module Cadenya
             )
           end
 
-        sig { returns(String) }
-        attr_accessor :workspace_id
+        sig { returns(T.nilable(String)) }
+        attr_reader :workspace_id
+
+        sig { params(workspace_id: String).void }
+        attr_writer :workspace_id
 
         sig { returns(String) }
         attr_accessor :objective_id
@@ -40,21 +43,21 @@ module Cadenya
 
         sig do
           params(
-            workspace_id: String,
             objective_id: String,
             data: Cadenya::Objectives::ObjectiveFeedbackData::OrHash,
             metadata: Cadenya::CreateOperationMetadata::OrHash,
+            workspace_id: String,
             request_options: Cadenya::RequestOptions::OrHash
           ).returns(T.attached_class)
         end
         def self.new(
-          workspace_id:,
           objective_id:,
           data:,
           # CreateOperationMetadata contains the user-provided fields for creating an
           # operation. Read-only fields (id, account_id, workspace_id, created_at,
           # profile_id) are excluded since they are set by the server.
           metadata:,
+          workspace_id: nil,
           request_options: {}
         )
         end

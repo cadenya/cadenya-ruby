@@ -18,7 +18,7 @@ module Cadenya
         # Model ID
         id,
         # Workspace ID.
-        workspace_id:,
+        workspace_id: nil,
         request_options: {}
       )
       end
@@ -41,35 +41,35 @@ module Cadenya
         ).returns(Cadenya::Internal::CursorPagination[Cadenya::Model])
       end
       def list(
-        # Workspace ID.
-        workspace_id,
-        # Filter to models provisioned on a specific AI provider key. Accepts the key's id
-        # or an "external_id:"-prefixed slug.
+        # Path param: Workspace ID.
+        workspace_id: nil,
+        # Query param: Filter to models provisioned on a specific AI provider key. Accepts
+        # the key's id or an "external_id:"-prefixed slug.
         ai_provider_key_id: nil,
-        # Pagination cursor from previous response
+        # Query param: Pagination cursor from previous response
         cursor: nil,
-        # When true, populate each item's info (e.g. the AI provider), at the cost of
-        # extra lookups.
+        # Query param: When true, populate each item's info (e.g. the AI provider), at the
+        # cost of extra lookups.
         include_info: nil,
-        # Filter models to only ones assigned to an active agent variation/agent. Draft
-        # agents count as assigned; archived agents do not. Assignment does not imply
-        # recent traffic — see ModelInfo.last_used_at for that.
+        # Query param: Filter models to only ones assigned to an active agent
+        # variation/agent. Draft agents count as assigned; archived agents do not.
+        # Assignment does not imply recent traffic — see ModelInfo.last_used_at for that.
         is_assigned: nil,
-        # Filters by metadata labels. Comma-separated key=value pairs, e.g.
+        # Query param: Filters by metadata labels. Comma-separated key=value pairs, e.g.
         # "env=prod,team=ai". A resource matches only if every pair matches exactly (AND
         # semantics).
         labels: nil,
-        # Maximum number of results to return
+        # Query param: Maximum number of results to return
         limit: nil,
-        # Filter by a prefix of the model's display name, external id, or id
+        # Query param: Filter by a prefix of the model's display name, external id, or id
         # (case-insensitive). A model's external id is the form used in
         # modelConfig.modelId, so a caller holding that can narrow the list by it.
         prefix: nil,
-        # Free-form search query
+        # Query param: Free-form search query
         query: nil,
-        # Sort order for results (asc or desc by creation time)
+        # Query param: Sort order for results (asc or desc by creation time)
         sort_order: nil,
-        # Filter by model state
+        # Query param: Filter by model state
         state: nil,
         request_options: {}
       )
@@ -88,7 +88,7 @@ module Cadenya
         # Model ID
         id,
         # Workspace ID.
-        workspace_id:,
+        workspace_id: nil,
         request_options: {}
       )
       end
@@ -106,7 +106,7 @@ module Cadenya
         # Model ID
         id,
         # Workspace ID.
-        workspace_id:,
+        workspace_id: nil,
         request_options: {}
       )
       end
@@ -121,9 +121,9 @@ module Cadenya
         ).returns(T.anything)
       end
       def swap(
-        # Workspace ID.
-        workspace_id,
-        # The swaps to perform.
+        # Path param: Workspace ID.
+        workspace_id: nil,
+        # Body param: The swaps to perform.
         model_swaps: nil,
         request_options: {}
       )

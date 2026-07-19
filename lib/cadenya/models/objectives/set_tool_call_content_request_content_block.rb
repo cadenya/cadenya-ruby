@@ -3,29 +3,21 @@
 module Cadenya
   module Models
     module Objectives
-      class SetToolCallContentRequestContentBlock < Cadenya::Internal::Type::BaseModel
-        # @!attribute audio
-        #
-        #   @return [Cadenya::Models::Objectives::SetToolCallContentRequestAudioBlock, nil]
-        optional :audio, -> { Cadenya::Objectives::SetToolCallContentRequestAudioBlock }
+      # ContentBlock is a single block of tool call content supplied on input. Exactly
+      # one of the variants is set.
+      module SetToolCallContentRequestContentBlock
+        extend Cadenya::Internal::Type::Union
 
-        # @!attribute image
-        #
-        #   @return [Cadenya::Models::Objectives::SetToolCallContentRequestImageBlock, nil]
-        optional :image, -> { Cadenya::Objectives::SetToolCallContentRequestImageBlock }
+        discriminator :type
 
-        # @!attribute text
-        #
-        #   @return [Cadenya::Models::Objectives::SetToolCallContentRequestTextBlock, nil]
-        optional :text, -> { Cadenya::Objectives::SetToolCallContentRequestTextBlock }
+        variant :text, -> { Cadenya::Objectives::SetToolCallContentRequestContentBlockText }
 
-        # @!method initialize(audio: nil, image: nil, text: nil)
-        #   ContentBlock is a single block of tool call content supplied on input. Exactly
-        #   one of the variants is set.
-        #
-        #   @param audio [Cadenya::Models::Objectives::SetToolCallContentRequestAudioBlock]
-        #   @param image [Cadenya::Models::Objectives::SetToolCallContentRequestImageBlock]
-        #   @param text [Cadenya::Models::Objectives::SetToolCallContentRequestTextBlock]
+        variant :image, -> { Cadenya::Objectives::SetToolCallContentRequestContentBlockImage }
+
+        variant :audio, -> { Cadenya::Objectives::SetToolCallContentRequestContentBlockAudio }
+
+        # @!method self.variants
+        #   @return [Array(Cadenya::Models::Objectives::SetToolCallContentRequestContentBlockText, Cadenya::Models::Objectives::SetToolCallContentRequestContentBlockImage, Cadenya::Models::Objectives::SetToolCallContentRequestContentBlockAudio)]
       end
     end
   end

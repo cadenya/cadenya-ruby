@@ -9,8 +9,8 @@ module Cadenya
 
       # @!attribute workspace_id
       #
-      #   @return [String]
-      required :workspace_id, String
+      #   @return [String, nil]
+      optional :workspace_id, String
 
       # @!attribute metadata
       #   CreateResourceMetadata contains the user-provided fields for creating a
@@ -34,15 +34,15 @@ module Cadenya
                -> { Cadenya::AgentCreateParams::DefaultVariation },
                api_name: :defaultVariation
 
-      # @!method initialize(workspace_id:, metadata:, spec:, default_variation: nil, request_options: {})
+      # @!method initialize(metadata:, spec:, workspace_id: nil, default_variation: nil, request_options: {})
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::AgentCreateParams} for more details.
-      #
-      #   @param workspace_id [String]
       #
       #   @param metadata [Cadenya::Models::CreateResourceMetadata] CreateResourceMetadata contains the user-provided fields for creating
       #
       #   @param spec [Cadenya::Models::AgentSpec] Agent specification (user-provided configuration)
+      #
+      #   @param workspace_id [String]
       #
       #   @param default_variation [Cadenya::Models::AgentCreateParams::DefaultVariation] Create agent variation request
       #

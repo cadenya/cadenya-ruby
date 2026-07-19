@@ -9,13 +9,19 @@ module Cadenya
 
       # @!attribute workspace_id
       #
-      #   @return [String]
-      required :workspace_id, String
+      #   @return [String, nil]
+      optional :workspace_id, String
 
       # @!attribute objective_id
       #
       #   @return [String]
       required :objective_id, String
+
+      # @!attribute message
+      #   The message to continue an objective that has completed (or you are enqueing)
+      #
+      #   @return [String]
+      required :message, String
 
       # @!attribute enqueue
       #   When set to true, the message will be enqueued for when the agent loop is
@@ -24,23 +30,17 @@ module Cadenya
       #   @return [Boolean, nil]
       optional :enqueue, Cadenya::Internal::Type::Boolean
 
-      # @!attribute message
-      #   The message to continue an objective that has completed (or you are enqueing)
-      #
-      #   @return [String, nil]
-      optional :message, String
-
-      # @!method initialize(workspace_id:, objective_id:, enqueue: nil, message: nil, request_options: {})
+      # @!method initialize(objective_id:, message:, workspace_id: nil, enqueue: nil, request_options: {})
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::ObjectiveContinueParams} for more details.
       #
-      #   @param workspace_id [String]
-      #
       #   @param objective_id [String]
       #
-      #   @param enqueue [Boolean] When set to true, the message will be enqueued for when the agent loop is availa
-      #
       #   @param message [String] The message to continue an objective that has completed (or you are enqueing)
+      #
+      #   @param workspace_id [String]
+      #
+      #   @param enqueue [Boolean] When set to true, the message will be enqueued for when the agent loop is availa
       #
       #   @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}]
     end

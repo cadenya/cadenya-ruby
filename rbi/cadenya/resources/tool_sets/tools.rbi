@@ -13,9 +13,9 @@ module Cadenya
         sig do
           params(
             tool_set_id: String,
-            workspace_id: String,
             metadata: Cadenya::CreateResourceMetadata::OrHash,
             spec: Cadenya::ToolSets::ToolSpec::OrHash,
+            workspace_id: String,
             request_options: Cadenya::RequestOptions::OrHash
           ).returns(Cadenya::ToolSets::Tool)
         end
@@ -23,8 +23,6 @@ module Cadenya
           # Path param: Tool set ID. Accepts the canonical ts\_… form or the
           # external_id:<value> form.
           tool_set_id,
-          # Path param: Workspace ID.
-          workspace_id:,
           # Body param: CreateResourceMetadata contains the user-provided fields for
           # creating a workspace-scoped resource. Read-only fields (id, account_id,
           # workspace_id, profile_id, created_at) are excluded since they are set by the
@@ -32,6 +30,8 @@ module Cadenya
           metadata:,
           # Body param
           spec:,
+          # Path param: Workspace ID.
+          workspace_id: nil,
           request_options: {}
         )
         end
@@ -39,19 +39,19 @@ module Cadenya
         # Retrieves a tool by ID from the workspace
         sig do
           params(
+            tool_set_id: String,
             id: String,
             workspace_id: String,
-            tool_set_id: String,
             request_options: Cadenya::RequestOptions::OrHash
           ).returns(Cadenya::ToolSets::Tool)
         end
         def retrieve(
+          # Tool set ID. Accepts the canonical ts\_… form or the external_id:<value> form.
+          tool_set_id,
           # Tool ID. Accepts the canonical tool\_… form or the external_id:<value> form.
           id,
           # Workspace ID.
-          workspace_id:,
-          # Tool set ID. Accepts the canonical ts\_… form or the external_id:<value> form.
-          tool_set_id:,
+          workspace_id: nil,
           request_options: {}
         )
         end
@@ -59,9 +59,9 @@ module Cadenya
         # Updates a tool in the tool set
         sig do
           params(
+            tool_set_id: String,
             id: String,
             workspace_id: String,
-            tool_set_id: String,
             metadata: Cadenya::UpdateResourceMetadata::OrHash,
             spec: Cadenya::ToolSets::ToolSpec::OrHash,
             update_mask: String,
@@ -69,14 +69,14 @@ module Cadenya
           ).returns(Cadenya::ToolSets::Tool)
         end
         def update(
+          # Path param: Tool set ID. Accepts the canonical ts\_… form or the
+          # external_id:<value> form.
+          tool_set_id,
           # Path param: Tool ID. Accepts the canonical tool\_… form or the
           # external_id:<value> form.
           id,
           # Path param: Workspace ID.
-          workspace_id:,
-          # Path param: Tool set ID. Accepts the canonical ts\_… form or the
-          # external_id:<value> form.
-          tool_set_id:,
+          workspace_id: nil,
           # Body param: UpdateResourceMetadata contains the user-provided fields for
           # updating a workspace-scoped resource. Read-only fields (id, account_id,
           # workspace_id, profile_id, created_at) are excluded since they are set by the
@@ -116,7 +116,7 @@ module Cadenya
           # external_id:<value> form.
           tool_set_id,
           # Path param: Workspace ID.
-          workspace_id:,
+          workspace_id: nil,
           # Query param: Pagination cursor from previous response
           cursor: nil,
           # Query param: When set to true you may use more of your alloted API rate-limit
@@ -148,19 +148,19 @@ module Cadenya
         # Deletes a tool in the tool set
         sig do
           params(
+            tool_set_id: String,
             id: String,
             workspace_id: String,
-            tool_set_id: String,
             request_options: Cadenya::RequestOptions::OrHash
           ).void
         end
         def delete(
+          # Tool set ID. Accepts the canonical ts\_… form or the external_id:<value> form.
+          tool_set_id,
           # Tool ID. Accepts the canonical tool\_… form or the external_id:<value> form.
           id,
           # Workspace ID.
-          workspace_id:,
-          # Tool set ID. Accepts the canonical ts\_… form or the external_id:<value> form.
-          tool_set_id:,
+          workspace_id: nil,
           request_options: {}
         )
         end
@@ -169,19 +169,19 @@ module Cadenya
         # tool is currently assigned to agent variations.
         sig do
           params(
+            tool_set_id: String,
             id: String,
             workspace_id: String,
-            tool_set_id: String,
             request_options: Cadenya::RequestOptions::OrHash
           ).returns(Cadenya::ToolSets::Tool)
         end
         def omit(
+          # Tool set ID. Accepts the canonical ts\_… form or the external_id:<value> form.
+          tool_set_id,
           # Tool ID. Accepts the canonical tool\_… form or the external_id:<value> form.
           id,
           # Workspace ID.
-          workspace_id:,
-          # Tool set ID. Accepts the canonical ts\_… form or the external_id:<value> form.
-          tool_set_id:,
+          workspace_id: nil,
           request_options: {}
         )
         end
@@ -190,19 +190,19 @@ module Cadenya
         # next sync may omit the tool again if its filters still exclude it.
         sig do
           params(
+            tool_set_id: String,
             id: String,
             workspace_id: String,
-            tool_set_id: String,
             request_options: Cadenya::RequestOptions::OrHash
           ).returns(Cadenya::ToolSets::Tool)
         end
         def restore(
+          # Tool set ID. Accepts the canonical ts\_… form or the external_id:<value> form.
+          tool_set_id,
           # Tool ID. Accepts the canonical tool\_… form or the external_id:<value> form.
           id,
           # Workspace ID.
-          workspace_id:,
-          # Tool set ID. Accepts the canonical ts\_… form or the external_id:<value> form.
-          tool_set_id:,
+          workspace_id: nil,
           request_options: {}
         )
         end

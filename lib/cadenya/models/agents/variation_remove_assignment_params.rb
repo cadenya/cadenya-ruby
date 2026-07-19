@@ -10,8 +10,8 @@ module Cadenya
 
         # @!attribute workspace_id
         #
-        #   @return [String]
-        required :workspace_id, String
+        #   @return [String, nil]
+        optional :workspace_id, String
 
         # @!attribute agent_id
         #
@@ -28,11 +28,11 @@ module Cadenya
         #   @return [String]
         required :id, String
 
-        # @!method initialize(workspace_id:, agent_id:, variation_id:, id:, request_options: {})
-        #   @param workspace_id [String]
+        # @!method initialize(agent_id:, variation_id:, id:, workspace_id: nil, request_options: {})
         #   @param agent_id [String]
         #   @param variation_id [String]
         #   @param id [String]
+        #   @param workspace_id [String]
         #   @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}]
       end
     end

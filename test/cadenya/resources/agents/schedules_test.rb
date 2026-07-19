@@ -8,8 +8,8 @@ class Cadenya::Test::Resources::Agents::SchedulesTest < Cadenya::Test::ResourceT
 
     response =
       @cadenya.agents.schedules.create(
-        "agentId",
-        workspace_id: "workspaceId",
+        "agent_01HXKD2E5NQM3T9AYWCFMGWT9Y",
+        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q",
         metadata: {name: "name"},
         spec: {schedule: {}}
       )
@@ -31,7 +31,12 @@ class Cadenya::Test::Resources::Agents::SchedulesTest < Cadenya::Test::ResourceT
   def test_retrieve_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.agents.schedules.retrieve("id", workspace_id: "workspaceId", agent_id: "agentId")
+    response =
+      @cadenya.agents.schedules.retrieve(
+        "agent_01HXKD2E5NQM3T9AYWCFMGWT9Y",
+        "as_01HXKD2E5NQM3T9AYWCFMZZZBD",
+        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
+      )
 
     assert_pattern do
       response => Cadenya::Agents::AgentSchedule
@@ -50,7 +55,12 @@ class Cadenya::Test::Resources::Agents::SchedulesTest < Cadenya::Test::ResourceT
   def test_update_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.agents.schedules.update("id", workspace_id: "workspaceId", agent_id: "agentId")
+    response =
+      @cadenya.agents.schedules.update(
+        "agent_01HXKD2E5NQM3T9AYWCFMGWT9Y",
+        "as_01HXKD2E5NQM3T9AYWCFMZZZBD",
+        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
+      )
 
     assert_pattern do
       response => Cadenya::Agents::AgentSchedule
@@ -69,7 +79,11 @@ class Cadenya::Test::Resources::Agents::SchedulesTest < Cadenya::Test::ResourceT
   def test_list_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.agents.schedules.list("agentId", workspace_id: "workspaceId")
+    response =
+      @cadenya.agents.schedules.list(
+        "agent_01HXKD2E5NQM3T9AYWCFMGWT9Y",
+        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
+      )
 
     assert_pattern do
       response => Cadenya::Internal::CursorPagination
@@ -95,7 +109,12 @@ class Cadenya::Test::Resources::Agents::SchedulesTest < Cadenya::Test::ResourceT
   def test_delete_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.agents.schedules.delete("id", workspace_id: "workspaceId", agent_id: "agentId")
+    response =
+      @cadenya.agents.schedules.delete(
+        "agent_01HXKD2E5NQM3T9AYWCFMGWT9Y",
+        "as_01HXKD2E5NQM3T9AYWCFMZZZBD",
+        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
+      )
 
     assert_pattern do
       response => nil
@@ -105,7 +124,12 @@ class Cadenya::Test::Resources::Agents::SchedulesTest < Cadenya::Test::ResourceT
   def test_archive_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.agents.schedules.archive("id", workspace_id: "workspaceId", agent_id: "agentId")
+    response =
+      @cadenya.agents.schedules.archive(
+        "agent_01HXKD2E5NQM3T9AYWCFMGWT9Y",
+        "as_01HXKD2E5NQM3T9AYWCFMZZZBD",
+        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
+      )
 
     assert_pattern do
       response => Cadenya::Agents::AgentSchedule
@@ -124,7 +148,12 @@ class Cadenya::Test::Resources::Agents::SchedulesTest < Cadenya::Test::ResourceT
   def test_pause_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.agents.schedules.pause("id", workspace_id: "workspaceId", agent_id: "agentId")
+    response =
+      @cadenya.agents.schedules.pause(
+        "agent_01HXKD2E5NQM3T9AYWCFMGWT9Y",
+        "as_01HXKD2E5NQM3T9AYWCFMZZZBD",
+        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
+      )
 
     assert_pattern do
       response => Cadenya::Agents::AgentSchedule
@@ -143,7 +172,12 @@ class Cadenya::Test::Resources::Agents::SchedulesTest < Cadenya::Test::ResourceT
   def test_resume_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.agents.schedules.resume("id", workspace_id: "workspaceId", agent_id: "agentId")
+    response =
+      @cadenya.agents.schedules.resume(
+        "agent_01HXKD2E5NQM3T9AYWCFMGWT9Y",
+        "as_01HXKD2E5NQM3T9AYWCFMZZZBD",
+        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
+      )
 
     assert_pattern do
       response => Cadenya::Agents::AgentSchedule

@@ -9,8 +9,8 @@ module Cadenya
 
       # @!attribute workspace_id
       #
-      #   @return [String]
-      required :workspace_id, String
+      #   @return [String, nil]
+      optional :workspace_id, String
 
       # @!attribute agent_id
       #
@@ -97,15 +97,15 @@ module Cadenya
       #   @return [String, nil]
       optional :variation_id, String, api_name: :variationId
 
-      # @!method initialize(workspace_id:, agent_id:, system_prompt_data:, episodic_memory: nil, first_user_message: nil, first_user_message_data: nil, memory_cascade: nil, metadata: nil, secrets: nil, variation_id: nil, request_options: {})
+      # @!method initialize(agent_id:, system_prompt_data:, workspace_id: nil, episodic_memory: nil, first_user_message: nil, first_user_message_data: nil, memory_cascade: nil, metadata: nil, secrets: nil, variation_id: nil, request_options: {})
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::ObjectiveCreateParams} for more details.
-      #
-      #   @param workspace_id [String]
       #
       #   @param agent_id [String]
       #
       #   @param system_prompt_data [Hash{Symbol=>Object}] Arbitrary data rendered into the selected variation's system_prompt_template
+      #
+      #   @param workspace_id [String]
       #
       #   @param episodic_memory [Cadenya::Models::ObjectiveCreateParams::EpisodicMemory] Episodic is used to configure the episodic memory for the objective
       #
@@ -128,10 +128,10 @@ module Cadenya
         #   The caller-supplied episodic key. Objectives created with the same key (for the
         #   same agent) share one episodic memory layer.
         #
-        #   @return [String, nil]
-        optional :key, String
+        #   @return [String]
+        required :key, String
 
-        # @!method initialize(key: nil)
+        # @!method initialize(key:)
         #   Some parameter documentations has been truncated, see
         #   {Cadenya::Models::ObjectiveCreateParams::EpisodicMemory} for more details.
         #

@@ -1,0 +1,35 @@
+module Cadenya
+  module Models
+    type objective_event_data_context_window_compacted =
+      {
+        context_window_compacted: Cadenya::ContextWindowCompacted,
+        type: Cadenya::Models::ObjectiveEventDataContextWindowCompacted::type_
+      }
+
+    class ObjectiveEventDataContextWindowCompacted < Cadenya::Internal::Type::BaseModel
+      attr_accessor context_window_compacted: Cadenya::ContextWindowCompacted
+
+      attr_accessor type: Cadenya::Models::ObjectiveEventDataContextWindowCompacted::type_
+
+      def initialize: (
+        context_window_compacted: Cadenya::ContextWindowCompacted,
+        type: Cadenya::Models::ObjectiveEventDataContextWindowCompacted::type_
+      ) -> void
+
+      def to_hash: -> {
+        context_window_compacted: Cadenya::ContextWindowCompacted,
+        type: Cadenya::Models::ObjectiveEventDataContextWindowCompacted::type_
+      }
+
+      type type_ = :contextWindowCompacted
+
+      module Type
+        extend Cadenya::Internal::Type::Enum
+
+        CONTEXT_WINDOW_COMPACTED: :contextWindowCompacted
+
+        def self?.values: -> ::Array[Cadenya::Models::ObjectiveEventDataContextWindowCompacted::type_]
+      end
+    end
+  end
+end

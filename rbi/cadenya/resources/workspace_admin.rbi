@@ -54,7 +54,7 @@ module Cadenya
       end
       def retrieve(
         # Workspace ID to retrieve (path).
-        workspace_id,
+        workspace_id: nil,
         request_options: {}
       )
       end
@@ -70,14 +70,15 @@ module Cadenya
         ).returns(Cadenya::Workspace)
       end
       def update(
-        # Workspace ID to update (path).
-        workspace_id,
-        # UpdateAccountResourceMetadata contains the user-provided fields for updating an
-        # account-scoped resource. Read-only fields (id, account_id, profile_id) are
-        # excluded since they are set by the server.
+        # Path param: Workspace ID to update (path).
+        workspace_id: nil,
+        # Body param: UpdateAccountResourceMetadata contains the user-provided fields for
+        # updating an account-scoped resource. Read-only fields (id, account_id,
+        # profile_id) are excluded since they are set by the server.
         metadata: nil,
+        # Body param
         spec: nil,
-        # Fields to update.
+        # Body param: Fields to update.
         update_mask: nil,
         request_options: {}
       )
@@ -122,7 +123,7 @@ module Cadenya
       end
       def archive(
         # Workspace ID to archive (path).
-        workspace_id,
+        workspace_id: nil,
         request_options: {}
       )
       end

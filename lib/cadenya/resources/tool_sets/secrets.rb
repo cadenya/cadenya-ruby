@@ -14,16 +14,16 @@ module Cadenya
         #
         # Creates a new secret scoped to the tool set
         #
-        # @overload create(tool_set_id, workspace_id:, metadata:, spec:, request_options: {})
+        # @overload create(tool_set_id, metadata:, spec:, workspace_id: nil, request_options: {})
         #
         # @param tool_set_id [String] Path param: The tool set that will own this secret. Accepts the canonical ts\_…
         # f
         #
-        # @param workspace_id [String] Path param: The workspace that owns the tool set.
-        #
         # @param metadata [Cadenya::Models::CreateResourceMetadata] Body param: CreateResourceMetadata contains the user-provided fields for creatin
         #
         # @param spec [Cadenya::Models::ToolSets::ToolSetSecretSpec] Body param
+        #
+        # @param workspace_id [String] Path param: The workspace that owns the tool set.
         #
         # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
         #
@@ -34,7 +34,7 @@ module Cadenya
           parsed, options = Cadenya::ToolSets::SecretCreateParams.dump_request(params)
           workspace_id =
             parsed.delete(:workspace_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
+              @client.workspace_id
             end
           @client.request(
             method: :post,
@@ -50,28 +50,24 @@ module Cadenya
         #
         # Retrieves a tool set secret by ID from the tool set
         #
-        # @overload retrieve(id, workspace_id:, tool_set_id:, request_options: {})
+        # @overload retrieve(tool_set_id, id, workspace_id: nil, request_options: {})
+        #
+        # @param tool_set_id [String] The tool set the secret belongs to. Accepts the canonical ts\_… form
         #
         # @param id [String] The secret to retrieve.
         #
         # @param workspace_id [String] The workspace that owns the tool set.
-        #
-        # @param tool_set_id [String] The tool set the secret belongs to. Accepts the canonical ts\_… form
         #
         # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
         #
         # @return [Cadenya::Models::ToolSets::ToolSetSecret]
         #
         # @see Cadenya::Models::ToolSets::SecretRetrieveParams
-        def retrieve(id, params)
+        def retrieve(tool_set_id, id, params = {})
           parsed, options = Cadenya::ToolSets::SecretRetrieveParams.dump_request(params)
           workspace_id =
             parsed.delete(:workspace_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
-            end
-          tool_set_id =
-            parsed.delete(:tool_set_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
+              @client.workspace_id
             end
           @client.request(
             method: :get,
@@ -86,13 +82,13 @@ module Cadenya
         #
         # Updates a secret scoped to the tool set
         #
-        # @overload update(id, workspace_id:, tool_set_id:, metadata: nil, spec: nil, update_mask: nil, request_options: {})
+        # @overload update(tool_set_id, id, workspace_id: nil, metadata: nil, spec: nil, update_mask: nil, request_options: {})
+        #
+        # @param tool_set_id [String] Path param: The tool set the secret belongs to. Accepts the canonical ts\_… form
         #
         # @param id [String] Path param: The secret to update.
         #
         # @param workspace_id [String] Path param: The workspace that owns the tool set.
-        #
-        # @param tool_set_id [String] Path param: The tool set the secret belongs to. Accepts the canonical ts\_… form
         #
         # @param metadata [Cadenya::Models::UpdateResourceMetadata] Body param: UpdateResourceMetadata contains the user-provided fields for updatin
         #
@@ -105,15 +101,11 @@ module Cadenya
         # @return [Cadenya::Models::ToolSets::ToolSetSecret]
         #
         # @see Cadenya::Models::ToolSets::SecretUpdateParams
-        def update(id, params)
+        def update(tool_set_id, id, params = {})
           parsed, options = Cadenya::ToolSets::SecretUpdateParams.dump_request(params)
           workspace_id =
             parsed.delete(:workspace_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
-            end
-          tool_set_id =
-            parsed.delete(:tool_set_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
+              @client.workspace_id
             end
           @client.request(
             method: :patch,
@@ -129,7 +121,7 @@ module Cadenya
         #
         # Lists all secrets scoped to the tool set
         #
-        # @overload list(tool_set_id, workspace_id:, cursor: nil, include_info: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, request_options: {})
+        # @overload list(tool_set_id, workspace_id: nil, cursor: nil, include_info: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, request_options: {})
         #
         # @param tool_set_id [String] Path param: The tool set whose secrets will be listed. Accepts the canonical
         # ts\_
@@ -153,12 +145,12 @@ module Cadenya
         # @return [Cadenya::Internal::CursorPagination<Cadenya::Models::ToolSets::ToolSetSecret>]
         #
         # @see Cadenya::Models::ToolSets::SecretListParams
-        def list(tool_set_id, params)
+        def list(tool_set_id, params = {})
           parsed, options = Cadenya::ToolSets::SecretListParams.dump_request(params)
           query = Cadenya::Internal::Util.encode_query_params(parsed)
           workspace_id =
             parsed.delete(:workspace_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
+              @client.workspace_id
             end
           @client.request(
             method: :get,
@@ -175,28 +167,24 @@ module Cadenya
         #
         # Deletes a secret scoped to the tool set
         #
-        # @overload delete(id, workspace_id:, tool_set_id:, request_options: {})
+        # @overload delete(tool_set_id, id, workspace_id: nil, request_options: {})
+        #
+        # @param tool_set_id [String] The tool set the secret belongs to. Accepts the canonical ts\_… form
         #
         # @param id [String] The secret to delete.
         #
         # @param workspace_id [String] The workspace that owns the tool set.
-        #
-        # @param tool_set_id [String] The tool set the secret belongs to. Accepts the canonical ts\_… form
         #
         # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
         #
         # @return [nil]
         #
         # @see Cadenya::Models::ToolSets::SecretDeleteParams
-        def delete(id, params)
+        def delete(tool_set_id, id, params = {})
           parsed, options = Cadenya::ToolSets::SecretDeleteParams.dump_request(params)
           workspace_id =
             parsed.delete(:workspace_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
-            end
-          tool_set_id =
-            parsed.delete(:tool_set_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
+              @client.workspace_id
             end
           @client.request(
             method: :delete,

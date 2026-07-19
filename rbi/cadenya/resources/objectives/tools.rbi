@@ -23,7 +23,7 @@ module Cadenya
           # IDs.
           objective_id,
           # Path param
-          workspace_id:,
+          workspace_id: nil,
           # Query param: Pagination cursor from previous response
           cursor: nil,
           # Query param: Maximum number of results to return

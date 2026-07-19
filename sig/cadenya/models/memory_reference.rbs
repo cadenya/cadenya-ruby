@@ -1,22 +1,20 @@
 module Cadenya
   module Models
-    type memory_reference = { memory_entry_id: String, memory_layer_id: String }
+    type memory_reference = { memory_layer_id: String, memory_entry_id: String }
 
     class MemoryReference < Cadenya::Internal::Type::BaseModel
+      attr_accessor memory_layer_id: String
+
       attr_reader memory_entry_id: String?
 
       def memory_entry_id=: (String) -> String
 
-      attr_reader memory_layer_id: String?
-
-      def memory_layer_id=: (String) -> String
-
       def initialize: (
-        ?memory_entry_id: String,
-        ?memory_layer_id: String
+        memory_layer_id: String,
+        ?memory_entry_id: String
       ) -> void
 
-      def to_hash: -> { memory_entry_id: String, memory_layer_id: String }
+      def to_hash: -> { memory_layer_id: String, memory_entry_id: String }
     end
   end
 end

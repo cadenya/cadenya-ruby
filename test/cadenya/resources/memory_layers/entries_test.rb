@@ -8,10 +8,10 @@ class Cadenya::Test::Resources::MemoryLayers::EntriesTest < Cadenya::Test::Resou
 
     response =
       @cadenya.memory_layers.entries.create(
-        "memoryLayerId",
-        workspace_id: "workspaceId",
+        "memlyr_01HXKD2E5NQM3T9AYWCFFFBMJH",
+        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q",
         metadata: {name: "name"},
-        spec: {key: "key"}
+        spec: {content: "content", type: :content}
       )
 
     assert_pattern do
@@ -33,9 +33,9 @@ class Cadenya::Test::Resources::MemoryLayers::EntriesTest < Cadenya::Test::Resou
 
     response =
       @cadenya.memory_layers.entries.retrieve(
-        "id",
-        workspace_id: "workspaceId",
-        memory_layer_id: "memoryLayerId"
+        "memlyr_01HXKD2E5NQM3T9AYWCFFFBMJH",
+        "mementry_01HXKD2E5NQM3T9AYWCF5E52Z0",
+        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
       )
 
     assert_pattern do
@@ -57,9 +57,9 @@ class Cadenya::Test::Resources::MemoryLayers::EntriesTest < Cadenya::Test::Resou
 
     response =
       @cadenya.memory_layers.entries.update(
-        "id",
-        workspace_id: "workspaceId",
-        memory_layer_id: "memoryLayerId"
+        "memlyr_01HXKD2E5NQM3T9AYWCFFFBMJH",
+        "mementry_01HXKD2E5NQM3T9AYWCF5E52Z0",
+        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
       )
 
     assert_pattern do
@@ -79,7 +79,11 @@ class Cadenya::Test::Resources::MemoryLayers::EntriesTest < Cadenya::Test::Resou
   def test_list_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.memory_layers.entries.list("memoryLayerId", workspace_id: "workspaceId")
+    response =
+      @cadenya.memory_layers.entries.list(
+        "memlyr_01HXKD2E5NQM3T9AYWCFFFBMJH",
+        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
+      )
 
     assert_pattern do
       response => Cadenya::Internal::CursorPagination
@@ -106,9 +110,9 @@ class Cadenya::Test::Resources::MemoryLayers::EntriesTest < Cadenya::Test::Resou
 
     response =
       @cadenya.memory_layers.entries.delete(
-        "id",
-        workspace_id: "workspaceId",
-        memory_layer_id: "memoryLayerId"
+        "memlyr_01HXKD2E5NQM3T9AYWCFFFBMJH",
+        "mementry_01HXKD2E5NQM3T9AYWCF5E52Z0",
+        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
       )
 
     assert_pattern do

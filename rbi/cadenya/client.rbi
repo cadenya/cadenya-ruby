@@ -2,7 +2,7 @@
 
 module Cadenya
   class Client < Cadenya::Internal::Transport::BaseClient
-    DEFAULT_MAX_RETRIES = 2
+    DEFAULT_MAX_RETRIES = 0
 
     DEFAULT_TIMEOUT_IN_SECONDS = T.let(60.0, Float)
 
@@ -15,6 +15,11 @@ module Cadenya
 
     sig { returns(T.nilable(String)) }
     attr_reader :webhook_key
+
+    # Workspace to operate on. Fills the {workspaceId} path parameter on
+    # workspace-scoped endpoints unless overridden per request.
+    sig { returns(T.nilable(String)) }
+    attr_reader :workspace_id
 
     sig { returns(Cadenya::Resources::AIProviderKeys) }
     attr_reader :ai_provider_keys
@@ -111,6 +116,7 @@ module Cadenya
     sig do
       params(
         api_key: T.nilable(String),
+        workspace_id: T.nilable(String),
         webhook_key: T.nilable(String),
         base_url: T.nilable(String),
         max_retries: Integer,
@@ -122,6 +128,10 @@ module Cadenya
     def self.new(
       # Defaults to `ENV["CADENYA_API_KEY"]`
       api_key: ENV["CADENYA_API_KEY"],
+      # Workspace to operate on. Fills the {workspaceId} path parameter on
+      # workspace-scoped endpoints unless overridden per request. Defaults to
+      # `ENV["CADENYA_WORKSPACE_ID"]`
+      workspace_id: ENV["CADENYA_WORKSPACE_ID"],
       # Defaults to `ENV["CADENYA_WEBHOOK_KEY"]`
       webhook_key: ENV["CADENYA_WEBHOOK_KEY"],
       # Override the default base URL for the API, e.g.,

@@ -11,15 +11,15 @@ module Cadenya
         #
         # Creates a new variation for an agent
         #
-        # @overload create(agent_id, workspace_id:, metadata:, spec:, request_options: {})
+        # @overload create(agent_id, metadata:, spec:, workspace_id: nil, request_options: {})
         #
         # @param agent_id [String] Path param: Agent ID. Accepts the canonical `agent_…` form or the `external_id:<
-        #
-        # @param workspace_id [String] Path param: Workspace ID.
         #
         # @param metadata [Cadenya::Models::CreateResourceMetadata] Body param: CreateResourceMetadata contains the user-provided fields for creatin
         #
         # @param spec [Cadenya::Models::Agents::AgentVariationSpec] Body param: AgentVariationSpec defines the operational configuration for a varia
+        #
+        # @param workspace_id [String] Path param: Workspace ID.
         #
         # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
         #
@@ -30,7 +30,7 @@ module Cadenya
           parsed, options = Cadenya::Agents::VariationCreateParams.dump_request(params)
           workspace_id =
             parsed.delete(:workspace_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
+              @client.workspace_id
             end
           @client.request(
             method: :post,
@@ -46,28 +46,24 @@ module Cadenya
         #
         # Retrieves a variation by ID from an agent
         #
-        # @overload retrieve(id, workspace_id:, agent_id:, request_options: {})
-        #
-        # @param id [String] Variation ID. Accepts the canonical `av_…` form or the `external_id:<value>` for
-        #
-        # @param workspace_id [String] Workspace ID.
+        # @overload retrieve(agent_id, id, workspace_id: nil, request_options: {})
         #
         # @param agent_id [String] Agent ID. Accepts the canonical `agent_…` form or the `external_id:<value>` form
+        #
+        # @param id [String] Variation ID. Accepts the canonical `agentvar_…` form or the `external_id:<value
+        #
+        # @param workspace_id [String] Workspace ID.
         #
         # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
         #
         # @return [Cadenya::Models::Agents::AgentVariation]
         #
         # @see Cadenya::Models::Agents::VariationRetrieveParams
-        def retrieve(id, params)
+        def retrieve(agent_id, id, params = {})
           parsed, options = Cadenya::Agents::VariationRetrieveParams.dump_request(params)
           workspace_id =
             parsed.delete(:workspace_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
-            end
-          agent_id =
-            parsed.delete(:agent_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
+              @client.workspace_id
             end
           @client.request(
             method: :get,
@@ -82,13 +78,13 @@ module Cadenya
         #
         # Updates a variation for an agent
         #
-        # @overload update(id, workspace_id:, agent_id:, metadata: nil, spec: nil, update_mask: nil, request_options: {})
-        #
-        # @param id [String] Path param: Variation ID. Accepts the canonical `av_…` form or the `external_id:
-        #
-        # @param workspace_id [String] Path param: Workspace ID.
+        # @overload update(agent_id, id, workspace_id: nil, metadata: nil, spec: nil, update_mask: nil, request_options: {})
         #
         # @param agent_id [String] Path param: Agent ID. Accepts the canonical `agent_…` form or the `external_id:<
+        #
+        # @param id [String] Path param: Variation ID. Accepts the canonical `agentvar_…` form or the `extern
+        #
+        # @param workspace_id [String] Path param: Workspace ID.
         #
         # @param metadata [Cadenya::Models::UpdateResourceMetadata] Body param: UpdateResourceMetadata contains the user-provided fields for updatin
         #
@@ -101,15 +97,11 @@ module Cadenya
         # @return [Cadenya::Models::Agents::AgentVariation]
         #
         # @see Cadenya::Models::Agents::VariationUpdateParams
-        def update(id, params)
+        def update(agent_id, id, params = {})
           parsed, options = Cadenya::Agents::VariationUpdateParams.dump_request(params)
           workspace_id =
             parsed.delete(:workspace_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
-            end
-          agent_id =
-            parsed.delete(:agent_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
+              @client.workspace_id
             end
           @client.request(
             method: :patch,
@@ -125,7 +117,7 @@ module Cadenya
         #
         # Lists all variations for an agent
         #
-        # @overload list(agent_id, workspace_id:, cursor: nil, include_info: nil, labels: nil, limit: nil, sort_order: nil, request_options: {})
+        # @overload list(agent_id, workspace_id: nil, cursor: nil, include_info: nil, labels: nil, limit: nil, sort_order: nil, request_options: {})
         #
         # @param agent_id [String] Path param: Agent ID. Accepts the canonical `agent_…` form or the `external_id:<
         #
@@ -146,12 +138,12 @@ module Cadenya
         # @return [Cadenya::Internal::CursorPagination<Cadenya::Models::Agents::AgentVariation>]
         #
         # @see Cadenya::Models::Agents::VariationListParams
-        def list(agent_id, params)
+        def list(agent_id, params = {})
           parsed, options = Cadenya::Agents::VariationListParams.dump_request(params)
           query = Cadenya::Internal::Util.encode_query_params(parsed)
           workspace_id =
             parsed.delete(:workspace_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
+              @client.workspace_id
             end
           @client.request(
             method: :get,
@@ -168,28 +160,24 @@ module Cadenya
         #
         # Deletes a variation from an agent
         #
-        # @overload delete(id, workspace_id:, agent_id:, request_options: {})
-        #
-        # @param id [String] Variation ID. Accepts the canonical `av_…` form or the `external_id:<value>` for
-        #
-        # @param workspace_id [String] Workspace ID.
+        # @overload delete(agent_id, id, workspace_id: nil, request_options: {})
         #
         # @param agent_id [String] Agent ID. Accepts the canonical `agent_…` form or the `external_id:<value>` form
+        #
+        # @param id [String] Variation ID. Accepts the canonical `agentvar_…` form or the `external_id:<value
+        #
+        # @param workspace_id [String] Workspace ID.
         #
         # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
         #
         # @return [nil]
         #
         # @see Cadenya::Models::Agents::VariationDeleteParams
-        def delete(id, params)
+        def delete(agent_id, id, params = {})
           parsed, options = Cadenya::Agents::VariationDeleteParams.dump_request(params)
           workspace_id =
             parsed.delete(:workspace_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
-            end
-          agent_id =
-            parsed.delete(:agent_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
+              @client.workspace_id
             end
           @client.request(
             method: :delete,
@@ -205,34 +193,26 @@ module Cadenya
         # Assigns a tool, tool set, or sub-agent to a variation. Exactly one target ID
         # must be set.
         #
-        # @overload add_assignment(variation_id, workspace_id:, agent_id:, sub_agent_id: nil, tool_id: nil, tool_set_id: nil, request_options: {})
-        #
-        # @param variation_id [String] Path param: Variation ID. Accepts the canonical `av_…` form or the `external_id:
-        #
-        # @param workspace_id [String] Path param: Workspace ID.
+        # @overload add_assignment(agent_id, variation_id, body:, workspace_id: nil, request_options: {})
         #
         # @param agent_id [String] Path param: Agent ID. Accepts the canonical `agent_…` form or the `external_id:<
         #
-        # @param sub_agent_id [String] Body param
+        # @param variation_id [String] Path param: Variation ID. Accepts the canonical `agentvar_…` form or the `extern
         #
-        # @param tool_id [String] Body param
+        # @param body [Cadenya::Models::Agents::AddAgentVariationAssignmentRequestToolID, Cadenya::Models::Agents::AddAgentVariationAssignmentRequestToolSetID, Cadenya::Models::Agents::AddAgentVariationAssignmentRequestSubAgentID] Body param: Attach a single tool, tool set, or sub-agent to a variation. Exactly
         #
-        # @param tool_set_id [String] Body param
+        # @param workspace_id [String] Path param: Workspace ID.
         #
         # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
         #
-        # @return [Cadenya::Models::Agents::VariationAssignment]
+        # @return [Cadenya::Models::Agents::VariationAssignmentTool, Cadenya::Models::Agents::VariationAssignmentToolSet, Cadenya::Models::Agents::VariationAssignmentAgent]
         #
         # @see Cadenya::Models::Agents::VariationAddAssignmentParams
-        def add_assignment(variation_id, params)
+        def add_assignment(agent_id, variation_id, params)
           parsed, options = Cadenya::Agents::VariationAddAssignmentParams.dump_request(params)
           workspace_id =
             parsed.delete(:workspace_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
-            end
-          agent_id =
-            parsed.delete(:agent_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
+              @client.workspace_id
             end
           @client.request(
             method: :post,
@@ -242,7 +222,7 @@ module Cadenya
               agent_id,
               variation_id
             ],
-            body: parsed,
+            body: parsed[:body],
             model: Cadenya::Agents::VariationAssignment,
             options: options
           )
@@ -254,15 +234,15 @@ module Cadenya
         # Attaches a memory layer to a variation at a given position in the variation's
         # baseline memory cascade.
         #
-        # @overload add_memory_layer(variation_id, workspace_id:, agent_id:, memory_layer_id: nil, position: nil, request_options: {})
-        #
-        # @param variation_id [String] Path param: Variation ID. Accepts the canonical `av_…` form or the `external_id:
-        #
-        # @param workspace_id [String] Path param: Workspace ID.
+        # @overload add_memory_layer(agent_id, variation_id, memory_layer_id:, workspace_id: nil, position: nil, request_options: {})
         #
         # @param agent_id [String] Path param: Agent ID. Accepts the canonical `agent_…` form or the `external_id:<
         #
+        # @param variation_id [String] Path param: Variation ID. Accepts the canonical `agentvar_…` form or the `extern
+        #
         # @param memory_layer_id [String] Body param: Layer to attach. Accepts the canonical `memlyr_…` form or the `exter
+        #
+        # @param workspace_id [String] Path param: Workspace ID.
         #
         # @param position [Integer] Body param: Position in the baseline cascade (lower = more specific). If
         #
@@ -271,15 +251,11 @@ module Cadenya
         # @return [Cadenya::Models::Agents::VariationMemoryLayerAssignment]
         #
         # @see Cadenya::Models::Agents::VariationAddMemoryLayerParams
-        def add_memory_layer(variation_id, params)
+        def add_memory_layer(agent_id, variation_id, params)
           parsed, options = Cadenya::Agents::VariationAddMemoryLayerParams.dump_request(params)
           workspace_id =
             parsed.delete(:workspace_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
-            end
-          agent_id =
-            parsed.delete(:agent_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
+              @client.workspace_id
             end
           @client.request(
             method: :post,
@@ -301,34 +277,26 @@ module Cadenya
         # Detaches an assignment from a variation, identified by the assignment ID
         # returned when it was added.
         #
-        # @overload remove_assignment(id, workspace_id:, agent_id:, variation_id:, request_options: {})
+        # @overload remove_assignment(agent_id, variation_id, id, workspace_id: nil, request_options: {})
+        #
+        # @param agent_id [String] Agent ID. Accepts the canonical `agent_…` form or the `external_id:<value>` form
+        #
+        # @param variation_id [String] Variation ID. Accepts the canonical `agentvar_…` form or the `external_id:<value
         #
         # @param id [String]
         #
         # @param workspace_id [String] Workspace ID.
-        #
-        # @param agent_id [String] Agent ID. Accepts the canonical `agent_…` form or the `external_id:<value>` form
-        #
-        # @param variation_id [String] Variation ID. Accepts the canonical `av_…` form or the `external_id:<value>` for
         #
         # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
         #
         # @return [nil]
         #
         # @see Cadenya::Models::Agents::VariationRemoveAssignmentParams
-        def remove_assignment(id, params)
+        def remove_assignment(agent_id, variation_id, id, params = {})
           parsed, options = Cadenya::Agents::VariationRemoveAssignmentParams.dump_request(params)
           workspace_id =
             parsed.delete(:workspace_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
-            end
-          agent_id =
-            parsed.delete(:agent_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
-            end
-          variation_id =
-            parsed.delete(:variation_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
+              @client.workspace_id
             end
           @client.request(
             method: :delete,
@@ -350,34 +318,26 @@ module Cadenya
         # Detaches a memory layer assignment from a variation, identified by the
         # assignment id.
         #
-        # @overload remove_memory_layer(id, workspace_id:, agent_id:, variation_id:, request_options: {})
+        # @overload remove_memory_layer(agent_id, variation_id, id, workspace_id: nil, request_options: {})
+        #
+        # @param agent_id [String] Agent ID. Accepts the canonical `agent_…` form or the `external_id:<value>` form
+        #
+        # @param variation_id [String] Variation ID. Accepts the canonical `agentvar_…` form or the `external_id:<value
         #
         # @param id [String]
         #
         # @param workspace_id [String] Workspace ID.
-        #
-        # @param agent_id [String] Agent ID. Accepts the canonical `agent_…` form or the `external_id:<value>` form
-        #
-        # @param variation_id [String] Variation ID. Accepts the canonical `av_…` form or the `external_id:<value>` for
         #
         # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
         #
         # @return [nil]
         #
         # @see Cadenya::Models::Agents::VariationRemoveMemoryLayerParams
-        def remove_memory_layer(id, params)
+        def remove_memory_layer(agent_id, variation_id, id, params = {})
           parsed, options = Cadenya::Agents::VariationRemoveMemoryLayerParams.dump_request(params)
           workspace_id =
             parsed.delete(:workspace_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
-            end
-          agent_id =
-            parsed.delete(:agent_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
-            end
-          variation_id =
-            parsed.delete(:variation_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
+              @client.workspace_id
             end
           @client.request(
             method: :delete,
@@ -398,15 +358,15 @@ module Cadenya
         #
         # Updates the position of a memory layer assignment on a variation.
         #
-        # @overload update_memory_layer(id, workspace_id:, agent_id:, variation_id:, position: nil, request_options: {})
+        # @overload update_memory_layer(agent_id, variation_id, id, workspace_id: nil, position: nil, request_options: {})
+        #
+        # @param agent_id [String] Path param: Agent ID. Accepts the canonical `agent_…` form or the `external_id:<
+        #
+        # @param variation_id [String] Path param: Variation ID. Accepts the canonical `agentvar_…` form or the `extern
         #
         # @param id [String] Path param
         #
         # @param workspace_id [String] Path param: Workspace ID.
-        #
-        # @param agent_id [String] Path param: Agent ID. Accepts the canonical `agent_…` form or the `external_id:<
-        #
-        # @param variation_id [String] Path param: Variation ID. Accepts the canonical `av_…` form or the `external_id:
         #
         # @param position [Integer] Body param: New position. Only field currently updatable on an assignment.
         #
@@ -415,19 +375,11 @@ module Cadenya
         # @return [Cadenya::Models::Agents::VariationMemoryLayerAssignment]
         #
         # @see Cadenya::Models::Agents::VariationUpdateMemoryLayerParams
-        def update_memory_layer(id, params)
+        def update_memory_layer(agent_id, variation_id, id, params = {})
           parsed, options = Cadenya::Agents::VariationUpdateMemoryLayerParams.dump_request(params)
           workspace_id =
             parsed.delete(:workspace_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
-            end
-          agent_id =
-            parsed.delete(:agent_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
-            end
-          variation_id =
-            parsed.delete(:variation_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
+              @client.workspace_id
             end
           @client.request(
             method: :patch,

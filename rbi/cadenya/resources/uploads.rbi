@@ -11,20 +11,22 @@ module Cadenya
       # content.
       sig do
         params(
-          workspace_id: String,
           metadata: Cadenya::CreateResourceMetadata::OrHash,
           spec: Cadenya::UploadSpec::OrHash,
+          workspace_id: String,
           request_options: Cadenya::RequestOptions::OrHash
         ).returns(Cadenya::Upload)
       end
       def create(
-        # Workspace ID.
-        workspace_id,
-        # CreateResourceMetadata contains the user-provided fields for creating a
-        # workspace-scoped resource. Read-only fields (id, account_id, workspace_id,
-        # profile_id, created_at) are excluded since they are set by the server.
+        # Body param: CreateResourceMetadata contains the user-provided fields for
+        # creating a workspace-scoped resource. Read-only fields (id, account_id,
+        # workspace_id, profile_id, created_at) are excluded since they are set by the
+        # server.
         metadata:,
+        # Body param
         spec:,
+        # Path param: Workspace ID.
+        workspace_id: nil,
         request_options: {}
       )
       end
@@ -40,7 +42,7 @@ module Cadenya
       def retrieve(
         id,
         # Workspace ID.
-        workspace_id:,
+        workspace_id: nil,
         request_options: {}
       )
       end

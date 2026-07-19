@@ -1,0 +1,47 @@
+module Cadenya
+  module Models
+    type objective_event_data_timed_out =
+      {
+        timed_out: Cadenya::ObjectiveEventDataTimedOut::TimedOut,
+        type: Cadenya::Models::ObjectiveEventDataTimedOut::type_
+      }
+
+    class ObjectiveEventDataTimedOut < Cadenya::Internal::Type::BaseModel
+      attr_accessor timed_out: Cadenya::ObjectiveEventDataTimedOut::TimedOut
+
+      attr_accessor type: Cadenya::Models::ObjectiveEventDataTimedOut::type_
+
+      def initialize: (
+        timed_out: Cadenya::ObjectiveEventDataTimedOut::TimedOut,
+        type: Cadenya::Models::ObjectiveEventDataTimedOut::type_
+      ) -> void
+
+      def to_hash: -> {
+        timed_out: Cadenya::ObjectiveEventDataTimedOut::TimedOut,
+        type: Cadenya::Models::ObjectiveEventDataTimedOut::type_
+      }
+
+      type timed_out = { message: String }
+
+      class TimedOut < Cadenya::Internal::Type::BaseModel
+        attr_reader message: String?
+
+        def message=: (String) -> String
+
+        def initialize: (?message: String) -> void
+
+        def to_hash: -> { message: String }
+      end
+
+      type type_ = :timedOut
+
+      module Type
+        extend Cadenya::Internal::Type::Enum
+
+        TIMED_OUT: :timedOut
+
+        def self?.values: -> ::Array[Cadenya::Models::ObjectiveEventDataTimedOut::type_]
+      end
+    end
+  end
+end

@@ -15,8 +15,11 @@ module Cadenya
             )
           end
 
-        sig { returns(String) }
-        attr_accessor :workspace_id
+        sig { returns(T.nilable(String)) }
+        attr_reader :workspace_id
+
+        sig { params(workspace_id: String).void }
+        attr_writer :workspace_id
 
         sig { returns(String) }
         attr_accessor :objective_id
@@ -44,8 +47,8 @@ module Cadenya
 
         sig do
           params(
-            workspace_id: String,
             objective_id: String,
+            workspace_id: String,
             cursor: String,
             limit: Integer,
             sort_order: String,
@@ -53,8 +56,8 @@ module Cadenya
           ).returns(T.attached_class)
         end
         def self.new(
-          workspace_id:,
           objective_id:,
+          workspace_id: nil,
           # Pagination cursor from previous response
           cursor: nil,
           # Maximum number of results to return

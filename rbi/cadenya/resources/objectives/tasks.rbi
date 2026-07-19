@@ -7,18 +7,18 @@ module Cadenya
         # Retrieves a task by ID from an objective
         sig do
           params(
+            objective_id: String,
             id: String,
             workspace_id: String,
-            objective_id: String,
             request_options: Cadenya::RequestOptions::OrHash
           ).returns(Cadenya::Objectives::ObjectiveTask)
         end
         def retrieve(
+          # The ID of the objective. Supports "external_id:" prefix for external IDs.
+          objective_id,
           # Task ID
           id,
-          workspace_id:,
-          # The ID of the objective. Supports "external_id:" prefix for external IDs.
-          objective_id:,
+          workspace_id: nil,
           request_options: {}
         )
         end
@@ -43,7 +43,7 @@ module Cadenya
           # IDs.
           objective_id,
           # Path param
-          workspace_id:,
+          workspace_id: nil,
           # Query param: Pagination cursor from previous response
           cursor: nil,
           # Query param: Maximum number of results to return

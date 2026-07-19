@@ -10,8 +10,8 @@ module Cadenya
 
         # @!attribute workspace_id
         #
-        #   @return [String]
-        required :workspace_id, String
+        #   @return [String, nil]
+        optional :workspace_id, String
 
         # @!attribute agent_id
         #
@@ -34,14 +34,14 @@ module Cadenya
         #   @return [Integer, nil]
         optional :position, Integer
 
-        # @!method initialize(workspace_id:, agent_id:, variation_id:, id:, position: nil, request_options: {})
-        #   @param workspace_id [String]
-        #
+        # @!method initialize(agent_id:, variation_id:, id:, workspace_id: nil, position: nil, request_options: {})
         #   @param agent_id [String]
         #
         #   @param variation_id [String]
         #
         #   @param id [String]
+        #
+        #   @param workspace_id [String]
         #
         #   @param position [Integer] New position. Only field currently updatable on an assignment.
         #

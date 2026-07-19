@@ -9,8 +9,8 @@ module Cadenya
 
       # @!attribute workspace_id
       #
-      #   @return [String]
-      required :workspace_id, String
+      #   @return [String, nil]
+      optional :workspace_id, String
 
       # @!attribute cursor
       #   Pagination cursor from previous response
@@ -56,7 +56,7 @@ module Cadenya
       #   @return [String, nil]
       optional :sort_order, String
 
-      # @!method initialize(workspace_id:, cursor: nil, include_info: nil, labels: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, request_options: {})
+      # @!method initialize(workspace_id: nil, cursor: nil, include_info: nil, labels: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, request_options: {})
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::WorkspaceSecretListParams} for more details.
       #

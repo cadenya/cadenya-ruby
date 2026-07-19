@@ -10,8 +10,8 @@ module Cadenya
 
         # @!attribute workspace_id
         #
-        #   @return [String]
-        required :workspace_id, String
+        #   @return [String, nil]
+        optional :workspace_id, String
 
         # @!attribute objective_id
         #
@@ -31,17 +31,17 @@ module Cadenya
         #   @return [Cadenya::Models::CreateOperationMetadata]
         required :metadata, -> { Cadenya::CreateOperationMetadata }
 
-        # @!method initialize(workspace_id:, objective_id:, data:, metadata:, request_options: {})
+        # @!method initialize(objective_id:, data:, metadata:, workspace_id: nil, request_options: {})
         #   Some parameter documentations has been truncated, see
         #   {Cadenya::Models::Objectives::FeedbackCreateParams} for more details.
-        #
-        #   @param workspace_id [String]
         #
         #   @param objective_id [String]
         #
         #   @param data [Cadenya::Models::Objectives::ObjectiveFeedbackData]
         #
         #   @param metadata [Cadenya::Models::CreateOperationMetadata] CreateOperationMetadata contains the user-provided fields for creating
+        #
+        #   @param workspace_id [String]
         #
         #   @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}]
       end

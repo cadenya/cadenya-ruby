@@ -10,8 +10,8 @@ module Cadenya
 
         # @!attribute workspace_id
         #
-        #   @return [String]
-        required :workspace_id, String
+        #   @return [String, nil]
+        optional :workspace_id, String
 
         # @!attribute objective_id
         #
@@ -36,10 +36,10 @@ module Cadenya
         #   @return [String, nil]
         optional :sort_order, String
 
-        # @!method initialize(workspace_id:, objective_id:, cursor: nil, limit: nil, sort_order: nil, request_options: {})
-        #   @param workspace_id [String]
-        #
+        # @!method initialize(objective_id:, workspace_id: nil, cursor: nil, limit: nil, sort_order: nil, request_options: {})
         #   @param objective_id [String]
+        #
+        #   @param workspace_id [String]
         #
         #   @param cursor [String] Pagination cursor from previous response
         #

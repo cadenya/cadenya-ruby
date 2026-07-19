@@ -11,15 +11,15 @@ module Cadenya
         #
         # Creates a new schedule for an agent
         #
-        # @overload create(agent_id, workspace_id:, metadata:, spec:, request_options: {})
+        # @overload create(agent_id, metadata:, spec:, workspace_id: nil, request_options: {})
         #
         # @param agent_id [String] Path param: Agent ID. Accepts the canonical `agent_…` form or the `external_id:<
-        #
-        # @param workspace_id [String] Path param: Workspace ID.
         #
         # @param metadata [Cadenya::Models::CreateResourceMetadata] Body param: CreateResourceMetadata contains the user-provided fields for creatin
         #
         # @param spec [Cadenya::Models::Agents::AgentScheduleSpec] Body param: AgentScheduleSpec is the user-provided configuration for a schedule.
+        #
+        # @param workspace_id [String] Path param: Workspace ID.
         #
         # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
         #
@@ -30,7 +30,7 @@ module Cadenya
           parsed, options = Cadenya::Agents::ScheduleCreateParams.dump_request(params)
           workspace_id =
             parsed.delete(:workspace_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
+              @client.workspace_id
             end
           @client.request(
             method: :post,
@@ -46,28 +46,24 @@ module Cadenya
         #
         # Retrieves a schedule by ID from an agent
         #
-        # @overload retrieve(id, workspace_id:, agent_id:, request_options: {})
+        # @overload retrieve(agent_id, id, workspace_id: nil, request_options: {})
+        #
+        # @param agent_id [String] Agent ID. Accepts the canonical `agent_…` form or the `external_id:<value>` form
         #
         # @param id [String] Schedule ID. Accepts the canonical `as_…` form or the `external_id:<value>` form
         #
         # @param workspace_id [String] Workspace ID.
-        #
-        # @param agent_id [String] Agent ID. Accepts the canonical `agent_…` form or the `external_id:<value>` form
         #
         # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
         #
         # @return [Cadenya::Models::Agents::AgentSchedule]
         #
         # @see Cadenya::Models::Agents::ScheduleRetrieveParams
-        def retrieve(id, params)
+        def retrieve(agent_id, id, params = {})
           parsed, options = Cadenya::Agents::ScheduleRetrieveParams.dump_request(params)
           workspace_id =
             parsed.delete(:workspace_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
-            end
-          agent_id =
-            parsed.delete(:agent_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
+              @client.workspace_id
             end
           @client.request(
             method: :get,
@@ -82,13 +78,13 @@ module Cadenya
         #
         # Updates a schedule for an agent
         #
-        # @overload update(id, workspace_id:, agent_id:, metadata: nil, spec: nil, update_mask: nil, request_options: {})
+        # @overload update(agent_id, id, workspace_id: nil, metadata: nil, spec: nil, update_mask: nil, request_options: {})
+        #
+        # @param agent_id [String] Path param: Agent ID. Accepts the canonical `agent_…` form or the `external_id:<
         #
         # @param id [String] Path param: Schedule ID. Accepts the canonical `as_…` form or the `external_id:<
         #
         # @param workspace_id [String] Path param: Workspace ID.
-        #
-        # @param agent_id [String] Path param: Agent ID. Accepts the canonical `agent_…` form or the `external_id:<
         #
         # @param metadata [Cadenya::Models::UpdateResourceMetadata] Body param: UpdateResourceMetadata contains the user-provided fields for updatin
         #
@@ -101,15 +97,11 @@ module Cadenya
         # @return [Cadenya::Models::Agents::AgentSchedule]
         #
         # @see Cadenya::Models::Agents::ScheduleUpdateParams
-        def update(id, params)
+        def update(agent_id, id, params = {})
           parsed, options = Cadenya::Agents::ScheduleUpdateParams.dump_request(params)
           workspace_id =
             parsed.delete(:workspace_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
-            end
-          agent_id =
-            parsed.delete(:agent_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
+              @client.workspace_id
             end
           @client.request(
             method: :patch,
@@ -125,7 +117,7 @@ module Cadenya
         #
         # Lists all schedules for an agent
         #
-        # @overload list(agent_id, workspace_id:, cursor: nil, include_info: nil, labels: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, request_options: {})
+        # @overload list(agent_id, workspace_id: nil, cursor: nil, include_info: nil, labels: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, request_options: {})
         #
         # @param agent_id [String] Path param: Agent ID. Accepts the canonical `agent_…` form or the `external_id:<
         #
@@ -150,12 +142,12 @@ module Cadenya
         # @return [Cadenya::Internal::CursorPagination<Cadenya::Models::Agents::AgentSchedule>]
         #
         # @see Cadenya::Models::Agents::ScheduleListParams
-        def list(agent_id, params)
+        def list(agent_id, params = {})
           parsed, options = Cadenya::Agents::ScheduleListParams.dump_request(params)
           query = Cadenya::Internal::Util.encode_query_params(parsed)
           workspace_id =
             parsed.delete(:workspace_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
+              @client.workspace_id
             end
           @client.request(
             method: :get,
@@ -172,28 +164,24 @@ module Cadenya
         #
         # Deletes a schedule from an agent
         #
-        # @overload delete(id, workspace_id:, agent_id:, request_options: {})
+        # @overload delete(agent_id, id, workspace_id: nil, request_options: {})
+        #
+        # @param agent_id [String] Agent ID. Accepts the canonical `agent_…` form or the `external_id:<value>` form
         #
         # @param id [String] Schedule ID. Accepts the canonical `as_…` form or the `external_id:<value>` form
         #
         # @param workspace_id [String] Workspace ID.
-        #
-        # @param agent_id [String] Agent ID. Accepts the canonical `agent_…` form or the `external_id:<value>` form
         #
         # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
         #
         # @return [nil]
         #
         # @see Cadenya::Models::Agents::ScheduleDeleteParams
-        def delete(id, params)
+        def delete(agent_id, id, params = {})
           parsed, options = Cadenya::Agents::ScheduleDeleteParams.dump_request(params)
           workspace_id =
             parsed.delete(:workspace_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
-            end
-          agent_id =
-            parsed.delete(:agent_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
+              @client.workspace_id
             end
           @client.request(
             method: :delete,
@@ -210,28 +198,24 @@ module Cadenya
         # Archiving is terminal: archived schedules never fire and cannot be reactivated;
         # create a new schedule instead.
         #
-        # @overload archive(id, workspace_id:, agent_id:, request_options: {})
+        # @overload archive(agent_id, id, workspace_id: nil, request_options: {})
+        #
+        # @param agent_id [String] Agent ID. Accepts the canonical `agent_…` form or the `external_id:<value>` form
         #
         # @param id [String] Schedule ID. Accepts the canonical `as_…` form or the `external_id:<value>` form
         #
         # @param workspace_id [String] Workspace ID.
-        #
-        # @param agent_id [String] Agent ID. Accepts the canonical `agent_…` form or the `external_id:<value>` form
         #
         # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
         #
         # @return [Cadenya::Models::Agents::AgentSchedule]
         #
         # @see Cadenya::Models::Agents::ScheduleArchiveParams
-        def archive(id, params)
+        def archive(agent_id, id, params = {})
           parsed, options = Cadenya::Agents::ScheduleArchiveParams.dump_request(params)
           workspace_id =
             parsed.delete(:workspace_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
-            end
-          agent_id =
-            parsed.delete(:agent_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
+              @client.workspace_id
             end
           @client.request(
             method: :post,
@@ -247,28 +231,24 @@ module Cadenya
         # Transitions a schedule to STATE_PAUSED. Paused schedules retain history but do
         # not fire.
         #
-        # @overload pause(id, workspace_id:, agent_id:, request_options: {})
+        # @overload pause(agent_id, id, workspace_id: nil, request_options: {})
+        #
+        # @param agent_id [String] Agent ID. Accepts the canonical `agent_…` form or the `external_id:<value>` form
         #
         # @param id [String] Schedule ID. Accepts the canonical `as_…` form or the `external_id:<value>` form
         #
         # @param workspace_id [String] Workspace ID.
-        #
-        # @param agent_id [String] Agent ID. Accepts the canonical `agent_…` form or the `external_id:<value>` form
         #
         # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
         #
         # @return [Cadenya::Models::Agents::AgentSchedule]
         #
         # @see Cadenya::Models::Agents::SchedulePauseParams
-        def pause(id, params)
+        def pause(agent_id, id, params = {})
           parsed, options = Cadenya::Agents::SchedulePauseParams.dump_request(params)
           workspace_id =
             parsed.delete(:workspace_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
-            end
-          agent_id =
-            parsed.delete(:agent_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
+              @client.workspace_id
             end
           @client.request(
             method: :post,
@@ -284,28 +264,24 @@ module Cadenya
         # Transitions a paused schedule back to STATE_ACTIVE so it fires on its cadence
         # again. Archived schedules cannot be resumed.
         #
-        # @overload resume(id, workspace_id:, agent_id:, request_options: {})
+        # @overload resume(agent_id, id, workspace_id: nil, request_options: {})
+        #
+        # @param agent_id [String] Agent ID. Accepts the canonical `agent_…` form or the `external_id:<value>` form
         #
         # @param id [String] Schedule ID. Accepts the canonical `as_…` form or the `external_id:<value>` form
         #
         # @param workspace_id [String] Workspace ID.
-        #
-        # @param agent_id [String] Agent ID. Accepts the canonical `agent_…` form or the `external_id:<value>` form
         #
         # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
         #
         # @return [Cadenya::Models::Agents::AgentSchedule]
         #
         # @see Cadenya::Models::Agents::ScheduleResumeParams
-        def resume(id, params)
+        def resume(agent_id, id, params = {})
           parsed, options = Cadenya::Agents::ScheduleResumeParams.dump_request(params)
           workspace_id =
             parsed.delete(:workspace_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
-            end
-          agent_id =
-            parsed.delete(:agent_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
+              @client.workspace_id
             end
           @client.request(
             method: :post,

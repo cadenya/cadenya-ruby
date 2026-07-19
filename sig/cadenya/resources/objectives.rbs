@@ -10,9 +10,9 @@ module Cadenya
       attr_reader feedback: Cadenya::Resources::Objectives::Feedback
 
       def create: (
-        String workspace_id,
         agent_id: String,
         system_prompt_data: ::Hash[Symbol, top],
+        ?workspace_id: String,
         ?episodic_memory: Cadenya::ObjectiveCreateParams::EpisodicMemory,
         ?first_user_message: String,
         ?first_user_message_data: ::Hash[Symbol, top],
@@ -25,12 +25,12 @@ module Cadenya
 
       def retrieve: (
         String id,
-        workspace_id: String,
+        ?workspace_id: String,
         ?request_options: Cadenya::request_opts
       ) -> Cadenya::Objective
 
       def list: (
-        String workspace_id,
+        ?workspace_id: String,
         ?agent_id: String,
         ?agent_schedule_id: String,
         ?cursor: String,
@@ -46,29 +46,29 @@ module Cadenya
 
       def cancel: (
         String objective_id,
-        workspace_id: String,
+        ?workspace_id: String,
         ?reason: String,
         ?request_options: Cadenya::request_opts
       ) -> Cadenya::Objective
 
       def compact: (
         String objective_id,
-        workspace_id: String,
+        ?workspace_id: String,
         ?compaction_config: Cadenya::Agents::AgentVariationSpecCompactionConfig,
         ?request_options: Cadenya::request_opts
       ) -> Cadenya::Models::ObjectiveCompactResponse
 
       def continue: (
         String objective_id,
-        workspace_id: String,
+        message: String,
+        ?workspace_id: String,
         ?enqueue: bool,
-        ?message: String,
         ?request_options: Cadenya::request_opts
       ) -> Cadenya::ObjectiveEvent
 
       def list_context_windows: (
         String objective_id,
-        workspace_id: String,
+        ?workspace_id: String,
         ?cursor: String,
         ?include_info: bool,
         ?labels: String,
@@ -78,7 +78,7 @@ module Cadenya
 
       def list_events: (
         String objective_id,
-        workspace_id: String,
+        ?workspace_id: String,
         ?cursor: String,
         ?include_info: bool,
         ?labels: String,
@@ -91,13 +91,13 @@ module Cadenya
 
       def retrieve_diagnostics: (
         String objective_id,
-        workspace_id: String,
+        ?workspace_id: String,
         ?request_options: Cadenya::request_opts
       ) -> Cadenya::Models::ObjectiveRetrieveDiagnosticsResponse
 
       def stream_events_streaming: (
         String objective_id,
-        workspace_id: String,
+        ?workspace_id: String,
         ?request_options: Cadenya::request_opts
       ) -> Cadenya::Internal::Stream[Cadenya::ObjectiveEvent]
 

@@ -4,21 +4,21 @@ module Cadenya
       attr_reader entries: Cadenya::Resources::MemoryLayers::Entries
 
       def create: (
-        String workspace_id,
         metadata: Cadenya::CreateResourceMetadata,
         spec: Cadenya::MemoryLayerSpec,
+        ?workspace_id: String,
         ?request_options: Cadenya::request_opts
       ) -> Cadenya::MemoryLayer
 
       def retrieve: (
         String id,
-        workspace_id: String,
+        ?workspace_id: String,
         ?request_options: Cadenya::request_opts
       ) -> Cadenya::MemoryLayer
 
       def update: (
         String id,
-        workspace_id: String,
+        ?workspace_id: String,
         ?metadata: Cadenya::UpdateResourceMetadata,
         ?spec: Cadenya::MemoryLayerSpec,
         ?update_mask: String,
@@ -26,7 +26,7 @@ module Cadenya
       ) -> Cadenya::MemoryLayer
 
       def list: (
-        String workspace_id,
+        ?workspace_id: String,
         ?agent_id: String,
         ?cursor: String,
         ?episodic_key_prefix: String,
@@ -42,7 +42,7 @@ module Cadenya
 
       def delete: (
         String id,
-        workspace_id: String,
+        ?workspace_id: String,
         ?request_options: Cadenya::request_opts
       ) -> nil
 

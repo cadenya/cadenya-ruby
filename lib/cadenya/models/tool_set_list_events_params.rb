@@ -9,8 +9,8 @@ module Cadenya
 
       # @!attribute workspace_id
       #
-      #   @return [String]
-      required :workspace_id, String
+      #   @return [String, nil]
+      optional :workspace_id, String
 
       # @!attribute tool_set_id
       #
@@ -49,13 +49,13 @@ module Cadenya
       #   @return [String, nil]
       optional :sort_order, String
 
-      # @!method initialize(workspace_id:, tool_set_id:, cursor: nil, include_info: nil, labels: nil, limit: nil, sort_order: nil, request_options: {})
+      # @!method initialize(tool_set_id:, workspace_id: nil, cursor: nil, include_info: nil, labels: nil, limit: nil, sort_order: nil, request_options: {})
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::ToolSetListEventsParams} for more details.
       #
-      #   @param workspace_id [String]
-      #
       #   @param tool_set_id [String]
+      #
+      #   @param workspace_id [String]
       #
       #   @param cursor [String] Pagination cursor from previous response
       #

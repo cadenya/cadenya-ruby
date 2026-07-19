@@ -3,17 +3,17 @@ module Cadenya
     type model_spec =
       {
         family: String,
+        provider: String,
         input_price_per_million_tokens: String,
         max_input_tokens: Integer,
         max_output_tokens: Integer,
-        output_price_per_million_tokens: String,
-        provider: String
+        output_price_per_million_tokens: String
       }
 
     class ModelSpec < Cadenya::Internal::Type::BaseModel
-      attr_reader family: String?
+      attr_accessor family: String
 
-      def family=: (String) -> String
+      attr_accessor provider: String
 
       attr_reader input_price_per_million_tokens: String?
 
@@ -31,26 +31,22 @@ module Cadenya
 
       def output_price_per_million_tokens=: (String) -> String
 
-      attr_reader provider: String?
-
-      def provider=: (String) -> String
-
       def initialize: (
-        ?family: String,
+        family: String,
+        provider: String,
         ?input_price_per_million_tokens: String,
         ?max_input_tokens: Integer,
         ?max_output_tokens: Integer,
-        ?output_price_per_million_tokens: String,
-        ?provider: String
+        ?output_price_per_million_tokens: String
       ) -> void
 
       def to_hash: -> {
         family: String,
+        provider: String,
         input_price_per_million_tokens: String,
         max_input_tokens: Integer,
         max_output_tokens: Integer,
-        output_price_per_million_tokens: String,
-        provider: String
+        output_price_per_million_tokens: String
       }
     end
   end

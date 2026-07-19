@@ -5,8 +5,8 @@ module Cadenya
     class ToolSetSpec < Cadenya::Internal::Type::BaseModel
       # @!attribute adapter
       #
-      #   @return [Cadenya::Models::ToolSetAdapter, nil]
-      optional :adapter, -> { Cadenya::ToolSetAdapter }
+      #   @return [Cadenya::Models::ToolSetAdapterMCPVariant, Cadenya::Models::ToolSetAdapterHTTPVariant, Cadenya::Models::ToolSetAdapterOpenAPIVariant, Cadenya::Models::ToolSetAdapterBareVariant, nil]
+      optional :adapter, union: -> { Cadenya::ToolSetAdapter }
 
       # @!attribute description
       #
@@ -14,7 +14,7 @@ module Cadenya
       optional :description, String
 
       # @!method initialize(adapter: nil, description: nil)
-      #   @param adapter [Cadenya::Models::ToolSetAdapter]
+      #   @param adapter [Cadenya::Models::ToolSetAdapterMCPVariant, Cadenya::Models::ToolSetAdapterHTTPVariant, Cadenya::Models::ToolSetAdapterOpenAPIVariant, Cadenya::Models::ToolSetAdapterBareVariant]
       #   @param description [String]
     end
   end

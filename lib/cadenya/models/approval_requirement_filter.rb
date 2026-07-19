@@ -2,25 +2,19 @@
 
 module Cadenya
   module Models
-    class ApprovalRequirementFilter < Cadenya::Internal::Type::BaseModel
-      # @!attribute always
-      #
-      #   @return [Boolean, nil]
-      optional :always, Cadenya::Internal::Type::Boolean
+    # Approval filters that will automatically set the approval requirement on tools
+    # synced from an external source
+    module ApprovalRequirementFilter
+      extend Cadenya::Internal::Type::Union
 
-      # @!attribute only
-      #   Top-level filter with simple boolean logic (no nesting)
-      #
-      #   @return [Cadenya::Models::ToolFilter, nil]
-      optional :only, -> { Cadenya::ToolFilter }
+      discriminator :type
 
-      # @!method initialize(always: nil, only: nil)
-      #   Approval filters that will automatically set the approval requirement on tools
-      #   synced from an external source
-      #
-      #   @param always [Boolean]
-      #
-      #   @param only [Cadenya::Models::ToolFilter] Top-level filter with simple boolean logic (no nesting)
+      variant :always, -> { Cadenya::ApprovalRequirementFilterAlways }
+
+      variant :only, -> { Cadenya::ApprovalRequirementFilterOnly }
+
+      # @!method self.variants
+      #   @return [Array(Cadenya::Models::ApprovalRequirementFilterAlways, Cadenya::Models::ApprovalRequirementFilterOnly)]
     end
   end
 end

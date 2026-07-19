@@ -3,7 +3,7 @@
 module Cadenya
   module Models
     module ToolSets
-      class McpAnnotations < Cadenya::Internal::Type::BaseModel
+      class MCPAnnotations < Cadenya::Internal::Type::BaseModel
         # @!attribute destructive_hint
         #   If true, the tool may perform destructive updates to its environment. Only
         #   meaningful when read_only_hint is false.
@@ -39,7 +39,7 @@ module Cadenya
 
         # @!method initialize(destructive_hint: nil, idempotent_hint: nil, open_world_hint: nil, read_only_hint: nil, title: nil)
         #   Some parameter documentations has been truncated, see
-        #   {Cadenya::Models::ToolSets::McpAnnotations} for more details.
+        #   {Cadenya::Models::ToolSets::MCPAnnotations} for more details.
         #
         #   Behavior hints synced from the MCP server's tool definition (ToolAnnotations in
         #   the MCP specification). All hints are advisory: servers are not required to send

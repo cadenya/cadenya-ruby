@@ -6,7 +6,12 @@ class Cadenya::Test::Resources::AIProviderKeysTest < Cadenya::Test::ResourceTest
   def test_create_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.ai_provider_keys.create("workspaceId", metadata: {name: "name"}, spec: {})
+    response =
+      @cadenya.ai_provider_keys.create(
+        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q",
+        metadata: {name: "name"},
+        spec: {}
+      )
 
     assert_pattern do
       response => Cadenya::AIProviderKey
@@ -24,7 +29,11 @@ class Cadenya::Test::Resources::AIProviderKeysTest < Cadenya::Test::ResourceTest
   def test_retrieve_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.ai_provider_keys.retrieve("id", workspace_id: "workspaceId")
+    response =
+      @cadenya.ai_provider_keys.retrieve(
+        "aipk_01HXKD2E5NQM3T9AYWCFQ41VW3",
+        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
+      )
 
     assert_pattern do
       response => Cadenya::AIProviderKey
@@ -42,7 +51,11 @@ class Cadenya::Test::Resources::AIProviderKeysTest < Cadenya::Test::ResourceTest
   def test_update_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.ai_provider_keys.update("id", workspace_id: "workspaceId")
+    response =
+      @cadenya.ai_provider_keys.update(
+        "aipk_01HXKD2E5NQM3T9AYWCFQ41VW3",
+        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
+      )
 
     assert_pattern do
       response => Cadenya::AIProviderKey
@@ -57,10 +70,10 @@ class Cadenya::Test::Resources::AIProviderKeysTest < Cadenya::Test::ResourceTest
     end
   end
 
-  def test_list
+  def test_list_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.ai_provider_keys.list("workspaceId")
+    response = @cadenya.ai_provider_keys.list(workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q")
 
     assert_pattern do
       response => Cadenya::Internal::CursorPagination
@@ -85,7 +98,11 @@ class Cadenya::Test::Resources::AIProviderKeysTest < Cadenya::Test::ResourceTest
   def test_delete_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.ai_provider_keys.delete("id", workspace_id: "workspaceId")
+    response =
+      @cadenya.ai_provider_keys.delete(
+        "aipk_01HXKD2E5NQM3T9AYWCFQ41VW3",
+        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
+      )
 
     assert_pattern do
       response => nil

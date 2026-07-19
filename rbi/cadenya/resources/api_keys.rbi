@@ -9,21 +9,21 @@ module Cadenya
       # Creates a new API key in the workspace.
       sig do
         params(
-          workspace_id: String,
           metadata: Cadenya::APIKeyCreateParams::Metadata::OrHash,
           spec: Cadenya::APIKeySpec::OrHash,
+          workspace_id: String,
           request_options: Cadenya::RequestOptions::OrHash
         ).returns(Cadenya::APIKey)
       end
       def create(
-        # The workspace this API key belongs to (path).
-        workspace_id,
-        # CreateAccountResourceMetadata contains the user-provided fields for creating an
-        # account-scoped resource. Read-only fields (id, account_id, profile_id) are
-        # excluded since they are set by the server.
+        # Body param: CreateAccountResourceMetadata contains the user-provided fields for
+        # creating an account-scoped resource. Read-only fields (id, account_id,
+        # profile_id) are excluded since they are set by the server.
         metadata:,
-        # Configuration for an API key.
+        # Body param: Configuration for an API key.
         spec:,
+        # Path param: The workspace this API key belongs to (path).
+        workspace_id: nil,
         request_options: {}
       )
       end
@@ -40,7 +40,7 @@ module Cadenya
         # The API key to retrieve.
         id,
         # The workspace the API key belongs to (path).
-        workspace_id:,
+        workspace_id: nil,
         request_options: {}
       )
       end
@@ -60,7 +60,7 @@ module Cadenya
         # Path param: The API key to update.
         id,
         # Path param: The workspace the API key belongs to (path).
-        workspace_id:,
+        workspace_id: nil,
         # Body param: UpdateAccountResourceMetadata contains the user-provided fields for
         # updating an account-scoped resource. Read-only fields (id, account_id,
         # profile_id) are excluded since they are set by the server.
@@ -88,24 +88,24 @@ module Cadenya
         ).returns(Cadenya::Internal::CursorPagination[Cadenya::APIKey])
       end
       def list(
-        # The workspace whose API keys will be listed (path).
-        workspace_id,
-        # Pagination cursor from previous response.
+        # Path param: The workspace whose API keys will be listed (path).
+        workspace_id: nil,
+        # Query param: Pagination cursor from previous response.
         cursor: nil,
-        # When true, included info fields are populated. Requests with this flag count
-        # more against your rate limit.
+        # Query param: When true, included info fields are populated. Requests with this
+        # flag count more against your rate limit.
         include_info: nil,
-        # Filters by metadata labels. Comma-separated key=value pairs, e.g.
+        # Query param: Filters by metadata labels. Comma-separated key=value pairs, e.g.
         # "env=prod,team=ai". A resource matches only if every pair matches exactly (AND
         # semantics).
         labels: nil,
-        # Maximum number of results to return.
+        # Query param: Maximum number of results to return.
         limit: nil,
-        # Filter by ID prefix.
+        # Query param: Filter by ID prefix.
         prefix: nil,
-        # Free-form search query.
+        # Query param: Free-form search query.
         query: nil,
-        # Sort order for results (asc or desc by creation time).
+        # Query param: Sort order for results (asc or desc by creation time).
         sort_order: nil,
         request_options: {}
       )
@@ -123,7 +123,7 @@ module Cadenya
         # The API key to delete.
         id,
         # The workspace the API key belongs to (path).
-        workspace_id:,
+        workspace_id: nil,
         request_options: {}
       )
       end
@@ -141,7 +141,7 @@ module Cadenya
         # The API key to disable.
         id,
         # The workspace the API key belongs to (path).
-        workspace_id:,
+        workspace_id: nil,
         request_options: {}
       )
       end
@@ -158,7 +158,7 @@ module Cadenya
         # The API key to enable.
         id,
         # The workspace the API key belongs to (path).
-        workspace_id:,
+        workspace_id: nil,
         request_options: {}
       )
       end
@@ -177,7 +177,7 @@ module Cadenya
         # invalidated.
         id,
         # The workspace the API key belongs to (path).
-        workspace_id:,
+        workspace_id: nil,
         request_options: {}
       )
       end

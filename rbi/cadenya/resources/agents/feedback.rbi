@@ -33,7 +33,7 @@ module Cadenya
           # IDs.
           agent_id,
           # Path param
-          workspace_id:,
+          workspace_id: nil,
           # Query param: Optional filter to limit results to feedback on objectives run by a
           # single agent variation. Supports "external_id:" prefix for external IDs.
           agent_variation_id: nil,

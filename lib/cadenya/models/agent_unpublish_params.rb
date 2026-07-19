@@ -9,17 +9,17 @@ module Cadenya
 
       # @!attribute workspace_id
       #
-      #   @return [String]
-      required :workspace_id, String
+      #   @return [String, nil]
+      optional :workspace_id, String
 
       # @!attribute id
       #
       #   @return [String]
       required :id, String
 
-      # @!method initialize(workspace_id:, id:, request_options: {})
-      #   @param workspace_id [String]
+      # @!method initialize(id:, workspace_id: nil, request_options: {})
       #   @param id [String]
+      #   @param workspace_id [String]
       #   @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}]
     end
   end

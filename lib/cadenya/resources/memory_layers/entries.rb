@@ -14,16 +14,16 @@ module Cadenya
         # Creates a new entry in a memory layer. Returns the detail view, including the
         # resolved content body.
         #
-        # @overload create(memory_layer_id, workspace_id:, metadata:, spec:, request_options: {})
+        # @overload create(memory_layer_id, metadata:, spec:, workspace_id: nil, request_options: {})
         #
         # @param memory_layer_id [String] Path param: Memory layer ID. Accepts canonical memlyr\_… form or
         # external_id:<val
         #
-        # @param workspace_id [String] Path param
-        #
         # @param metadata [Cadenya::Models::CreateResourceMetadata] Body param: CreateResourceMetadata contains the user-provided fields for creatin
         #
-        # @param spec [Cadenya::Models::MemoryLayers::MemoryEntryCreateSpec] Body param: MemoryEntryCreateSpec is the input shape for CreateMemoryEntry. It a
+        # @param spec [Cadenya::Models::MemoryLayers::MemoryEntryCreateSpecContent, Cadenya::Models::MemoryLayers::MemoryEntryCreateSpecUploadID] Body param: MemoryEntryCreateSpec is the input shape for CreateMemoryEntry. It a
+        #
+        # @param workspace_id [String] Path param
         #
         # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
         #
@@ -34,7 +34,7 @@ module Cadenya
           parsed, options = Cadenya::MemoryLayers::EntryCreateParams.dump_request(params)
           workspace_id =
             parsed.delete(:workspace_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
+              @client.workspace_id
             end
           @client.request(
             method: :post,
@@ -48,28 +48,24 @@ module Cadenya
         # Retrieves a memory entry by ID from a memory layer. Returns the detail view,
         # including the content body.
         #
-        # @overload retrieve(id, workspace_id:, memory_layer_id:, request_options: {})
+        # @overload retrieve(memory_layer_id, id, workspace_id: nil, request_options: {})
+        #
+        # @param memory_layer_id [String] Memory layer ID. Accepts canonical memlyr\_… form or external_id:<value> form.
         #
         # @param id [String]
         #
         # @param workspace_id [String]
-        #
-        # @param memory_layer_id [String] Memory layer ID. Accepts canonical memlyr\_… form or external_id:<value> form.
         #
         # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
         #
         # @return [Cadenya::Models::MemoryLayers::MemoryEntryDetail]
         #
         # @see Cadenya::Models::MemoryLayers::EntryRetrieveParams
-        def retrieve(id, params)
+        def retrieve(memory_layer_id, id, params = {})
           parsed, options = Cadenya::MemoryLayers::EntryRetrieveParams.dump_request(params)
           workspace_id =
             parsed.delete(:workspace_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
-            end
-          memory_layer_id =
-            parsed.delete(:memory_layer_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
+              @client.workspace_id
             end
           @client.request(
             method: :get,
@@ -85,14 +81,14 @@ module Cadenya
         # Updates a memory entry in a memory layer. Returns the detail view, including the
         # resolved content body.
         #
-        # @overload update(id, workspace_id:, memory_layer_id:, metadata: nil, spec: nil, update_mask: nil, request_options: {})
+        # @overload update(memory_layer_id, id, workspace_id: nil, metadata: nil, spec: nil, update_mask: nil, request_options: {})
+        #
+        # @param memory_layer_id [String] Path param: Memory layer ID. Accepts canonical memlyr\_… form or
+        # external_id:<val
         #
         # @param id [String] Path param
         #
         # @param workspace_id [String] Path param
-        #
-        # @param memory_layer_id [String] Path param: Memory layer ID. Accepts canonical memlyr\_… form or
-        # external_id:<val
         #
         # @param metadata [Cadenya::Models::UpdateResourceMetadata] Body param: UpdateResourceMetadata contains the user-provided fields for updatin
         #
@@ -105,15 +101,11 @@ module Cadenya
         # @return [Cadenya::Models::MemoryLayers::MemoryEntryDetail]
         #
         # @see Cadenya::Models::MemoryLayers::EntryUpdateParams
-        def update(id, params)
+        def update(memory_layer_id, id, params = {})
           parsed, options = Cadenya::MemoryLayers::EntryUpdateParams.dump_request(params)
           workspace_id =
             parsed.delete(:workspace_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
-            end
-          memory_layer_id =
-            parsed.delete(:memory_layer_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
+              @client.workspace_id
             end
           @client.request(
             method: :patch,
@@ -129,7 +121,7 @@ module Cadenya
         #
         # Lists all entries in a memory layer
         #
-        # @overload list(memory_layer_id, workspace_id:, cursor: nil, include_info: nil, labels: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, request_options: {})
+        # @overload list(memory_layer_id, workspace_id: nil, cursor: nil, include_info: nil, labels: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, request_options: {})
         #
         # @param memory_layer_id [String] Path param: Memory layer ID. Accepts canonical memlyr\_… form or
         # external_id:<val
@@ -155,12 +147,12 @@ module Cadenya
         # @return [Cadenya::Internal::CursorPagination<Cadenya::Models::MemoryLayers::MemoryEntry>]
         #
         # @see Cadenya::Models::MemoryLayers::EntryListParams
-        def list(memory_layer_id, params)
+        def list(memory_layer_id, params = {})
           parsed, options = Cadenya::MemoryLayers::EntryListParams.dump_request(params)
           query = Cadenya::Internal::Util.encode_query_params(parsed)
           workspace_id =
             parsed.delete(:workspace_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
+              @client.workspace_id
             end
           @client.request(
             method: :get,
@@ -174,28 +166,24 @@ module Cadenya
 
         # Deletes a memory entry from a memory layer
         #
-        # @overload delete(id, workspace_id:, memory_layer_id:, request_options: {})
+        # @overload delete(memory_layer_id, id, workspace_id: nil, request_options: {})
+        #
+        # @param memory_layer_id [String] Memory layer ID. Accepts canonical memlyr\_… form or external_id:<value> form.
         #
         # @param id [String]
         #
         # @param workspace_id [String]
-        #
-        # @param memory_layer_id [String] Memory layer ID. Accepts canonical memlyr\_… form or external_id:<value> form.
         #
         # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
         #
         # @return [nil]
         #
         # @see Cadenya::Models::MemoryLayers::EntryDeleteParams
-        def delete(id, params)
+        def delete(memory_layer_id, id, params = {})
           parsed, options = Cadenya::MemoryLayers::EntryDeleteParams.dump_request(params)
           workspace_id =
             parsed.delete(:workspace_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
-            end
-          memory_layer_id =
-            parsed.delete(:memory_layer_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
+              @client.workspace_id
             end
           @client.request(
             method: :delete,

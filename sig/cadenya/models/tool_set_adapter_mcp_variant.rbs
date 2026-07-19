@@ -1,0 +1,35 @@
+module Cadenya
+  module Models
+    type tool_set_adapter_mcp_variant =
+      {
+        mcp: Cadenya::ToolSetAdapterMCP,
+        type: Cadenya::Models::ToolSetAdapterMCPVariant::type_
+      }
+
+    class ToolSetAdapterMCPVariant < Cadenya::Internal::Type::BaseModel
+      attr_accessor mcp: Cadenya::ToolSetAdapterMCP
+
+      attr_accessor type: Cadenya::Models::ToolSetAdapterMCPVariant::type_
+
+      def initialize: (
+        mcp: Cadenya::ToolSetAdapterMCP,
+        type: Cadenya::Models::ToolSetAdapterMCPVariant::type_
+      ) -> void
+
+      def to_hash: -> {
+        mcp: Cadenya::ToolSetAdapterMCP,
+        type: Cadenya::Models::ToolSetAdapterMCPVariant::type_
+      }
+
+      type type_ = :mcp
+
+      module Type
+        extend Cadenya::Internal::Type::Enum
+
+        MCP: :mcp
+
+        def self?.values: -> ::Array[Cadenya::Models::ToolSetAdapterMCPVariant::type_]
+      end
+    end
+  end
+end

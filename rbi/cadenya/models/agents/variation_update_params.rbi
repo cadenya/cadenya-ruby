@@ -15,8 +15,11 @@ module Cadenya
             )
           end
 
-        sig { returns(String) }
-        attr_accessor :workspace_id
+        sig { returns(T.nilable(String)) }
+        attr_reader :workspace_id
+
+        sig { params(workspace_id: String).void }
+        attr_writer :workspace_id
 
         sig { returns(String) }
         attr_accessor :agent_id
@@ -49,9 +52,9 @@ module Cadenya
 
         sig do
           params(
-            workspace_id: String,
             agent_id: String,
             id: String,
+            workspace_id: String,
             metadata: Cadenya::UpdateResourceMetadata::OrHash,
             spec: Cadenya::Agents::AgentVariationSpec::OrHash,
             update_mask: String,
@@ -59,9 +62,9 @@ module Cadenya
           ).returns(T.attached_class)
         end
         def self.new(
-          workspace_id:,
           agent_id:,
           id:,
+          workspace_id: nil,
           # UpdateResourceMetadata contains the user-provided fields for updating a
           # workspace-scoped resource. Read-only fields (id, account_id, workspace_id,
           # profile_id, created_at) are excluded since they are set by the server.

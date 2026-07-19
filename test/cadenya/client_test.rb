@@ -43,7 +43,7 @@ class CadenyaTest < Minitest::Test
       cadenya.account.retrieve
     end
 
-    assert_requested(:any, /./, times: 3)
+    assert_requested(:any, /./, times: 1)
   end
 
   def test_client_given_request_default_retry_attempts
@@ -146,7 +146,7 @@ class CadenyaTest < Minitest::Test
       cadenya.account.retrieve
     end
 
-    3.times do
+    1.times do
       assert_requested(:any, /./, headers: {"x-stainless-retry-count" => _1})
     end
   end
@@ -160,7 +160,7 @@ class CadenyaTest < Minitest::Test
       cadenya.account.retrieve(request_options: {extra_headers: {"x-stainless-retry-count" => nil}})
     end
 
-    assert_requested(:any, /./, times: 3) do
+    assert_requested(:any, /./, times: 1) do
       refute_includes(_1.headers.keys.map(&:downcase), "x-stainless-retry-count")
     end
   end
@@ -174,7 +174,7 @@ class CadenyaTest < Minitest::Test
       cadenya.account.retrieve(request_options: {extra_headers: {"x-stainless-retry-count" => "42"}})
     end
 
-    assert_requested(:any, /./, headers: {"x-stainless-retry-count" => "42"}, times: 3)
+    assert_requested(:any, /./, headers: {"x-stainless-retry-count" => "42"}, times: 1)
   end
 
   def test_client_redirect_307

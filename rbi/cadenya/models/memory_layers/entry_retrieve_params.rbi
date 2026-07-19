@@ -15,8 +15,11 @@ module Cadenya
             )
           end
 
-        sig { returns(String) }
-        attr_accessor :workspace_id
+        sig { returns(T.nilable(String)) }
+        attr_reader :workspace_id
+
+        sig { params(workspace_id: String).void }
+        attr_writer :workspace_id
 
         sig { returns(String) }
         attr_accessor :memory_layer_id
@@ -26,13 +29,18 @@ module Cadenya
 
         sig do
           params(
-            workspace_id: String,
             memory_layer_id: String,
             id: String,
+            workspace_id: String,
             request_options: Cadenya::RequestOptions::OrHash
           ).returns(T.attached_class)
         end
-        def self.new(workspace_id:, memory_layer_id:, id:, request_options: {})
+        def self.new(
+          memory_layer_id:,
+          id:,
+          workspace_id: nil,
+          request_options: {}
+        )
         end
 
         sig do

@@ -19,7 +19,9 @@ module Cadenya
       extend Cadenya::Internal::Type::RequestParameters::Converter
       include Cadenya::Internal::Type::RequestParameters
 
-      attr_accessor workspace_id: String
+      attr_reader workspace_id: String?
+
+      def workspace_id=: (String) -> String
 
       attr_accessor agent_id: String
 
@@ -62,9 +64,9 @@ module Cadenya
       def variation_id=: (String) -> String
 
       def initialize: (
-        workspace_id: String,
         agent_id: String,
         system_prompt_data: ::Hash[Symbol, top],
+        ?workspace_id: String,
         ?episodic_memory: Cadenya::ObjectiveCreateParams::EpisodicMemory,
         ?first_user_message: String,
         ?first_user_message_data: ::Hash[Symbol, top],
@@ -92,11 +94,9 @@ module Cadenya
       type episodic_memory = { key: String, memory_layer_id: String }
 
       class EpisodicMemory < Cadenya::Internal::Type::BaseModel
-        attr_reader key: String?
+        attr_accessor key: String
 
-        def key=: (String) -> String
-
-        def initialize: (?key: String) -> void
+        def initialize: (key: String) -> void
 
         def to_hash: -> { key: String, memory_layer_id: String }
       end

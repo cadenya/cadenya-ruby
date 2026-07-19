@@ -42,13 +42,22 @@ module Cadenya
         # reads so clients can render a variation's full assignment list without calling
         # the add/remove endpoints just to enumerate.
         sig do
-          returns(T.nilable(T::Array[Cadenya::Agents::VariationAssignment]))
+          returns(
+            T.nilable(T::Array[Cadenya::Agents::VariationAssignment::Variants])
+          )
         end
         attr_reader :assignments
 
         sig do
           params(
-            assignments: T::Array[Cadenya::Agents::VariationAssignment::OrHash]
+            assignments:
+              T::Array[
+                T.any(
+                  Cadenya::Agents::VariationAssignmentTool::OrHash,
+                  Cadenya::Agents::VariationAssignmentToolSet::OrHash,
+                  Cadenya::Agents::VariationAssignmentAgent::OrHash
+                )
+              ]
           ).void
         end
         attr_writer :assignments
@@ -109,7 +118,14 @@ module Cadenya
         # AgentVariationInfo provides read-only summary information about a variation
         sig do
           params(
-            assignments: T::Array[Cadenya::Agents::VariationAssignment::OrHash],
+            assignments:
+              T::Array[
+                T.any(
+                  Cadenya::Agents::VariationAssignmentTool::OrHash,
+                  Cadenya::Agents::VariationAssignmentToolSet::OrHash,
+                  Cadenya::Agents::VariationAssignmentAgent::OrHash
+                )
+              ],
             created_by: Cadenya::Profile::OrHash,
             feedback_count: Integer,
             memory_layer_assignments:
@@ -156,7 +172,8 @@ module Cadenya
         sig do
           override.returns(
             {
-              assignments: T::Array[Cadenya::Agents::VariationAssignment],
+              assignments:
+                T::Array[Cadenya::Agents::VariationAssignment::Variants],
               created_by: Cadenya::Profile,
               feedback_count: Integer,
               memory_layer_assignments:

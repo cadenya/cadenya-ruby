@@ -3,10 +3,10 @@
 module Cadenya
   module Models
     module ToolSets
-      class ConfigMcp < Cadenya::Internal::Type::BaseModel
+      class ConfigMCP < Cadenya::Internal::Type::BaseModel
         OrHash =
           T.type_alias do
-            T.any(Cadenya::ToolSets::ConfigMcp, Cadenya::Internal::AnyHash)
+            T.any(Cadenya::ToolSets::ConfigMCP, Cadenya::Internal::AnyHash)
           end
 
         # Behavior hints synced from the MCP server's tool definition (ToolAnnotations in
@@ -14,17 +14,17 @@ module Cadenya
         # them, and clients should not rely on them for security decisions. Absent hints
         # keep the MCP spec defaults (destructiveHint and openWorldHint default to true;
         # readOnlyHint and idempotentHint default to false).
-        sig { returns(T.nilable(Cadenya::ToolSets::McpAnnotations)) }
+        sig { returns(T.nilable(Cadenya::ToolSets::MCPAnnotations)) }
         attr_reader :annotations
 
         sig do
-          params(annotations: Cadenya::ToolSets::McpAnnotations::OrHash).void
+          params(annotations: Cadenya::ToolSets::MCPAnnotations::OrHash).void
         end
         attr_writer :annotations
 
         sig do
           params(
-            annotations: Cadenya::ToolSets::McpAnnotations::OrHash
+            annotations: Cadenya::ToolSets::MCPAnnotations::OrHash
           ).returns(T.attached_class)
         end
         def self.new(
@@ -38,7 +38,7 @@ module Cadenya
         end
 
         sig do
-          override.returns({ annotations: Cadenya::ToolSets::McpAnnotations })
+          override.returns({ annotations: Cadenya::ToolSets::MCPAnnotations })
         end
         def to_hash
         end

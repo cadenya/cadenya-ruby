@@ -1,242 +1,28 @@
 module Cadenya
   module Models
     type objective_event_data =
-      {
-        assistant_message: Cadenya::AssistantMessage,
-        cancelled: Cadenya::ObjectiveEventData::Cancelled,
-        context_window_compacted: Cadenya::ContextWindowCompacted,
-        error: Cadenya::ObjectiveError,
-        finalized: Cadenya::ObjectiveEventData::Finalized,
-        memory_read: Cadenya::MemoryRead,
-        notice: Cadenya::ObjectiveEventData::Notice,
-        sub_agent_spawned: Cadenya::SubAgentSpawned,
-        sub_agent_updated: Cadenya::SubAgentUpdated,
-        timed_out: Cadenya::ObjectiveEventData::TimedOut,
-        tool_approval_requested: Cadenya::ToolApprovalRequested,
-        tool_approved: Cadenya::ToolApproved,
-        tool_called: Cadenya::ToolCalled,
-        tool_denied: Cadenya::ToolDenied,
-        tool_error: Cadenya::ToolError,
-        tool_result: Cadenya::ToolResult,
-        type: String,
-        user_message: Cadenya::UserMessage
-      }
-
-    class ObjectiveEventData < Cadenya::Internal::Type::BaseModel
-      attr_reader assistant_message: Cadenya::AssistantMessage?
-
-      def assistant_message=: (
-        Cadenya::AssistantMessage
-      ) -> Cadenya::AssistantMessage
-
-      attr_reader cancelled: Cadenya::ObjectiveEventData::Cancelled?
-
-      def cancelled=: (
-        Cadenya::ObjectiveEventData::Cancelled
-      ) -> Cadenya::ObjectiveEventData::Cancelled
-
-      attr_reader context_window_compacted: Cadenya::ContextWindowCompacted?
-
-      def context_window_compacted=: (
-        Cadenya::ContextWindowCompacted
-      ) -> Cadenya::ContextWindowCompacted
-
-      attr_reader error: Cadenya::ObjectiveError?
-
-      def error=: (Cadenya::ObjectiveError) -> Cadenya::ObjectiveError
-
-      attr_reader finalized: Cadenya::ObjectiveEventData::Finalized?
-
-      def finalized=: (
-        Cadenya::ObjectiveEventData::Finalized
-      ) -> Cadenya::ObjectiveEventData::Finalized
-
-      attr_reader memory_read: Cadenya::MemoryRead?
-
-      def memory_read=: (Cadenya::MemoryRead) -> Cadenya::MemoryRead
-
-      attr_reader notice: Cadenya::ObjectiveEventData::Notice?
-
-      def notice=: (
-        Cadenya::ObjectiveEventData::Notice
-      ) -> Cadenya::ObjectiveEventData::Notice
-
-      attr_reader sub_agent_spawned: Cadenya::SubAgentSpawned?
-
-      def sub_agent_spawned=: (
-        Cadenya::SubAgentSpawned
-      ) -> Cadenya::SubAgentSpawned
-
-      attr_reader sub_agent_updated: Cadenya::SubAgentUpdated?
-
-      def sub_agent_updated=: (
-        Cadenya::SubAgentUpdated
-      ) -> Cadenya::SubAgentUpdated
-
-      attr_reader timed_out: Cadenya::ObjectiveEventData::TimedOut?
-
-      def timed_out=: (
-        Cadenya::ObjectiveEventData::TimedOut
-      ) -> Cadenya::ObjectiveEventData::TimedOut
-
-      attr_reader tool_approval_requested: Cadenya::ToolApprovalRequested?
-
-      def tool_approval_requested=: (
-        Cadenya::ToolApprovalRequested
-      ) -> Cadenya::ToolApprovalRequested
-
-      attr_reader tool_approved: Cadenya::ToolApproved?
-
-      def tool_approved=: (Cadenya::ToolApproved) -> Cadenya::ToolApproved
-
-      attr_reader tool_called: Cadenya::ToolCalled?
-
-      def tool_called=: (Cadenya::ToolCalled) -> Cadenya::ToolCalled
-
-      attr_reader tool_denied: Cadenya::ToolDenied?
-
-      def tool_denied=: (Cadenya::ToolDenied) -> Cadenya::ToolDenied
-
-      attr_reader tool_error: Cadenya::ToolError?
-
-      def tool_error=: (Cadenya::ToolError) -> Cadenya::ToolError
-
-      attr_reader tool_result: Cadenya::ToolResult?
-
-      def tool_result=: (Cadenya::ToolResult) -> Cadenya::ToolResult
-
-      attr_reader type: String?
-
-      def type=: (String) -> String
-
-      attr_reader user_message: Cadenya::UserMessage?
-
-      def user_message=: (Cadenya::UserMessage) -> Cadenya::UserMessage
-
-      def initialize: (
-        ?assistant_message: Cadenya::AssistantMessage,
-        ?cancelled: Cadenya::ObjectiveEventData::Cancelled,
-        ?context_window_compacted: Cadenya::ContextWindowCompacted,
-        ?error: Cadenya::ObjectiveError,
-        ?finalized: Cadenya::ObjectiveEventData::Finalized,
-        ?memory_read: Cadenya::MemoryRead,
-        ?notice: Cadenya::ObjectiveEventData::Notice,
-        ?sub_agent_spawned: Cadenya::SubAgentSpawned,
-        ?sub_agent_updated: Cadenya::SubAgentUpdated,
-        ?timed_out: Cadenya::ObjectiveEventData::TimedOut,
-        ?tool_approval_requested: Cadenya::ToolApprovalRequested,
-        ?tool_approved: Cadenya::ToolApproved,
-        ?tool_called: Cadenya::ToolCalled,
-        ?tool_denied: Cadenya::ToolDenied,
-        ?tool_error: Cadenya::ToolError,
-        ?tool_result: Cadenya::ToolResult,
-        ?type: String,
-        ?user_message: Cadenya::UserMessage
-      ) -> void
-
-      def to_hash: -> {
-        assistant_message: Cadenya::AssistantMessage,
-        cancelled: Cadenya::ObjectiveEventData::Cancelled,
-        context_window_compacted: Cadenya::ContextWindowCompacted,
-        error: Cadenya::ObjectiveError,
-        finalized: Cadenya::ObjectiveEventData::Finalized,
-        memory_read: Cadenya::MemoryRead,
-        notice: Cadenya::ObjectiveEventData::Notice,
-        sub_agent_spawned: Cadenya::SubAgentSpawned,
-        sub_agent_updated: Cadenya::SubAgentUpdated,
-        timed_out: Cadenya::ObjectiveEventData::TimedOut,
-        tool_approval_requested: Cadenya::ToolApprovalRequested,
-        tool_approved: Cadenya::ToolApproved,
-        tool_called: Cadenya::ToolCalled,
-        tool_denied: Cadenya::ToolDenied,
-        tool_error: Cadenya::ToolError,
-        tool_result: Cadenya::ToolResult,
-        type: String,
-        user_message: Cadenya::UserMessage
-      }
-
-      type cancelled = { message: String }
-
-      class Cancelled < Cadenya::Internal::Type::BaseModel
-        attr_reader message: String?
-
-        def message=: (String) -> String
-
-        def initialize: (?message: String) -> void
-
-        def to_hash: -> { message: String }
-      end
-
-      type finalized = { output: top }
-
-      class Finalized < Cadenya::Internal::Type::BaseModel
-        attr_reader output: top?
-
-        def output=: (top) -> top
-
-        def initialize: (?output: top) -> void
-
-        def to_hash: -> { output: top }
-      end
-
-      type notice =
-        {
-          key: String,
-          level: Cadenya::Models::ObjectiveEventData::Notice::level,
-          message: String
-        }
-
-      class Notice < Cadenya::Internal::Type::BaseModel
-        attr_reader key: String?
-
-        def key=: (String) -> String
-
-        attr_reader level: Cadenya::Models::ObjectiveEventData::Notice::level?
-
-        def level=: (
-          Cadenya::Models::ObjectiveEventData::Notice::level
-        ) -> Cadenya::Models::ObjectiveEventData::Notice::level
-
-        attr_reader message: String?
-
-        def message=: (String) -> String
-
-        def initialize: (
-          ?key: String,
-          ?level: Cadenya::Models::ObjectiveEventData::Notice::level,
-          ?message: String
-        ) -> void
-
-        def to_hash: -> {
-          key: String,
-          level: Cadenya::Models::ObjectiveEventData::Notice::level,
-          message: String
-        }
-
-        type level = :LEVEL_UNSPECIFIED | :LEVEL_INFO | :LEVEL_WARN
-
-        module Level
-          extend Cadenya::Internal::Type::Enum
-
-          LEVEL_UNSPECIFIED: :LEVEL_UNSPECIFIED
-          LEVEL_INFO: :LEVEL_INFO
-          LEVEL_WARN: :LEVEL_WARN
-
-          def self?.values: -> ::Array[Cadenya::Models::ObjectiveEventData::Notice::level]
-        end
-      end
-
-      type timed_out = { message: String }
-
-      class TimedOut < Cadenya::Internal::Type::BaseModel
-        attr_reader message: String?
-
-        def message=: (String) -> String
-
-        def initialize: (?message: String) -> void
-
-        def to_hash: -> { message: String }
-      end
+      Cadenya::ObjectiveEventDataUserMessage
+      | Cadenya::ObjectiveEventDataToolApprovalRequested
+      | Cadenya::ObjectiveEventDataToolApproved
+      | Cadenya::ObjectiveEventDataToolDenied
+      | Cadenya::ObjectiveEventDataToolCalled
+      | Cadenya::ObjectiveEventDataError
+      | Cadenya::ObjectiveEventDataAssistantMessage
+      | Cadenya::ObjectiveEventDataToolResult
+      | Cadenya::ObjectiveEventDataToolError
+      | Cadenya::ObjectiveEventDataContextWindowCompacted
+      | Cadenya::ObjectiveEventDataMemoryRead
+      | Cadenya::ObjectiveEventDataCancelled
+      | Cadenya::ObjectiveEventDataSubAgentSpawned
+      | Cadenya::ObjectiveEventDataSubAgentUpdated
+      | Cadenya::ObjectiveEventDataFinalized
+      | Cadenya::ObjectiveEventDataNotice
+      | Cadenya::ObjectiveEventDataTimedOut
+
+    module ObjectiveEventData
+      extend Cadenya::Internal::Type::Union
+
+      def self?.variants: -> ::Array[Cadenya::Models::objective_event_data]
     end
   end
 end

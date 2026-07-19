@@ -1,0 +1,35 @@
+module Cadenya
+  module Models
+    type objective_event_data_sub_agent_spawned =
+      {
+        sub_agent_spawned: Cadenya::SubAgentSpawned,
+        type: Cadenya::Models::ObjectiveEventDataSubAgentSpawned::type_
+      }
+
+    class ObjectiveEventDataSubAgentSpawned < Cadenya::Internal::Type::BaseModel
+      attr_accessor sub_agent_spawned: Cadenya::SubAgentSpawned
+
+      attr_accessor type: Cadenya::Models::ObjectiveEventDataSubAgentSpawned::type_
+
+      def initialize: (
+        sub_agent_spawned: Cadenya::SubAgentSpawned,
+        type: Cadenya::Models::ObjectiveEventDataSubAgentSpawned::type_
+      ) -> void
+
+      def to_hash: -> {
+        sub_agent_spawned: Cadenya::SubAgentSpawned,
+        type: Cadenya::Models::ObjectiveEventDataSubAgentSpawned::type_
+      }
+
+      type type_ = :subAgentSpawned
+
+      module Type
+        extend Cadenya::Internal::Type::Enum
+
+        SUB_AGENT_SPAWNED: :subAgentSpawned
+
+        def self?.values: -> ::Array[Cadenya::Models::ObjectiveEventDataSubAgentSpawned::type_]
+      end
+    end
+  end
+end

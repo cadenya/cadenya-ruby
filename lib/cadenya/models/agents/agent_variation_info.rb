@@ -31,8 +31,9 @@ module Cadenya
           #   reads so clients can render a variation's full assignment list without calling
           #   the add/remove endpoints just to enumerate.
           #
-          #   @return [Array<Cadenya::Models::Agents::VariationAssignment>, nil]
-          optional :assignments, -> { Cadenya::Internal::Type::ArrayOf[Cadenya::Agents::VariationAssignment] }
+          #   @return [Array<Cadenya::Models::Agents::VariationAssignmentTool, Cadenya::Models::Agents::VariationAssignmentToolSet, Cadenya::Models::Agents::VariationAssignmentAgent>, nil]
+          optional :assignments,
+                   -> { Cadenya::Internal::Type::ArrayOf[union: Cadenya::Agents::VariationAssignment] }
 
           # @!attribute memory_layer_assignments
           #   Read-only list of memory layer assignments for this variation, returned in
@@ -81,7 +82,7 @@ module Cadenya
         #
         #   AgentVariationInfo provides read-only summary information about a variation
         #
-        #   @param assignments [Array<Cadenya::Models::Agents::VariationAssignment>] All tools, tool sets, and sub-agents assigned to this variation.
+        #   @param assignments [Array<Cadenya::Models::Agents::VariationAssignmentTool, Cadenya::Models::Agents::VariationAssignmentToolSet, Cadenya::Models::Agents::VariationAssignmentAgent>] All tools, tool sets, and sub-agents assigned to this variation.
         #
         #   @param created_by [Cadenya::Models::Profile] A profile identifies a user or non-human principal (such as an API key)
         #

@@ -3,15 +3,15 @@ module Cadenya
     class Objectives
       class Tasks
         def retrieve: (
+          String objective_id,
           String id,
-          workspace_id: String,
-          objective_id: String,
+          ?workspace_id: String,
           ?request_options: Cadenya::request_opts
         ) -> Cadenya::Objectives::ObjectiveTask
 
         def list: (
           String objective_id,
-          workspace_id: String,
+          ?workspace_id: String,
           ?cursor: String,
           ?limit: Integer,
           ?sort_order: String,
