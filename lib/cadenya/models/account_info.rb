@@ -14,15 +14,6 @@ module Cadenya
         #   @return [String, nil]
         optional :challenge_token, String, api_name: :challengeToken
 
-        # @!attribute global_api_key
-        #   An API key. Every key belongs to exactly one workspace and is managed via the
-        #   workspace-scoped API key routes. The only exception is the system-managed global
-        #   account key, which spans all workspaces and is managed via the account
-        #   global_api_key routes.
-        #
-        #   @return [Cadenya::Models::APIKey, nil]
-        optional :global_api_key, -> { Cadenya::APIKey }, api_name: :globalApiKey
-
         # @!attribute webhook_events_hmac_secret
         #   The generated secret that will sign all webhooks that are sent to your
         #   configured Webhook URL. Formatted as "wh_asdf1234" per the
@@ -32,15 +23,13 @@ module Cadenya
         optional :webhook_events_hmac_secret, String, api_name: :webhookEventsHmacSecret
       end
 
-      # @!method initialize(challenge_token: nil, global_api_key: nil, webhook_events_hmac_secret: nil)
+      # @!method initialize(challenge_token: nil, webhook_events_hmac_secret: nil)
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::AccountInfo} for more details.
       #
       #   Server-populated information about the account.
       #
       #   @param challenge_token [String] The challenge token Cadenya sends in the X-Cadenya-Challenge-Token header
-      #
-      #   @param global_api_key [Cadenya::Models::APIKey] An API key. Every key belongs to exactly one workspace and is managed via
       #
       #   @param webhook_events_hmac_secret [String] The generated secret that will sign all webhooks that are sent to your configure
     end
