@@ -1,20 +1,20 @@
 module Cadenya
   module Models
     module ToolSets
-      type config_mcp = { annotations: Cadenya::ToolSets::McpAnnotations }
+      type config_mcp = { annotations: Cadenya::ToolSets::MCPAnnotations }
 
-      class ConfigMcp < Cadenya::Internal::Type::BaseModel
-        attr_reader annotations: Cadenya::ToolSets::McpAnnotations?
+      class ConfigMCP < Cadenya::Internal::Type::BaseModel
+        attr_reader annotations: Cadenya::ToolSets::MCPAnnotations?
 
         def annotations=: (
-          Cadenya::ToolSets::McpAnnotations
-        ) -> Cadenya::ToolSets::McpAnnotations
+          Cadenya::ToolSets::MCPAnnotations
+        ) -> Cadenya::ToolSets::MCPAnnotations
 
         def initialize: (
-          ?annotations: Cadenya::ToolSets::McpAnnotations
+          ?annotations: Cadenya::ToolSets::MCPAnnotations
         ) -> void
 
-        def to_hash: -> { annotations: Cadenya::ToolSets::McpAnnotations }
+        def to_hash: -> { annotations: Cadenya::ToolSets::MCPAnnotations }
       end
     end
   end

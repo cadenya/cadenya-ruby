@@ -10,8 +10,8 @@ module Cadenya
         #   user-defined tool (IE: MCP, HTTP), another Agent (useful to separate context),
         #   or a Cadenya Tool (one Cadenya provides).
         #
-        #   @return [Cadenya::Models::CallableTool]
-        required :callable, -> { Cadenya::CallableTool }
+        #   @return [Cadenya::Models::CallableToolTool, Cadenya::Models::CallableToolAgent, Cadenya::Models::CallableToolCadenyaProvidedTool]
+        required :callable, union: -> { Cadenya::CallableTool }
 
         # @!attribute arguments
         #   The arguments passed to the tool
@@ -47,7 +47,7 @@ module Cadenya
         #   Some parameter documentations has been truncated, see
         #   {Cadenya::Models::Objectives::ObjectiveToolCallData} for more details.
         #
-        #   @param callable [Cadenya::Models::CallableTool] CallableTool is a union that represents a tool that can be called by an agent. I
+        #   @param callable [Cadenya::Models::CallableToolTool, Cadenya::Models::CallableToolAgent, Cadenya::Models::CallableToolCadenyaProvidedTool] CallableTool is a union that represents a tool that can be called by an agent. I
         #
         #   @param arguments [Hash{Symbol=>Object}] The arguments passed to the tool
         #

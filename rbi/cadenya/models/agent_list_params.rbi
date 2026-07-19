@@ -11,8 +11,11 @@ module Cadenya
           T.any(Cadenya::AgentListParams, Cadenya::Internal::AnyHash)
         end
 
-      sig { returns(String) }
-      attr_accessor :workspace_id
+      sig { returns(T.nilable(String)) }
+      attr_reader :workspace_id
+
+      sig { params(workspace_id: String).void }
+      attr_writer :workspace_id
 
       # Pagination cursor from previous response
       sig { returns(T.nilable(String)) }
@@ -106,7 +109,7 @@ module Cadenya
         ).returns(T.attached_class)
       end
       def self.new(
-        workspace_id:,
+        workspace_id: nil,
         # Pagination cursor from previous response
         cursor: nil,
         # When true, the `info` field on each returned agent is populated. Requests with

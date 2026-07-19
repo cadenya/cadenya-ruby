@@ -8,21 +8,25 @@ module Cadenya
       #
       # Creates a new customer-provided AI provider key in the workspace
       #
-      # @overload create(workspace_id, metadata:, spec:, request_options: {})
+      # @overload create(metadata:, spec:, workspace_id: nil, request_options: {})
       #
-      # @param workspace_id [String] The workspace that will own this key.
+      # @param metadata [Cadenya::Models::CreateResourceMetadata] Body param: CreateResourceMetadata contains the user-provided fields for creatin
       #
-      # @param metadata [Cadenya::Models::CreateResourceMetadata] CreateResourceMetadata contains the user-provided fields for creating
+      # @param spec [Cadenya::Models::AIProviderKeySpec] Body param
       #
-      # @param spec [Cadenya::Models::AIProviderKeySpec]
+      # @param workspace_id [String] Path param: The workspace that will own this key.
       #
       # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
       #
       # @return [Cadenya::Models::AIProviderKey]
       #
       # @see Cadenya::Models::AIProviderKeyCreateParams
-      def create(workspace_id, params)
+      def create(params)
         parsed, options = Cadenya::AIProviderKeyCreateParams.dump_request(params)
+        workspace_id =
+          parsed.delete(:workspace_id) do
+            @client.workspace_id
+          end
         @client.request(
           method: :post,
           path: ["v1/workspaces/%1$s/ai_provider_keys", workspace_id],
@@ -34,7 +38,7 @@ module Cadenya
 
       # Retrieves an AI provider key by ID from the workspace
       #
-      # @overload retrieve(id, workspace_id:, request_options: {})
+      # @overload retrieve(id, workspace_id: nil, request_options: {})
       #
       # @param id [String] The key to retrieve.
       #
@@ -45,11 +49,11 @@ module Cadenya
       # @return [Cadenya::Models::AIProviderKey]
       #
       # @see Cadenya::Models::AIProviderKeyRetrieveParams
-      def retrieve(id, params)
+      def retrieve(id, params = {})
         parsed, options = Cadenya::AIProviderKeyRetrieveParams.dump_request(params)
         workspace_id =
           parsed.delete(:workspace_id) do
-            raise ArgumentError.new("missing required path argument #{_1}")
+            @client.workspace_id
           end
         @client.request(
           method: :get,
@@ -64,7 +68,7 @@ module Cadenya
       #
       # Updates an AI provider key's name or key value in the workspace
       #
-      # @overload update(id, workspace_id:, metadata: nil, spec: nil, update_mask: nil, request_options: {})
+      # @overload update(id, workspace_id: nil, metadata: nil, spec: nil, update_mask: nil, request_options: {})
       #
       # @param id [String] Path param: The key to update.
       #
@@ -81,11 +85,11 @@ module Cadenya
       # @return [Cadenya::Models::AIProviderKey]
       #
       # @see Cadenya::Models::AIProviderKeyUpdateParams
-      def update(id, params)
+      def update(id, params = {})
         parsed, options = Cadenya::AIProviderKeyUpdateParams.dump_request(params)
         workspace_id =
           parsed.delete(:workspace_id) do
-            raise ArgumentError.new("missing required path argument #{_1}")
+            @client.workspace_id
           end
         @client.request(
           method: :patch,
@@ -101,34 +105,38 @@ module Cadenya
       #
       # Lists all customer-provided AI provider keys in the workspace
       #
-      # @overload list(workspace_id, cursor: nil, include_info: nil, labels: nil, limit: nil, prefix: nil, promotional: nil, query: nil, sort_order: nil, request_options: {})
+      # @overload list(workspace_id: nil, cursor: nil, include_info: nil, labels: nil, limit: nil, prefix: nil, promotional: nil, query: nil, sort_order: nil, request_options: {})
       #
-      # @param workspace_id [String] The workspace whose keys will be listed.
+      # @param workspace_id [String] Path param: The workspace whose keys will be listed.
       #
-      # @param cursor [String] Pagination cursor from previous response
+      # @param cursor [String] Query param: Pagination cursor from previous response
       #
-      # @param include_info [Boolean] When true, populate each item's info (model counts), at the cost of extra
+      # @param include_info [Boolean] Query param: When true, populate each item's info (model counts), at the cost of
       #
-      # @param labels [String] Filters by metadata labels. Comma-separated key=value pairs,
+      # @param labels [String] Query param: Filters by metadata labels. Comma-separated key=value pairs,
       #
-      # @param limit [Integer] Maximum number of results to return
+      # @param limit [Integer] Query param: Maximum number of results to return
       #
-      # @param prefix [String] Filter expression (query param: prefix)
+      # @param prefix [String] Query param: Filter expression (query param: prefix)
       #
-      # @param promotional [Boolean] When true, return only promotional keys (provided by Cadenya, e.g. for
+      # @param promotional [Boolean] Query param: When true, return only promotional keys (provided by Cadenya, e.g.
       #
-      # @param query [String] Free-form search query
+      # @param query [String] Query param: Free-form search query
       #
-      # @param sort_order [String] Sort order for results (asc or desc by creation time)
+      # @param sort_order [String] Query param: Sort order for results (asc or desc by creation time)
       #
       # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
       #
       # @return [Cadenya::Internal::CursorPagination<Cadenya::Models::AIProviderKey>]
       #
       # @see Cadenya::Models::AIProviderKeyListParams
-      def list(workspace_id, params = {})
+      def list(params = {})
         parsed, options = Cadenya::AIProviderKeyListParams.dump_request(params)
         query = Cadenya::Internal::Util.encode_query_params(parsed)
+        workspace_id =
+          parsed.delete(:workspace_id) do
+            @client.workspace_id
+          end
         @client.request(
           method: :get,
           path: ["v1/workspaces/%1$s/ai_provider_keys", workspace_id],
@@ -141,7 +149,7 @@ module Cadenya
 
       # Deletes an AI provider key from the workspace
       #
-      # @overload delete(id, workspace_id:, request_options: {})
+      # @overload delete(id, workspace_id: nil, request_options: {})
       #
       # @param id [String] The key to delete.
       #
@@ -152,11 +160,11 @@ module Cadenya
       # @return [nil]
       #
       # @see Cadenya::Models::AIProviderKeyDeleteParams
-      def delete(id, params)
+      def delete(id, params = {})
         parsed, options = Cadenya::AIProviderKeyDeleteParams.dump_request(params)
         workspace_id =
           parsed.delete(:workspace_id) do
-            raise ArgumentError.new("missing required path argument #{_1}")
+            @client.workspace_id
           end
         @client.request(
           method: :delete,

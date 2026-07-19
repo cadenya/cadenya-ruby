@@ -15,25 +15,25 @@ module Cadenya
         extend Cadenya::Internal::Type::RequestParameters::Converter
         include Cadenya::Internal::Type::RequestParameters
 
-        attr_accessor workspace_id: String
+        attr_reader workspace_id: String?
+
+        def workspace_id=: (String) -> String
 
         attr_accessor agent_id: String
 
         attr_accessor variation_id: String
 
-        attr_reader memory_layer_id: String?
-
-        def memory_layer_id=: (String) -> String
+        attr_accessor memory_layer_id: String
 
         attr_reader position: Integer?
 
         def position=: (Integer) -> Integer
 
         def initialize: (
-          workspace_id: String,
           agent_id: String,
           variation_id: String,
-          ?memory_layer_id: String,
+          memory_layer_id: String,
+          ?workspace_id: String,
           ?position: Integer,
           ?request_options: Cadenya::request_opts
         ) -> void

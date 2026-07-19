@@ -15,8 +15,11 @@ module Cadenya
             )
           end
 
-        sig { returns(String) }
-        attr_accessor :workspace_id
+        sig { returns(T.nilable(String)) }
+        attr_reader :workspace_id
+
+        sig { params(workspace_id: String).void }
+        attr_writer :workspace_id
 
         sig { returns(String) }
         attr_accessor :agent_id
@@ -98,8 +101,8 @@ module Cadenya
 
         sig do
           params(
-            workspace_id: String,
             agent_id: String,
+            workspace_id: String,
             agent_variation_id: String,
             created_after: Time,
             created_before: Time,
@@ -113,8 +116,8 @@ module Cadenya
           ).returns(T.attached_class)
         end
         def self.new(
-          workspace_id:,
           agent_id:,
+          workspace_id: nil,
           # Optional filter to limit results to feedback on objectives run by a single agent
           # variation. Supports "external_id:" prefix for external IDs.
           agent_variation_id: nil,

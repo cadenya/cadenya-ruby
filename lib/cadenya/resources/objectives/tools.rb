@@ -9,7 +9,7 @@ module Cadenya
         #
         # Lists all tools that were assigned to an objective
         #
-        # @overload list(objective_id, workspace_id:, cursor: nil, limit: nil, request_options: {})
+        # @overload list(objective_id, workspace_id: nil, cursor: nil, limit: nil, request_options: {})
         #
         # @param objective_id [String] Path param: The ID of the objective. Supports "external_id:" prefix for external
         #
@@ -24,12 +24,12 @@ module Cadenya
         # @return [Cadenya::Internal::CursorPagination<Cadenya::Models::Objectives::ObjectiveTool>]
         #
         # @see Cadenya::Models::Objectives::ToolListParams
-        def list(objective_id, params)
+        def list(objective_id, params = {})
           parsed, options = Cadenya::Objectives::ToolListParams.dump_request(params)
           query = Cadenya::Internal::Util.encode_query_params(parsed)
           workspace_id =
             parsed.delete(:workspace_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
+              @client.workspace_id
             end
           @client.request(
             method: :get,

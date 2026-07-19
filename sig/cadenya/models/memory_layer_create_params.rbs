@@ -12,16 +12,18 @@ module Cadenya
       extend Cadenya::Internal::Type::RequestParameters::Converter
       include Cadenya::Internal::Type::RequestParameters
 
-      attr_accessor workspace_id: String
+      attr_reader workspace_id: String?
+
+      def workspace_id=: (String) -> String
 
       attr_accessor metadata: Cadenya::CreateResourceMetadata
 
       attr_accessor spec: Cadenya::MemoryLayerSpec
 
       def initialize: (
-        workspace_id: String,
         metadata: Cadenya::CreateResourceMetadata,
         spec: Cadenya::MemoryLayerSpec,
+        ?workspace_id: String,
         ?request_options: Cadenya::request_opts
       ) -> void
 

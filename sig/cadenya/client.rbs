@@ -1,6 +1,6 @@
 module Cadenya
   class Client < Cadenya::Internal::Transport::BaseClient
-    DEFAULT_MAX_RETRIES: 2
+    DEFAULT_MAX_RETRIES: 0
 
     DEFAULT_TIMEOUT_IN_SECONDS: Float
 
@@ -11,6 +11,8 @@ module Cadenya
     attr_reader api_key: String
 
     attr_reader webhook_key: String?
+
+    attr_reader workspace_id: String?
 
     attr_reader ai_provider_keys: Cadenya::Resources::AIProviderKeys
 
@@ -48,6 +50,7 @@ module Cadenya
 
     def initialize: (
       ?api_key: String?,
+      ?workspace_id: String?,
       ?webhook_key: String?,
       ?base_url: String?,
       ?max_retries: Integer,

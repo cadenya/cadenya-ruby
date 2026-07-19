@@ -9,8 +9,8 @@ module Cadenya
 
       # @!attribute workspace_id
       #
-      #   @return [String]
-      required :workspace_id, String
+      #   @return [String, nil]
+      optional :workspace_id, String
 
       # @!attribute objective_id
       #
@@ -26,13 +26,13 @@ module Cadenya
                -> { Cadenya::Agents::AgentVariationSpecCompactionConfig },
                api_name: :compactionConfig
 
-      # @!method initialize(workspace_id:, objective_id:, compaction_config: nil, request_options: {})
+      # @!method initialize(objective_id:, workspace_id: nil, compaction_config: nil, request_options: {})
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::ObjectiveCompactParams} for more details.
       #
-      #   @param workspace_id [String]
-      #
       #   @param objective_id [String]
+      #
+      #   @param workspace_id [String]
       #
       #   @param compaction_config [Cadenya::Models::Agents::AgentVariationSpecCompactionConfig] CompactionConfig defines how context window compaction behaves for objectives us
       #

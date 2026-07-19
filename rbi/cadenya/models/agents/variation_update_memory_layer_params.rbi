@@ -15,8 +15,11 @@ module Cadenya
             )
           end
 
-        sig { returns(String) }
-        attr_accessor :workspace_id
+        sig { returns(T.nilable(String)) }
+        attr_reader :workspace_id
+
+        sig { params(workspace_id: String).void }
+        attr_writer :workspace_id
 
         sig { returns(String) }
         attr_accessor :agent_id
@@ -36,19 +39,19 @@ module Cadenya
 
         sig do
           params(
-            workspace_id: String,
             agent_id: String,
             variation_id: String,
             id: String,
+            workspace_id: String,
             position: Integer,
             request_options: Cadenya::RequestOptions::OrHash
           ).returns(T.attached_class)
         end
         def self.new(
-          workspace_id:,
           agent_id:,
           variation_id:,
           id:,
+          workspace_id: nil,
           # New position. Only field currently updatable on an assignment.
           position: nil,
           request_options: {}

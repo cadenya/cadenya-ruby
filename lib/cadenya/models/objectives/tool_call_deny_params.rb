@@ -10,8 +10,8 @@ module Cadenya
 
         # @!attribute workspace_id
         #
-        #   @return [String]
-        required :workspace_id, String
+        #   @return [String, nil]
+        optional :workspace_id, String
 
         # @!attribute objective_id
         #
@@ -30,15 +30,15 @@ module Cadenya
         #   @return [String, nil]
         optional :memo, String
 
-        # @!method initialize(workspace_id:, objective_id:, tool_call_id:, memo: nil, request_options: {})
+        # @!method initialize(objective_id:, tool_call_id:, workspace_id: nil, memo: nil, request_options: {})
         #   Some parameter documentations has been truncated, see
         #   {Cadenya::Models::Objectives::ToolCallDenyParams} for more details.
-        #
-        #   @param workspace_id [String]
         #
         #   @param objective_id [String]
         #
         #   @param tool_call_id [String]
+        #
+        #   @param workspace_id [String]
         #
         #   @param memo [String] A memo to associate to the tool call denial. Use a memo to steer the LLM to a di
         #

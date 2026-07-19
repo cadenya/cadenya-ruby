@@ -12,7 +12,7 @@ module Cadenya
         # search by comment, sentiment filter, agent variation filter, and creation date
         # range. Results are ordered by creation time, newest first.
         #
-        # @overload list(agent_id, workspace_id:, agent_variation_id: nil, created_after: nil, created_before: nil, cursor: nil, include_info: nil, labels: nil, limit: nil, query: nil, sentiment: nil, request_options: {})
+        # @overload list(agent_id, workspace_id: nil, agent_variation_id: nil, created_after: nil, created_before: nil, cursor: nil, include_info: nil, labels: nil, limit: nil, query: nil, sentiment: nil, request_options: {})
         #
         # @param agent_id [String] Path param: The ID of the agent. Supports "external_id:" prefix for external IDs
         #
@@ -41,12 +41,12 @@ module Cadenya
         # @return [Cadenya::Internal::CursorPagination<Cadenya::Models::Objectives::ObjectiveFeedback>]
         #
         # @see Cadenya::Models::Agents::FeedbackListParams
-        def list(agent_id, params)
+        def list(agent_id, params = {})
           parsed, options = Cadenya::Agents::FeedbackListParams.dump_request(params)
           query = Cadenya::Internal::Util.encode_query_params(parsed)
           workspace_id =
             parsed.delete(:workspace_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
+              @client.workspace_id
             end
           @client.request(
             method: :get,

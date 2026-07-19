@@ -7,28 +7,24 @@ module Cadenya
         # Retrieves a single tool call, including the content the tool returned. Media
         # content (images, audio) is served as short-lived signed URLs.
         #
-        # @overload retrieve(tool_call_id, workspace_id:, objective_id:, request_options: {})
+        # @overload retrieve(objective_id, tool_call_id, workspace_id: nil, request_options: {})
+        #
+        # @param objective_id [String] The ID of the objective. Supports "external_id:" prefix for external IDs.
         #
         # @param tool_call_id [String] The ID of the tool call to retrieve
         #
         # @param workspace_id [String]
-        #
-        # @param objective_id [String] The ID of the objective. Supports "external_id:" prefix for external IDs.
         #
         # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
         #
         # @return [Cadenya::Models::Objectives::ObjectiveToolCallWithResult]
         #
         # @see Cadenya::Models::Objectives::ToolCallRetrieveParams
-        def retrieve(tool_call_id, params)
+        def retrieve(objective_id, tool_call_id, params = {})
           parsed, options = Cadenya::Objectives::ToolCallRetrieveParams.dump_request(params)
           workspace_id =
             parsed.delete(:workspace_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
-            end
-          objective_id =
-            parsed.delete(:objective_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
+              @client.workspace_id
             end
           @client.request(
             method: :get,
@@ -48,7 +44,7 @@ module Cadenya
         #
         # Lists all tool calls for an objective
         #
-        # @overload list(objective_id, workspace_id:, cursor: nil, execution_status: nil, include_info: nil, labels: nil, limit: nil, status: nil, request_options: {})
+        # @overload list(objective_id, workspace_id: nil, cursor: nil, execution_status: nil, include_info: nil, labels: nil, limit: nil, status: nil, request_options: {})
         #
         # @param objective_id [String] Path param: The objective ID to return tool calls for
         #
@@ -71,12 +67,12 @@ module Cadenya
         # @return [Cadenya::Internal::CursorPagination<Cadenya::Models::Objectives::ObjectiveToolCall>]
         #
         # @see Cadenya::Models::Objectives::ToolCallListParams
-        def list(objective_id, params)
+        def list(objective_id, params = {})
           parsed, options = Cadenya::Objectives::ToolCallListParams.dump_request(params)
           query = Cadenya::Internal::Util.encode_query_params(parsed)
           workspace_id =
             parsed.delete(:workspace_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
+              @client.workspace_id
             end
           @client.request(
             method: :get,
@@ -91,28 +87,24 @@ module Cadenya
         # When an agent attempts to use a tool that requires approval, use this endpoint
         # to mark it as approved.
         #
-        # @overload approve(tool_call_id, workspace_id:, objective_id:, request_options: {})
+        # @overload approve(objective_id, tool_call_id, workspace_id: nil, request_options: {})
+        #
+        # @param objective_id [String] The ID of the objective. Supports "external_id:" prefix for external IDs.
         #
         # @param tool_call_id [String] The ID of the tool call to approve
         #
         # @param workspace_id [String]
-        #
-        # @param objective_id [String] The ID of the objective. Supports "external_id:" prefix for external IDs.
         #
         # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
         #
         # @return [Cadenya::Models::Objectives::ObjectiveToolCall]
         #
         # @see Cadenya::Models::Objectives::ToolCallApproveParams
-        def approve(tool_call_id, params)
+        def approve(objective_id, tool_call_id, params = {})
           parsed, options = Cadenya::Objectives::ToolCallApproveParams.dump_request(params)
           workspace_id =
             parsed.delete(:workspace_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
-            end
-          objective_id =
-            parsed.delete(:objective_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
+              @client.workspace_id
             end
           @client.request(
             method: :post,
@@ -134,13 +126,13 @@ module Cadenya
         # to mark it as denied. Use a memo to steer the LLM to a different decision or
         # usage of the tool.
         #
-        # @overload deny(tool_call_id, workspace_id:, objective_id:, memo: nil, request_options: {})
+        # @overload deny(objective_id, tool_call_id, workspace_id: nil, memo: nil, request_options: {})
+        #
+        # @param objective_id [String] Path param: The ID of the objective. Supports "external_id:" prefix for external
         #
         # @param tool_call_id [String] Path param: The ID of the tool call to deny
         #
         # @param workspace_id [String] Path param
-        #
-        # @param objective_id [String] Path param: The ID of the objective. Supports "external_id:" prefix for external
         #
         # @param memo [String] Body param: A memo to associate to the tool call denial. Use a memo to steer the
         #
@@ -149,15 +141,11 @@ module Cadenya
         # @return [Cadenya::Models::Objectives::ObjectiveToolCall]
         #
         # @see Cadenya::Models::Objectives::ToolCallDenyParams
-        def deny(tool_call_id, params)
+        def deny(objective_id, tool_call_id, params = {})
           parsed, options = Cadenya::Objectives::ToolCallDenyParams.dump_request(params)
           workspace_id =
             parsed.delete(:workspace_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
-            end
-          objective_id =
-            parsed.delete(:objective_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
+              @client.workspace_id
             end
           @client.request(
             method: :post,
@@ -180,30 +168,26 @@ module Cadenya
         # external API consumer supplies for the call — used for human-in-the-loop tools
         # and reverse harnesses that execute tools locally and report results back.
         #
-        # @overload set_content(tool_call_id, workspace_id:, objective_id:, content:, request_options: {})
-        #
-        # @param tool_call_id [String] Path param: The ID of the tool call to set content for
-        #
-        # @param workspace_id [String] Path param
+        # @overload set_content(objective_id, tool_call_id, content:, workspace_id: nil, request_options: {})
         #
         # @param objective_id [String] Path param: The ID of the objective. Supports "external_id:" prefix for external
         #
-        # @param content [Array<Cadenya::Models::Objectives::SetToolCallContentRequestContentBlock>] Body param: The content to set on the tool call. Mirrors
+        # @param tool_call_id [String] Path param: The ID of the tool call to set content for
+        #
+        # @param content [Array<Cadenya::Models::Objectives::SetToolCallContentRequestContentBlockText, Cadenya::Models::Objectives::SetToolCallContentRequestContentBlockImage, Cadenya::Models::Objectives::SetToolCallContentRequestContentBlockAudio>] Body param: The content to set on the tool call. Mirrors
+        #
+        # @param workspace_id [String] Path param
         #
         # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
         #
         # @return [Cadenya::Models::Objectives::ObjectiveToolCall]
         #
         # @see Cadenya::Models::Objectives::ToolCallSetContentParams
-        def set_content(tool_call_id, params)
+        def set_content(objective_id, tool_call_id, params)
           parsed, options = Cadenya::Objectives::ToolCallSetContentParams.dump_request(params)
           workspace_id =
             parsed.delete(:workspace_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
-            end
-          objective_id =
-            parsed.delete(:objective_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
+              @client.workspace_id
             end
           @client.request(
             method: :post,

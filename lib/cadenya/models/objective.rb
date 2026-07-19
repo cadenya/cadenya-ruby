@@ -177,8 +177,8 @@ module Cadenya
         #   The caller-supplied episodic key. Objectives created with the same key (for the
         #   same agent) share one episodic memory layer.
         #
-        #   @return [String, nil]
-        optional :key, String
+        #   @return [String]
+        required :key, String
 
         response_only do
           # @!attribute memory_layer_id
@@ -189,7 +189,7 @@ module Cadenya
           optional :memory_layer_id, String, api_name: :memoryLayerId
         end
 
-        # @!method initialize(key: nil, memory_layer_id: nil)
+        # @!method initialize(key:, memory_layer_id: nil)
         #   Some parameter documentations has been truncated, see
         #   {Cadenya::Models::Objective::EpisodicMemory} for more details.
         #

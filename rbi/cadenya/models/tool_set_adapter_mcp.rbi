@@ -2,10 +2,10 @@
 
 module Cadenya
   module Models
-    class ToolSetAdapterMcp < Cadenya::Internal::Type::BaseModel
+    class ToolSetAdapterMCP < Cadenya::Internal::Type::BaseModel
       OrHash =
         T.type_alias do
-          T.any(Cadenya::ToolSetAdapterMcp, Cadenya::Internal::AnyHash)
+          T.any(Cadenya::ToolSetAdapterMCP, Cadenya::Internal::AnyHash)
         end
 
       # Top-level filter with simple boolean logic (no nesting)
@@ -29,23 +29,38 @@ module Cadenya
       attr_writer :include_tools
 
       # Defines behavior for just-in-time capable tool set adapters (IE: MCP).
-      sig { returns(T.nilable(Cadenya::ToolSetAdapterMcp::JustInTime)) }
+      sig { returns(T.nilable(Cadenya::ToolSetAdapterMCP::JustInTime)) }
       attr_reader :just_in_time
 
       sig do
         params(
-          just_in_time: Cadenya::ToolSetAdapterMcp::JustInTime::OrHash
+          just_in_time: Cadenya::ToolSetAdapterMCP::JustInTime::OrHash
         ).void
       end
       attr_writer :just_in_time
 
       # Approval filters that will automatically set the approval requirement on tools
       # synced from an external source
-      sig { returns(T.nilable(Cadenya::ApprovalRequirementFilter)) }
+      sig do
+        returns(
+          T.nilable(
+            T.any(
+              Cadenya::ApprovalRequirementFilterAlways,
+              Cadenya::ApprovalRequirementFilterOnly
+            )
+          )
+        )
+      end
       attr_reader :tool_approvals
 
       sig do
-        params(tool_approvals: Cadenya::ApprovalRequirementFilter::OrHash).void
+        params(
+          tool_approvals:
+            T.any(
+              Cadenya::ApprovalRequirementFilterAlways::OrHash,
+              Cadenya::ApprovalRequirementFilterOnly::OrHash
+            )
+        ).void
       end
       attr_writer :tool_approvals
 
@@ -60,8 +75,12 @@ module Cadenya
           exclude_tools: Cadenya::ToolFilter::OrHash,
           headers: T::Hash[Symbol, String],
           include_tools: Cadenya::ToolFilter::OrHash,
-          just_in_time: Cadenya::ToolSetAdapterMcp::JustInTime::OrHash,
-          tool_approvals: Cadenya::ApprovalRequirementFilter::OrHash,
+          just_in_time: Cadenya::ToolSetAdapterMCP::JustInTime::OrHash,
+          tool_approvals:
+            T.any(
+              Cadenya::ApprovalRequirementFilterAlways::OrHash,
+              Cadenya::ApprovalRequirementFilterOnly::OrHash
+            ),
           url: String
         ).returns(T.attached_class)
       end
@@ -86,8 +105,12 @@ module Cadenya
             exclude_tools: Cadenya::ToolFilter,
             headers: T::Hash[Symbol, String],
             include_tools: Cadenya::ToolFilter,
-            just_in_time: Cadenya::ToolSetAdapterMcp::JustInTime,
-            tool_approvals: Cadenya::ApprovalRequirementFilter,
+            just_in_time: Cadenya::ToolSetAdapterMCP::JustInTime,
+            tool_approvals:
+              T.any(
+                Cadenya::ApprovalRequirementFilterAlways,
+                Cadenya::ApprovalRequirementFilterOnly
+              ),
             url: String
           }
         )
@@ -99,7 +122,7 @@ module Cadenya
         OrHash =
           T.type_alias do
             T.any(
-              Cadenya::ToolSetAdapterMcp::JustInTime,
+              Cadenya::ToolSetAdapterMCP::JustInTime,
               Cadenya::Internal::AnyHash
             )
           end

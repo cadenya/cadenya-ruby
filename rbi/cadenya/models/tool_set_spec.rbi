@@ -6,10 +6,31 @@ module Cadenya
       OrHash =
         T.type_alias { T.any(Cadenya::ToolSetSpec, Cadenya::Internal::AnyHash) }
 
-      sig { returns(T.nilable(Cadenya::ToolSetAdapter)) }
+      sig do
+        returns(
+          T.nilable(
+            T.any(
+              Cadenya::ToolSetAdapterMCPVariant,
+              Cadenya::ToolSetAdapterHTTPVariant,
+              Cadenya::ToolSetAdapterOpenAPIVariant,
+              Cadenya::ToolSetAdapterBareVariant
+            )
+          )
+        )
+      end
       attr_reader :adapter
 
-      sig { params(adapter: Cadenya::ToolSetAdapter::OrHash).void }
+      sig do
+        params(
+          adapter:
+            T.any(
+              Cadenya::ToolSetAdapterMCPVariant::OrHash,
+              Cadenya::ToolSetAdapterHTTPVariant::OrHash,
+              Cadenya::ToolSetAdapterOpenAPIVariant::OrHash,
+              Cadenya::ToolSetAdapterBareVariant::OrHash
+            )
+        ).void
+      end
       attr_writer :adapter
 
       sig { returns(T.nilable(String)) }
@@ -20,7 +41,13 @@ module Cadenya
 
       sig do
         params(
-          adapter: Cadenya::ToolSetAdapter::OrHash,
+          adapter:
+            T.any(
+              Cadenya::ToolSetAdapterMCPVariant::OrHash,
+              Cadenya::ToolSetAdapterHTTPVariant::OrHash,
+              Cadenya::ToolSetAdapterOpenAPIVariant::OrHash,
+              Cadenya::ToolSetAdapterBareVariant::OrHash
+            ),
           description: String
         ).returns(T.attached_class)
       end
@@ -29,7 +56,16 @@ module Cadenya
 
       sig do
         override.returns(
-          { adapter: Cadenya::ToolSetAdapter, description: String }
+          {
+            adapter:
+              T.any(
+                Cadenya::ToolSetAdapterMCPVariant,
+                Cadenya::ToolSetAdapterHTTPVariant,
+                Cadenya::ToolSetAdapterOpenAPIVariant,
+                Cadenya::ToolSetAdapterBareVariant
+              ),
+            description: String
+          }
         )
       end
       def to_hash

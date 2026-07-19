@@ -4,8 +4,8 @@ module Cadenya
       {
         workspace_id: String,
         objective_id: String,
-        enqueue: bool,
-        message: String
+        message: String,
+        enqueue: bool
       }
       & Cadenya::Internal::Type::request_parameters
 
@@ -13,31 +13,31 @@ module Cadenya
       extend Cadenya::Internal::Type::RequestParameters::Converter
       include Cadenya::Internal::Type::RequestParameters
 
-      attr_accessor workspace_id: String
+      attr_reader workspace_id: String?
+
+      def workspace_id=: (String) -> String
 
       attr_accessor objective_id: String
+
+      attr_accessor message: String
 
       attr_reader enqueue: bool?
 
       def enqueue=: (bool) -> bool
 
-      attr_reader message: String?
-
-      def message=: (String) -> String
-
       def initialize: (
-        workspace_id: String,
         objective_id: String,
+        message: String,
+        ?workspace_id: String,
         ?enqueue: bool,
-        ?message: String,
         ?request_options: Cadenya::request_opts
       ) -> void
 
       def to_hash: -> {
         workspace_id: String,
         objective_id: String,
-        enqueue: bool,
         message: String,
+        enqueue: bool,
         request_options: Cadenya::RequestOptions
       }
     end

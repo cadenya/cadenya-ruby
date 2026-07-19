@@ -19,21 +19,25 @@ module Cadenya
       #
       # Creates a new memory layer in the workspace
       #
-      # @overload create(workspace_id, metadata:, spec:, request_options: {})
+      # @overload create(metadata:, spec:, workspace_id: nil, request_options: {})
       #
-      # @param workspace_id [String]
+      # @param metadata [Cadenya::Models::CreateResourceMetadata] Body param: CreateResourceMetadata contains the user-provided fields for creatin
       #
-      # @param metadata [Cadenya::Models::CreateResourceMetadata] CreateResourceMetadata contains the user-provided fields for creating
+      # @param spec [Cadenya::Models::MemoryLayerSpec] Body param
       #
-      # @param spec [Cadenya::Models::MemoryLayerSpec]
+      # @param workspace_id [String] Path param
       #
       # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
       #
       # @return [Cadenya::Models::MemoryLayer]
       #
       # @see Cadenya::Models::MemoryLayerCreateParams
-      def create(workspace_id, params)
+      def create(params)
         parsed, options = Cadenya::MemoryLayerCreateParams.dump_request(params)
+        workspace_id =
+          parsed.delete(:workspace_id) do
+            @client.workspace_id
+          end
         @client.request(
           method: :post,
           path: ["v1/workspaces/%1$s/memory_layers", workspace_id],
@@ -45,7 +49,7 @@ module Cadenya
 
       # Retrieves a memory layer by ID from the workspace
       #
-      # @overload retrieve(id, workspace_id:, request_options: {})
+      # @overload retrieve(id, workspace_id: nil, request_options: {})
       #
       # @param id [String] Memory layer ID. Accepts canonical memlyr\_… form or external_id:<value> form.
       #
@@ -56,11 +60,11 @@ module Cadenya
       # @return [Cadenya::Models::MemoryLayer]
       #
       # @see Cadenya::Models::MemoryLayerRetrieveParams
-      def retrieve(id, params)
+      def retrieve(id, params = {})
         parsed, options = Cadenya::MemoryLayerRetrieveParams.dump_request(params)
         workspace_id =
           parsed.delete(:workspace_id) do
-            raise ArgumentError.new("missing required path argument #{_1}")
+            @client.workspace_id
           end
         @client.request(
           method: :get,
@@ -75,7 +79,7 @@ module Cadenya
       #
       # Updates a memory layer in the workspace
       #
-      # @overload update(id, workspace_id:, metadata: nil, spec: nil, update_mask: nil, request_options: {})
+      # @overload update(id, workspace_id: nil, metadata: nil, spec: nil, update_mask: nil, request_options: {})
       #
       # @param id [String] Path param: Memory layer ID. Accepts canonical memlyr\_… form or
       # external_id:<val
@@ -93,11 +97,11 @@ module Cadenya
       # @return [Cadenya::Models::MemoryLayer]
       #
       # @see Cadenya::Models::MemoryLayerUpdateParams
-      def update(id, params)
+      def update(id, params = {})
         parsed, options = Cadenya::MemoryLayerUpdateParams.dump_request(params)
         workspace_id =
           parsed.delete(:workspace_id) do
-            raise ArgumentError.new("missing required path argument #{_1}")
+            @client.workspace_id
           end
         @client.request(
           method: :patch,
@@ -113,38 +117,42 @@ module Cadenya
       #
       # Lists all memory layers in the workspace
       #
-      # @overload list(workspace_id, agent_id: nil, cursor: nil, episodic_key_prefix: nil, include_info: nil, labels: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, type: nil, request_options: {})
+      # @overload list(workspace_id: nil, agent_id: nil, cursor: nil, episodic_key_prefix: nil, include_info: nil, labels: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, type: nil, request_options: {})
       #
-      # @param workspace_id [String]
+      # @param workspace_id [String] Path param
       #
-      # @param agent_id [String] Filter to episodic layers belonging to this agent.
+      # @param agent_id [String] Query param: Filter to episodic layers belonging to this agent.
       #
-      # @param cursor [String] Pagination cursor from previous response
+      # @param cursor [String] Query param: Pagination cursor from previous response
       #
-      # @param episodic_key_prefix [String] Filter to episodic layers whose episodic key starts with this prefix
+      # @param episodic_key_prefix [String] Query param: Filter to episodic layers whose episodic key starts with this prefi
       #
-      # @param include_info [Boolean] When set to true you may use more of your alloted API rate-limit
+      # @param include_info [Boolean] Query param: When set to true you may use more of your alloted API rate-limit
       #
-      # @param labels [String] Filters by metadata labels. Comma-separated key=value pairs,
+      # @param labels [String] Query param: Filters by metadata labels. Comma-separated key=value pairs,
       #
-      # @param limit [Integer] Maximum number of results to return
+      # @param limit [Integer] Query param: Maximum number of results to return
       #
-      # @param prefix [String] Filter expression (query param: prefix)
+      # @param prefix [String] Query param: Filter expression (query param: prefix)
       #
-      # @param query [String] Free-form search query
+      # @param query [String] Query param: Free-form search query
       #
-      # @param sort_order [String] Sort order for results (asc or desc by creation time)
+      # @param sort_order [String] Query param: Sort order for results (asc or desc by creation time)
       #
-      # @param type [Symbol, Cadenya::Models::MemoryLayerListParams::Type] Filter by layer type
+      # @param type [Symbol, Cadenya::Models::MemoryLayerListParams::Type] Query param: Filter by layer type
       #
       # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
       #
       # @return [Cadenya::Internal::CursorPagination<Cadenya::Models::MemoryLayer>]
       #
       # @see Cadenya::Models::MemoryLayerListParams
-      def list(workspace_id, params = {})
+      def list(params = {})
         parsed, options = Cadenya::MemoryLayerListParams.dump_request(params)
         query = Cadenya::Internal::Util.encode_query_params(parsed)
+        workspace_id =
+          parsed.delete(:workspace_id) do
+            @client.workspace_id
+          end
         @client.request(
           method: :get,
           path: ["v1/workspaces/%1$s/memory_layers", workspace_id],
@@ -162,7 +170,7 @@ module Cadenya
 
       # Deletes a memory layer from the workspace
       #
-      # @overload delete(id, workspace_id:, request_options: {})
+      # @overload delete(id, workspace_id: nil, request_options: {})
       #
       # @param id [String] Memory layer ID. Accepts canonical memlyr\_… form or external_id:<value> form.
       #
@@ -173,11 +181,11 @@ module Cadenya
       # @return [nil]
       #
       # @see Cadenya::Models::MemoryLayerDeleteParams
-      def delete(id, params)
+      def delete(id, params = {})
         parsed, options = Cadenya::MemoryLayerDeleteParams.dump_request(params)
         workspace_id =
           parsed.delete(:workspace_id) do
-            raise ArgumentError.new("missing required path argument #{_1}")
+            @client.workspace_id
           end
         @client.request(
           method: :delete,

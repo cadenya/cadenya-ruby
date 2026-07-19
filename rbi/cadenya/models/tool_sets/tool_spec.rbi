@@ -12,11 +12,17 @@ module Cadenya
         # Config defines the adapter to use for the tool. This is used to determine how
         # the tool is called. For example, if the tool is an HTTP tool, the adapter will
         # be Http. If the tool is an inline tool, the adapter will be Inline.
-        sig { returns(Cadenya::ToolSets::ToolSpecConfig) }
-        attr_reader :config
-
-        sig { params(config: Cadenya::ToolSets::ToolSpecConfig::OrHash).void }
-        attr_writer :config
+        sig do
+          returns(
+            T.any(
+              Cadenya::ToolSets::ToolSpecConfigHTTP,
+              Cadenya::ToolSets::ToolSpecConfigMCP,
+              Cadenya::ToolSets::ToolSpecConfigOpenAPI,
+              Cadenya::ToolSets::ToolSpecConfigBare
+            )
+          )
+        end
+        attr_accessor :config
 
         sig { returns(String) }
         attr_accessor :description
@@ -43,7 +49,13 @@ module Cadenya
 
         sig do
           params(
-            config: Cadenya::ToolSets::ToolSpecConfig::OrHash,
+            config:
+              T.any(
+                Cadenya::ToolSets::ToolSpecConfigHTTP::OrHash,
+                Cadenya::ToolSets::ToolSpecConfigMCP::OrHash,
+                Cadenya::ToolSets::ToolSpecConfigOpenAPI::OrHash,
+                Cadenya::ToolSets::ToolSpecConfigBare::OrHash
+              ),
             description: String,
             parameters: T::Hash[Symbol, T.anything],
             requires_approval: T::Boolean,
@@ -73,7 +85,13 @@ module Cadenya
         sig do
           override.returns(
             {
-              config: Cadenya::ToolSets::ToolSpecConfig,
+              config:
+                T.any(
+                  Cadenya::ToolSets::ToolSpecConfigHTTP,
+                  Cadenya::ToolSets::ToolSpecConfigMCP,
+                  Cadenya::ToolSets::ToolSpecConfigOpenAPI,
+                  Cadenya::ToolSets::ToolSpecConfigBare
+                ),
               description: String,
               parameters: T::Hash[Symbol, T.anything],
               requires_approval: T::Boolean,

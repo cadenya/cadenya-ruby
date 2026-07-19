@@ -10,22 +10,22 @@ module Cadenya
       attr_reader schedules: Cadenya::Resources::Agents::Schedules
 
       def create: (
-        String workspace_id,
         metadata: Cadenya::CreateResourceMetadata,
         spec: Cadenya::AgentSpec,
+        ?workspace_id: String,
         ?default_variation: Cadenya::AgentCreateParams::DefaultVariation,
         ?request_options: Cadenya::request_opts
       ) -> Cadenya::Agent
 
       def retrieve: (
         String id,
-        workspace_id: String,
+        ?workspace_id: String,
         ?request_options: Cadenya::request_opts
       ) -> Cadenya::Agent
 
       def update: (
         String id,
-        workspace_id: String,
+        ?workspace_id: String,
         ?metadata: Cadenya::UpdateResourceMetadata,
         ?spec: Cadenya::AgentSpec,
         ?update_mask: String,
@@ -33,7 +33,7 @@ module Cadenya
       ) -> Cadenya::Agent
 
       def list: (
-        String workspace_id,
+        ?workspace_id: String,
         ?cursor: String,
         ?include_info: bool,
         ?labels: String,
@@ -48,31 +48,31 @@ module Cadenya
 
       def delete: (
         String id,
-        workspace_id: String,
+        ?workspace_id: String,
         ?request_options: Cadenya::request_opts
       ) -> nil
 
       def archive: (
         String id,
-        workspace_id: String,
+        ?workspace_id: String,
         ?request_options: Cadenya::request_opts
       ) -> Cadenya::Agent
 
       def publish: (
         String id,
-        workspace_id: String,
+        ?workspace_id: String,
         ?request_options: Cadenya::request_opts
       ) -> Cadenya::Agent
 
       def unarchive: (
         String id,
-        workspace_id: String,
+        ?workspace_id: String,
         ?request_options: Cadenya::request_opts
       ) -> Cadenya::Agent
 
       def unpublish: (
         String id,
-        workspace_id: String,
+        ?workspace_id: String,
         ?request_options: Cadenya::request_opts
       ) -> Cadenya::Agent
 

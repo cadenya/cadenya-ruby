@@ -10,8 +10,8 @@ module Cadenya
 
         # @!attribute workspace_id
         #
-        #   @return [String]
-        required :workspace_id, String
+        #   @return [String, nil]
+        optional :workspace_id, String
 
         # @!attribute memory_layer_id
         #
@@ -63,13 +63,13 @@ module Cadenya
         #   @return [String, nil]
         optional :sort_order, String
 
-        # @!method initialize(workspace_id:, memory_layer_id:, cursor: nil, include_info: nil, labels: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, request_options: {})
+        # @!method initialize(memory_layer_id:, workspace_id: nil, cursor: nil, include_info: nil, labels: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, request_options: {})
         #   Some parameter documentations has been truncated, see
         #   {Cadenya::Models::MemoryLayers::EntryListParams} for more details.
         #
-        #   @param workspace_id [String]
-        #
         #   @param memory_layer_id [String]
+        #
+        #   @param workspace_id [String]
         #
         #   @param cursor [String] Pagination cursor from previous response
         #

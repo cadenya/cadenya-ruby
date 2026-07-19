@@ -13,9 +13,13 @@ module Cadenya
         sig do
           params(
             memory_layer_id: String,
-            workspace_id: String,
             metadata: Cadenya::CreateResourceMetadata::OrHash,
-            spec: Cadenya::MemoryLayers::MemoryEntryCreateSpec::OrHash,
+            spec:
+              T.any(
+                Cadenya::MemoryLayers::MemoryEntryCreateSpecContent::OrHash,
+                Cadenya::MemoryLayers::MemoryEntryCreateSpecUploadID::OrHash
+              ),
+            workspace_id: String,
             request_options: Cadenya::RequestOptions::OrHash
           ).returns(Cadenya::MemoryLayers::MemoryEntryDetail)
         end
@@ -23,8 +27,6 @@ module Cadenya
           # Path param: Memory layer ID. Accepts canonical memlyr\_… form or
           # external_id:<value> form.
           memory_layer_id,
-          # Path param
-          workspace_id:,
           # Body param: CreateResourceMetadata contains the user-provided fields for
           # creating a workspace-scoped resource. Read-only fields (id, account_id,
           # workspace_id, profile_id, created_at) are excluded since they are set by the
@@ -34,6 +36,8 @@ module Cadenya
           # accepts either inline content or a reference to a completed Upload; exactly one
           # of the two must be set.
           spec:,
+          # Path param
+          workspace_id: nil,
           request_options: {}
         )
         end
@@ -42,17 +46,17 @@ module Cadenya
         # including the content body.
         sig do
           params(
+            memory_layer_id: String,
             id: String,
             workspace_id: String,
-            memory_layer_id: String,
             request_options: Cadenya::RequestOptions::OrHash
           ).returns(Cadenya::MemoryLayers::MemoryEntryDetail)
         end
         def retrieve(
-          id,
-          workspace_id:,
           # Memory layer ID. Accepts canonical memlyr\_… form or external_id:<value> form.
-          memory_layer_id:,
+          memory_layer_id,
+          id,
+          workspace_id: nil,
           request_options: {}
         )
         end
@@ -61,9 +65,9 @@ module Cadenya
         # resolved content body.
         sig do
           params(
+            memory_layer_id: String,
             id: String,
             workspace_id: String,
-            memory_layer_id: String,
             metadata: Cadenya::UpdateResourceMetadata::OrHash,
             spec: Cadenya::MemoryLayers::MemoryEntryUpdateSpec::OrHash,
             update_mask: String,
@@ -71,13 +75,13 @@ module Cadenya
           ).returns(Cadenya::MemoryLayers::MemoryEntryDetail)
         end
         def update(
+          # Path param: Memory layer ID. Accepts canonical memlyr\_… form or
+          # external_id:<value> form.
+          memory_layer_id,
           # Path param
           id,
           # Path param
-          workspace_id:,
-          # Path param: Memory layer ID. Accepts canonical memlyr\_… form or
-          # external_id:<value> form.
-          memory_layer_id:,
+          workspace_id: nil,
           # Body param: UpdateResourceMetadata contains the user-provided fields for
           # updating a workspace-scoped resource. Read-only fields (id, account_id,
           # workspace_id, profile_id, created_at) are excluded since they are set by the
@@ -118,7 +122,7 @@ module Cadenya
           # external_id:<value> form.
           memory_layer_id,
           # Path param
-          workspace_id:,
+          workspace_id: nil,
           # Query param: Pagination cursor from previous response
           cursor: nil,
           # Query param: When set to true you may use more of your alloted API rate-limit
@@ -143,17 +147,17 @@ module Cadenya
         # Deletes a memory entry from a memory layer
         sig do
           params(
+            memory_layer_id: String,
             id: String,
             workspace_id: String,
-            memory_layer_id: String,
             request_options: Cadenya::RequestOptions::OrHash
           ).void
         end
         def delete(
-          id,
-          workspace_id:,
           # Memory layer ID. Accepts canonical memlyr\_… form or external_id:<value> form.
-          memory_layer_id:,
+          memory_layer_id,
+          id,
+          workspace_id: nil,
           request_options: {}
         )
         end

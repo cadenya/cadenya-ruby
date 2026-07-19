@@ -8,18 +8,18 @@ module Cadenya
         # content (images, audio) is served as short-lived signed URLs.
         sig do
           params(
+            objective_id: String,
             tool_call_id: String,
             workspace_id: String,
-            objective_id: String,
             request_options: Cadenya::RequestOptions::OrHash
           ).returns(Cadenya::Objectives::ObjectiveToolCallWithResult)
         end
         def retrieve(
+          # The ID of the objective. Supports "external_id:" prefix for external IDs.
+          objective_id,
           # The ID of the tool call to retrieve
           tool_call_id,
-          workspace_id:,
-          # The ID of the objective. Supports "external_id:" prefix for external IDs.
-          objective_id:,
+          workspace_id: nil,
           request_options: {}
         )
         end
@@ -47,7 +47,7 @@ module Cadenya
           # Path param: The objective ID to return tool calls for
           objective_id,
           # Path param
-          workspace_id:,
+          workspace_id: nil,
           # Query param: Pagination cursor from previous response
           cursor: nil,
           # Query param: Filter by tool call execution status. Useful for reverse-harness
@@ -72,18 +72,18 @@ module Cadenya
         # to mark it as approved.
         sig do
           params(
+            objective_id: String,
             tool_call_id: String,
             workspace_id: String,
-            objective_id: String,
             request_options: Cadenya::RequestOptions::OrHash
           ).returns(Cadenya::Objectives::ObjectiveToolCall)
         end
         def approve(
+          # The ID of the objective. Supports "external_id:" prefix for external IDs.
+          objective_id,
           # The ID of the tool call to approve
           tool_call_id,
-          workspace_id:,
-          # The ID of the objective. Supports "external_id:" prefix for external IDs.
-          objective_id:,
+          workspace_id: nil,
           request_options: {}
         )
         end
@@ -93,21 +93,21 @@ module Cadenya
         # usage of the tool.
         sig do
           params(
+            objective_id: String,
             tool_call_id: String,
             workspace_id: String,
-            objective_id: String,
             memo: String,
             request_options: Cadenya::RequestOptions::OrHash
           ).returns(Cadenya::Objectives::ObjectiveToolCall)
         end
         def deny(
+          # Path param: The ID of the objective. Supports "external_id:" prefix for external
+          # IDs.
+          objective_id,
           # Path param: The ID of the tool call to deny
           tool_call_id,
           # Path param
-          workspace_id:,
-          # Path param: The ID of the objective. Supports "external_id:" prefix for external
-          # IDs.
-          objective_id:,
+          workspace_id: nil,
           # Body param: A memo to associate to the tool call denial. Use a memo to steer the
           # LLM to a different decision or usage of the tool.
           memo: nil,
@@ -120,28 +120,32 @@ module Cadenya
         # and reverse harnesses that execute tools locally and report results back.
         sig do
           params(
-            tool_call_id: String,
-            workspace_id: String,
             objective_id: String,
+            tool_call_id: String,
             content:
               T::Array[
-                Cadenya::Objectives::SetToolCallContentRequestContentBlock::OrHash
+                T.any(
+                  Cadenya::Objectives::SetToolCallContentRequestContentBlockText::OrHash,
+                  Cadenya::Objectives::SetToolCallContentRequestContentBlockImage::OrHash,
+                  Cadenya::Objectives::SetToolCallContentRequestContentBlockAudio::OrHash
+                )
               ],
+            workspace_id: String,
             request_options: Cadenya::RequestOptions::OrHash
           ).returns(Cadenya::Objectives::ObjectiveToolCall)
         end
         def set_content(
-          # Path param: The ID of the tool call to set content for
-          tool_call_id,
-          # Path param
-          workspace_id:,
           # Path param: The ID of the objective. Supports "external_id:" prefix for external
           # IDs.
-          objective_id:,
+          objective_id,
+          # Path param: The ID of the tool call to set content for
+          tool_call_id,
           # Body param: The content to set on the tool call. Mirrors
           # ObjectiveToolCallResult.ContentBlock but writable: media blocks carry raw data
           # on input where the result-side carries a signed url on output.
           content:,
+          # Path param
+          workspace_id: nil,
           request_options: {}
         )
         end

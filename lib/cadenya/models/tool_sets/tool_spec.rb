@@ -9,8 +9,8 @@ module Cadenya
         #   the tool is called. For example, if the tool is an HTTP tool, the adapter will
         #   be Http. If the tool is an inline tool, the adapter will be Inline.
         #
-        #   @return [Cadenya::Models::ToolSets::ToolSpecConfig]
-        required :config, -> { Cadenya::ToolSets::ToolSpecConfig }
+        #   @return [Cadenya::Models::ToolSets::ToolSpecConfigHTTP, Cadenya::Models::ToolSets::ToolSpecConfigMCP, Cadenya::Models::ToolSets::ToolSpecConfigOpenAPI, Cadenya::Models::ToolSets::ToolSpecConfigBare]
+        required :config, union: -> { Cadenya::ToolSets::ToolSpecConfig }
 
         # @!attribute description
         #
@@ -44,7 +44,7 @@ module Cadenya
         #   Some parameter documentations has been truncated, see
         #   {Cadenya::Models::ToolSets::ToolSpec} for more details.
         #
-        #   @param config [Cadenya::Models::ToolSets::ToolSpecConfig] Config defines the adapter to use for the tool.
+        #   @param config [Cadenya::Models::ToolSets::ToolSpecConfigHTTP, Cadenya::Models::ToolSets::ToolSpecConfigMCP, Cadenya::Models::ToolSets::ToolSpecConfigOpenAPI, Cadenya::Models::ToolSets::ToolSpecConfigBare] Config defines the adapter to use for the tool.
         #
         #   @param description [String]
         #

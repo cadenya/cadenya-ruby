@@ -10,8 +10,8 @@ module Cadenya
 
         # @!attribute workspace_id
         #
-        #   @return [String]
-        required :workspace_id, String
+        #   @return [String, nil]
+        optional :workspace_id, String
 
         # @!attribute tool_set_id
         #
@@ -81,13 +81,13 @@ module Cadenya
         #   @return [Array<Symbol, Cadenya::Models::ToolSets::ToolListParams::State>, nil]
         optional :states, -> { Cadenya::Internal::Type::ArrayOf[enum: Cadenya::ToolSets::ToolListParams::State] }
 
-        # @!method initialize(workspace_id:, tool_set_id:, cursor: nil, include_info: nil, labels: nil, limit: nil, names: nil, prefix: nil, query: nil, requires_approval: nil, sort_order: nil, states: nil, request_options: {})
+        # @!method initialize(tool_set_id:, workspace_id: nil, cursor: nil, include_info: nil, labels: nil, limit: nil, names: nil, prefix: nil, query: nil, requires_approval: nil, sort_order: nil, states: nil, request_options: {})
         #   Some parameter documentations has been truncated, see
         #   {Cadenya::Models::ToolSets::ToolListParams} for more details.
         #
-        #   @param workspace_id [String]
-        #
         #   @param tool_set_id [String]
+        #
+        #   @param workspace_id [String]
         #
         #   @param cursor [String] Pagination cursor from previous response
         #

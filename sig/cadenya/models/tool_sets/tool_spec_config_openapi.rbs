@@ -1,0 +1,37 @@
+module Cadenya
+  module Models
+    module ToolSets
+      type tool_spec_config_openapi =
+        {
+          openapi: Cadenya::ToolSets::ConfigOpenAPI,
+          type: Cadenya::Models::ToolSets::ToolSpecConfigOpenAPI::type_
+        }
+
+      class ToolSpecConfigOpenAPI < Cadenya::Internal::Type::BaseModel
+        attr_accessor openapi: Cadenya::ToolSets::ConfigOpenAPI
+
+        attr_accessor type: Cadenya::Models::ToolSets::ToolSpecConfigOpenAPI::type_
+
+        def initialize: (
+          openapi: Cadenya::ToolSets::ConfigOpenAPI,
+          type: Cadenya::Models::ToolSets::ToolSpecConfigOpenAPI::type_
+        ) -> void
+
+        def to_hash: -> {
+          openapi: Cadenya::ToolSets::ConfigOpenAPI,
+          type: Cadenya::Models::ToolSets::ToolSpecConfigOpenAPI::type_
+        }
+
+        type type_ = :openapi
+
+        module Type
+          extend Cadenya::Internal::Type::Enum
+
+          OPENAPI: :openapi
+
+          def self?.values: -> ::Array[Cadenya::Models::ToolSets::ToolSpecConfigOpenAPI::type_]
+        end
+      end
+    end
+  end
+end

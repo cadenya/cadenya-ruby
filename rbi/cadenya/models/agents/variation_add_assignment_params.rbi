@@ -15,8 +15,11 @@ module Cadenya
             )
           end
 
-        sig { returns(String) }
-        attr_accessor :workspace_id
+        sig { returns(T.nilable(String)) }
+        attr_reader :workspace_id
+
+        sig { params(workspace_id: String).void }
+        attr_writer :workspace_id
 
         sig { returns(String) }
         attr_accessor :agent_id
@@ -24,42 +27,42 @@ module Cadenya
         sig { returns(String) }
         attr_accessor :variation_id
 
-        sig { returns(T.nilable(String)) }
-        attr_reader :sub_agent_id
-
-        sig { params(sub_agent_id: String).void }
-        attr_writer :sub_agent_id
-
-        sig { returns(T.nilable(String)) }
-        attr_reader :tool_id
-
-        sig { params(tool_id: String).void }
-        attr_writer :tool_id
-
-        sig { returns(T.nilable(String)) }
-        attr_reader :tool_set_id
-
-        sig { params(tool_set_id: String).void }
-        attr_writer :tool_set_id
+        # Attach a single tool, tool set, or sub-agent to a variation. Exactly one of the
+        # target fields must be set; the assignment kind is inferred from the populated
+        # field.
+        sig do
+          returns(
+            T.any(
+              Cadenya::Agents::AddAgentVariationAssignmentRequestToolID,
+              Cadenya::Agents::AddAgentVariationAssignmentRequestToolSetID,
+              Cadenya::Agents::AddAgentVariationAssignmentRequestSubAgentID
+            )
+          )
+        end
+        attr_accessor :body
 
         sig do
           params(
-            workspace_id: String,
             agent_id: String,
             variation_id: String,
-            sub_agent_id: String,
-            tool_id: String,
-            tool_set_id: String,
+            body:
+              T.any(
+                Cadenya::Agents::AddAgentVariationAssignmentRequestToolID::OrHash,
+                Cadenya::Agents::AddAgentVariationAssignmentRequestToolSetID::OrHash,
+                Cadenya::Agents::AddAgentVariationAssignmentRequestSubAgentID::OrHash
+              ),
+            workspace_id: String,
             request_options: Cadenya::RequestOptions::OrHash
           ).returns(T.attached_class)
         end
         def self.new(
-          workspace_id:,
           agent_id:,
           variation_id:,
-          sub_agent_id: nil,
-          tool_id: nil,
-          tool_set_id: nil,
+          # Attach a single tool, tool set, or sub-agent to a variation. Exactly one of the
+          # target fields must be set; the assignment kind is inferred from the populated
+          # field.
+          body:,
+          workspace_id: nil,
           request_options: {}
         )
         end
@@ -70,14 +73,43 @@ module Cadenya
               workspace_id: String,
               agent_id: String,
               variation_id: String,
-              sub_agent_id: String,
-              tool_id: String,
-              tool_set_id: String,
+              body:
+                T.any(
+                  Cadenya::Agents::AddAgentVariationAssignmentRequestToolID,
+                  Cadenya::Agents::AddAgentVariationAssignmentRequestToolSetID,
+                  Cadenya::Agents::AddAgentVariationAssignmentRequestSubAgentID
+                ),
               request_options: Cadenya::RequestOptions
             }
           )
         end
         def to_hash
+        end
+
+        # Attach a single tool, tool set, or sub-agent to a variation. Exactly one of the
+        # target fields must be set; the assignment kind is inferred from the populated
+        # field.
+        module Body
+          extend Cadenya::Internal::Type::Union
+
+          Variants =
+            T.type_alias do
+              T.any(
+                Cadenya::Agents::AddAgentVariationAssignmentRequestToolID,
+                Cadenya::Agents::AddAgentVariationAssignmentRequestToolSetID,
+                Cadenya::Agents::AddAgentVariationAssignmentRequestSubAgentID
+              )
+            end
+
+          sig do
+            override.returns(
+              T::Array[
+                Cadenya::Agents::VariationAddAssignmentParams::Body::Variants
+              ]
+            )
+          end
+          def self.variants
+          end
         end
       end
     end

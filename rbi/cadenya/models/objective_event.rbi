@@ -8,11 +8,8 @@ module Cadenya
           T.any(Cadenya::ObjectiveEvent, Cadenya::Internal::AnyHash)
         end
 
-      sig { returns(Cadenya::ObjectiveEventData) }
-      attr_reader :data
-
-      sig { params(data: Cadenya::ObjectiveEventData::OrHash).void }
-      attr_writer :data
+      sig { returns(Cadenya::ObjectiveEventData::Variants) }
+      attr_accessor :data
 
       # Metadata for ephemeral operations and activities (e.g., objectives, executions,
       # runs)
@@ -36,7 +33,26 @@ module Cadenya
 
       sig do
         params(
-          data: Cadenya::ObjectiveEventData::OrHash,
+          data:
+            T.any(
+              Cadenya::ObjectiveEventDataUserMessage::OrHash,
+              Cadenya::ObjectiveEventDataToolApprovalRequested::OrHash,
+              Cadenya::ObjectiveEventDataToolApproved::OrHash,
+              Cadenya::ObjectiveEventDataToolDenied::OrHash,
+              Cadenya::ObjectiveEventDataToolCalled::OrHash,
+              Cadenya::ObjectiveEventDataError::OrHash,
+              Cadenya::ObjectiveEventDataAssistantMessage::OrHash,
+              Cadenya::ObjectiveEventDataToolResult::OrHash,
+              Cadenya::ObjectiveEventDataToolError::OrHash,
+              Cadenya::ObjectiveEventDataContextWindowCompacted::OrHash,
+              Cadenya::ObjectiveEventDataMemoryRead::OrHash,
+              Cadenya::ObjectiveEventDataCancelled::OrHash,
+              Cadenya::ObjectiveEventDataSubAgentSpawned::OrHash,
+              Cadenya::ObjectiveEventDataSubAgentUpdated::OrHash,
+              Cadenya::ObjectiveEventDataFinalized::OrHash,
+              Cadenya::ObjectiveEventDataNotice::OrHash,
+              Cadenya::ObjectiveEventDataTimedOut::OrHash
+            ),
           metadata: Cadenya::OperationMetadata::OrHash,
           context_window_id: String,
           info: Cadenya::ObjectiveEventInfo::OrHash
@@ -55,7 +71,7 @@ module Cadenya
       sig do
         override.returns(
           {
-            data: Cadenya::ObjectiveEventData,
+            data: Cadenya::ObjectiveEventData::Variants,
             metadata: Cadenya::OperationMetadata,
             context_window_id: String,
             info: Cadenya::ObjectiveEventInfo

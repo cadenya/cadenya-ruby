@@ -1,0 +1,35 @@
+module Cadenya
+  module Models
+    type callable_tool_agent =
+      {
+        agent: Cadenya::ResourceMetadata,
+        type: Cadenya::Models::CallableToolAgent::type_
+      }
+
+    class CallableToolAgent < Cadenya::Internal::Type::BaseModel
+      attr_accessor agent: Cadenya::ResourceMetadata
+
+      attr_accessor type: Cadenya::Models::CallableToolAgent::type_
+
+      def initialize: (
+        agent: Cadenya::ResourceMetadata,
+        type: Cadenya::Models::CallableToolAgent::type_
+      ) -> void
+
+      def to_hash: -> {
+        agent: Cadenya::ResourceMetadata,
+        type: Cadenya::Models::CallableToolAgent::type_
+      }
+
+      type type_ = :agent
+
+      module Type
+        extend Cadenya::Internal::Type::Enum
+
+        AGENT: :agent
+
+        def self?.values: -> ::Array[Cadenya::Models::CallableToolAgent::type_]
+      end
+    end
+  end
+end

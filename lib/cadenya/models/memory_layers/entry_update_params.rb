@@ -10,8 +10,8 @@ module Cadenya
 
         # @!attribute workspace_id
         #
-        #   @return [String]
-        required :workspace_id, String
+        #   @return [String, nil]
+        optional :workspace_id, String
 
         # @!attribute memory_layer_id
         #
@@ -45,15 +45,15 @@ module Cadenya
         #   @return [String, nil]
         optional :update_mask, String, api_name: :updateMask
 
-        # @!method initialize(workspace_id:, memory_layer_id:, id:, metadata: nil, spec: nil, update_mask: nil, request_options: {})
+        # @!method initialize(memory_layer_id:, id:, workspace_id: nil, metadata: nil, spec: nil, update_mask: nil, request_options: {})
         #   Some parameter documentations has been truncated, see
         #   {Cadenya::Models::MemoryLayers::EntryUpdateParams} for more details.
-        #
-        #   @param workspace_id [String]
         #
         #   @param memory_layer_id [String]
         #
         #   @param id [String]
+        #
+        #   @param workspace_id [String]
         #
         #   @param metadata [Cadenya::Models::UpdateResourceMetadata] UpdateResourceMetadata contains the user-provided fields for updating
         #

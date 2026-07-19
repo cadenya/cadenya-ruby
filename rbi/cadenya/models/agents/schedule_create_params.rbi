@@ -15,8 +15,11 @@ module Cadenya
             )
           end
 
-        sig { returns(String) }
-        attr_accessor :workspace_id
+        sig { returns(T.nilable(String)) }
+        attr_reader :workspace_id
+
+        sig { params(workspace_id: String).void }
+        attr_writer :workspace_id
 
         sig { returns(String) }
         attr_accessor :agent_id
@@ -39,15 +42,14 @@ module Cadenya
 
         sig do
           params(
-            workspace_id: String,
             agent_id: String,
             metadata: Cadenya::CreateResourceMetadata::OrHash,
             spec: Cadenya::Agents::AgentScheduleSpec::OrHash,
+            workspace_id: String,
             request_options: Cadenya::RequestOptions::OrHash
           ).returns(T.attached_class)
         end
         def self.new(
-          workspace_id:,
           agent_id:,
           # CreateResourceMetadata contains the user-provided fields for creating a
           # workspace-scoped resource. Read-only fields (id, account_id, workspace_id,
@@ -55,6 +57,7 @@ module Cadenya
           metadata:,
           # AgentScheduleSpec is the user-provided configuration for a schedule.
           spec:,
+          workspace_id: nil,
           request_options: {}
         )
         end

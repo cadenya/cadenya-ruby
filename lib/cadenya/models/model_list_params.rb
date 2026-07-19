@@ -9,8 +9,8 @@ module Cadenya
 
       # @!attribute workspace_id
       #
-      #   @return [String]
-      required :workspace_id, String
+      #   @return [String, nil]
+      optional :workspace_id, String
 
       # @!attribute ai_provider_key_id
       #   Filter to models provisioned on a specific AI provider key. Accepts the key's id
@@ -80,7 +80,7 @@ module Cadenya
       #   @return [Symbol, Cadenya::Models::ModelListParams::State, nil]
       optional :state, enum: -> { Cadenya::ModelListParams::State }
 
-      # @!method initialize(workspace_id:, ai_provider_key_id: nil, cursor: nil, include_info: nil, is_assigned: nil, labels: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, state: nil, request_options: {})
+      # @!method initialize(workspace_id: nil, ai_provider_key_id: nil, cursor: nil, include_info: nil, is_assigned: nil, labels: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, state: nil, request_options: {})
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::ModelListParams} for more details.
       #

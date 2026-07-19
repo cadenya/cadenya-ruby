@@ -11,7 +11,9 @@ module Cadenya
       extend Cadenya::Internal::Type::RequestParameters::Converter
       include Cadenya::Internal::Type::RequestParameters
 
-      attr_accessor workspace_id: String
+      attr_reader workspace_id: String?
+
+      def workspace_id=: (String) -> String
 
       attr_reader model_swaps: ::Array[Cadenya::ModelSwapParams::ModelSwap]?
 
@@ -20,7 +22,7 @@ module Cadenya
       ) -> ::Array[Cadenya::ModelSwapParams::ModelSwap]
 
       def initialize: (
-        workspace_id: String,
+        ?workspace_id: String,
         ?model_swaps: ::Array[Cadenya::ModelSwapParams::ModelSwap],
         ?request_options: Cadenya::request_opts
       ) -> void

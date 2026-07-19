@@ -10,7 +10,7 @@ module Cadenya
           title: String
         }
 
-      class McpAnnotations < Cadenya::Internal::Type::BaseModel
+      class MCPAnnotations < Cadenya::Internal::Type::BaseModel
         attr_reader destructive_hint: bool?
 
         def destructive_hint=: (bool) -> bool

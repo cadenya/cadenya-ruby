@@ -1,0 +1,37 @@
+module Cadenya
+  module Models
+    module Objectives
+      type set_tool_call_content_request_content_block_audio =
+        {
+          audio: Cadenya::Objectives::SetToolCallContentRequestAudioBlock,
+          type: Cadenya::Models::Objectives::SetToolCallContentRequestContentBlockAudio::type_
+        }
+
+      class SetToolCallContentRequestContentBlockAudio < Cadenya::Internal::Type::BaseModel
+        attr_accessor audio: Cadenya::Objectives::SetToolCallContentRequestAudioBlock
+
+        attr_accessor type: Cadenya::Models::Objectives::SetToolCallContentRequestContentBlockAudio::type_
+
+        def initialize: (
+          audio: Cadenya::Objectives::SetToolCallContentRequestAudioBlock,
+          type: Cadenya::Models::Objectives::SetToolCallContentRequestContentBlockAudio::type_
+        ) -> void
+
+        def to_hash: -> {
+          audio: Cadenya::Objectives::SetToolCallContentRequestAudioBlock,
+          type: Cadenya::Models::Objectives::SetToolCallContentRequestContentBlockAudio::type_
+        }
+
+        type type_ = :audio
+
+        module Type
+          extend Cadenya::Internal::Type::Enum
+
+          AUDIO: :audio
+
+          def self?.values: -> ::Array[Cadenya::Models::Objectives::SetToolCallContentRequestContentBlockAudio::type_]
+        end
+      end
+    end
+  end
+end

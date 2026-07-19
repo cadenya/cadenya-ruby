@@ -6,7 +6,12 @@ class Cadenya::Test::Resources::APIKeysTest < Cadenya::Test::ResourceTest
   def test_create_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.api_keys.create("workspaceId", metadata: {name: "name"}, spec: {})
+    response =
+      @cadenya.api_keys.create(
+        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q",
+        metadata: {name: "name"},
+        spec: {}
+      )
 
     assert_pattern do
       response => Cadenya::APIKey
@@ -25,7 +30,11 @@ class Cadenya::Test::Resources::APIKeysTest < Cadenya::Test::ResourceTest
   def test_retrieve_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.api_keys.retrieve("id", workspace_id: "workspaceId")
+    response =
+      @cadenya.api_keys.retrieve(
+        "apikey_01HXKD2E5NQM3T9AYWCFCSPNQY",
+        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
+      )
 
     assert_pattern do
       response => Cadenya::APIKey
@@ -44,7 +53,11 @@ class Cadenya::Test::Resources::APIKeysTest < Cadenya::Test::ResourceTest
   def test_update_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.api_keys.update("id", workspace_id: "workspaceId")
+    response =
+      @cadenya.api_keys.update(
+        "apikey_01HXKD2E5NQM3T9AYWCFCSPNQY",
+        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
+      )
 
     assert_pattern do
       response => Cadenya::APIKey
@@ -60,10 +73,10 @@ class Cadenya::Test::Resources::APIKeysTest < Cadenya::Test::ResourceTest
     end
   end
 
-  def test_list
+  def test_list_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.api_keys.list("workspaceId")
+    response = @cadenya.api_keys.list(workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q")
 
     assert_pattern do
       response => Cadenya::Internal::CursorPagination
@@ -89,7 +102,11 @@ class Cadenya::Test::Resources::APIKeysTest < Cadenya::Test::ResourceTest
   def test_delete_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.api_keys.delete("id", workspace_id: "workspaceId")
+    response =
+      @cadenya.api_keys.delete(
+        "apikey_01HXKD2E5NQM3T9AYWCFCSPNQY",
+        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
+      )
 
     assert_pattern do
       response => nil
@@ -99,7 +116,11 @@ class Cadenya::Test::Resources::APIKeysTest < Cadenya::Test::ResourceTest
   def test_disable_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.api_keys.disable("id", workspace_id: "workspaceId")
+    response =
+      @cadenya.api_keys.disable(
+        "apikey_01HXKD2E5NQM3T9AYWCFCSPNQY",
+        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
+      )
 
     assert_pattern do
       response => Cadenya::APIKey
@@ -118,7 +139,11 @@ class Cadenya::Test::Resources::APIKeysTest < Cadenya::Test::ResourceTest
   def test_enable_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.api_keys.enable("id", workspace_id: "workspaceId")
+    response =
+      @cadenya.api_keys.enable(
+        "apikey_01HXKD2E5NQM3T9AYWCFCSPNQY",
+        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
+      )
 
     assert_pattern do
       response => Cadenya::APIKey
@@ -137,7 +162,11 @@ class Cadenya::Test::Resources::APIKeysTest < Cadenya::Test::ResourceTest
   def test_rotate_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.api_keys.rotate("id", workspace_id: "workspaceId")
+    response =
+      @cadenya.api_keys.rotate(
+        "apikey_01HXKD2E5NQM3T9AYWCFCSPNQY",
+        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
+      )
 
     assert_pattern do
       response => Cadenya::APIKey

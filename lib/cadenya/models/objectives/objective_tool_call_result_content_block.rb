@@ -3,29 +3,21 @@
 module Cadenya
   module Models
     module Objectives
-      class ObjectiveToolCallResultContentBlock < Cadenya::Internal::Type::BaseModel
-        # @!attribute audio
-        #
-        #   @return [Cadenya::Models::Objectives::ObjectiveToolCallResultAudioBlock, nil]
-        optional :audio, -> { Cadenya::Objectives::ObjectiveToolCallResultAudioBlock }
+      # ContentBlock is a single block of tool result content. Exactly one of the
+      # variants is set.
+      module ObjectiveToolCallResultContentBlock
+        extend Cadenya::Internal::Type::Union
 
-        # @!attribute image
-        #
-        #   @return [Cadenya::Models::Objectives::ObjectiveToolCallResultImageBlock, nil]
-        optional :image, -> { Cadenya::Objectives::ObjectiveToolCallResultImageBlock }
+        discriminator :type
 
-        # @!attribute text
-        #
-        #   @return [Cadenya::Models::Objectives::ObjectiveToolCallResultTextBlock, nil]
-        optional :text, -> { Cadenya::Objectives::ObjectiveToolCallResultTextBlock }
+        variant :text, -> { Cadenya::Objectives::ObjectiveToolCallResultContentBlockText }
 
-        # @!method initialize(audio: nil, image: nil, text: nil)
-        #   ContentBlock is a single block of tool result content. Exactly one of the
-        #   variants is set.
-        #
-        #   @param audio [Cadenya::Models::Objectives::ObjectiveToolCallResultAudioBlock]
-        #   @param image [Cadenya::Models::Objectives::ObjectiveToolCallResultImageBlock]
-        #   @param text [Cadenya::Models::Objectives::ObjectiveToolCallResultTextBlock]
+        variant :image, -> { Cadenya::Objectives::ObjectiveToolCallResultContentBlockImage }
+
+        variant :audio, -> { Cadenya::Objectives::ObjectiveToolCallResultContentBlockAudio }
+
+        # @!method self.variants
+        #   @return [Array(Cadenya::Models::Objectives::ObjectiveToolCallResultContentBlockText, Cadenya::Models::Objectives::ObjectiveToolCallResultContentBlockImage, Cadenya::Models::Objectives::ObjectiveToolCallResultContentBlockAudio)]
       end
     end
 

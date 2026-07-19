@@ -1,0 +1,35 @@
+module Cadenya
+  module Models
+    type callable_tool_tool =
+      {
+        tool: Cadenya::ResourceMetadata,
+        type: Cadenya::Models::CallableToolTool::type_
+      }
+
+    class CallableToolTool < Cadenya::Internal::Type::BaseModel
+      attr_accessor tool: Cadenya::ResourceMetadata
+
+      attr_accessor type: Cadenya::Models::CallableToolTool::type_
+
+      def initialize: (
+        tool: Cadenya::ResourceMetadata,
+        type: Cadenya::Models::CallableToolTool::type_
+      ) -> void
+
+      def to_hash: -> {
+        tool: Cadenya::ResourceMetadata,
+        type: Cadenya::Models::CallableToolTool::type_
+      }
+
+      type type_ = :tool
+
+      module Type
+        extend Cadenya::Internal::Type::Enum
+
+        TOOL: :tool
+
+        def self?.values: -> ::Array[Cadenya::Models::CallableToolTool::type_]
+      end
+    end
+  end
+end

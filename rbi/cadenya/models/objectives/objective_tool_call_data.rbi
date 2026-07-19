@@ -18,11 +18,8 @@ module Cadenya
         # In Cadenya, a tool that is used within an agent objective might be a
         # user-defined tool (IE: MCP, HTTP), another Agent (useful to separate context),
         # or a Cadenya Tool (one Cadenya provides).
-        sig { returns(Cadenya::CallableTool) }
-        attr_reader :callable
-
-        sig { params(callable: Cadenya::CallableTool::OrHash).void }
-        attr_writer :callable
+        sig { returns(Cadenya::CallableTool::Variants) }
+        attr_accessor :callable
 
         # The arguments passed to the tool
         sig { returns(T.nilable(T::Hash[Symbol, T.anything])) }
@@ -63,7 +60,12 @@ module Cadenya
 
         sig do
           params(
-            callable: Cadenya::CallableTool::OrHash,
+            callable:
+              T.any(
+                Cadenya::CallableToolTool::OrHash,
+                Cadenya::CallableToolAgent::OrHash,
+                Cadenya::CallableToolCadenyaProvidedTool::OrHash
+              ),
             arguments: T::Hash[Symbol, T.anything],
             memo: String,
             resolved_secrets:
@@ -93,7 +95,7 @@ module Cadenya
         sig do
           override.returns(
             {
-              callable: Cadenya::CallableTool,
+              callable: Cadenya::CallableTool::Variants,
               arguments: T::Hash[Symbol, T.anything],
               memo: String,
               resolved_secrets: T::Array[Cadenya::Objectives::ResolvedSecret],

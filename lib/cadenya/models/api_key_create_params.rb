@@ -9,8 +9,8 @@ module Cadenya
 
       # @!attribute workspace_id
       #
-      #   @return [String]
-      required :workspace_id, String
+      #   @return [String, nil]
+      optional :workspace_id, String
 
       # @!attribute metadata
       #   CreateAccountResourceMetadata contains the user-provided fields for creating an
@@ -26,15 +26,15 @@ module Cadenya
       #   @return [Cadenya::Models::APIKeySpec]
       required :spec, -> { Cadenya::APIKeySpec }
 
-      # @!method initialize(workspace_id:, metadata:, spec:, request_options: {})
+      # @!method initialize(metadata:, spec:, workspace_id: nil, request_options: {})
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::APIKeyCreateParams} for more details.
-      #
-      #   @param workspace_id [String]
       #
       #   @param metadata [Cadenya::Models::APIKeyCreateParams::Metadata] CreateAccountResourceMetadata contains the user-provided fields for creating
       #
       #   @param spec [Cadenya::Models::APIKeySpec] Configuration for an API key.
+      #
+      #   @param workspace_id [String]
       #
       #   @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}]
 

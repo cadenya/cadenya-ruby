@@ -4,23 +4,23 @@ module Cadenya
       class Variations
         def create: (
           String agent_id,
-          workspace_id: String,
           metadata: Cadenya::CreateResourceMetadata,
           spec: Cadenya::Agents::AgentVariationSpec,
+          ?workspace_id: String,
           ?request_options: Cadenya::request_opts
         ) -> Cadenya::Agents::AgentVariation
 
         def retrieve: (
+          String agent_id,
           String id,
-          workspace_id: String,
-          agent_id: String,
+          ?workspace_id: String,
           ?request_options: Cadenya::request_opts
         ) -> Cadenya::Agents::AgentVariation
 
         def update: (
+          String agent_id,
           String id,
-          workspace_id: String,
-          agent_id: String,
+          ?workspace_id: String,
           ?metadata: Cadenya::UpdateResourceMetadata,
           ?spec: Cadenya::Agents::AgentVariationSpec,
           ?update_mask: String,
@@ -29,7 +29,7 @@ module Cadenya
 
         def list: (
           String agent_id,
-          workspace_id: String,
+          ?workspace_id: String,
           ?cursor: String,
           ?include_info: bool,
           ?labels: String,
@@ -39,52 +39,50 @@ module Cadenya
         ) -> Cadenya::Internal::CursorPagination[Cadenya::Agents::AgentVariation]
 
         def delete: (
+          String agent_id,
           String id,
-          workspace_id: String,
-          agent_id: String,
+          ?workspace_id: String,
           ?request_options: Cadenya::request_opts
         ) -> nil
 
         def add_assignment: (
+          String agent_id,
           String variation_id,
-          workspace_id: String,
-          agent_id: String,
-          ?sub_agent_id: String,
-          ?tool_id: String,
-          ?tool_set_id: String,
+          body: Cadenya::Models::Agents::VariationAddAssignmentParams::body,
+          ?workspace_id: String,
           ?request_options: Cadenya::request_opts
-        ) -> Cadenya::Agents::VariationAssignment
+        ) -> Cadenya::Models::Agents::variation_assignment
 
         def add_memory_layer: (
+          String agent_id,
           String variation_id,
-          workspace_id: String,
-          agent_id: String,
-          ?memory_layer_id: String,
+          memory_layer_id: String,
+          ?workspace_id: String,
           ?position: Integer,
           ?request_options: Cadenya::request_opts
         ) -> Cadenya::Agents::VariationMemoryLayerAssignment
 
         def remove_assignment: (
+          String agent_id,
+          String variation_id,
           String id,
-          workspace_id: String,
-          agent_id: String,
-          variation_id: String,
+          ?workspace_id: String,
           ?request_options: Cadenya::request_opts
         ) -> nil
 
         def remove_memory_layer: (
+          String agent_id,
+          String variation_id,
           String id,
-          workspace_id: String,
-          agent_id: String,
-          variation_id: String,
+          ?workspace_id: String,
           ?request_options: Cadenya::request_opts
         ) -> nil
 
         def update_memory_layer: (
+          String agent_id,
+          String variation_id,
           String id,
-          workspace_id: String,
-          agent_id: String,
-          variation_id: String,
+          ?workspace_id: String,
           ?position: Integer,
           ?request_options: Cadenya::request_opts
         ) -> Cadenya::Agents::VariationMemoryLayerAssignment

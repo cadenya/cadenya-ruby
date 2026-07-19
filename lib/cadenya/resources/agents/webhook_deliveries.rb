@@ -10,7 +10,7 @@ module Cadenya
         #
         # Lists all webhook deliveries for an agent
         #
-        # @overload list(agent_id, workspace_id:, cursor: nil, event_type: nil, labels: nil, limit: nil, objective_id: nil, request_options: {})
+        # @overload list(agent_id, workspace_id: nil, cursor: nil, event_type: nil, labels: nil, limit: nil, objective_id: nil, request_options: {})
         #
         # @param agent_id [String] Path param
         #
@@ -31,12 +31,12 @@ module Cadenya
         # @return [Cadenya::Internal::CursorPagination<Cadenya::Models::Agents::WebhookDelivery>]
         #
         # @see Cadenya::Models::Agents::WebhookDeliveryListParams
-        def list(agent_id, params)
+        def list(agent_id, params = {})
           parsed, options = Cadenya::Agents::WebhookDeliveryListParams.dump_request(params)
           query = Cadenya::Internal::Util.encode_query_params(parsed)
           workspace_id =
             parsed.delete(:workspace_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
+              @client.workspace_id
             end
           @client.request(
             method: :get,

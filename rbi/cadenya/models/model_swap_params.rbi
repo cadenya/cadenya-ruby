@@ -11,8 +11,11 @@ module Cadenya
           T.any(Cadenya::ModelSwapParams, Cadenya::Internal::AnyHash)
         end
 
-      sig { returns(String) }
-      attr_accessor :workspace_id
+      sig { returns(T.nilable(String)) }
+      attr_reader :workspace_id
+
+      sig { params(workspace_id: String).void }
+      attr_writer :workspace_id
 
       # The swaps to perform.
       sig { returns(T.nilable(T::Array[Cadenya::ModelSwapParams::ModelSwap])) }
@@ -33,7 +36,7 @@ module Cadenya
         ).returns(T.attached_class)
       end
       def self.new(
-        workspace_id:,
+        workspace_id: nil,
         # The swaps to perform.
         model_swaps: nil,
         request_options: {}

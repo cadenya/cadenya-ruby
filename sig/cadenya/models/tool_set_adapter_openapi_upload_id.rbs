@@ -1,0 +1,79 @@
+module Cadenya
+  module Models
+    type tool_set_adapter_openapi_upload_id =
+      {
+        type: Cadenya::Models::ToolSetAdapterOpenAPIUploadID::type_,
+        upload_id: String,
+        base_url: String,
+        exclude_tools: Cadenya::ToolFilter,
+        headers: ::Hash[Symbol, String],
+        include_tools: Cadenya::ToolFilter,
+        server_name: String,
+        tool_approvals: Cadenya::Models::approval_requirement_filter
+      }
+
+    class ToolSetAdapterOpenAPIUploadID < Cadenya::Internal::Type::BaseModel
+      attr_accessor type: Cadenya::Models::ToolSetAdapterOpenAPIUploadID::type_
+
+      attr_accessor upload_id: String
+
+      attr_reader base_url: String?
+
+      def base_url=: (String) -> String
+
+      attr_reader exclude_tools: Cadenya::ToolFilter?
+
+      def exclude_tools=: (Cadenya::ToolFilter) -> Cadenya::ToolFilter
+
+      attr_reader headers: ::Hash[Symbol, String]?
+
+      def headers=: (::Hash[Symbol, String]) -> ::Hash[Symbol, String]
+
+      attr_reader include_tools: Cadenya::ToolFilter?
+
+      def include_tools=: (Cadenya::ToolFilter) -> Cadenya::ToolFilter
+
+      attr_reader server_name: String?
+
+      def server_name=: (String) -> String
+
+      attr_reader tool_approvals: Cadenya::Models::approval_requirement_filter?
+
+      def tool_approvals=: (
+        Cadenya::Models::approval_requirement_filter
+      ) -> Cadenya::Models::approval_requirement_filter
+
+      def initialize: (
+        type: Cadenya::Models::ToolSetAdapterOpenAPIUploadID::type_,
+        upload_id: String,
+        ?base_url: String,
+        ?exclude_tools: Cadenya::ToolFilter,
+        ?headers: ::Hash[Symbol, String],
+        ?include_tools: Cadenya::ToolFilter,
+        ?server_name: String,
+        ?tool_approvals: Cadenya::Models::approval_requirement_filter
+      ) -> void
+
+      def to_hash: -> {
+        type: Cadenya::Models::ToolSetAdapterOpenAPIUploadID::type_,
+        upload_id: String,
+        base_url: String,
+        exclude_tools: Cadenya::ToolFilter,
+        headers: ::Hash[Symbol, String],
+        include_tools: Cadenya::ToolFilter,
+        server_name: String,
+        tool_approvals: Cadenya::Models::approval_requirement_filter
+      }
+
+      type type_ = :uploadId
+
+      module Type
+        extend Cadenya::Internal::Type::Enum
+
+        UPLOAD_ID: :uploadId
+
+        def self?.values: -> ::Array[Cadenya::Models::ToolSetAdapterOpenAPIUploadID::type_]
+      end
+    end
+  end
+end

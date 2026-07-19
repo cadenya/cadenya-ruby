@@ -9,9 +9,9 @@ module Cadenya
         sig do
           params(
             objective_id: String,
-            workspace_id: String,
             data: Cadenya::Objectives::ObjectiveFeedbackData::OrHash,
             metadata: Cadenya::CreateOperationMetadata::OrHash,
+            workspace_id: String,
             request_options: Cadenya::RequestOptions::OrHash
           ).returns(Cadenya::Objectives::ObjectiveFeedback)
         end
@@ -19,14 +19,14 @@ module Cadenya
           # Path param: The ID of the objective. Supports "external_id:" prefix for external
           # IDs.
           objective_id,
-          # Path param
-          workspace_id:,
           # Body param
           data:,
           # Body param: CreateOperationMetadata contains the user-provided fields for
           # creating an operation. Read-only fields (id, account_id, workspace_id,
           # created_at, profile_id) are excluded since they are set by the server.
           metadata:,
+          # Path param
+          workspace_id: nil,
           request_options: {}
         )
         end
@@ -51,7 +51,7 @@ module Cadenya
           # IDs.
           objective_id,
           # Path param
-          workspace_id:,
+          workspace_id: nil,
           # Query param: Pagination cursor from previous response
           cursor: nil,
           # Query param: Filters by metadata labels. Comma-separated key=value pairs, e.g.

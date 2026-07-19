@@ -3,10 +3,10 @@
 module Cadenya
   module Models
     module ToolSets
-      class McpAnnotations < Cadenya::Internal::Type::BaseModel
+      class MCPAnnotations < Cadenya::Internal::Type::BaseModel
         OrHash =
           T.type_alias do
-            T.any(Cadenya::ToolSets::McpAnnotations, Cadenya::Internal::AnyHash)
+            T.any(Cadenya::ToolSets::MCPAnnotations, Cadenya::Internal::AnyHash)
           end
 
         # If true, the tool may perform destructive updates to its environment. Only

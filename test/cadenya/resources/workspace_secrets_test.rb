@@ -6,7 +6,12 @@ class Cadenya::Test::Resources::WorkspaceSecretsTest < Cadenya::Test::ResourceTe
   def test_create_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.workspace_secrets.create("workspaceId", metadata: {name: "name"}, spec: {})
+    response =
+      @cadenya.workspace_secrets.create(
+        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q",
+        metadata: {name: "name"},
+        spec: {}
+      )
 
     assert_pattern do
       response => Cadenya::WorkspaceSecret
@@ -24,7 +29,11 @@ class Cadenya::Test::Resources::WorkspaceSecretsTest < Cadenya::Test::ResourceTe
   def test_retrieve_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.workspace_secrets.retrieve("id", workspace_id: "workspaceId")
+    response =
+      @cadenya.workspace_secrets.retrieve(
+        "wsecret_01HXKD2E5NQM3T9AYWCF586W5A",
+        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
+      )
 
     assert_pattern do
       response => Cadenya::WorkspaceSecret
@@ -42,7 +51,11 @@ class Cadenya::Test::Resources::WorkspaceSecretsTest < Cadenya::Test::ResourceTe
   def test_update_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.workspace_secrets.update("id", workspace_id: "workspaceId")
+    response =
+      @cadenya.workspace_secrets.update(
+        "wsecret_01HXKD2E5NQM3T9AYWCF586W5A",
+        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
+      )
 
     assert_pattern do
       response => Cadenya::WorkspaceSecret
@@ -57,10 +70,10 @@ class Cadenya::Test::Resources::WorkspaceSecretsTest < Cadenya::Test::ResourceTe
     end
   end
 
-  def test_list
+  def test_list_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.workspace_secrets.list("workspaceId")
+    response = @cadenya.workspace_secrets.list(workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q")
 
     assert_pattern do
       response => Cadenya::Internal::CursorPagination
@@ -85,7 +98,11 @@ class Cadenya::Test::Resources::WorkspaceSecretsTest < Cadenya::Test::ResourceTe
   def test_delete_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.workspace_secrets.delete("id", workspace_id: "workspaceId")
+    response =
+      @cadenya.workspace_secrets.delete(
+        "wsecret_01HXKD2E5NQM3T9AYWCF586W5A",
+        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
+      )
 
     assert_pattern do
       response => nil

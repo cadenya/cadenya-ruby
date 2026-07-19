@@ -5,12 +5,12 @@ module Cadenya
         exclude_tools: Cadenya::ToolFilter,
         headers: ::Hash[Symbol, String],
         include_tools: Cadenya::ToolFilter,
-        just_in_time: Cadenya::ToolSetAdapterMcp::JustInTime,
-        tool_approvals: Cadenya::ApprovalRequirementFilter,
+        just_in_time: Cadenya::ToolSetAdapterMCP::JustInTime,
+        tool_approvals: Cadenya::Models::approval_requirement_filter,
         url: String
       }
 
-    class ToolSetAdapterMcp < Cadenya::Internal::Type::BaseModel
+    class ToolSetAdapterMCP < Cadenya::Internal::Type::BaseModel
       attr_reader exclude_tools: Cadenya::ToolFilter?
 
       def exclude_tools=: (Cadenya::ToolFilter) -> Cadenya::ToolFilter
@@ -23,17 +23,17 @@ module Cadenya
 
       def include_tools=: (Cadenya::ToolFilter) -> Cadenya::ToolFilter
 
-      attr_reader just_in_time: Cadenya::ToolSetAdapterMcp::JustInTime?
+      attr_reader just_in_time: Cadenya::ToolSetAdapterMCP::JustInTime?
 
       def just_in_time=: (
-        Cadenya::ToolSetAdapterMcp::JustInTime
-      ) -> Cadenya::ToolSetAdapterMcp::JustInTime
+        Cadenya::ToolSetAdapterMCP::JustInTime
+      ) -> Cadenya::ToolSetAdapterMCP::JustInTime
 
-      attr_reader tool_approvals: Cadenya::ApprovalRequirementFilter?
+      attr_reader tool_approvals: Cadenya::Models::approval_requirement_filter?
 
       def tool_approvals=: (
-        Cadenya::ApprovalRequirementFilter
-      ) -> Cadenya::ApprovalRequirementFilter
+        Cadenya::Models::approval_requirement_filter
+      ) -> Cadenya::Models::approval_requirement_filter
 
       attr_reader url: String?
 
@@ -43,8 +43,8 @@ module Cadenya
         ?exclude_tools: Cadenya::ToolFilter,
         ?headers: ::Hash[Symbol, String],
         ?include_tools: Cadenya::ToolFilter,
-        ?just_in_time: Cadenya::ToolSetAdapterMcp::JustInTime,
-        ?tool_approvals: Cadenya::ApprovalRequirementFilter,
+        ?just_in_time: Cadenya::ToolSetAdapterMCP::JustInTime,
+        ?tool_approvals: Cadenya::Models::approval_requirement_filter,
         ?url: String
       ) -> void
 
@@ -52,8 +52,8 @@ module Cadenya
         exclude_tools: Cadenya::ToolFilter,
         headers: ::Hash[Symbol, String],
         include_tools: Cadenya::ToolFilter,
-        just_in_time: Cadenya::ToolSetAdapterMcp::JustInTime,
-        tool_approvals: Cadenya::ApprovalRequirementFilter,
+        just_in_time: Cadenya::ToolSetAdapterMCP::JustInTime,
+        tool_approvals: Cadenya::Models::approval_requirement_filter,
         url: String
       }
 

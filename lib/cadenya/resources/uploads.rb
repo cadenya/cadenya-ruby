@@ -13,21 +13,25 @@ module Cadenya
       # returned id is used to reference the upload from resources that accept binary
       # content.
       #
-      # @overload create(workspace_id, metadata:, spec:, request_options: {})
+      # @overload create(metadata:, spec:, workspace_id: nil, request_options: {})
       #
-      # @param workspace_id [String] Workspace ID.
+      # @param metadata [Cadenya::Models::CreateResourceMetadata] Body param: CreateResourceMetadata contains the user-provided fields for creatin
       #
-      # @param metadata [Cadenya::Models::CreateResourceMetadata] CreateResourceMetadata contains the user-provided fields for creating
+      # @param spec [Cadenya::Models::UploadSpec] Body param
       #
-      # @param spec [Cadenya::Models::UploadSpec]
+      # @param workspace_id [String] Path param: Workspace ID.
       #
       # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
       #
       # @return [Cadenya::Models::Upload]
       #
       # @see Cadenya::Models::UploadCreateParams
-      def create(workspace_id, params)
+      def create(params)
         parsed, options = Cadenya::UploadCreateParams.dump_request(params)
+        workspace_id =
+          parsed.delete(:workspace_id) do
+            @client.workspace_id
+          end
         @client.request(
           method: :post,
           path: ["v1/workspaces/%1$s/uploads", workspace_id],
@@ -39,7 +43,7 @@ module Cadenya
 
       # Retrieves the current state of an upload, including its lifecycle status
       #
-      # @overload retrieve(id, workspace_id:, request_options: {})
+      # @overload retrieve(id, workspace_id: nil, request_options: {})
       #
       # @param id [String]
       #
@@ -50,11 +54,11 @@ module Cadenya
       # @return [Cadenya::Models::Upload]
       #
       # @see Cadenya::Models::UploadRetrieveParams
-      def retrieve(id, params)
+      def retrieve(id, params = {})
         parsed, options = Cadenya::UploadRetrieveParams.dump_request(params)
         workspace_id =
           parsed.delete(:workspace_id) do
-            raise ArgumentError.new("missing required path argument #{_1}")
+            @client.workspace_id
           end
         @client.request(
           method: :get,

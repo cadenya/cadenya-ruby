@@ -11,8 +11,11 @@ module Cadenya
           T.any(Cadenya::MemoryLayerListParams, Cadenya::Internal::AnyHash)
         end
 
-      sig { returns(String) }
-      attr_accessor :workspace_id
+      sig { returns(T.nilable(String)) }
+      attr_reader :workspace_id
+
+      sig { params(workspace_id: String).void }
+      attr_writer :workspace_id
 
       # Filter to episodic layers belonging to this agent.
       sig { returns(T.nilable(String)) }
@@ -105,7 +108,7 @@ module Cadenya
         ).returns(T.attached_class)
       end
       def self.new(
-        workspace_id:,
+        workspace_id: nil,
         # Filter to episodic layers belonging to this agent.
         agent_id: nil,
         # Pagination cursor from previous response

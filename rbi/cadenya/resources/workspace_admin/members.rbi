@@ -22,11 +22,11 @@ module Cadenya
           )
         end
         def list(
-          # The workspace whose members will be listed (path).
-          workspace_id,
-          # Pagination cursor from previous response
+          # Path param: The workspace whose members will be listed (path).
+          workspace_id: nil,
+          # Query param: Pagination cursor from previous response
           cursor: nil,
-          # Maximum number of results to return
+          # Query param: Maximum number of results to return
           limit: nil,
           request_options: {}
         )
@@ -45,11 +45,12 @@ module Cadenya
           ).returns(Cadenya::WorkspaceMember)
         end
         def add(
-          # The workspace to add the member to (path).
-          workspace_id,
-          # Email address to add (resolve-or-invite). Mutually exclusive with profile_id.
+          # Path param: The workspace to add the member to (path).
+          workspace_id: nil,
+          # Body param: Email address to add (resolve-or-invite). Mutually exclusive with
+          # profile_id.
           email: nil,
-          # An existing account profile to add. Mutually exclusive with email.
+          # Body param: An existing account profile to add. Mutually exclusive with email.
           profile_id: nil,
           request_options: {}
         )
@@ -68,7 +69,7 @@ module Cadenya
           # The profile to remove from the workspace (path).
           profile_id,
           # The workspace to remove the member from (path).
-          workspace_id:,
+          workspace_id: nil,
           request_options: {}
         )
         end

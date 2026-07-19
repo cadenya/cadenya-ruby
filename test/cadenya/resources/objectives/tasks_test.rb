@@ -7,7 +7,11 @@ class Cadenya::Test::Resources::Objectives::TasksTest < Cadenya::Test::ResourceT
     skip("Mock server tests are disabled")
 
     response =
-      @cadenya.objectives.tasks.retrieve("id", workspace_id: "workspaceId", objective_id: "objectiveId")
+      @cadenya.objectives.tasks.retrieve(
+        "obj_01HXKD2E5NQM3T9AYWCFQAZGFV",
+        "id",
+        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
+      )
 
     assert_pattern do
       response => Cadenya::Objectives::ObjectiveTask
@@ -24,7 +28,11 @@ class Cadenya::Test::Resources::Objectives::TasksTest < Cadenya::Test::ResourceT
   def test_list_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.objectives.tasks.list("objectiveId", workspace_id: "workspaceId")
+    response =
+      @cadenya.objectives.tasks.list(
+        "obj_01HXKD2E5NQM3T9AYWCFQAZGFV",
+        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
+      )
 
     assert_pattern do
       response => Cadenya::Internal::CursorPagination

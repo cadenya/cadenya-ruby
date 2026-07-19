@@ -15,8 +15,11 @@ module Cadenya
             )
           end
 
-        sig { returns(String) }
-        attr_accessor :workspace_id
+        sig { returns(T.nilable(String)) }
+        attr_reader :workspace_id
+
+        sig { params(workspace_id: String).void }
+        attr_writer :workspace_id
 
         sig { returns(String) }
         attr_accessor :agent_id
@@ -26,11 +29,8 @@ module Cadenya
 
         # Layer to attach. Accepts the canonical `memlyr_…` form or the
         # `external_id:<value>` form.
-        sig { returns(T.nilable(String)) }
-        attr_reader :memory_layer_id
-
-        sig { params(memory_layer_id: String).void }
-        attr_writer :memory_layer_id
+        sig { returns(String) }
+        attr_accessor :memory_layer_id
 
         # Position in the baseline cascade (lower = more specific). If omitted, the server
         # appends at the most general end (max existing position + 1).
@@ -42,21 +42,21 @@ module Cadenya
 
         sig do
           params(
-            workspace_id: String,
             agent_id: String,
             variation_id: String,
             memory_layer_id: String,
+            workspace_id: String,
             position: Integer,
             request_options: Cadenya::RequestOptions::OrHash
           ).returns(T.attached_class)
         end
         def self.new(
-          workspace_id:,
           agent_id:,
           variation_id:,
           # Layer to attach. Accepts the canonical `memlyr_…` form or the
           # `external_id:<value>` form.
-          memory_layer_id: nil,
+          memory_layer_id:,
+          workspace_id: nil,
           # Position in the baseline cascade (lower = more specific). If omitted, the server
           # appends at the most general end (max existing position + 1).
           position: nil,

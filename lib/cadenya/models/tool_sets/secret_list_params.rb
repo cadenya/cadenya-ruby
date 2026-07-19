@@ -10,8 +10,8 @@ module Cadenya
 
         # @!attribute workspace_id
         #
-        #   @return [String]
-        required :workspace_id, String
+        #   @return [String, nil]
+        optional :workspace_id, String
 
         # @!attribute tool_set_id
         #
@@ -54,10 +54,10 @@ module Cadenya
         #   @return [String, nil]
         optional :sort_order, String
 
-        # @!method initialize(workspace_id:, tool_set_id:, cursor: nil, include_info: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, request_options: {})
-        #   @param workspace_id [String]
-        #
+        # @!method initialize(tool_set_id:, workspace_id: nil, cursor: nil, include_info: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, request_options: {})
         #   @param tool_set_id [String]
+        #
+        #   @param workspace_id [String]
         #
         #   @param cursor [String] Pagination cursor from previous response
         #

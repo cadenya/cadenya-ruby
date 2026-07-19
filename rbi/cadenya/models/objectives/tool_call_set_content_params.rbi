@@ -15,8 +15,11 @@ module Cadenya
             )
           end
 
-        sig { returns(String) }
-        attr_accessor :workspace_id
+        sig { returns(T.nilable(String)) }
+        attr_reader :workspace_id
+
+        sig { params(workspace_id: String).void }
+        attr_writer :workspace_id
 
         sig { returns(String) }
         attr_accessor :objective_id
@@ -29,31 +32,41 @@ module Cadenya
         # on input where the result-side carries a signed url on output.
         sig do
           returns(
-            T::Array[Cadenya::Objectives::SetToolCallContentRequestContentBlock]
+            T::Array[
+              T.any(
+                Cadenya::Objectives::SetToolCallContentRequestContentBlockText,
+                Cadenya::Objectives::SetToolCallContentRequestContentBlockImage,
+                Cadenya::Objectives::SetToolCallContentRequestContentBlockAudio
+              )
+            ]
           )
         end
         attr_accessor :content
 
         sig do
           params(
-            workspace_id: String,
             objective_id: String,
             tool_call_id: String,
             content:
               T::Array[
-                Cadenya::Objectives::SetToolCallContentRequestContentBlock::OrHash
+                T.any(
+                  Cadenya::Objectives::SetToolCallContentRequestContentBlockText::OrHash,
+                  Cadenya::Objectives::SetToolCallContentRequestContentBlockImage::OrHash,
+                  Cadenya::Objectives::SetToolCallContentRequestContentBlockAudio::OrHash
+                )
               ],
+            workspace_id: String,
             request_options: Cadenya::RequestOptions::OrHash
           ).returns(T.attached_class)
         end
         def self.new(
-          workspace_id:,
           objective_id:,
           tool_call_id:,
           # The content to set on the tool call. Mirrors
           # ObjectiveToolCallResult.ContentBlock but writable: media blocks carry raw data
           # on input where the result-side carries a signed url on output.
           content:,
+          workspace_id: nil,
           request_options: {}
         )
         end
@@ -66,7 +79,11 @@ module Cadenya
               tool_call_id: String,
               content:
                 T::Array[
-                  Cadenya::Objectives::SetToolCallContentRequestContentBlock
+                  T.any(
+                    Cadenya::Objectives::SetToolCallContentRequestContentBlockText,
+                    Cadenya::Objectives::SetToolCallContentRequestContentBlockImage,
+                    Cadenya::Objectives::SetToolCallContentRequestContentBlockAudio
+                  )
                 ],
               request_options: Cadenya::RequestOptions
             }
