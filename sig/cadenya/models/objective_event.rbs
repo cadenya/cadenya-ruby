@@ -5,6 +5,7 @@ module Cadenya
         data: Cadenya::Models::objective_event_data,
         metadata: Cadenya::OperationMetadata,
         context_window_id: String,
+        duration: String,
         info: Cadenya::ObjectiveEventInfo
       }
 
@@ -21,10 +22,15 @@ module Cadenya
 
       def info=: (Cadenya::ObjectiveEventInfo) -> Cadenya::ObjectiveEventInfo
 
+      attr_reader duration: String?
+
+      def duration=: (String) -> String
+
       def initialize: (
         data: Cadenya::Models::objective_event_data,
         metadata: Cadenya::OperationMetadata,
         ?context_window_id: String,
+        ?duration: String,
         ?info: Cadenya::ObjectiveEventInfo
       ) -> void
 
@@ -32,6 +38,7 @@ module Cadenya
         data: Cadenya::Models::objective_event_data,
         metadata: Cadenya::OperationMetadata,
         context_window_id: String,
+        duration: String,
         info: Cadenya::ObjectiveEventInfo
       }
     end
