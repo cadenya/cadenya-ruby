@@ -6,7 +6,8 @@ module Cadenya
         metadata: Cadenya::OperationMetadata,
         context_window_id: String,
         duration: String,
-        info: Cadenya::ObjectiveEventInfo
+        info: Cadenya::ObjectiveEventInfo,
+        started_at: Time
       }
 
     class ObjectiveEvent < Cadenya::Internal::Type::BaseModel
@@ -26,12 +27,17 @@ module Cadenya
 
       def duration=: (String) -> String
 
+      attr_reader started_at: Time?
+
+      def started_at=: (Time) -> Time
+
       def initialize: (
         data: Cadenya::Models::objective_event_data,
         metadata: Cadenya::OperationMetadata,
         ?context_window_id: String,
         ?duration: String,
-        ?info: Cadenya::ObjectiveEventInfo
+        ?info: Cadenya::ObjectiveEventInfo,
+        ?started_at: Time
       ) -> void
 
       def to_hash: -> {
@@ -39,7 +45,8 @@ module Cadenya
         metadata: Cadenya::OperationMetadata,
         context_window_id: String,
         duration: String,
-        info: Cadenya::ObjectiveEventInfo
+        info: Cadenya::ObjectiveEventInfo,
+        started_at: Time
       }
     end
   end

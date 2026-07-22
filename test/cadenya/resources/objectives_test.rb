@@ -179,7 +179,8 @@ class Cadenya::Test::Resources::ObjectivesTest < Cadenya::Test::ResourceTest
         metadata: Cadenya::OperationMetadata,
         context_window_id: String | nil,
         duration: String | nil,
-        info: Cadenya::ObjectiveEventInfo | nil
+        info: Cadenya::ObjectiveEventInfo | nil,
+        started_at: Time | nil
       }
     end
   end
@@ -239,7 +240,8 @@ class Cadenya::Test::Resources::ObjectivesTest < Cadenya::Test::ResourceTest
         metadata: Cadenya::OperationMetadata,
         context_window_id: String | nil,
         duration: String | nil,
-        info: Cadenya::ObjectiveEventInfo | nil
+        info: Cadenya::ObjectiveEventInfo | nil,
+        started_at: Time | nil
       }
     end
   end

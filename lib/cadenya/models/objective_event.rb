@@ -31,13 +31,22 @@ module Cadenya
         #   Elapsed time of the work this event records, when it is known at write time
         #   (e.g. assistant message generation, tool execution for result/error events).
         #   Unset means the event is instantaneous or the duration is not measurable.
-        #   Serialized as a canonical duration string (e.g. "4.1s").
+        #   Serialized as a canonical duration string (e.g. "4.1s"). Always set together
+        #   with started_at.
         #
         #   @return [String, nil]
         optional :duration, String
+
+        # @!attribute started_at
+        #   When the work this event records began. Set together with duration, so the work
+        #   interval is [started_at, started_at + duration]. The event's created_at remains
+        #   the time the event was persisted.
+        #
+        #   @return [Time, nil]
+        optional :started_at, Time, api_name: :startedAt
       end
 
-      # @!method initialize(data:, metadata:, context_window_id: nil, duration: nil, info: nil)
+      # @!method initialize(data:, metadata:, context_window_id: nil, duration: nil, info: nil, started_at: nil)
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::ObjectiveEvent} for more details.
       #
@@ -50,6 +59,8 @@ module Cadenya
       #   @param duration [String] Elapsed time of the work this event records, when it is known at
       #
       #   @param info [Cadenya::Models::ObjectiveEventInfo]
+      #
+      #   @param started_at [Time] When the work this event records began. Set together with duration,
     end
   end
 end

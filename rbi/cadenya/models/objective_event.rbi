@@ -34,12 +34,22 @@ module Cadenya
       # Elapsed time of the work this event records, when it is known at write time
       # (e.g. assistant message generation, tool execution for result/error events).
       # Unset means the event is instantaneous or the duration is not measurable.
-      # Serialized as a canonical duration string (e.g. "4.1s").
+      # Serialized as a canonical duration string (e.g. "4.1s"). Always set together
+      # with started_at.
       sig { returns(T.nilable(String)) }
       attr_reader :duration
 
       sig { params(duration: String).void }
       attr_writer :duration
+
+      # When the work this event records began. Set together with duration, so the work
+      # interval is [started_at, started_at + duration]. The event's created_at remains
+      # the time the event was persisted.
+      sig { returns(T.nilable(Time)) }
+      attr_reader :started_at
+
+      sig { params(started_at: Time).void }
+      attr_writer :started_at
 
       sig do
         params(
@@ -66,7 +76,8 @@ module Cadenya
           metadata: Cadenya::OperationMetadata::OrHash,
           context_window_id: String,
           duration: String,
-          info: Cadenya::ObjectiveEventInfo::OrHash
+          info: Cadenya::ObjectiveEventInfo::OrHash,
+          started_at: Time
         ).returns(T.attached_class)
       end
       def self.new(
@@ -78,9 +89,14 @@ module Cadenya
         # Elapsed time of the work this event records, when it is known at write time
         # (e.g. assistant message generation, tool execution for result/error events).
         # Unset means the event is instantaneous or the duration is not measurable.
-        # Serialized as a canonical duration string (e.g. "4.1s").
+        # Serialized as a canonical duration string (e.g. "4.1s"). Always set together
+        # with started_at.
         duration: nil,
-        info: nil
+        info: nil,
+        # When the work this event records began. Set together with duration, so the work
+        # interval is [started_at, started_at + duration]. The event's created_at remains
+        # the time the event was persisted.
+        started_at: nil
       )
       end
 
@@ -91,7 +107,8 @@ module Cadenya
             metadata: Cadenya::OperationMetadata,
             context_window_id: String,
             duration: String,
-            info: Cadenya::ObjectiveEventInfo
+            info: Cadenya::ObjectiveEventInfo,
+            started_at: Time
           }
         )
       end
