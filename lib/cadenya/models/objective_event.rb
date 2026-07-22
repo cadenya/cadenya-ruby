@@ -26,7 +26,18 @@ module Cadenya
       #   @return [Cadenya::Models::ObjectiveEventInfo, nil]
       optional :info, -> { Cadenya::ObjectiveEventInfo }
 
-      # @!method initialize(data:, metadata:, context_window_id: nil, info: nil)
+      response_only do
+        # @!attribute duration
+        #   Elapsed time of the work this event records, when it is known at write time
+        #   (e.g. assistant message generation, tool execution for result/error events).
+        #   Unset means the event is instantaneous or the duration is not measurable.
+        #   Serialized as a canonical duration string (e.g. "4.1s").
+        #
+        #   @return [String, nil]
+        optional :duration, String
+      end
+
+      # @!method initialize(data:, metadata:, context_window_id: nil, duration: nil, info: nil)
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::ObjectiveEvent} for more details.
       #
@@ -35,6 +46,8 @@ module Cadenya
       #   @param metadata [Cadenya::Models::OperationMetadata] Metadata for ephemeral operations and activities (e.g., objectives, executions,
       #
       #   @param context_window_id [String]
+      #
+      #   @param duration [String] Elapsed time of the work this event records, when it is known at
       #
       #   @param info [Cadenya::Models::ObjectiveEventInfo]
     end

@@ -31,6 +31,16 @@ module Cadenya
       sig { params(info: Cadenya::ObjectiveEventInfo::OrHash).void }
       attr_writer :info
 
+      # Elapsed time of the work this event records, when it is known at write time
+      # (e.g. assistant message generation, tool execution for result/error events).
+      # Unset means the event is instantaneous or the duration is not measurable.
+      # Serialized as a canonical duration string (e.g. "4.1s").
+      sig { returns(T.nilable(String)) }
+      attr_reader :duration
+
+      sig { params(duration: String).void }
+      attr_writer :duration
+
       sig do
         params(
           data:
@@ -55,6 +65,7 @@ module Cadenya
             ),
           metadata: Cadenya::OperationMetadata::OrHash,
           context_window_id: String,
+          duration: String,
           info: Cadenya::ObjectiveEventInfo::OrHash
         ).returns(T.attached_class)
       end
@@ -64,6 +75,11 @@ module Cadenya
         # runs)
         metadata:,
         context_window_id: nil,
+        # Elapsed time of the work this event records, when it is known at write time
+        # (e.g. assistant message generation, tool execution for result/error events).
+        # Unset means the event is instantaneous or the duration is not measurable.
+        # Serialized as a canonical duration string (e.g. "4.1s").
+        duration: nil,
         info: nil
       )
       end
@@ -74,6 +90,7 @@ module Cadenya
             data: Cadenya::ObjectiveEventData::Variants,
             metadata: Cadenya::OperationMetadata,
             context_window_id: String,
+            duration: String,
             info: Cadenya::ObjectiveEventInfo
           }
         )
