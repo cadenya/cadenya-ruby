@@ -1,0 +1,61 @@
+module Cadenya
+  module Models
+    type tool_set_list_usage_params =
+      {
+        workspace_id: String,
+        tool_set_id: String,
+        cursor: String,
+        limit: Integer,
+        sort_order: String,
+        tool_id: String
+      }
+      & Cadenya::Internal::Type::request_parameters
+
+    class ToolSetListUsageParams < Cadenya::Internal::Type::BaseModel
+      extend Cadenya::Internal::Type::RequestParameters::Converter
+      include Cadenya::Internal::Type::RequestParameters
+
+      attr_reader workspace_id: String?
+
+      def workspace_id=: (String) -> String
+
+      attr_accessor tool_set_id: String
+
+      attr_reader cursor: String?
+
+      def cursor=: (String) -> String
+
+      attr_reader limit: Integer?
+
+      def limit=: (Integer) -> Integer
+
+      attr_reader sort_order: String?
+
+      def sort_order=: (String) -> String
+
+      attr_reader tool_id: String?
+
+      def tool_id=: (String) -> String
+
+      def initialize: (
+        tool_set_id: String,
+        ?workspace_id: String,
+        ?cursor: String,
+        ?limit: Integer,
+        ?sort_order: String,
+        ?tool_id: String,
+        ?request_options: Cadenya::request_opts
+      ) -> void
+
+      def to_hash: -> {
+        workspace_id: String,
+        tool_set_id: String,
+        cursor: String,
+        limit: Integer,
+        sort_order: String,
+        tool_id: String,
+        request_options: Cadenya::RequestOptions
+      }
+    end
+  end
+end

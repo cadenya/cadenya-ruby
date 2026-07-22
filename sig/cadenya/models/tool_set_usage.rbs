@@ -1,0 +1,43 @@
+module Cadenya
+  module Models
+    type tool_set_usage =
+      {
+        assigned_at: Time,
+        agent: Cadenya::ResourceMetadata,
+        agent_variation: Cadenya::ResourceMetadata,
+        model: Cadenya::ResourceMetadata
+      }
+
+    class ToolSetUsage < Cadenya::Internal::Type::BaseModel
+      attr_accessor assigned_at: Time
+
+      attr_reader agent: Cadenya::ResourceMetadata?
+
+      def agent=: (Cadenya::ResourceMetadata) -> Cadenya::ResourceMetadata
+
+      attr_reader agent_variation: Cadenya::ResourceMetadata?
+
+      def agent_variation=: (
+        Cadenya::ResourceMetadata
+      ) -> Cadenya::ResourceMetadata
+
+      attr_reader model: Cadenya::ResourceMetadata?
+
+      def model=: (Cadenya::ResourceMetadata) -> Cadenya::ResourceMetadata
+
+      def initialize: (
+        assigned_at: Time,
+        ?agent: Cadenya::ResourceMetadata,
+        ?agent_variation: Cadenya::ResourceMetadata,
+        ?model: Cadenya::ResourceMetadata
+      ) -> void
+
+      def to_hash: -> {
+        assigned_at: Time,
+        agent: Cadenya::ResourceMetadata,
+        agent_variation: Cadenya::ResourceMetadata,
+        model: Cadenya::ResourceMetadata
+      }
+    end
+  end
+end

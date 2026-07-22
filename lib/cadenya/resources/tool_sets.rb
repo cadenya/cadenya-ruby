@@ -310,6 +310,50 @@ module Cadenya
       end
 
       # Some parameter documentations has been truncated, see
+      # {Cadenya::Models::ToolSetListUsageParams} for more details.
+      #
+      # Lists the agent variations (with their parent agent) that have the tool set
+      # assigned. Pass tool_id to instead list variations with a direct assignment of
+      # that individual tool; variations that receive the tool implicitly through a
+      # whole-set assignment are not included in that filtered view.
+      #
+      # @overload list_usage(tool_set_id, workspace_id: nil, cursor: nil, limit: nil, sort_order: nil, tool_id: nil, request_options: {})
+      #
+      # @param tool_set_id [String] Path param: Tool set ID. Accepts the canonical ts\_… form or the
+      #
+      # @param workspace_id [String] Path param: Workspace ID.
+      #
+      # @param cursor [String] Query param: Pagination cursor from previous response
+      #
+      # @param limit [Integer] Query param: Maximum number of results to return
+      #
+      # @param sort_order [String] Query param: Sort order for results (asc or desc by assignment creation time)
+      #
+      # @param tool_id [String] Query param: When set, lists only variations with a direct assignment of this
+      #
+      # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
+      #
+      # @return [Cadenya::Internal::CursorPagination<Cadenya::Models::ToolSetUsage>]
+      #
+      # @see Cadenya::Models::ToolSetListUsageParams
+      def list_usage(tool_set_id, params = {})
+        parsed, options = Cadenya::ToolSetListUsageParams.dump_request(params)
+        query = Cadenya::Internal::Util.encode_query_params(parsed)
+        workspace_id =
+          parsed.delete(:workspace_id) do
+            @client.workspace_id
+          end
+        @client.request(
+          method: :get,
+          path: ["v1/workspaces/%1$s/tool_sets/%2$s/usage", workspace_id, tool_set_id],
+          query: query.transform_keys(sort_order: "sortOrder", tool_id: "toolId"),
+          page: Cadenya::Internal::CursorPagination,
+          model: Cadenya::ToolSetUsage,
+          options: options
+        )
+      end
+
+      # Some parameter documentations has been truncated, see
       # {Cadenya::Models::ToolSetUnarchiveParams} for more details.
       #
       # Transitions an archived tool set back to STATE_ACTIVE. Managed tool sets resume

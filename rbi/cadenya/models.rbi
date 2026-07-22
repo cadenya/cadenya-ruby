@@ -358,6 +358,8 @@ module Cadenya
 
   ToolSetListParams = Cadenya::Models::ToolSetListParams
 
+  ToolSetListUsageParams = Cadenya::Models::ToolSetListUsageParams
+
   ToolSetRetrieveParams = Cadenya::Models::ToolSetRetrieveParams
 
   ToolSets = Cadenya::Models::ToolSets
@@ -367,6 +369,8 @@ module Cadenya
   ToolSetUnarchiveParams = Cadenya::Models::ToolSetUnarchiveParams
 
   ToolSetUpdateParams = Cadenya::Models::ToolSetUpdateParams
+
+  ToolSetUsage = Cadenya::Models::ToolSetUsage
 
   UnsafeUnwrapWebhookEvent = Cadenya::Models::UnsafeUnwrapWebhookEvent
 
