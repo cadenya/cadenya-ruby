@@ -69,6 +69,16 @@ module Cadenya
         ?request_options: Cadenya::request_opts
       ) -> Cadenya::Internal::CursorPagination[Cadenya::ToolSetEvent]
 
+      def list_usage: (
+        String tool_set_id,
+        ?workspace_id: String,
+        ?cursor: String,
+        ?limit: Integer,
+        ?sort_order: String,
+        ?tool_id: String,
+        ?request_options: Cadenya::request_opts
+      ) -> Cadenya::Internal::CursorPagination[Cadenya::ToolSetUsage]
+
       def unarchive: (
         String id,
         ?workspace_id: String,

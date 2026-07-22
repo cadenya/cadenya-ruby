@@ -186,6 +186,36 @@ class Cadenya::Test::Resources::ToolSetsTest < Cadenya::Test::ResourceTest
     end
   end
 
+  def test_list_usage_required_params
+    skip("Mock server tests are disabled")
+
+    response =
+      @cadenya.tool_sets.list_usage(
+        "toolset_01HXKD2E5NQM3T9AYWCFNRMN74",
+        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
+      )
+
+    assert_pattern do
+      response => Cadenya::Internal::CursorPagination
+    end
+
+    row = response.to_enum.first
+    return if row.nil?
+
+    assert_pattern do
+      row => Cadenya::ToolSetUsage
+    end
+
+    assert_pattern do
+      row => {
+        assigned_at: Time,
+        agent: Cadenya::ResourceMetadata | nil,
+        agent_variation: Cadenya::ResourceMetadata | nil,
+        model: Cadenya::ResourceMetadata | nil
+      }
+    end
+  end
+
   def test_unarchive_required_params
     skip("Mock server tests are disabled")
 

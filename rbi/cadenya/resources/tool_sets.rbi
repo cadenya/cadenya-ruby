@@ -226,6 +226,41 @@ module Cadenya
       )
       end
 
+      # Lists the agent variations (with their parent agent) that have the tool set
+      # assigned. Pass tool_id to instead list variations with a direct assignment of
+      # that individual tool; variations that receive the tool implicitly through a
+      # whole-set assignment are not included in that filtered view.
+      sig do
+        params(
+          tool_set_id: String,
+          workspace_id: String,
+          cursor: String,
+          limit: Integer,
+          sort_order: String,
+          tool_id: String,
+          request_options: Cadenya::RequestOptions::OrHash
+        ).returns(Cadenya::Internal::CursorPagination[Cadenya::ToolSetUsage])
+      end
+      def list_usage(
+        # Path param: Tool set ID. Accepts the canonical ts\_… form or the
+        # external_id:<value> form.
+        tool_set_id,
+        # Path param: Workspace ID.
+        workspace_id: nil,
+        # Query param: Pagination cursor from previous response
+        cursor: nil,
+        # Query param: Maximum number of results to return
+        limit: nil,
+        # Query param: Sort order for results (asc or desc by assignment creation time)
+        sort_order: nil,
+        # Query param: When set, lists only variations with a direct assignment of this
+        # individual tool. When unset, lists variations assigned the whole tool set. The
+        # tool must belong to the tool set.
+        tool_id: nil,
+        request_options: {}
+      )
+      end
+
       # Transitions an archived tool set back to STATE_ACTIVE. Managed tool sets resume
       # syncing on their next cycle and their tools become available to objectives
       # again.
