@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.50.0 (2026-07-22)
+
+Full Changelog: [v0.49.0...v0.50.0](https://github.com/cadenya/cadenya-ruby/compare/v0.49.0...v0.50.0)
+
+### Features
+
+* Add oneof discriminator field extension and OpenAPI discriminated unions (ENG-467) ([855e61c](https://github.com/cadenya/cadenya-ruby/commit/855e61c719deef0f9216cd39b01cbc2ed7eda1df))
+* **api:** api update ([3df16a6](https://github.com/cadenya/cadenya-ruby/commit/3df16a69b23536770204bdbb3b2bc52e1dce11c0))
+* **api:** api update ([dd3e9a9](https://github.com/cadenya/cadenya-ruby/commit/dd3e9a96186aafe759ee0a2419156dd45361b2ad))
+* **api:** api update ([77c6a65](https://github.com/cadenya/cadenya-ruby/commit/77c6a65f2c658ad75ba3bf69de0e85c4adad0441))
+* **api:** api update ([6f69c0c](https://github.com/cadenya/cadenya-ruby/commit/6f69c0c6605b8da7496aad34a3aa60f33e6e46c5))
+* **api:** api update ([0e024f3](https://github.com/cadenya/cadenya-ruby/commit/0e024f3b47a6b530570f70757c10fd4f41b8f389))
+
 ## 0.49.0 (2026-07-19)
 
 Full Changelog: [v0.48.0...v0.49.0](https://github.com/cadenya/cadenya-ruby/compare/v0.48.0...v0.49.0)
