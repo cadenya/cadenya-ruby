@@ -1,0 +1,35 @@
+module Cadenya
+  module Models
+    type tool_set_adapter_http_variant =
+      {
+        http: Cadenya::ToolSetAdapterHTTP,
+        type: Cadenya::Models::ToolSetAdapterHTTPVariant::type_
+      }
+
+    class ToolSetAdapterHTTPVariant < Cadenya::Internal::Type::BaseModel
+      attr_accessor http: Cadenya::ToolSetAdapterHTTP
+
+      attr_accessor type: Cadenya::Models::ToolSetAdapterHTTPVariant::type_
+
+      def initialize: (
+        http: Cadenya::ToolSetAdapterHTTP,
+        type: Cadenya::Models::ToolSetAdapterHTTPVariant::type_
+      ) -> void
+
+      def to_hash: -> {
+        http: Cadenya::ToolSetAdapterHTTP,
+        type: Cadenya::Models::ToolSetAdapterHTTPVariant::type_
+      }
+
+      type type_ = :http
+
+      module Type
+        extend Cadenya::Internal::Type::Enum
+
+        HTTP: :http
+
+        def self?.values: -> ::Array[Cadenya::Models::ToolSetAdapterHTTPVariant::type_]
+      end
+    end
+  end
+end

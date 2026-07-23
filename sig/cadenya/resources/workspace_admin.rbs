@@ -12,12 +12,12 @@ module Cadenya
       ) -> Cadenya::Workspace
 
       def retrieve: (
-        String workspace_id,
+        ?workspace_id: String,
         ?request_options: Cadenya::request_opts
       ) -> Cadenya::Workspace
 
       def update: (
-        String workspace_id,
+        ?workspace_id: String,
         ?metadata: Cadenya::WorkspaceAdminUpdateParams::Metadata,
         ?spec: Cadenya::WorkspaceSpec,
         ?update_mask: String,
@@ -33,7 +33,7 @@ module Cadenya
       ) -> Cadenya::Internal::CursorPagination[Cadenya::Workspace]
 
       def archive: (
-        String workspace_id,
+        ?workspace_id: String,
         ?request_options: Cadenya::request_opts
       ) -> nil
 

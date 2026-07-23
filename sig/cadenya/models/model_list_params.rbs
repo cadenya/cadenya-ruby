@@ -20,7 +20,9 @@ module Cadenya
       extend Cadenya::Internal::Type::RequestParameters::Converter
       include Cadenya::Internal::Type::RequestParameters
 
-      attr_accessor workspace_id: String
+      attr_reader workspace_id: String?
+
+      def workspace_id=: (String) -> String
 
       attr_reader ai_provider_key_id: String?
 
@@ -65,7 +67,7 @@ module Cadenya
       ) -> Cadenya::Models::ModelListParams::state
 
       def initialize: (
-        workspace_id: String,
+        ?workspace_id: String,
         ?ai_provider_key_id: String,
         ?cursor: String,
         ?include_info: bool,

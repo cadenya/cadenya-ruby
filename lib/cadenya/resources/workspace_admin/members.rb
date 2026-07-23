@@ -12,22 +12,26 @@ module Cadenya
       class Members
         # Lists the members of a workspace. Admin only.
         #
-        # @overload list(workspace_id, cursor: nil, limit: nil, request_options: {})
+        # @overload list(workspace_id: nil, cursor: nil, limit: nil, request_options: {})
         #
-        # @param workspace_id [String] The workspace whose members will be listed (path).
+        # @param workspace_id [String] Path param: The workspace whose members will be listed (path).
         #
-        # @param cursor [String] Pagination cursor from previous response
+        # @param cursor [String] Query param: Pagination cursor from previous response
         #
-        # @param limit [Integer] Maximum number of results to return
+        # @param limit [Integer] Query param: Maximum number of results to return
         #
         # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
         #
         # @return [Cadenya::Internal::CursorPagination<Cadenya::Models::WorkspaceMember>]
         #
         # @see Cadenya::Models::WorkspaceAdmin::MemberListParams
-        def list(workspace_id, params = {})
+        def list(params = {})
           parsed, options = Cadenya::WorkspaceAdmin::MemberListParams.dump_request(params)
           query = Cadenya::Internal::Util.encode_query_params(parsed)
+          workspace_id =
+            parsed.delete(:workspace_id) do
+              @client.workspace_id
+            end
           @client.request(
             method: :get,
             path: ["v1/account/workspaces/%1$s/members", workspace_id],
@@ -38,26 +42,33 @@ module Cadenya
           )
         end
 
+        # Some parameter documentations has been truncated, see
+        # {Cadenya::Models::WorkspaceAdmin::MemberAddParams} for more details.
+        #
         # Grants a profile access to the workspace by creating (or reactivating) the actor
         # that links the profile to the workspace. Accepts either an existing profile_id
         # or an email to resolve-or-invite. Idempotent for an already-active member. Admin
         # only.
         #
-        # @overload add(workspace_id, email: nil, profile_id: nil, request_options: {})
+        # @overload add(workspace_id: nil, email: nil, profile_id: nil, request_options: {})
         #
-        # @param workspace_id [String] The workspace to add the member to (path).
+        # @param workspace_id [String] Path param: The workspace to add the member to (path).
         #
-        # @param email [String] Email address to add (resolve-or-invite). Mutually exclusive with profile_id.
+        # @param email [String] Body param: Email address to add (resolve-or-invite). Mutually exclusive with pr
         #
-        # @param profile_id [String] An existing account profile to add. Mutually exclusive with email.
+        # @param profile_id [String] Body param: An existing account profile to add. Mutually exclusive with email.
         #
         # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
         #
         # @return [Cadenya::Models::WorkspaceMember]
         #
         # @see Cadenya::Models::WorkspaceAdmin::MemberAddParams
-        def add(workspace_id, params = {})
+        def add(params = {})
           parsed, options = Cadenya::WorkspaceAdmin::MemberAddParams.dump_request(params)
+          workspace_id =
+            parsed.delete(:workspace_id) do
+              @client.workspace_id
+            end
           @client.request(
             method: :post,
             path: ["v1/account/workspaces/%1$s/members", workspace_id],
@@ -70,7 +81,7 @@ module Cadenya
         # Revokes a member's access by deactivating their actor; the member is immediately
         # cut off. The underlying profile is not deleted. Admin only.
         #
-        # @overload remove(profile_id, workspace_id:, request_options: {})
+        # @overload remove(profile_id, workspace_id: nil, request_options: {})
         #
         # @param profile_id [String] The profile to remove from the workspace (path).
         #
@@ -81,11 +92,11 @@ module Cadenya
         # @return [nil]
         #
         # @see Cadenya::Models::WorkspaceAdmin::MemberRemoveParams
-        def remove(profile_id, params)
+        def remove(profile_id, params = {})
           parsed, options = Cadenya::WorkspaceAdmin::MemberRemoveParams.dump_request(params)
           workspace_id =
             parsed.delete(:workspace_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
+              @client.workspace_id
             end
           @client.request(
             method: :delete,

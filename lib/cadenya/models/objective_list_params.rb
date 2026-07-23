@@ -9,8 +9,8 @@ module Cadenya
 
       # @!attribute workspace_id
       #
-      #   @return [String]
-      required :workspace_id, String
+      #   @return [String, nil]
+      optional :workspace_id, String
 
       # @!attribute agent_id
       #   Agent ID for filtering
@@ -74,7 +74,7 @@ module Cadenya
       #   @return [Symbol, Cadenya::Models::ObjectiveListParams::State, nil]
       optional :state, enum: -> { Cadenya::ObjectiveListParams::State }
 
-      # @!method initialize(workspace_id:, agent_id: nil, agent_schedule_id: nil, cursor: nil, include_info: nil, labels: nil, limit: nil, parent_objective_id: nil, profile_id: nil, sort_order: nil, state: nil, request_options: {})
+      # @!method initialize(workspace_id: nil, agent_id: nil, agent_schedule_id: nil, cursor: nil, include_info: nil, labels: nil, limit: nil, parent_objective_id: nil, profile_id: nil, sort_order: nil, state: nil, request_options: {})
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::ObjectiveListParams} for more details.
       #

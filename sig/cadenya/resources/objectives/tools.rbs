@@ -4,7 +4,7 @@ module Cadenya
       class Tools
         def list: (
           String objective_id,
-          workspace_id: String,
+          ?workspace_id: String,
           ?cursor: String,
           ?limit: Integer,
           ?request_options: Cadenya::request_opts

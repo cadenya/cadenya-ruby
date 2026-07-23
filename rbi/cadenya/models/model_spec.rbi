@@ -7,11 +7,12 @@ module Cadenya
         T.type_alias { T.any(Cadenya::ModelSpec, Cadenya::Internal::AnyHash) }
 
       # The model family (e.g., "claude-sonnet-4.6", "gpt-5.4", "gemini-2.5-flash")
-      sig { returns(T.nilable(String)) }
-      attr_reader :family
+      sig { returns(String) }
+      attr_accessor :family
 
-      sig { params(family: String).void }
-      attr_writer :family
+      # The model provider (e.g., "anthropic", "openai", "google")
+      sig { returns(String) }
+      attr_accessor :provider
 
       # Cost per million input tokens in cents (e.g., 300 = $3.00)
       sig { returns(T.nilable(String)) }
@@ -41,26 +42,21 @@ module Cadenya
       sig { params(output_price_per_million_tokens: String).void }
       attr_writer :output_price_per_million_tokens
 
-      # The model provider (e.g., "anthropic", "openai", "google")
-      sig { returns(T.nilable(String)) }
-      attr_reader :provider
-
-      sig { params(provider: String).void }
-      attr_writer :provider
-
       sig do
         params(
           family: String,
+          provider: String,
           input_price_per_million_tokens: String,
           max_input_tokens: Integer,
           max_output_tokens: Integer,
-          output_price_per_million_tokens: String,
-          provider: String
+          output_price_per_million_tokens: String
         ).returns(T.attached_class)
       end
       def self.new(
         # The model family (e.g., "claude-sonnet-4.6", "gpt-5.4", "gemini-2.5-flash")
-        family: nil,
+        family:,
+        # The model provider (e.g., "anthropic", "openai", "google")
+        provider:,
         # Cost per million input tokens in cents (e.g., 300 = $3.00)
         input_price_per_million_tokens: nil,
         # Maximum number of input tokens the model supports
@@ -68,9 +64,7 @@ module Cadenya
         # Maximum number of output tokens the model can generate
         max_output_tokens: nil,
         # Cost per million output tokens in cents (e.g., 1500 = $15.00)
-        output_price_per_million_tokens: nil,
-        # The model provider (e.g., "anthropic", "openai", "google")
-        provider: nil
+        output_price_per_million_tokens: nil
       )
       end
 
@@ -78,11 +72,11 @@ module Cadenya
         override.returns(
           {
             family: String,
+            provider: String,
             input_price_per_million_tokens: String,
             max_input_tokens: Integer,
             max_output_tokens: Integer,
-            output_price_per_million_tokens: String,
-            provider: String
+            output_price_per_million_tokens: String
           }
         )
       end

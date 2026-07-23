@@ -10,15 +10,15 @@ module Cadenya
         # Submits feedback for an objective's execution. Feedback scores are used by the
         # agent variation scoring system to evaluate and rank variation performance.
         #
-        # @overload create(objective_id, workspace_id:, data:, metadata:, request_options: {})
+        # @overload create(objective_id, data:, metadata:, workspace_id: nil, request_options: {})
         #
         # @param objective_id [String] Path param: The ID of the objective. Supports "external_id:" prefix for external
-        #
-        # @param workspace_id [String] Path param
         #
         # @param data [Cadenya::Models::Objectives::ObjectiveFeedbackData] Body param
         #
         # @param metadata [Cadenya::Models::CreateOperationMetadata] Body param: CreateOperationMetadata contains the user-provided fields for creati
+        #
+        # @param workspace_id [String] Path param
         #
         # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
         #
@@ -29,7 +29,7 @@ module Cadenya
           parsed, options = Cadenya::Objectives::FeedbackCreateParams.dump_request(params)
           workspace_id =
             parsed.delete(:workspace_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
+              @client.workspace_id
             end
           @client.request(
             method: :post,
@@ -45,7 +45,7 @@ module Cadenya
         #
         # Lists all feedback submitted for an objective
         #
-        # @overload list(objective_id, workspace_id:, cursor: nil, labels: nil, limit: nil, request_options: {})
+        # @overload list(objective_id, workspace_id: nil, cursor: nil, labels: nil, limit: nil, request_options: {})
         #
         # @param objective_id [String] Path param: The ID of the objective. Supports "external_id:" prefix for external
         #
@@ -62,12 +62,12 @@ module Cadenya
         # @return [Cadenya::Internal::CursorPagination<Cadenya::Models::Objectives::ObjectiveFeedback>]
         #
         # @see Cadenya::Models::Objectives::FeedbackListParams
-        def list(objective_id, params)
+        def list(objective_id, params = {})
           parsed, options = Cadenya::Objectives::FeedbackListParams.dump_request(params)
           query = Cadenya::Internal::Util.encode_query_params(parsed)
           workspace_id =
             parsed.delete(:workspace_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
+              @client.workspace_id
             end
           @client.request(
             method: :get,

@@ -17,7 +17,7 @@ To use this gem, install via Bundler by adding the following to your application
 <!-- x-release-please-start-version -->
 
 ```ruby
-gem "cadenya", "~> 0.49.0"
+gem "cadenya", "~> 0.50.0"
 ```
 
 <!-- x-release-please-end -->
@@ -32,9 +32,14 @@ cadenya = Cadenya::Client.new(
   api_key: ENV["CADENYA_API_KEY"] # This is the default and can be omitted
 )
 
-account = cadenya.account.retrieve
+objective = cadenya.objectives.create(
+  workspace_id: "workspace_01HXKD2E5NQXAMPLE0000000",
+  agent_id: "agent_01HXKD2E5NQXAMPLE0000000",
+  system_prompt_data: {customer_name: "Ada"},
+  first_user_message: "Summarize the open support tickets from yesterday."
+)
 
-puts(account.info)
+puts(objective.configSnapshot)
 ```
 
 ### Streaming
@@ -42,7 +47,10 @@ puts(account.info)
 We provide support for streaming responses using Server-Sent Events (SSE).
 
 ```ruby
-stream = cadenya.objectives.stream_events_streaming
+stream = cadenya.objectives.stream_events_streaming(
+  "obj_01HXKD2E5NQXAMPLE0000000",
+  workspace_id: "workspace_01HXKD2E5NQXAMPLE0000000"
+)
 
 stream.each do |objective|
   puts(objective.data)
@@ -113,7 +121,7 @@ Error codes are as follows:
 
 ### Retries
 
-Certain errors will be automatically retried 2 times by default, with a short exponential backoff.
+Certain errors will be automatically retried 0 times by default, with a short exponential backoff.
 
 Connection errors (for example, due to a network connectivity problem), 408 Request Timeout, 409 Conflict, 429 Rate Limit, >=500 Internal errors, and timeouts will all be retried by default.
 
@@ -122,7 +130,7 @@ You can use the `max_retries` option to configure or disable this:
 ```ruby
 # Configure the default for all requests:
 cadenya = Cadenya::Client.new(
-  max_retries: 0 # default is 2
+  max_retries: 0 # default is 0
 )
 
 # Or, configure per-request:
@@ -217,18 +225,33 @@ This library provides comprehensive [RBI](https://sorbet.org/docs/rbi) definitio
 You can provide typesafe request parameters like so:
 
 ```ruby
-cadenya.account.retrieve
+cadenya.objectives.create(
+  workspace_id: "workspace_01HXKD2E5NQXAMPLE0000000",
+  agent_id: "agent_01HXKD2E5NQXAMPLE0000000",
+  system_prompt_data: {customer_name: "Ada"},
+  first_user_message: "Summarize the open support tickets from yesterday."
+)
 ```
 
 Or, equivalently:
 
 ```ruby
 # Hashes work, but are not typesafe:
-cadenya.account.retrieve
+cadenya.objectives.create(
+  workspace_id: "workspace_01HXKD2E5NQXAMPLE0000000",
+  agent_id: "agent_01HXKD2E5NQXAMPLE0000000",
+  system_prompt_data: {customer_name: "Ada"},
+  first_user_message: "Summarize the open support tickets from yesterday."
+)
 
 # You can also splat a full Params class:
-params = Cadenya::AccountRetrieveParams.new
-cadenya.account.retrieve(**params)
+params = Cadenya::ObjectiveCreateParams.new(
+  workspace_id: "workspace_01HXKD2E5NQXAMPLE0000000",
+  agent_id: "agent_01HXKD2E5NQXAMPLE0000000",
+  system_prompt_data: {customer_name: "Ada"},
+  first_user_message: "Summarize the open support tickets from yesterday."
+)
+cadenya.objectives.create(**params)
 ```
 
 ### Enums

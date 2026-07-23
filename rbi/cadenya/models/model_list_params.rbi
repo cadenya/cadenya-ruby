@@ -11,8 +11,11 @@ module Cadenya
           T.any(Cadenya::ModelListParams, Cadenya::Internal::AnyHash)
         end
 
-      sig { returns(String) }
-      attr_accessor :workspace_id
+      sig { returns(T.nilable(String)) }
+      attr_reader :workspace_id
+
+      sig { params(workspace_id: String).void }
+      attr_writer :workspace_id
 
       # Filter to models provisioned on a specific AI provider key. Accepts the key's id
       # or an "external_id:"-prefixed slug.
@@ -109,7 +112,7 @@ module Cadenya
         ).returns(T.attached_class)
       end
       def self.new(
-        workspace_id:,
+        workspace_id: nil,
         # Filter to models provisioned on a specific AI provider key. Accepts the key's id
         # or an "external_id:"-prefixed slug.
         ai_provider_key_id: nil,

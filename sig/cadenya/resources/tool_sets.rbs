@@ -6,21 +6,21 @@ module Cadenya
       attr_reader secrets: Cadenya::Resources::ToolSets::Secrets
 
       def create: (
-        String workspace_id,
         metadata: Cadenya::CreateResourceMetadata,
         spec: Cadenya::ToolSetSpec,
+        ?workspace_id: String,
         ?request_options: Cadenya::request_opts
       ) -> Cadenya::ToolSet
 
       def retrieve: (
         String id,
-        workspace_id: String,
+        ?workspace_id: String,
         ?request_options: Cadenya::request_opts
       ) -> Cadenya::ToolSet
 
       def update: (
         String id,
-        workspace_id: String,
+        ?workspace_id: String,
         ?metadata: Cadenya::UpdateResourceMetadata,
         ?spec: Cadenya::ToolSetSpec,
         ?update_mask: String,
@@ -28,7 +28,7 @@ module Cadenya
       ) -> Cadenya::ToolSet
 
       def list: (
-        String workspace_id,
+        ?workspace_id: String,
         ?cursor: String,
         ?include_info: bool,
         ?labels: String,
@@ -42,25 +42,25 @@ module Cadenya
 
       def delete: (
         String id,
-        workspace_id: String,
+        ?workspace_id: String,
         ?request_options: Cadenya::request_opts
       ) -> nil
 
       def archive: (
         String id,
-        workspace_id: String,
+        ?workspace_id: String,
         ?request_options: Cadenya::request_opts
       ) -> Cadenya::ToolSet
 
       def get_openapi_spec: (
         String tool_set_id,
-        workspace_id: String,
+        ?workspace_id: String,
         ?request_options: Cadenya::request_opts
       ) -> Cadenya::Models::ToolSetGetOpenAPISpecResponse
 
       def list_events: (
         String tool_set_id,
-        workspace_id: String,
+        ?workspace_id: String,
         ?cursor: String,
         ?include_info: bool,
         ?labels: String,
@@ -69,9 +69,19 @@ module Cadenya
         ?request_options: Cadenya::request_opts
       ) -> Cadenya::Internal::CursorPagination[Cadenya::ToolSetEvent]
 
+      def list_usage: (
+        String tool_set_id,
+        ?workspace_id: String,
+        ?cursor: String,
+        ?limit: Integer,
+        ?sort_order: String,
+        ?tool_id: String,
+        ?request_options: Cadenya::request_opts
+      ) -> Cadenya::Internal::CursorPagination[Cadenya::ToolSetUsage]
+
       def unarchive: (
         String id,
-        workspace_id: String,
+        ?workspace_id: String,
         ?request_options: Cadenya::request_opts
       ) -> Cadenya::ToolSet
 

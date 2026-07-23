@@ -9,8 +9,8 @@ module Cadenya
 
       # @!attribute workspace_id
       #
-      #   @return [String]
-      required :workspace_id, String
+      #   @return [String, nil]
+      optional :workspace_id, String
 
       # @!attribute metadata
       #   CreateResourceMetadata contains the user-provided fields for creating a
@@ -25,15 +25,15 @@ module Cadenya
       #   @return [Cadenya::Models::MemoryLayerSpec]
       required :spec, -> { Cadenya::MemoryLayerSpec }
 
-      # @!method initialize(workspace_id:, metadata:, spec:, request_options: {})
+      # @!method initialize(metadata:, spec:, workspace_id: nil, request_options: {})
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::MemoryLayerCreateParams} for more details.
-      #
-      #   @param workspace_id [String]
       #
       #   @param metadata [Cadenya::Models::CreateResourceMetadata] CreateResourceMetadata contains the user-provided fields for creating
       #
       #   @param spec [Cadenya::Models::MemoryLayerSpec]
+      #
+      #   @param workspace_id [String]
       #
       #   @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}]
     end

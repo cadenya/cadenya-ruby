@@ -11,8 +11,11 @@ module Cadenya
           T.any(Cadenya::ObjectiveCreateParams, Cadenya::Internal::AnyHash)
         end
 
-      sig { returns(String) }
-      attr_accessor :workspace_id
+      sig { returns(T.nilable(String)) }
+      attr_reader :workspace_id
+
+      sig { params(workspace_id: String).void }
+      attr_writer :workspace_id
 
       sig { returns(String) }
       attr_accessor :agent_id
@@ -109,9 +112,9 @@ module Cadenya
 
       sig do
         params(
-          workspace_id: String,
           agent_id: String,
           system_prompt_data: T::Hash[Symbol, T.anything],
+          workspace_id: String,
           episodic_memory:
             Cadenya::ObjectiveCreateParams::EpisodicMemory::OrHash,
           first_user_message: String,
@@ -124,12 +127,12 @@ module Cadenya
         ).returns(T.attached_class)
       end
       def self.new(
-        workspace_id:,
         agent_id:,
         # Arbitrary data rendered into the selected variation's system_prompt_template
         # (liquid) to produce the objective's system prompt. If the agent has a
         # system_prompt_data_schema, this must satisfy it.
         system_prompt_data:,
+        workspace_id: nil,
         # Episodic is used to configure the episodic memory for the objective
         episodic_memory: nil,
         # Optional explicit first user message for the LLM chat history. When not set, the
@@ -201,18 +204,15 @@ module Cadenya
 
         # The caller-supplied episodic key. Objectives created with the same key (for the
         # same agent) share one episodic memory layer.
-        sig { returns(T.nilable(String)) }
-        attr_reader :key
-
-        sig { params(key: String).void }
-        attr_writer :key
+        sig { returns(String) }
+        attr_accessor :key
 
         # Episodic is used to configure the episodic memory for the objective
         sig { params(key: String).returns(T.attached_class) }
         def self.new(
           # The caller-supplied episodic key. Objectives created with the same key (for the
           # same agent) share one episodic memory layer.
-          key: nil
+          key:
         )
         end
 

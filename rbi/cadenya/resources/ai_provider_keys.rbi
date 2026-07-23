@@ -6,20 +6,22 @@ module Cadenya
       # Creates a new customer-provided AI provider key in the workspace
       sig do
         params(
-          workspace_id: String,
           metadata: Cadenya::CreateResourceMetadata::OrHash,
           spec: Cadenya::AIProviderKeySpec::OrHash,
+          workspace_id: String,
           request_options: Cadenya::RequestOptions::OrHash
         ).returns(Cadenya::AIProviderKey)
       end
       def create(
-        # The workspace that will own this key.
-        workspace_id,
-        # CreateResourceMetadata contains the user-provided fields for creating a
-        # workspace-scoped resource. Read-only fields (id, account_id, workspace_id,
-        # profile_id, created_at) are excluded since they are set by the server.
+        # Body param: CreateResourceMetadata contains the user-provided fields for
+        # creating a workspace-scoped resource. Read-only fields (id, account_id,
+        # workspace_id, profile_id, created_at) are excluded since they are set by the
+        # server.
         metadata:,
+        # Body param
         spec:,
+        # Path param: The workspace that will own this key.
+        workspace_id: nil,
         request_options: {}
       )
       end
@@ -36,7 +38,7 @@ module Cadenya
         # The key to retrieve.
         id,
         # The workspace the key belongs to.
-        workspace_id:,
+        workspace_id: nil,
         request_options: {}
       )
       end
@@ -56,7 +58,7 @@ module Cadenya
         # Path param: The key to update.
         id,
         # Path param: The workspace the key belongs to.
-        workspace_id:,
+        workspace_id: nil,
         # Body param: UpdateResourceMetadata contains the user-provided fields for
         # updating a workspace-scoped resource. Read-only fields (id, account_id,
         # workspace_id, profile_id, created_at) are excluded since they are set by the
@@ -86,28 +88,28 @@ module Cadenya
         ).returns(Cadenya::Internal::CursorPagination[Cadenya::AIProviderKey])
       end
       def list(
-        # The workspace whose keys will be listed.
-        workspace_id,
-        # Pagination cursor from previous response
+        # Path param: The workspace whose keys will be listed.
+        workspace_id: nil,
+        # Query param: Pagination cursor from previous response
         cursor: nil,
-        # When true, populate each item's info (model counts), at the cost of extra
-        # lookups.
+        # Query param: When true, populate each item's info (model counts), at the cost of
+        # extra lookups.
         include_info: nil,
-        # Filters by metadata labels. Comma-separated key=value pairs, e.g.
+        # Query param: Filters by metadata labels. Comma-separated key=value pairs, e.g.
         # "env=prod,team=ai". A resource matches only if every pair matches exactly (AND
         # semantics).
         labels: nil,
-        # Maximum number of results to return
+        # Query param: Maximum number of results to return
         limit: nil,
-        # Filter expression (query param: prefix)
+        # Query param: Filter expression (query param: prefix)
         prefix: nil,
-        # When true, return only promotional keys (provided by Cadenya, e.g. for
-        # onboarding). Defaults to returning all keys, customer-provided and promotional
-        # alike.
+        # Query param: When true, return only promotional keys (provided by Cadenya, e.g.
+        # for onboarding). Defaults to returning all keys, customer-provided and
+        # promotional alike.
         promotional: nil,
-        # Free-form search query
+        # Query param: Free-form search query
         query: nil,
-        # Sort order for results (asc or desc by creation time)
+        # Query param: Sort order for results (asc or desc by creation time)
         sort_order: nil,
         request_options: {}
       )
@@ -125,7 +127,7 @@ module Cadenya
         # The key to delete.
         id,
         # The workspace the key belongs to.
-        workspace_id:,
+        workspace_id: nil,
         request_options: {}
       )
       end

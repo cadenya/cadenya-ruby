@@ -4,7 +4,7 @@ module Cadenya
       class Feedback
         def list: (
           String agent_id,
-          workspace_id: String,
+          ?workspace_id: String,
           ?agent_variation_id: String,
           ?created_after: Time,
           ?created_before: Time,

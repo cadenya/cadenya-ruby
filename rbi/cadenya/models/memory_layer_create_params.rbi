@@ -11,8 +11,11 @@ module Cadenya
           T.any(Cadenya::MemoryLayerCreateParams, Cadenya::Internal::AnyHash)
         end
 
-      sig { returns(String) }
-      attr_accessor :workspace_id
+      sig { returns(T.nilable(String)) }
+      attr_reader :workspace_id
+
+      sig { params(workspace_id: String).void }
+      attr_writer :workspace_id
 
       # CreateResourceMetadata contains the user-provided fields for creating a
       # workspace-scoped resource. Read-only fields (id, account_id, workspace_id,
@@ -31,19 +34,19 @@ module Cadenya
 
       sig do
         params(
-          workspace_id: String,
           metadata: Cadenya::CreateResourceMetadata::OrHash,
           spec: Cadenya::MemoryLayerSpec::OrHash,
+          workspace_id: String,
           request_options: Cadenya::RequestOptions::OrHash
         ).returns(T.attached_class)
       end
       def self.new(
-        workspace_id:,
         # CreateResourceMetadata contains the user-provided fields for creating a
         # workspace-scoped resource. Read-only fields (id, account_id, workspace_id,
         # profile_id, created_at) are excluded since they are set by the server.
         metadata:,
         spec:,
+        workspace_id: nil,
         request_options: {}
       )
       end

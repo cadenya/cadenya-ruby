@@ -27,7 +27,7 @@ module Cadenya
           # Path param
           agent_id,
           # Path param: Workspace ID.
-          workspace_id:,
+          workspace_id: nil,
           # Query param: Pagination cursor from previous response
           cursor: nil,
           # Query param: Optional filter by event type

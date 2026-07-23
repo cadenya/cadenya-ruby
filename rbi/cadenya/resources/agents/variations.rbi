@@ -10,9 +10,9 @@ module Cadenya
         sig do
           params(
             agent_id: String,
-            workspace_id: String,
             metadata: Cadenya::CreateResourceMetadata::OrHash,
             spec: Cadenya::Agents::AgentVariationSpec::OrHash,
+            workspace_id: String,
             request_options: Cadenya::RequestOptions::OrHash
           ).returns(Cadenya::Agents::AgentVariation)
         end
@@ -20,8 +20,6 @@ module Cadenya
           # Path param: Agent ID. Accepts the canonical `agent_…` form or the
           # `external_id:<value>` form.
           agent_id,
-          # Path param: Workspace ID.
-          workspace_id:,
           # Body param: CreateResourceMetadata contains the user-provided fields for
           # creating a workspace-scoped resource. Read-only fields (id, account_id,
           # workspace_id, profile_id, created_at) are excluded since they are set by the
@@ -30,6 +28,8 @@ module Cadenya
           # Body param: AgentVariationSpec defines the operational configuration for a
           # variation
           spec:,
+          # Path param: Workspace ID.
+          workspace_id: nil,
           request_options: {}
         )
         end
@@ -37,21 +37,21 @@ module Cadenya
         # Retrieves a variation by ID from an agent
         sig do
           params(
+            agent_id: String,
             id: String,
             workspace_id: String,
-            agent_id: String,
             request_options: Cadenya::RequestOptions::OrHash
           ).returns(Cadenya::Agents::AgentVariation)
         end
         def retrieve(
-          # Variation ID. Accepts the canonical `av_…` form or the `external_id:<value>`
-          # form.
-          id,
-          # Workspace ID.
-          workspace_id:,
           # Agent ID. Accepts the canonical `agent_…` form or the `external_id:<value>`
           # form.
-          agent_id:,
+          agent_id,
+          # Variation ID. Accepts the canonical `agentvar_…` form or the
+          # `external_id:<value>` form.
+          id,
+          # Workspace ID.
+          workspace_id: nil,
           request_options: {}
         )
         end
@@ -59,9 +59,9 @@ module Cadenya
         # Updates a variation for an agent
         sig do
           params(
+            agent_id: String,
             id: String,
             workspace_id: String,
-            agent_id: String,
             metadata: Cadenya::UpdateResourceMetadata::OrHash,
             spec: Cadenya::Agents::AgentVariationSpec::OrHash,
             update_mask: String,
@@ -69,14 +69,14 @@ module Cadenya
           ).returns(Cadenya::Agents::AgentVariation)
         end
         def update(
-          # Path param: Variation ID. Accepts the canonical `av_…` form or the
+          # Path param: Agent ID. Accepts the canonical `agent_…` form or the
+          # `external_id:<value>` form.
+          agent_id,
+          # Path param: Variation ID. Accepts the canonical `agentvar_…` form or the
           # `external_id:<value>` form.
           id,
           # Path param: Workspace ID.
-          workspace_id:,
-          # Path param: Agent ID. Accepts the canonical `agent_…` form or the
-          # `external_id:<value>` form.
-          agent_id:,
+          workspace_id: nil,
           # Body param: UpdateResourceMetadata contains the user-provided fields for
           # updating a workspace-scoped resource. Read-only fields (id, account_id,
           # workspace_id, profile_id, created_at) are excluded since they are set by the
@@ -111,7 +111,7 @@ module Cadenya
           # `external_id:<value>` form.
           agent_id,
           # Path param: Workspace ID.
-          workspace_id:,
+          workspace_id: nil,
           # Query param: Pagination cursor from previous response
           cursor: nil,
           # Query param: When true, the `info` field on each returned variation is
@@ -132,21 +132,21 @@ module Cadenya
         # Deletes a variation from an agent
         sig do
           params(
+            agent_id: String,
             id: String,
             workspace_id: String,
-            agent_id: String,
             request_options: Cadenya::RequestOptions::OrHash
           ).void
         end
         def delete(
-          # Variation ID. Accepts the canonical `av_…` form or the `external_id:<value>`
-          # form.
-          id,
-          # Workspace ID.
-          workspace_id:,
           # Agent ID. Accepts the canonical `agent_…` form or the `external_id:<value>`
           # form.
-          agent_id:,
+          agent_id,
+          # Variation ID. Accepts the canonical `agentvar_…` form or the
+          # `external_id:<value>` form.
+          id,
+          # Workspace ID.
+          workspace_id: nil,
           request_options: {}
         )
         end
@@ -155,30 +155,31 @@ module Cadenya
         # must be set.
         sig do
           params(
-            variation_id: String,
-            workspace_id: String,
             agent_id: String,
-            sub_agent_id: String,
-            tool_id: String,
-            tool_set_id: String,
+            variation_id: String,
+            body:
+              T.any(
+                Cadenya::Agents::AddAgentVariationAssignmentRequestToolID::OrHash,
+                Cadenya::Agents::AddAgentVariationAssignmentRequestToolSetID::OrHash,
+                Cadenya::Agents::AddAgentVariationAssignmentRequestSubAgentID::OrHash
+              ),
+            workspace_id: String,
             request_options: Cadenya::RequestOptions::OrHash
-          ).returns(Cadenya::Agents::VariationAssignment)
+          ).returns(Cadenya::Agents::VariationAssignment::Variants)
         end
         def add_assignment(
-          # Path param: Variation ID. Accepts the canonical `av_…` form or the
-          # `external_id:<value>` form.
-          variation_id,
-          # Path param: Workspace ID.
-          workspace_id:,
           # Path param: Agent ID. Accepts the canonical `agent_…` form or the
           # `external_id:<value>` form.
-          agent_id:,
-          # Body param
-          sub_agent_id: nil,
-          # Body param
-          tool_id: nil,
-          # Body param
-          tool_set_id: nil,
+          agent_id,
+          # Path param: Variation ID. Accepts the canonical `agentvar_…` form or the
+          # `external_id:<value>` form.
+          variation_id,
+          # Body param: Attach a single tool, tool set, or sub-agent to a variation. Exactly
+          # one of the target fields must be set; the assignment kind is inferred from the
+          # populated field.
+          body:,
+          # Path param: Workspace ID.
+          workspace_id: nil,
           request_options: {}
         )
         end
@@ -187,26 +188,26 @@ module Cadenya
         # baseline memory cascade.
         sig do
           params(
-            variation_id: String,
-            workspace_id: String,
             agent_id: String,
+            variation_id: String,
             memory_layer_id: String,
+            workspace_id: String,
             position: Integer,
             request_options: Cadenya::RequestOptions::OrHash
           ).returns(Cadenya::Agents::VariationMemoryLayerAssignment)
         end
         def add_memory_layer(
-          # Path param: Variation ID. Accepts the canonical `av_…` form or the
-          # `external_id:<value>` form.
-          variation_id,
-          # Path param: Workspace ID.
-          workspace_id:,
           # Path param: Agent ID. Accepts the canonical `agent_…` form or the
           # `external_id:<value>` form.
-          agent_id:,
+          agent_id,
+          # Path param: Variation ID. Accepts the canonical `agentvar_…` form or the
+          # `external_id:<value>` form.
+          variation_id,
           # Body param: Layer to attach. Accepts the canonical `memlyr_…` form or the
           # `external_id:<value>` form.
-          memory_layer_id: nil,
+          memory_layer_id:,
+          # Path param: Workspace ID.
+          workspace_id: nil,
           # Body param: Position in the baseline cascade (lower = more specific). If
           # omitted, the server appends at the most general end (max existing position + 1).
           position: nil,
@@ -218,23 +219,23 @@ module Cadenya
         # returned when it was added.
         sig do
           params(
-            id: String,
-            workspace_id: String,
             agent_id: String,
             variation_id: String,
+            id: String,
+            workspace_id: String,
             request_options: Cadenya::RequestOptions::OrHash
           ).void
         end
         def remove_assignment(
-          id,
-          # Workspace ID.
-          workspace_id:,
           # Agent ID. Accepts the canonical `agent_…` form or the `external_id:<value>`
           # form.
-          agent_id:,
-          # Variation ID. Accepts the canonical `av_…` form or the `external_id:<value>`
-          # form.
-          variation_id:,
+          agent_id,
+          # Variation ID. Accepts the canonical `agentvar_…` form or the
+          # `external_id:<value>` form.
+          variation_id,
+          id,
+          # Workspace ID.
+          workspace_id: nil,
           request_options: {}
         )
         end
@@ -243,23 +244,23 @@ module Cadenya
         # assignment id.
         sig do
           params(
-            id: String,
-            workspace_id: String,
             agent_id: String,
             variation_id: String,
+            id: String,
+            workspace_id: String,
             request_options: Cadenya::RequestOptions::OrHash
           ).void
         end
         def remove_memory_layer(
-          id,
-          # Workspace ID.
-          workspace_id:,
           # Agent ID. Accepts the canonical `agent_…` form or the `external_id:<value>`
           # form.
-          agent_id:,
-          # Variation ID. Accepts the canonical `av_…` form or the `external_id:<value>`
-          # form.
-          variation_id:,
+          agent_id,
+          # Variation ID. Accepts the canonical `agentvar_…` form or the
+          # `external_id:<value>` form.
+          variation_id,
+          id,
+          # Workspace ID.
+          workspace_id: nil,
           request_options: {}
         )
         end
@@ -267,25 +268,25 @@ module Cadenya
         # Updates the position of a memory layer assignment on a variation.
         sig do
           params(
-            id: String,
-            workspace_id: String,
             agent_id: String,
             variation_id: String,
+            id: String,
+            workspace_id: String,
             position: Integer,
             request_options: Cadenya::RequestOptions::OrHash
           ).returns(Cadenya::Agents::VariationMemoryLayerAssignment)
         end
         def update_memory_layer(
+          # Path param: Agent ID. Accepts the canonical `agent_…` form or the
+          # `external_id:<value>` form.
+          agent_id,
+          # Path param: Variation ID. Accepts the canonical `agentvar_…` form or the
+          # `external_id:<value>` form.
+          variation_id,
           # Path param
           id,
           # Path param: Workspace ID.
-          workspace_id:,
-          # Path param: Agent ID. Accepts the canonical `agent_…` form or the
-          # `external_id:<value>` form.
-          agent_id:,
-          # Path param: Variation ID. Accepts the canonical `av_…` form or the
-          # `external_id:<value>` form.
-          variation_id:,
+          workspace_id: nil,
           # Body param: New position. Only field currently updatable on an assignment.
           position: nil,
           request_options: {}

@@ -11,11 +11,18 @@ module Cadenya
           T.any(Cadenya::ObjectiveContinueParams, Cadenya::Internal::AnyHash)
         end
 
-      sig { returns(String) }
-      attr_accessor :workspace_id
+      sig { returns(T.nilable(String)) }
+      attr_reader :workspace_id
+
+      sig { params(workspace_id: String).void }
+      attr_writer :workspace_id
 
       sig { returns(String) }
       attr_accessor :objective_id
+
+      # The message to continue an objective that has completed (or you are enqueing)
+      sig { returns(String) }
+      attr_accessor :message
 
       # When set to true, the message will be enqueued for when the agent loop is
       # available to process it.
@@ -25,30 +32,23 @@ module Cadenya
       sig { params(enqueue: T::Boolean).void }
       attr_writer :enqueue
 
-      # The message to continue an objective that has completed (or you are enqueing)
-      sig { returns(T.nilable(String)) }
-      attr_reader :message
-
-      sig { params(message: String).void }
-      attr_writer :message
-
       sig do
         params(
-          workspace_id: String,
           objective_id: String,
-          enqueue: T::Boolean,
           message: String,
+          workspace_id: String,
+          enqueue: T::Boolean,
           request_options: Cadenya::RequestOptions::OrHash
         ).returns(T.attached_class)
       end
       def self.new(
-        workspace_id:,
         objective_id:,
+        # The message to continue an objective that has completed (or you are enqueing)
+        message:,
+        workspace_id: nil,
         # When set to true, the message will be enqueued for when the agent loop is
         # available to process it.
         enqueue: nil,
-        # The message to continue an objective that has completed (or you are enqueing)
-        message: nil,
         request_options: {}
       )
       end
@@ -58,8 +58,8 @@ module Cadenya
           {
             workspace_id: String,
             objective_id: String,
-            enqueue: T::Boolean,
             message: String,
+            enqueue: T::Boolean,
             request_options: Cadenya::RequestOptions
           }
         )

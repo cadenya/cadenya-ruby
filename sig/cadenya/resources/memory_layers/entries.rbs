@@ -4,23 +4,23 @@ module Cadenya
       class Entries
         def create: (
           String memory_layer_id,
-          workspace_id: String,
           metadata: Cadenya::CreateResourceMetadata,
-          spec: Cadenya::MemoryLayers::MemoryEntryCreateSpec,
+          spec: Cadenya::Models::MemoryLayers::memory_entry_create_spec,
+          ?workspace_id: String,
           ?request_options: Cadenya::request_opts
         ) -> Cadenya::MemoryLayers::MemoryEntryDetail
 
         def retrieve: (
+          String memory_layer_id,
           String id,
-          workspace_id: String,
-          memory_layer_id: String,
+          ?workspace_id: String,
           ?request_options: Cadenya::request_opts
         ) -> Cadenya::MemoryLayers::MemoryEntryDetail
 
         def update: (
+          String memory_layer_id,
           String id,
-          workspace_id: String,
-          memory_layer_id: String,
+          ?workspace_id: String,
           ?metadata: Cadenya::UpdateResourceMetadata,
           ?spec: Cadenya::MemoryLayers::MemoryEntryUpdateSpec,
           ?update_mask: String,
@@ -29,7 +29,7 @@ module Cadenya
 
         def list: (
           String memory_layer_id,
-          workspace_id: String,
+          ?workspace_id: String,
           ?cursor: String,
           ?include_info: bool,
           ?labels: String,
@@ -41,9 +41,9 @@ module Cadenya
         ) -> Cadenya::Internal::CursorPagination[Cadenya::MemoryLayers::MemoryEntry]
 
         def delete: (
+          String memory_layer_id,
           String id,
-          workspace_id: String,
-          memory_layer_id: String,
+          ?workspace_id: String,
           ?request_options: Cadenya::request_opts
         ) -> nil
 

@@ -3,7 +3,7 @@
 module Cadenya
   class Client < Cadenya::Internal::Transport::BaseClient
     # Default max number of retries to attempt after a failed retryable request.
-    DEFAULT_MAX_RETRIES = 2
+    DEFAULT_MAX_RETRIES = 0
 
     # Default per-request timeout.
     DEFAULT_TIMEOUT_IN_SECONDS = 60.0
@@ -20,6 +20,11 @@ module Cadenya
 
     # @return [String, nil]
     attr_reader :webhook_key
+
+    # Workspace to operate on. Fills the {workspaceId} path parameter on
+    # workspace-scoped endpoints unless overridden per request.
+    # @return [String, nil]
+    attr_reader :workspace_id
 
     # @return [Cadenya::Resources::AIProviderKeys]
     attr_reader :ai_provider_keys
@@ -120,6 +125,10 @@ module Cadenya
     #
     # @param api_key [String, nil] Defaults to `ENV["CADENYA_API_KEY"]`
     #
+    # @param workspace_id [String, nil] Workspace to operate on. Fills the {workspaceId} path parameter on
+    # workspace-scoped endpoints unless overridden per request. Defaults to
+    # `ENV["CADENYA_WORKSPACE_ID"]`
+    #
     # @param webhook_key [String, nil] Defaults to `ENV["CADENYA_WEBHOOK_KEY"]`
     #
     # @param base_url [String, nil] Override the default base URL for the API, e.g.,
@@ -134,6 +143,7 @@ module Cadenya
     # @param max_retry_delay [Float]
     def initialize(
       api_key: ENV["CADENYA_API_KEY"],
+      workspace_id: ENV["CADENYA_WORKSPACE_ID"],
       webhook_key: ENV["CADENYA_WEBHOOK_KEY"],
       base_url: ENV["CADENYA_BASE_URL"],
       max_retries: self.class::DEFAULT_MAX_RETRIES,
@@ -160,6 +170,7 @@ module Cadenya
         headers = parsed.merge(headers)
       end
 
+      @workspace_id = workspace_id&.to_s
       @api_key = api_key.to_s
       @webhook_key = webhook_key&.to_s
 

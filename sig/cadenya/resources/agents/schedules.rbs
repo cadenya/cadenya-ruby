@@ -4,23 +4,23 @@ module Cadenya
       class Schedules
         def create: (
           String agent_id,
-          workspace_id: String,
           metadata: Cadenya::CreateResourceMetadata,
           spec: Cadenya::Agents::AgentScheduleSpec,
+          ?workspace_id: String,
           ?request_options: Cadenya::request_opts
         ) -> Cadenya::Agents::AgentSchedule
 
         def retrieve: (
+          String agent_id,
           String id,
-          workspace_id: String,
-          agent_id: String,
+          ?workspace_id: String,
           ?request_options: Cadenya::request_opts
         ) -> Cadenya::Agents::AgentSchedule
 
         def update: (
+          String agent_id,
           String id,
-          workspace_id: String,
-          agent_id: String,
+          ?workspace_id: String,
           ?metadata: Cadenya::UpdateResourceMetadata,
           ?spec: Cadenya::Agents::AgentScheduleSpec,
           ?update_mask: String,
@@ -29,7 +29,7 @@ module Cadenya
 
         def list: (
           String agent_id,
-          workspace_id: String,
+          ?workspace_id: String,
           ?cursor: String,
           ?include_info: bool,
           ?labels: String,
@@ -41,30 +41,30 @@ module Cadenya
         ) -> Cadenya::Internal::CursorPagination[Cadenya::Agents::AgentSchedule]
 
         def delete: (
+          String agent_id,
           String id,
-          workspace_id: String,
-          agent_id: String,
+          ?workspace_id: String,
           ?request_options: Cadenya::request_opts
         ) -> nil
 
         def archive: (
+          String agent_id,
           String id,
-          workspace_id: String,
-          agent_id: String,
+          ?workspace_id: String,
           ?request_options: Cadenya::request_opts
         ) -> Cadenya::Agents::AgentSchedule
 
         def pause: (
+          String agent_id,
           String id,
-          workspace_id: String,
-          agent_id: String,
+          ?workspace_id: String,
           ?request_options: Cadenya::request_opts
         ) -> Cadenya::Agents::AgentSchedule
 
         def resume: (
+          String agent_id,
           String id,
-          workspace_id: String,
-          agent_id: String,
+          ?workspace_id: String,
           ?request_options: Cadenya::request_opts
         ) -> Cadenya::Agents::AgentSchedule
 

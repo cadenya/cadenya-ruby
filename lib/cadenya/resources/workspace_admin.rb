@@ -56,7 +56,7 @@ module Cadenya
 
       # Retrieves a workspace in the account by ID. Admin only.
       #
-      # @overload retrieve(workspace_id, request_options: {})
+      # @overload retrieve(workspace_id: nil, request_options: {})
       #
       # @param workspace_id [String] Workspace ID to retrieve (path).
       #
@@ -65,12 +65,17 @@ module Cadenya
       # @return [Cadenya::Models::Workspace]
       #
       # @see Cadenya::Models::WorkspaceAdminRetrieveParams
-      def retrieve(workspace_id, params = {})
+      def retrieve(params = {})
+        parsed, options = Cadenya::WorkspaceAdminRetrieveParams.dump_request(params)
+        workspace_id =
+          parsed.delete(:workspace_id) do
+            @client.workspace_id
+          end
         @client.request(
           method: :get,
           path: ["v1/account/workspaces/%1$s", workspace_id],
           model: Cadenya::Workspace,
-          options: params[:request_options]
+          options: options
         )
       end
 
@@ -79,23 +84,27 @@ module Cadenya
       #
       # Updates a workspace's metadata (e.g. name) and spec. Admin only.
       #
-      # @overload update(workspace_id, metadata: nil, spec: nil, update_mask: nil, request_options: {})
+      # @overload update(workspace_id: nil, metadata: nil, spec: nil, update_mask: nil, request_options: {})
       #
-      # @param workspace_id [String] Workspace ID to update (path).
+      # @param workspace_id [String] Path param: Workspace ID to update (path).
       #
-      # @param metadata [Cadenya::Models::WorkspaceAdminUpdateParams::Metadata] UpdateAccountResourceMetadata contains the user-provided fields for updating
+      # @param metadata [Cadenya::Models::WorkspaceAdminUpdateParams::Metadata] Body param: UpdateAccountResourceMetadata contains the user-provided fields for
       #
-      # @param spec [Cadenya::Models::WorkspaceSpec]
+      # @param spec [Cadenya::Models::WorkspaceSpec] Body param
       #
-      # @param update_mask [String] Fields to update.
+      # @param update_mask [String] Body param: Fields to update.
       #
       # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
       #
       # @return [Cadenya::Models::Workspace]
       #
       # @see Cadenya::Models::WorkspaceAdminUpdateParams
-      def update(workspace_id, params = {})
+      def update(params = {})
         parsed, options = Cadenya::WorkspaceAdminUpdateParams.dump_request(params)
+        workspace_id =
+          parsed.delete(:workspace_id) do
+            @client.workspace_id
+          end
         @client.request(
           method: :patch,
           path: ["v1/account/workspaces/%1$s", workspace_id],
@@ -144,7 +153,7 @@ module Cadenya
       # account's last active (non-archived) workspace is not allowed and returns
       # FailedPrecondition. Admin only.
       #
-      # @overload archive(workspace_id, request_options: {})
+      # @overload archive(workspace_id: nil, request_options: {})
       #
       # @param workspace_id [String] Workspace ID to archive (path).
       #
@@ -153,12 +162,17 @@ module Cadenya
       # @return [nil]
       #
       # @see Cadenya::Models::WorkspaceAdminArchiveParams
-      def archive(workspace_id, params = {})
+      def archive(params = {})
+        parsed, options = Cadenya::WorkspaceAdminArchiveParams.dump_request(params)
+        workspace_id =
+          parsed.delete(:workspace_id) do
+            @client.workspace_id
+          end
         @client.request(
           method: :delete,
           path: ["v1/account/workspaces/%1$s", workspace_id],
           model: NilClass,
-          options: params[:request_options]
+          options: options
         )
       end
 

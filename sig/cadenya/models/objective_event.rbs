@@ -2,14 +2,16 @@ module Cadenya
   module Models
     type objective_event =
       {
-        data: Cadenya::ObjectiveEventData,
+        data: Cadenya::Models::objective_event_data,
         metadata: Cadenya::OperationMetadata,
         context_window_id: String,
-        info: Cadenya::ObjectiveEventInfo
+        duration: String,
+        info: Cadenya::ObjectiveEventInfo,
+        started_at: Time
       }
 
     class ObjectiveEvent < Cadenya::Internal::Type::BaseModel
-      attr_accessor data: Cadenya::ObjectiveEventData
+      attr_accessor data: Cadenya::Models::objective_event_data
 
       attr_accessor metadata: Cadenya::OperationMetadata
 
@@ -21,18 +23,30 @@ module Cadenya
 
       def info=: (Cadenya::ObjectiveEventInfo) -> Cadenya::ObjectiveEventInfo
 
+      attr_reader duration: String?
+
+      def duration=: (String) -> String
+
+      attr_reader started_at: Time?
+
+      def started_at=: (Time) -> Time
+
       def initialize: (
-        data: Cadenya::ObjectiveEventData,
+        data: Cadenya::Models::objective_event_data,
         metadata: Cadenya::OperationMetadata,
         ?context_window_id: String,
-        ?info: Cadenya::ObjectiveEventInfo
+        ?duration: String,
+        ?info: Cadenya::ObjectiveEventInfo,
+        ?started_at: Time
       ) -> void
 
       def to_hash: -> {
-        data: Cadenya::ObjectiveEventData,
+        data: Cadenya::Models::objective_event_data,
         metadata: Cadenya::OperationMetadata,
         context_window_id: String,
-        info: Cadenya::ObjectiveEventInfo
+        duration: String,
+        info: Cadenya::ObjectiveEventInfo,
+        started_at: Time
       }
     end
   end

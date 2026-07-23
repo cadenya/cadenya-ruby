@@ -11,8 +11,11 @@ module Cadenya
           T.any(Cadenya::ObjectiveCompactParams, Cadenya::Internal::AnyHash)
         end
 
-      sig { returns(String) }
-      attr_accessor :workspace_id
+      sig { returns(T.nilable(String)) }
+      attr_reader :workspace_id
+
+      sig { params(workspace_id: String).void }
+      attr_writer :workspace_id
 
       sig { returns(String) }
       attr_accessor :objective_id
@@ -34,16 +37,16 @@ module Cadenya
 
       sig do
         params(
-          workspace_id: String,
           objective_id: String,
+          workspace_id: String,
           compaction_config:
             Cadenya::Agents::AgentVariationSpecCompactionConfig::OrHash,
           request_options: Cadenya::RequestOptions::OrHash
         ).returns(T.attached_class)
       end
       def self.new(
-        workspace_id:,
         objective_id:,
+        workspace_id: nil,
         # CompactionConfig defines how context window compaction behaves for objectives
         # using this variation.
         compaction_config: nil,

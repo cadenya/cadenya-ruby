@@ -14,15 +14,15 @@ module Cadenya
         #
         # Creates a new tool in the tool set
         #
-        # @overload create(tool_set_id, workspace_id:, metadata:, spec:, request_options: {})
+        # @overload create(tool_set_id, metadata:, spec:, workspace_id: nil, request_options: {})
         #
         # @param tool_set_id [String] Path param: Tool set ID. Accepts the canonical ts\_… form or the
-        #
-        # @param workspace_id [String] Path param: Workspace ID.
         #
         # @param metadata [Cadenya::Models::CreateResourceMetadata] Body param: CreateResourceMetadata contains the user-provided fields for creatin
         #
         # @param spec [Cadenya::Models::ToolSets::ToolSpec] Body param
+        #
+        # @param workspace_id [String] Path param: Workspace ID.
         #
         # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
         #
@@ -33,7 +33,7 @@ module Cadenya
           parsed, options = Cadenya::ToolSets::ToolCreateParams.dump_request(params)
           workspace_id =
             parsed.delete(:workspace_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
+              @client.workspace_id
             end
           @client.request(
             method: :post,
@@ -49,28 +49,24 @@ module Cadenya
         #
         # Retrieves a tool by ID from the workspace
         #
-        # @overload retrieve(id, workspace_id:, tool_set_id:, request_options: {})
+        # @overload retrieve(tool_set_id, id, workspace_id: nil, request_options: {})
+        #
+        # @param tool_set_id [String] Tool set ID. Accepts the canonical ts\_… form or the
         #
         # @param id [String] Tool ID. Accepts the canonical tool\_… form or the
         #
         # @param workspace_id [String] Workspace ID.
-        #
-        # @param tool_set_id [String] Tool set ID. Accepts the canonical ts\_… form or the
         #
         # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
         #
         # @return [Cadenya::Models::ToolSets::Tool]
         #
         # @see Cadenya::Models::ToolSets::ToolRetrieveParams
-        def retrieve(id, params)
+        def retrieve(tool_set_id, id, params = {})
           parsed, options = Cadenya::ToolSets::ToolRetrieveParams.dump_request(params)
           workspace_id =
             parsed.delete(:workspace_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
-            end
-          tool_set_id =
-            parsed.delete(:tool_set_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
+              @client.workspace_id
             end
           @client.request(
             method: :get,
@@ -85,13 +81,13 @@ module Cadenya
         #
         # Updates a tool in the tool set
         #
-        # @overload update(id, workspace_id:, tool_set_id:, metadata: nil, spec: nil, update_mask: nil, request_options: {})
+        # @overload update(tool_set_id, id, workspace_id: nil, metadata: nil, spec: nil, update_mask: nil, request_options: {})
+        #
+        # @param tool_set_id [String] Path param: Tool set ID. Accepts the canonical ts\_… form or the
         #
         # @param id [String] Path param: Tool ID. Accepts the canonical tool\_… form or the
         #
         # @param workspace_id [String] Path param: Workspace ID.
-        #
-        # @param tool_set_id [String] Path param: Tool set ID. Accepts the canonical ts\_… form or the
         #
         # @param metadata [Cadenya::Models::UpdateResourceMetadata] Body param: UpdateResourceMetadata contains the user-provided fields for updatin
         #
@@ -104,15 +100,11 @@ module Cadenya
         # @return [Cadenya::Models::ToolSets::Tool]
         #
         # @see Cadenya::Models::ToolSets::ToolUpdateParams
-        def update(id, params)
+        def update(tool_set_id, id, params = {})
           parsed, options = Cadenya::ToolSets::ToolUpdateParams.dump_request(params)
           workspace_id =
             parsed.delete(:workspace_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
-            end
-          tool_set_id =
-            parsed.delete(:tool_set_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
+              @client.workspace_id
             end
           @client.request(
             method: :patch,
@@ -128,7 +120,7 @@ module Cadenya
         #
         # Lists all tools in the tool set
         #
-        # @overload list(tool_set_id, workspace_id:, cursor: nil, include_info: nil, labels: nil, limit: nil, names: nil, prefix: nil, query: nil, requires_approval: nil, sort_order: nil, states: nil, request_options: {})
+        # @overload list(tool_set_id, workspace_id: nil, cursor: nil, include_info: nil, labels: nil, limit: nil, names: nil, prefix: nil, query: nil, requires_approval: nil, sort_order: nil, states: nil, request_options: {})
         #
         # @param tool_set_id [String] Path param: Tool set ID. Accepts the canonical ts\_… form or the
         #
@@ -159,12 +151,12 @@ module Cadenya
         # @return [Cadenya::Internal::CursorPagination<Cadenya::Models::ToolSets::Tool>]
         #
         # @see Cadenya::Models::ToolSets::ToolListParams
-        def list(tool_set_id, params)
+        def list(tool_set_id, params = {})
           parsed, options = Cadenya::ToolSets::ToolListParams.dump_request(params)
           query = Cadenya::Internal::Util.encode_query_params(parsed)
           workspace_id =
             parsed.delete(:workspace_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
+              @client.workspace_id
             end
           @client.request(
             method: :get,
@@ -185,28 +177,24 @@ module Cadenya
         #
         # Deletes a tool in the tool set
         #
-        # @overload delete(id, workspace_id:, tool_set_id:, request_options: {})
+        # @overload delete(tool_set_id, id, workspace_id: nil, request_options: {})
+        #
+        # @param tool_set_id [String] Tool set ID. Accepts the canonical ts\_… form or the
         #
         # @param id [String] Tool ID. Accepts the canonical tool\_… form or the
         #
         # @param workspace_id [String] Workspace ID.
-        #
-        # @param tool_set_id [String] Tool set ID. Accepts the canonical ts\_… form or the
         #
         # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
         #
         # @return [nil]
         #
         # @see Cadenya::Models::ToolSets::ToolDeleteParams
-        def delete(id, params)
+        def delete(tool_set_id, id, params = {})
           parsed, options = Cadenya::ToolSets::ToolDeleteParams.dump_request(params)
           workspace_id =
             parsed.delete(:workspace_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
-            end
-          tool_set_id =
-            parsed.delete(:tool_set_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
+              @client.workspace_id
             end
           @client.request(
             method: :delete,
@@ -222,28 +210,24 @@ module Cadenya
         # Transitions a tool to STATE_OMITTED, excluding it from agent use. Fails if the
         # tool is currently assigned to agent variations.
         #
-        # @overload omit(id, workspace_id:, tool_set_id:, request_options: {})
+        # @overload omit(tool_set_id, id, workspace_id: nil, request_options: {})
+        #
+        # @param tool_set_id [String] Tool set ID. Accepts the canonical ts\_… form or the
         #
         # @param id [String] Tool ID. Accepts the canonical tool\_… form or the
         #
         # @param workspace_id [String] Workspace ID.
-        #
-        # @param tool_set_id [String] Tool set ID. Accepts the canonical ts\_… form or the
         #
         # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
         #
         # @return [Cadenya::Models::ToolSets::Tool]
         #
         # @see Cadenya::Models::ToolSets::ToolOmitParams
-        def omit(id, params)
+        def omit(tool_set_id, id, params = {})
           parsed, options = Cadenya::ToolSets::ToolOmitParams.dump_request(params)
           workspace_id =
             parsed.delete(:workspace_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
-            end
-          tool_set_id =
-            parsed.delete(:tool_set_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
+              @client.workspace_id
             end
           @client.request(
             method: :post,
@@ -259,28 +243,24 @@ module Cadenya
         # Transitions an omitted tool back to STATE_AVAILABLE. For managed tool sets, the
         # next sync may omit the tool again if its filters still exclude it.
         #
-        # @overload restore(id, workspace_id:, tool_set_id:, request_options: {})
+        # @overload restore(tool_set_id, id, workspace_id: nil, request_options: {})
+        #
+        # @param tool_set_id [String] Tool set ID. Accepts the canonical ts\_… form or the
         #
         # @param id [String] Tool ID. Accepts the canonical tool\_… form or the
         #
         # @param workspace_id [String] Workspace ID.
-        #
-        # @param tool_set_id [String] Tool set ID. Accepts the canonical ts\_… form or the
         #
         # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
         #
         # @return [Cadenya::Models::ToolSets::Tool]
         #
         # @see Cadenya::Models::ToolSets::ToolRestoreParams
-        def restore(id, params)
+        def restore(tool_set_id, id, params = {})
           parsed, options = Cadenya::ToolSets::ToolRestoreParams.dump_request(params)
           workspace_id =
             parsed.delete(:workspace_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
-            end
-          tool_set_id =
-            parsed.delete(:tool_set_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
+              @client.workspace_id
             end
           @client.request(
             method: :post,

@@ -1,0 +1,37 @@
+module Cadenya
+  module Models
+    module Objectives
+      type set_tool_call_content_request_content_block_text =
+        {
+          text: Cadenya::Objectives::SetToolCallContentRequestTextBlock,
+          type: Cadenya::Models::Objectives::SetToolCallContentRequestContentBlockText::type_
+        }
+
+      class SetToolCallContentRequestContentBlockText < Cadenya::Internal::Type::BaseModel
+        attr_accessor text: Cadenya::Objectives::SetToolCallContentRequestTextBlock
+
+        attr_accessor type: Cadenya::Models::Objectives::SetToolCallContentRequestContentBlockText::type_
+
+        def initialize: (
+          text: Cadenya::Objectives::SetToolCallContentRequestTextBlock,
+          type: Cadenya::Models::Objectives::SetToolCallContentRequestContentBlockText::type_
+        ) -> void
+
+        def to_hash: -> {
+          text: Cadenya::Objectives::SetToolCallContentRequestTextBlock,
+          type: Cadenya::Models::Objectives::SetToolCallContentRequestContentBlockText::type_
+        }
+
+        type type_ = :text
+
+        module Type
+          extend Cadenya::Internal::Type::Enum
+
+          TEXT: :text
+
+          def self?.values: -> ::Array[Cadenya::Models::Objectives::SetToolCallContentRequestContentBlockText::type_]
+        end
+      end
+    end
+  end
+end

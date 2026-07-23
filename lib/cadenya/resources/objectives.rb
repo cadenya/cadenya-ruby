@@ -20,35 +20,39 @@ module Cadenya
       #
       # Creates a new objective in the workspace
       #
-      # @overload create(workspace_id, agent_id:, system_prompt_data:, episodic_memory: nil, first_user_message: nil, first_user_message_data: nil, memory_cascade: nil, metadata: nil, secrets: nil, variation_id: nil, request_options: {})
+      # @overload create(agent_id:, system_prompt_data:, workspace_id: nil, episodic_memory: nil, first_user_message: nil, first_user_message_data: nil, memory_cascade: nil, metadata: nil, secrets: nil, variation_id: nil, request_options: {})
       #
-      # @param workspace_id [String]
+      # @param agent_id [String] Body param
       #
-      # @param agent_id [String]
+      # @param system_prompt_data [Hash{Symbol=>Object}] Body param: Arbitrary data rendered into the selected variation's system*prompt*
       #
-      # @param system_prompt_data [Hash{Symbol=>Object}] Arbitrary data rendered into the selected variation's system_prompt_template
+      # @param workspace_id [String] Path param
       #
-      # @param episodic_memory [Cadenya::Models::ObjectiveCreateParams::EpisodicMemory] Episodic is used to configure the episodic memory for the objective
+      # @param episodic_memory [Cadenya::Models::ObjectiveCreateParams::EpisodicMemory] Body param: Episodic is used to configure the episodic memory for the objective
       #
-      # @param first_user_message [String] Optional explicit first user message for the LLM chat history. When not set,
+      # @param first_user_message [String] Body param: Optional explicit first user message for the LLM chat history. When
       #
-      # @param first_user_message_data [Hash{Symbol=>Object}] Arbitrary data rendered into the selected variation's first_user_message_templat
+      # @param first_user_message_data [Hash{Symbol=>Object}] Body param: Arbitrary data rendered into the selected variation's first_user_mes
       #
-      # @param memory_cascade [Array<Cadenya::Models::MemoryReference>] Memory layers/entries layered over the baseline cascade inherited
+      # @param memory_cascade [Array<Cadenya::Models::MemoryReference>] Body param: Memory layers/entries layered over the baseline cascade inherited
       #
-      # @param metadata [Cadenya::Models::CreateOperationMetadata] CreateOperationMetadata contains the user-provided fields for creating
+      # @param metadata [Cadenya::Models::CreateOperationMetadata] Body param: CreateOperationMetadata contains the user-provided fields for creati
       #
-      # @param secrets [Array<Cadenya::Models::ObjectiveCreateParams::Secret>] Secrets that can be used in the headers for tool calls using the secret interpol
+      # @param secrets [Array<Cadenya::Models::ObjectiveCreateParams::Secret>] Body param: Secrets that can be used in the headers for tool calls using the sec
       #
-      # @param variation_id [String] Optional explicit variation selection. Overrides the agent's variation_selection
+      # @param variation_id [String] Body param: Optional explicit variation selection. Overrides the agent's variati
       #
       # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
       #
       # @return [Cadenya::Models::Objective]
       #
       # @see Cadenya::Models::ObjectiveCreateParams
-      def create(workspace_id, params)
+      def create(params)
         parsed, options = Cadenya::ObjectiveCreateParams.dump_request(params)
+        workspace_id =
+          parsed.delete(:workspace_id) do
+            @client.workspace_id
+          end
         @client.request(
           method: :post,
           path: ["v1/workspaces/%1$s/objectives", workspace_id],
@@ -60,7 +64,7 @@ module Cadenya
 
       # Retrieves an objective by ID from the workspace
       #
-      # @overload retrieve(id, workspace_id:, request_options: {})
+      # @overload retrieve(id, workspace_id: nil, request_options: {})
       #
       # @param id [String]
       # @param workspace_id [String]
@@ -69,11 +73,11 @@ module Cadenya
       # @return [Cadenya::Models::Objective]
       #
       # @see Cadenya::Models::ObjectiveRetrieveParams
-      def retrieve(id, params)
+      def retrieve(id, params = {})
         parsed, options = Cadenya::ObjectiveRetrieveParams.dump_request(params)
         workspace_id =
           parsed.delete(:workspace_id) do
-            raise ArgumentError.new("missing required path argument #{_1}")
+            @client.workspace_id
           end
         @client.request(
           method: :get,
@@ -88,38 +92,42 @@ module Cadenya
       #
       # Lists all objectives in the workspace
       #
-      # @overload list(workspace_id, agent_id: nil, agent_schedule_id: nil, cursor: nil, include_info: nil, labels: nil, limit: nil, parent_objective_id: nil, profile_id: nil, sort_order: nil, state: nil, request_options: {})
+      # @overload list(workspace_id: nil, agent_id: nil, agent_schedule_id: nil, cursor: nil, include_info: nil, labels: nil, limit: nil, parent_objective_id: nil, profile_id: nil, sort_order: nil, state: nil, request_options: {})
       #
-      # @param workspace_id [String]
+      # @param workspace_id [String] Path param
       #
-      # @param agent_id [String] Agent ID for filtering
+      # @param agent_id [String] Query param: Agent ID for filtering
       #
-      # @param agent_schedule_id [String] Filter to objectives produced by a specific AgentSchedule. Accepts
+      # @param agent_schedule_id [String] Query param: Filter to objectives produced by a specific AgentSchedule. Accepts
       #
-      # @param cursor [String] Pagination cursor from previous response
+      # @param cursor [String] Query param: Pagination cursor from previous response
       #
-      # @param include_info [Boolean] When set to true you may use more of your alloted API rate-limit
+      # @param include_info [Boolean] Query param: When set to true you may use more of your alloted API rate-limit
       #
-      # @param labels [String] Filters by metadata labels. Comma-separated key=value pairs,
+      # @param labels [String] Query param: Filters by metadata labels. Comma-separated key=value pairs,
       #
-      # @param limit [Integer] Maximum number of results to return
+      # @param limit [Integer] Query param: Maximum number of results to return
       #
-      # @param parent_objective_id [String] Optional filters
+      # @param parent_objective_id [String] Query param: Optional filters
       #
-      # @param profile_id [String]
+      # @param profile_id [String] Query param
       #
-      # @param sort_order [String] Sort order for results (asc or desc by creation time)
+      # @param sort_order [String] Query param: Sort order for results (asc or desc by creation time)
       #
-      # @param state [Symbol, Cadenya::Models::ObjectiveListParams::State] Filter by state
+      # @param state [Symbol, Cadenya::Models::ObjectiveListParams::State] Query param: Filter by state
       #
       # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
       #
       # @return [Cadenya::Internal::CursorPagination<Cadenya::Models::Objective>]
       #
       # @see Cadenya::Models::ObjectiveListParams
-      def list(workspace_id, params = {})
+      def list(params = {})
         parsed, options = Cadenya::ObjectiveListParams.dump_request(params)
         query = Cadenya::Internal::Util.encode_query_params(parsed)
+        workspace_id =
+          parsed.delete(:workspace_id) do
+            @client.workspace_id
+          end
         @client.request(
           method: :get,
           path: ["v1/workspaces/%1$s/objectives", workspace_id],
@@ -143,7 +151,7 @@ module Cadenya
       # Cancels a running or pending objective. The objective's state will be set to
       # STATE_CANCELLED.
       #
-      # @overload cancel(objective_id, workspace_id:, reason: nil, request_options: {})
+      # @overload cancel(objective_id, workspace_id: nil, reason: nil, request_options: {})
       #
       # @param objective_id [String] Path param: The ID of the objective. Supports "external_id:" prefix for external
       #
@@ -156,11 +164,11 @@ module Cadenya
       # @return [Cadenya::Models::Objective]
       #
       # @see Cadenya::Models::ObjectiveCancelParams
-      def cancel(objective_id, params)
+      def cancel(objective_id, params = {})
         parsed, options = Cadenya::ObjectiveCancelParams.dump_request(params)
         workspace_id =
           parsed.delete(:workspace_id) do
-            raise ArgumentError.new("missing required path argument #{_1}")
+            @client.workspace_id
           end
         @client.request(
           method: :post,
@@ -177,7 +185,7 @@ module Cadenya
       # Triggers compaction on a running objective. Optionally override the variation's
       # compaction config.
       #
-      # @overload compact(objective_id, workspace_id:, compaction_config: nil, request_options: {})
+      # @overload compact(objective_id, workspace_id: nil, compaction_config: nil, request_options: {})
       #
       # @param objective_id [String] Path param: The ID of the objective. Supports "external_id:" prefix for external
       #
@@ -190,11 +198,11 @@ module Cadenya
       # @return [Cadenya::Models::ObjectiveCompactResponse]
       #
       # @see Cadenya::Models::ObjectiveCompactParams
-      def compact(objective_id, params)
+      def compact(objective_id, params = {})
         parsed, options = Cadenya::ObjectiveCompactParams.dump_request(params)
         workspace_id =
           parsed.delete(:workspace_id) do
-            raise ArgumentError.new("missing required path argument #{_1}")
+            @client.workspace_id
           end
         @client.request(
           method: :post,
@@ -210,15 +218,15 @@ module Cadenya
       #
       # Continues an objective that has completed
       #
-      # @overload continue(objective_id, workspace_id:, enqueue: nil, message: nil, request_options: {})
+      # @overload continue(objective_id, message:, workspace_id: nil, enqueue: nil, request_options: {})
       #
       # @param objective_id [String] Path param: The ID of the objective. If you have assigned an external ID to the
+      #
+      # @param message [String] Body param: The message to continue an objective that has completed (or you are
       #
       # @param workspace_id [String] Path param
       #
       # @param enqueue [Boolean] Body param: When set to true, the message will be enqueued for when the agent lo
-      #
-      # @param message [String] Body param: The message to continue an objective that has completed (or you are
       #
       # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
       #
@@ -229,7 +237,7 @@ module Cadenya
         parsed, options = Cadenya::ObjectiveContinueParams.dump_request(params)
         workspace_id =
           parsed.delete(:workspace_id) do
-            raise ArgumentError.new("missing required path argument #{_1}")
+            @client.workspace_id
           end
         @client.request(
           method: :post,
@@ -246,7 +254,7 @@ module Cadenya
       # Read-only list of the last five windows of execution for this objective, ordered
       # by most recent first
       #
-      # @overload list_context_windows(objective_id, workspace_id:, cursor: nil, include_info: nil, labels: nil, limit: nil, request_options: {})
+      # @overload list_context_windows(objective_id, workspace_id: nil, cursor: nil, include_info: nil, labels: nil, limit: nil, request_options: {})
       #
       # @param objective_id [String] Path param: The objective ID to return windows for
       #
@@ -265,12 +273,12 @@ module Cadenya
       # @return [Cadenya::Internal::CursorPagination<Cadenya::Models::ObjectiveContextWindow>]
       #
       # @see Cadenya::Models::ObjectiveListContextWindowsParams
-      def list_context_windows(objective_id, params)
+      def list_context_windows(objective_id, params = {})
         parsed, options = Cadenya::ObjectiveListContextWindowsParams.dump_request(params)
         query = Cadenya::Internal::Util.encode_query_params(parsed)
         workspace_id =
           parsed.delete(:workspace_id) do
-            raise ArgumentError.new("missing required path argument #{_1}")
+            @client.workspace_id
           end
         @client.request(
           method: :get,
@@ -287,7 +295,7 @@ module Cadenya
       #
       # Lists all events for an objective
       #
-      # @overload list_events(objective_id, workspace_id:, cursor: nil, include_info: nil, labels: nil, limit: nil, since_event_id: nil, sort_order: nil, window_id: nil, request_options: {})
+      # @overload list_events(objective_id, workspace_id: nil, cursor: nil, include_info: nil, labels: nil, limit: nil, since_event_id: nil, sort_order: nil, window_id: nil, request_options: {})
       #
       # @param objective_id [String] Path param: Objective ID for filtering
       #
@@ -312,12 +320,12 @@ module Cadenya
       # @return [Cadenya::Internal::CursorPagination<Cadenya::Models::ObjectiveEvent>]
       #
       # @see Cadenya::Models::ObjectiveListEventsParams
-      def list_events(objective_id, params)
+      def list_events(objective_id, params = {})
         parsed, options = Cadenya::ObjectiveListEventsParams.dump_request(params)
         query = Cadenya::Internal::Util.encode_query_params(parsed)
         workspace_id =
           parsed.delete(:workspace_id) do
-            raise ArgumentError.new("missing required path argument #{_1}")
+            @client.workspace_id
           end
         @client.request(
           method: :get,
@@ -339,7 +347,7 @@ module Cadenya
       # appendices, tool definitions, messages by role) alongside the iteration's input
       # token counts.
       #
-      # @overload retrieve_diagnostics(objective_id, workspace_id:, request_options: {})
+      # @overload retrieve_diagnostics(objective_id, workspace_id: nil, request_options: {})
       #
       # @param objective_id [String] The ID of the objective. Supports "external_id:" prefix for external IDs.
       #
@@ -350,11 +358,11 @@ module Cadenya
       # @return [Cadenya::Models::ObjectiveRetrieveDiagnosticsResponse]
       #
       # @see Cadenya::Models::ObjectiveRetrieveDiagnosticsParams
-      def retrieve_diagnostics(objective_id, params)
+      def retrieve_diagnostics(objective_id, params = {})
         parsed, options = Cadenya::ObjectiveRetrieveDiagnosticsParams.dump_request(params)
         workspace_id =
           parsed.delete(:workspace_id) do
-            raise ArgumentError.new("missing required path argument #{_1}")
+            @client.workspace_id
           end
         @client.request(
           method: :get,
@@ -366,7 +374,7 @@ module Cadenya
 
       # Streams events for an objective in real-time using server-sent events (SSE)
       #
-      # @overload stream_events_streaming(objective_id, workspace_id:, request_options: {})
+      # @overload stream_events_streaming(objective_id, workspace_id: nil, request_options: {})
       #
       # @param objective_id [String]
       # @param workspace_id [String]
@@ -375,11 +383,11 @@ module Cadenya
       # @return [Cadenya::Internal::Stream<Cadenya::Models::ObjectiveEvent>]
       #
       # @see Cadenya::Models::ObjectiveStreamEventsParams
-      def stream_events_streaming(objective_id, params)
+      def stream_events_streaming(objective_id, params = {})
         parsed, options = Cadenya::ObjectiveStreamEventsParams.dump_request(params)
         workspace_id =
           parsed.delete(:workspace_id) do
-            raise ArgumentError.new("missing required path argument #{_1}")
+            @client.workspace_id
           end
         @client.request(
           method: :get,

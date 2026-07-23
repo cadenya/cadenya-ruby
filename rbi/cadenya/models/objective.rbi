@@ -259,11 +259,8 @@ module Cadenya
 
         # The caller-supplied episodic key. Objectives created with the same key (for the
         # same agent) share one episodic memory layer.
-        sig { returns(T.nilable(String)) }
-        attr_reader :key
-
-        sig { params(key: String).void }
-        attr_writer :key
+        sig { returns(String) }
+        attr_accessor :key
 
         # The episodic memory layer resolved (created or reused) for this objective's key.
         # Populated by the system at objective creation.
@@ -280,7 +277,7 @@ module Cadenya
         def self.new(
           # The caller-supplied episodic key. Objectives created with the same key (for the
           # same agent) share one episodic memory layer.
-          key: nil,
+          key:,
           # The episodic memory layer resolved (created or reused) for this objective's key.
           # Populated by the system at objective creation.
           memory_layer_id: nil

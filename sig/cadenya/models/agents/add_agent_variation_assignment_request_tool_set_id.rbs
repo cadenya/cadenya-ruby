@@ -1,0 +1,43 @@
+module Cadenya
+  module Models
+    module Agents
+      type add_agent_variation_assignment_request_tool_set_id =
+        {
+          tool_set_id: String,
+          type: Cadenya::Models::Agents::AddAgentVariationAssignmentRequestToolSetID::type_,
+          agent_id: String,
+          variation_id: String,
+          workspace_id: String
+        }
+
+      class AddAgentVariationAssignmentRequestToolSetID < Cadenya::Internal::Type::BaseModel
+        attr_accessor tool_set_id: String
+
+        attr_accessor type: Cadenya::Models::Agents::AddAgentVariationAssignmentRequestToolSetID::type_
+
+        def initialize: (
+          tool_set_id: String,
+          type: Cadenya::Models::Agents::AddAgentVariationAssignmentRequestToolSetID::type_
+        ) -> void
+
+        def to_hash: -> {
+          tool_set_id: String,
+          type: Cadenya::Models::Agents::AddAgentVariationAssignmentRequestToolSetID::type_,
+          agent_id: String,
+          variation_id: String,
+          workspace_id: String
+        }
+
+        type type_ = :toolSetId
+
+        module Type
+          extend Cadenya::Internal::Type::Enum
+
+          TOOL_SET_ID: :toolSetId
+
+          def self?.values: -> ::Array[Cadenya::Models::Agents::AddAgentVariationAssignmentRequestToolSetID::type_]
+        end
+      end
+    end
+  end
+end

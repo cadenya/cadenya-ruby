@@ -9,8 +9,8 @@ module Cadenya
 
       # @!attribute workspace_id
       #
-      #   @return [String]
-      required :workspace_id, String
+      #   @return [String, nil]
+      optional :workspace_id, String
 
       # @!attribute objective_id
       #
@@ -23,10 +23,10 @@ module Cadenya
       #   @return [String, nil]
       optional :reason, String
 
-      # @!method initialize(workspace_id:, objective_id:, reason: nil, request_options: {})
-      #   @param workspace_id [String]
-      #
+      # @!method initialize(objective_id:, workspace_id: nil, reason: nil, request_options: {})
       #   @param objective_id [String]
+      #
+      #   @param workspace_id [String]
       #
       #   @param reason [String] Optional reason for cancellation
       #

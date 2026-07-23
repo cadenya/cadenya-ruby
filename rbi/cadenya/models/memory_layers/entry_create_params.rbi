@@ -15,8 +15,11 @@ module Cadenya
             )
           end
 
-        sig { returns(String) }
-        attr_accessor :workspace_id
+        sig { returns(T.nilable(String)) }
+        attr_reader :workspace_id
+
+        sig { params(workspace_id: String).void }
+        attr_writer :workspace_id
 
         sig { returns(String) }
         attr_accessor :memory_layer_id
@@ -33,27 +36,30 @@ module Cadenya
         # MemoryEntryCreateSpec is the input shape for CreateMemoryEntry. It accepts
         # either inline content or a reference to a completed Upload; exactly one of the
         # two must be set.
-        sig { returns(Cadenya::MemoryLayers::MemoryEntryCreateSpec) }
-        attr_reader :spec
-
         sig do
-          params(
-            spec: Cadenya::MemoryLayers::MemoryEntryCreateSpec::OrHash
-          ).void
+          returns(
+            T.any(
+              Cadenya::MemoryLayers::MemoryEntryCreateSpecContent,
+              Cadenya::MemoryLayers::MemoryEntryCreateSpecUploadID
+            )
+          )
         end
-        attr_writer :spec
+        attr_accessor :spec
 
         sig do
           params(
-            workspace_id: String,
             memory_layer_id: String,
             metadata: Cadenya::CreateResourceMetadata::OrHash,
-            spec: Cadenya::MemoryLayers::MemoryEntryCreateSpec::OrHash,
+            spec:
+              T.any(
+                Cadenya::MemoryLayers::MemoryEntryCreateSpecContent::OrHash,
+                Cadenya::MemoryLayers::MemoryEntryCreateSpecUploadID::OrHash
+              ),
+            workspace_id: String,
             request_options: Cadenya::RequestOptions::OrHash
           ).returns(T.attached_class)
         end
         def self.new(
-          workspace_id:,
           memory_layer_id:,
           # CreateResourceMetadata contains the user-provided fields for creating a
           # workspace-scoped resource. Read-only fields (id, account_id, workspace_id,
@@ -63,6 +69,7 @@ module Cadenya
           # either inline content or a reference to a completed Upload; exactly one of the
           # two must be set.
           spec:,
+          workspace_id: nil,
           request_options: {}
         )
         end
@@ -73,7 +80,11 @@ module Cadenya
               workspace_id: String,
               memory_layer_id: String,
               metadata: Cadenya::CreateResourceMetadata,
-              spec: Cadenya::MemoryLayers::MemoryEntryCreateSpec,
+              spec:
+                T.any(
+                  Cadenya::MemoryLayers::MemoryEntryCreateSpecContent,
+                  Cadenya::MemoryLayers::MemoryEntryCreateSpecUploadID
+                ),
               request_options: Cadenya::RequestOptions
             }
           )

@@ -1,0 +1,82 @@
+module Cadenya
+  module Models
+    type objective_event_data_notice =
+      {
+        notice: Cadenya::ObjectiveEventDataNotice::Notice,
+        type: Cadenya::Models::ObjectiveEventDataNotice::type_
+      }
+
+    class ObjectiveEventDataNotice < Cadenya::Internal::Type::BaseModel
+      attr_accessor notice: Cadenya::ObjectiveEventDataNotice::Notice
+
+      attr_accessor type: Cadenya::Models::ObjectiveEventDataNotice::type_
+
+      def initialize: (
+        notice: Cadenya::ObjectiveEventDataNotice::Notice,
+        type: Cadenya::Models::ObjectiveEventDataNotice::type_
+      ) -> void
+
+      def to_hash: -> {
+        notice: Cadenya::ObjectiveEventDataNotice::Notice,
+        type: Cadenya::Models::ObjectiveEventDataNotice::type_
+      }
+
+      type notice =
+        {
+          key: String,
+          level: Cadenya::Models::ObjectiveEventDataNotice::Notice::level,
+          message: String
+        }
+
+      class Notice < Cadenya::Internal::Type::BaseModel
+        attr_reader key: String?
+
+        def key=: (String) -> String
+
+        attr_reader level: Cadenya::Models::ObjectiveEventDataNotice::Notice::level?
+
+        def level=: (
+          Cadenya::Models::ObjectiveEventDataNotice::Notice::level
+        ) -> Cadenya::Models::ObjectiveEventDataNotice::Notice::level
+
+        attr_reader message: String?
+
+        def message=: (String) -> String
+
+        def initialize: (
+          ?key: String,
+          ?level: Cadenya::Models::ObjectiveEventDataNotice::Notice::level,
+          ?message: String
+        ) -> void
+
+        def to_hash: -> {
+          key: String,
+          level: Cadenya::Models::ObjectiveEventDataNotice::Notice::level,
+          message: String
+        }
+
+        type level = :LEVEL_UNSPECIFIED | :LEVEL_INFO | :LEVEL_WARN
+
+        module Level
+          extend Cadenya::Internal::Type::Enum
+
+          LEVEL_UNSPECIFIED: :LEVEL_UNSPECIFIED
+          LEVEL_INFO: :LEVEL_INFO
+          LEVEL_WARN: :LEVEL_WARN
+
+          def self?.values: -> ::Array[Cadenya::Models::ObjectiveEventDataNotice::Notice::level]
+        end
+      end
+
+      type type_ = :notice
+
+      module Type
+        extend Cadenya::Internal::Type::Enum
+
+        NOTICE: :notice
+
+        def self?.values: -> ::Array[Cadenya::Models::ObjectiveEventDataNotice::type_]
+      end
+    end
+  end
+end

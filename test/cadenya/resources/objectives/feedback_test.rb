@@ -7,7 +7,12 @@ class Cadenya::Test::Resources::Objectives::FeedbackTest < Cadenya::Test::Resour
     skip("Mock server tests are disabled")
 
     response =
-      @cadenya.objectives.feedback.create("objectiveId", workspace_id: "workspaceId", data: {}, metadata: {})
+      @cadenya.objectives.feedback.create(
+        "obj_01HXKD2E5NQM3T9AYWCFQAZGFV",
+        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q",
+        data: {},
+        metadata: {}
+      )
 
     assert_pattern do
       response => Cadenya::Objectives::ObjectiveFeedback
@@ -25,7 +30,11 @@ class Cadenya::Test::Resources::Objectives::FeedbackTest < Cadenya::Test::Resour
   def test_list_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.objectives.feedback.list("objectiveId", workspace_id: "workspaceId")
+    response =
+      @cadenya.objectives.feedback.list(
+        "obj_01HXKD2E5NQM3T9AYWCFQAZGFV",
+        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
+      )
 
     assert_pattern do
       response => Cadenya::Internal::CursorPagination

@@ -1,0 +1,45 @@
+module Cadenya
+  module Models
+    type ai_provider_config_openai_compatible =
+      {
+        openai_compatible: Cadenya::AIProviderConfigOpenAICompatible::OpenAICompatible,
+        type: Cadenya::Models::AIProviderConfigOpenAICompatible::type_
+      }
+
+    class AIProviderConfigOpenAICompatible < Cadenya::Internal::Type::BaseModel
+      attr_accessor openai_compatible: Cadenya::AIProviderConfigOpenAICompatible::OpenAICompatible
+
+      attr_accessor type: Cadenya::Models::AIProviderConfigOpenAICompatible::type_
+
+      def initialize: (
+        openai_compatible: Cadenya::AIProviderConfigOpenAICompatible::OpenAICompatible,
+        type: Cadenya::Models::AIProviderConfigOpenAICompatible::type_
+      ) -> void
+
+      def to_hash: -> {
+        openai_compatible: Cadenya::AIProviderConfigOpenAICompatible::OpenAICompatible,
+        type: Cadenya::Models::AIProviderConfigOpenAICompatible::type_
+      }
+
+      type openai_compatible = { base_url: String }
+
+      class OpenAICompatible < Cadenya::Internal::Type::BaseModel
+        attr_accessor base_url: String
+
+        def initialize: (base_url: String) -> void
+
+        def to_hash: -> { base_url: String }
+      end
+
+      type type_ = :openaiCompatible
+
+      module Type
+        extend Cadenya::Internal::Type::Enum
+
+        OPENAI_COMPATIBLE: :openaiCompatible
+
+        def self?.values: -> ::Array[Cadenya::Models::AIProviderConfigOpenAICompatible::type_]
+      end
+    end
+  end
+end

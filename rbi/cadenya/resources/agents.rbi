@@ -25,24 +25,25 @@ module Cadenya
       # Creates a new agent in the workspace
       sig do
         params(
-          workspace_id: String,
           metadata: Cadenya::CreateResourceMetadata::OrHash,
           spec: Cadenya::AgentSpec::OrHash,
+          workspace_id: String,
           default_variation:
             Cadenya::AgentCreateParams::DefaultVariation::OrHash,
           request_options: Cadenya::RequestOptions::OrHash
         ).returns(Cadenya::Agent)
       end
       def create(
-        # Workspace ID.
-        workspace_id,
-        # CreateResourceMetadata contains the user-provided fields for creating a
-        # workspace-scoped resource. Read-only fields (id, account_id, workspace_id,
-        # profile_id, created_at) are excluded since they are set by the server.
+        # Body param: CreateResourceMetadata contains the user-provided fields for
+        # creating a workspace-scoped resource. Read-only fields (id, account_id,
+        # workspace_id, profile_id, created_at) are excluded since they are set by the
+        # server.
         metadata:,
-        # Agent specification (user-provided configuration)
+        # Body param: Agent specification (user-provided configuration)
         spec:,
-        # Create agent variation request
+        # Path param: Workspace ID.
+        workspace_id: nil,
+        # Body param: Create agent variation request
         default_variation: nil,
         request_options: {}
       )
@@ -61,7 +62,7 @@ module Cadenya
         # form.
         id,
         # Workspace ID.
-        workspace_id:,
+        workspace_id: nil,
         request_options: {}
       )
       end
@@ -82,7 +83,7 @@ module Cadenya
         # `external_id:<value>` form.
         id,
         # Path param: Workspace ID.
-        workspace_id:,
+        workspace_id: nil,
         # Body param: UpdateResourceMetadata contains the user-provided fields for
         # updating a workspace-scoped resource. Read-only fields (id, account_id,
         # workspace_id, profile_id, created_at) are excluded since they are set by the
@@ -114,28 +115,28 @@ module Cadenya
         ).returns(Cadenya::Internal::CursorPagination[Cadenya::Agent])
       end
       def list(
-        # Workspace ID.
-        workspace_id,
-        # Pagination cursor from previous response
+        # Path param: Workspace ID.
+        workspace_id: nil,
+        # Query param: Pagination cursor from previous response
         cursor: nil,
-        # When true, the `info` field on each returned agent is populated. Requests with
-        # this flag count more against your rate limit.
+        # Query param: When true, the `info` field on each returned agent is populated.
+        # Requests with this flag count more against your rate limit.
         include_info: nil,
-        # Filters by metadata labels. Comma-separated key=value pairs, e.g.
+        # Query param: Filters by metadata labels. Comma-separated key=value pairs, e.g.
         # "env=prod,team=ai". A resource matches only if every pair matches exactly (AND
         # semantics).
         labels: nil,
-        # Maximum number of results to return
+        # Query param: Maximum number of results to return
         limit: nil,
-        # Filter expression (query param: prefix)
+        # Query param: Filter expression (query param: prefix)
         prefix: nil,
-        # Free-form search query
+        # Query param: Free-form search query
         query: nil,
-        # Sort order for results (asc or desc by creation time)
+        # Query param: Sort order for results (asc or desc by creation time)
         sort_order: nil,
-        # Filter by agent lifecycle state
+        # Query param: Filter by agent lifecycle state
         state: nil,
-        # Filter by variation selection mode
+        # Query param: Filter by variation selection mode
         variation_selection_mode: nil,
         request_options: {}
       )
@@ -154,7 +155,7 @@ module Cadenya
         # form.
         id,
         # Workspace ID.
-        workspace_id:,
+        workspace_id: nil,
         request_options: {}
       )
       end
@@ -173,7 +174,7 @@ module Cadenya
         # form.
         id,
         # Workspace ID.
-        workspace_id:,
+        workspace_id: nil,
         request_options: {}
       )
       end
@@ -192,7 +193,7 @@ module Cadenya
         # form.
         id,
         # Workspace ID.
-        workspace_id:,
+        workspace_id: nil,
         request_options: {}
       )
       end
@@ -211,7 +212,7 @@ module Cadenya
         # form.
         id,
         # Workspace ID.
-        workspace_id:,
+        workspace_id: nil,
         request_options: {}
       )
       end
@@ -230,7 +231,7 @@ module Cadenya
         # form.
         id,
         # Workspace ID.
-        workspace_id:,
+        workspace_id: nil,
         request_options: {}
       )
       end

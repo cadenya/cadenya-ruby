@@ -18,7 +18,9 @@ module Cadenya
         extend Cadenya::Internal::Type::RequestParameters::Converter
         include Cadenya::Internal::Type::RequestParameters
 
-        attr_accessor workspace_id: String
+        attr_reader workspace_id: String?
+
+        def workspace_id=: (String) -> String
 
         attr_accessor objective_id: String
 
@@ -51,8 +53,8 @@ module Cadenya
         ) -> Cadenya::Models::Objectives::ToolCallListParams::status
 
         def initialize: (
-          workspace_id: String,
           objective_id: String,
+          ?workspace_id: String,
           ?cursor: String,
           ?execution_status: Cadenya::Models::Objectives::ToolCallListParams::execution_status,
           ?include_info: bool,

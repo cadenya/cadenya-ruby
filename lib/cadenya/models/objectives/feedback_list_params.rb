@@ -10,8 +10,8 @@ module Cadenya
 
         # @!attribute workspace_id
         #
-        #   @return [String]
-        required :workspace_id, String
+        #   @return [String, nil]
+        optional :workspace_id, String
 
         # @!attribute objective_id
         #
@@ -38,13 +38,13 @@ module Cadenya
         #   @return [Integer, nil]
         optional :limit, Integer
 
-        # @!method initialize(workspace_id:, objective_id:, cursor: nil, labels: nil, limit: nil, request_options: {})
+        # @!method initialize(objective_id:, workspace_id: nil, cursor: nil, labels: nil, limit: nil, request_options: {})
         #   Some parameter documentations has been truncated, see
         #   {Cadenya::Models::Objectives::FeedbackListParams} for more details.
         #
-        #   @param workspace_id [String]
-        #
         #   @param objective_id [String]
+        #
+        #   @param workspace_id [String]
         #
         #   @param cursor [String] Pagination cursor from previous response
         #

@@ -29,21 +29,25 @@ module Cadenya
       #
       # Creates a new tool set in the workspace
       #
-      # @overload create(workspace_id, metadata:, spec:, request_options: {})
+      # @overload create(metadata:, spec:, workspace_id: nil, request_options: {})
       #
-      # @param workspace_id [String] Workspace ID.
+      # @param metadata [Cadenya::Models::CreateResourceMetadata] Body param: CreateResourceMetadata contains the user-provided fields for creatin
       #
-      # @param metadata [Cadenya::Models::CreateResourceMetadata] CreateResourceMetadata contains the user-provided fields for creating
+      # @param spec [Cadenya::Models::ToolSetSpec] Body param
       #
-      # @param spec [Cadenya::Models::ToolSetSpec]
+      # @param workspace_id [String] Path param: Workspace ID.
       #
       # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
       #
       # @return [Cadenya::Models::ToolSet]
       #
       # @see Cadenya::Models::ToolSetCreateParams
-      def create(workspace_id, params)
+      def create(params)
         parsed, options = Cadenya::ToolSetCreateParams.dump_request(params)
+        workspace_id =
+          parsed.delete(:workspace_id) do
+            @client.workspace_id
+          end
         @client.request(
           method: :post,
           path: ["v1/workspaces/%1$s/tool_sets", workspace_id],
@@ -58,7 +62,7 @@ module Cadenya
       #
       # Retrieves a tool set by ID from the workspace
       #
-      # @overload retrieve(id, workspace_id:, request_options: {})
+      # @overload retrieve(id, workspace_id: nil, request_options: {})
       #
       # @param id [String] Tool set ID. Accepts the canonical ts\_… form or the
       #
@@ -69,11 +73,11 @@ module Cadenya
       # @return [Cadenya::Models::ToolSet]
       #
       # @see Cadenya::Models::ToolSetRetrieveParams
-      def retrieve(id, params)
+      def retrieve(id, params = {})
         parsed, options = Cadenya::ToolSetRetrieveParams.dump_request(params)
         workspace_id =
           parsed.delete(:workspace_id) do
-            raise ArgumentError.new("missing required path argument #{_1}")
+            @client.workspace_id
           end
         @client.request(
           method: :get,
@@ -88,7 +92,7 @@ module Cadenya
       #
       # Updates a tool set in the workspace
       #
-      # @overload update(id, workspace_id:, metadata: nil, spec: nil, update_mask: nil, request_options: {})
+      # @overload update(id, workspace_id: nil, metadata: nil, spec: nil, update_mask: nil, request_options: {})
       #
       # @param id [String] Path param: Tool set ID. Accepts the canonical ts\_… form or the
       #
@@ -105,11 +109,11 @@ module Cadenya
       # @return [Cadenya::Models::ToolSet]
       #
       # @see Cadenya::Models::ToolSetUpdateParams
-      def update(id, params)
+      def update(id, params = {})
         parsed, options = Cadenya::ToolSetUpdateParams.dump_request(params)
         workspace_id =
           parsed.delete(:workspace_id) do
-            raise ArgumentError.new("missing required path argument #{_1}")
+            @client.workspace_id
           end
         @client.request(
           method: :patch,
@@ -125,34 +129,38 @@ module Cadenya
       #
       # Lists all tool sets in the workspace
       #
-      # @overload list(workspace_id, cursor: nil, include_info: nil, labels: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, state: nil, request_options: {})
+      # @overload list(workspace_id: nil, cursor: nil, include_info: nil, labels: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, state: nil, request_options: {})
       #
-      # @param workspace_id [String] Workspace ID.
+      # @param workspace_id [String] Path param: Workspace ID.
       #
-      # @param cursor [String] Pagination cursor from previous response
+      # @param cursor [String] Query param: Pagination cursor from previous response
       #
-      # @param include_info [Boolean] When set to true you may use more of your alloted API rate-limit
+      # @param include_info [Boolean] Query param: When set to true you may use more of your alloted API rate-limit
       #
-      # @param labels [String] Filters by metadata labels. Comma-separated key=value pairs,
+      # @param labels [String] Query param: Filters by metadata labels. Comma-separated key=value pairs,
       #
-      # @param limit [Integer] Maximum number of results to return
+      # @param limit [Integer] Query param: Maximum number of results to return
       #
-      # @param prefix [String] Filter expression (query param: prefix)
+      # @param prefix [String] Query param: Filter expression (query param: prefix)
       #
-      # @param query [String] Free-form search query
+      # @param query [String] Query param: Free-form search query
       #
-      # @param sort_order [String] Sort order for results (asc or desc by creation time)
+      # @param sort_order [String] Query param: Sort order for results (asc or desc by creation time)
       #
-      # @param state [Symbol, Cadenya::Models::ToolSetListParams::State] Filter by tool set lifecycle state. Defaults to STATE_ACTIVE when
+      # @param state [Symbol, Cadenya::Models::ToolSetListParams::State] Query param: Filter by tool set lifecycle state. Defaults to STATE_ACTIVE when
       #
       # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
       #
       # @return [Cadenya::Internal::CursorPagination<Cadenya::Models::ToolSet>]
       #
       # @see Cadenya::Models::ToolSetListParams
-      def list(workspace_id, params = {})
+      def list(params = {})
         parsed, options = Cadenya::ToolSetListParams.dump_request(params)
         query = Cadenya::Internal::Util.encode_query_params(parsed)
+        workspace_id =
+          parsed.delete(:workspace_id) do
+            @client.workspace_id
+          end
         @client.request(
           method: :get,
           path: ["v1/workspaces/%1$s/tool_sets", workspace_id],
@@ -168,7 +176,7 @@ module Cadenya
       #
       # Deletes a tool set in the workspace
       #
-      # @overload delete(id, workspace_id:, request_options: {})
+      # @overload delete(id, workspace_id: nil, request_options: {})
       #
       # @param id [String] Tool set ID. Accepts the canonical ts\_… form or the
       #
@@ -179,11 +187,11 @@ module Cadenya
       # @return [nil]
       #
       # @see Cadenya::Models::ToolSetDeleteParams
-      def delete(id, params)
+      def delete(id, params = {})
         parsed, options = Cadenya::ToolSetDeleteParams.dump_request(params)
         workspace_id =
           parsed.delete(:workspace_id) do
-            raise ArgumentError.new("missing required path argument #{_1}")
+            @client.workspace_id
           end
         @client.request(
           method: :delete,
@@ -202,7 +210,7 @@ module Cadenya
       # history is preserved — unlike delete, archiving works while the tool set is
       # still assigned to agent variations.
       #
-      # @overload archive(id, workspace_id:, request_options: {})
+      # @overload archive(id, workspace_id: nil, request_options: {})
       #
       # @param id [String] Tool set ID. Accepts the canonical ts\_… form or the
       #
@@ -213,11 +221,11 @@ module Cadenya
       # @return [Cadenya::Models::ToolSet]
       #
       # @see Cadenya::Models::ToolSetArchiveParams
-      def archive(id, params)
+      def archive(id, params = {})
         parsed, options = Cadenya::ToolSetArchiveParams.dump_request(params)
         workspace_id =
           parsed.delete(:workspace_id) do
-            raise ArgumentError.new("missing required path argument #{_1}")
+            @client.workspace_id
           end
         @client.request(
           method: :post,
@@ -233,7 +241,7 @@ module Cadenya
       # Retrieves the current OpenAPI specification JSON that has been consumed by the
       # tool set. Only applicable to tool sets using the OpenAPI adapter.
       #
-      # @overload get_openapi_spec(tool_set_id, workspace_id:, request_options: {})
+      # @overload get_openapi_spec(tool_set_id, workspace_id: nil, request_options: {})
       #
       # @param tool_set_id [String] Tool set ID. Accepts the canonical ts\_… form or the
       #
@@ -244,11 +252,11 @@ module Cadenya
       # @return [Cadenya::Models::ToolSetGetOpenAPISpecResponse]
       #
       # @see Cadenya::Models::ToolSetGetOpenAPISpecParams
-      def get_openapi_spec(tool_set_id, params)
+      def get_openapi_spec(tool_set_id, params = {})
         parsed, options = Cadenya::ToolSetGetOpenAPISpecParams.dump_request(params)
         workspace_id =
           parsed.delete(:workspace_id) do
-            raise ArgumentError.new("missing required path argument #{_1}")
+            @client.workspace_id
           end
         @client.request(
           method: :get,
@@ -263,7 +271,7 @@ module Cadenya
       #
       # Lists all events (including sync status) for a tool set
       #
-      # @overload list_events(tool_set_id, workspace_id:, cursor: nil, include_info: nil, labels: nil, limit: nil, sort_order: nil, request_options: {})
+      # @overload list_events(tool_set_id, workspace_id: nil, cursor: nil, include_info: nil, labels: nil, limit: nil, sort_order: nil, request_options: {})
       #
       # @param tool_set_id [String] Path param: Tool set ID. Accepts the canonical ts\_… form or the
       #
@@ -284,12 +292,12 @@ module Cadenya
       # @return [Cadenya::Internal::CursorPagination<Cadenya::Models::ToolSetEvent>]
       #
       # @see Cadenya::Models::ToolSetListEventsParams
-      def list_events(tool_set_id, params)
+      def list_events(tool_set_id, params = {})
         parsed, options = Cadenya::ToolSetListEventsParams.dump_request(params)
         query = Cadenya::Internal::Util.encode_query_params(parsed)
         workspace_id =
           parsed.delete(:workspace_id) do
-            raise ArgumentError.new("missing required path argument #{_1}")
+            @client.workspace_id
           end
         @client.request(
           method: :get,
@@ -302,13 +310,57 @@ module Cadenya
       end
 
       # Some parameter documentations has been truncated, see
+      # {Cadenya::Models::ToolSetListUsageParams} for more details.
+      #
+      # Lists the agent variations (with their parent agent) that have the tool set
+      # assigned. Pass tool_id to instead list variations with a direct assignment of
+      # that individual tool; variations that receive the tool implicitly through a
+      # whole-set assignment are not included in that filtered view.
+      #
+      # @overload list_usage(tool_set_id, workspace_id: nil, cursor: nil, limit: nil, sort_order: nil, tool_id: nil, request_options: {})
+      #
+      # @param tool_set_id [String] Path param: Tool set ID. Accepts the canonical ts\_… form or the
+      #
+      # @param workspace_id [String] Path param: Workspace ID.
+      #
+      # @param cursor [String] Query param: Pagination cursor from previous response
+      #
+      # @param limit [Integer] Query param: Maximum number of results to return
+      #
+      # @param sort_order [String] Query param: Sort order for results (asc or desc by assignment creation time)
+      #
+      # @param tool_id [String] Query param: When set, lists only variations with a direct assignment of this
+      #
+      # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
+      #
+      # @return [Cadenya::Internal::CursorPagination<Cadenya::Models::ToolSetUsage>]
+      #
+      # @see Cadenya::Models::ToolSetListUsageParams
+      def list_usage(tool_set_id, params = {})
+        parsed, options = Cadenya::ToolSetListUsageParams.dump_request(params)
+        query = Cadenya::Internal::Util.encode_query_params(parsed)
+        workspace_id =
+          parsed.delete(:workspace_id) do
+            @client.workspace_id
+          end
+        @client.request(
+          method: :get,
+          path: ["v1/workspaces/%1$s/tool_sets/%2$s/usage", workspace_id, tool_set_id],
+          query: query.transform_keys(sort_order: "sortOrder", tool_id: "toolId"),
+          page: Cadenya::Internal::CursorPagination,
+          model: Cadenya::ToolSetUsage,
+          options: options
+        )
+      end
+
+      # Some parameter documentations has been truncated, see
       # {Cadenya::Models::ToolSetUnarchiveParams} for more details.
       #
       # Transitions an archived tool set back to STATE_ACTIVE. Managed tool sets resume
       # syncing on their next cycle and their tools become available to objectives
       # again.
       #
-      # @overload unarchive(id, workspace_id:, request_options: {})
+      # @overload unarchive(id, workspace_id: nil, request_options: {})
       #
       # @param id [String] Tool set ID. Accepts the canonical ts\_… form or the
       #
@@ -319,11 +371,11 @@ module Cadenya
       # @return [Cadenya::Models::ToolSet]
       #
       # @see Cadenya::Models::ToolSetUnarchiveParams
-      def unarchive(id, params)
+      def unarchive(id, params = {})
         parsed, options = Cadenya::ToolSetUnarchiveParams.dump_request(params)
         workspace_id =
           parsed.delete(:workspace_id) do
-            raise ArgumentError.new("missing required path argument #{_1}")
+            @client.workspace_id
           end
         @client.request(
           method: :post,

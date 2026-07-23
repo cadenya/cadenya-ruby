@@ -9,8 +9,8 @@ module Cadenya
 
       # @!attribute workspace_id
       #
-      #   @return [String]
-      required :workspace_id, String
+      #   @return [String, nil]
+      optional :workspace_id, String
 
       # @!attribute model_swaps
       #   The swaps to perform.
@@ -20,7 +20,7 @@ module Cadenya
                -> { Cadenya::Internal::Type::ArrayOf[Cadenya::ModelSwapParams::ModelSwap] },
                api_name: :modelSwaps
 
-      # @!method initialize(workspace_id:, model_swaps: nil, request_options: {})
+      # @!method initialize(workspace_id: nil, model_swaps: nil, request_options: {})
       #   @param workspace_id [String]
       #
       #   @param model_swaps [Array<Cadenya::Models::ModelSwapParams::ModelSwap>] The swaps to perform.

@@ -13,9 +13,9 @@ module Cadenya
         sig do
           params(
             tool_set_id: String,
-            workspace_id: String,
             metadata: Cadenya::CreateResourceMetadata::OrHash,
             spec: Cadenya::ToolSets::ToolSetSecretSpec::OrHash,
+            workspace_id: String,
             request_options: Cadenya::RequestOptions::OrHash
           ).returns(Cadenya::ToolSets::ToolSetSecret)
         end
@@ -23,8 +23,6 @@ module Cadenya
           # Path param: The tool set that will own this secret. Accepts the canonical ts\_…
           # form or the external_id:<value> form.
           tool_set_id,
-          # Path param: The workspace that owns the tool set.
-          workspace_id:,
           # Body param: CreateResourceMetadata contains the user-provided fields for
           # creating a workspace-scoped resource. Read-only fields (id, account_id,
           # workspace_id, profile_id, created_at) are excluded since they are set by the
@@ -32,6 +30,8 @@ module Cadenya
           metadata:,
           # Body param
           spec:,
+          # Path param: The workspace that owns the tool set.
+          workspace_id: nil,
           request_options: {}
         )
         end
@@ -39,20 +39,20 @@ module Cadenya
         # Retrieves a tool set secret by ID from the tool set
         sig do
           params(
+            tool_set_id: String,
             id: String,
             workspace_id: String,
-            tool_set_id: String,
             request_options: Cadenya::RequestOptions::OrHash
           ).returns(Cadenya::ToolSets::ToolSetSecret)
         end
         def retrieve(
+          # The tool set the secret belongs to. Accepts the canonical ts\_… form or the
+          # external_id:<value> form.
+          tool_set_id,
           # The secret to retrieve.
           id,
           # The workspace that owns the tool set.
-          workspace_id:,
-          # The tool set the secret belongs to. Accepts the canonical ts\_… form or the
-          # external_id:<value> form.
-          tool_set_id:,
+          workspace_id: nil,
           request_options: {}
         )
         end
@@ -60,9 +60,9 @@ module Cadenya
         # Updates a secret scoped to the tool set
         sig do
           params(
+            tool_set_id: String,
             id: String,
             workspace_id: String,
-            tool_set_id: String,
             metadata: Cadenya::UpdateResourceMetadata::OrHash,
             spec: Cadenya::ToolSets::ToolSetSecretSpec::OrHash,
             update_mask: String,
@@ -70,13 +70,13 @@ module Cadenya
           ).returns(Cadenya::ToolSets::ToolSetSecret)
         end
         def update(
+          # Path param: The tool set the secret belongs to. Accepts the canonical ts\_… form
+          # or the external_id:<value> form.
+          tool_set_id,
           # Path param: The secret to update.
           id,
           # Path param: The workspace that owns the tool set.
-          workspace_id:,
-          # Path param: The tool set the secret belongs to. Accepts the canonical ts\_… form
-          # or the external_id:<value> form.
-          tool_set_id:,
+          workspace_id: nil,
           # Body param: UpdateResourceMetadata contains the user-provided fields for
           # updating a workspace-scoped resource. Read-only fields (id, account_id,
           # workspace_id, profile_id, created_at) are excluded since they are set by the
@@ -113,7 +113,7 @@ module Cadenya
           # ts\_… form or the external_id:<value> form.
           tool_set_id,
           # Path param: The workspace that owns the tool set.
-          workspace_id:,
+          workspace_id: nil,
           # Query param: Pagination cursor from previous response
           cursor: nil,
           # Query param: When set to true you may use more of your alloted API rate-limit
@@ -133,20 +133,20 @@ module Cadenya
         # Deletes a secret scoped to the tool set
         sig do
           params(
+            tool_set_id: String,
             id: String,
             workspace_id: String,
-            tool_set_id: String,
             request_options: Cadenya::RequestOptions::OrHash
           ).void
         end
         def delete(
+          # The tool set the secret belongs to. Accepts the canonical ts\_… form or the
+          # external_id:<value> form.
+          tool_set_id,
           # The secret to delete.
           id,
           # The workspace that owns the tool set.
-          workspace_id:,
-          # The tool set the secret belongs to. Accepts the canonical ts\_… form or the
-          # external_id:<value> form.
-          tool_set_id:,
+          workspace_id: nil,
           request_options: {}
         )
         end

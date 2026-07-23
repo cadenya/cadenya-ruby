@@ -1,0 +1,42 @@
+module Cadenya
+  module Models
+    type string_matcher_contains =
+      {
+        contains: String,
+        type: Cadenya::Models::StringMatcherContains::type_,
+        case_sensitive: bool
+      }
+
+    class StringMatcherContains < Cadenya::Internal::Type::BaseModel
+      attr_accessor contains: String
+
+      attr_accessor type: Cadenya::Models::StringMatcherContains::type_
+
+      attr_reader case_sensitive: bool?
+
+      def case_sensitive=: (bool) -> bool
+
+      def initialize: (
+        contains: String,
+        type: Cadenya::Models::StringMatcherContains::type_,
+        ?case_sensitive: bool
+      ) -> void
+
+      def to_hash: -> {
+        contains: String,
+        type: Cadenya::Models::StringMatcherContains::type_,
+        case_sensitive: bool
+      }
+
+      type type_ = :contains
+
+      module Type
+        extend Cadenya::Internal::Type::Enum
+
+        CONTAINS: :contains
+
+        def self?.values: -> ::Array[Cadenya::Models::StringMatcherContains::type_]
+      end
+    end
+  end
+end

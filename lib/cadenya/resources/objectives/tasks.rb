@@ -6,28 +6,24 @@ module Cadenya
       class Tasks
         # Retrieves a task by ID from an objective
         #
-        # @overload retrieve(id, workspace_id:, objective_id:, request_options: {})
+        # @overload retrieve(objective_id, id, workspace_id: nil, request_options: {})
+        #
+        # @param objective_id [String] The ID of the objective. Supports "external_id:" prefix for external IDs.
         #
         # @param id [String] Task ID
         #
         # @param workspace_id [String]
-        #
-        # @param objective_id [String] The ID of the objective. Supports "external_id:" prefix for external IDs.
         #
         # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
         #
         # @return [Cadenya::Models::Objectives::ObjectiveTask]
         #
         # @see Cadenya::Models::Objectives::TaskRetrieveParams
-        def retrieve(id, params)
+        def retrieve(objective_id, id, params = {})
           parsed, options = Cadenya::Objectives::TaskRetrieveParams.dump_request(params)
           workspace_id =
             parsed.delete(:workspace_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
-            end
-          objective_id =
-            parsed.delete(:objective_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
+              @client.workspace_id
             end
           @client.request(
             method: :get,
@@ -42,7 +38,7 @@ module Cadenya
         #
         # Lists all tasks for an objective
         #
-        # @overload list(objective_id, workspace_id:, cursor: nil, limit: nil, sort_order: nil, request_options: {})
+        # @overload list(objective_id, workspace_id: nil, cursor: nil, limit: nil, sort_order: nil, request_options: {})
         #
         # @param objective_id [String] Path param: The ID of the objective. Supports "external_id:" prefix for external
         #
@@ -59,12 +55,12 @@ module Cadenya
         # @return [Cadenya::Internal::CursorPagination<Cadenya::Models::Objectives::ObjectiveTask>]
         #
         # @see Cadenya::Models::Objectives::TaskListParams
-        def list(objective_id, params)
+        def list(objective_id, params = {})
           parsed, options = Cadenya::Objectives::TaskListParams.dump_request(params)
           query = Cadenya::Internal::Util.encode_query_params(parsed)
           workspace_id =
             parsed.delete(:workspace_id) do
-              raise ArgumentError.new("missing required path argument #{_1}")
+              @client.workspace_id
             end
           @client.request(
             method: :get,

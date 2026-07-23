@@ -1,0 +1,35 @@
+module Cadenya
+  module Models
+    type objective_event_data_user_message =
+      {
+        type: Cadenya::Models::ObjectiveEventDataUserMessage::type_,
+        user_message: Cadenya::UserMessage
+      }
+
+    class ObjectiveEventDataUserMessage < Cadenya::Internal::Type::BaseModel
+      attr_accessor type: Cadenya::Models::ObjectiveEventDataUserMessage::type_
+
+      attr_accessor user_message: Cadenya::UserMessage
+
+      def initialize: (
+        type: Cadenya::Models::ObjectiveEventDataUserMessage::type_,
+        user_message: Cadenya::UserMessage
+      ) -> void
+
+      def to_hash: -> {
+        type: Cadenya::Models::ObjectiveEventDataUserMessage::type_,
+        user_message: Cadenya::UserMessage
+      }
+
+      type type_ = :userMessage
+
+      module Type
+        extend Cadenya::Internal::Type::Enum
+
+        USER_MESSAGE: :userMessage
+
+        def self?.values: -> ::Array[Cadenya::Models::ObjectiveEventDataUserMessage::type_]
+      end
+    end
+  end
+end

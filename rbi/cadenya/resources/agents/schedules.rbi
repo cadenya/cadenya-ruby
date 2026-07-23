@@ -10,9 +10,9 @@ module Cadenya
         sig do
           params(
             agent_id: String,
-            workspace_id: String,
             metadata: Cadenya::CreateResourceMetadata::OrHash,
             spec: Cadenya::Agents::AgentScheduleSpec::OrHash,
+            workspace_id: String,
             request_options: Cadenya::RequestOptions::OrHash
           ).returns(Cadenya::Agents::AgentSchedule)
         end
@@ -20,8 +20,6 @@ module Cadenya
           # Path param: Agent ID. Accepts the canonical `agent_…` form or the
           # `external_id:<value>` form.
           agent_id,
-          # Path param: Workspace ID.
-          workspace_id:,
           # Body param: CreateResourceMetadata contains the user-provided fields for
           # creating a workspace-scoped resource. Read-only fields (id, account_id,
           # workspace_id, profile_id, created_at) are excluded since they are set by the
@@ -29,6 +27,8 @@ module Cadenya
           metadata:,
           # Body param: AgentScheduleSpec is the user-provided configuration for a schedule.
           spec:,
+          # Path param: Workspace ID.
+          workspace_id: nil,
           request_options: {}
         )
         end
@@ -36,21 +36,21 @@ module Cadenya
         # Retrieves a schedule by ID from an agent
         sig do
           params(
+            agent_id: String,
             id: String,
             workspace_id: String,
-            agent_id: String,
             request_options: Cadenya::RequestOptions::OrHash
           ).returns(Cadenya::Agents::AgentSchedule)
         end
         def retrieve(
+          # Agent ID. Accepts the canonical `agent_…` form or the `external_id:<value>`
+          # form.
+          agent_id,
           # Schedule ID. Accepts the canonical `as_…` form or the `external_id:<value>`
           # form.
           id,
           # Workspace ID.
-          workspace_id:,
-          # Agent ID. Accepts the canonical `agent_…` form or the `external_id:<value>`
-          # form.
-          agent_id:,
+          workspace_id: nil,
           request_options: {}
         )
         end
@@ -58,9 +58,9 @@ module Cadenya
         # Updates a schedule for an agent
         sig do
           params(
+            agent_id: String,
             id: String,
             workspace_id: String,
-            agent_id: String,
             metadata: Cadenya::UpdateResourceMetadata::OrHash,
             spec: Cadenya::Agents::AgentScheduleSpec::OrHash,
             update_mask: String,
@@ -68,14 +68,14 @@ module Cadenya
           ).returns(Cadenya::Agents::AgentSchedule)
         end
         def update(
+          # Path param: Agent ID. Accepts the canonical `agent_…` form or the
+          # `external_id:<value>` form.
+          agent_id,
           # Path param: Schedule ID. Accepts the canonical `as_…` form or the
           # `external_id:<value>` form.
           id,
           # Path param: Workspace ID.
-          workspace_id:,
-          # Path param: Agent ID. Accepts the canonical `agent_…` form or the
-          # `external_id:<value>` form.
-          agent_id:,
+          workspace_id: nil,
           # Body param: UpdateResourceMetadata contains the user-provided fields for
           # updating a workspace-scoped resource. Read-only fields (id, account_id,
           # workspace_id, profile_id, created_at) are excluded since they are set by the
@@ -111,7 +111,7 @@ module Cadenya
           # `external_id:<value>` form.
           agent_id,
           # Path param: Workspace ID.
-          workspace_id:,
+          workspace_id: nil,
           # Query param: Pagination cursor from previous response.
           cursor: nil,
           # Query param: When true, the `info` field on each returned schedule is populated.
@@ -136,21 +136,21 @@ module Cadenya
         # Deletes a schedule from an agent
         sig do
           params(
+            agent_id: String,
             id: String,
             workspace_id: String,
-            agent_id: String,
             request_options: Cadenya::RequestOptions::OrHash
           ).void
         end
         def delete(
+          # Agent ID. Accepts the canonical `agent_…` form or the `external_id:<value>`
+          # form.
+          agent_id,
           # Schedule ID. Accepts the canonical `as_…` form or the `external_id:<value>`
           # form.
           id,
           # Workspace ID.
-          workspace_id:,
-          # Agent ID. Accepts the canonical `agent_…` form or the `external_id:<value>`
-          # form.
-          agent_id:,
+          workspace_id: nil,
           request_options: {}
         )
         end
@@ -160,21 +160,21 @@ module Cadenya
         # create a new schedule instead.
         sig do
           params(
+            agent_id: String,
             id: String,
             workspace_id: String,
-            agent_id: String,
             request_options: Cadenya::RequestOptions::OrHash
           ).returns(Cadenya::Agents::AgentSchedule)
         end
         def archive(
+          # Agent ID. Accepts the canonical `agent_…` form or the `external_id:<value>`
+          # form.
+          agent_id,
           # Schedule ID. Accepts the canonical `as_…` form or the `external_id:<value>`
           # form.
           id,
           # Workspace ID.
-          workspace_id:,
-          # Agent ID. Accepts the canonical `agent_…` form or the `external_id:<value>`
-          # form.
-          agent_id:,
+          workspace_id: nil,
           request_options: {}
         )
         end
@@ -183,21 +183,21 @@ module Cadenya
         # not fire.
         sig do
           params(
+            agent_id: String,
             id: String,
             workspace_id: String,
-            agent_id: String,
             request_options: Cadenya::RequestOptions::OrHash
           ).returns(Cadenya::Agents::AgentSchedule)
         end
         def pause(
+          # Agent ID. Accepts the canonical `agent_…` form or the `external_id:<value>`
+          # form.
+          agent_id,
           # Schedule ID. Accepts the canonical `as_…` form or the `external_id:<value>`
           # form.
           id,
           # Workspace ID.
-          workspace_id:,
-          # Agent ID. Accepts the canonical `agent_…` form or the `external_id:<value>`
-          # form.
-          agent_id:,
+          workspace_id: nil,
           request_options: {}
         )
         end
@@ -206,21 +206,21 @@ module Cadenya
         # again. Archived schedules cannot be resumed.
         sig do
           params(
+            agent_id: String,
             id: String,
             workspace_id: String,
-            agent_id: String,
             request_options: Cadenya::RequestOptions::OrHash
           ).returns(Cadenya::Agents::AgentSchedule)
         end
         def resume(
+          # Agent ID. Accepts the canonical `agent_…` form or the `external_id:<value>`
+          # form.
+          agent_id,
           # Schedule ID. Accepts the canonical `as_…` form or the `external_id:<value>`
           # form.
           id,
           # Workspace ID.
-          workspace_id:,
-          # Agent ID. Accepts the canonical `agent_…` form or the `external_id:<value>`
-          # form.
-          agent_id:,
+          workspace_id: nil,
           request_options: {}
         )
         end

@@ -15,8 +15,11 @@ module Cadenya
             )
           end
 
-        sig { returns(String) }
-        attr_accessor :workspace_id
+        sig { returns(T.nilable(String)) }
+        attr_reader :workspace_id
+
+        sig { params(workspace_id: String).void }
+        attr_writer :workspace_id
 
         # Email address to add (resolve-or-invite). Mutually exclusive with profile_id.
         sig { returns(T.nilable(String)) }
@@ -41,7 +44,7 @@ module Cadenya
           ).returns(T.attached_class)
         end
         def self.new(
-          workspace_id:,
+          workspace_id: nil,
           # Email address to add (resolve-or-invite). Mutually exclusive with profile_id.
           email: nil,
           # An existing account profile to add. Mutually exclusive with email.

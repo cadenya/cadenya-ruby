@@ -4,6 +4,31 @@ module Cadenya
   module Internal
     module Type
       # @api private
+      #
+      # @example
+      #   # `variation_assignment` is a `Cadenya::Agents::VariationAssignment`
+      #   case variation_assignment
+      #   when Cadenya::Agents::VariationAssignmentTool
+      #     puts(variation_assignment.tool)
+      #   when Cadenya::Agents::VariationAssignmentToolSet
+      #     puts(variation_assignment.tool_set)
+      #   when Cadenya::Agents::VariationAssignmentAgent
+      #     puts(variation_assignment.agent)
+      #   else
+      #     puts(variation_assignment)
+      #   end
+      #
+      # @example
+      #   case variation_assignment
+      #   in {type: :tool, tool: tool, id: id}
+      #     puts(tool)
+      #   in {type: :toolSet, tool_set: tool_set, id: id}
+      #     puts(tool_set)
+      #   in {type: :agent, agent: agent, id: id}
+      #     puts(agent)
+      #   else
+      #     puts(variation_assignment)
+      #   end
       module Union
         include Cadenya::Internal::Type::Converter
         include Cadenya::Internal::Util::SorbetRuntimeSupport

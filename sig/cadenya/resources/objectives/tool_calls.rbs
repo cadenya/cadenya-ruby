@@ -3,15 +3,15 @@ module Cadenya
     class Objectives
       class ToolCalls
         def retrieve: (
+          String objective_id,
           String tool_call_id,
-          workspace_id: String,
-          objective_id: String,
+          ?workspace_id: String,
           ?request_options: Cadenya::request_opts
         ) -> Cadenya::Objectives::ObjectiveToolCallWithResult
 
         def list: (
           String objective_id,
-          workspace_id: String,
+          ?workspace_id: String,
           ?cursor: String,
           ?execution_status: Cadenya::Models::Objectives::ToolCallListParams::execution_status,
           ?include_info: bool,
@@ -22,25 +22,25 @@ module Cadenya
         ) -> Cadenya::Internal::CursorPagination[Cadenya::Objectives::ObjectiveToolCall]
 
         def approve: (
+          String objective_id,
           String tool_call_id,
-          workspace_id: String,
-          objective_id: String,
+          ?workspace_id: String,
           ?request_options: Cadenya::request_opts
         ) -> Cadenya::Objectives::ObjectiveToolCall
 
         def deny: (
+          String objective_id,
           String tool_call_id,
-          workspace_id: String,
-          objective_id: String,
+          ?workspace_id: String,
           ?memo: String,
           ?request_options: Cadenya::request_opts
         ) -> Cadenya::Objectives::ObjectiveToolCall
 
         def set_content: (
+          String objective_id,
           String tool_call_id,
-          workspace_id: String,
-          objective_id: String,
-          content: ::Array[Cadenya::Objectives::SetToolCallContentRequestContentBlock],
+          content: ::Array[Cadenya::Models::Objectives::set_tool_call_content_request_content_block],
+          ?workspace_id: String,
           ?request_options: Cadenya::request_opts
         ) -> Cadenya::Objectives::ObjectiveToolCall
 

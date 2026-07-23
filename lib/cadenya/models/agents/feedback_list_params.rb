@@ -10,8 +10,8 @@ module Cadenya
 
         # @!attribute workspace_id
         #
-        #   @return [String]
-        required :workspace_id, String
+        #   @return [String, nil]
+        optional :workspace_id, String
 
         # @!attribute agent_id
         #
@@ -76,13 +76,13 @@ module Cadenya
         #   @return [Symbol, Cadenya::Models::Agents::FeedbackListParams::Sentiment, nil]
         optional :sentiment, enum: -> { Cadenya::Agents::FeedbackListParams::Sentiment }
 
-        # @!method initialize(workspace_id:, agent_id:, agent_variation_id: nil, created_after: nil, created_before: nil, cursor: nil, include_info: nil, labels: nil, limit: nil, query: nil, sentiment: nil, request_options: {})
+        # @!method initialize(agent_id:, workspace_id: nil, agent_variation_id: nil, created_after: nil, created_before: nil, cursor: nil, include_info: nil, labels: nil, limit: nil, query: nil, sentiment: nil, request_options: {})
         #   Some parameter documentations has been truncated, see
         #   {Cadenya::Models::Agents::FeedbackListParams} for more details.
         #
-        #   @param workspace_id [String]
-        #
         #   @param agent_id [String]
+        #
+        #   @param workspace_id [String]
         #
         #   @param agent_variation_id [String] Optional filter to limit results to feedback on objectives run by a single
         #

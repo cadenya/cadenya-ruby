@@ -8,21 +8,25 @@ module Cadenya
       #
       # Creates a new workspace secret in the workspace
       #
-      # @overload create(workspace_id, metadata:, spec:, request_options: {})
+      # @overload create(metadata:, spec:, workspace_id: nil, request_options: {})
       #
-      # @param workspace_id [String] The workspace that will own this secret.
+      # @param metadata [Cadenya::Models::CreateResourceMetadata] Body param: CreateResourceMetadata contains the user-provided fields for creatin
       #
-      # @param metadata [Cadenya::Models::CreateResourceMetadata] CreateResourceMetadata contains the user-provided fields for creating
+      # @param spec [Cadenya::Models::WorkspaceSecretSpec] Body param
       #
-      # @param spec [Cadenya::Models::WorkspaceSecretSpec]
+      # @param workspace_id [String] Path param: The workspace that will own this secret.
       #
       # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
       #
       # @return [Cadenya::Models::WorkspaceSecret]
       #
       # @see Cadenya::Models::WorkspaceSecretCreateParams
-      def create(workspace_id, params)
+      def create(params)
         parsed, options = Cadenya::WorkspaceSecretCreateParams.dump_request(params)
+        workspace_id =
+          parsed.delete(:workspace_id) do
+            @client.workspace_id
+          end
         @client.request(
           method: :post,
           path: ["v1/workspaces/%1$s/workspace_secrets", workspace_id],
@@ -34,7 +38,7 @@ module Cadenya
 
       # Retrieves a workspace secret by ID from the workspace
       #
-      # @overload retrieve(id, workspace_id:, request_options: {})
+      # @overload retrieve(id, workspace_id: nil, request_options: {})
       #
       # @param id [String] The secret to retrieve.
       #
@@ -45,11 +49,11 @@ module Cadenya
       # @return [Cadenya::Models::WorkspaceSecret]
       #
       # @see Cadenya::Models::WorkspaceSecretRetrieveParams
-      def retrieve(id, params)
+      def retrieve(id, params = {})
         parsed, options = Cadenya::WorkspaceSecretRetrieveParams.dump_request(params)
         workspace_id =
           parsed.delete(:workspace_id) do
-            raise ArgumentError.new("missing required path argument #{_1}")
+            @client.workspace_id
           end
         @client.request(
           method: :get,
@@ -64,7 +68,7 @@ module Cadenya
       #
       # Updates a workspace secret in the workspace
       #
-      # @overload update(id, workspace_id:, metadata: nil, spec: nil, update_mask: nil, request_options: {})
+      # @overload update(id, workspace_id: nil, metadata: nil, spec: nil, update_mask: nil, request_options: {})
       #
       # @param id [String] Path param: The secret to update.
       #
@@ -81,11 +85,11 @@ module Cadenya
       # @return [Cadenya::Models::WorkspaceSecret]
       #
       # @see Cadenya::Models::WorkspaceSecretUpdateParams
-      def update(id, params)
+      def update(id, params = {})
         parsed, options = Cadenya::WorkspaceSecretUpdateParams.dump_request(params)
         workspace_id =
           parsed.delete(:workspace_id) do
-            raise ArgumentError.new("missing required path argument #{_1}")
+            @client.workspace_id
           end
         @client.request(
           method: :patch,
@@ -101,32 +105,36 @@ module Cadenya
       #
       # Lists all workspace secrets in the workspace
       #
-      # @overload list(workspace_id, cursor: nil, include_info: nil, labels: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, request_options: {})
+      # @overload list(workspace_id: nil, cursor: nil, include_info: nil, labels: nil, limit: nil, prefix: nil, query: nil, sort_order: nil, request_options: {})
       #
-      # @param workspace_id [String] The workspace whose secrets will be listed.
+      # @param workspace_id [String] Path param: The workspace whose secrets will be listed.
       #
-      # @param cursor [String] Pagination cursor from previous response
+      # @param cursor [String] Query param: Pagination cursor from previous response
       #
-      # @param include_info [Boolean] When set to true you may use more of your alloted API rate-limit
+      # @param include_info [Boolean] Query param: When set to true you may use more of your alloted API rate-limit
       #
-      # @param labels [String] Filters by metadata labels. Comma-separated key=value pairs,
+      # @param labels [String] Query param: Filters by metadata labels. Comma-separated key=value pairs,
       #
-      # @param limit [Integer] Maximum number of results to return
+      # @param limit [Integer] Query param: Maximum number of results to return
       #
-      # @param prefix [String] Filter expression (query param: prefix)
+      # @param prefix [String] Query param: Filter expression (query param: prefix)
       #
-      # @param query [String] Free-form search query
+      # @param query [String] Query param: Free-form search query
       #
-      # @param sort_order [String] Sort order for results (asc or desc by creation time)
+      # @param sort_order [String] Query param: Sort order for results (asc or desc by creation time)
       #
       # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
       #
       # @return [Cadenya::Internal::CursorPagination<Cadenya::Models::WorkspaceSecret>]
       #
       # @see Cadenya::Models::WorkspaceSecretListParams
-      def list(workspace_id, params = {})
+      def list(params = {})
         parsed, options = Cadenya::WorkspaceSecretListParams.dump_request(params)
         query = Cadenya::Internal::Util.encode_query_params(parsed)
+        workspace_id =
+          parsed.delete(:workspace_id) do
+            @client.workspace_id
+          end
         @client.request(
           method: :get,
           path: ["v1/workspaces/%1$s/workspace_secrets", workspace_id],
@@ -139,7 +147,7 @@ module Cadenya
 
       # Deletes a workspace secret from the workspace
       #
-      # @overload delete(id, workspace_id:, request_options: {})
+      # @overload delete(id, workspace_id: nil, request_options: {})
       #
       # @param id [String] The secret to delete.
       #
@@ -150,11 +158,11 @@ module Cadenya
       # @return [nil]
       #
       # @see Cadenya::Models::WorkspaceSecretDeleteParams
-      def delete(id, params)
+      def delete(id, params = {})
         parsed, options = Cadenya::WorkspaceSecretDeleteParams.dump_request(params)
         workspace_id =
           parsed.delete(:workspace_id) do
-            raise ArgumentError.new("missing required path argument #{_1}")
+            @client.workspace_id
           end
         @client.request(
           method: :delete,

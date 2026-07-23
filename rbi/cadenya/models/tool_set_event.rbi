@@ -17,10 +17,19 @@ module Cadenya
       attr_writer :metadata
 
       # Event payload for a tool set operation.
-      sig { returns(T.nilable(Cadenya::ToolSetEventData)) }
+      sig { returns(T.nilable(Cadenya::ToolSetEventData::Variants)) }
       attr_reader :event
 
-      sig { params(event: Cadenya::ToolSetEventData::OrHash).void }
+      sig do
+        params(
+          event:
+            T.any(
+              Cadenya::ToolSetEventDataSyncStarted::OrHash,
+              Cadenya::ToolSetEventDataSyncCompleted::OrHash,
+              Cadenya::ToolSetEventDataSyncFailed::OrHash
+            )
+        ).void
+      end
       attr_writer :event
 
       sig { returns(T.nilable(Cadenya::ToolSetEvent::Info)) }
@@ -40,7 +49,12 @@ module Cadenya
       sig do
         params(
           metadata: Cadenya::OperationMetadata::OrHash,
-          event: Cadenya::ToolSetEventData::OrHash,
+          event:
+            T.any(
+              Cadenya::ToolSetEventDataSyncStarted::OrHash,
+              Cadenya::ToolSetEventDataSyncCompleted::OrHash,
+              Cadenya::ToolSetEventDataSyncFailed::OrHash
+            ),
           info: Cadenya::ToolSetEvent::Info::OrHash,
           tool_set_id: String
         ).returns(T.attached_class)
@@ -61,7 +75,7 @@ module Cadenya
         override.returns(
           {
             metadata: Cadenya::OperationMetadata,
-            event: Cadenya::ToolSetEventData,
+            event: Cadenya::ToolSetEventData::Variants,
             info: Cadenya::ToolSetEvent::Info,
             tool_set_id: String
           }

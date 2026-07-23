@@ -11,8 +11,11 @@ module Cadenya
           T.any(Cadenya::APIKeyCreateParams, Cadenya::Internal::AnyHash)
         end
 
-      sig { returns(String) }
-      attr_accessor :workspace_id
+      sig { returns(T.nilable(String)) }
+      attr_reader :workspace_id
+
+      sig { params(workspace_id: String).void }
+      attr_writer :workspace_id
 
       # CreateAccountResourceMetadata contains the user-provided fields for creating an
       # account-scoped resource. Read-only fields (id, account_id, profile_id) are
@@ -34,20 +37,20 @@ module Cadenya
 
       sig do
         params(
-          workspace_id: String,
           metadata: Cadenya::APIKeyCreateParams::Metadata::OrHash,
           spec: Cadenya::APIKeySpec::OrHash,
+          workspace_id: String,
           request_options: Cadenya::RequestOptions::OrHash
         ).returns(T.attached_class)
       end
       def self.new(
-        workspace_id:,
         # CreateAccountResourceMetadata contains the user-provided fields for creating an
         # account-scoped resource. Read-only fields (id, account_id, profile_id) are
         # excluded since they are set by the server.
         metadata:,
         # Configuration for an API key.
         spec:,
+        workspace_id: nil,
         request_options: {}
       )
       end

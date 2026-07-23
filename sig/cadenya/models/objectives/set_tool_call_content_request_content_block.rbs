@@ -2,42 +2,14 @@ module Cadenya
   module Models
     module Objectives
       type set_tool_call_content_request_content_block =
-        {
-          audio: Cadenya::Objectives::SetToolCallContentRequestAudioBlock,
-          image: Cadenya::Objectives::SetToolCallContentRequestImageBlock,
-          text: Cadenya::Objectives::SetToolCallContentRequestTextBlock
-        }
+        Cadenya::Objectives::SetToolCallContentRequestContentBlockText
+        | Cadenya::Objectives::SetToolCallContentRequestContentBlockImage
+        | Cadenya::Objectives::SetToolCallContentRequestContentBlockAudio
 
-      class SetToolCallContentRequestContentBlock < Cadenya::Internal::Type::BaseModel
-        attr_reader audio: Cadenya::Objectives::SetToolCallContentRequestAudioBlock?
+      module SetToolCallContentRequestContentBlock
+        extend Cadenya::Internal::Type::Union
 
-        def audio=: (
-          Cadenya::Objectives::SetToolCallContentRequestAudioBlock
-        ) -> Cadenya::Objectives::SetToolCallContentRequestAudioBlock
-
-        attr_reader image: Cadenya::Objectives::SetToolCallContentRequestImageBlock?
-
-        def image=: (
-          Cadenya::Objectives::SetToolCallContentRequestImageBlock
-        ) -> Cadenya::Objectives::SetToolCallContentRequestImageBlock
-
-        attr_reader text: Cadenya::Objectives::SetToolCallContentRequestTextBlock?
-
-        def text=: (
-          Cadenya::Objectives::SetToolCallContentRequestTextBlock
-        ) -> Cadenya::Objectives::SetToolCallContentRequestTextBlock
-
-        def initialize: (
-          ?audio: Cadenya::Objectives::SetToolCallContentRequestAudioBlock,
-          ?image: Cadenya::Objectives::SetToolCallContentRequestImageBlock,
-          ?text: Cadenya::Objectives::SetToolCallContentRequestTextBlock
-        ) -> void
-
-        def to_hash: -> {
-          audio: Cadenya::Objectives::SetToolCallContentRequestAudioBlock,
-          image: Cadenya::Objectives::SetToolCallContentRequestImageBlock,
-          text: Cadenya::Objectives::SetToolCallContentRequestTextBlock
-        }
+        def self?.variants: -> ::Array[Cadenya::Models::Objectives::set_tool_call_content_request_content_block]
       end
     end
   end
