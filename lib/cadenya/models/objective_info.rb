@@ -94,9 +94,20 @@ module Cadenya
         #
         #   @return [Cadenya::Models::TenantReference, nil]
         optional :tenant, -> { Cadenya::TenantReference }
+
+        # @!attribute widget
+        #   BareMetadata contains the minimal metadata for a resource: the ID and an
+        #   optional human-readable name. These are used for reference fields where the full
+        #   metadata (account scoping, timestamps, labels, external IDs) is not needed —
+        #   e.g., the tool references inside an agent variation spec or the tools assigned
+        #   to an objective. Both fields are server-populated; clients provide IDs through
+        #   sibling fields rather than by constructing a BareMetadata themselves.
+        #
+        #   @return [Cadenya::Models::BareMetadata, nil]
+        optional :widget, -> { Cadenya::BareMetadata }
       end
 
-      # @!method initialize(agent:, agent_variation:, created_by:, current_context_window_id:, effective_memory_cascade:, total_context_windows:, total_events:, total_input_tokens:, total_iterations:, total_output_tokens:, total_tool_calls:, subject: nil, tenant: nil)
+      # @!method initialize(agent:, agent_variation:, created_by:, current_context_window_id:, effective_memory_cascade:, total_context_windows:, total_events:, total_input_tokens:, total_iterations:, total_output_tokens:, total_tool_calls:, subject: nil, tenant: nil, widget: nil)
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::ObjectiveInfo} for more details.
       #
@@ -128,6 +139,8 @@ module Cadenya
       #   @param subject [Cadenya::Models::SubjectReference] SubjectReference is the read-only echo of a resource's subject association,
       #
       #   @param tenant [Cadenya::Models::TenantReference] TenantReference is the read-only echo of a resource's tenant association,
+      #
+      #   @param widget [Cadenya::Models::BareMetadata] BareMetadata contains the minimal metadata for a resource: the ID and an
     end
   end
 end

@@ -128,6 +128,8 @@ module Cadenya
           state: Cadenya::ObjectiveListParams::State::OrSymbol,
           subject_id: String,
           tenant_id: String,
+          widget_id: String,
+          widget_session_id: String,
           request_options: Cadenya::RequestOptions::OrHash
         ).returns(Cadenya::Internal::CursorPagination[Cadenya::Objective])
       end
@@ -164,6 +166,11 @@ module Cadenya
         # Query param: Filter to objectives associated with a tenant. Accepts the
         # canonical `tenant_…` form or the `external_id:<value>` form.
         tenant_id: nil,
+        # Query param: Filter to objectives whose conversation ran through a widget.
+        # Accepts the canonical `wgt_…` form or the `external_id:<value>` form.
+        widget_id: nil,
+        # Query param: Filter to objectives created by a specific widget session.
+        widget_session_id: nil,
         request_options: {}
       )
       end
