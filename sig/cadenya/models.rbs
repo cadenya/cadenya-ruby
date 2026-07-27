@@ -273,11 +273,19 @@ module Cadenya
 
   class SubAgentUpdated = Cadenya::Models::SubAgentUpdated
 
+  class SubjectAssertion = Cadenya::Models::SubjectAssertion
+
+  class SubjectReference = Cadenya::Models::SubjectReference
+
   class SyncCompleted = Cadenya::Models::SyncCompleted
 
   class SyncFailed = Cadenya::Models::SyncFailed
 
   class SyncStarted = Cadenya::Models::SyncStarted
+
+  class TenantAssertion = Cadenya::Models::TenantAssertion
+
+  class TenantReference = Cadenya::Models::TenantReference
 
   class ToolApprovalRequested = Cadenya::Models::ToolApprovalRequested
 
@@ -376,6 +384,44 @@ module Cadenya
   class WebhookUnsafeUnwrapParams = Cadenya::Models::WebhookUnsafeUnwrapParams
 
   class WebhookUnwrapParams = Cadenya::Models::WebhookUnwrapParams
+
+  class Widget = Cadenya::Models::Widget
+
+  class WidgetArchiveParams = Cadenya::Models::WidgetArchiveParams
+
+  class WidgetCreateParams = Cadenya::Models::WidgetCreateParams
+
+  class WidgetDeleteParams = Cadenya::Models::WidgetDeleteParams
+
+  class WidgetInfo = Cadenya::Models::WidgetInfo
+
+  class WidgetListParams = Cadenya::Models::WidgetListParams
+
+  class WidgetRetrieveParams = Cadenya::Models::WidgetRetrieveParams
+
+  class WidgetSession = Cadenya::Models::WidgetSession
+
+  class WidgetSessionCreateParams = Cadenya::Models::WidgetSessionCreateParams
+
+  class WidgetSessionDeleteParams = Cadenya::Models::WidgetSessionDeleteParams
+
+  class WidgetSessionDeleteTenantParams = Cadenya::Models::WidgetSessionDeleteTenantParams
+
+  class WidgetSessionInfo = Cadenya::Models::WidgetSessionInfo
+
+  class WidgetSessionListParams = Cadenya::Models::WidgetSessionListParams
+
+  class WidgetSessionRetrieveParams = Cadenya::Models::WidgetSessionRetrieveParams
+
+  class WidgetSessionRevokeParams = Cadenya::Models::WidgetSessionRevokeParams
+
+  class WidgetSessionSpec = Cadenya::Models::WidgetSessionSpec
+
+  class WidgetSpec = Cadenya::Models::WidgetSpec
+
+  class WidgetUnarchiveParams = Cadenya::Models::WidgetUnarchiveParams
+
+  class WidgetUpdateParams = Cadenya::Models::WidgetUpdateParams
 
   class Workspace = Cadenya::Models::Workspace
 

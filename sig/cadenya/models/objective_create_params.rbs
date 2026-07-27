@@ -10,7 +10,10 @@ module Cadenya
         first_user_message_data: ::Hash[Symbol, top],
         memory_cascade: ::Array[Cadenya::MemoryReference],
         metadata: Cadenya::CreateOperationMetadata,
+        pinned_parameters: ::Hash[Symbol, String],
         secrets: ::Array[Cadenya::ObjectiveCreateParams::Secret],
+        subject: Cadenya::SubjectAssertion,
+        tenant: Cadenya::TenantAssertion,
         variation_id: String
       }
       & Cadenya::Internal::Type::request_parameters
@@ -53,11 +56,23 @@ module Cadenya
         Cadenya::CreateOperationMetadata
       ) -> Cadenya::CreateOperationMetadata
 
+      attr_reader pinned_parameters: ::Hash[Symbol, String]?
+
+      def pinned_parameters=: (::Hash[Symbol, String]) -> ::Hash[Symbol, String]
+
       attr_reader secrets: ::Array[Cadenya::ObjectiveCreateParams::Secret]?
 
       def secrets=: (
         ::Array[Cadenya::ObjectiveCreateParams::Secret]
       ) -> ::Array[Cadenya::ObjectiveCreateParams::Secret]
+
+      attr_reader subject: Cadenya::SubjectAssertion?
+
+      def subject=: (Cadenya::SubjectAssertion) -> Cadenya::SubjectAssertion
+
+      attr_reader tenant: Cadenya::TenantAssertion?
+
+      def tenant=: (Cadenya::TenantAssertion) -> Cadenya::TenantAssertion
 
       attr_reader variation_id: String?
 
@@ -72,7 +87,10 @@ module Cadenya
         ?first_user_message_data: ::Hash[Symbol, top],
         ?memory_cascade: ::Array[Cadenya::MemoryReference],
         ?metadata: Cadenya::CreateOperationMetadata,
+        ?pinned_parameters: ::Hash[Symbol, String],
         ?secrets: ::Array[Cadenya::ObjectiveCreateParams::Secret],
+        ?subject: Cadenya::SubjectAssertion,
+        ?tenant: Cadenya::TenantAssertion,
         ?variation_id: String,
         ?request_options: Cadenya::request_opts
       ) -> void
@@ -86,7 +104,10 @@ module Cadenya
         first_user_message_data: ::Hash[Symbol, top],
         memory_cascade: ::Array[Cadenya::MemoryReference],
         metadata: Cadenya::CreateOperationMetadata,
+        pinned_parameters: ::Hash[Symbol, String],
         secrets: ::Array[Cadenya::ObjectiveCreateParams::Secret],
+        subject: Cadenya::SubjectAssertion,
+        tenant: Cadenya::TenantAssertion,
         variation_id: String,
         request_options: Cadenya::RequestOptions
       }

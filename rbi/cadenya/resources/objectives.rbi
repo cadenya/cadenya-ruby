@@ -27,7 +27,10 @@ module Cadenya
           first_user_message_data: T::Hash[Symbol, T.anything],
           memory_cascade: T::Array[Cadenya::MemoryReference::OrHash],
           metadata: Cadenya::CreateOperationMetadata::OrHash,
+          pinned_parameters: T::Hash[Symbol, String],
           secrets: T::Array[Cadenya::ObjectiveCreateParams::Secret::OrHash],
+          subject: Cadenya::SubjectAssertion::OrHash,
+          tenant: Cadenya::TenantAssertion::OrHash,
           variation_id: String,
           request_options: Cadenya::RequestOptions::OrHash
         ).returns(Cadenya::Objective)
@@ -72,9 +75,25 @@ module Cadenya
         # creating an operation. Read-only fields (id, account_id, workspace_id,
         # created_at, profile_id) are excluded since they are set by the server.
         metadata: nil,
+        # Body param: Parameters forced onto this objective's tool calls. A pinned
+        # parameter is an overlay on a tool's JSON schema: the parameter is removed from
+        # what the LLM sees, and its value is always overwritten server-side with the
+        # pinned value — the model cannot choose a different value for it.
+        pinned_parameters: nil,
         # Body param: Secrets that can be used in the headers for tool calls using the
         # secret interpolation format.
         secrets: nil,
+        # Body param: SubjectAssertion identifies a person within a tenant in the
+        # customer's own namespace — typically their user id. Asserting a subject upserts
+        # the subject record under the asserted tenant and associates the created resource
+        # with it. A subject assertion is only valid alongside a tenant assertion: subject
+        # identifiers are scoped to their tenant.
+        subject: nil,
+        # Body param: TenantAssertion identifies a tenant in the customer's own namespace
+        # — their org, company, or team identifier for an end user. Asserting a tenant
+        # upserts the tenant record in the workspace (keyed on `id` as the tenant's
+        # external_id) and associates the created resource with it.
+        tenant: nil,
         # Body param: Optional explicit variation selection. Overrides the agent's
         # variation_selection_mode.
         variation_id: nil,
@@ -107,6 +126,8 @@ module Cadenya
           profile_id: String,
           sort_order: String,
           state: Cadenya::ObjectiveListParams::State::OrSymbol,
+          subject_id: String,
+          tenant_id: String,
           request_options: Cadenya::RequestOptions::OrHash
         ).returns(Cadenya::Internal::CursorPagination[Cadenya::Objective])
       end
@@ -136,6 +157,13 @@ module Cadenya
         sort_order: nil,
         # Query param: Filter by state
         state: nil,
+        # Query param: Filter to objectives associated with a subject. Accepts the
+        # canonical `subj_…` form or the `external_id:<value>` form; the external_id form
+        # is scoped within a tenant and requires `tenant_id` to also be set.
+        subject_id: nil,
+        # Query param: Filter to objectives associated with a tenant. Accepts the
+        # canonical `tenant_…` form or the `external_id:<value>` form.
+        tenant_id: nil,
         request_options: {}
       )
       end

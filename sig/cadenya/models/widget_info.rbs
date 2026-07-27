@@ -1,0 +1,43 @@
+module Cadenya
+  module Models
+    type widget_info =
+      {
+        agent: Cadenya::BareMetadata,
+        created_by: Cadenya::Profile,
+        dns_label: String,
+        host: String
+      }
+
+    class WidgetInfo < Cadenya::Internal::Type::BaseModel
+      attr_reader created_by: Cadenya::Profile?
+
+      def created_by=: (Cadenya::Profile) -> Cadenya::Profile
+
+      attr_reader agent: Cadenya::BareMetadata?
+
+      def agent=: (Cadenya::BareMetadata) -> Cadenya::BareMetadata
+
+      attr_reader dns_label: String?
+
+      def dns_label=: (String) -> String
+
+      attr_reader host: String?
+
+      def host=: (String) -> String
+
+      def initialize: (
+        ?agent: Cadenya::BareMetadata,
+        ?created_by: Cadenya::Profile,
+        ?dns_label: String,
+        ?host: String
+      ) -> void
+
+      def to_hash: -> {
+        agent: Cadenya::BareMetadata,
+        created_by: Cadenya::Profile,
+        dns_label: String,
+        host: String
+      }
+    end
+  end
+end
