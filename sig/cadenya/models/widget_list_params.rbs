@@ -1,0 +1,70 @@
+module Cadenya
+  module Models
+    type widget_list_params =
+      {
+        workspace_id: String,
+        agent_id: String,
+        cursor: String,
+        include_info: bool,
+        labels: String,
+        limit: Integer,
+        sort_order: String
+      }
+      & Cadenya::Internal::Type::request_parameters
+
+    class WidgetListParams < Cadenya::Internal::Type::BaseModel
+      extend Cadenya::Internal::Type::RequestParameters::Converter
+      include Cadenya::Internal::Type::RequestParameters
+
+      attr_reader workspace_id: String?
+
+      def workspace_id=: (String) -> String
+
+      attr_reader agent_id: String?
+
+      def agent_id=: (String) -> String
+
+      attr_reader cursor: String?
+
+      def cursor=: (String) -> String
+
+      attr_reader include_info: bool?
+
+      def include_info=: (bool) -> bool
+
+      attr_reader labels: String?
+
+      def labels=: (String) -> String
+
+      attr_reader limit: Integer?
+
+      def limit=: (Integer) -> Integer
+
+      attr_reader sort_order: String?
+
+      def sort_order=: (String) -> String
+
+      def initialize: (
+        ?workspace_id: String,
+        ?agent_id: String,
+        ?cursor: String,
+        ?include_info: bool,
+        ?labels: String,
+        ?limit: Integer,
+        ?sort_order: String,
+        ?request_options: Cadenya::request_opts
+      ) -> void
+
+      def to_hash: -> {
+        workspace_id: String,
+        agent_id: String,
+        cursor: String,
+        include_info: bool,
+        labels: String,
+        limit: Integer,
+        sort_order: String,
+        request_options: Cadenya::RequestOptions
+      }
+    end
+  end
+end

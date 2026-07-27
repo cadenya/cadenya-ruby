@@ -1,0 +1,53 @@
+module Cadenya
+  module Resources
+    class WidgetSessions
+      def create: (
+        spec: Cadenya::WidgetSessionSpec,
+        ?workspace_id: String,
+        ?metadata: Cadenya::CreateOperationMetadata,
+        ?secrets: ::Array[Cadenya::WidgetSessionCreateParams::Secret],
+        ?request_options: Cadenya::request_opts
+      ) -> Cadenya::WidgetSession
+
+      def retrieve: (
+        String id,
+        ?workspace_id: String,
+        ?request_options: Cadenya::request_opts
+      ) -> Cadenya::WidgetSession
+
+      def list: (
+        ?workspace_id: String,
+        ?cursor: String,
+        ?include_info: bool,
+        ?labels: String,
+        ?limit: Integer,
+        ?sort_order: String,
+        ?state: Cadenya::Models::WidgetSessionListParams::state,
+        ?subject_id: String,
+        ?tenant_id: String,
+        ?widget_id: String,
+        ?request_options: Cadenya::request_opts
+      ) -> Cadenya::Internal::CursorPagination[Cadenya::WidgetSession]
+
+      def delete: (
+        String id,
+        ?workspace_id: String,
+        ?request_options: Cadenya::request_opts
+      ) -> nil
+
+      def delete_tenant: (
+        ?workspace_id: String,
+        ?tenant_id: String,
+        ?request_options: Cadenya::request_opts
+      ) -> Cadenya::Models::WidgetSessionDeleteTenantResponse
+
+      def revoke: (
+        String id,
+        ?workspace_id: String,
+        ?request_options: Cadenya::request_opts
+      ) -> Cadenya::WidgetSession
+
+      def initialize: (client: Cadenya::Client) -> void
+    end
+  end
+end

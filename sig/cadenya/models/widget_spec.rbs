@@ -1,0 +1,34 @@
+module Cadenya
+  module Models
+    type widget_spec =
+      {
+        agent_id: String,
+        origin_allowlist: ::Array[String],
+        variation_id: String
+      }
+
+    class WidgetSpec < Cadenya::Internal::Type::BaseModel
+      attr_accessor agent_id: String
+
+      attr_reader origin_allowlist: ::Array[String]?
+
+      def origin_allowlist=: (::Array[String]) -> ::Array[String]
+
+      attr_reader variation_id: String?
+
+      def variation_id=: (String) -> String
+
+      def initialize: (
+        agent_id: String,
+        ?origin_allowlist: ::Array[String],
+        ?variation_id: String
+      ) -> void
+
+      def to_hash: -> {
+        agent_id: String,
+        origin_allowlist: ::Array[String],
+        variation_id: String
+      }
+    end
+  end
+end

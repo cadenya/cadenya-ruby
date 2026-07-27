@@ -101,6 +101,13 @@ module Cadenya
         #   @return [String, nil]
         optional :parent_objective_id, String, api_name: :parentObjectiveId
 
+        # @!attribute pinned_parameters
+        #   Parameters forced onto this objective's tool calls, as provided at creation. See
+        #   CreateObjectiveRequest.pinned_parameters for semantics.
+        #
+        #   @return [Hash{Symbol=>String}, nil]
+        optional :pinned_parameters, Cadenya::Internal::Type::HashOf[String], api_name: :pinnedParameters
+
         # @!attribute state_message
         #   Optional human-readable detail about the current state (e.g. a failure reason).
         #
@@ -116,7 +123,7 @@ module Cadenya
                  api_name: :systemPromptData
       end
 
-      # @!method initialize(config_snapshot:, first_user_message:, metadata:, state:, system_prompt:, episodic_memory: nil, first_user_message_data: nil, info: nil, memory_cascade: nil, output: nil, parent_objective_id: nil, secrets: nil, state_message: nil, system_prompt_data: nil)
+      # @!method initialize(config_snapshot:, first_user_message:, metadata:, state:, system_prompt:, episodic_memory: nil, first_user_message_data: nil, info: nil, memory_cascade: nil, output: nil, parent_objective_id: nil, pinned_parameters: nil, secrets: nil, state_message: nil, system_prompt_data: nil)
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::Objective} for more details.
       #
@@ -145,6 +152,8 @@ module Cadenya
       #   @param output [Hash{Symbol=>Object}] The output of the objective, populated when the objective completes. Will match
       #
       #   @param parent_objective_id [String] A parent objective means the objective was spawned off using a separate agent to
+      #
+      #   @param pinned_parameters [Hash{Symbol=>String}] Parameters forced onto this objective's tool calls, as provided at
       #
       #   @param secrets [Array<Cadenya::Models::ObjectiveSecret>] Secrets that can be used in the headers for tool calls using the secret interpol
       #

@@ -112,6 +112,19 @@ module Cadenya
     # @return [Cadenya::Resources::Webhooks]
     attr_reader :webhooks
 
+    # Manage embeddable chat widgets. A widget binds an agent to a globally unique
+    # hostname with a per-widget origin allowlist; browsers reach it with session
+    # tokens minted via WidgetSessionService.
+    # @return [Cadenya::Resources::Widgets]
+    attr_reader :widgets
+
+    # Mint and manage widget sessions. Session creation is server-to-server only: the
+    # customer's backend authenticates its visitor, asserts tenant/subject context,
+    # attaches any per-visitor secrets, and receives a short-lived bearer token the
+    # browser uses against the widget host.
+    # @return [Cadenya::Resources::WidgetSessions]
+    attr_reader :widget_sessions
+
     # @api private
     #
     # @return [Hash{String=>String}]
@@ -199,6 +212,8 @@ module Cadenya
       @workspaces = Cadenya::Resources::Workspaces.new(client: self)
       @workspace_admin = Cadenya::Resources::WorkspaceAdmin.new(client: self)
       @webhooks = Cadenya::Resources::Webhooks.new(client: self)
+      @widgets = Cadenya::Resources::Widgets.new(client: self)
+      @widget_sessions = Cadenya::Resources::WidgetSessions.new(client: self)
     end
   end
 end

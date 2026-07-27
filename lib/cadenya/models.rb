@@ -313,11 +313,19 @@ module Cadenya
 
   SubAgentUpdated = Cadenya::Models::SubAgentUpdated
 
+  SubjectAssertion = Cadenya::Models::SubjectAssertion
+
+  SubjectReference = Cadenya::Models::SubjectReference
+
   SyncCompleted = Cadenya::Models::SyncCompleted
 
   SyncFailed = Cadenya::Models::SyncFailed
 
   SyncStarted = Cadenya::Models::SyncStarted
+
+  TenantAssertion = Cadenya::Models::TenantAssertion
+
+  TenantReference = Cadenya::Models::TenantReference
 
   ToolApprovalRequested = Cadenya::Models::ToolApprovalRequested
 
@@ -416,6 +424,44 @@ module Cadenya
   WebhookUnsafeUnwrapParams = Cadenya::Models::WebhookUnsafeUnwrapParams
 
   WebhookUnwrapParams = Cadenya::Models::WebhookUnwrapParams
+
+  Widget = Cadenya::Models::Widget
+
+  WidgetArchiveParams = Cadenya::Models::WidgetArchiveParams
+
+  WidgetCreateParams = Cadenya::Models::WidgetCreateParams
+
+  WidgetDeleteParams = Cadenya::Models::WidgetDeleteParams
+
+  WidgetInfo = Cadenya::Models::WidgetInfo
+
+  WidgetListParams = Cadenya::Models::WidgetListParams
+
+  WidgetRetrieveParams = Cadenya::Models::WidgetRetrieveParams
+
+  WidgetSession = Cadenya::Models::WidgetSession
+
+  WidgetSessionCreateParams = Cadenya::Models::WidgetSessionCreateParams
+
+  WidgetSessionDeleteParams = Cadenya::Models::WidgetSessionDeleteParams
+
+  WidgetSessionDeleteTenantParams = Cadenya::Models::WidgetSessionDeleteTenantParams
+
+  WidgetSessionInfo = Cadenya::Models::WidgetSessionInfo
+
+  WidgetSessionListParams = Cadenya::Models::WidgetSessionListParams
+
+  WidgetSessionRetrieveParams = Cadenya::Models::WidgetSessionRetrieveParams
+
+  WidgetSessionRevokeParams = Cadenya::Models::WidgetSessionRevokeParams
+
+  WidgetSessionSpec = Cadenya::Models::WidgetSessionSpec
+
+  WidgetSpec = Cadenya::Models::WidgetSpec
+
+  WidgetUnarchiveParams = Cadenya::Models::WidgetUnarchiveParams
+
+  WidgetUpdateParams = Cadenya::Models::WidgetUpdateParams
 
   Workspace = Cadenya::Models::Workspace
 

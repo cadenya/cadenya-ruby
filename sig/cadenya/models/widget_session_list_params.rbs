@@ -1,0 +1,112 @@
+module Cadenya
+  module Models
+    type widget_session_list_params =
+      {
+        workspace_id: String,
+        cursor: String,
+        include_info: bool,
+        labels: String,
+        limit: Integer,
+        sort_order: String,
+        state: Cadenya::Models::WidgetSessionListParams::state,
+        subject_id: String,
+        tenant_id: String,
+        widget_id: String
+      }
+      & Cadenya::Internal::Type::request_parameters
+
+    class WidgetSessionListParams < Cadenya::Internal::Type::BaseModel
+      extend Cadenya::Internal::Type::RequestParameters::Converter
+      include Cadenya::Internal::Type::RequestParameters
+
+      attr_reader workspace_id: String?
+
+      def workspace_id=: (String) -> String
+
+      attr_reader cursor: String?
+
+      def cursor=: (String) -> String
+
+      attr_reader include_info: bool?
+
+      def include_info=: (bool) -> bool
+
+      attr_reader labels: String?
+
+      def labels=: (String) -> String
+
+      attr_reader limit: Integer?
+
+      def limit=: (Integer) -> Integer
+
+      attr_reader sort_order: String?
+
+      def sort_order=: (String) -> String
+
+      attr_reader state: Cadenya::Models::WidgetSessionListParams::state?
+
+      def state=: (
+        Cadenya::Models::WidgetSessionListParams::state
+      ) -> Cadenya::Models::WidgetSessionListParams::state
+
+      attr_reader subject_id: String?
+
+      def subject_id=: (String) -> String
+
+      attr_reader tenant_id: String?
+
+      def tenant_id=: (String) -> String
+
+      attr_reader widget_id: String?
+
+      def widget_id=: (String) -> String
+
+      def initialize: (
+        ?workspace_id: String,
+        ?cursor: String,
+        ?include_info: bool,
+        ?labels: String,
+        ?limit: Integer,
+        ?sort_order: String,
+        ?state: Cadenya::Models::WidgetSessionListParams::state,
+        ?subject_id: String,
+        ?tenant_id: String,
+        ?widget_id: String,
+        ?request_options: Cadenya::request_opts
+      ) -> void
+
+      def to_hash: -> {
+        workspace_id: String,
+        cursor: String,
+        include_info: bool,
+        labels: String,
+        limit: Integer,
+        sort_order: String,
+        state: Cadenya::Models::WidgetSessionListParams::state,
+        subject_id: String,
+        tenant_id: String,
+        widget_id: String,
+        request_options: Cadenya::RequestOptions
+      }
+
+      type state =
+        :STATE_UNSPECIFIED
+        | :STATE_ACTIVE
+        | :STATE_EXPIRED
+        | :STATE_REVOKED
+        | :STATE_EXHAUSTED
+
+      module State
+        extend Cadenya::Internal::Type::Enum
+
+        STATE_UNSPECIFIED: :STATE_UNSPECIFIED
+        STATE_ACTIVE: :STATE_ACTIVE
+        STATE_EXPIRED: :STATE_EXPIRED
+        STATE_REVOKED: :STATE_REVOKED
+        STATE_EXHAUSTED: :STATE_EXHAUSTED
+
+        def self?.values: -> ::Array[Cadenya::Models::WidgetSessionListParams::state]
+      end
+    end
+  end
+end

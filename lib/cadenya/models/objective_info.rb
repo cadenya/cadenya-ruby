@@ -80,9 +80,23 @@ module Cadenya
         #
         #   @return [Integer]
         required :total_tool_calls, Integer, api_name: :totalToolCalls
+
+        # @!attribute subject
+        #   SubjectReference is the read-only echo of a resource's subject association,
+        #   carrying both Cadenya's canonical id and the customer's own key.
+        #
+        #   @return [Cadenya::Models::SubjectReference, nil]
+        optional :subject, -> { Cadenya::SubjectReference }
+
+        # @!attribute tenant
+        #   TenantReference is the read-only echo of a resource's tenant association,
+        #   carrying both Cadenya's canonical id and the customer's own key.
+        #
+        #   @return [Cadenya::Models::TenantReference, nil]
+        optional :tenant, -> { Cadenya::TenantReference }
       end
 
-      # @!method initialize(agent:, agent_variation:, created_by:, current_context_window_id:, effective_memory_cascade:, total_context_windows:, total_events:, total_input_tokens:, total_iterations:, total_output_tokens:, total_tool_calls:)
+      # @!method initialize(agent:, agent_variation:, created_by:, current_context_window_id:, effective_memory_cascade:, total_context_windows:, total_events:, total_input_tokens:, total_iterations:, total_output_tokens:, total_tool_calls:, subject: nil, tenant: nil)
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::ObjectiveInfo} for more details.
       #
@@ -110,6 +124,10 @@ module Cadenya
       #   @param total_output_tokens [Integer] Total output tokens generated across all LLM completions across all context wind
       #
       #   @param total_tool_calls [Integer] Total number of tool calls made during execution
+      #
+      #   @param subject [Cadenya::Models::SubjectReference] SubjectReference is the read-only echo of a resource's subject association,
+      #
+      #   @param tenant [Cadenya::Models::TenantReference] TenantReference is the read-only echo of a resource's tenant association,
     end
   end
 end

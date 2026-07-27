@@ -1,0 +1,49 @@
+module Cadenya
+  module Models
+    type widget =
+      {
+        metadata: Cadenya::ResourceMetadata,
+        spec: Cadenya::WidgetSpec,
+        state: Cadenya::Models::Widget::state,
+        info: Cadenya::WidgetInfo
+      }
+
+    class Widget < Cadenya::Internal::Type::BaseModel
+      attr_accessor metadata: Cadenya::ResourceMetadata
+
+      attr_accessor spec: Cadenya::WidgetSpec
+
+      attr_reader info: Cadenya::WidgetInfo?
+
+      def info=: (Cadenya::WidgetInfo) -> Cadenya::WidgetInfo
+
+      attr_accessor state: Cadenya::Models::Widget::state
+
+      def initialize: (
+        metadata: Cadenya::ResourceMetadata,
+        spec: Cadenya::WidgetSpec,
+        state: Cadenya::Models::Widget::state,
+        ?info: Cadenya::WidgetInfo
+      ) -> void
+
+      def to_hash: -> {
+        metadata: Cadenya::ResourceMetadata,
+        spec: Cadenya::WidgetSpec,
+        state: Cadenya::Models::Widget::state,
+        info: Cadenya::WidgetInfo
+      }
+
+      type state = :STATE_UNSPECIFIED | :STATE_ACTIVE | :STATE_ARCHIVED
+
+      module State
+        extend Cadenya::Internal::Type::Enum
+
+        STATE_UNSPECIFIED: :STATE_UNSPECIFIED
+        STATE_ACTIVE: :STATE_ACTIVE
+        STATE_ARCHIVED: :STATE_ARCHIVED
+
+        def self?.values: -> ::Array[Cadenya::Models::Widget::state]
+      end
+    end
+  end
+end

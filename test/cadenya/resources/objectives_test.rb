@@ -30,6 +30,7 @@ class Cadenya::Test::Resources::ObjectivesTest < Cadenya::Test::ResourceTest
         memory_cascade: ^(Cadenya::Internal::Type::ArrayOf[Cadenya::MemoryReference]) | nil,
         output: ^(Cadenya::Internal::Type::HashOf[Cadenya::Internal::Type::Unknown]) | nil,
         parent_objective_id: String | nil,
+        pinned_parameters: ^(Cadenya::Internal::Type::HashOf[String]) | nil,
         secrets: ^(Cadenya::Internal::Type::ArrayOf[Cadenya::ObjectiveSecret]) | nil,
         state_message: String | nil,
         system_prompt_data: ^(Cadenya::Internal::Type::HashOf[Cadenya::Internal::Type::Unknown]) | nil
@@ -63,6 +64,7 @@ class Cadenya::Test::Resources::ObjectivesTest < Cadenya::Test::ResourceTest
         memory_cascade: ^(Cadenya::Internal::Type::ArrayOf[Cadenya::MemoryReference]) | nil,
         output: ^(Cadenya::Internal::Type::HashOf[Cadenya::Internal::Type::Unknown]) | nil,
         parent_objective_id: String | nil,
+        pinned_parameters: ^(Cadenya::Internal::Type::HashOf[String]) | nil,
         secrets: ^(Cadenya::Internal::Type::ArrayOf[Cadenya::ObjectiveSecret]) | nil,
         state_message: String | nil,
         system_prompt_data: ^(Cadenya::Internal::Type::HashOf[Cadenya::Internal::Type::Unknown]) | nil
@@ -99,6 +101,7 @@ class Cadenya::Test::Resources::ObjectivesTest < Cadenya::Test::ResourceTest
         memory_cascade: ^(Cadenya::Internal::Type::ArrayOf[Cadenya::MemoryReference]) | nil,
         output: ^(Cadenya::Internal::Type::HashOf[Cadenya::Internal::Type::Unknown]) | nil,
         parent_objective_id: String | nil,
+        pinned_parameters: ^(Cadenya::Internal::Type::HashOf[String]) | nil,
         secrets: ^(Cadenya::Internal::Type::ArrayOf[Cadenya::ObjectiveSecret]) | nil,
         state_message: String | nil,
         system_prompt_data: ^(Cadenya::Internal::Type::HashOf[Cadenya::Internal::Type::Unknown]) | nil
@@ -132,6 +135,7 @@ class Cadenya::Test::Resources::ObjectivesTest < Cadenya::Test::ResourceTest
         memory_cascade: ^(Cadenya::Internal::Type::ArrayOf[Cadenya::MemoryReference]) | nil,
         output: ^(Cadenya::Internal::Type::HashOf[Cadenya::Internal::Type::Unknown]) | nil,
         parent_objective_id: String | nil,
+        pinned_parameters: ^(Cadenya::Internal::Type::HashOf[String]) | nil,
         secrets: ^(Cadenya::Internal::Type::ArrayOf[Cadenya::ObjectiveSecret]) | nil,
         state_message: String | nil,
         system_prompt_data: ^(Cadenya::Internal::Type::HashOf[Cadenya::Internal::Type::Unknown]) | nil

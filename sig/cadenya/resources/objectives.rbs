@@ -18,7 +18,10 @@ module Cadenya
         ?first_user_message_data: ::Hash[Symbol, top],
         ?memory_cascade: ::Array[Cadenya::MemoryReference],
         ?metadata: Cadenya::CreateOperationMetadata,
+        ?pinned_parameters: ::Hash[Symbol, String],
         ?secrets: ::Array[Cadenya::ObjectiveCreateParams::Secret],
+        ?subject: Cadenya::SubjectAssertion,
+        ?tenant: Cadenya::TenantAssertion,
         ?variation_id: String,
         ?request_options: Cadenya::request_opts
       ) -> Cadenya::Objective
@@ -41,6 +44,8 @@ module Cadenya
         ?profile_id: String,
         ?sort_order: String,
         ?state: Cadenya::Models::ObjectiveListParams::state,
+        ?subject_id: String,
+        ?tenant_id: String,
         ?request_options: Cadenya::request_opts
       ) -> Cadenya::Internal::CursorPagination[Cadenya::Objective]
 

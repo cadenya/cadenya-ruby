@@ -1,0 +1,64 @@
+module Cadenya
+  module Models
+    type widget_session_info =
+      {
+        agent: Cadenya::BareMetadata,
+        host: String,
+        last_active_at: Time,
+        message_count: Integer,
+        subject: Cadenya::SubjectReference,
+        tenant: Cadenya::TenantReference,
+        widget: Cadenya::BareMetadata
+      }
+
+    class WidgetSessionInfo < Cadenya::Internal::Type::BaseModel
+      attr_reader agent: Cadenya::BareMetadata?
+
+      def agent=: (Cadenya::BareMetadata) -> Cadenya::BareMetadata
+
+      attr_reader host: String?
+
+      def host=: (String) -> String
+
+      attr_reader last_active_at: Time?
+
+      def last_active_at=: (Time) -> Time
+
+      attr_reader message_count: Integer?
+
+      def message_count=: (Integer) -> Integer
+
+      attr_reader subject: Cadenya::SubjectReference?
+
+      def subject=: (Cadenya::SubjectReference) -> Cadenya::SubjectReference
+
+      attr_reader tenant: Cadenya::TenantReference?
+
+      def tenant=: (Cadenya::TenantReference) -> Cadenya::TenantReference
+
+      attr_reader widget: Cadenya::BareMetadata?
+
+      def widget=: (Cadenya::BareMetadata) -> Cadenya::BareMetadata
+
+      def initialize: (
+        ?agent: Cadenya::BareMetadata,
+        ?host: String,
+        ?last_active_at: Time,
+        ?message_count: Integer,
+        ?subject: Cadenya::SubjectReference,
+        ?tenant: Cadenya::TenantReference,
+        ?widget: Cadenya::BareMetadata
+      ) -> void
+
+      def to_hash: -> {
+        agent: Cadenya::BareMetadata,
+        host: String,
+        last_active_at: Time,
+        message_count: Integer,
+        subject: Cadenya::SubjectReference,
+        tenant: Cadenya::TenantReference,
+        widget: Cadenya::BareMetadata
+      }
+    end
+  end
+end

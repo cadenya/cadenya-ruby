@@ -13,6 +13,7 @@ module Cadenya
         memory_cascade: ::Array[Cadenya::MemoryReference],
         output: ::Hash[Symbol, top],
         parent_objective_id: String,
+        pinned_parameters: ::Hash[Symbol, String],
         secrets: ::Array[Cadenya::ObjectiveSecret],
         state_message: String,
         system_prompt_data: ::Hash[Symbol, top]
@@ -63,6 +64,10 @@ module Cadenya
 
       def parent_objective_id=: (String) -> String
 
+      attr_reader pinned_parameters: ::Hash[Symbol, String]?
+
+      def pinned_parameters=: (::Hash[Symbol, String]) -> ::Hash[Symbol, String]
+
       attr_reader state_message: String?
 
       def state_message=: (String) -> String
@@ -83,6 +88,7 @@ module Cadenya
         ?memory_cascade: ::Array[Cadenya::MemoryReference],
         ?output: ::Hash[Symbol, top],
         ?parent_objective_id: String,
+        ?pinned_parameters: ::Hash[Symbol, String],
         ?secrets: ::Array[Cadenya::ObjectiveSecret],
         ?state_message: String,
         ?system_prompt_data: ::Hash[Symbol, top]
@@ -100,6 +106,7 @@ module Cadenya
         memory_cascade: ::Array[Cadenya::MemoryReference],
         output: ::Hash[Symbol, top],
         parent_objective_id: String,
+        pinned_parameters: ::Hash[Symbol, String],
         secrets: ::Array[Cadenya::ObjectiveSecret],
         state_message: String,
         system_prompt_data: ::Hash[Symbol, top]
