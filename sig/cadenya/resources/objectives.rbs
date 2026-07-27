@@ -46,6 +46,8 @@ module Cadenya
         ?state: Cadenya::Models::ObjectiveListParams::state,
         ?subject_id: String,
         ?tenant_id: String,
+        ?widget_id: String,
+        ?widget_session_id: String,
         ?request_options: Cadenya::request_opts
       ) -> Cadenya::Internal::CursorPagination[Cadenya::Objective]
 

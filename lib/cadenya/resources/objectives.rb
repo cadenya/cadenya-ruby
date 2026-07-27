@@ -98,7 +98,7 @@ module Cadenya
       #
       # Lists all objectives in the workspace
       #
-      # @overload list(workspace_id: nil, agent_id: nil, agent_schedule_id: nil, cursor: nil, include_info: nil, labels: nil, limit: nil, parent_objective_id: nil, profile_id: nil, sort_order: nil, state: nil, subject_id: nil, tenant_id: nil, request_options: {})
+      # @overload list(workspace_id: nil, agent_id: nil, agent_schedule_id: nil, cursor: nil, include_info: nil, labels: nil, limit: nil, parent_objective_id: nil, profile_id: nil, sort_order: nil, state: nil, subject_id: nil, tenant_id: nil, widget_id: nil, widget_session_id: nil, request_options: {})
       #
       # @param workspace_id [String] Path param
       #
@@ -126,6 +126,10 @@ module Cadenya
       #
       # @param tenant_id [String] Query param: Filter to objectives associated with a tenant. Accepts the canonica
       #
+      # @param widget_id [String] Query param: Filter to objectives whose conversation ran through a widget. Accep
+      #
+      # @param widget_session_id [String] Query param: Filter to objectives created by a specific widget session.
+      #
       # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
       #
       # @return [Cadenya::Internal::CursorPagination<Cadenya::Models::Objective>]
@@ -149,7 +153,9 @@ module Cadenya
             profile_id: "profileId",
             sort_order: "sortOrder",
             subject_id: "subjectId",
-            tenant_id: "tenantId"
+            tenant_id: "tenantId",
+            widget_id: "widgetId",
+            widget_session_id: "widgetSessionId"
           ),
           page: Cadenya::Internal::CursorPagination,
           model: Cadenya::Objective,
