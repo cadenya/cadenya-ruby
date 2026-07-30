@@ -1,0 +1,70 @@
+module Cadenya
+  module Models
+    module Tenants
+      type subject_list_params =
+        {
+          workspace_id: String,
+          tenant_id: String,
+          cursor: String,
+          include_info: bool,
+          limit: Integer,
+          query: String,
+          sort_order: String
+        }
+        & Cadenya::Internal::Type::request_parameters
+
+      class SubjectListParams < Cadenya::Internal::Type::BaseModel
+        extend Cadenya::Internal::Type::RequestParameters::Converter
+        include Cadenya::Internal::Type::RequestParameters
+
+        attr_reader workspace_id: String?
+
+        def workspace_id=: (String) -> String
+
+        attr_accessor tenant_id: String
+
+        attr_reader cursor: String?
+
+        def cursor=: (String) -> String
+
+        attr_reader include_info: bool?
+
+        def include_info=: (bool) -> bool
+
+        attr_reader limit: Integer?
+
+        def limit=: (Integer) -> Integer
+
+        attr_reader query: String?
+
+        def query=: (String) -> String
+
+        attr_reader sort_order: String?
+
+        def sort_order=: (String) -> String
+
+        def initialize: (
+          tenant_id: String,
+          ?workspace_id: String,
+          ?cursor: String,
+          ?include_info: bool,
+          ?limit: Integer,
+          ?query: String,
+          ?sort_order: String,
+          ?request_options: Cadenya::request_opts
+        ) -> void
+
+        def to_hash: -> {
+          workspace_id: String,
+          tenant_id: String,
+          cursor: String,
+          include_info: bool,
+          limit: Integer,
+          query: String,
+          sort_order: String,
+          request_options: Cadenya::RequestOptions
+        }
+      end
+    end
+  end
+end

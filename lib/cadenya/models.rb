@@ -313,7 +313,11 @@ module Cadenya
 
   SubAgentUpdated = Cadenya::Models::SubAgentUpdated
 
+  Subject = Cadenya::Models::Subject
+
   SubjectAssertion = Cadenya::Models::SubjectAssertion
+
+  SubjectInfo = Cadenya::Models::SubjectInfo
 
   SubjectReference = Cadenya::Models::SubjectReference
 
@@ -323,9 +327,21 @@ module Cadenya
 
   SyncStarted = Cadenya::Models::SyncStarted
 
+  Tenant = Cadenya::Models::Tenant
+
   TenantAssertion = Cadenya::Models::TenantAssertion
 
+  TenantDeleteParams = Cadenya::Models::TenantDeleteParams
+
+  TenantInfo = Cadenya::Models::TenantInfo
+
+  TenantListParams = Cadenya::Models::TenantListParams
+
   TenantReference = Cadenya::Models::TenantReference
+
+  TenantRetrieveParams = Cadenya::Models::TenantRetrieveParams
+
+  Tenants = Cadenya::Models::Tenants
 
   ToolApprovalRequested = Cadenya::Models::ToolApprovalRequested
 
