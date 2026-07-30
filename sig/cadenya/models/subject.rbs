@@ -1,0 +1,24 @@
+module Cadenya
+  module Models
+    type subject =
+      { metadata: Cadenya::ResourceMetadata, info: Cadenya::SubjectInfo }
+
+    class Subject < Cadenya::Internal::Type::BaseModel
+      attr_accessor metadata: Cadenya::ResourceMetadata
+
+      attr_reader info: Cadenya::SubjectInfo?
+
+      def info=: (Cadenya::SubjectInfo) -> Cadenya::SubjectInfo
+
+      def initialize: (
+        metadata: Cadenya::ResourceMetadata,
+        ?info: Cadenya::SubjectInfo
+      ) -> void
+
+      def to_hash: -> {
+        metadata: Cadenya::ResourceMetadata,
+        info: Cadenya::SubjectInfo
+      }
+    end
+  end
+end

@@ -1,0 +1,36 @@
+module Cadenya
+  module Models
+    type tenant_info =
+      {
+        objective_count: Integer,
+        subject_count: Integer,
+        widget_session_count: Integer
+      }
+
+    class TenantInfo < Cadenya::Internal::Type::BaseModel
+      attr_reader objective_count: Integer?
+
+      def objective_count=: (Integer) -> Integer
+
+      attr_reader subject_count: Integer?
+
+      def subject_count=: (Integer) -> Integer
+
+      attr_reader widget_session_count: Integer?
+
+      def widget_session_count=: (Integer) -> Integer
+
+      def initialize: (
+        ?objective_count: Integer,
+        ?subject_count: Integer,
+        ?widget_session_count: Integer
+      ) -> void
+
+      def to_hash: -> {
+        objective_count: Integer,
+        subject_count: Integer,
+        widget_session_count: Integer
+      }
+    end
+  end
+end

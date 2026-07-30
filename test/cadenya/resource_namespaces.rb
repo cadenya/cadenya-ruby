@@ -12,6 +12,9 @@ module Cadenya
       module Objectives
       end
 
+      module Tenants
+      end
+
       module ToolSets
       end
 
