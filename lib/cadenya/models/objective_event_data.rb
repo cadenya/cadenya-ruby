@@ -41,8 +41,10 @@ module Cadenya
 
       variant :timedOut, -> { Cadenya::ObjectiveEventDataTimedOut }
 
+      variant :reasoning, -> { Cadenya::ObjectiveEventDataReasoning }
+
       # @!method self.variants
-      #   @return [Array(Cadenya::Models::ObjectiveEventDataUserMessage, Cadenya::Models::ObjectiveEventDataToolApprovalRequested, Cadenya::Models::ObjectiveEventDataToolApproved, Cadenya::Models::ObjectiveEventDataToolDenied, Cadenya::Models::ObjectiveEventDataToolCalled, Cadenya::Models::ObjectiveEventDataError, Cadenya::Models::ObjectiveEventDataAssistantMessage, Cadenya::Models::ObjectiveEventDataToolResult, Cadenya::Models::ObjectiveEventDataToolError, Cadenya::Models::ObjectiveEventDataContextWindowCompacted, Cadenya::Models::ObjectiveEventDataMemoryRead, Cadenya::Models::ObjectiveEventDataCancelled, Cadenya::Models::ObjectiveEventDataSubAgentSpawned, Cadenya::Models::ObjectiveEventDataSubAgentUpdated, Cadenya::Models::ObjectiveEventDataFinalized, Cadenya::Models::ObjectiveEventDataNotice, Cadenya::Models::ObjectiveEventDataTimedOut)]
+      #   @return [Array(Cadenya::Models::ObjectiveEventDataUserMessage, Cadenya::Models::ObjectiveEventDataToolApprovalRequested, Cadenya::Models::ObjectiveEventDataToolApproved, Cadenya::Models::ObjectiveEventDataToolDenied, Cadenya::Models::ObjectiveEventDataToolCalled, Cadenya::Models::ObjectiveEventDataError, Cadenya::Models::ObjectiveEventDataAssistantMessage, Cadenya::Models::ObjectiveEventDataToolResult, Cadenya::Models::ObjectiveEventDataToolError, Cadenya::Models::ObjectiveEventDataContextWindowCompacted, Cadenya::Models::ObjectiveEventDataMemoryRead, Cadenya::Models::ObjectiveEventDataCancelled, Cadenya::Models::ObjectiveEventDataSubAgentSpawned, Cadenya::Models::ObjectiveEventDataSubAgentUpdated, Cadenya::Models::ObjectiveEventDataFinalized, Cadenya::Models::ObjectiveEventDataNotice, Cadenya::Models::ObjectiveEventDataTimedOut, Cadenya::Models::ObjectiveEventDataReasoning)]
     end
   end
 end

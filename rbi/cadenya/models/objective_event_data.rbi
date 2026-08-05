@@ -24,7 +24,8 @@ module Cadenya
             Cadenya::ObjectiveEventDataSubAgentUpdated,
             Cadenya::ObjectiveEventDataFinalized,
             Cadenya::ObjectiveEventDataNotice,
-            Cadenya::ObjectiveEventDataTimedOut
+            Cadenya::ObjectiveEventDataTimedOut,
+            Cadenya::ObjectiveEventDataReasoning
           )
         end
 

@@ -86,6 +86,7 @@ module Cadenya
           | :OBJECTIVE_EVENT_TYPE_FINALIZED
           | :OBJECTIVE_EVENT_TYPE_NOTICE
           | :OBJECTIVE_EVENT_TYPE_TIMED_OUT
+          | :OBJECTIVE_EVENT_TYPE_REASONING
 
         module EventType
           extend Cadenya::Internal::Type::Enum
@@ -108,6 +109,7 @@ module Cadenya
           OBJECTIVE_EVENT_TYPE_FINALIZED: :OBJECTIVE_EVENT_TYPE_FINALIZED
           OBJECTIVE_EVENT_TYPE_NOTICE: :OBJECTIVE_EVENT_TYPE_NOTICE
           OBJECTIVE_EVENT_TYPE_TIMED_OUT: :OBJECTIVE_EVENT_TYPE_TIMED_OUT
+          OBJECTIVE_EVENT_TYPE_REASONING: :OBJECTIVE_EVENT_TYPE_REASONING
 
           def self?.values: -> ::Array[Cadenya::Models::Agents::WebhookDeliveryListParams::event_type]
         end

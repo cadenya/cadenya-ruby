@@ -71,7 +71,8 @@ module Cadenya
               Cadenya::ObjectiveEventDataSubAgentUpdated::OrHash,
               Cadenya::ObjectiveEventDataFinalized::OrHash,
               Cadenya::ObjectiveEventDataNotice::OrHash,
-              Cadenya::ObjectiveEventDataTimedOut::OrHash
+              Cadenya::ObjectiveEventDataTimedOut::OrHash,
+              Cadenya::ObjectiveEventDataReasoning::OrHash
             ),
           metadata: Cadenya::OperationMetadata::OrHash,
           context_window_id: String,
