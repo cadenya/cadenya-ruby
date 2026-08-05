@@ -206,6 +206,8 @@ module Cadenya
 
   ObjectiveEventDataNotice = Cadenya::Models::ObjectiveEventDataNotice
 
+  ObjectiveEventDataReasoning = Cadenya::Models::ObjectiveEventDataReasoning
+
   ObjectiveEventDataSubAgentSpawned =
     Cadenya::Models::ObjectiveEventDataSubAgentSpawned
 
@@ -263,6 +265,8 @@ module Cadenya
   ProfileSpec = Cadenya::Models::ProfileSpec
 
   ProfileWhoamiParams = Cadenya::Models::ProfileWhoamiParams
+
+  Reasoning = Cadenya::Models::Reasoning
 
   ResourceMetadata = Cadenya::Models::ResourceMetadata
 

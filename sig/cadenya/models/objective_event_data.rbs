@@ -18,6 +18,7 @@ module Cadenya
       | Cadenya::ObjectiveEventDataFinalized
       | Cadenya::ObjectiveEventDataNotice
       | Cadenya::ObjectiveEventDataTimedOut
+      | Cadenya::ObjectiveEventDataReasoning
 
     module ObjectiveEventData
       extend Cadenya::Internal::Type::Union
