@@ -8,18 +8,18 @@ module Cadenya
       #
       # Searches for tools or tool sets in the workspace
       #
-      # @overload search_tools_or_tool_sets(workspace_id: nil, query: nil, request_options: {})
-      #
-      # @param workspace_id [String] Path param: NOTE: `query` is runtime-required (buf.validate min_len), but gnosti
+      # @overload search_tools_or_tool_sets(query:, workspace_id: nil, request_options: {})
       #
       # @param query [String] Query param
+      #
+      # @param workspace_id [String] Path param: NOTE: `query` is runtime-required (buf.validate min_len), but gnosti
       #
       # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
       #
       # @return [Cadenya::Models::SearchSearchToolsOrToolSetsResponse]
       #
       # @see Cadenya::Models::SearchSearchToolsOrToolSetsParams
-      def search_tools_or_tool_sets(params = {})
+      def search_tools_or_tool_sets(params)
         parsed, options = Cadenya::SearchSearchToolsOrToolSetsParams.dump_request(params)
         query = Cadenya::Internal::Util.encode_query_params(parsed)
         workspace_id =

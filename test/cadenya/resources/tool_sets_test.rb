@@ -6,7 +6,12 @@ class Cadenya::Test::Resources::ToolSetsTest < Cadenya::Test::ResourceTest
   def test_create_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.tool_sets.create(workspace_id: "workspaceId", metadata: {name: "name"}, spec: {})
+    response =
+      @cadenya.tool_sets.create(
+        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q",
+        metadata: {name: "name"},
+        spec: {}
+      )
 
     assert_pattern do
       response => Cadenya::ToolSet
@@ -25,7 +30,11 @@ class Cadenya::Test::Resources::ToolSetsTest < Cadenya::Test::ResourceTest
   def test_retrieve_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.tool_sets.retrieve("id", workspace_id: "workspaceId")
+    response =
+      @cadenya.tool_sets.retrieve(
+        "toolset_01HXKD2E5NQM3T9AYWCFNRMN74",
+        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
+      )
 
     assert_pattern do
       response => Cadenya::ToolSet
@@ -44,7 +53,11 @@ class Cadenya::Test::Resources::ToolSetsTest < Cadenya::Test::ResourceTest
   def test_update_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.tool_sets.update("id", workspace_id: "workspaceId")
+    response =
+      @cadenya.tool_sets.update(
+        "toolset_01HXKD2E5NQM3T9AYWCFNRMN74",
+        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
+      )
 
     assert_pattern do
       response => Cadenya::ToolSet
@@ -63,7 +76,7 @@ class Cadenya::Test::Resources::ToolSetsTest < Cadenya::Test::ResourceTest
   def test_list_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.tool_sets.list(workspace_id: "workspaceId")
+    response = @cadenya.tool_sets.list(workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q")
 
     assert_pattern do
       response => Cadenya::Internal::CursorPagination
@@ -89,7 +102,11 @@ class Cadenya::Test::Resources::ToolSetsTest < Cadenya::Test::ResourceTest
   def test_delete_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.tool_sets.delete("id", workspace_id: "workspaceId")
+    response =
+      @cadenya.tool_sets.delete(
+        "toolset_01HXKD2E5NQM3T9AYWCFNRMN74",
+        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
+      )
 
     assert_pattern do
       response => nil
@@ -99,7 +116,11 @@ class Cadenya::Test::Resources::ToolSetsTest < Cadenya::Test::ResourceTest
   def test_archive_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.tool_sets.archive("id", workspace_id: "workspaceId")
+    response =
+      @cadenya.tool_sets.archive(
+        "toolset_01HXKD2E5NQM3T9AYWCFNRMN74",
+        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
+      )
 
     assert_pattern do
       response => Cadenya::ToolSet
@@ -118,7 +139,11 @@ class Cadenya::Test::Resources::ToolSetsTest < Cadenya::Test::ResourceTest
   def test_get_openapi_spec_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.tool_sets.get_openapi_spec("toolSetId", workspace_id: "workspaceId")
+    response =
+      @cadenya.tool_sets.get_openapi_spec(
+        "toolset_01HXKD2E5NQM3T9AYWCFNRMN74",
+        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
+      )
 
     assert_pattern do
       response => Cadenya::Models::ToolSetGetOpenAPISpecResponse
@@ -134,7 +159,11 @@ class Cadenya::Test::Resources::ToolSetsTest < Cadenya::Test::ResourceTest
   def test_list_events_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.tool_sets.list_events("toolSetId", workspace_id: "workspaceId")
+    response =
+      @cadenya.tool_sets.list_events(
+        "toolset_01HXKD2E5NQM3T9AYWCFNRMN74",
+        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
+      )
 
     assert_pattern do
       response => Cadenya::Internal::CursorPagination
@@ -160,7 +189,11 @@ class Cadenya::Test::Resources::ToolSetsTest < Cadenya::Test::ResourceTest
   def test_list_usage_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.tool_sets.list_usage("toolSetId", workspace_id: "workspaceId")
+    response =
+      @cadenya.tool_sets.list_usage(
+        "toolset_01HXKD2E5NQM3T9AYWCFNRMN74",
+        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
+      )
 
     assert_pattern do
       response => Cadenya::Internal::CursorPagination
@@ -186,7 +219,11 @@ class Cadenya::Test::Resources::ToolSetsTest < Cadenya::Test::ResourceTest
   def test_unarchive_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.tool_sets.unarchive("id", workspace_id: "workspaceId")
+    response =
+      @cadenya.tool_sets.unarchive(
+        "toolset_01HXKD2E5NQM3T9AYWCFNRMN74",
+        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
+      )
 
     assert_pattern do
       response => Cadenya::ToolSet

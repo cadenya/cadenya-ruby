@@ -1,0 +1,42 @@
+module Cadenya
+  module Models
+    type string_matcher_ends_with =
+      {
+        ends_with: String,
+        type: Cadenya::Models::StringMatcherEndsWith::type_,
+        case_sensitive: bool
+      }
+
+    class StringMatcherEndsWith < Cadenya::Internal::Type::BaseModel
+      attr_accessor ends_with: String
+
+      attr_accessor type: Cadenya::Models::StringMatcherEndsWith::type_
+
+      attr_reader case_sensitive: bool?
+
+      def case_sensitive=: (bool) -> bool
+
+      def initialize: (
+        ends_with: String,
+        type: Cadenya::Models::StringMatcherEndsWith::type_,
+        ?case_sensitive: bool
+      ) -> void
+
+      def to_hash: -> {
+        ends_with: String,
+        type: Cadenya::Models::StringMatcherEndsWith::type_,
+        case_sensitive: bool
+      }
+
+      type type_ = :endsWith
+
+      module Type
+        extend Cadenya::Internal::Type::Enum
+
+        ENDS_WITH: :endsWith
+
+        def self?.values: -> ::Array[Cadenya::Models::StringMatcherEndsWith::type_]
+      end
+    end
+  end
+end

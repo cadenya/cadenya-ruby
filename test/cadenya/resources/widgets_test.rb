@@ -8,7 +8,7 @@ class Cadenya::Test::Resources::WidgetsTest < Cadenya::Test::ResourceTest
 
     response =
       @cadenya.widgets.create(
-        workspace_id: "workspaceId",
+        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q",
         metadata: {name: "name"},
         spec: {agentId: "agent_01HXKD2E5NQM3T9AYWCFMGWT9Y"}
       )
@@ -30,7 +30,7 @@ class Cadenya::Test::Resources::WidgetsTest < Cadenya::Test::ResourceTest
   def test_retrieve_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.widgets.retrieve("id", workspace_id: "workspaceId")
+    response = @cadenya.widgets.retrieve("id", workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q")
 
     assert_pattern do
       response => Cadenya::Widget
@@ -49,7 +49,7 @@ class Cadenya::Test::Resources::WidgetsTest < Cadenya::Test::ResourceTest
   def test_update_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.widgets.update("id", workspace_id: "workspaceId")
+    response = @cadenya.widgets.update("id", workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q")
 
     assert_pattern do
       response => Cadenya::Widget
@@ -68,7 +68,7 @@ class Cadenya::Test::Resources::WidgetsTest < Cadenya::Test::ResourceTest
   def test_list_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.widgets.list(workspace_id: "workspaceId")
+    response = @cadenya.widgets.list(workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q")
 
     assert_pattern do
       response => Cadenya::Internal::CursorPagination
@@ -94,7 +94,7 @@ class Cadenya::Test::Resources::WidgetsTest < Cadenya::Test::ResourceTest
   def test_delete_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.widgets.delete("id", workspace_id: "workspaceId")
+    response = @cadenya.widgets.delete("id", workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q")
 
     assert_pattern do
       response => nil
@@ -104,7 +104,7 @@ class Cadenya::Test::Resources::WidgetsTest < Cadenya::Test::ResourceTest
   def test_archive_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.widgets.archive("id", workspace_id: "workspaceId")
+    response = @cadenya.widgets.archive("id", workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q")
 
     assert_pattern do
       response => Cadenya::Widget
@@ -123,7 +123,7 @@ class Cadenya::Test::Resources::WidgetsTest < Cadenya::Test::ResourceTest
   def test_unarchive_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.widgets.unarchive("id", workspace_id: "workspaceId")
+    response = @cadenya.widgets.unarchive("id", workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q")
 
     assert_pattern do
       response => Cadenya::Widget

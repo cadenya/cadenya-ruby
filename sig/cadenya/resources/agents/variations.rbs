@@ -48,13 +48,10 @@ module Cadenya
         def add_assignment: (
           String agent_id,
           String variation_id,
+          body: Cadenya::Models::Agents::VariationAddAssignmentParams::body,
           ?workspace_id: String,
-          ?sub_agent_id: String,
-          ?tool_id: String,
-          ?tool_set_id: String,
-          ?type: String,
           ?request_options: Cadenya::request_opts
-        ) -> Cadenya::Agents::VariationAssignment
+        ) -> Cadenya::Models::Agents::variation_assignment
 
         def add_memory_layer: (
           String agent_id,

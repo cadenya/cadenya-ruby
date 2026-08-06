@@ -16,20 +16,39 @@ module Cadenya
       # Config defines the adapter to use for the tool. This is used to determine how
       # the tool is called. For example, if the tool is an HTTP tool, the adapter will
       # be Http. If the tool is an inline tool, the adapter will be Inline.
-      sig { returns(T.nilable(Cadenya::ToolSets::ToolSpecConfig)) }
+      sig { returns(T.nilable(Cadenya::ToolSets::ToolSpecConfig::Variants)) }
       attr_reader :config
 
-      sig { params(config: Cadenya::ToolSets::ToolSpecConfig::OrHash).void }
+      sig do
+        params(
+          config:
+            T.any(
+              Cadenya::ToolSets::ToolSpecConfigHTTP::OrHash,
+              Cadenya::ToolSets::ToolSpecConfigMCP::OrHash,
+              Cadenya::ToolSets::ToolSpecConfigOpenAPI::OrHash,
+              Cadenya::ToolSets::ToolSpecConfigBare::OrHash
+            )
+        ).void
+      end
       attr_writer :config
 
       # CallableTool is a union that represents a tool that can be called by an agent.
       # In Cadenya, a tool that is used within an agent objective might be a
       # user-defined tool (IE: MCP, HTTP), another Agent (useful to separate context),
       # or a Cadenya Tool (one Cadenya provides).
-      sig { returns(T.nilable(Cadenya::CallableTool)) }
+      sig { returns(T.nilable(Cadenya::CallableTool::Variants)) }
       attr_reader :tool
 
-      sig { params(tool: Cadenya::CallableTool::OrHash).void }
+      sig do
+        params(
+          tool:
+            T.any(
+              Cadenya::CallableToolTool::OrHash,
+              Cadenya::CallableToolAgent::OrHash,
+              Cadenya::CallableToolCadenyaProvidedTool::OrHash
+            )
+        ).void
+      end
       attr_writer :tool
 
       # The ID of the objective tool call record that was executed.
@@ -42,8 +61,19 @@ module Cadenya
       sig do
         params(
           arguments: T::Hash[Symbol, T.anything],
-          config: Cadenya::ToolSets::ToolSpecConfig::OrHash,
-          tool: Cadenya::CallableTool::OrHash,
+          config:
+            T.any(
+              Cadenya::ToolSets::ToolSpecConfigHTTP::OrHash,
+              Cadenya::ToolSets::ToolSpecConfigMCP::OrHash,
+              Cadenya::ToolSets::ToolSpecConfigOpenAPI::OrHash,
+              Cadenya::ToolSets::ToolSpecConfigBare::OrHash
+            ),
+          tool:
+            T.any(
+              Cadenya::CallableToolTool::OrHash,
+              Cadenya::CallableToolAgent::OrHash,
+              Cadenya::CallableToolCadenyaProvidedTool::OrHash
+            ),
           tool_call_id: String
         ).returns(T.attached_class)
       end
@@ -68,8 +98,8 @@ module Cadenya
         override.returns(
           {
             arguments: T::Hash[Symbol, T.anything],
-            config: Cadenya::ToolSets::ToolSpecConfig,
-            tool: Cadenya::CallableTool,
+            config: Cadenya::ToolSets::ToolSpecConfig::Variants,
+            tool: Cadenya::CallableTool::Variants,
             tool_call_id: String
           }
         )

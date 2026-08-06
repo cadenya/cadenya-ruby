@@ -6,7 +6,7 @@ class Cadenya::Test::Resources::WorkspaceAdmin::MembersTest < Cadenya::Test::Res
   def test_list_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.workspace_admin.members.list(workspace_id: "workspaceId")
+    response = @cadenya.workspace_admin.members.list(workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q")
 
     assert_pattern do
       response => Cadenya::Internal::CursorPagination
@@ -33,7 +33,7 @@ class Cadenya::Test::Resources::WorkspaceAdmin::MembersTest < Cadenya::Test::Res
   def test_add_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.workspace_admin.members.add(workspace_id: "workspaceId")
+    response = @cadenya.workspace_admin.members.add(workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q")
 
     assert_pattern do
       response => Cadenya::WorkspaceMember
@@ -53,7 +53,11 @@ class Cadenya::Test::Resources::WorkspaceAdmin::MembersTest < Cadenya::Test::Res
   def test_remove_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.workspace_admin.members.remove("profileId", workspace_id: "workspaceId")
+    response =
+      @cadenya.workspace_admin.members.remove(
+        "profile_01HXKD2E5NQM3T9AYWCFS0AP08",
+        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
+      )
 
     assert_pattern do
       response => nil

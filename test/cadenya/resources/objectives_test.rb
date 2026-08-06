@@ -8,7 +8,7 @@ class Cadenya::Test::Resources::ObjectivesTest < Cadenya::Test::ResourceTest
 
     response =
       @cadenya.objectives.create(
-        workspace_id: "workspaceId",
+        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q",
         agent_id: "agent_01HXKD2E5NQM3T9AYWCFMGWT9Y",
         system_prompt_data: {foo: "bar"}
       )
@@ -41,7 +41,11 @@ class Cadenya::Test::Resources::ObjectivesTest < Cadenya::Test::ResourceTest
   def test_retrieve_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.objectives.retrieve("id", workspace_id: "workspaceId")
+    response =
+      @cadenya.objectives.retrieve(
+        "obj_01HXKD2E5NQM3T9AYWCFQAZGFV",
+        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
+      )
 
     assert_pattern do
       response => Cadenya::Objective
@@ -71,7 +75,7 @@ class Cadenya::Test::Resources::ObjectivesTest < Cadenya::Test::ResourceTest
   def test_list_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.objectives.list(workspace_id: "workspaceId")
+    response = @cadenya.objectives.list(workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q")
 
     assert_pattern do
       response => Cadenya::Internal::CursorPagination
@@ -108,7 +112,11 @@ class Cadenya::Test::Resources::ObjectivesTest < Cadenya::Test::ResourceTest
   def test_cancel_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.objectives.cancel("objectiveId", workspace_id: "workspaceId")
+    response =
+      @cadenya.objectives.cancel(
+        "obj_01HXKD2E5NQM3T9AYWCFQAZGFV",
+        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
+      )
 
     assert_pattern do
       response => Cadenya::Objective
@@ -138,7 +146,11 @@ class Cadenya::Test::Resources::ObjectivesTest < Cadenya::Test::ResourceTest
   def test_compact_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.objectives.compact("objectiveId", workspace_id: "workspaceId")
+    response =
+      @cadenya.objectives.compact(
+        "obj_01HXKD2E5NQM3T9AYWCFQAZGFV",
+        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
+      )
 
     assert_pattern do
       response => Cadenya::Models::ObjectiveCompactResponse
@@ -154,7 +166,12 @@ class Cadenya::Test::Resources::ObjectivesTest < Cadenya::Test::ResourceTest
   def test_continue_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.objectives.continue("objectiveId", workspace_id: "workspaceId", message: "message")
+    response =
+      @cadenya.objectives.continue(
+        "obj_01HXKD2E5NQM3T9AYWCFQAZGFV",
+        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q",
+        message: "message"
+      )
 
     assert_pattern do
       response => Cadenya::ObjectiveEvent
@@ -175,7 +192,11 @@ class Cadenya::Test::Resources::ObjectivesTest < Cadenya::Test::ResourceTest
   def test_list_context_windows_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.objectives.list_context_windows("objectiveId", workspace_id: "workspaceId")
+    response =
+      @cadenya.objectives.list_context_windows(
+        "obj_01HXKD2E5NQM3T9AYWCFQAZGFV",
+        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
+      )
 
     assert_pattern do
       response => Cadenya::Internal::CursorPagination
@@ -200,7 +221,11 @@ class Cadenya::Test::Resources::ObjectivesTest < Cadenya::Test::ResourceTest
   def test_list_events_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.objectives.list_events("objectiveId", workspace_id: "workspaceId")
+    response =
+      @cadenya.objectives.list_events(
+        "obj_01HXKD2E5NQM3T9AYWCFQAZGFV",
+        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
+      )
 
     assert_pattern do
       response => Cadenya::Internal::CursorPagination
@@ -228,7 +253,11 @@ class Cadenya::Test::Resources::ObjectivesTest < Cadenya::Test::ResourceTest
   def test_retrieve_diagnostics_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.objectives.retrieve_diagnostics("objectiveId", workspace_id: "workspaceId")
+    response =
+      @cadenya.objectives.retrieve_diagnostics(
+        "obj_01HXKD2E5NQM3T9AYWCFQAZGFV",
+        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
+      )
 
     assert_pattern do
       response => Cadenya::Models::ObjectiveRetrieveDiagnosticsResponse

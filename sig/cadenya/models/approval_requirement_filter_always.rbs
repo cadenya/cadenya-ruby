@@ -1,0 +1,35 @@
+module Cadenya
+  module Models
+    type approval_requirement_filter_always =
+      {
+        always: bool,
+        type: Cadenya::Models::ApprovalRequirementFilterAlways::type_
+      }
+
+    class ApprovalRequirementFilterAlways < Cadenya::Internal::Type::BaseModel
+      attr_accessor always: bool
+
+      attr_accessor type: Cadenya::Models::ApprovalRequirementFilterAlways::type_
+
+      def initialize: (
+        always: bool,
+        type: Cadenya::Models::ApprovalRequirementFilterAlways::type_
+      ) -> void
+
+      def to_hash: -> {
+        always: bool,
+        type: Cadenya::Models::ApprovalRequirementFilterAlways::type_
+      }
+
+      type type_ = :always
+
+      module Type
+        extend Cadenya::Internal::Type::Enum
+
+        ALWAYS: :always
+
+        def self?.values: -> ::Array[Cadenya::Models::ApprovalRequirementFilterAlways::type_]
+      end
+    end
+  end
+end

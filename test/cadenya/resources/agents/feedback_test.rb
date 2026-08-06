@@ -6,7 +6,11 @@ class Cadenya::Test::Resources::Agents::FeedbackTest < Cadenya::Test::ResourceTe
   def test_list_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.agents.feedback.list("agentId", workspace_id: "workspaceId")
+    response =
+      @cadenya.agents.feedback.list(
+        "agent_01HXKD2E5NQM3T9AYWCFMGWT9Y",
+        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
+      )
 
     assert_pattern do
       response => Cadenya::Internal::CursorPagination

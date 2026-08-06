@@ -1,80 +1,12 @@
 module Cadenya
   module Models
     type tool_set_adapter_openapi =
-      {
-        base_url: String,
-        exclude_tools: Cadenya::ToolFilter,
-        headers: ::Hash[Symbol, String],
-        include_tools: Cadenya::ToolFilter,
-        server_name: String,
-        tool_approvals: Cadenya::ApprovalRequirementFilter,
-        type: String,
-        upload_id: String,
-        url: String
-      }
+      Cadenya::ToolSetAdapterOpenAPIURL | Cadenya::ToolSetAdapterOpenAPIUploadID
 
-    class ToolSetAdapterOpenAPI < Cadenya::Internal::Type::BaseModel
-      attr_reader base_url: String?
+    module ToolSetAdapterOpenAPI
+      extend Cadenya::Internal::Type::Union
 
-      def base_url=: (String) -> String
-
-      attr_reader exclude_tools: Cadenya::ToolFilter?
-
-      def exclude_tools=: (Cadenya::ToolFilter) -> Cadenya::ToolFilter
-
-      attr_reader headers: ::Hash[Symbol, String]?
-
-      def headers=: (::Hash[Symbol, String]) -> ::Hash[Symbol, String]
-
-      attr_reader include_tools: Cadenya::ToolFilter?
-
-      def include_tools=: (Cadenya::ToolFilter) -> Cadenya::ToolFilter
-
-      attr_reader server_name: String?
-
-      def server_name=: (String) -> String
-
-      attr_reader tool_approvals: Cadenya::ApprovalRequirementFilter?
-
-      def tool_approvals=: (
-        Cadenya::ApprovalRequirementFilter
-      ) -> Cadenya::ApprovalRequirementFilter
-
-      attr_reader type: String?
-
-      def type=: (String) -> String
-
-      attr_reader upload_id: String?
-
-      def upload_id=: (String) -> String
-
-      attr_reader url: String?
-
-      def url=: (String) -> String
-
-      def initialize: (
-        ?base_url: String,
-        ?exclude_tools: Cadenya::ToolFilter,
-        ?headers: ::Hash[Symbol, String],
-        ?include_tools: Cadenya::ToolFilter,
-        ?server_name: String,
-        ?tool_approvals: Cadenya::ApprovalRequirementFilter,
-        ?type: String,
-        ?upload_id: String,
-        ?url: String
-      ) -> void
-
-      def to_hash: -> {
-        base_url: String,
-        exclude_tools: Cadenya::ToolFilter,
-        headers: ::Hash[Symbol, String],
-        include_tools: Cadenya::ToolFilter,
-        server_name: String,
-        tool_approvals: Cadenya::ApprovalRequirementFilter,
-        type: String,
-        upload_id: String,
-        url: String
-      }
+      def self?.variants: -> ::Array[Cadenya::Models::tool_set_adapter_openapi]
     end
   end
 end

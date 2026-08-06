@@ -36,21 +36,25 @@ module Cadenya
         # MemoryEntryCreateSpec is the input shape for CreateMemoryEntry. It accepts
         # either inline content or a reference to a completed Upload; exactly one of the
         # two must be set.
-        sig { returns(Cadenya::MemoryLayers::MemoryEntryCreateSpec) }
-        attr_reader :spec
-
         sig do
-          params(
-            spec: Cadenya::MemoryLayers::MemoryEntryCreateSpec::OrHash
-          ).void
+          returns(
+            T.any(
+              Cadenya::MemoryLayers::MemoryEntryCreateSpecContent,
+              Cadenya::MemoryLayers::MemoryEntryCreateSpecUploadID
+            )
+          )
         end
-        attr_writer :spec
+        attr_accessor :spec
 
         sig do
           params(
             memory_layer_id: String,
             metadata: Cadenya::CreateResourceMetadata::OrHash,
-            spec: Cadenya::MemoryLayers::MemoryEntryCreateSpec::OrHash,
+            spec:
+              T.any(
+                Cadenya::MemoryLayers::MemoryEntryCreateSpecContent::OrHash,
+                Cadenya::MemoryLayers::MemoryEntryCreateSpecUploadID::OrHash
+              ),
             workspace_id: String,
             request_options: Cadenya::RequestOptions::OrHash
           ).returns(T.attached_class)
@@ -76,7 +80,11 @@ module Cadenya
               workspace_id: String,
               memory_layer_id: String,
               metadata: Cadenya::CreateResourceMetadata,
-              spec: Cadenya::MemoryLayers::MemoryEntryCreateSpec,
+              spec:
+                T.any(
+                  Cadenya::MemoryLayers::MemoryEntryCreateSpecContent,
+                  Cadenya::MemoryLayers::MemoryEntryCreateSpecUploadID
+                ),
               request_options: Cadenya::RequestOptions
             }
           )

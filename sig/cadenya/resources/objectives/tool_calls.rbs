@@ -39,7 +39,7 @@ module Cadenya
         def set_content: (
           String objective_id,
           String tool_call_id,
-          content: ::Array[Cadenya::Objectives::SetToolCallContentRequestContentBlock],
+          content: ::Array[Cadenya::Models::Objectives::set_tool_call_content_request_content_block],
           ?workspace_id: String,
           ?request_options: Cadenya::request_opts
         ) -> Cadenya::Objectives::ObjectiveToolCall

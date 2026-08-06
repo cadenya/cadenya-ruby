@@ -6,7 +6,8 @@ class Cadenya::Test::Resources::Tenants::SubjectsTest < Cadenya::Test::ResourceT
   def test_list_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.tenants.subjects.list("tenantId", workspace_id: "workspaceId")
+    response =
+      @cadenya.tenants.subjects.list("tenantId", workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q")
 
     assert_pattern do
       response => Cadenya::Internal::CursorPagination

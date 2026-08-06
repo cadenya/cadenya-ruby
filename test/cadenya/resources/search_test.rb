@@ -6,7 +6,11 @@ class Cadenya::Test::Resources::SearchTest < Cadenya::Test::ResourceTest
   def test_search_tools_or_tool_sets_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.search.search_tools_or_tool_sets(workspace_id: "workspaceId")
+    response =
+      @cadenya.search.search_tools_or_tool_sets(
+        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q",
+        query: "query"
+      )
 
     assert_pattern do
       response => Cadenya::Models::SearchSearchToolsOrToolSetsResponse

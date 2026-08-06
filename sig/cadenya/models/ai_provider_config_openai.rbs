@@ -1,0 +1,51 @@
+module Cadenya
+  module Models
+    type ai_provider_config_openai =
+      {
+        openai: Cadenya::AIProviderConfigOpenAI::OpenAI,
+        type: Cadenya::Models::AIProviderConfigOpenAI::type_
+      }
+
+    class AIProviderConfigOpenAI < Cadenya::Internal::Type::BaseModel
+      attr_accessor openai: Cadenya::AIProviderConfigOpenAI::OpenAI
+
+      attr_accessor type: Cadenya::Models::AIProviderConfigOpenAI::type_
+
+      def initialize: (
+        openai: Cadenya::AIProviderConfigOpenAI::OpenAI,
+        type: Cadenya::Models::AIProviderConfigOpenAI::type_
+      ) -> void
+
+      def to_hash: -> {
+        openai: Cadenya::AIProviderConfigOpenAI::OpenAI,
+        type: Cadenya::Models::AIProviderConfigOpenAI::type_
+      }
+
+      type openai = { organization_id: String, project_id: String }
+
+      class OpenAI < Cadenya::Internal::Type::BaseModel
+        attr_reader organization_id: String?
+
+        def organization_id=: (String) -> String
+
+        attr_reader project_id: String?
+
+        def project_id=: (String) -> String
+
+        def initialize: (?organization_id: String, ?project_id: String) -> void
+
+        def to_hash: -> { organization_id: String, project_id: String }
+      end
+
+      type type_ = :openai
+
+      module Type
+        extend Cadenya::Internal::Type::Enum
+
+        OPENAI: :openai
+
+        def self?.values: -> ::Array[Cadenya::Models::AIProviderConfigOpenAI::type_]
+      end
+    end
+  end
+end

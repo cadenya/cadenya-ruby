@@ -2,50 +2,14 @@ module Cadenya
   module Models
     module Agents
       type variation_assignment =
-        {
-          id: String,
-          agent: Cadenya::BareMetadata,
-          tool: Cadenya::BareMetadata,
-          tool_set: Cadenya::BareMetadata,
-          type: String
-        }
+        Cadenya::Agents::VariationAssignmentTool
+        | Cadenya::Agents::VariationAssignmentToolSet
+        | Cadenya::Agents::VariationAssignmentAgent
 
-      class VariationAssignment < Cadenya::Internal::Type::BaseModel
-        attr_reader agent: Cadenya::BareMetadata?
+      module VariationAssignment
+        extend Cadenya::Internal::Type::Union
 
-        def agent=: (Cadenya::BareMetadata) -> Cadenya::BareMetadata
-
-        attr_reader tool: Cadenya::BareMetadata?
-
-        def tool=: (Cadenya::BareMetadata) -> Cadenya::BareMetadata
-
-        attr_reader tool_set: Cadenya::BareMetadata?
-
-        def tool_set=: (Cadenya::BareMetadata) -> Cadenya::BareMetadata
-
-        attr_reader type: String?
-
-        def type=: (String) -> String
-
-        attr_reader id: String?
-
-        def id=: (String) -> String
-
-        def initialize: (
-          ?id: String,
-          ?agent: Cadenya::BareMetadata,
-          ?tool: Cadenya::BareMetadata,
-          ?tool_set: Cadenya::BareMetadata,
-          ?type: String
-        ) -> void
-
-        def to_hash: -> {
-          id: String,
-          agent: Cadenya::BareMetadata,
-          tool: Cadenya::BareMetadata,
-          tool_set: Cadenya::BareMetadata,
-          type: String
-        }
+        def self?.variants: -> ::Array[Cadenya::Models::Agents::variation_assignment]
       end
     end
   end

@@ -5,18 +5,18 @@ module Cadenya
     module Objectives
       type objective_tool_call_result =
         {
-          content: ::Array[Cadenya::Objectives::ObjectiveToolCallResultContentBlock]
+          content: ::Array[Cadenya::Models::Objectives::objective_tool_call_result_content_block]
         }
 
       class ObjectiveToolCallResult < Cadenya::Internal::Type::BaseModel
-        attr_accessor content: ::Array[Cadenya::Objectives::ObjectiveToolCallResultContentBlock]
+        attr_accessor content: ::Array[Cadenya::Models::Objectives::objective_tool_call_result_content_block]
 
         def initialize: (
-          content: ::Array[Cadenya::Objectives::ObjectiveToolCallResultContentBlock]
+          content: ::Array[Cadenya::Models::Objectives::objective_tool_call_result_content_block]
         ) -> void
 
         def to_hash: -> {
-          content: ::Array[Cadenya::Objectives::ObjectiveToolCallResultContentBlock]
+          content: ::Array[Cadenya::Models::Objectives::objective_tool_call_result_content_block]
         }
       end
     end

@@ -25,7 +25,7 @@ class Cadenya::Test::Resources::WorkspaceAdminTest < Cadenya::Test::ResourceTest
   def test_retrieve_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.workspace_admin.retrieve(workspace_id: "workspaceId")
+    response = @cadenya.workspace_admin.retrieve(workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q")
 
     assert_pattern do
       response => Cadenya::Workspace
@@ -44,7 +44,7 @@ class Cadenya::Test::Resources::WorkspaceAdminTest < Cadenya::Test::ResourceTest
   def test_update_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.workspace_admin.update(workspace_id: "workspaceId")
+    response = @cadenya.workspace_admin.update(workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q")
 
     assert_pattern do
       response => Cadenya::Workspace
@@ -89,7 +89,7 @@ class Cadenya::Test::Resources::WorkspaceAdminTest < Cadenya::Test::ResourceTest
   def test_archive_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.workspace_admin.archive(workspace_id: "workspaceId")
+    response = @cadenya.workspace_admin.archive(workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q")
 
     assert_pattern do
       response => nil

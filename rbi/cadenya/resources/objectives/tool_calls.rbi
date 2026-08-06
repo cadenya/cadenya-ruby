@@ -124,7 +124,11 @@ module Cadenya
             tool_call_id: String,
             content:
               T::Array[
-                Cadenya::Objectives::SetToolCallContentRequestContentBlock::OrHash
+                T.any(
+                  Cadenya::Objectives::SetToolCallContentRequestContentBlockText::OrHash,
+                  Cadenya::Objectives::SetToolCallContentRequestContentBlockImage::OrHash,
+                  Cadenya::Objectives::SetToolCallContentRequestContentBlockAudio::OrHash
+                )
               ],
             workspace_id: String,
             request_options: Cadenya::RequestOptions::OrHash

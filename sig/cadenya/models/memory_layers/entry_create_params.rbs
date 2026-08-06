@@ -6,7 +6,7 @@ module Cadenya
           workspace_id: String,
           memory_layer_id: String,
           metadata: Cadenya::CreateResourceMetadata,
-          spec: Cadenya::MemoryLayers::MemoryEntryCreateSpec
+          spec: Cadenya::Models::MemoryLayers::memory_entry_create_spec
         }
         & Cadenya::Internal::Type::request_parameters
 
@@ -22,12 +22,12 @@ module Cadenya
 
         attr_accessor metadata: Cadenya::CreateResourceMetadata
 
-        attr_accessor spec: Cadenya::MemoryLayers::MemoryEntryCreateSpec
+        attr_accessor spec: Cadenya::Models::MemoryLayers::memory_entry_create_spec
 
         def initialize: (
           memory_layer_id: String,
           metadata: Cadenya::CreateResourceMetadata,
-          spec: Cadenya::MemoryLayers::MemoryEntryCreateSpec,
+          spec: Cadenya::Models::MemoryLayers::memory_entry_create_spec,
           ?workspace_id: String,
           ?request_options: Cadenya::request_opts
         ) -> void
@@ -36,7 +36,7 @@ module Cadenya
           workspace_id: String,
           memory_layer_id: String,
           metadata: Cadenya::CreateResourceMetadata,
-          spec: Cadenya::MemoryLayers::MemoryEntryCreateSpec,
+          spec: Cadenya::Models::MemoryLayers::memory_entry_create_spec,
           request_options: Cadenya::RequestOptions
         }
       end

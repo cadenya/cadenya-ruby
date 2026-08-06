@@ -24,17 +24,31 @@ module Cadenya
       # In Cadenya, a tool that is used within an agent objective might be a
       # user-defined tool (IE: MCP, HTTP), another Agent (useful to separate context),
       # or a Cadenya Tool (one Cadenya provides).
-      sig { returns(T.nilable(Cadenya::CallableTool)) }
+      sig { returns(T.nilable(Cadenya::CallableTool::Variants)) }
       attr_reader :tool
 
-      sig { params(tool: Cadenya::CallableTool::OrHash).void }
+      sig do
+        params(
+          tool:
+            T.any(
+              Cadenya::CallableToolTool::OrHash,
+              Cadenya::CallableToolAgent::OrHash,
+              Cadenya::CallableToolCadenyaProvidedTool::OrHash
+            )
+        ).void
+      end
       attr_writer :tool
 
       sig do
         params(
           arguments: String,
           function_name: String,
-          tool: Cadenya::CallableTool::OrHash
+          tool:
+            T.any(
+              Cadenya::CallableToolTool::OrHash,
+              Cadenya::CallableToolAgent::OrHash,
+              Cadenya::CallableToolCadenyaProvidedTool::OrHash
+            )
         ).returns(T.attached_class)
       end
       def self.new(
@@ -53,7 +67,7 @@ module Cadenya
           {
             arguments: String,
             function_name: String,
-            tool: Cadenya::CallableTool
+            tool: Cadenya::CallableTool::Variants
           }
         )
       end

@@ -14,12 +14,12 @@ module Cadenya
 
       # @!attribute query
       #
-      #   @return [String, nil]
-      optional :query, String
+      #   @return [String]
+      required :query, String
 
-      # @!method initialize(workspace_id: nil, query: nil, request_options: {})
-      #   @param workspace_id [String]
+      # @!method initialize(query:, workspace_id: nil, request_options: {})
       #   @param query [String]
+      #   @param workspace_id [String]
       #   @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}]
     end
   end

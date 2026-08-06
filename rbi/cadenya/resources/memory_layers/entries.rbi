@@ -14,7 +14,11 @@ module Cadenya
           params(
             memory_layer_id: String,
             metadata: Cadenya::CreateResourceMetadata::OrHash,
-            spec: Cadenya::MemoryLayers::MemoryEntryCreateSpec::OrHash,
+            spec:
+              T.any(
+                Cadenya::MemoryLayers::MemoryEntryCreateSpecContent::OrHash,
+                Cadenya::MemoryLayers::MemoryEntryCreateSpecUploadID::OrHash
+              ),
             workspace_id: String,
             request_options: Cadenya::RequestOptions::OrHash
           ).returns(Cadenya::MemoryLayers::MemoryEntryDetail)

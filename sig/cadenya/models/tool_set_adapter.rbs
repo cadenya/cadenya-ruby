@@ -1,52 +1,15 @@
 module Cadenya
   module Models
     type tool_set_adapter =
-      {
-        bare: Cadenya::ToolSetAdapterBare,
-        http: Cadenya::ToolSetAdapterHTTP,
-        mcp: Cadenya::ToolSetAdapterMCP,
-        openapi: Cadenya::ToolSetAdapterOpenAPI,
-        type: String
-      }
+      Cadenya::ToolSetAdapterMCPVariant
+      | Cadenya::ToolSetAdapterHTTPVariant
+      | Cadenya::ToolSetAdapterOpenAPIVariant
+      | Cadenya::ToolSetAdapterBareVariant
 
-    class ToolSetAdapter < Cadenya::Internal::Type::BaseModel
-      attr_reader bare: Cadenya::ToolSetAdapterBare?
+    module ToolSetAdapter
+      extend Cadenya::Internal::Type::Union
 
-      def bare=: (Cadenya::ToolSetAdapterBare) -> Cadenya::ToolSetAdapterBare
-
-      attr_reader http: Cadenya::ToolSetAdapterHTTP?
-
-      def http=: (Cadenya::ToolSetAdapterHTTP) -> Cadenya::ToolSetAdapterHTTP
-
-      attr_reader mcp: Cadenya::ToolSetAdapterMCP?
-
-      def mcp=: (Cadenya::ToolSetAdapterMCP) -> Cadenya::ToolSetAdapterMCP
-
-      attr_reader openapi: Cadenya::ToolSetAdapterOpenAPI?
-
-      def openapi=: (
-        Cadenya::ToolSetAdapterOpenAPI
-      ) -> Cadenya::ToolSetAdapterOpenAPI
-
-      attr_reader type: String?
-
-      def type=: (String) -> String
-
-      def initialize: (
-        ?bare: Cadenya::ToolSetAdapterBare,
-        ?http: Cadenya::ToolSetAdapterHTTP,
-        ?mcp: Cadenya::ToolSetAdapterMCP,
-        ?openapi: Cadenya::ToolSetAdapterOpenAPI,
-        ?type: String
-      ) -> void
-
-      def to_hash: -> {
-        bare: Cadenya::ToolSetAdapterBare,
-        http: Cadenya::ToolSetAdapterHTTP,
-        mcp: Cadenya::ToolSetAdapterMCP,
-        openapi: Cadenya::ToolSetAdapterOpenAPI,
-        type: String
-      }
+      def self?.variants: -> ::Array[Cadenya::Models::tool_set_adapter]
     end
   end
 end

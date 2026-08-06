@@ -1,45 +1,14 @@
 module Cadenya
   module Models
     type callable_tool =
-      {
-        agent: Cadenya::ResourceMetadata,
-        cadenya_provided_tool: Cadenya::ResourceMetadata,
-        tool: Cadenya::ResourceMetadata,
-        type: String
-      }
+      Cadenya::CallableToolTool
+      | Cadenya::CallableToolAgent
+      | Cadenya::CallableToolCadenyaProvidedTool
 
-    class CallableTool < Cadenya::Internal::Type::BaseModel
-      attr_reader agent: Cadenya::ResourceMetadata?
+    module CallableTool
+      extend Cadenya::Internal::Type::Union
 
-      def agent=: (Cadenya::ResourceMetadata) -> Cadenya::ResourceMetadata
-
-      attr_reader cadenya_provided_tool: Cadenya::ResourceMetadata?
-
-      def cadenya_provided_tool=: (
-        Cadenya::ResourceMetadata
-      ) -> Cadenya::ResourceMetadata
-
-      attr_reader tool: Cadenya::ResourceMetadata?
-
-      def tool=: (Cadenya::ResourceMetadata) -> Cadenya::ResourceMetadata
-
-      attr_reader type: String?
-
-      def type=: (String) -> String
-
-      def initialize: (
-        ?agent: Cadenya::ResourceMetadata,
-        ?cadenya_provided_tool: Cadenya::ResourceMetadata,
-        ?tool: Cadenya::ResourceMetadata,
-        ?type: String
-      ) -> void
-
-      def to_hash: -> {
-        agent: Cadenya::ResourceMetadata,
-        cadenya_provided_tool: Cadenya::ResourceMetadata,
-        tool: Cadenya::ResourceMetadata,
-        type: String
-      }
+      def self?.variants: -> ::Array[Cadenya::Models::callable_tool]
     end
   end
 end

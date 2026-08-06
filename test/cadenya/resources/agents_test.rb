@@ -8,7 +8,7 @@ class Cadenya::Test::Resources::AgentsTest < Cadenya::Test::ResourceTest
 
     response =
       @cadenya.agents.create(
-        workspace_id: "workspaceId",
+        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q",
         metadata: {name: "name"},
         spec: {variationSelectionMode: :VARIATION_SELECTION_MODE_UNSPECIFIED}
       )
@@ -30,7 +30,11 @@ class Cadenya::Test::Resources::AgentsTest < Cadenya::Test::ResourceTest
   def test_retrieve_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.agents.retrieve("id", workspace_id: "workspaceId")
+    response =
+      @cadenya.agents.retrieve(
+        "agent_01HXKD2E5NQM3T9AYWCFMGWT9Y",
+        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
+      )
 
     assert_pattern do
       response => Cadenya::Agent
@@ -49,7 +53,11 @@ class Cadenya::Test::Resources::AgentsTest < Cadenya::Test::ResourceTest
   def test_update_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.agents.update("id", workspace_id: "workspaceId")
+    response =
+      @cadenya.agents.update(
+        "agent_01HXKD2E5NQM3T9AYWCFMGWT9Y",
+        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
+      )
 
     assert_pattern do
       response => Cadenya::Agent
@@ -68,7 +76,7 @@ class Cadenya::Test::Resources::AgentsTest < Cadenya::Test::ResourceTest
   def test_list_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.agents.list(workspace_id: "workspaceId")
+    response = @cadenya.agents.list(workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q")
 
     assert_pattern do
       response => Cadenya::Internal::CursorPagination
@@ -94,7 +102,11 @@ class Cadenya::Test::Resources::AgentsTest < Cadenya::Test::ResourceTest
   def test_delete_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.agents.delete("id", workspace_id: "workspaceId")
+    response =
+      @cadenya.agents.delete(
+        "agent_01HXKD2E5NQM3T9AYWCFMGWT9Y",
+        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
+      )
 
     assert_pattern do
       response => nil
@@ -104,7 +116,11 @@ class Cadenya::Test::Resources::AgentsTest < Cadenya::Test::ResourceTest
   def test_archive_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.agents.archive("id", workspace_id: "workspaceId")
+    response =
+      @cadenya.agents.archive(
+        "agent_01HXKD2E5NQM3T9AYWCFMGWT9Y",
+        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
+      )
 
     assert_pattern do
       response => Cadenya::Agent
@@ -123,7 +139,11 @@ class Cadenya::Test::Resources::AgentsTest < Cadenya::Test::ResourceTest
   def test_publish_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.agents.publish("id", workspace_id: "workspaceId")
+    response =
+      @cadenya.agents.publish(
+        "agent_01HXKD2E5NQM3T9AYWCFMGWT9Y",
+        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
+      )
 
     assert_pattern do
       response => Cadenya::Agent
@@ -142,7 +162,11 @@ class Cadenya::Test::Resources::AgentsTest < Cadenya::Test::ResourceTest
   def test_unarchive_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.agents.unarchive("id", workspace_id: "workspaceId")
+    response =
+      @cadenya.agents.unarchive(
+        "agent_01HXKD2E5NQM3T9AYWCFMGWT9Y",
+        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
+      )
 
     assert_pattern do
       response => Cadenya::Agent
@@ -161,7 +185,11 @@ class Cadenya::Test::Resources::AgentsTest < Cadenya::Test::ResourceTest
   def test_unpublish_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.agents.unpublish("id", workspace_id: "workspaceId")
+    response =
+      @cadenya.agents.unpublish(
+        "agent_01HXKD2E5NQM3T9AYWCFMGWT9Y",
+        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
+      )
 
     assert_pattern do
       response => Cadenya::Agent

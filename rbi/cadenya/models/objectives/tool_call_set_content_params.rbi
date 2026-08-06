@@ -32,7 +32,13 @@ module Cadenya
         # on input where the result-side carries a signed url on output.
         sig do
           returns(
-            T::Array[Cadenya::Objectives::SetToolCallContentRequestContentBlock]
+            T::Array[
+              T.any(
+                Cadenya::Objectives::SetToolCallContentRequestContentBlockText,
+                Cadenya::Objectives::SetToolCallContentRequestContentBlockImage,
+                Cadenya::Objectives::SetToolCallContentRequestContentBlockAudio
+              )
+            ]
           )
         end
         attr_accessor :content
@@ -43,7 +49,11 @@ module Cadenya
             tool_call_id: String,
             content:
               T::Array[
-                Cadenya::Objectives::SetToolCallContentRequestContentBlock::OrHash
+                T.any(
+                  Cadenya::Objectives::SetToolCallContentRequestContentBlockText::OrHash,
+                  Cadenya::Objectives::SetToolCallContentRequestContentBlockImage::OrHash,
+                  Cadenya::Objectives::SetToolCallContentRequestContentBlockAudio::OrHash
+                )
               ],
             workspace_id: String,
             request_options: Cadenya::RequestOptions::OrHash
@@ -69,7 +79,11 @@ module Cadenya
               tool_call_id: String,
               content:
                 T::Array[
-                  Cadenya::Objectives::SetToolCallContentRequestContentBlock
+                  T.any(
+                    Cadenya::Objectives::SetToolCallContentRequestContentBlockText,
+                    Cadenya::Objectives::SetToolCallContentRequestContentBlockImage,
+                    Cadenya::Objectives::SetToolCallContentRequestContentBlockAudio
+                  )
                 ],
               request_options: Cadenya::RequestOptions
             }

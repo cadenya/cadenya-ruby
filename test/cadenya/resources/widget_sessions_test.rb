@@ -8,7 +8,7 @@ class Cadenya::Test::Resources::WidgetSessionsTest < Cadenya::Test::ResourceTest
 
     response =
       @cadenya.widget_sessions.create(
-        workspace_id: "workspaceId",
+        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q",
         spec: {widgetId: "wgt_01HXKD2E5NQM3T9AYWCFMZZZBD"}
       )
 
@@ -30,7 +30,7 @@ class Cadenya::Test::Resources::WidgetSessionsTest < Cadenya::Test::ResourceTest
   def test_retrieve_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.widget_sessions.retrieve("id", workspace_id: "workspaceId")
+    response = @cadenya.widget_sessions.retrieve("id", workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q")
 
     assert_pattern do
       response => Cadenya::WidgetSession
@@ -50,7 +50,7 @@ class Cadenya::Test::Resources::WidgetSessionsTest < Cadenya::Test::ResourceTest
   def test_list_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.widget_sessions.list(workspace_id: "workspaceId")
+    response = @cadenya.widget_sessions.list(workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q")
 
     assert_pattern do
       response => Cadenya::Internal::CursorPagination
@@ -77,7 +77,7 @@ class Cadenya::Test::Resources::WidgetSessionsTest < Cadenya::Test::ResourceTest
   def test_delete_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.widget_sessions.delete("id", workspace_id: "workspaceId")
+    response = @cadenya.widget_sessions.delete("id", workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q")
 
     assert_pattern do
       response => nil
@@ -87,7 +87,7 @@ class Cadenya::Test::Resources::WidgetSessionsTest < Cadenya::Test::ResourceTest
   def test_delete_tenant_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.widget_sessions.delete_tenant(workspace_id: "workspaceId")
+    response = @cadenya.widget_sessions.delete_tenant(workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q")
 
     assert_pattern do
       response => Cadenya::Models::WidgetSessionDeleteTenantResponse
@@ -104,7 +104,7 @@ class Cadenya::Test::Resources::WidgetSessionsTest < Cadenya::Test::ResourceTest
   def test_revoke_required_params
     skip("Mock server tests are disabled")
 
-    response = @cadenya.widget_sessions.revoke("id", workspace_id: "workspaceId")
+    response = @cadenya.widget_sessions.revoke("id", workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q")
 
     assert_pattern do
       response => Cadenya::WidgetSession

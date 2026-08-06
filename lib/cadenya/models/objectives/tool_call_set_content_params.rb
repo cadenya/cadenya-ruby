@@ -28,9 +28,9 @@ module Cadenya
         #   ObjectiveToolCallResult.ContentBlock but writable: media blocks carry raw data
         #   on input where the result-side carries a signed url on output.
         #
-        #   @return [Array<Cadenya::Models::Objectives::SetToolCallContentRequestContentBlock>]
+        #   @return [Array<Cadenya::Models::Objectives::SetToolCallContentRequestContentBlockText, Cadenya::Models::Objectives::SetToolCallContentRequestContentBlockImage, Cadenya::Models::Objectives::SetToolCallContentRequestContentBlockAudio>]
         required :content,
-                 -> { Cadenya::Internal::Type::ArrayOf[Cadenya::Objectives::SetToolCallContentRequestContentBlock] }
+                 -> { Cadenya::Internal::Type::ArrayOf[union: Cadenya::Objectives::SetToolCallContentRequestContentBlock] }
 
         # @!method initialize(objective_id:, tool_call_id:, content:, workspace_id: nil, request_options: {})
         #   Some parameter documentations has been truncated, see
@@ -40,7 +40,7 @@ module Cadenya
         #
         #   @param tool_call_id [String]
         #
-        #   @param content [Array<Cadenya::Models::Objectives::SetToolCallContentRequestContentBlock>] The content to set on the tool call. Mirrors
+        #   @param content [Array<Cadenya::Models::Objectives::SetToolCallContentRequestContentBlockText, Cadenya::Models::Objectives::SetToolCallContentRequestContentBlockImage, Cadenya::Models::Objectives::SetToolCallContentRequestContentBlockAudio>] The content to set on the tool call. Mirrors
         #
         #   @param workspace_id [String]
         #

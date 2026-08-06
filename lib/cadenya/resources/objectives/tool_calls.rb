@@ -174,7 +174,7 @@ module Cadenya
         #
         # @param tool_call_id [String] Path param: The ID of the tool call to set content for
         #
-        # @param content [Array<Cadenya::Models::Objectives::SetToolCallContentRequestContentBlock>] Body param: The content to set on the tool call. Mirrors
+        # @param content [Array<Cadenya::Models::Objectives::SetToolCallContentRequestContentBlockText, Cadenya::Models::Objectives::SetToolCallContentRequestContentBlockImage, Cadenya::Models::Objectives::SetToolCallContentRequestContentBlockAudio>] Body param: The content to set on the tool call. Mirrors
         #
         # @param workspace_id [String] Path param
         #

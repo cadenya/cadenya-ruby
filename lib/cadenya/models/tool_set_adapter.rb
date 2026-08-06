@@ -2,53 +2,21 @@
 
 module Cadenya
   module Models
-    class ToolSetAdapter < Cadenya::Internal::Type::BaseModel
-      # @!attribute bare
-      #   Bare tool sets define tools without an execution adapter. A bare tool call
-      #   doesn't fire anything: the objective's workflow pauses and waits for an external
-      #   API consumer to set the tool call's content (e.g. human-in-the-loop tools, or a
-      #   reverse harness that polls for pending tool calls, executes locally, and reports
-      #   results back via SetToolCallContent).
-      #
-      #   @return [Cadenya::Models::ToolSetAdapterBare, nil]
-      optional :bare, -> { Cadenya::ToolSetAdapterBare }
+    module ToolSetAdapter
+      extend Cadenya::Internal::Type::Union
 
-      # @!attribute http
-      #
-      #   @return [Cadenya::Models::ToolSetAdapterHTTP, nil]
-      optional :http, -> { Cadenya::ToolSetAdapterHTTP }
+      discriminator :type
 
-      # @!attribute mcp
-      #
-      #   @return [Cadenya::Models::ToolSetAdapterMCP, nil]
-      optional :mcp, -> { Cadenya::ToolSetAdapterMCP }
+      variant :mcp, -> { Cadenya::ToolSetAdapterMCPVariant }
 
-      # @!attribute openapi
-      #
-      #   @return [Cadenya::Models::ToolSetAdapterOpenAPI, nil]
-      optional :openapi, -> { Cadenya::ToolSetAdapterOpenAPI }
+      variant :http, -> { Cadenya::ToolSetAdapterHTTPVariant }
 
-      # @!attribute type
-      #   The JSON name of the variant set in `adapter` (e.g. "mcp"). Required from
-      #   clients on writes, filled by the server on reads; drives the discriminated union
-      #   in the generated OpenAPI.
-      #
-      #   @return [String, nil]
-      optional :type, String
+      variant :openapi, -> { Cadenya::ToolSetAdapterOpenAPIVariant }
 
-      # @!method initialize(bare: nil, http: nil, mcp: nil, openapi: nil, type: nil)
-      #   Some parameter documentations has been truncated, see
-      #   {Cadenya::Models::ToolSetAdapter} for more details.
-      #
-      #   @param bare [Cadenya::Models::ToolSetAdapterBare] Bare tool sets define tools without an execution adapter. A bare tool
-      #
-      #   @param http [Cadenya::Models::ToolSetAdapterHTTP]
-      #
-      #   @param mcp [Cadenya::Models::ToolSetAdapterMCP]
-      #
-      #   @param openapi [Cadenya::Models::ToolSetAdapterOpenAPI]
-      #
-      #   @param type [String] The JSON name of the variant set in `adapter` (e.g. "mcp"). Required
+      variant :bare, -> { Cadenya::ToolSetAdapterBareVariant }
+
+      # @!method self.variants
+      #   @return [Array(Cadenya::Models::ToolSetAdapterMCPVariant, Cadenya::Models::ToolSetAdapterHTTPVariant, Cadenya::Models::ToolSetAdapterOpenAPIVariant, Cadenya::Models::ToolSetAdapterBareVariant)]
     end
   end
 end

@@ -23,29 +23,15 @@ module Cadenya
         #   @return [String]
         required :variation_id, String
 
-        # @!attribute sub_agent_id
+        # @!attribute body
+        #   Attach a single tool, tool set, or sub-agent to a variation. Exactly one of the
+        #   target fields must be set; the assignment kind is inferred from the populated
+        #   field.
         #
-        #   @return [String, nil]
-        optional :sub_agent_id, String, api_name: :subAgentId
+        #   @return [Cadenya::Models::Agents::AddAgentVariationAssignmentRequestToolID, Cadenya::Models::Agents::AddAgentVariationAssignmentRequestToolSetID, Cadenya::Models::Agents::AddAgentVariationAssignmentRequestSubAgentID]
+        required :body, union: -> { Cadenya::Agents::VariationAddAssignmentParams::Body }
 
-        # @!attribute tool_id
-        #
-        #   @return [String, nil]
-        optional :tool_id, String, api_name: :toolId
-
-        # @!attribute tool_set_id
-        #
-        #   @return [String, nil]
-        optional :tool_set_id, String, api_name: :toolSetId
-
-        # @!attribute type
-        #   The JSON name of the variant set in `target` (e.g. "toolId"). Required on input;
-        #   drives the discriminated union in the generated OpenAPI.
-        #
-        #   @return [String, nil]
-        optional :type, String
-
-        # @!method initialize(agent_id:, variation_id:, workspace_id: nil, sub_agent_id: nil, tool_id: nil, tool_set_id: nil, type: nil, request_options: {})
+        # @!method initialize(agent_id:, variation_id:, body:, workspace_id: nil, request_options: {})
         #   Some parameter documentations has been truncated, see
         #   {Cadenya::Models::Agents::VariationAddAssignmentParams} for more details.
         #
@@ -53,17 +39,29 @@ module Cadenya
         #
         #   @param variation_id [String]
         #
+        #   @param body [Cadenya::Models::Agents::AddAgentVariationAssignmentRequestToolID, Cadenya::Models::Agents::AddAgentVariationAssignmentRequestToolSetID, Cadenya::Models::Agents::AddAgentVariationAssignmentRequestSubAgentID] Attach a single tool, tool set, or sub-agent to a variation. Exactly one
+        #
         #   @param workspace_id [String]
         #
-        #   @param sub_agent_id [String]
-        #
-        #   @param tool_id [String]
-        #
-        #   @param tool_set_id [String]
-        #
-        #   @param type [String] The JSON name of the variant set in `target` (e.g. "toolId"). Required
-        #
         #   @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}]
+
+        # Attach a single tool, tool set, or sub-agent to a variation. Exactly one of the
+        # target fields must be set; the assignment kind is inferred from the populated
+        # field.
+        module Body
+          extend Cadenya::Internal::Type::Union
+
+          discriminator :type
+
+          variant :toolId, -> { Cadenya::Agents::AddAgentVariationAssignmentRequestToolID }
+
+          variant :toolSetId, -> { Cadenya::Agents::AddAgentVariationAssignmentRequestToolSetID }
+
+          variant :subAgentId, -> { Cadenya::Agents::AddAgentVariationAssignmentRequestSubAgentID }
+
+          # @!method self.variants
+          #   @return [Array(Cadenya::Models::Agents::AddAgentVariationAssignmentRequestToolID, Cadenya::Models::Agents::AddAgentVariationAssignmentRequestToolSetID, Cadenya::Models::Agents::AddAgentVariationAssignmentRequestSubAgentID)]
+        end
       end
     end
   end
