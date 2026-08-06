@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.51.1 (2026-08-06)
+
+Full Changelog: [v0.51.0...v0.51.1](https://github.com/cadenya/cadenya-ruby/compare/v0.51.0...v0.51.1)
+
 ## 0.51.0 (2026-08-05)
 
 Full Changelog: [v0.50.0...v0.51.0](https://github.com/cadenya/cadenya-ruby/compare/v0.50.0...v0.51.0)
