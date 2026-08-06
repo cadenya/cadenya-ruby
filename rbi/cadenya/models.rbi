@@ -206,6 +206,8 @@ module Cadenya
 
   ObjectiveEventDataNotice = Cadenya::Models::ObjectiveEventDataNotice
 
+  ObjectiveEventDataReasoning = Cadenya::Models::ObjectiveEventDataReasoning
+
   ObjectiveEventDataSubAgentSpawned =
     Cadenya::Models::ObjectiveEventDataSubAgentSpawned
 
@@ -264,6 +266,8 @@ module Cadenya
 
   ProfileWhoamiParams = Cadenya::Models::ProfileWhoamiParams
 
+  Reasoning = Cadenya::Models::Reasoning
+
   ResourceMetadata = Cadenya::Models::ResourceMetadata
 
   RotateChallengeTokenResponse = Cadenya::Models::RotateChallengeTokenResponse
@@ -290,11 +294,35 @@ module Cadenya
 
   SubAgentUpdated = Cadenya::Models::SubAgentUpdated
 
+  Subject = Cadenya::Models::Subject
+
+  SubjectAssertion = Cadenya::Models::SubjectAssertion
+
+  SubjectInfo = Cadenya::Models::SubjectInfo
+
+  SubjectReference = Cadenya::Models::SubjectReference
+
   SyncCompleted = Cadenya::Models::SyncCompleted
 
   SyncFailed = Cadenya::Models::SyncFailed
 
   SyncStarted = Cadenya::Models::SyncStarted
+
+  Tenant = Cadenya::Models::Tenant
+
+  TenantAssertion = Cadenya::Models::TenantAssertion
+
+  TenantDeleteParams = Cadenya::Models::TenantDeleteParams
+
+  TenantInfo = Cadenya::Models::TenantInfo
+
+  TenantListParams = Cadenya::Models::TenantListParams
+
+  TenantReference = Cadenya::Models::TenantReference
+
+  TenantRetrieveParams = Cadenya::Models::TenantRetrieveParams
+
+  Tenants = Cadenya::Models::Tenants
 
   ToolApprovalRequested = Cadenya::Models::ToolApprovalRequested
 
@@ -393,6 +421,45 @@ module Cadenya
   WebhookUnsafeUnwrapParams = Cadenya::Models::WebhookUnsafeUnwrapParams
 
   WebhookUnwrapParams = Cadenya::Models::WebhookUnwrapParams
+
+  Widget = Cadenya::Models::Widget
+
+  WidgetArchiveParams = Cadenya::Models::WidgetArchiveParams
+
+  WidgetCreateParams = Cadenya::Models::WidgetCreateParams
+
+  WidgetDeleteParams = Cadenya::Models::WidgetDeleteParams
+
+  WidgetInfo = Cadenya::Models::WidgetInfo
+
+  WidgetListParams = Cadenya::Models::WidgetListParams
+
+  WidgetRetrieveParams = Cadenya::Models::WidgetRetrieveParams
+
+  WidgetSession = Cadenya::Models::WidgetSession
+
+  WidgetSessionCreateParams = Cadenya::Models::WidgetSessionCreateParams
+
+  WidgetSessionDeleteParams = Cadenya::Models::WidgetSessionDeleteParams
+
+  WidgetSessionDeleteTenantParams =
+    Cadenya::Models::WidgetSessionDeleteTenantParams
+
+  WidgetSessionInfo = Cadenya::Models::WidgetSessionInfo
+
+  WidgetSessionListParams = Cadenya::Models::WidgetSessionListParams
+
+  WidgetSessionRetrieveParams = Cadenya::Models::WidgetSessionRetrieveParams
+
+  WidgetSessionRevokeParams = Cadenya::Models::WidgetSessionRevokeParams
+
+  WidgetSessionSpec = Cadenya::Models::WidgetSessionSpec
+
+  WidgetSpec = Cadenya::Models::WidgetSpec
+
+  WidgetUnarchiveParams = Cadenya::Models::WidgetUnarchiveParams
+
+  WidgetUpdateParams = Cadenya::Models::WidgetUpdateParams
 
   Workspace = Cadenya::Models::Workspace
 

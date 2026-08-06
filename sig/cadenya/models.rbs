@@ -197,6 +197,8 @@ module Cadenya
 
   class ObjectiveEventDataNotice = Cadenya::Models::ObjectiveEventDataNotice
 
+  class ObjectiveEventDataReasoning = Cadenya::Models::ObjectiveEventDataReasoning
+
   class ObjectiveEventDataSubAgentSpawned = Cadenya::Models::ObjectiveEventDataSubAgentSpawned
 
   class ObjectiveEventDataSubAgentUpdated = Cadenya::Models::ObjectiveEventDataSubAgentUpdated
@@ -249,6 +251,8 @@ module Cadenya
 
   class ProfileWhoamiParams = Cadenya::Models::ProfileWhoamiParams
 
+  class Reasoning = Cadenya::Models::Reasoning
+
   class ResourceMetadata = Cadenya::Models::ResourceMetadata
 
   class RotateChallengeTokenResponse = Cadenya::Models::RotateChallengeTokenResponse
@@ -273,11 +277,35 @@ module Cadenya
 
   class SubAgentUpdated = Cadenya::Models::SubAgentUpdated
 
+  class Subject = Cadenya::Models::Subject
+
+  class SubjectAssertion = Cadenya::Models::SubjectAssertion
+
+  class SubjectInfo = Cadenya::Models::SubjectInfo
+
+  class SubjectReference = Cadenya::Models::SubjectReference
+
   class SyncCompleted = Cadenya::Models::SyncCompleted
 
   class SyncFailed = Cadenya::Models::SyncFailed
 
   class SyncStarted = Cadenya::Models::SyncStarted
+
+  class Tenant = Cadenya::Models::Tenant
+
+  class TenantAssertion = Cadenya::Models::TenantAssertion
+
+  class TenantDeleteParams = Cadenya::Models::TenantDeleteParams
+
+  class TenantInfo = Cadenya::Models::TenantInfo
+
+  class TenantListParams = Cadenya::Models::TenantListParams
+
+  class TenantReference = Cadenya::Models::TenantReference
+
+  class TenantRetrieveParams = Cadenya::Models::TenantRetrieveParams
+
+  module Tenants = Cadenya::Models::Tenants
 
   class ToolApprovalRequested = Cadenya::Models::ToolApprovalRequested
 
@@ -376,6 +404,44 @@ module Cadenya
   class WebhookUnsafeUnwrapParams = Cadenya::Models::WebhookUnsafeUnwrapParams
 
   class WebhookUnwrapParams = Cadenya::Models::WebhookUnwrapParams
+
+  class Widget = Cadenya::Models::Widget
+
+  class WidgetArchiveParams = Cadenya::Models::WidgetArchiveParams
+
+  class WidgetCreateParams = Cadenya::Models::WidgetCreateParams
+
+  class WidgetDeleteParams = Cadenya::Models::WidgetDeleteParams
+
+  class WidgetInfo = Cadenya::Models::WidgetInfo
+
+  class WidgetListParams = Cadenya::Models::WidgetListParams
+
+  class WidgetRetrieveParams = Cadenya::Models::WidgetRetrieveParams
+
+  class WidgetSession = Cadenya::Models::WidgetSession
+
+  class WidgetSessionCreateParams = Cadenya::Models::WidgetSessionCreateParams
+
+  class WidgetSessionDeleteParams = Cadenya::Models::WidgetSessionDeleteParams
+
+  class WidgetSessionDeleteTenantParams = Cadenya::Models::WidgetSessionDeleteTenantParams
+
+  class WidgetSessionInfo = Cadenya::Models::WidgetSessionInfo
+
+  class WidgetSessionListParams = Cadenya::Models::WidgetSessionListParams
+
+  class WidgetSessionRetrieveParams = Cadenya::Models::WidgetSessionRetrieveParams
+
+  class WidgetSessionRevokeParams = Cadenya::Models::WidgetSessionRevokeParams
+
+  class WidgetSessionSpec = Cadenya::Models::WidgetSessionSpec
+
+  class WidgetSpec = Cadenya::Models::WidgetSpec
+
+  class WidgetUnarchiveParams = Cadenya::Models::WidgetUnarchiveParams
+
+  class WidgetUpdateParams = Cadenya::Models::WidgetUpdateParams
 
   class Workspace = Cadenya::Models::Workspace
 

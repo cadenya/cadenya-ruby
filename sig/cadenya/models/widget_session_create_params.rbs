@@ -1,0 +1,67 @@
+module Cadenya
+  module Models
+    type widget_session_create_params =
+      {
+        workspace_id: String,
+        spec: Cadenya::WidgetSessionSpec,
+        metadata: Cadenya::CreateOperationMetadata,
+        secrets: ::Array[Cadenya::WidgetSessionCreateParams::Secret]
+      }
+      & Cadenya::Internal::Type::request_parameters
+
+    class WidgetSessionCreateParams < Cadenya::Internal::Type::BaseModel
+      extend Cadenya::Internal::Type::RequestParameters::Converter
+      include Cadenya::Internal::Type::RequestParameters
+
+      attr_reader workspace_id: String?
+
+      def workspace_id=: (String) -> String
+
+      attr_accessor spec: Cadenya::WidgetSessionSpec
+
+      attr_reader metadata: Cadenya::CreateOperationMetadata?
+
+      def metadata=: (
+        Cadenya::CreateOperationMetadata
+      ) -> Cadenya::CreateOperationMetadata
+
+      attr_reader secrets: ::Array[Cadenya::WidgetSessionCreateParams::Secret]?
+
+      def secrets=: (
+        ::Array[Cadenya::WidgetSessionCreateParams::Secret]
+      ) -> ::Array[Cadenya::WidgetSessionCreateParams::Secret]
+
+      def initialize: (
+        spec: Cadenya::WidgetSessionSpec,
+        ?workspace_id: String,
+        ?metadata: Cadenya::CreateOperationMetadata,
+        ?secrets: ::Array[Cadenya::WidgetSessionCreateParams::Secret],
+        ?request_options: Cadenya::request_opts
+      ) -> void
+
+      def to_hash: -> {
+        workspace_id: String,
+        spec: Cadenya::WidgetSessionSpec,
+        metadata: Cadenya::CreateOperationMetadata,
+        secrets: ::Array[Cadenya::WidgetSessionCreateParams::Secret],
+        request_options: Cadenya::RequestOptions
+      }
+
+      type secret = { name: String, value: String }
+
+      class Secret < Cadenya::Internal::Type::BaseModel
+        attr_reader name: String?
+
+        def name=: (String) -> String
+
+        attr_reader value: String?
+
+        def value=: (String) -> String
+
+        def initialize: (?name: String, ?value: String) -> void
+
+        def to_hash: -> { name: String, value: String }
+      end
+    end
+  end
+end

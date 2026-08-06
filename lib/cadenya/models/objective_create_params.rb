@@ -83,12 +83,40 @@ module Cadenya
       #   @return [Cadenya::Models::CreateOperationMetadata, nil]
       optional :metadata, -> { Cadenya::CreateOperationMetadata }
 
+      # @!attribute pinned_parameters
+      #   Parameters forced onto this objective's tool calls. A pinned parameter is an
+      #   overlay on a tool's JSON schema: the parameter is removed from what the LLM
+      #   sees, and its value is always overwritten server-side with the pinned value —
+      #   the model cannot choose a different value for it.
+      #
+      #   @return [Hash{Symbol=>String}, nil]
+      optional :pinned_parameters, Cadenya::Internal::Type::HashOf[String], api_name: :pinnedParameters
+
       # @!attribute secrets
       #   Secrets that can be used in the headers for tool calls using the secret
       #   interpolation format.
       #
       #   @return [Array<Cadenya::Models::ObjectiveCreateParams::Secret>, nil]
       optional :secrets, -> { Cadenya::Internal::Type::ArrayOf[Cadenya::ObjectiveCreateParams::Secret] }
+
+      # @!attribute subject
+      #   SubjectAssertion identifies a person within a tenant in the customer's own
+      #   namespace — typically their user id. Asserting a subject upserts the subject
+      #   record under the asserted tenant and associates the created resource with it. A
+      #   subject assertion is only valid alongside a tenant assertion: subject
+      #   identifiers are scoped to their tenant.
+      #
+      #   @return [Cadenya::Models::SubjectAssertion, nil]
+      optional :subject, -> { Cadenya::SubjectAssertion }
+
+      # @!attribute tenant
+      #   TenantAssertion identifies a tenant in the customer's own namespace — their org,
+      #   company, or team identifier for an end user. Asserting a tenant upserts the
+      #   tenant record in the workspace (keyed on `id` as the tenant's external_id) and
+      #   associates the created resource with it.
+      #
+      #   @return [Cadenya::Models::TenantAssertion, nil]
+      optional :tenant, -> { Cadenya::TenantAssertion }
 
       # @!attribute variation_id
       #   Optional explicit variation selection. Overrides the agent's
@@ -97,7 +125,7 @@ module Cadenya
       #   @return [String, nil]
       optional :variation_id, String, api_name: :variationId
 
-      # @!method initialize(agent_id:, system_prompt_data:, workspace_id: nil, episodic_memory: nil, first_user_message: nil, first_user_message_data: nil, memory_cascade: nil, metadata: nil, secrets: nil, variation_id: nil, request_options: {})
+      # @!method initialize(agent_id:, system_prompt_data:, workspace_id: nil, episodic_memory: nil, first_user_message: nil, first_user_message_data: nil, memory_cascade: nil, metadata: nil, pinned_parameters: nil, secrets: nil, subject: nil, tenant: nil, variation_id: nil, request_options: {})
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::ObjectiveCreateParams} for more details.
       #
@@ -117,7 +145,13 @@ module Cadenya
       #
       #   @param metadata [Cadenya::Models::CreateOperationMetadata] CreateOperationMetadata contains the user-provided fields for creating
       #
+      #   @param pinned_parameters [Hash{Symbol=>String}] Parameters forced onto this objective's tool calls. A pinned parameter
+      #
       #   @param secrets [Array<Cadenya::Models::ObjectiveCreateParams::Secret>] Secrets that can be used in the headers for tool calls using the secret interpol
+      #
+      #   @param subject [Cadenya::Models::SubjectAssertion] SubjectAssertion identifies a person within a tenant in the customer's own
+      #
+      #   @param tenant [Cadenya::Models::TenantAssertion] TenantAssertion identifies a tenant in the customer's own namespace — their
       #
       #   @param variation_id [String] Optional explicit variation selection. Overrides the agent's variation_selection
       #

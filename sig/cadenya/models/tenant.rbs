@@ -1,0 +1,44 @@
+module Cadenya
+  module Models
+    type tenant =
+      {
+        metadata: Cadenya::ResourceMetadata,
+        state: Cadenya::Models::Tenant::state,
+        info: Cadenya::TenantInfo
+      }
+
+    class Tenant < Cadenya::Internal::Type::BaseModel
+      attr_accessor metadata: Cadenya::ResourceMetadata
+
+      attr_reader info: Cadenya::TenantInfo?
+
+      def info=: (Cadenya::TenantInfo) -> Cadenya::TenantInfo
+
+      attr_accessor state: Cadenya::Models::Tenant::state
+
+      def initialize: (
+        metadata: Cadenya::ResourceMetadata,
+        state: Cadenya::Models::Tenant::state,
+        ?info: Cadenya::TenantInfo
+      ) -> void
+
+      def to_hash: -> {
+        metadata: Cadenya::ResourceMetadata,
+        state: Cadenya::Models::Tenant::state,
+        info: Cadenya::TenantInfo
+      }
+
+      type state = :STATE_UNSPECIFIED | :STATE_ACTIVE | :STATE_ERASING
+
+      module State
+        extend Cadenya::Internal::Type::Enum
+
+        STATE_UNSPECIFIED: :STATE_UNSPECIFIED
+        STATE_ACTIVE: :STATE_ACTIVE
+        STATE_ERASING: :STATE_ERASING
+
+        def self?.values: -> ::Array[Cadenya::Models::Tenant::state]
+      end
+    end
+  end
+end

@@ -46,6 +46,12 @@ module Cadenya
 
     attr_reader webhooks: Cadenya::Resources::Webhooks
 
+    attr_reader widgets: Cadenya::Resources::Widgets
+
+    attr_reader tenants: Cadenya::Resources::Tenants
+
+    attr_reader widget_sessions: Cadenya::Resources::WidgetSessions
+
     private def auth_headers: -> ::Hash[String, String]
 
     def initialize: (

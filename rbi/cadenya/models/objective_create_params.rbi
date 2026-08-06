@@ -88,6 +88,16 @@ module Cadenya
       sig { params(metadata: Cadenya::CreateOperationMetadata::OrHash).void }
       attr_writer :metadata
 
+      # Parameters forced onto this objective's tool calls. A pinned parameter is an
+      # overlay on a tool's JSON schema: the parameter is removed from what the LLM
+      # sees, and its value is always overwritten server-side with the pinned value —
+      # the model cannot choose a different value for it.
+      sig { returns(T.nilable(T::Hash[Symbol, String])) }
+      attr_reader :pinned_parameters
+
+      sig { params(pinned_parameters: T::Hash[Symbol, String]).void }
+      attr_writer :pinned_parameters
+
       # Secrets that can be used in the headers for tool calls using the secret
       # interpolation format.
       sig do
@@ -101,6 +111,27 @@ module Cadenya
         ).void
       end
       attr_writer :secrets
+
+      # SubjectAssertion identifies a person within a tenant in the customer's own
+      # namespace — typically their user id. Asserting a subject upserts the subject
+      # record under the asserted tenant and associates the created resource with it. A
+      # subject assertion is only valid alongside a tenant assertion: subject
+      # identifiers are scoped to their tenant.
+      sig { returns(T.nilable(Cadenya::SubjectAssertion)) }
+      attr_reader :subject
+
+      sig { params(subject: Cadenya::SubjectAssertion::OrHash).void }
+      attr_writer :subject
+
+      # TenantAssertion identifies a tenant in the customer's own namespace — their org,
+      # company, or team identifier for an end user. Asserting a tenant upserts the
+      # tenant record in the workspace (keyed on `id` as the tenant's external_id) and
+      # associates the created resource with it.
+      sig { returns(T.nilable(Cadenya::TenantAssertion)) }
+      attr_reader :tenant
+
+      sig { params(tenant: Cadenya::TenantAssertion::OrHash).void }
+      attr_writer :tenant
 
       # Optional explicit variation selection. Overrides the agent's
       # variation_selection_mode.
@@ -121,7 +152,10 @@ module Cadenya
           first_user_message_data: T::Hash[Symbol, T.anything],
           memory_cascade: T::Array[Cadenya::MemoryReference::OrHash],
           metadata: Cadenya::CreateOperationMetadata::OrHash,
+          pinned_parameters: T::Hash[Symbol, String],
           secrets: T::Array[Cadenya::ObjectiveCreateParams::Secret::OrHash],
+          subject: Cadenya::SubjectAssertion::OrHash,
+          tenant: Cadenya::TenantAssertion::OrHash,
           variation_id: String,
           request_options: Cadenya::RequestOptions::OrHash
         ).returns(T.attached_class)
@@ -163,9 +197,25 @@ module Cadenya
         # operation. Read-only fields (id, account_id, workspace_id, created_at,
         # profile_id) are excluded since they are set by the server.
         metadata: nil,
+        # Parameters forced onto this objective's tool calls. A pinned parameter is an
+        # overlay on a tool's JSON schema: the parameter is removed from what the LLM
+        # sees, and its value is always overwritten server-side with the pinned value —
+        # the model cannot choose a different value for it.
+        pinned_parameters: nil,
         # Secrets that can be used in the headers for tool calls using the secret
         # interpolation format.
         secrets: nil,
+        # SubjectAssertion identifies a person within a tenant in the customer's own
+        # namespace — typically their user id. Asserting a subject upserts the subject
+        # record under the asserted tenant and associates the created resource with it. A
+        # subject assertion is only valid alongside a tenant assertion: subject
+        # identifiers are scoped to their tenant.
+        subject: nil,
+        # TenantAssertion identifies a tenant in the customer's own namespace — their org,
+        # company, or team identifier for an end user. Asserting a tenant upserts the
+        # tenant record in the workspace (keyed on `id` as the tenant's external_id) and
+        # associates the created resource with it.
+        tenant: nil,
         # Optional explicit variation selection. Overrides the agent's
         # variation_selection_mode.
         variation_id: nil,
@@ -184,7 +234,10 @@ module Cadenya
             first_user_message_data: T::Hash[Symbol, T.anything],
             memory_cascade: T::Array[Cadenya::MemoryReference],
             metadata: Cadenya::CreateOperationMetadata,
+            pinned_parameters: T::Hash[Symbol, String],
             secrets: T::Array[Cadenya::ObjectiveCreateParams::Secret],
+            subject: Cadenya::SubjectAssertion,
+            tenant: Cadenya::TenantAssertion,
             variation_id: String,
             request_options: Cadenya::RequestOptions
           }

@@ -107,6 +107,14 @@ module Cadenya
       sig { params(parent_objective_id: String).void }
       attr_writer :parent_objective_id
 
+      # Parameters forced onto this objective's tool calls, as provided at creation. See
+      # CreateObjectiveRequest.pinned_parameters for semantics.
+      sig { returns(T.nilable(T::Hash[Symbol, String])) }
+      attr_reader :pinned_parameters
+
+      sig { params(pinned_parameters: T::Hash[Symbol, String]).void }
+      attr_writer :pinned_parameters
+
       # Optional human-readable detail about the current state (e.g. a failure reason).
       sig { returns(T.nilable(String)) }
       attr_reader :state_message
@@ -137,6 +145,7 @@ module Cadenya
           memory_cascade: T::Array[Cadenya::MemoryReference::OrHash],
           output: T::Hash[Symbol, T.anything],
           parent_objective_id: String,
+          pinned_parameters: T::Hash[Symbol, String],
           secrets: T::Array[Cadenya::ObjectiveSecret::OrHash],
           state_message: String,
           system_prompt_data: T::Hash[Symbol, T.anything]
@@ -184,6 +193,9 @@ module Cadenya
         # A parent objective means the objective was spawned off using a separate agent to
         # complete an objective
         parent_objective_id: nil,
+        # Parameters forced onto this objective's tool calls, as provided at creation. See
+        # CreateObjectiveRequest.pinned_parameters for semantics.
+        pinned_parameters: nil,
         # Secrets that can be used in the headers for tool calls using the secret
         # interpolation format.
         secrets: nil,
@@ -208,6 +220,7 @@ module Cadenya
             memory_cascade: T::Array[Cadenya::MemoryReference],
             output: T::Hash[Symbol, T.anything],
             parent_objective_id: String,
+            pinned_parameters: T::Hash[Symbol, String],
             secrets: T::Array[Cadenya::ObjectiveSecret],
             state_message: String,
             system_prompt_data: T::Hash[Symbol, T.anything]

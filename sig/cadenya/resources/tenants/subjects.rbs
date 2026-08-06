@@ -1,0 +1,20 @@
+module Cadenya
+  module Resources
+    class Tenants
+      class Subjects
+        def list: (
+          String tenant_id,
+          ?workspace_id: String,
+          ?cursor: String,
+          ?include_info: bool,
+          ?limit: Integer,
+          ?query: String,
+          ?sort_order: String,
+          ?request_options: Cadenya::request_opts
+        ) -> Cadenya::Internal::CursorPagination[Cadenya::Subject]
+
+        def initialize: (client: Cadenya::Client) -> void
+      end
+    end
+  end
+end

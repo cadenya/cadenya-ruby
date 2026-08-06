@@ -20,7 +20,7 @@ module Cadenya
       #
       # Creates a new objective in the workspace
       #
-      # @overload create(agent_id:, system_prompt_data:, workspace_id: nil, episodic_memory: nil, first_user_message: nil, first_user_message_data: nil, memory_cascade: nil, metadata: nil, secrets: nil, variation_id: nil, request_options: {})
+      # @overload create(agent_id:, system_prompt_data:, workspace_id: nil, episodic_memory: nil, first_user_message: nil, first_user_message_data: nil, memory_cascade: nil, metadata: nil, pinned_parameters: nil, secrets: nil, subject: nil, tenant: nil, variation_id: nil, request_options: {})
       #
       # @param agent_id [String] Body param
       #
@@ -38,7 +38,13 @@ module Cadenya
       #
       # @param metadata [Cadenya::Models::CreateOperationMetadata] Body param: CreateOperationMetadata contains the user-provided fields for creati
       #
+      # @param pinned_parameters [Hash{Symbol=>String}] Body param: Parameters forced onto this objective's tool calls. A pinned paramet
+      #
       # @param secrets [Array<Cadenya::Models::ObjectiveCreateParams::Secret>] Body param: Secrets that can be used in the headers for tool calls using the sec
+      #
+      # @param subject [Cadenya::Models::SubjectAssertion] Body param: SubjectAssertion identifies a person within a tenant in the customer
+      #
+      # @param tenant [Cadenya::Models::TenantAssertion] Body param: TenantAssertion identifies a tenant in the customer's own namespace
       #
       # @param variation_id [String] Body param: Optional explicit variation selection. Overrides the agent's variati
       #
@@ -92,7 +98,7 @@ module Cadenya
       #
       # Lists all objectives in the workspace
       #
-      # @overload list(workspace_id: nil, agent_id: nil, agent_schedule_id: nil, cursor: nil, include_info: nil, labels: nil, limit: nil, parent_objective_id: nil, profile_id: nil, sort_order: nil, state: nil, request_options: {})
+      # @overload list(workspace_id: nil, agent_id: nil, agent_schedule_id: nil, cursor: nil, include_info: nil, labels: nil, limit: nil, parent_objective_id: nil, profile_id: nil, sort_order: nil, state: nil, subject_id: nil, tenant_id: nil, widget_id: nil, widget_session_id: nil, request_options: {})
       #
       # @param workspace_id [String] Path param
       #
@@ -116,6 +122,14 @@ module Cadenya
       #
       # @param state [Symbol, Cadenya::Models::ObjectiveListParams::State] Query param: Filter by state
       #
+      # @param subject_id [String] Query param: Filter to objectives associated with a subject. Accepts the canonic
+      #
+      # @param tenant_id [String] Query param: Filter to objectives associated with a tenant. Accepts the canonica
+      #
+      # @param widget_id [String] Query param: Filter to objectives whose conversation ran through a widget. Accep
+      #
+      # @param widget_session_id [String] Query param: Filter to objectives created by a specific widget session.
+      #
       # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
       #
       # @return [Cadenya::Internal::CursorPagination<Cadenya::Models::Objective>]
@@ -137,7 +151,11 @@ module Cadenya
             include_info: "includeInfo",
             parent_objective_id: "parentObjectiveId",
             profile_id: "profileId",
-            sort_order: "sortOrder"
+            sort_order: "sortOrder",
+            subject_id: "subjectId",
+            tenant_id: "tenantId",
+            widget_id: "widgetId",
+            widget_session_id: "widgetSessionId"
           ),
           page: Cadenya::Internal::CursorPagination,
           model: Cadenya::Objective,

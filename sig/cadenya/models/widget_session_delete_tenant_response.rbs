@@ -1,0 +1,23 @@
+module Cadenya
+  module Models
+    type widget_session_delete_tenant_response =
+      { objectives_deleted: Integer, sessions_deleted: Integer }
+
+    class WidgetSessionDeleteTenantResponse < Cadenya::Internal::Type::BaseModel
+      attr_reader objectives_deleted: Integer?
+
+      def objectives_deleted=: (Integer) -> Integer
+
+      attr_reader sessions_deleted: Integer?
+
+      def sessions_deleted=: (Integer) -> Integer
+
+      def initialize: (
+        ?objectives_deleted: Integer,
+        ?sessions_deleted: Integer
+      ) -> void
+
+      def to_hash: -> { objectives_deleted: Integer, sessions_deleted: Integer }
+    end
+  end
+end

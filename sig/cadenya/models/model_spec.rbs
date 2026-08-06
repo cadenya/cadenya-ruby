@@ -7,7 +7,8 @@ module Cadenya
         input_price_per_million_tokens: String,
         max_input_tokens: Integer,
         max_output_tokens: Integer,
-        output_price_per_million_tokens: String
+        output_price_per_million_tokens: String,
+        reasoning: Cadenya::Models::ModelSpec::reasoning
       }
 
     class ModelSpec < Cadenya::Internal::Type::BaseModel
@@ -31,13 +32,20 @@ module Cadenya
 
       def output_price_per_million_tokens=: (String) -> String
 
+      attr_reader reasoning: Cadenya::Models::ModelSpec::reasoning?
+
+      def reasoning=: (
+        Cadenya::Models::ModelSpec::reasoning
+      ) -> Cadenya::Models::ModelSpec::reasoning
+
       def initialize: (
         family: String,
         provider: String,
         ?input_price_per_million_tokens: String,
         ?max_input_tokens: Integer,
         ?max_output_tokens: Integer,
-        ?output_price_per_million_tokens: String
+        ?output_price_per_million_tokens: String,
+        ?reasoning: Cadenya::Models::ModelSpec::reasoning
       ) -> void
 
       def to_hash: -> {
@@ -46,8 +54,26 @@ module Cadenya
         input_price_per_million_tokens: String,
         max_input_tokens: Integer,
         max_output_tokens: Integer,
-        output_price_per_million_tokens: String
+        output_price_per_million_tokens: String,
+        reasoning: Cadenya::Models::ModelSpec::reasoning
       }
+
+      type reasoning =
+        :REASONING_UNSPECIFIED
+        | :REASONING_NONE
+        | :REASONING_ADAPTIVE
+        | :REASONING_BUDGET
+
+      module Reasoning
+        extend Cadenya::Internal::Type::Enum
+
+        REASONING_UNSPECIFIED: :REASONING_UNSPECIFIED
+        REASONING_NONE: :REASONING_NONE
+        REASONING_ADAPTIVE: :REASONING_ADAPTIVE
+        REASONING_BUDGET: :REASONING_BUDGET
+
+        def self?.values: -> ::Array[Cadenya::Models::ModelSpec::reasoning]
+      end
     end
   end
 end

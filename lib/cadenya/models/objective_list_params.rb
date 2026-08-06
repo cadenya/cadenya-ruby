@@ -74,7 +74,35 @@ module Cadenya
       #   @return [Symbol, Cadenya::Models::ObjectiveListParams::State, nil]
       optional :state, enum: -> { Cadenya::ObjectiveListParams::State }
 
-      # @!method initialize(workspace_id: nil, agent_id: nil, agent_schedule_id: nil, cursor: nil, include_info: nil, labels: nil, limit: nil, parent_objective_id: nil, profile_id: nil, sort_order: nil, state: nil, request_options: {})
+      # @!attribute subject_id
+      #   Filter to objectives associated with a subject. Accepts the canonical `subj_…`
+      #   form or the `external_id:<value>` form; the external_id form is scoped within a
+      #   tenant and requires `tenant_id` to also be set.
+      #
+      #   @return [String, nil]
+      optional :subject_id, String
+
+      # @!attribute tenant_id
+      #   Filter to objectives associated with a tenant. Accepts the canonical `tenant_…`
+      #   form or the `external_id:<value>` form.
+      #
+      #   @return [String, nil]
+      optional :tenant_id, String
+
+      # @!attribute widget_id
+      #   Filter to objectives whose conversation ran through a widget. Accepts the
+      #   canonical `wgt_…` form or the `external_id:<value>` form.
+      #
+      #   @return [String, nil]
+      optional :widget_id, String
+
+      # @!attribute widget_session_id
+      #   Filter to objectives created by a specific widget session.
+      #
+      #   @return [String, nil]
+      optional :widget_session_id, String
+
+      # @!method initialize(workspace_id: nil, agent_id: nil, agent_schedule_id: nil, cursor: nil, include_info: nil, labels: nil, limit: nil, parent_objective_id: nil, profile_id: nil, sort_order: nil, state: nil, subject_id: nil, tenant_id: nil, widget_id: nil, widget_session_id: nil, request_options: {})
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::ObjectiveListParams} for more details.
       #
@@ -99,6 +127,14 @@ module Cadenya
       #   @param sort_order [String] Sort order for results (asc or desc by creation time)
       #
       #   @param state [Symbol, Cadenya::Models::ObjectiveListParams::State] Filter by state
+      #
+      #   @param subject_id [String] Filter to objectives associated with a subject. Accepts the canonical
+      #
+      #   @param tenant_id [String] Filter to objectives associated with a tenant. Accepts the canonical
+      #
+      #   @param widget_id [String] Filter to objectives whose conversation ran through a widget. Accepts
+      #
+      #   @param widget_session_id [String] Filter to objectives created by a specific widget session.
       #
       #   @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}]
 
