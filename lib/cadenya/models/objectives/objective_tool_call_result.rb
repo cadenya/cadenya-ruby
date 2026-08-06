@@ -7,9 +7,9 @@ module Cadenya
         response_only do
           # @!attribute content
           #
-          #   @return [Array<Cadenya::Models::Objectives::ObjectiveToolCallResultContentBlockText, Cadenya::Models::Objectives::ObjectiveToolCallResultContentBlockImage, Cadenya::Models::Objectives::ObjectiveToolCallResultContentBlockAudio>]
+          #   @return [Array<Cadenya::Models::Objectives::ObjectiveToolCallResultContentBlock>]
           required :content,
-                   -> { Cadenya::Internal::Type::ArrayOf[union: Cadenya::Objectives::ObjectiveToolCallResultContentBlock] }
+                   -> { Cadenya::Internal::Type::ArrayOf[Cadenya::Objectives::ObjectiveToolCallResultContentBlock] }
         end
 
         # @!method initialize(content:)
@@ -18,7 +18,7 @@ module Cadenya
         #   audio). Media blocks are stored by Cadenya and served as short-lived signed URLs
         #   rather than inline bytes.
         #
-        #   @param content [Array<Cadenya::Models::Objectives::ObjectiveToolCallResultContentBlockText, Cadenya::Models::Objectives::ObjectiveToolCallResultContentBlockImage, Cadenya::Models::Objectives::ObjectiveToolCallResultContentBlockAudio>]
+        #   @param content [Array<Cadenya::Models::Objectives::ObjectiveToolCallResultContentBlock>]
       end
     end
 

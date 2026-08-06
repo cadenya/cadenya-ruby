@@ -2,13 +2,48 @@ module Cadenya
   module Models
     module MemoryLayers
       type memory_entry_create_spec =
-        Cadenya::MemoryLayers::MemoryEntryCreateSpecContent
-        | Cadenya::MemoryLayers::MemoryEntryCreateSpecUploadID
+        {
+          key: String,
+          content: String,
+          description: String,
+          type: String,
+          upload_id: String
+        }
 
-      module MemoryEntryCreateSpec
-        extend Cadenya::Internal::Type::Union
+      class MemoryEntryCreateSpec < Cadenya::Internal::Type::BaseModel
+        attr_accessor key: String
 
-        def self?.variants: -> ::Array[Cadenya::Models::MemoryLayers::memory_entry_create_spec]
+        attr_reader content: String?
+
+        def content=: (String) -> String
+
+        attr_reader description: String?
+
+        def description=: (String) -> String
+
+        attr_reader type: String?
+
+        def type=: (String) -> String
+
+        attr_reader upload_id: String?
+
+        def upload_id=: (String) -> String
+
+        def initialize: (
+          key: String,
+          ?content: String,
+          ?description: String,
+          ?type: String,
+          ?upload_id: String
+        ) -> void
+
+        def to_hash: -> {
+          key: String,
+          content: String,
+          description: String,
+          type: String,
+          upload_id: String
+        }
       end
     end
   end

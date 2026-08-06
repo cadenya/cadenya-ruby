@@ -14,8 +14,8 @@ module Cadenya
       # @!attribute event
       #   Event payload for a tool set operation.
       #
-      #   @return [Cadenya::Models::ToolSetEventDataSyncStarted, Cadenya::Models::ToolSetEventDataSyncCompleted, Cadenya::Models::ToolSetEventDataSyncFailed, nil]
-      optional :event, union: -> { Cadenya::ToolSetEventData }
+      #   @return [Cadenya::Models::ToolSetEventData, nil]
+      optional :event, -> { Cadenya::ToolSetEventData }
 
       # @!attribute info
       #
@@ -38,7 +38,7 @@ module Cadenya
       #
       #   @param metadata [Cadenya::Models::OperationMetadata] Metadata for ephemeral operations and activities (e.g., objectives, executions,
       #
-      #   @param event [Cadenya::Models::ToolSetEventDataSyncStarted, Cadenya::Models::ToolSetEventDataSyncCompleted, Cadenya::Models::ToolSetEventDataSyncFailed] Event payload for a tool set operation.
+      #   @param event [Cadenya::Models::ToolSetEventData] Event payload for a tool set operation.
       #
       #   @param info [Cadenya::Models::ToolSetEvent::Info]
       #

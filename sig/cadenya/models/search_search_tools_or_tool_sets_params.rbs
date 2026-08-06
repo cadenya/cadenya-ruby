@@ -12,11 +12,13 @@ module Cadenya
 
       def workspace_id=: (String) -> String
 
-      attr_accessor query: String
+      attr_reader query: String?
+
+      def query=: (String) -> String
 
       def initialize: (
-        query: String,
         ?workspace_id: String,
+        ?query: String,
         ?request_options: Cadenya::request_opts
       ) -> void
 

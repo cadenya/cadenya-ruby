@@ -42,6 +42,14 @@ module Cadenya
       sig { params(output_price_per_million_tokens: String).void }
       attr_writer :output_price_per_million_tokens
 
+      # The model's reasoning capability. Catalog data used to decide whether thinking
+      # is requested for objective iterations on this model.
+      sig { returns(T.nilable(Cadenya::ModelSpec::Reasoning::TaggedSymbol)) }
+      attr_reader :reasoning
+
+      sig { params(reasoning: Cadenya::ModelSpec::Reasoning::OrSymbol).void }
+      attr_writer :reasoning
+
       sig do
         params(
           family: String,
@@ -49,7 +57,8 @@ module Cadenya
           input_price_per_million_tokens: String,
           max_input_tokens: Integer,
           max_output_tokens: Integer,
-          output_price_per_million_tokens: String
+          output_price_per_million_tokens: String,
+          reasoning: Cadenya::ModelSpec::Reasoning::OrSymbol
         ).returns(T.attached_class)
       end
       def self.new(
@@ -64,7 +73,10 @@ module Cadenya
         # Maximum number of output tokens the model can generate
         max_output_tokens: nil,
         # Cost per million output tokens in cents (e.g., 1500 = $15.00)
-        output_price_per_million_tokens: nil
+        output_price_per_million_tokens: nil,
+        # The model's reasoning capability. Catalog data used to decide whether thinking
+        # is requested for objective iterations on this model.
+        reasoning: nil
       )
       end
 
@@ -76,11 +88,45 @@ module Cadenya
             input_price_per_million_tokens: String,
             max_input_tokens: Integer,
             max_output_tokens: Integer,
-            output_price_per_million_tokens: String
+            output_price_per_million_tokens: String,
+            reasoning: Cadenya::ModelSpec::Reasoning::TaggedSymbol
           }
         )
       end
       def to_hash
+      end
+
+      # The model's reasoning capability. Catalog data used to decide whether thinking
+      # is requested for objective iterations on this model.
+      module Reasoning
+        extend Cadenya::Internal::Type::Enum
+
+        TaggedSymbol =
+          T.type_alias { T.all(Symbol, Cadenya::ModelSpec::Reasoning) }
+        OrSymbol = T.type_alias { T.any(Symbol, String) }
+
+        REASONING_UNSPECIFIED =
+          T.let(
+            :REASONING_UNSPECIFIED,
+            Cadenya::ModelSpec::Reasoning::TaggedSymbol
+          )
+        REASONING_NONE =
+          T.let(:REASONING_NONE, Cadenya::ModelSpec::Reasoning::TaggedSymbol)
+        REASONING_ADAPTIVE =
+          T.let(
+            :REASONING_ADAPTIVE,
+            Cadenya::ModelSpec::Reasoning::TaggedSymbol
+          )
+        REASONING_BUDGET =
+          T.let(:REASONING_BUDGET, Cadenya::ModelSpec::Reasoning::TaggedSymbol)
+
+        sig do
+          override.returns(
+            T::Array[Cadenya::ModelSpec::Reasoning::TaggedSymbol]
+          )
+        end
+        def self.values
+        end
       end
     end
   end

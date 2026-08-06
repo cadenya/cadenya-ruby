@@ -3,7 +3,7 @@ module Cadenya
     module ToolSets
       type tool_spec =
         {
-          config: Cadenya::Models::ToolSets::tool_spec_config,
+          config: Cadenya::ToolSets::ToolSpecConfig,
           description: String,
           parameters: ::Hash[Symbol, top],
           requires_approval: bool,
@@ -11,7 +11,7 @@ module Cadenya
         }
 
       class ToolSpec < Cadenya::Internal::Type::BaseModel
-        attr_accessor config: Cadenya::Models::ToolSets::tool_spec_config
+        attr_accessor config: Cadenya::ToolSets::ToolSpecConfig
 
         attr_accessor description: String
 
@@ -24,7 +24,7 @@ module Cadenya
         def llm_tool_name=: (String) -> String
 
         def initialize: (
-          config: Cadenya::Models::ToolSets::tool_spec_config,
+          config: Cadenya::ToolSets::ToolSpecConfig,
           description: String,
           parameters: ::Hash[Symbol, top],
           requires_approval: bool,
@@ -32,7 +32,7 @@ module Cadenya
         ) -> void
 
         def to_hash: -> {
-          config: Cadenya::Models::ToolSets::tool_spec_config,
+          config: Cadenya::ToolSets::ToolSpecConfig,
           description: String,
           parameters: ::Hash[Symbol, top],
           requires_approval: bool,

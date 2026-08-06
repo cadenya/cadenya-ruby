@@ -1,17 +1,52 @@
 module Cadenya
   module Models
-    module ObjectiveToolCallResultContentBlock = Objectives::ObjectiveToolCallResultContentBlock
+    class ObjectiveToolCallResultContentBlock = Objectives::ObjectiveToolCallResultContentBlock
 
     module Objectives
       type objective_tool_call_result_content_block =
-        Cadenya::Objectives::ObjectiveToolCallResultContentBlockText
-        | Cadenya::Objectives::ObjectiveToolCallResultContentBlockImage
-        | Cadenya::Objectives::ObjectiveToolCallResultContentBlockAudio
+        {
+          audio: Cadenya::Objectives::ObjectiveToolCallResultAudioBlock,
+          image: Cadenya::Objectives::ObjectiveToolCallResultImageBlock,
+          text: Cadenya::Objectives::ObjectiveToolCallResultTextBlock,
+          type: String
+        }
 
-      module ObjectiveToolCallResultContentBlock
-        extend Cadenya::Internal::Type::Union
+      class ObjectiveToolCallResultContentBlock < Cadenya::Internal::Type::BaseModel
+        attr_reader audio: Cadenya::Objectives::ObjectiveToolCallResultAudioBlock?
 
-        def self?.variants: -> ::Array[Cadenya::Models::Objectives::objective_tool_call_result_content_block]
+        def audio=: (
+          Cadenya::Objectives::ObjectiveToolCallResultAudioBlock
+        ) -> Cadenya::Objectives::ObjectiveToolCallResultAudioBlock
+
+        attr_reader image: Cadenya::Objectives::ObjectiveToolCallResultImageBlock?
+
+        def image=: (
+          Cadenya::Objectives::ObjectiveToolCallResultImageBlock
+        ) -> Cadenya::Objectives::ObjectiveToolCallResultImageBlock
+
+        attr_reader text: Cadenya::Objectives::ObjectiveToolCallResultTextBlock?
+
+        def text=: (
+          Cadenya::Objectives::ObjectiveToolCallResultTextBlock
+        ) -> Cadenya::Objectives::ObjectiveToolCallResultTextBlock
+
+        attr_reader type: String?
+
+        def type=: (String) -> String
+
+        def initialize: (
+          ?audio: Cadenya::Objectives::ObjectiveToolCallResultAudioBlock,
+          ?image: Cadenya::Objectives::ObjectiveToolCallResultImageBlock,
+          ?text: Cadenya::Objectives::ObjectiveToolCallResultTextBlock,
+          ?type: String
+        ) -> void
+
+        def to_hash: -> {
+          audio: Cadenya::Objectives::ObjectiveToolCallResultAudioBlock,
+          image: Cadenya::Objectives::ObjectiveToolCallResultImageBlock,
+          text: Cadenya::Objectives::ObjectiveToolCallResultTextBlock,
+          type: String
+        }
       end
     end
   end

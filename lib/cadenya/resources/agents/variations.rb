@@ -193,22 +193,28 @@ module Cadenya
         # Assigns a tool, tool set, or sub-agent to a variation. Exactly one target ID
         # must be set.
         #
-        # @overload add_assignment(agent_id, variation_id, body:, workspace_id: nil, request_options: {})
+        # @overload add_assignment(agent_id, variation_id, workspace_id: nil, sub_agent_id: nil, tool_id: nil, tool_set_id: nil, type: nil, request_options: {})
         #
         # @param agent_id [String] Path param: Agent ID. Accepts the canonical `agent_…` form or the `external_id:<
         #
         # @param variation_id [String] Path param: Variation ID. Accepts the canonical `agentvar_…` form or the `extern
         #
-        # @param body [Cadenya::Models::Agents::AddAgentVariationAssignmentRequestToolID, Cadenya::Models::Agents::AddAgentVariationAssignmentRequestToolSetID, Cadenya::Models::Agents::AddAgentVariationAssignmentRequestSubAgentID] Body param: Attach a single tool, tool set, or sub-agent to a variation. Exactly
-        #
         # @param workspace_id [String] Path param: Workspace ID.
+        #
+        # @param sub_agent_id [String] Body param
+        #
+        # @param tool_id [String] Body param
+        #
+        # @param tool_set_id [String] Body param
+        #
+        # @param type [String] Body param: The JSON name of the variant set in `target` (e.g. "toolId"). Requir
         #
         # @param request_options [Cadenya::RequestOptions, Hash{Symbol=>Object}, nil]
         #
-        # @return [Cadenya::Models::Agents::VariationAssignmentTool, Cadenya::Models::Agents::VariationAssignmentToolSet, Cadenya::Models::Agents::VariationAssignmentAgent]
+        # @return [Cadenya::Models::Agents::VariationAssignment]
         #
         # @see Cadenya::Models::Agents::VariationAddAssignmentParams
-        def add_assignment(agent_id, variation_id, params)
+        def add_assignment(agent_id, variation_id, params = {})
           parsed, options = Cadenya::Agents::VariationAddAssignmentParams.dump_request(params)
           workspace_id =
             parsed.delete(:workspace_id) do
@@ -222,7 +228,7 @@ module Cadenya
               agent_id,
               variation_id
             ],
-            body: parsed[:body],
+            body: parsed,
             model: Cadenya::Agents::VariationAssignment,
             options: options
           )

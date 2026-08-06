@@ -1,28 +1,23 @@
 module Cadenya
   module Models
     type tool_set_spec =
-      { adapter: Cadenya::Models::tool_set_adapter, description: String }
+      { adapter: Cadenya::ToolSetAdapter, description: String }
 
     class ToolSetSpec < Cadenya::Internal::Type::BaseModel
-      attr_reader adapter: Cadenya::Models::tool_set_adapter?
+      attr_reader adapter: Cadenya::ToolSetAdapter?
 
-      def adapter=: (
-        Cadenya::Models::tool_set_adapter
-      ) -> Cadenya::Models::tool_set_adapter
+      def adapter=: (Cadenya::ToolSetAdapter) -> Cadenya::ToolSetAdapter
 
       attr_reader description: String?
 
       def description=: (String) -> String
 
       def initialize: (
-        ?adapter: Cadenya::Models::tool_set_adapter,
+        ?adapter: Cadenya::ToolSetAdapter,
         ?description: String
       ) -> void
 
-      def to_hash: -> {
-        adapter: Cadenya::Models::tool_set_adapter,
-        description: String
-      }
+      def to_hash: -> { adapter: Cadenya::ToolSetAdapter, description: String }
     end
   end
 end

@@ -26,5 +26,4 @@ Gem::Specification.new do |s|
   s.extra_rdoc_files = ["README.md"]
   s.add_dependency "cgi"
   s.add_dependency "connection_pool"
-  s.add_dependency "standardwebhooks"
 end

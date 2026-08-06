@@ -8,10 +8,10 @@ class Cadenya::Test::Resources::MemoryLayers::EntriesTest < Cadenya::Test::Resou
 
     response =
       @cadenya.memory_layers.entries.create(
-        "memlyr_01HXKD2E5NQM3T9AYWCFFFBMJH",
-        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q",
+        "memoryLayerId",
+        workspace_id: "workspaceId",
         metadata: {name: "name"},
-        spec: {content: "content", type: :content}
+        spec: {key: "key"}
       )
 
     assert_pattern do
@@ -31,12 +31,7 @@ class Cadenya::Test::Resources::MemoryLayers::EntriesTest < Cadenya::Test::Resou
   def test_retrieve_required_params
     skip("Mock server tests are disabled")
 
-    response =
-      @cadenya.memory_layers.entries.retrieve(
-        "memlyr_01HXKD2E5NQM3T9AYWCFFFBMJH",
-        "mementry_01HXKD2E5NQM3T9AYWCF5E52Z0",
-        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
-      )
+    response = @cadenya.memory_layers.entries.retrieve("memoryLayerId", "id", workspace_id: "workspaceId")
 
     assert_pattern do
       response => Cadenya::MemoryLayers::MemoryEntryDetail
@@ -55,12 +50,7 @@ class Cadenya::Test::Resources::MemoryLayers::EntriesTest < Cadenya::Test::Resou
   def test_update_required_params
     skip("Mock server tests are disabled")
 
-    response =
-      @cadenya.memory_layers.entries.update(
-        "memlyr_01HXKD2E5NQM3T9AYWCFFFBMJH",
-        "mementry_01HXKD2E5NQM3T9AYWCF5E52Z0",
-        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
-      )
+    response = @cadenya.memory_layers.entries.update("memoryLayerId", "id", workspace_id: "workspaceId")
 
     assert_pattern do
       response => Cadenya::MemoryLayers::MemoryEntryDetail
@@ -79,11 +69,7 @@ class Cadenya::Test::Resources::MemoryLayers::EntriesTest < Cadenya::Test::Resou
   def test_list_required_params
     skip("Mock server tests are disabled")
 
-    response =
-      @cadenya.memory_layers.entries.list(
-        "memlyr_01HXKD2E5NQM3T9AYWCFFFBMJH",
-        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
-      )
+    response = @cadenya.memory_layers.entries.list("memoryLayerId", workspace_id: "workspaceId")
 
     assert_pattern do
       response => Cadenya::Internal::CursorPagination
@@ -108,12 +94,7 @@ class Cadenya::Test::Resources::MemoryLayers::EntriesTest < Cadenya::Test::Resou
   def test_delete_required_params
     skip("Mock server tests are disabled")
 
-    response =
-      @cadenya.memory_layers.entries.delete(
-        "memlyr_01HXKD2E5NQM3T9AYWCFFFBMJH",
-        "mementry_01HXKD2E5NQM3T9AYWCF5E52Z0",
-        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
-      )
+    response = @cadenya.memory_layers.entries.delete("memoryLayerId", "id", workspace_id: "workspaceId")
 
     assert_pattern do
       response => nil

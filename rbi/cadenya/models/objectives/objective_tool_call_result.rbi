@@ -16,9 +16,7 @@ module Cadenya
 
         sig do
           returns(
-            T::Array[
-              Cadenya::Objectives::ObjectiveToolCallResultContentBlock::Variants
-            ]
+            T::Array[Cadenya::Objectives::ObjectiveToolCallResultContentBlock]
           )
         end
         attr_accessor :content
@@ -31,11 +29,7 @@ module Cadenya
           params(
             content:
               T::Array[
-                T.any(
-                  Cadenya::Objectives::ObjectiveToolCallResultContentBlockText::OrHash,
-                  Cadenya::Objectives::ObjectiveToolCallResultContentBlockImage::OrHash,
-                  Cadenya::Objectives::ObjectiveToolCallResultContentBlockAudio::OrHash
-                )
+                Cadenya::Objectives::ObjectiveToolCallResultContentBlock::OrHash
               ]
           ).returns(T.attached_class)
         end
@@ -47,7 +41,7 @@ module Cadenya
             {
               content:
                 T::Array[
-                  Cadenya::Objectives::ObjectiveToolCallResultContentBlock::Variants
+                  Cadenya::Objectives::ObjectiveToolCallResultContentBlock
                 ]
             }
           )

@@ -39,16 +39,6 @@ module Cadenya
 
   class AgentUpdateParams = Cadenya::Models::AgentUpdateParams
 
-  class AIProviderConfigOpenAI = Cadenya::Models::AIProviderConfigOpenAI
-
-  class AIProviderConfigOpenAICompatible = Cadenya::Models::AIProviderConfigOpenAICompatible
-
-  class AIProviderConfigOpenrouter = Cadenya::Models::AIProviderConfigOpenrouter
-
-  class AIProviderCredentialAPIKey = Cadenya::Models::AIProviderCredentialAPIKey
-
-  class AIProviderCredentialHeaders = Cadenya::Models::AIProviderCredentialHeaders
-
   class AIProviderKey = Cadenya::Models::AIProviderKey
 
   class AIProviderKeyCreateParams = Cadenya::Models::AIProviderKeyCreateParams
@@ -85,11 +75,7 @@ module Cadenya
 
   class APIKeyUpdateParams = Cadenya::Models::APIKeyUpdateParams
 
-  module ApprovalRequirementFilter = Cadenya::Models::ApprovalRequirementFilter
-
-  class ApprovalRequirementFilterAlways = Cadenya::Models::ApprovalRequirementFilterAlways
-
-  class ApprovalRequirementFilterOnly = Cadenya::Models::ApprovalRequirementFilterOnly
+  class ApprovalRequirementFilter = Cadenya::Models::ApprovalRequirementFilter
 
   class AssistantMessage = Cadenya::Models::AssistantMessage
 
@@ -99,13 +85,7 @@ module Cadenya
 
   class BareMetadata = Cadenya::Models::BareMetadata
 
-  module CallableTool = Cadenya::Models::CallableTool
-
-  class CallableToolAgent = Cadenya::Models::CallableToolAgent
-
-  class CallableToolCadenyaProvidedTool = Cadenya::Models::CallableToolCadenyaProvidedTool
-
-  class CallableToolTool = Cadenya::Models::CallableToolTool
+  class CallableTool = Cadenya::Models::CallableTool
 
   class ContextLengths = Cadenya::Models::ContextLengths
 
@@ -181,45 +161,9 @@ module Cadenya
 
   class ObjectiveEvent = Cadenya::Models::ObjectiveEvent
 
-  module ObjectiveEventData = Cadenya::Models::ObjectiveEventData
-
-  class ObjectiveEventDataAssistantMessage = Cadenya::Models::ObjectiveEventDataAssistantMessage
-
-  class ObjectiveEventDataCancelled = Cadenya::Models::ObjectiveEventDataCancelled
-
-  class ObjectiveEventDataContextWindowCompacted = Cadenya::Models::ObjectiveEventDataContextWindowCompacted
-
-  class ObjectiveEventDataError = Cadenya::Models::ObjectiveEventDataError
-
-  class ObjectiveEventDataFinalized = Cadenya::Models::ObjectiveEventDataFinalized
-
-  class ObjectiveEventDataMemoryRead = Cadenya::Models::ObjectiveEventDataMemoryRead
-
-  class ObjectiveEventDataNotice = Cadenya::Models::ObjectiveEventDataNotice
-
-  class ObjectiveEventDataSubAgentSpawned = Cadenya::Models::ObjectiveEventDataSubAgentSpawned
-
-  class ObjectiveEventDataSubAgentUpdated = Cadenya::Models::ObjectiveEventDataSubAgentUpdated
-
-  class ObjectiveEventDataTimedOut = Cadenya::Models::ObjectiveEventDataTimedOut
-
-  class ObjectiveEventDataToolApprovalRequested = Cadenya::Models::ObjectiveEventDataToolApprovalRequested
-
-  class ObjectiveEventDataToolApproved = Cadenya::Models::ObjectiveEventDataToolApproved
-
-  class ObjectiveEventDataToolCalled = Cadenya::Models::ObjectiveEventDataToolCalled
-
-  class ObjectiveEventDataToolDenied = Cadenya::Models::ObjectiveEventDataToolDenied
-
-  class ObjectiveEventDataToolError = Cadenya::Models::ObjectiveEventDataToolError
-
-  class ObjectiveEventDataToolResult = Cadenya::Models::ObjectiveEventDataToolResult
-
-  class ObjectiveEventDataUserMessage = Cadenya::Models::ObjectiveEventDataUserMessage
+  class ObjectiveEventData = Cadenya::Models::ObjectiveEventData
 
   class ObjectiveEventInfo = Cadenya::Models::ObjectiveEventInfo
-
-  class ObjectiveEventWebhookData = Cadenya::Models::ObjectiveEventWebhookData
 
   class ObjectiveInfo = Cadenya::Models::ObjectiveInfo
 
@@ -249,6 +193,8 @@ module Cadenya
 
   class ProfileWhoamiParams = Cadenya::Models::ProfileWhoamiParams
 
+  class Reasoning = Cadenya::Models::Reasoning
+
   class ResourceMetadata = Cadenya::Models::ResourceMetadata
 
   class RotateChallengeTokenResponse = Cadenya::Models::RotateChallengeTokenResponse
@@ -257,23 +203,17 @@ module Cadenya
 
   class SearchSearchToolsOrToolSetsParams = Cadenya::Models::SearchSearchToolsOrToolSetsParams
 
-  module StringMatcher = Cadenya::Models::StringMatcher
-
-  class StringMatcherContains = Cadenya::Models::StringMatcherContains
-
-  class StringMatcherEndsWith = Cadenya::Models::StringMatcherEndsWith
-
-  class StringMatcherExact = Cadenya::Models::StringMatcherExact
-
-  class StringMatcherRegex = Cadenya::Models::StringMatcherRegex
-
-  class StringMatcherStartsWith = Cadenya::Models::StringMatcherStartsWith
+  class StringMatcher = Cadenya::Models::StringMatcher
 
   class SubAgentSpawned = Cadenya::Models::SubAgentSpawned
 
   class SubAgentUpdated = Cadenya::Models::SubAgentUpdated
 
+  class Subject = Cadenya::Models::Subject
+
   class SubjectAssertion = Cadenya::Models::SubjectAssertion
+
+  class SubjectInfo = Cadenya::Models::SubjectInfo
 
   class SubjectReference = Cadenya::Models::SubjectReference
 
@@ -283,9 +223,21 @@ module Cadenya
 
   class SyncStarted = Cadenya::Models::SyncStarted
 
+  class Tenant = Cadenya::Models::Tenant
+
   class TenantAssertion = Cadenya::Models::TenantAssertion
 
+  class TenantDeleteParams = Cadenya::Models::TenantDeleteParams
+
+  class TenantInfo = Cadenya::Models::TenantInfo
+
+  class TenantListParams = Cadenya::Models::TenantListParams
+
   class TenantReference = Cadenya::Models::TenantReference
+
+  class TenantRetrieveParams = Cadenya::Models::TenantRetrieveParams
+
+  module Tenants = Cadenya::Models::Tenants
 
   class ToolApprovalRequested = Cadenya::Models::ToolApprovalRequested
 
@@ -303,27 +255,15 @@ module Cadenya
 
   class ToolSet = Cadenya::Models::ToolSet
 
-  module ToolSetAdapter = Cadenya::Models::ToolSetAdapter
+  class ToolSetAdapter = Cadenya::Models::ToolSetAdapter
 
   class ToolSetAdapterBare = Cadenya::Models::ToolSetAdapterBare
 
-  class ToolSetAdapterBareVariant = Cadenya::Models::ToolSetAdapterBareVariant
-
   class ToolSetAdapterHTTP = Cadenya::Models::ToolSetAdapterHTTP
-
-  class ToolSetAdapterHTTPVariant = Cadenya::Models::ToolSetAdapterHTTPVariant
 
   class ToolSetAdapterMCP = Cadenya::Models::ToolSetAdapterMCP
 
-  class ToolSetAdapterMCPVariant = Cadenya::Models::ToolSetAdapterMCPVariant
-
-  module ToolSetAdapterOpenAPI = Cadenya::Models::ToolSetAdapterOpenAPI
-
-  class ToolSetAdapterOpenAPIUploadID = Cadenya::Models::ToolSetAdapterOpenAPIUploadID
-
-  class ToolSetAdapterOpenAPIURL = Cadenya::Models::ToolSetAdapterOpenAPIURL
-
-  class ToolSetAdapterOpenAPIVariant = Cadenya::Models::ToolSetAdapterOpenAPIVariant
+  class ToolSetAdapterOpenAPI = Cadenya::Models::ToolSetAdapterOpenAPI
 
   class ToolSetArchiveParams = Cadenya::Models::ToolSetArchiveParams
 
@@ -333,13 +273,7 @@ module Cadenya
 
   class ToolSetEvent = Cadenya::Models::ToolSetEvent
 
-  module ToolSetEventData = Cadenya::Models::ToolSetEventData
-
-  class ToolSetEventDataSyncCompleted = Cadenya::Models::ToolSetEventDataSyncCompleted
-
-  class ToolSetEventDataSyncFailed = Cadenya::Models::ToolSetEventDataSyncFailed
-
-  class ToolSetEventDataSyncStarted = Cadenya::Models::ToolSetEventDataSyncStarted
+  class ToolSetEventData = Cadenya::Models::ToolSetEventData
 
   class ToolSetGetOpenAPISpecParams = Cadenya::Models::ToolSetGetOpenAPISpecParams
 
@@ -363,10 +297,6 @@ module Cadenya
 
   class ToolSetUsage = Cadenya::Models::ToolSetUsage
 
-  class UnsafeUnwrapWebhookEvent = Cadenya::Models::UnsafeUnwrapWebhookEvent
-
-  class UnwrapWebhookEvent = Cadenya::Models::UnwrapWebhookEvent
-
   class UpdateResourceMetadata = Cadenya::Models::UpdateResourceMetadata
 
   class Upload = Cadenya::Models::Upload
@@ -380,10 +310,6 @@ module Cadenya
   class UploadSpec = Cadenya::Models::UploadSpec
 
   class UserMessage = Cadenya::Models::UserMessage
-
-  class WebhookUnsafeUnwrapParams = Cadenya::Models::WebhookUnsafeUnwrapParams
-
-  class WebhookUnwrapParams = Cadenya::Models::WebhookUnwrapParams
 
   class Widget = Cadenya::Models::Widget
 

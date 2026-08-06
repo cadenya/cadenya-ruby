@@ -6,8 +6,8 @@ module Cadenya
     class ObjectiveEvent < Cadenya::Internal::Type::BaseModel
       # @!attribute data
       #
-      #   @return [Cadenya::Models::ObjectiveEventDataUserMessage, Cadenya::Models::ObjectiveEventDataToolApprovalRequested, Cadenya::Models::ObjectiveEventDataToolApproved, Cadenya::Models::ObjectiveEventDataToolDenied, Cadenya::Models::ObjectiveEventDataToolCalled, Cadenya::Models::ObjectiveEventDataError, Cadenya::Models::ObjectiveEventDataAssistantMessage, Cadenya::Models::ObjectiveEventDataToolResult, Cadenya::Models::ObjectiveEventDataToolError, Cadenya::Models::ObjectiveEventDataContextWindowCompacted, Cadenya::Models::ObjectiveEventDataMemoryRead, Cadenya::Models::ObjectiveEventDataCancelled, Cadenya::Models::ObjectiveEventDataSubAgentSpawned, Cadenya::Models::ObjectiveEventDataSubAgentUpdated, Cadenya::Models::ObjectiveEventDataFinalized, Cadenya::Models::ObjectiveEventDataNotice, Cadenya::Models::ObjectiveEventDataTimedOut]
-      required :data, union: -> { Cadenya::ObjectiveEventData }
+      #   @return [Cadenya::Models::ObjectiveEventData]
+      required :data, -> { Cadenya::ObjectiveEventData }
 
       # @!attribute metadata
       #   Metadata for ephemeral operations and activities (e.g., objectives, executions,
@@ -50,7 +50,7 @@ module Cadenya
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::ObjectiveEvent} for more details.
       #
-      #   @param data [Cadenya::Models::ObjectiveEventDataUserMessage, Cadenya::Models::ObjectiveEventDataToolApprovalRequested, Cadenya::Models::ObjectiveEventDataToolApproved, Cadenya::Models::ObjectiveEventDataToolDenied, Cadenya::Models::ObjectiveEventDataToolCalled, Cadenya::Models::ObjectiveEventDataError, Cadenya::Models::ObjectiveEventDataAssistantMessage, Cadenya::Models::ObjectiveEventDataToolResult, Cadenya::Models::ObjectiveEventDataToolError, Cadenya::Models::ObjectiveEventDataContextWindowCompacted, Cadenya::Models::ObjectiveEventDataMemoryRead, Cadenya::Models::ObjectiveEventDataCancelled, Cadenya::Models::ObjectiveEventDataSubAgentSpawned, Cadenya::Models::ObjectiveEventDataSubAgentUpdated, Cadenya::Models::ObjectiveEventDataFinalized, Cadenya::Models::ObjectiveEventDataNotice, Cadenya::Models::ObjectiveEventDataTimedOut]
+      #   @param data [Cadenya::Models::ObjectiveEventData]
       #
       #   @param metadata [Cadenya::Models::OperationMetadata] Metadata for ephemeral operations and activities (e.g., objectives, executions,
       #

@@ -41,26 +41,11 @@ module Cadenya
 
       # Approval filters that will automatically set the approval requirement on tools
       # synced from an external source
-      sig do
-        returns(
-          T.nilable(
-            T.any(
-              Cadenya::ApprovalRequirementFilterAlways,
-              Cadenya::ApprovalRequirementFilterOnly
-            )
-          )
-        )
-      end
+      sig { returns(T.nilable(Cadenya::ApprovalRequirementFilter)) }
       attr_reader :tool_approvals
 
       sig do
-        params(
-          tool_approvals:
-            T.any(
-              Cadenya::ApprovalRequirementFilterAlways::OrHash,
-              Cadenya::ApprovalRequirementFilterOnly::OrHash
-            )
-        ).void
+        params(tool_approvals: Cadenya::ApprovalRequirementFilter::OrHash).void
       end
       attr_writer :tool_approvals
 
@@ -76,11 +61,7 @@ module Cadenya
           headers: T::Hash[Symbol, String],
           include_tools: Cadenya::ToolFilter::OrHash,
           just_in_time: Cadenya::ToolSetAdapterMCP::JustInTime::OrHash,
-          tool_approvals:
-            T.any(
-              Cadenya::ApprovalRequirementFilterAlways::OrHash,
-              Cadenya::ApprovalRequirementFilterOnly::OrHash
-            ),
+          tool_approvals: Cadenya::ApprovalRequirementFilter::OrHash,
           url: String
         ).returns(T.attached_class)
       end
@@ -106,11 +87,7 @@ module Cadenya
             headers: T::Hash[Symbol, String],
             include_tools: Cadenya::ToolFilter,
             just_in_time: Cadenya::ToolSetAdapterMCP::JustInTime,
-            tool_approvals:
-              T.any(
-                Cadenya::ApprovalRequirementFilterAlways,
-                Cadenya::ApprovalRequirementFilterOnly
-              ),
+            tool_approvals: Cadenya::ApprovalRequirementFilter,
             url: String
           }
         )

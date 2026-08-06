@@ -2,8 +2,8 @@ module Cadenya
   module Resources
     class Search
       def search_tools_or_tool_sets: (
-        query: String,
         ?workspace_id: String,
+        ?query: String,
         ?request_options: Cadenya::request_opts
       ) -> Cadenya::Models::SearchSearchToolsOrToolSetsResponse
 

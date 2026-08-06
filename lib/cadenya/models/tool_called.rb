@@ -14,8 +14,8 @@ module Cadenya
       #   the tool is called. For example, if the tool is an HTTP tool, the adapter will
       #   be Http. If the tool is an inline tool, the adapter will be Inline.
       #
-      #   @return [Cadenya::Models::ToolSets::ToolSpecConfigHTTP, Cadenya::Models::ToolSets::ToolSpecConfigMCP, Cadenya::Models::ToolSets::ToolSpecConfigOpenAPI, Cadenya::Models::ToolSets::ToolSpecConfigBare, nil]
-      optional :config, union: -> { Cadenya::ToolSets::ToolSpecConfig }
+      #   @return [Cadenya::Models::ToolSets::ToolSpecConfig, nil]
+      optional :config, -> { Cadenya::ToolSets::ToolSpecConfig }
 
       # @!attribute tool
       #   CallableTool is a union that represents a tool that can be called by an agent.
@@ -23,8 +23,8 @@ module Cadenya
       #   user-defined tool (IE: MCP, HTTP), another Agent (useful to separate context),
       #   or a Cadenya Tool (one Cadenya provides).
       #
-      #   @return [Cadenya::Models::CallableToolTool, Cadenya::Models::CallableToolAgent, Cadenya::Models::CallableToolCadenyaProvidedTool, nil]
-      optional :tool, union: -> { Cadenya::CallableTool }
+      #   @return [Cadenya::Models::CallableTool, nil]
+      optional :tool, -> { Cadenya::CallableTool }
 
       # @!attribute tool_call_id
       #   The ID of the objective tool call record that was executed.
@@ -38,9 +38,9 @@ module Cadenya
       #
       #   @param arguments [Hash{Symbol=>Object}] The arguments passed to the tool.
       #
-      #   @param config [Cadenya::Models::ToolSets::ToolSpecConfigHTTP, Cadenya::Models::ToolSets::ToolSpecConfigMCP, Cadenya::Models::ToolSets::ToolSpecConfigOpenAPI, Cadenya::Models::ToolSets::ToolSpecConfigBare] Config defines the adapter to use for the tool.
+      #   @param config [Cadenya::Models::ToolSets::ToolSpecConfig] Config defines the adapter to use for the tool.
       #
-      #   @param tool [Cadenya::Models::CallableToolTool, Cadenya::Models::CallableToolAgent, Cadenya::Models::CallableToolCadenyaProvidedTool] CallableTool is a union that represents a tool that can be called by an agent. I
+      #   @param tool [Cadenya::Models::CallableTool] CallableTool is a union that represents a tool that can be called by an agent. I
       #
       #   @param tool_call_id [String] The ID of the objective tool call record that was executed.
     end

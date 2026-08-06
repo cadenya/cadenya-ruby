@@ -6,11 +6,7 @@ class Cadenya::Test::Resources::Agents::WebhookDeliveriesTest < Cadenya::Test::R
   def test_list_required_params
     skip("Mock server tests are disabled")
 
-    response =
-      @cadenya.agents.webhook_deliveries.list(
-        "agent_01HXKD2E5NQM3T9AYWCFMGWT9Y",
-        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
-      )
+    response = @cadenya.agents.webhook_deliveries.list("agentId", workspace_id: "workspaceId")
 
     assert_pattern do
       response => Cadenya::Internal::CursorPagination

@@ -7,11 +7,7 @@ class Cadenya::Test::Resources::Objectives::ToolCallsTest < Cadenya::Test::Resou
     skip("Mock server tests are disabled")
 
     response =
-      @cadenya.objectives.tool_calls.retrieve(
-        "obj_01HXKD2E5NQM3T9AYWCFQAZGFV",
-        "toolcall_01HXKD2E5NQM3T9AYWCFTANFGV",
-        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
-      )
+      @cadenya.objectives.tool_calls.retrieve("objectiveId", "toolCallId", workspace_id: "workspaceId")
 
     assert_pattern do
       response => Cadenya::Objectives::ObjectiveToolCallWithResult
@@ -33,11 +29,7 @@ class Cadenya::Test::Resources::Objectives::ToolCallsTest < Cadenya::Test::Resou
   def test_list_required_params
     skip("Mock server tests are disabled")
 
-    response =
-      @cadenya.objectives.tool_calls.list(
-        "obj_01HXKD2E5NQM3T9AYWCFQAZGFV",
-        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
-      )
+    response = @cadenya.objectives.tool_calls.list("objectiveId", workspace_id: "workspaceId")
 
     assert_pattern do
       response => Cadenya::Internal::CursorPagination
@@ -65,11 +57,7 @@ class Cadenya::Test::Resources::Objectives::ToolCallsTest < Cadenya::Test::Resou
     skip("Mock server tests are disabled")
 
     response =
-      @cadenya.objectives.tool_calls.approve(
-        "obj_01HXKD2E5NQM3T9AYWCFQAZGFV",
-        "toolcall_01HXKD2E5NQM3T9AYWCFTANFGV",
-        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
-      )
+      @cadenya.objectives.tool_calls.approve("objectiveId", "toolCallId", workspace_id: "workspaceId")
 
     assert_pattern do
       response => Cadenya::Objectives::ObjectiveToolCall
@@ -89,12 +77,7 @@ class Cadenya::Test::Resources::Objectives::ToolCallsTest < Cadenya::Test::Resou
   def test_deny_required_params
     skip("Mock server tests are disabled")
 
-    response =
-      @cadenya.objectives.tool_calls.deny(
-        "obj_01HXKD2E5NQM3T9AYWCFQAZGFV",
-        "toolcall_01HXKD2E5NQM3T9AYWCFTANFGV",
-        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
-      )
+    response = @cadenya.objectives.tool_calls.deny("objectiveId", "toolCallId", workspace_id: "workspaceId")
 
     assert_pattern do
       response => Cadenya::Objectives::ObjectiveToolCall
@@ -116,10 +99,10 @@ class Cadenya::Test::Resources::Objectives::ToolCallsTest < Cadenya::Test::Resou
 
     response =
       @cadenya.objectives.tool_calls.set_content(
-        "obj_01HXKD2E5NQM3T9AYWCFQAZGFV",
-        "toolcall_01HXKD2E5NQM3T9AYWCFTANFGV",
-        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q",
-        content: [{text: {text: "text"}, type: :text}]
+        "objectiveId",
+        "toolCallId",
+        workspace_id: "workspaceId",
+        content: [{}]
       )
 
     assert_pattern do

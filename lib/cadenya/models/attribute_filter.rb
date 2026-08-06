@@ -11,15 +11,15 @@ module Cadenya
       # @!attribute matcher
       #   String matching operations
       #
-      #   @return [Cadenya::Models::StringMatcherExact, Cadenya::Models::StringMatcherStartsWith, Cadenya::Models::StringMatcherEndsWith, Cadenya::Models::StringMatcherContains, Cadenya::Models::StringMatcherRegex, nil]
-      optional :matcher, union: -> { Cadenya::StringMatcher }
+      #   @return [Cadenya::Models::StringMatcher, nil]
+      optional :matcher, -> { Cadenya::StringMatcher }
 
       # @!method initialize(attribute:, matcher: nil)
       #   Single attribute filter
       #
       #   @param attribute [Symbol, Cadenya::Models::AttributeFilter::Attribute]
       #
-      #   @param matcher [Cadenya::Models::StringMatcherExact, Cadenya::Models::StringMatcherStartsWith, Cadenya::Models::StringMatcherEndsWith, Cadenya::Models::StringMatcherContains, Cadenya::Models::StringMatcherRegex] String matching operations
+      #   @param matcher [Cadenya::Models::StringMatcher] String matching operations
 
       # @see Cadenya::Models::AttributeFilter#attribute
       module Attribute

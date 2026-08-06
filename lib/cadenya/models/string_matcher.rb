@@ -2,24 +2,64 @@
 
 module Cadenya
   module Models
-    # String matching operations
-    module StringMatcher
-      extend Cadenya::Internal::Type::Union
+    class StringMatcher < Cadenya::Internal::Type::BaseModel
+      # @!attribute case_sensitive
+      #
+      #   @return [Boolean, nil]
+      optional :case_sensitive, Cadenya::Internal::Type::Boolean, api_name: :caseSensitive
 
-      discriminator :type
+      # @!attribute contains
+      #
+      #   @return [String, nil]
+      optional :contains, String
 
-      variant :exact, -> { Cadenya::StringMatcherExact }
+      # @!attribute ends_with
+      #
+      #   @return [String, nil]
+      optional :ends_with, String, api_name: :endsWith
 
-      variant :startsWith, -> { Cadenya::StringMatcherStartsWith }
+      # @!attribute exact
+      #
+      #   @return [String, nil]
+      optional :exact, String
 
-      variant :endsWith, -> { Cadenya::StringMatcherEndsWith }
+      # @!attribute regex
+      #
+      #   @return [String, nil]
+      optional :regex, String
 
-      variant :contains, -> { Cadenya::StringMatcherContains }
+      # @!attribute starts_with
+      #
+      #   @return [String, nil]
+      optional :starts_with, String, api_name: :startsWith
 
-      variant :regex, -> { Cadenya::StringMatcherRegex }
+      # @!attribute type
+      #   The JSON name of the variant set in `match_type` (e.g. "startsWith"). Required
+      #   from clients on writes, filled by the server on reads; drives the discriminated
+      #   union in the generated OpenAPI.
+      #
+      #   @return [String, nil]
+      optional :type, String
 
-      # @!method self.variants
-      #   @return [Array(Cadenya::Models::StringMatcherExact, Cadenya::Models::StringMatcherStartsWith, Cadenya::Models::StringMatcherEndsWith, Cadenya::Models::StringMatcherContains, Cadenya::Models::StringMatcherRegex)]
+      # @!method initialize(case_sensitive: nil, contains: nil, ends_with: nil, exact: nil, regex: nil, starts_with: nil, type: nil)
+      #   Some parameter documentations has been truncated, see
+      #   {Cadenya::Models::StringMatcher} for more details.
+      #
+      #   String matching operations
+      #
+      #   @param case_sensitive [Boolean]
+      #
+      #   @param contains [String]
+      #
+      #   @param ends_with [String]
+      #
+      #   @param exact [String]
+      #
+      #   @param regex [String]
+      #
+      #   @param starts_with [String]
+      #
+      #   @param type [String] The JSON name of the variant set in `match_type` (e.g. "startsWith").
     end
   end
 end

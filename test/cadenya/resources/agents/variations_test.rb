@@ -8,8 +8,8 @@ class Cadenya::Test::Resources::Agents::VariationsTest < Cadenya::Test::Resource
 
     response =
       @cadenya.agents.variations.create(
-        "agent_01HXKD2E5NQM3T9AYWCFMGWT9Y",
-        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q",
+        "agentId",
+        workspace_id: "workspaceId",
         metadata: {name: "name"},
         spec: {}
       )
@@ -30,12 +30,7 @@ class Cadenya::Test::Resources::Agents::VariationsTest < Cadenya::Test::Resource
   def test_retrieve_required_params
     skip("Mock server tests are disabled")
 
-    response =
-      @cadenya.agents.variations.retrieve(
-        "agent_01HXKD2E5NQM3T9AYWCFMGWT9Y",
-        "agentvar_01HXKD2E5NQM3T9AYWCF32BSPP",
-        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
-      )
+    response = @cadenya.agents.variations.retrieve("agentId", "id", workspace_id: "workspaceId")
 
     assert_pattern do
       response => Cadenya::Agents::AgentVariation
@@ -53,12 +48,7 @@ class Cadenya::Test::Resources::Agents::VariationsTest < Cadenya::Test::Resource
   def test_update_required_params
     skip("Mock server tests are disabled")
 
-    response =
-      @cadenya.agents.variations.update(
-        "agent_01HXKD2E5NQM3T9AYWCFMGWT9Y",
-        "agentvar_01HXKD2E5NQM3T9AYWCF32BSPP",
-        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
-      )
+    response = @cadenya.agents.variations.update("agentId", "id", workspace_id: "workspaceId")
 
     assert_pattern do
       response => Cadenya::Agents::AgentVariation
@@ -76,11 +66,7 @@ class Cadenya::Test::Resources::Agents::VariationsTest < Cadenya::Test::Resource
   def test_list_required_params
     skip("Mock server tests are disabled")
 
-    response =
-      @cadenya.agents.variations.list(
-        "agent_01HXKD2E5NQM3T9AYWCFMGWT9Y",
-        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
-      )
+    response = @cadenya.agents.variations.list("agentId", workspace_id: "workspaceId")
 
     assert_pattern do
       response => Cadenya::Internal::CursorPagination
@@ -105,12 +91,7 @@ class Cadenya::Test::Resources::Agents::VariationsTest < Cadenya::Test::Resource
   def test_delete_required_params
     skip("Mock server tests are disabled")
 
-    response =
-      @cadenya.agents.variations.delete(
-        "agent_01HXKD2E5NQM3T9AYWCFMGWT9Y",
-        "agentvar_01HXKD2E5NQM3T9AYWCF32BSPP",
-        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
-      )
+    response = @cadenya.agents.variations.delete("agentId", "id", workspace_id: "workspaceId")
 
     assert_pattern do
       response => nil
@@ -121,31 +102,20 @@ class Cadenya::Test::Resources::Agents::VariationsTest < Cadenya::Test::Resource
     skip("Mock server tests are disabled")
 
     response =
-      @cadenya.agents.variations.add_assignment(
-        "agent_01HXKD2E5NQM3T9AYWCFMGWT9Y",
-        "agentvar_01HXKD2E5NQM3T9AYWCF32BSPP",
-        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q",
-        body: {toolId: "tool_01HXKD2E5NQM3T9AYWCFWVYY9K", type: :toolId}
-      )
+      @cadenya.agents.variations.add_assignment("agentId", "variationId", workspace_id: "workspaceId")
 
     assert_pattern do
       response => Cadenya::Agents::VariationAssignment
     end
 
     assert_pattern do
-      case response
-      in Cadenya::Agents::VariationAssignmentTool
-      in Cadenya::Agents::VariationAssignmentToolSet
-      in Cadenya::Agents::VariationAssignmentAgent
-      end
-    end
-
-    assert_pattern do
-      case response
-      in {type: :tool, tool: Cadenya::BareMetadata, id: String | nil}
-      in {type: :toolSet, tool_set: Cadenya::BareMetadata, id: String | nil}
-      in {type: :agent, agent: Cadenya::BareMetadata, id: String | nil}
-      end
+      response => {
+        id: String | nil,
+        agent: Cadenya::BareMetadata | nil,
+        tool: Cadenya::BareMetadata | nil,
+        tool_set: Cadenya::BareMetadata | nil,
+        type: String | nil
+      }
     end
   end
 
@@ -154,9 +124,9 @@ class Cadenya::Test::Resources::Agents::VariationsTest < Cadenya::Test::Resource
 
     response =
       @cadenya.agents.variations.add_memory_layer(
-        "agent_01HXKD2E5NQM3T9AYWCFMGWT9Y",
-        "agentvar_01HXKD2E5NQM3T9AYWCF32BSPP",
-        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q",
+        "agentId",
+        "variationId",
+        workspace_id: "workspaceId",
         memory_layer_id: "memlyr_01HXKD2E5NQM3T9AYWCFFFBMJH"
       )
 
@@ -178,10 +148,10 @@ class Cadenya::Test::Resources::Agents::VariationsTest < Cadenya::Test::Resource
 
     response =
       @cadenya.agents.variations.remove_assignment(
-        "agent_01HXKD2E5NQM3T9AYWCFMGWT9Y",
-        "agentvar_01HXKD2E5NQM3T9AYWCF32BSPP",
-        "avt_01HXKD2E5NQM3T9AYWCFJE6K89",
-        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
+        "agentId",
+        "variationId",
+        "id",
+        workspace_id: "workspaceId"
       )
 
     assert_pattern do
@@ -194,10 +164,10 @@ class Cadenya::Test::Resources::Agents::VariationsTest < Cadenya::Test::Resource
 
     response =
       @cadenya.agents.variations.remove_memory_layer(
-        "agent_01HXKD2E5NQM3T9AYWCFMGWT9Y",
-        "agentvar_01HXKD2E5NQM3T9AYWCF32BSPP",
-        "avml_01HXKD2E5NQM3T9AYWCFX8AF59",
-        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
+        "agentId",
+        "variationId",
+        "id",
+        workspace_id: "workspaceId"
       )
 
     assert_pattern do
@@ -210,10 +180,10 @@ class Cadenya::Test::Resources::Agents::VariationsTest < Cadenya::Test::Resource
 
     response =
       @cadenya.agents.variations.update_memory_layer(
-        "agent_01HXKD2E5NQM3T9AYWCFMGWT9Y",
-        "agentvar_01HXKD2E5NQM3T9AYWCF32BSPP",
-        "avml_01HXKD2E5NQM3T9AYWCFX8AF59",
-        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
+        "agentId",
+        "variationId",
+        "id",
+        workspace_id: "workspaceId"
       )
 
     assert_pattern do

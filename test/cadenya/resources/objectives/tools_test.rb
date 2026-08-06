@@ -6,11 +6,7 @@ class Cadenya::Test::Resources::Objectives::ToolsTest < Cadenya::Test::ResourceT
   def test_list_required_params
     skip("Mock server tests are disabled")
 
-    response =
-      @cadenya.objectives.tools.list(
-        "obj_01HXKD2E5NQM3T9AYWCFQAZGFV",
-        workspace_id: "workspace_01HXKD2E5NQM3T9AYWCF133E3Q"
-      )
+    response = @cadenya.objectives.tools.list("objectiveId", workspace_id: "workspaceId")
 
     assert_pattern do
       response => Cadenya::Internal::CursorPagination

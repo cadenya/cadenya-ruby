@@ -3,26 +3,24 @@ module Cadenya
     type attribute_filter =
       {
         attribute: Cadenya::Models::AttributeFilter::attribute,
-        matcher: Cadenya::Models::string_matcher
+        matcher: Cadenya::StringMatcher
       }
 
     class AttributeFilter < Cadenya::Internal::Type::BaseModel
       attr_accessor attribute: Cadenya::Models::AttributeFilter::attribute
 
-      attr_reader matcher: Cadenya::Models::string_matcher?
+      attr_reader matcher: Cadenya::StringMatcher?
 
-      def matcher=: (
-        Cadenya::Models::string_matcher
-      ) -> Cadenya::Models::string_matcher
+      def matcher=: (Cadenya::StringMatcher) -> Cadenya::StringMatcher
 
       def initialize: (
         attribute: Cadenya::Models::AttributeFilter::attribute,
-        ?matcher: Cadenya::Models::string_matcher
+        ?matcher: Cadenya::StringMatcher
       ) -> void
 
       def to_hash: -> {
         attribute: Cadenya::Models::AttributeFilter::attribute,
-        matcher: Cadenya::Models::string_matcher
+        matcher: Cadenya::StringMatcher
       }
 
       type attribute =

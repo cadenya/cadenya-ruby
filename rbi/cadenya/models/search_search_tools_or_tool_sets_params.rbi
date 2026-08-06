@@ -20,17 +20,20 @@ module Cadenya
       sig { params(workspace_id: String).void }
       attr_writer :workspace_id
 
-      sig { returns(String) }
-      attr_accessor :query
+      sig { returns(T.nilable(String)) }
+      attr_reader :query
+
+      sig { params(query: String).void }
+      attr_writer :query
 
       sig do
         params(
-          query: String,
           workspace_id: String,
+          query: String,
           request_options: Cadenya::RequestOptions::OrHash
         ).returns(T.attached_class)
       end
-      def self.new(query:, workspace_id: nil, request_options: {})
+      def self.new(workspace_id: nil, query: nil, request_options: {})
       end
 
       sig do

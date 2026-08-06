@@ -31,8 +31,8 @@ module Cadenya
         #   either inline content or a reference to a completed Upload; exactly one of the
         #   two must be set.
         #
-        #   @return [Cadenya::Models::MemoryLayers::MemoryEntryCreateSpecContent, Cadenya::Models::MemoryLayers::MemoryEntryCreateSpecUploadID]
-        required :spec, union: -> { Cadenya::MemoryLayers::MemoryEntryCreateSpec }
+        #   @return [Cadenya::Models::MemoryLayers::MemoryEntryCreateSpec]
+        required :spec, -> { Cadenya::MemoryLayers::MemoryEntryCreateSpec }
 
         # @!method initialize(memory_layer_id:, metadata:, spec:, workspace_id: nil, request_options: {})
         #   Some parameter documentations has been truncated, see
@@ -42,7 +42,7 @@ module Cadenya
         #
         #   @param metadata [Cadenya::Models::CreateResourceMetadata] CreateResourceMetadata contains the user-provided fields for creating
         #
-        #   @param spec [Cadenya::Models::MemoryLayers::MemoryEntryCreateSpecContent, Cadenya::Models::MemoryLayers::MemoryEntryCreateSpecUploadID] MemoryEntryCreateSpec is the input shape for CreateMemoryEntry. It accepts
+        #   @param spec [Cadenya::Models::MemoryLayers::MemoryEntryCreateSpec] MemoryEntryCreateSpec is the input shape for CreateMemoryEntry. It accepts
         #
         #   @param workspace_id [String]
         #

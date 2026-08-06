@@ -10,16 +10,16 @@ module Cadenya
       #   intentionally not overridable here; use the OpenAI-compatible provider to target
       #   a custom endpoint.
       #
-      #   @return [Cadenya::Models::AIProviderConfigOpenrouter, Cadenya::Models::AIProviderConfigOpenAI, Cadenya::Models::AIProviderConfigOpenAICompatible, nil]
-      optional :config, union: -> { Cadenya::AIProviderKeySpec::Config }
+      #   @return [Cadenya::Models::AIProviderKeySpec::Config, nil]
+      optional :config, -> { Cadenya::AIProviderKeySpec::Config }
 
       # @!attribute credentials
       #   AIProviderCredential is the secret material used to authenticate with a
       #   provider. The set case must correspond to AIProviderKeySpec.provider. The server
       #   encrypts the serialized message at rest and never returns it on reads.
       #
-      #   @return [Cadenya::Models::AIProviderCredentialAPIKey, Cadenya::Models::AIProviderCredentialHeaders, nil]
-      optional :credentials, union: -> { Cadenya::AIProviderKeySpec::Credentials }
+      #   @return [Cadenya::Models::AIProviderKeySpec::Credentials, nil]
+      optional :credentials, -> { Cadenya::AIProviderKeySpec::Credentials }
 
       # @!attribute provider
       #   The AI provider this key authenticates against.
@@ -31,50 +31,177 @@ module Cadenya
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::AIProviderKeySpec} for more details.
       #
-      #   @param config [Cadenya::Models::AIProviderConfigOpenrouter, Cadenya::Models::AIProviderConfigOpenAI, Cadenya::Models::AIProviderConfigOpenAICompatible] AIProviderConfig holds non-secret, provider-specific settings. The set case
+      #   @param config [Cadenya::Models::AIProviderKeySpec::Config] AIProviderConfig holds non-secret, provider-specific settings. The set case
       #
-      #   @param credentials [Cadenya::Models::AIProviderCredentialAPIKey, Cadenya::Models::AIProviderCredentialHeaders] AIProviderCredential is the secret material used to authenticate with a
+      #   @param credentials [Cadenya::Models::AIProviderKeySpec::Credentials] AIProviderCredential is the secret material used to authenticate with a
       #
       #   @param provider [Symbol, Cadenya::Models::AIProviderKeySpec::Provider] The AI provider this key authenticates against.
 
-      # AIProviderConfig holds non-secret, provider-specific settings. The set case must
-      # correspond to AIProviderKeySpec.provider. Providers with no settings (Anthropic,
-      # Gemini) simply leave this unset. The endpoint of a named provider is fixed and
-      # intentionally not overridable here; use the OpenAI-compatible provider to target
-      # a custom endpoint.
-      #
       # @see Cadenya::Models::AIProviderKeySpec#config
-      module Config
-        extend Cadenya::Internal::Type::Union
+      class Config < Cadenya::Internal::Type::BaseModel
+        # @!attribute openai
+        #   OpenAIConfig holds OpenAI-specific settings.
+        #
+        #   @return [Cadenya::Models::AIProviderKeySpec::Config::OpenAI, nil]
+        optional :openai, -> { Cadenya::AIProviderKeySpec::Config::OpenAI }
 
-        discriminator :type
+        # @!attribute openai_compatible
+        #   OpenAICompatibleConfig configures a generic endpoint that speaks the OpenAI Chat
+        #   Completions API. The base URL is required and its model catalog is discovered
+        #   live via GET {base_url}/models.
+        #
+        #   @return [Cadenya::Models::AIProviderKeySpec::Config::OpenAICompatible, nil]
+        optional :openai_compatible,
+                 -> { Cadenya::AIProviderKeySpec::Config::OpenAICompatible },
+                 api_name: :openaiCompatible
 
-        variant :openrouter, -> { Cadenya::AIProviderConfigOpenrouter }
+        # @!attribute openrouter
+        #   OpenRouterConfig holds OpenRouter-specific settings.
+        #
+        #   @return [Cadenya::Models::AIProviderKeySpec::Config::Openrouter, nil]
+        optional :openrouter, -> { Cadenya::AIProviderKeySpec::Config::Openrouter }
 
-        variant :openai, -> { Cadenya::AIProviderConfigOpenAI }
+        # @!attribute type
+        #   The JSON name of the variant set in `config` (e.g. "openrouter"). Required from
+        #   clients on writes, filled by the server on reads; drives the discriminated union
+        #   in the generated OpenAPI.
+        #
+        #   @return [String, nil]
+        optional :type, String
 
-        variant :openaiCompatible, -> { Cadenya::AIProviderConfigOpenAICompatible }
+        # @!method initialize(openai: nil, openai_compatible: nil, openrouter: nil, type: nil)
+        #   Some parameter documentations has been truncated, see
+        #   {Cadenya::Models::AIProviderKeySpec::Config} for more details.
+        #
+        #   AIProviderConfig holds non-secret, provider-specific settings. The set case must
+        #   correspond to AIProviderKeySpec.provider. Providers with no settings (Anthropic,
+        #   Gemini) simply leave this unset. The endpoint of a named provider is fixed and
+        #   intentionally not overridable here; use the OpenAI-compatible provider to target
+        #   a custom endpoint.
+        #
+        #   @param openai [Cadenya::Models::AIProviderKeySpec::Config::OpenAI] OpenAIConfig holds OpenAI-specific settings.
+        #
+        #   @param openai_compatible [Cadenya::Models::AIProviderKeySpec::Config::OpenAICompatible] OpenAICompatibleConfig configures a generic endpoint that speaks the OpenAI
+        #
+        #   @param openrouter [Cadenya::Models::AIProviderKeySpec::Config::Openrouter] OpenRouterConfig holds OpenRouter-specific settings.
+        #
+        #   @param type [String] The JSON name of the variant set in `config` (e.g. "openrouter").
 
-        # @!method self.variants
-        #   @return [Array(Cadenya::Models::AIProviderConfigOpenrouter, Cadenya::Models::AIProviderConfigOpenAI, Cadenya::Models::AIProviderConfigOpenAICompatible)]
+        # @see Cadenya::Models::AIProviderKeySpec::Config#openai
+        class OpenAI < Cadenya::Internal::Type::BaseModel
+          # @!attribute organization_id
+          #   Sent as the OpenAI-Organization header when set.
+          #
+          #   @return [String, nil]
+          optional :organization_id, String, api_name: :organizationId
+
+          # @!attribute project_id
+          #   Sent as the OpenAI-Project header when set.
+          #
+          #   @return [String, nil]
+          optional :project_id, String, api_name: :projectId
+
+          # @!method initialize(organization_id: nil, project_id: nil)
+          #   OpenAIConfig holds OpenAI-specific settings.
+          #
+          #   @param organization_id [String] Sent as the OpenAI-Organization header when set.
+          #
+          #   @param project_id [String] Sent as the OpenAI-Project header when set.
+        end
+
+        # @see Cadenya::Models::AIProviderKeySpec::Config#openai_compatible
+        class OpenAICompatible < Cadenya::Internal::Type::BaseModel
+          # @!attribute base_url
+          #
+          #   @return [String]
+          required :base_url, String, api_name: :baseUrl
+
+          # @!method initialize(base_url:)
+          #   OpenAICompatibleConfig configures a generic endpoint that speaks the OpenAI Chat
+          #   Completions API. The base URL is required and its model catalog is discovered
+          #   live via GET {base_url}/models.
+          #
+          #   @param base_url [String]
+        end
+
+        # @see Cadenya::Models::AIProviderKeySpec::Config#openrouter
+        class Openrouter < Cadenya::Internal::Type::BaseModel
+          # @!attribute region
+          #   Data-residency region (e.g. "us", "eu"). Empty uses the provider default.
+          #
+          #   @return [String, nil]
+          optional :region, String
+
+          # @!method initialize(region: nil)
+          #   OpenRouterConfig holds OpenRouter-specific settings.
+          #
+          #   @param region [String] Data-residency region (e.g. "us", "eu"). Empty uses the provider default.
+        end
       end
 
-      # AIProviderCredential is the secret material used to authenticate with a
-      # provider. The set case must correspond to AIProviderKeySpec.provider. The server
-      # encrypts the serialized message at rest and never returns it on reads.
-      #
       # @see Cadenya::Models::AIProviderKeySpec#credentials
-      module Credentials
-        extend Cadenya::Internal::Type::Union
+      class Credentials < Cadenya::Internal::Type::BaseModel
+        # @!attribute api_key
+        #   CredentialAPIKey carries a single bearer/header API key.
+        #
+        #   @return [Cadenya::Models::AIProviderKeySpec::Credentials::APIKey, nil]
+        optional :api_key, -> { Cadenya::AIProviderKeySpec::Credentials::APIKey }, api_name: :apiKey
 
-        discriminator :type
+        # @!attribute headers
+        #   CredentialHeaders carries arbitrary HTTP headers sent with every request to the
+        #   provider (e.g. {"Authorization": "Bearer ...", "X-Api-Key": "..."}).
+        #
+        #   @return [Cadenya::Models::AIProviderKeySpec::Credentials::Headers, nil]
+        optional :headers, -> { Cadenya::AIProviderKeySpec::Credentials::Headers }
 
-        variant :apiKey, -> { Cadenya::AIProviderCredentialAPIKey }
+        # @!attribute type
+        #   The JSON name of the variant set in `credential` (e.g. "apiKey"). Required on
+        #   input; never returned (the credential is write-only). Drives the discriminated
+        #   union in the generated OpenAPI.
+        #
+        #   @return [String, nil]
+        optional :type, String
 
-        variant :headers, -> { Cadenya::AIProviderCredentialHeaders }
+        # @!method initialize(api_key: nil, headers: nil, type: nil)
+        #   Some parameter documentations has been truncated, see
+        #   {Cadenya::Models::AIProviderKeySpec::Credentials} for more details.
+        #
+        #   AIProviderCredential is the secret material used to authenticate with a
+        #   provider. The set case must correspond to AIProviderKeySpec.provider. The server
+        #   encrypts the serialized message at rest and never returns it on reads.
+        #
+        #   @param api_key [Cadenya::Models::AIProviderKeySpec::Credentials::APIKey] CredentialAPIKey carries a single bearer/header API key.
+        #
+        #   @param headers [Cadenya::Models::AIProviderKeySpec::Credentials::Headers] CredentialHeaders carries arbitrary HTTP headers sent with every request to
+        #
+        #   @param type [String] The JSON name of the variant set in `credential` (e.g. "apiKey").
 
-        # @!method self.variants
-        #   @return [Array(Cadenya::Models::AIProviderCredentialAPIKey, Cadenya::Models::AIProviderCredentialHeaders)]
+        # @see Cadenya::Models::AIProviderKeySpec::Credentials#api_key
+        class APIKey < Cadenya::Internal::Type::BaseModel
+          # @!attribute api_key
+          #
+          #   @return [String, nil]
+          optional :api_key, String, api_name: :apiKey
+
+          # @!method initialize(api_key: nil)
+          #   CredentialAPIKey carries a single bearer/header API key.
+          #
+          #   @param api_key [String]
+        end
+
+        # @see Cadenya::Models::AIProviderKeySpec::Credentials#headers
+        class Headers < Cadenya::Internal::Type::BaseModel
+          # @!attribute headers
+          #
+          #   @return [Hash{Symbol=>String}, nil]
+          optional :headers, Cadenya::Internal::Type::HashOf[String]
+
+          # @!method initialize(headers: nil)
+          #   CredentialHeaders carries arbitrary HTTP headers sent with every request to the
+          #   provider (e.g. {"Authorization": "Bearer ...", "X-Api-Key": "..."}).
+          #
+          #   @param headers [Hash{Symbol=>String}]
+        end
       end
 
       # The AI provider this key authenticates against.

@@ -157,15 +157,13 @@ module Cadenya
           params(
             agent_id: String,
             variation_id: String,
-            body:
-              T.any(
-                Cadenya::Agents::AddAgentVariationAssignmentRequestToolID::OrHash,
-                Cadenya::Agents::AddAgentVariationAssignmentRequestToolSetID::OrHash,
-                Cadenya::Agents::AddAgentVariationAssignmentRequestSubAgentID::OrHash
-              ),
             workspace_id: String,
+            sub_agent_id: String,
+            tool_id: String,
+            tool_set_id: String,
+            type: String,
             request_options: Cadenya::RequestOptions::OrHash
-          ).returns(Cadenya::Agents::VariationAssignment::Variants)
+          ).returns(Cadenya::Agents::VariationAssignment)
         end
         def add_assignment(
           # Path param: Agent ID. Accepts the canonical `agent_…` form or the
@@ -174,12 +172,17 @@ module Cadenya
           # Path param: Variation ID. Accepts the canonical `agentvar_…` form or the
           # `external_id:<value>` form.
           variation_id,
-          # Body param: Attach a single tool, tool set, or sub-agent to a variation. Exactly
-          # one of the target fields must be set; the assignment kind is inferred from the
-          # populated field.
-          body:,
           # Path param: Workspace ID.
           workspace_id: nil,
+          # Body param
+          sub_agent_id: nil,
+          # Body param
+          tool_id: nil,
+          # Body param
+          tool_set_id: nil,
+          # Body param: The JSON name of the variant set in `target` (e.g. "toolId").
+          # Required on input; drives the discriminated union in the generated OpenAPI.
+          type: nil,
           request_options: {}
         )
         end

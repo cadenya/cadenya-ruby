@@ -5,7 +5,7 @@ module Cadenya
         def create: (
           String memory_layer_id,
           metadata: Cadenya::CreateResourceMetadata,
-          spec: Cadenya::Models::MemoryLayers::memory_entry_create_spec,
+          spec: Cadenya::MemoryLayers::MemoryEntryCreateSpec,
           ?workspace_id: String,
           ?request_options: Cadenya::request_opts
         ) -> Cadenya::MemoryLayers::MemoryEntryDetail

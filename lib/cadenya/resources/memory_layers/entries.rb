@@ -21,7 +21,7 @@ module Cadenya
         #
         # @param metadata [Cadenya::Models::CreateResourceMetadata] Body param: CreateResourceMetadata contains the user-provided fields for creatin
         #
-        # @param spec [Cadenya::Models::MemoryLayers::MemoryEntryCreateSpecContent, Cadenya::Models::MemoryLayers::MemoryEntryCreateSpecUploadID] Body param: MemoryEntryCreateSpec is the input shape for CreateMemoryEntry. It a
+        # @param spec [Cadenya::Models::MemoryLayers::MemoryEntryCreateSpec] Body param: MemoryEntryCreateSpec is the input shape for CreateMemoryEntry. It a
         #
         # @param workspace_id [String] Path param
         #

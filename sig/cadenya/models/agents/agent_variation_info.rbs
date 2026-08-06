@@ -5,7 +5,7 @@ module Cadenya
     module Agents
       type agent_variation_info =
         {
-          assignments: ::Array[Cadenya::Models::Agents::variation_assignment],
+          assignments: ::Array[Cadenya::Agents::VariationAssignment],
           created_by: Cadenya::Profile,
           feedback_count: Integer,
           memory_layer_assignments: ::Array[Cadenya::Agents::VariationMemoryLayerAssignment],
@@ -30,11 +30,11 @@ module Cadenya
 
         def score=: (Float) -> Float
 
-        attr_reader assignments: ::Array[Cadenya::Models::Agents::variation_assignment]?
+        attr_reader assignments: ::Array[Cadenya::Agents::VariationAssignment]?
 
         def assignments=: (
-          ::Array[Cadenya::Models::Agents::variation_assignment]
-        ) -> ::Array[Cadenya::Models::Agents::variation_assignment]
+          ::Array[Cadenya::Agents::VariationAssignment]
+        ) -> ::Array[Cadenya::Agents::VariationAssignment]
 
         attr_reader memory_layer_assignments: ::Array[Cadenya::Agents::VariationMemoryLayerAssignment]?
 
@@ -63,7 +63,7 @@ module Cadenya
         def tool_set_count=: (Integer) -> Integer
 
         def initialize: (
-          ?assignments: ::Array[Cadenya::Models::Agents::variation_assignment],
+          ?assignments: ::Array[Cadenya::Agents::VariationAssignment],
           ?created_by: Cadenya::Profile,
           ?feedback_count: Integer,
           ?memory_layer_assignments: ::Array[Cadenya::Agents::VariationMemoryLayerAssignment],
@@ -76,7 +76,7 @@ module Cadenya
         ) -> void
 
         def to_hash: -> {
-          assignments: ::Array[Cadenya::Models::Agents::variation_assignment],
+          assignments: ::Array[Cadenya::Agents::VariationAssignment],
           created_by: Cadenya::Profile,
           feedback_count: Integer,
           memory_layer_assignments: ::Array[Cadenya::Agents::VariationMemoryLayerAssignment],

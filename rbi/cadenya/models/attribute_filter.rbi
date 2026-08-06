@@ -12,47 +12,17 @@ module Cadenya
       attr_accessor :attribute
 
       # String matching operations
-      sig do
-        returns(
-          T.nilable(
-            T.any(
-              Cadenya::StringMatcherExact,
-              Cadenya::StringMatcherStartsWith,
-              Cadenya::StringMatcherEndsWith,
-              Cadenya::StringMatcherContains,
-              Cadenya::StringMatcherRegex
-            )
-          )
-        )
-      end
+      sig { returns(T.nilable(Cadenya::StringMatcher)) }
       attr_reader :matcher
 
-      sig do
-        params(
-          matcher:
-            T.any(
-              Cadenya::StringMatcherExact::OrHash,
-              Cadenya::StringMatcherStartsWith::OrHash,
-              Cadenya::StringMatcherEndsWith::OrHash,
-              Cadenya::StringMatcherContains::OrHash,
-              Cadenya::StringMatcherRegex::OrHash
-            )
-        ).void
-      end
+      sig { params(matcher: Cadenya::StringMatcher::OrHash).void }
       attr_writer :matcher
 
       # Single attribute filter
       sig do
         params(
           attribute: Cadenya::AttributeFilter::Attribute::OrSymbol,
-          matcher:
-            T.any(
-              Cadenya::StringMatcherExact::OrHash,
-              Cadenya::StringMatcherStartsWith::OrHash,
-              Cadenya::StringMatcherEndsWith::OrHash,
-              Cadenya::StringMatcherContains::OrHash,
-              Cadenya::StringMatcherRegex::OrHash
-            )
+          matcher: Cadenya::StringMatcher::OrHash
         ).returns(T.attached_class)
       end
       def self.new(
@@ -66,14 +36,7 @@ module Cadenya
         override.returns(
           {
             attribute: Cadenya::AttributeFilter::Attribute::OrSymbol,
-            matcher:
-              T.any(
-                Cadenya::StringMatcherExact,
-                Cadenya::StringMatcherStartsWith,
-                Cadenya::StringMatcherEndsWith,
-                Cadenya::StringMatcherContains,
-                Cadenya::StringMatcherRegex
-              )
+            matcher: Cadenya::StringMatcher
           }
         )
       end

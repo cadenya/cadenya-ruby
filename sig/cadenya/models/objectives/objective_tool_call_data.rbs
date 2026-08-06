@@ -5,7 +5,7 @@ module Cadenya
     module Objectives
       type objective_tool_call_data =
         {
-          callable: Cadenya::Models::callable_tool,
+          callable: Cadenya::CallableTool,
           arguments: ::Hash[Symbol, top],
           memo: String,
           resolved_secrets: ::Array[Cadenya::Objectives::ResolvedSecret],
@@ -13,7 +13,7 @@ module Cadenya
         }
 
       class ObjectiveToolCallData < Cadenya::Internal::Type::BaseModel
-        attr_accessor callable: Cadenya::Models::callable_tool
+        attr_accessor callable: Cadenya::CallableTool
 
         attr_reader arguments: ::Hash[Symbol, top]?
 
@@ -34,7 +34,7 @@ module Cadenya
         def status_changed_by=: (Cadenya::Profile) -> Cadenya::Profile
 
         def initialize: (
-          callable: Cadenya::Models::callable_tool,
+          callable: Cadenya::CallableTool,
           ?arguments: ::Hash[Symbol, top],
           ?memo: String,
           ?resolved_secrets: ::Array[Cadenya::Objectives::ResolvedSecret],
@@ -42,7 +42,7 @@ module Cadenya
         ) -> void
 
         def to_hash: -> {
-          callable: Cadenya::Models::callable_tool,
+          callable: Cadenya::CallableTool,
           arguments: ::Hash[Symbol, top],
           memo: String,
           resolved_secrets: ::Array[Cadenya::Objectives::ResolvedSecret],

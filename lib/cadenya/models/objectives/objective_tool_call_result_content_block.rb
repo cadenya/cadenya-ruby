@@ -3,21 +3,44 @@
 module Cadenya
   module Models
     module Objectives
-      # ContentBlock is a single block of tool result content. Exactly one of the
-      # variants is set.
-      module ObjectiveToolCallResultContentBlock
-        extend Cadenya::Internal::Type::Union
+      class ObjectiveToolCallResultContentBlock < Cadenya::Internal::Type::BaseModel
+        # @!attribute audio
+        #
+        #   @return [Cadenya::Models::Objectives::ObjectiveToolCallResultAudioBlock, nil]
+        optional :audio, -> { Cadenya::Objectives::ObjectiveToolCallResultAudioBlock }
 
-        discriminator :type
+        # @!attribute image
+        #
+        #   @return [Cadenya::Models::Objectives::ObjectiveToolCallResultImageBlock, nil]
+        optional :image, -> { Cadenya::Objectives::ObjectiveToolCallResultImageBlock }
 
-        variant :text, -> { Cadenya::Objectives::ObjectiveToolCallResultContentBlockText }
+        # @!attribute text
+        #
+        #   @return [Cadenya::Models::Objectives::ObjectiveToolCallResultTextBlock, nil]
+        optional :text, -> { Cadenya::Objectives::ObjectiveToolCallResultTextBlock }
 
-        variant :image, -> { Cadenya::Objectives::ObjectiveToolCallResultContentBlockImage }
+        # @!attribute type
+        #   The JSON name of the variant set in `block` (e.g. "text"). Filled by the server;
+        #   drives the discriminated union in the generated OpenAPI.
+        #
+        #   @return [String, nil]
+        optional :type, String
 
-        variant :audio, -> { Cadenya::Objectives::ObjectiveToolCallResultContentBlockAudio }
-
-        # @!method self.variants
-        #   @return [Array(Cadenya::Models::Objectives::ObjectiveToolCallResultContentBlockText, Cadenya::Models::Objectives::ObjectiveToolCallResultContentBlockImage, Cadenya::Models::Objectives::ObjectiveToolCallResultContentBlockAudio)]
+        # @!method initialize(audio: nil, image: nil, text: nil, type: nil)
+        #   Some parameter documentations has been truncated, see
+        #   {Cadenya::Models::Objectives::ObjectiveToolCallResultContentBlock} for more
+        #   details.
+        #
+        #   ContentBlock is a single block of tool result content. Exactly one of the
+        #   variants is set.
+        #
+        #   @param audio [Cadenya::Models::Objectives::ObjectiveToolCallResultAudioBlock]
+        #
+        #   @param image [Cadenya::Models::Objectives::ObjectiveToolCallResultImageBlock]
+        #
+        #   @param text [Cadenya::Models::Objectives::ObjectiveToolCallResultTextBlock]
+        #
+        #   @param type [String] The JSON name of the variant set in `block` (e.g. "text"). Filled by the
       end
     end
 

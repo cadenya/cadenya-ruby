@@ -30,8 +30,8 @@ module Cadenya
       #   Approval filters that will automatically set the approval requirement on tools
       #   synced from an external source
       #
-      #   @return [Cadenya::Models::ApprovalRequirementFilterAlways, Cadenya::Models::ApprovalRequirementFilterOnly, nil]
-      optional :tool_approvals, union: -> { Cadenya::ApprovalRequirementFilter }, api_name: :toolApprovals
+      #   @return [Cadenya::Models::ApprovalRequirementFilter, nil]
+      optional :tool_approvals, -> { Cadenya::ApprovalRequirementFilter }, api_name: :toolApprovals
 
       # @!attribute url
       #
@@ -50,7 +50,7 @@ module Cadenya
       #
       #   @param just_in_time [Cadenya::Models::ToolSetAdapterMCP::JustInTime] Defines behavior for just-in-time capable tool set adapters (IE: MCP).
       #
-      #   @param tool_approvals [Cadenya::Models::ApprovalRequirementFilterAlways, Cadenya::Models::ApprovalRequirementFilterOnly] Approval filters that will automatically set the approval requirement on tools s
+      #   @param tool_approvals [Cadenya::Models::ApprovalRequirementFilter] Approval filters that will automatically set the approval requirement on tools s
       #
       #   @param url [String]
 

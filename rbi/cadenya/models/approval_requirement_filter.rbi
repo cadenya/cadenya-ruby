@@ -2,23 +2,60 @@
 
 module Cadenya
   module Models
-    # Approval filters that will automatically set the approval requirement on tools
-    # synced from an external source
-    module ApprovalRequirementFilter
-      extend Cadenya::Internal::Type::Union
-
-      Variants =
+    class ApprovalRequirementFilter < Cadenya::Internal::Type::BaseModel
+      OrHash =
         T.type_alias do
-          T.any(
-            Cadenya::ApprovalRequirementFilterAlways,
-            Cadenya::ApprovalRequirementFilterOnly
-          )
+          T.any(Cadenya::ApprovalRequirementFilter, Cadenya::Internal::AnyHash)
         end
 
+      sig { returns(T.nilable(T::Boolean)) }
+      attr_reader :always
+
+      sig { params(always: T::Boolean).void }
+      attr_writer :always
+
+      # Top-level filter with simple boolean logic (no nesting)
+      sig { returns(T.nilable(Cadenya::ToolFilter)) }
+      attr_reader :only
+
+      sig { params(only: Cadenya::ToolFilter::OrHash).void }
+      attr_writer :only
+
+      # The JSON name of the variant set in `requirement` (e.g. "always"). Required from
+      # clients on writes, filled by the server on reads; drives the discriminated union
+      # in the generated OpenAPI.
+      sig { returns(T.nilable(String)) }
+      attr_reader :type
+
+      sig { params(type: String).void }
+      attr_writer :type
+
+      # Approval filters that will automatically set the approval requirement on tools
+      # synced from an external source
       sig do
-        override.returns(T::Array[Cadenya::ApprovalRequirementFilter::Variants])
+        params(
+          always: T::Boolean,
+          only: Cadenya::ToolFilter::OrHash,
+          type: String
+        ).returns(T.attached_class)
       end
-      def self.variants
+      def self.new(
+        always: nil,
+        # Top-level filter with simple boolean logic (no nesting)
+        only: nil,
+        # The JSON name of the variant set in `requirement` (e.g. "always"). Required from
+        # clients on writes, filled by the server on reads; drives the discriminated union
+        # in the generated OpenAPI.
+        type: nil
+      )
+      end
+
+      sig do
+        override.returns(
+          { always: T::Boolean, only: Cadenya::ToolFilter, type: String }
+        )
+      end
+      def to_hash
       end
     end
   end

@@ -1,16 +1,64 @@
 module Cadenya
   module Models
     type string_matcher =
-      Cadenya::StringMatcherExact
-      | Cadenya::StringMatcherStartsWith
-      | Cadenya::StringMatcherEndsWith
-      | Cadenya::StringMatcherContains
-      | Cadenya::StringMatcherRegex
+      {
+        case_sensitive: bool,
+        contains: String,
+        ends_with: String,
+        exact: String,
+        regex: String,
+        starts_with: String,
+        type: String
+      }
 
-    module StringMatcher
-      extend Cadenya::Internal::Type::Union
+    class StringMatcher < Cadenya::Internal::Type::BaseModel
+      attr_reader case_sensitive: bool?
 
-      def self?.variants: -> ::Array[Cadenya::Models::string_matcher]
+      def case_sensitive=: (bool) -> bool
+
+      attr_reader contains: String?
+
+      def contains=: (String) -> String
+
+      attr_reader ends_with: String?
+
+      def ends_with=: (String) -> String
+
+      attr_reader exact: String?
+
+      def exact=: (String) -> String
+
+      attr_reader regex: String?
+
+      def regex=: (String) -> String
+
+      attr_reader starts_with: String?
+
+      def starts_with=: (String) -> String
+
+      attr_reader type: String?
+
+      def type=: (String) -> String
+
+      def initialize: (
+        ?case_sensitive: bool,
+        ?contains: String,
+        ?ends_with: String,
+        ?exact: String,
+        ?regex: String,
+        ?starts_with: String,
+        ?type: String
+      ) -> void
+
+      def to_hash: -> {
+        case_sensitive: bool,
+        contains: String,
+        ends_with: String,
+        exact: String,
+        regex: String,
+        starts_with: String,
+        type: String
+      }
     end
   end
 end

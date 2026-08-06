@@ -3,8 +3,8 @@ module Cadenya
     type tool_called =
       {
         arguments: ::Hash[Symbol, top],
-        config: Cadenya::Models::ToolSets::tool_spec_config,
-        tool: Cadenya::Models::callable_tool,
+        config: Cadenya::ToolSets::ToolSpecConfig,
+        tool: Cadenya::CallableTool,
         tool_call_id: String
       }
 
@@ -13,17 +13,15 @@ module Cadenya
 
       def arguments=: (::Hash[Symbol, top]) -> ::Hash[Symbol, top]
 
-      attr_reader config: Cadenya::Models::ToolSets::tool_spec_config?
+      attr_reader config: Cadenya::ToolSets::ToolSpecConfig?
 
       def config=: (
-        Cadenya::Models::ToolSets::tool_spec_config
-      ) -> Cadenya::Models::ToolSets::tool_spec_config
+        Cadenya::ToolSets::ToolSpecConfig
+      ) -> Cadenya::ToolSets::ToolSpecConfig
 
-      attr_reader tool: Cadenya::Models::callable_tool?
+      attr_reader tool: Cadenya::CallableTool?
 
-      def tool=: (
-        Cadenya::Models::callable_tool
-      ) -> Cadenya::Models::callable_tool
+      def tool=: (Cadenya::CallableTool) -> Cadenya::CallableTool
 
       attr_reader tool_call_id: String?
 
@@ -31,15 +29,15 @@ module Cadenya
 
       def initialize: (
         ?arguments: ::Hash[Symbol, top],
-        ?config: Cadenya::Models::ToolSets::tool_spec_config,
-        ?tool: Cadenya::Models::callable_tool,
+        ?config: Cadenya::ToolSets::ToolSpecConfig,
+        ?tool: Cadenya::CallableTool,
         ?tool_call_id: String
       ) -> void
 
       def to_hash: -> {
         arguments: ::Hash[Symbol, top],
-        config: Cadenya::Models::ToolSets::tool_spec_config,
-        tool: Cadenya::Models::callable_tool,
+        config: Cadenya::ToolSets::ToolSpecConfig,
+        tool: Cadenya::CallableTool,
         tool_call_id: String
       }
     end
