@@ -12,7 +12,11 @@ module Cadenya
         parent_objective_id: String,
         profile_id: String,
         sort_order: String,
-        state: Cadenya::Models::ObjectiveListParams::state
+        state: Cadenya::Models::ObjectiveListParams::state,
+        subject_id: String,
+        tenant_id: String,
+        widget_id: String,
+        widget_session_id: String
       }
       & Cadenya::Internal::Type::request_parameters
 
@@ -66,6 +70,22 @@ module Cadenya
         Cadenya::Models::ObjectiveListParams::state
       ) -> Cadenya::Models::ObjectiveListParams::state
 
+      attr_reader subject_id: String?
+
+      def subject_id=: (String) -> String
+
+      attr_reader tenant_id: String?
+
+      def tenant_id=: (String) -> String
+
+      attr_reader widget_id: String?
+
+      def widget_id=: (String) -> String
+
+      attr_reader widget_session_id: String?
+
+      def widget_session_id=: (String) -> String
+
       def initialize: (
         ?workspace_id: String,
         ?agent_id: String,
@@ -78,6 +98,10 @@ module Cadenya
         ?profile_id: String,
         ?sort_order: String,
         ?state: Cadenya::Models::ObjectiveListParams::state,
+        ?subject_id: String,
+        ?tenant_id: String,
+        ?widget_id: String,
+        ?widget_session_id: String,
         ?request_options: Cadenya::request_opts
       ) -> void
 
@@ -93,6 +117,10 @@ module Cadenya
         profile_id: String,
         sort_order: String,
         state: Cadenya::Models::ObjectiveListParams::state,
+        subject_id: String,
+        tenant_id: String,
+        widget_id: String,
+        widget_session_id: String,
         request_options: Cadenya::RequestOptions
       }
 

@@ -89,6 +89,38 @@ module Cadenya
       sig { params(state: Cadenya::ObjectiveListParams::State::OrSymbol).void }
       attr_writer :state
 
+      # Filter to objectives associated with a subject. Accepts the canonical `subj_…`
+      # form or the `external_id:<value>` form; the external_id form is scoped within a
+      # tenant and requires `tenant_id` to also be set.
+      sig { returns(T.nilable(String)) }
+      attr_reader :subject_id
+
+      sig { params(subject_id: String).void }
+      attr_writer :subject_id
+
+      # Filter to objectives associated with a tenant. Accepts the canonical `tenant_…`
+      # form or the `external_id:<value>` form.
+      sig { returns(T.nilable(String)) }
+      attr_reader :tenant_id
+
+      sig { params(tenant_id: String).void }
+      attr_writer :tenant_id
+
+      # Filter to objectives whose conversation ran through a widget. Accepts the
+      # canonical `wgt_…` form or the `external_id:<value>` form.
+      sig { returns(T.nilable(String)) }
+      attr_reader :widget_id
+
+      sig { params(widget_id: String).void }
+      attr_writer :widget_id
+
+      # Filter to objectives created by a specific widget session.
+      sig { returns(T.nilable(String)) }
+      attr_reader :widget_session_id
+
+      sig { params(widget_session_id: String).void }
+      attr_writer :widget_session_id
+
       sig do
         params(
           workspace_id: String,
@@ -102,6 +134,10 @@ module Cadenya
           profile_id: String,
           sort_order: String,
           state: Cadenya::ObjectiveListParams::State::OrSymbol,
+          subject_id: String,
+          tenant_id: String,
+          widget_id: String,
+          widget_session_id: String,
           request_options: Cadenya::RequestOptions::OrHash
         ).returns(T.attached_class)
       end
@@ -129,6 +165,18 @@ module Cadenya
         sort_order: nil,
         # Filter by state
         state: nil,
+        # Filter to objectives associated with a subject. Accepts the canonical `subj_…`
+        # form or the `external_id:<value>` form; the external_id form is scoped within a
+        # tenant and requires `tenant_id` to also be set.
+        subject_id: nil,
+        # Filter to objectives associated with a tenant. Accepts the canonical `tenant_…`
+        # form or the `external_id:<value>` form.
+        tenant_id: nil,
+        # Filter to objectives whose conversation ran through a widget. Accepts the
+        # canonical `wgt_…` form or the `external_id:<value>` form.
+        widget_id: nil,
+        # Filter to objectives created by a specific widget session.
+        widget_session_id: nil,
         request_options: {}
       )
       end
@@ -147,6 +195,10 @@ module Cadenya
             profile_id: String,
             sort_order: String,
             state: Cadenya::ObjectiveListParams::State::OrSymbol,
+            subject_id: String,
+            tenant_id: String,
+            widget_id: String,
+            widget_session_id: String,
             request_options: Cadenya::RequestOptions
           }
         )

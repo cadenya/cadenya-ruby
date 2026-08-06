@@ -12,7 +12,10 @@ module Cadenya
         total_input_tokens: Integer,
         total_iterations: Integer,
         total_output_tokens: Integer,
-        total_tool_calls: Integer
+        total_tool_calls: Integer,
+        subject: Cadenya::SubjectReference,
+        tenant: Cadenya::TenantReference,
+        widget: Cadenya::BareMetadata
       }
 
     class ObjectiveInfo < Cadenya::Internal::Type::BaseModel
@@ -38,6 +41,18 @@ module Cadenya
 
       attr_accessor total_tool_calls: Integer
 
+      attr_reader subject: Cadenya::SubjectReference?
+
+      def subject=: (Cadenya::SubjectReference) -> Cadenya::SubjectReference
+
+      attr_reader tenant: Cadenya::TenantReference?
+
+      def tenant=: (Cadenya::TenantReference) -> Cadenya::TenantReference
+
+      attr_reader widget: Cadenya::BareMetadata?
+
+      def widget=: (Cadenya::BareMetadata) -> Cadenya::BareMetadata
+
       def initialize: (
         agent: Cadenya::ResourceMetadata,
         agent_variation: Cadenya::ResourceMetadata,
@@ -49,7 +64,10 @@ module Cadenya
         total_input_tokens: Integer,
         total_iterations: Integer,
         total_output_tokens: Integer,
-        total_tool_calls: Integer
+        total_tool_calls: Integer,
+        ?subject: Cadenya::SubjectReference,
+        ?tenant: Cadenya::TenantReference,
+        ?widget: Cadenya::BareMetadata
       ) -> void
 
       def to_hash: -> {
@@ -63,7 +81,10 @@ module Cadenya
         total_input_tokens: Integer,
         total_iterations: Integer,
         total_output_tokens: Integer,
-        total_tool_calls: Integer
+        total_tool_calls: Integer,
+        subject: Cadenya::SubjectReference,
+        tenant: Cadenya::TenantReference,
+        widget: Cadenya::BareMetadata
       }
     end
   end

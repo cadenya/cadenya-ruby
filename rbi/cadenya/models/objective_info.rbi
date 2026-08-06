@@ -70,6 +70,34 @@ module Cadenya
       sig { returns(Integer) }
       attr_accessor :total_tool_calls
 
+      # SubjectReference is the read-only echo of a resource's subject association,
+      # carrying both Cadenya's canonical id and the customer's own key.
+      sig { returns(T.nilable(Cadenya::SubjectReference)) }
+      attr_reader :subject
+
+      sig { params(subject: Cadenya::SubjectReference::OrHash).void }
+      attr_writer :subject
+
+      # TenantReference is the read-only echo of a resource's tenant association,
+      # carrying both Cadenya's canonical id and the customer's own key.
+      sig { returns(T.nilable(Cadenya::TenantReference)) }
+      attr_reader :tenant
+
+      sig { params(tenant: Cadenya::TenantReference::OrHash).void }
+      attr_writer :tenant
+
+      # BareMetadata contains the minimal metadata for a resource: the ID and an
+      # optional human-readable name. These are used for reference fields where the full
+      # metadata (account scoping, timestamps, labels, external IDs) is not needed —
+      # e.g., the tool references inside an agent variation spec or the tools assigned
+      # to an objective. Both fields are server-populated; clients provide IDs through
+      # sibling fields rather than by constructing a BareMetadata themselves.
+      sig { returns(T.nilable(Cadenya::BareMetadata)) }
+      attr_reader :widget
+
+      sig { params(widget: Cadenya::BareMetadata::OrHash).void }
+      attr_writer :widget
+
       # ObjectiveInfo provides read-only aggregated statistics about an objective's
       # execution
       sig do
@@ -84,7 +112,10 @@ module Cadenya
           total_input_tokens: Integer,
           total_iterations: Integer,
           total_output_tokens: Integer,
-          total_tool_calls: Integer
+          total_tool_calls: Integer,
+          subject: Cadenya::SubjectReference::OrHash,
+          tenant: Cadenya::TenantReference::OrHash,
+          widget: Cadenya::BareMetadata::OrHash
         ).returns(T.attached_class)
       end
       def self.new(
@@ -118,7 +149,20 @@ module Cadenya
         # windows
         total_output_tokens:,
         # Total number of tool calls made during execution
-        total_tool_calls:
+        total_tool_calls:,
+        # SubjectReference is the read-only echo of a resource's subject association,
+        # carrying both Cadenya's canonical id and the customer's own key.
+        subject: nil,
+        # TenantReference is the read-only echo of a resource's tenant association,
+        # carrying both Cadenya's canonical id and the customer's own key.
+        tenant: nil,
+        # BareMetadata contains the minimal metadata for a resource: the ID and an
+        # optional human-readable name. These are used for reference fields where the full
+        # metadata (account scoping, timestamps, labels, external IDs) is not needed —
+        # e.g., the tool references inside an agent variation spec or the tools assigned
+        # to an objective. Both fields are server-populated; clients provide IDs through
+        # sibling fields rather than by constructing a BareMetadata themselves.
+        widget: nil
       )
       end
 
@@ -135,7 +179,10 @@ module Cadenya
             total_input_tokens: Integer,
             total_iterations: Integer,
             total_output_tokens: Integer,
-            total_tool_calls: Integer
+            total_tool_calls: Integer,
+            subject: Cadenya::SubjectReference,
+            tenant: Cadenya::TenantReference,
+            widget: Cadenya::BareMetadata
           }
         )
       end
