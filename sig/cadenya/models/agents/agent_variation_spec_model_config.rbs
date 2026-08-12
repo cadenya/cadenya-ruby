@@ -4,20 +4,83 @@ module Cadenya
 
     module Agents
       type agent_variation_spec_model_config =
-        { model_id: String, temperature: Float }
+        {
+          model_id: String,
+          max_output_tokens: Integer,
+          reasoning_effort: Cadenya::Models::Agents::AgentVariationSpecModelConfig::reasoning_effort,
+          stop_sequences: ::Array[String],
+          temperature: Float,
+          top_k: Integer,
+          top_p: Float
+        }
 
       class AgentVariationSpecModelConfig < Cadenya::Internal::Type::BaseModel
-        attr_reader model_id: String?
+        attr_accessor model_id: String
 
-        def model_id=: (String) -> String
+        attr_reader max_output_tokens: Integer?
+
+        def max_output_tokens=: (Integer) -> Integer
+
+        attr_reader reasoning_effort: Cadenya::Models::Agents::AgentVariationSpecModelConfig::reasoning_effort?
+
+        def reasoning_effort=: (
+          Cadenya::Models::Agents::AgentVariationSpecModelConfig::reasoning_effort
+        ) -> Cadenya::Models::Agents::AgentVariationSpecModelConfig::reasoning_effort
+
+        attr_reader stop_sequences: ::Array[String]?
+
+        def stop_sequences=: (::Array[String]) -> ::Array[String]
 
         attr_reader temperature: Float?
 
         def temperature=: (Float) -> Float
 
-        def initialize: (?model_id: String, ?temperature: Float) -> void
+        attr_reader top_k: Integer?
 
-        def to_hash: -> { model_id: String, temperature: Float }
+        def top_k=: (Integer) -> Integer
+
+        attr_reader top_p: Float?
+
+        def top_p=: (Float) -> Float
+
+        def initialize: (
+          model_id: String,
+          ?max_output_tokens: Integer,
+          ?reasoning_effort: Cadenya::Models::Agents::AgentVariationSpecModelConfig::reasoning_effort,
+          ?stop_sequences: ::Array[String],
+          ?temperature: Float,
+          ?top_k: Integer,
+          ?top_p: Float
+        ) -> void
+
+        def to_hash: -> {
+          model_id: String,
+          max_output_tokens: Integer,
+          reasoning_effort: Cadenya::Models::Agents::AgentVariationSpecModelConfig::reasoning_effort,
+          stop_sequences: ::Array[String],
+          temperature: Float,
+          top_k: Integer,
+          top_p: Float
+        }
+
+        type reasoning_effort =
+          :REASONING_EFFORT_UNSPECIFIED
+          | :REASONING_EFFORT_NONE
+          | :REASONING_EFFORT_LOW
+          | :REASONING_EFFORT_MEDIUM
+          | :REASONING_EFFORT_HIGH
+
+        module ReasoningEffort
+          extend Cadenya::Internal::Type::Enum
+
+          REASONING_EFFORT_UNSPECIFIED: :REASONING_EFFORT_UNSPECIFIED
+          REASONING_EFFORT_NONE: :REASONING_EFFORT_NONE
+          REASONING_EFFORT_LOW: :REASONING_EFFORT_LOW
+          REASONING_EFFORT_MEDIUM: :REASONING_EFFORT_MEDIUM
+          REASONING_EFFORT_HIGH: :REASONING_EFFORT_HIGH
+
+          def self?.values: -> ::Array[Cadenya::Models::Agents::AgentVariationSpecModelConfig::reasoning_effort]
+        end
       end
     end
   end

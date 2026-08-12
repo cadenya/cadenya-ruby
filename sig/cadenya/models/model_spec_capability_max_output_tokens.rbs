@@ -1,0 +1,35 @@
+module Cadenya
+  module Models
+    type model_spec_capability_max_output_tokens =
+      {
+        max_output_tokens: top,
+        type: Cadenya::Models::ModelSpecCapabilityMaxOutputTokens::type_
+      }
+
+    class ModelSpecCapabilityMaxOutputTokens < Cadenya::Internal::Type::BaseModel
+      attr_accessor max_output_tokens: top
+
+      attr_accessor type: Cadenya::Models::ModelSpecCapabilityMaxOutputTokens::type_
+
+      def initialize: (
+        max_output_tokens: top,
+        type: Cadenya::Models::ModelSpecCapabilityMaxOutputTokens::type_
+      ) -> void
+
+      def to_hash: -> {
+        max_output_tokens: top,
+        type: Cadenya::Models::ModelSpecCapabilityMaxOutputTokens::type_
+      }
+
+      type type_ = :maxOutputTokens
+
+      module Type
+        extend Cadenya::Internal::Type::Enum
+
+        MAX_OUTPUT_TOKENS: :maxOutputTokens
+
+        def self?.values: -> ::Array[Cadenya::Models::ModelSpecCapabilityMaxOutputTokens::type_]
+      end
+    end
+  end
+end

@@ -1,0 +1,15 @@
+module Cadenya
+  module Models
+    type capability_stop_sequences = { limit: Integer }
+
+    class CapabilityStopSequences < Cadenya::Internal::Type::BaseModel
+      attr_reader limit: Integer?
+
+      def limit=: (Integer) -> Integer
+
+      def initialize: (?limit: Integer) -> void
+
+      def to_hash: -> { limit: Integer }
+    end
+  end
+end

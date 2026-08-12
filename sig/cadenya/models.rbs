@@ -107,6 +107,18 @@ module Cadenya
 
   class CallableToolTool = Cadenya::Models::CallableToolTool
 
+  CapabilityMaxOutputTokens: Cadenya::Internal::Type::Converter
+
+  class CapabilityReasoning = Cadenya::Models::CapabilityReasoning
+
+  class CapabilityStopSequences = Cadenya::Models::CapabilityStopSequences
+
+  CapabilityTemperature: Cadenya::Internal::Type::Converter
+
+  CapabilityTopK: Cadenya::Internal::Type::Converter
+
+  CapabilityTopP: Cadenya::Internal::Type::Converter
+
   class ContextLengths = Cadenya::Models::ContextLengths
 
   class ContextWindowCompacted = Cadenya::Models::ContextWindowCompacted
@@ -156,6 +168,20 @@ module Cadenya
   class ModelRetrieveParams = Cadenya::Models::ModelRetrieveParams
 
   class ModelSpec = Cadenya::Models::ModelSpec
+
+  module ModelSpecCapability = Cadenya::Models::ModelSpecCapability
+
+  class ModelSpecCapabilityMaxOutputTokens = Cadenya::Models::ModelSpecCapabilityMaxOutputTokens
+
+  class ModelSpecCapabilityReasoning = Cadenya::Models::ModelSpecCapabilityReasoning
+
+  class ModelSpecCapabilityStopSequences = Cadenya::Models::ModelSpecCapabilityStopSequences
+
+  class ModelSpecCapabilityTemperature = Cadenya::Models::ModelSpecCapabilityTemperature
+
+  class ModelSpecCapabilityTopK = Cadenya::Models::ModelSpecCapabilityTopK
+
+  class ModelSpecCapabilityTopP = Cadenya::Models::ModelSpecCapabilityTopP
 
   class ModelSwapParams = Cadenya::Models::ModelSwapParams
 

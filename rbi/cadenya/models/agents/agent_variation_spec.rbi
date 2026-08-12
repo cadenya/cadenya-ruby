@@ -63,7 +63,10 @@ module Cadenya
         sig { params(first_user_message_template: String).void }
         attr_writer :first_user_message_template
 
-        # ModelConfig defines the model configuration for a variation
+        # ModelConfig defines the model configuration for a variation.
+        #
+        # Every knob besides model_id is honored only when the assigned model's
+        # spec.capabilities lists the matching capability.
         sig do
           returns(T.nilable(Cadenya::Agents::AgentVariationSpecModelConfig))
         end
@@ -135,7 +138,10 @@ module Cadenya
           # result. If neither this template nor first_user_message is present, objective
           # creation is rejected with InvalidArgument.
           first_user_message_template: nil,
-          # ModelConfig defines the model configuration for a variation
+          # ModelConfig defines the model configuration for a variation.
+          #
+          # Every knob besides model_id is honored only when the assigned model's
+          # spec.capabilities lists the matching capability.
           model_config: nil,
           # ProgressiveDiscovery is used to indicate that the agent should automatically
           # discover tools that are not explicitly assigned to it. Max tools is the maximum
