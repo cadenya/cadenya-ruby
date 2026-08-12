@@ -147,7 +147,7 @@ class CadenyaTest < Minitest::Test
     end
 
     1.times do
-      assert_requested(:any, /./, headers: {"x-stainless-retry-count" => _1})
+      assert_requested(:any, /./, headers: {"x-cadenya-retry-count" => _1})
     end
   end
 
@@ -157,11 +157,11 @@ class CadenyaTest < Minitest::Test
     cadenya = Cadenya::Client.new(base_url: "http://localhost", api_key: "My API Key")
 
     assert_raises(Cadenya::Errors::InternalServerError) do
-      cadenya.account.retrieve(request_options: {extra_headers: {"x-stainless-retry-count" => nil}})
+      cadenya.account.retrieve(request_options: {extra_headers: {"x-cadenya-retry-count" => nil}})
     end
 
     assert_requested(:any, /./, times: 1) do
-      refute_includes(_1.headers.keys.map(&:downcase), "x-stainless-retry-count")
+      refute_includes(_1.headers.keys.map(&:downcase), "x-cadenya-retry-count")
     end
   end
 
@@ -171,10 +171,10 @@ class CadenyaTest < Minitest::Test
     cadenya = Cadenya::Client.new(base_url: "http://localhost", api_key: "My API Key")
 
     assert_raises(Cadenya::Errors::InternalServerError) do
-      cadenya.account.retrieve(request_options: {extra_headers: {"x-stainless-retry-count" => "42"}})
+      cadenya.account.retrieve(request_options: {extra_headers: {"x-cadenya-retry-count" => "42"}})
     end
 
-    assert_requested(:any, /./, headers: {"x-stainless-retry-count" => "42"}, times: 1)
+    assert_requested(:any, /./, headers: {"x-cadenya-retry-count" => "42"}, times: 1)
   end
 
   def test_client_redirect_307
