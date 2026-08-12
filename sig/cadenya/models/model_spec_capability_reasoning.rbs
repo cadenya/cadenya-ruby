@@ -1,0 +1,35 @@
+module Cadenya
+  module Models
+    type model_spec_capability_reasoning =
+      {
+        reasoning: Cadenya::CapabilityReasoning,
+        type: Cadenya::Models::ModelSpecCapabilityReasoning::type_
+      }
+
+    class ModelSpecCapabilityReasoning < Cadenya::Internal::Type::BaseModel
+      attr_accessor reasoning: Cadenya::CapabilityReasoning
+
+      attr_accessor type: Cadenya::Models::ModelSpecCapabilityReasoning::type_
+
+      def initialize: (
+        reasoning: Cadenya::CapabilityReasoning,
+        type: Cadenya::Models::ModelSpecCapabilityReasoning::type_
+      ) -> void
+
+      def to_hash: -> {
+        reasoning: Cadenya::CapabilityReasoning,
+        type: Cadenya::Models::ModelSpecCapabilityReasoning::type_
+      }
+
+      type type_ = :reasoning
+
+      module Type
+        extend Cadenya::Internal::Type::Enum
+
+        REASONING: :reasoning
+
+        def self?.values: -> ::Array[Cadenya::Models::ModelSpecCapabilityReasoning::type_]
+      end
+    end
+  end
+end

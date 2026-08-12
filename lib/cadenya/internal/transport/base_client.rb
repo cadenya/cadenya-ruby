@@ -15,12 +15,12 @@ module Cadenya
         # rubocop:disable Style/MutableConstant
         PLATFORM_HEADERS =
           {
-            "x-stainless-arch" => Cadenya::Internal::Util.arch,
-            "x-stainless-lang" => "ruby",
-            "x-stainless-os" => Cadenya::Internal::Util.os,
-            "x-stainless-package-version" => Cadenya::VERSION,
-            "x-stainless-runtime" => ::RUBY_ENGINE,
-            "x-stainless-runtime-version" => ::RUBY_ENGINE_VERSION
+            "x-cadenya-arch" => Cadenya::Internal::Util.arch,
+            "x-cadenya-lang" => "ruby",
+            "x-cadenya-os" => Cadenya::Internal::Util.os,
+            "x-cadenya-package-version" => Cadenya::VERSION,
+            "x-cadenya-runtime" => ::RUBY_ENGINE,
+            "x-cadenya-runtime-version" => ::RUBY_ENGINE_VERSION
           }
         # rubocop:enable Style/MutableConstant
 
@@ -228,7 +228,7 @@ module Cadenya
         # @api private
         #
         # @return [String]
-        private def generate_idempotency_key = "stainless-ruby-retry-#{SecureRandom.uuid}"
+        private def generate_idempotency_key = "cadenya-ruby-retry-#{SecureRandom.uuid}"
 
         # @api private
         #
@@ -287,13 +287,13 @@ module Cadenya
             headers[@idempotency_header] = opts.fetch(:idempotency_key) { generate_idempotency_key }
           end
 
-          unless headers.key?("x-stainless-retry-count")
-            headers["x-stainless-retry-count"] = "0"
+          unless headers.key?("x-cadenya-retry-count")
+            headers["x-cadenya-retry-count"] = "0"
           end
 
           timeout = opts.fetch(:timeout, @timeout).to_f.clamp(0..)
-          unless headers.key?("x-stainless-timeout") || timeout.zero?
-            headers["x-stainless-timeout"] = timeout.to_s
+          unless headers.key?("x-cadenya-timeout") || timeout.zero?
+            headers["x-cadenya-timeout"] = timeout.to_s
           end
 
           headers.reject! { |_, v| v.to_s.empty? }
@@ -381,7 +381,7 @@ module Cadenya
           input = {**request.except(:timeout), deadline: Cadenya::Internal::Util.monotonic_secs + timeout}
 
           if send_retry_header
-            headers["x-stainless-retry-count"] = retry_count.to_s
+            headers["x-cadenya-retry-count"] = retry_count.to_s
           end
 
           begin
@@ -490,7 +490,7 @@ module Cadenya
           url = request.fetch(:url)
 
           # Don't send the current retry count in the headers if the caller modified the header defaults.
-          send_retry_header = request.fetch(:headers)["x-stainless-retry-count"] == "0"
+          send_retry_header = request.fetch(:headers)["x-cadenya-retry-count"] == "0"
           status, response, stream = send_request(
             request,
             redirect_count: 0,

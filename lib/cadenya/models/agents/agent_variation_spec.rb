@@ -37,7 +37,10 @@ module Cadenya
         optional :first_user_message_template, String, api_name: :firstUserMessageTemplate
 
         # @!attribute model_config
-        #   ModelConfig defines the model configuration for a variation
+        #   ModelConfig defines the model configuration for a variation.
+        #
+        #   Every knob besides model_id is honored only when the assigned model's
+        #   spec.capabilities lists the matching capability.
         #
         #   @return [Cadenya::Models::Agents::AgentVariationSpecModelConfig, nil]
         optional :model_config, -> { Cadenya::Agents::AgentVariationSpecModelConfig }, api_name: :modelConfig
@@ -76,7 +79,7 @@ module Cadenya
         #
         #   @param first_user_message_template [String] Liquid template for the first user message of objectives using this variation.
         #
-        #   @param model_config [Cadenya::Models::Agents::AgentVariationSpecModelConfig] ModelConfig defines the model configuration for a variation
+        #   @param model_config [Cadenya::Models::Agents::AgentVariationSpecModelConfig] ModelConfig defines the model configuration for a variation.
         #
         #   @param progressive_discovery [Cadenya::Models::Agents::AgentVariationSpecProgressiveDiscovery] ProgressiveDiscovery is used to indicate that the agent should automatically dis
         #

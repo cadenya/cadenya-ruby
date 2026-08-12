@@ -1,0 +1,5 @@
+module Cadenya
+  module Models
+    CapabilityTopK: Cadenya::Internal::Type::Converter
+  end
+end

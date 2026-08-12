@@ -1,0 +1,5 @@
+module Cadenya
+  module Models
+    CapabilityTemperature: Cadenya::Internal::Type::Converter
+  end
+end

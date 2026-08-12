@@ -1,0 +1,32 @@
+module Cadenya
+  module Models
+    type capability_reasoning =
+      { mode: Cadenya::Models::CapabilityReasoning::mode }
+
+    class CapabilityReasoning < Cadenya::Internal::Type::BaseModel
+      attr_reader mode: Cadenya::Models::CapabilityReasoning::mode?
+
+      def mode=: (
+        Cadenya::Models::CapabilityReasoning::mode
+      ) -> Cadenya::Models::CapabilityReasoning::mode
+
+      def initialize: (
+        ?mode: Cadenya::Models::CapabilityReasoning::mode
+      ) -> void
+
+      def to_hash: -> { mode: Cadenya::Models::CapabilityReasoning::mode }
+
+      type mode = :MODE_UNSPECIFIED | :MODE_ADAPTIVE | :MODE_BUDGET
+
+      module Mode
+        extend Cadenya::Internal::Type::Enum
+
+        MODE_UNSPECIFIED: :MODE_UNSPECIFIED
+        MODE_ADAPTIVE: :MODE_ADAPTIVE
+        MODE_BUDGET: :MODE_BUDGET
+
+        def self?.values: -> ::Array[Cadenya::Models::CapabilityReasoning::mode]
+      end
+    end
+  end
+end

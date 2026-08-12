@@ -2,7 +2,7 @@
 
 The Cadenya Ruby library provides convenient access to the Cadenya REST API from any Ruby 3.2.0+ application. It ships with comprehensive types & docstrings in Yard, RBS, and RBI – [see below](https://github.com/cadenya/cadenya-ruby#Sorbet) for usage with Sorbet. The standard library's `net/http` is used as the HTTP transport, with connection pooling via the `connection_pool` gem.
 
-It is generated with [Stainless](https://www.stainless.com/).
+This library is maintained by Cadenya, including its coding agents. Community contributions are welcome — see [Contributing](#contributing).
 
 ## Documentation
 

@@ -1,0 +1,5 @@
+module Cadenya
+  module Models
+    CapabilityMaxOutputTokens: Cadenya::Internal::Type::Converter
+  end
+end

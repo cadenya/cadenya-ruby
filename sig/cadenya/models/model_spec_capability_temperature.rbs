@@ -1,0 +1,35 @@
+module Cadenya
+  module Models
+    type model_spec_capability_temperature =
+      {
+        temperature: top,
+        type: Cadenya::Models::ModelSpecCapabilityTemperature::type_
+      }
+
+    class ModelSpecCapabilityTemperature < Cadenya::Internal::Type::BaseModel
+      attr_accessor temperature: top
+
+      attr_accessor type: Cadenya::Models::ModelSpecCapabilityTemperature::type_
+
+      def initialize: (
+        temperature: top,
+        type: Cadenya::Models::ModelSpecCapabilityTemperature::type_
+      ) -> void
+
+      def to_hash: -> {
+        temperature: top,
+        type: Cadenya::Models::ModelSpecCapabilityTemperature::type_
+      }
+
+      type type_ = :temperature
+
+      module Type
+        extend Cadenya::Internal::Type::Enum
+
+        TEMPERATURE: :temperature
+
+        def self?.values: -> ::Array[Cadenya::Models::ModelSpecCapabilityTemperature::type_]
+      end
+    end
+  end
+end
