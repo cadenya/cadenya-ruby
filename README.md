@@ -17,7 +17,7 @@ To use this gem, install via Bundler by adding the following to your application
 <!-- x-release-please-start-version -->
 
 ```ruby
-gem "cadenya", "~> 0.51.1"
+gem "cadenya", "~> 0.51.2"
 ```
 
 <!-- x-release-please-end -->
