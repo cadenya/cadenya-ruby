@@ -107,8 +107,8 @@ Lint/UselessAssignment:
   Exclude:
     - "examples/**/*.rb"
 
-# The generated retry-count test emits `1.times` when max_retries is 0
-# (Stainless generator bug); drop this once fixed upstream.
+# The retry-count test uses `1.times` when max_retries is 0; drop this once
+# the test is rewritten to avoid it.
 Lint/UselessTimes:
   Enabled: false
 

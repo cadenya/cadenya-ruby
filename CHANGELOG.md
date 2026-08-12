@@ -42,7 +42,7 @@ Full Changelog: [v0.47.0...v0.48.0](https://github.com/cadenya/cadenya-ruby/comp
 
 ### Features
 
-* **stlc:** configurable CI runner and private-production-repo support in workflow templates ([efc2777](https://github.com/cadenya/cadenya-ruby/commit/efc2777d7b7623ef2a27c102302c3f192ca642f1))
+* **ci:** configurable CI runner and private-production-repo support in workflow templates ([efc2777](https://github.com/cadenya/cadenya-ruby/commit/efc2777d7b7623ef2a27c102302c3f192ca642f1))
 
 ## 0.47.0 (2026-07-18)
 

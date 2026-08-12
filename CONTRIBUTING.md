@@ -14,11 +14,11 @@ This will install all the required dependencies.
 
 ## Modifying/Adding code
 
-Most of the SDK is generated code. Modifications to code will be persisted between generations, but may result in merge conflicts between manual patches and changes from the generator. The generator will never modify the contents of `lib/cadenya/helpers/` and `examples/` directory.
+Changes to this SDK are made directly in this repository — there is no code generator. When adding or changing API surface, keep the `*.rb` implementation, `rbi/` (Sorbet) and `sig/` (RBS) type definitions in sync.
 
 ## Adding and running examples
 
-All files in the `examples/` directory are not modified by the generator and can be freely edited or added to.
+All files in the `examples/` directory can be freely edited or added to.
 
 ```ruby
 #!/usr/bin/env ruby
