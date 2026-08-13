@@ -52,14 +52,12 @@ module Cadenya
       attr_writer :tool
 
       # The ID of the objective tool call record that was executed.
-      sig { returns(T.nilable(String)) }
-      attr_reader :tool_call_id
-
-      sig { params(tool_call_id: String).void }
-      attr_writer :tool_call_id
+      sig { returns(String) }
+      attr_accessor :tool_call_id
 
       sig do
         params(
+          tool_call_id: String,
           arguments: T::Hash[Symbol, T.anything],
           config:
             T.any(
@@ -73,11 +71,12 @@ module Cadenya
               Cadenya::CallableToolTool::OrHash,
               Cadenya::CallableToolAgent::OrHash,
               Cadenya::CallableToolCadenyaProvidedTool::OrHash
-            ),
-          tool_call_id: String
+            )
         ).returns(T.attached_class)
       end
       def self.new(
+        # The ID of the objective tool call record that was executed.
+        tool_call_id:,
         # The arguments passed to the tool.
         arguments: nil,
         # Config defines the adapter to use for the tool. This is used to determine how
@@ -88,9 +87,7 @@ module Cadenya
         # In Cadenya, a tool that is used within an agent objective might be a
         # user-defined tool (IE: MCP, HTTP), another Agent (useful to separate context),
         # or a Cadenya Tool (one Cadenya provides).
-        tool: nil,
-        # The ID of the objective tool call record that was executed.
-        tool_call_id: nil
+        tool: nil
       )
       end
 

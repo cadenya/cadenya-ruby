@@ -8,24 +8,16 @@ module Cadenya
       }
 
     class SearchSearchToolsOrToolSetsResponse < Cadenya::Internal::Type::BaseModel
-      attr_reader agents: ::Array[Cadenya::Agent]?
+      attr_accessor agents: ::Array[Cadenya::Agent]
 
-      def agents=: (::Array[Cadenya::Agent]) -> ::Array[Cadenya::Agent]
+      attr_accessor tools: ::Array[Cadenya::ToolSets::Tool]
 
-      attr_reader tools: ::Array[Cadenya::ToolSets::Tool]?
-
-      def tools=: (
-        ::Array[Cadenya::ToolSets::Tool]
-      ) -> ::Array[Cadenya::ToolSets::Tool]
-
-      attr_reader tool_sets: ::Array[Cadenya::ToolSet]?
-
-      def tool_sets=: (::Array[Cadenya::ToolSet]) -> ::Array[Cadenya::ToolSet]
+      attr_accessor tool_sets: ::Array[Cadenya::ToolSet]
 
       def initialize: (
-        ?agents: ::Array[Cadenya::Agent],
-        ?tools: ::Array[Cadenya::ToolSets::Tool],
-        ?tool_sets: ::Array[Cadenya::ToolSet]
+        agents: ::Array[Cadenya::Agent],
+        tools: ::Array[Cadenya::ToolSets::Tool],
+        tool_sets: ::Array[Cadenya::ToolSet]
       ) -> void
 
       def to_hash: -> {

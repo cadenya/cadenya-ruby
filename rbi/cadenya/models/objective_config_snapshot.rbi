@@ -9,11 +9,8 @@ module Cadenya
         end
 
       # Agent resource
-      sig { returns(T.nilable(Cadenya::Agent)) }
-      attr_reader :agent
-
-      sig { params(agent: Cadenya::Agent::OrHash).void }
-      attr_writer :agent
+      sig { returns(Cadenya::Agent) }
+      attr_accessor :agent
 
       # AgentSchedule resource — a recurring trigger attached to an agent that creates
       # objectives on its cadence.
@@ -26,31 +23,26 @@ module Cadenya
       attr_writer :agent_schedule
 
       # AgentVariation resource
-      sig { returns(T.nilable(Cadenya::Agents::AgentVariation)) }
-      attr_reader :agent_variation
-
-      sig do
-        params(agent_variation: Cadenya::Agents::AgentVariation::OrHash).void
-      end
-      attr_writer :agent_variation
+      sig { returns(Cadenya::Agents::AgentVariation) }
+      attr_accessor :agent_variation
 
       # ObjectiveConfigSnapshot is the point-in-time snapshot of the agent, variation,
       # and (when applicable) schedule that an objective was started with.
       sig do
         params(
           agent: Cadenya::Agent::OrHash,
-          agent_schedule: Cadenya::Agents::AgentSchedule::OrHash,
-          agent_variation: Cadenya::Agents::AgentVariation::OrHash
+          agent_variation: Cadenya::Agents::AgentVariation::OrHash,
+          agent_schedule: Cadenya::Agents::AgentSchedule::OrHash
         ).returns(T.attached_class)
       end
       def self.new(
         # Agent resource
-        agent: nil,
+        agent:,
+        # AgentVariation resource
+        agent_variation:,
         # AgentSchedule resource — a recurring trigger attached to an agent that creates
         # objectives on its cadence.
-        agent_schedule: nil,
-        # AgentVariation resource
-        agent_variation: nil
+        agent_schedule: nil
       )
       end
 

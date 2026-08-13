@@ -8,11 +8,8 @@ module Cadenya
           T.any(Cadenya::BareMetadata, Cadenya::Internal::AnyHash)
         end
 
-      sig { returns(T.nilable(String)) }
-      attr_reader :id
-
-      sig { params(id: String).void }
-      attr_writer :id
+      sig { returns(String) }
+      attr_accessor :id
 
       # Human-readable name of the referenced resource, populated by the server on reads
       # for convenience. Absent on references to resources that do not have a name
@@ -31,7 +28,7 @@ module Cadenya
       # sibling fields rather than by constructing a BareMetadata themselves.
       sig { params(id: String, name: String).returns(T.attached_class) }
       def self.new(
-        id: nil,
+        id:,
         # Human-readable name of the referenced resource, populated by the server on reads
         # for convenience. Absent on references to resources that do not have a name
         # (e.g., objective tasks).

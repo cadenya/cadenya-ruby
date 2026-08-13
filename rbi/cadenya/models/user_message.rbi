@@ -6,11 +6,8 @@ module Cadenya
       OrHash =
         T.type_alias { T.any(Cadenya::UserMessage, Cadenya::Internal::AnyHash) }
 
-      sig { returns(T.nilable(String)) }
-      attr_reader :content
-
-      sig { params(content: String).void }
-      attr_writer :content
+      sig { returns(String) }
+      attr_accessor :content
 
       sig { params(content: String).returns(T.attached_class) }
       def self.new(content: nil)

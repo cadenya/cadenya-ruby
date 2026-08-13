@@ -15,16 +15,12 @@ module Cadenya
 
         attr_accessor spec: Cadenya::Agents::AgentVariationSpec
 
-        attr_reader info: Cadenya::Agents::AgentVariationInfo?
-
-        def info=: (
-          Cadenya::Agents::AgentVariationInfo
-        ) -> Cadenya::Agents::AgentVariationInfo
+        attr_accessor info: Cadenya::Agents::AgentVariationInfo
 
         def initialize: (
           metadata: Cadenya::ResourceMetadata,
           spec: Cadenya::Agents::AgentVariationSpec,
-          ?info: Cadenya::Agents::AgentVariationInfo
+          info: Cadenya::Agents::AgentVariationInfo
         ) -> void
 
         def to_hash: -> {

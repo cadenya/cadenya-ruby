@@ -3,23 +3,13 @@ module Cadenya
     type sync_failed = { error: bool, error_type: String, message: String }
 
     class SyncFailed < Cadenya::Internal::Type::BaseModel
-      attr_reader error: bool?
+      attr_accessor error: bool
 
-      def error=: (bool) -> bool
+      attr_accessor error_type: String
 
-      attr_reader error_type: String?
+      attr_accessor message: String
 
-      def error_type=: (String) -> String
-
-      attr_reader message: String?
-
-      def message=: (String) -> String
-
-      def initialize: (
-        ?error: bool,
-        ?error_type: String,
-        ?message: String
-      ) -> void
+      def initialize: (error: bool, error_type: String, message: String) -> void
 
       def to_hash: -> { error: bool, error_type: String, message: String }
     end

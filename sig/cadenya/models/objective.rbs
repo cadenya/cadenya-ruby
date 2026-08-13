@@ -30,17 +30,9 @@ module Cadenya
         Cadenya::Objective::EpisodicMemory
       ) -> Cadenya::Objective::EpisodicMemory
 
-      attr_reader memory_cascade: ::Array[Cadenya::MemoryReference]?
+      attr_accessor memory_cascade: ::Array[Cadenya::MemoryReference]
 
-      def memory_cascade=: (
-        ::Array[Cadenya::MemoryReference]
-      ) -> ::Array[Cadenya::MemoryReference]
-
-      attr_reader secrets: ::Array[Cadenya::ObjectiveSecret]?
-
-      def secrets=: (
-        ::Array[Cadenya::ObjectiveSecret]
-      ) -> ::Array[Cadenya::ObjectiveSecret]
+      attr_accessor secrets: ::Array[Cadenya::ObjectiveSecret]
 
       attr_accessor config_snapshot: Cadenya::ObjectiveConfigSnapshot
 
@@ -60,17 +52,11 @@ module Cadenya
 
       def output=: (::Hash[Symbol, top]) -> ::Hash[Symbol, top]
 
-      attr_reader parent_objective_id: String?
+      attr_accessor parent_objective_id: String
 
-      def parent_objective_id=: (String) -> String
+      attr_accessor pinned_parameters: ::Hash[Symbol, String]
 
-      attr_reader pinned_parameters: ::Hash[Symbol, String]?
-
-      def pinned_parameters=: (::Hash[Symbol, String]) -> ::Hash[Symbol, String]
-
-      attr_reader state_message: String?
-
-      def state_message=: (String) -> String
+      attr_accessor state_message: String
 
       attr_reader system_prompt_data: ::Hash[Symbol, top]?
 
@@ -82,15 +68,15 @@ module Cadenya
         metadata: Cadenya::OperationMetadata,
         state: Cadenya::Models::Objective::state,
         system_prompt: String,
+        memory_cascade: ::Array[Cadenya::MemoryReference],
+        parent_objective_id: String,
+        pinned_parameters: ::Hash[Symbol, String],
+        secrets: ::Array[Cadenya::ObjectiveSecret],
+        state_message: String,
         ?episodic_memory: Cadenya::Objective::EpisodicMemory,
         ?first_user_message_data: ::Hash[Symbol, top],
         ?info: Cadenya::ObjectiveInfo,
-        ?memory_cascade: ::Array[Cadenya::MemoryReference],
         ?output: ::Hash[Symbol, top],
-        ?parent_objective_id: String,
-        ?pinned_parameters: ::Hash[Symbol, String],
-        ?secrets: ::Array[Cadenya::ObjectiveSecret],
-        ?state_message: String,
         ?system_prompt_data: ::Hash[Symbol, top]
       ) -> void
 

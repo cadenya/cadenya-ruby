@@ -25,11 +25,8 @@ module Cadenya
 
         # Metadata for ephemeral operations and activities (e.g., objectives, executions,
         # runs)
-        sig { returns(T.nilable(Cadenya::OperationMetadata)) }
-        attr_reader :objective
-
-        sig { params(objective: Cadenya::OperationMetadata::OrHash).void }
-        attr_writer :objective
+        sig { returns(Cadenya::OperationMetadata) }
+        attr_accessor :objective
 
         # BareMetadata contains the minimal metadata for a resource: the ID and an
         # optional human-readable name. These are used for reference fields where the full
@@ -57,20 +54,20 @@ module Cadenya
 
         sig do
           params(
-            created_by: Cadenya::Profile::OrHash,
             objective: Cadenya::OperationMetadata::OrHash,
+            created_by: Cadenya::Profile::OrHash,
             tool: Cadenya::BareMetadata::OrHash,
             tool_set: Cadenya::BareMetadata::OrHash
           ).returns(T.attached_class)
         end
         def self.new(
+          # Metadata for ephemeral operations and activities (e.g., objectives, executions,
+          # runs)
+          objective:,
           # A profile identifies a user or non-human principal (such as an API key) at the
           # account level. Profiles are account-scoped and can be granted access to multiple
           # workspaces.
           created_by: nil,
-          # Metadata for ephemeral operations and activities (e.g., objectives, executions,
-          # runs)
-          objective: nil,
           # BareMetadata contains the minimal metadata for a resource: the ID and an
           # optional human-readable name. These are used for reference fields where the full
           # metadata (account scoping, timestamps, labels, external IDs) is not needed —

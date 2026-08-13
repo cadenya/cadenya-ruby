@@ -12,11 +12,8 @@ module Cadenya
             )
           end
 
-        sig { returns(T.nilable(String)) }
-        attr_reader :key
-
-        sig { params(key: String).void }
-        attr_writer :key
+        sig { returns(String) }
+        attr_accessor :key
 
         sig do
           returns(

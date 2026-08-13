@@ -7,29 +7,20 @@ module Cadenya
         T.type_alias { T.any(Cadenya::MemoryRead, Cadenya::Internal::AnyHash) }
 
       # The specific entry that was read.
-      sig { returns(T.nilable(String)) }
-      attr_reader :memory_entry_id
-
-      sig { params(memory_entry_id: String).void }
-      attr_writer :memory_entry_id
+      sig { returns(String) }
+      attr_accessor :memory_entry_id
 
       # The layer the entry resolved to. The top-most layer that contained the key —
       # other layers beneath it that also contained the key are shadowed and not
       # referenced here.
-      sig { returns(T.nilable(String)) }
-      attr_reader :memory_layer_id
-
-      sig { params(memory_layer_id: String).void }
-      attr_writer :memory_layer_id
+      sig { returns(String) }
+      attr_accessor :memory_layer_id
 
       # Human-readable description of the read, set by the runtime. For example: "Loaded
       # skill", "Resolved context key". Not machine-parsed; intended for UI display
       # alongside the other events in an objective's timeline.
-      sig { returns(T.nilable(String)) }
-      attr_reader :message
-
-      sig { params(message: String).void }
-      attr_writer :message
+      sig { returns(String) }
+      attr_accessor :message
 
       # MemoryRead is emitted each time the agent resolves a key against the memory
       # cascade and loads an entry. Lookups that miss (key not found in any layer) do
@@ -43,15 +34,15 @@ module Cadenya
       end
       def self.new(
         # The specific entry that was read.
-        memory_entry_id: nil,
+        memory_entry_id:,
         # The layer the entry resolved to. The top-most layer that contained the key —
         # other layers beneath it that also contained the key are shadowed and not
         # referenced here.
-        memory_layer_id: nil,
+        memory_layer_id:,
         # Human-readable description of the read, set by the runtime. For example: "Loaded
         # skill", "Resolved context key". Not machine-parsed; intended for UI display
         # alongside the other events in an objective's timeline.
-        message: nil
+        message:
       )
       end
 

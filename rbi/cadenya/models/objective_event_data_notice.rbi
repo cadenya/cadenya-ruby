@@ -64,11 +64,8 @@ module Cadenya
         # Stable machine-readable identifier for the notice kind (for example
         # "tool_set_load_failed", "tool_archived"). Clients can switch on it or use it as
         # an i18n key; the message is the English fallback.
-        sig { returns(T.nilable(String)) }
-        attr_reader :key
-
-        sig { params(key: String).void }
-        attr_writer :key
+        sig { returns(String) }
+        attr_accessor :key
 
         sig do
           returns(
@@ -87,11 +84,8 @@ module Cadenya
         attr_writer :level
 
         # Human-readable description of what happened.
-        sig { returns(T.nilable(String)) }
-        attr_reader :message
-
-        sig { params(message: String).void }
-        attr_writer :message
+        sig { returns(String) }
+        attr_accessor :message
 
         # Notice is a non-terminal diagnostic emitted by the runtime when something
         # noteworthy but non-fatal happens during an objective — for example a
@@ -109,10 +103,10 @@ module Cadenya
           # Stable machine-readable identifier for the notice kind (for example
           # "tool_set_load_failed", "tool_archived"). Clients can switch on it or use it as
           # an i18n key; the message is the English fallback.
-          key: nil,
-          level: nil,
+          key:,
+          level:,
           # Human-readable description of what happened.
-          message: nil
+          message:
         )
         end
 

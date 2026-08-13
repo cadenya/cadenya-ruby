@@ -11,20 +11,14 @@ module Cadenya
       # challenge token in place of per-user auth when listing tools, while still
       # requiring real auth on tools/call. Rotate with RotateChallengeToken; update any
       # servers validating the token before rotating.
-      sig { returns(T.nilable(String)) }
-      attr_reader :challenge_token
-
-      sig { params(challenge_token: String).void }
-      attr_writer :challenge_token
+      sig { returns(String) }
+      attr_accessor :challenge_token
 
       # The generated secret that will sign all webhooks that are sent to your
       # configured Webhook URL. Formatted as "wh_asdf1234" per the
       # https://www.standardwebhooks.com/ format.
-      sig { returns(T.nilable(String)) }
-      attr_reader :webhook_events_hmac_secret
-
-      sig { params(webhook_events_hmac_secret: String).void }
-      attr_writer :webhook_events_hmac_secret
+      sig { returns(String) }
+      attr_accessor :webhook_events_hmac_secret
 
       # Server-populated information about the account.
       sig do
@@ -39,11 +33,11 @@ module Cadenya
         # challenge token in place of per-user auth when listing tools, while still
         # requiring real auth on tools/call. Rotate with RotateChallengeToken; update any
         # servers validating the token before rotating.
-        challenge_token: nil,
+        challenge_token:,
         # The generated secret that will sign all webhooks that are sent to your
         # configured Webhook URL. Formatted as "wh_asdf1234" per the
         # https://www.standardwebhooks.com/ format.
-        webhook_events_hmac_secret: nil
+        webhook_events_hmac_secret:
       )
       end
 

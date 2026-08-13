@@ -8,13 +8,9 @@ module Cadenya
       }
 
     class AssistantToolCall < Cadenya::Internal::Type::BaseModel
-      attr_reader arguments: String?
+      attr_accessor arguments: String
 
-      def arguments=: (String) -> String
-
-      attr_reader function_name: String?
-
-      def function_name=: (String) -> String
+      attr_accessor function_name: String
 
       attr_reader tool: Cadenya::Models::callable_tool?
 
@@ -23,8 +19,8 @@ module Cadenya
       ) -> Cadenya::Models::callable_tool
 
       def initialize: (
-        ?arguments: String,
-        ?function_name: String,
+        arguments: String,
+        function_name: String,
         ?tool: Cadenya::Models::callable_tool
       ) -> void
 

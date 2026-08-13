@@ -17,13 +17,11 @@ module Cadenya
 
         def tool_set=: (Cadenya::ResourceMetadata) -> Cadenya::ResourceMetadata
 
-        attr_reader signature: String?
-
-        def signature=: (String) -> String
+        attr_accessor signature: String
 
         def initialize: (
+          signature: String,
           ?created_by: Cadenya::Profile,
-          ?signature: String,
           ?tool_set: Cadenya::ResourceMetadata
         ) -> void
 

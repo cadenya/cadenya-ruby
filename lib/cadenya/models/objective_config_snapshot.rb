@@ -6,8 +6,8 @@ module Cadenya
       # @!attribute agent
       #   Agent resource
       #
-      #   @return [Cadenya::Models::Agent, nil]
-      optional :agent, -> { Cadenya::Agent }
+      #   @return [Cadenya::Models::Agent]
+      required :agent, -> { Cadenya::Agent }
 
       # @!attribute agent_schedule
       #   AgentSchedule resource — a recurring trigger attached to an agent that creates
@@ -19,10 +19,10 @@ module Cadenya
       # @!attribute agent_variation
       #   AgentVariation resource
       #
-      #   @return [Cadenya::Models::Agents::AgentVariation, nil]
-      optional :agent_variation, -> { Cadenya::Agents::AgentVariation }, api_name: :agentVariation
+      #   @return [Cadenya::Models::Agents::AgentVariation]
+      required :agent_variation, -> { Cadenya::Agents::AgentVariation }, api_name: :agentVariation
 
-      # @!method initialize(agent: nil, agent_schedule: nil, agent_variation: nil)
+      # @!method initialize(agent:, agent_schedule: nil, agent_variation:)
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::ObjectiveConfigSnapshot} for more details.
       #

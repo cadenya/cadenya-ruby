@@ -8,30 +8,15 @@ module Cadenya
 
       sig do
         returns(
-          T.nilable(
-            T.any(
-              Cadenya::ToolSetAdapterMCPVariant,
-              Cadenya::ToolSetAdapterHTTPVariant,
-              Cadenya::ToolSetAdapterOpenAPIVariant,
-              Cadenya::ToolSetAdapterBareVariant
-            )
+          T.any(
+            Cadenya::ToolSetAdapterMCPVariant,
+            Cadenya::ToolSetAdapterHTTPVariant,
+            Cadenya::ToolSetAdapterOpenAPIVariant,
+            Cadenya::ToolSetAdapterBareVariant
           )
         )
       end
-      attr_reader :adapter
-
-      sig do
-        params(
-          adapter:
-            T.any(
-              Cadenya::ToolSetAdapterMCPVariant::OrHash,
-              Cadenya::ToolSetAdapterHTTPVariant::OrHash,
-              Cadenya::ToolSetAdapterOpenAPIVariant::OrHash,
-              Cadenya::ToolSetAdapterBareVariant::OrHash
-            )
-        ).void
-      end
-      attr_writer :adapter
+      attr_accessor :adapter
 
       sig { returns(T.nilable(String)) }
       attr_reader :description
@@ -51,7 +36,7 @@ module Cadenya
           description: String
         ).returns(T.attached_class)
       end
-      def self.new(adapter: nil, description: nil)
+      def self.new(adapter:, description: nil)
       end
 
       sig do

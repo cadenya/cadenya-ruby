@@ -6,10 +6,10 @@ module Cadenya
       # @!attribute message
       #   Human-readable message describing the start of the sync.
       #
-      #   @return [String, nil]
-      optional :message, String
+      #   @return [String]
+      required :message, String
 
-      # @!method initialize(message: nil)
+      # @!method initialize(message:)
       #   Emitted when a tool set sync operation begins.
       #
       #   @param message [String] Human-readable message describing the start of the sync.

@@ -32,10 +32,10 @@ module Cadenya
 
       # @!attribute status
       #
-      #   @return [Symbol, Cadenya::Models::SubAgentUpdated::Status, nil]
-      optional :status, enum: -> { Cadenya::SubAgentUpdated::Status }
+      #   @return [Symbol, Cadenya::Models::SubAgentUpdated::Status]
+      required :status, enum: -> { Cadenya::SubAgentUpdated::Status }
 
-      # @!method initialize(agent: nil, message: nil, objective: nil, status: nil)
+      # @!method initialize(agent: nil, message: nil, objective: nil, status:)
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::SubAgentUpdated} for more details.
       #

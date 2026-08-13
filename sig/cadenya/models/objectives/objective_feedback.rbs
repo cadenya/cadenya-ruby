@@ -15,16 +15,12 @@ module Cadenya
 
         attr_accessor metadata: Cadenya::OperationMetadata
 
-        attr_reader info: Cadenya::Objectives::ObjectiveFeedbackInfo?
-
-        def info=: (
-          Cadenya::Objectives::ObjectiveFeedbackInfo
-        ) -> Cadenya::Objectives::ObjectiveFeedbackInfo
+        attr_accessor info: Cadenya::Objectives::ObjectiveFeedbackInfo
 
         def initialize: (
           data: Cadenya::Objectives::ObjectiveFeedbackData,
           metadata: Cadenya::OperationMetadata,
-          ?info: Cadenya::Objectives::ObjectiveFeedbackInfo
+          info: Cadenya::Objectives::ObjectiveFeedbackInfo
         ) -> void
 
         def to_hash: -> {

@@ -10,32 +10,22 @@ module Cadenya
       }
 
     class ObjectiveContextWindowData < Cadenya::Internal::Type::BaseModel
-      attr_reader previous_window_continue_instructions: String?
+      attr_accessor previous_window_continue_instructions: String
 
-      def previous_window_continue_instructions=: (String) -> String
+      attr_accessor completion_tokens: Integer
 
-      attr_reader completion_tokens: Integer?
+      attr_accessor objective_id: String
 
-      def completion_tokens=: (Integer) -> Integer
+      attr_accessor prompt_tokens: Integer
 
-      attr_reader objective_id: String?
-
-      def objective_id=: (String) -> String
-
-      attr_reader prompt_tokens: Integer?
-
-      def prompt_tokens=: (Integer) -> Integer
-
-      attr_reader sequence: Integer?
-
-      def sequence=: (Integer) -> Integer
+      attr_accessor sequence: Integer
 
       def initialize: (
-        ?completion_tokens: Integer,
-        ?objective_id: String,
-        ?previous_window_continue_instructions: String,
-        ?prompt_tokens: Integer,
-        ?sequence: Integer
+        completion_tokens: Integer,
+        objective_id: String,
+        previous_window_continue_instructions: String,
+        prompt_tokens: Integer,
+        sequence: Integer
       ) -> void
 
       def to_hash: -> {

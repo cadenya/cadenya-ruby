@@ -14,22 +14,16 @@ module Cadenya
       attr_accessor :name
 
       # External ID for the resource (e.g., a workflow ID from an external system)
-      sig { returns(T.nilable(String)) }
-      attr_reader :external_id
-
-      sig { params(external_id: String).void }
-      attr_writer :external_id
+      sig { returns(String) }
+      attr_accessor :external_id
 
       # Key-value pairs for categorization and filtering. Values are 0-63 alphanumeric
       # characters with "-", "\_", or "." allowed between; keys follow the same shape
       # and additionally accept an optional DNS-subdomain prefix (e.g. "cadenya.com/")
       # of at most 253 characters. Examples: {"environment": "production", "team":
       # "platform", "version": "v2"}
-      sig { returns(T.nilable(T::Hash[Symbol, String])) }
-      attr_reader :labels
-
-      sig { params(labels: T::Hash[Symbol, String]).void }
-      attr_writer :labels
+      sig { returns(T::Hash[Symbol, String]) }
+      attr_accessor :labels
 
       # Unique identifier for the resource (prefixed ULID, e.g., "apikey_01HXK...")
       sig { returns(String) }
@@ -56,9 +50,9 @@ module Cadenya
           account_id: String,
           name: String,
           profile_id: String,
-          created_at: Time,
           external_id: String,
-          labels: T::Hash[Symbol, String]
+          labels: T::Hash[Symbol, String],
+          created_at: Time
         ).returns(T.attached_class)
       end
       def self.new(
@@ -70,15 +64,15 @@ module Cadenya
         # Tool") Required for resources that users interact with directly
         name:,
         profile_id:,
-        created_at: nil,
         # External ID for the resource (e.g., a workflow ID from an external system)
-        external_id: nil,
+        external_id:,
         # Key-value pairs for categorization and filtering. Values are 0-63 alphanumeric
         # characters with "-", "\_", or "." allowed between; keys follow the same shape
         # and additionally accept an optional DNS-subdomain prefix (e.g. "cadenya.com/")
         # of at most 253 characters. Examples: {"environment": "production", "team":
         # "platform", "version": "v2"}
-        labels: nil
+        labels:,
+        created_at: nil
       )
       end
 

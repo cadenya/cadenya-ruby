@@ -7,18 +7,18 @@ module Cadenya
         # @!attribute objective_count
         #   Number of objectives associated with this subject.
         #
-        #   @return [Integer, nil]
-        optional :objective_count, Integer, api_name: :objectiveCount
+        #   @return [Integer]
+        required :objective_count, Integer, api_name: :objectiveCount
 
         # @!attribute tenant
         #   TenantReference is the read-only echo of a resource's tenant association,
         #   carrying both Cadenya's canonical id and the customer's own key.
         #
-        #   @return [Cadenya::Models::TenantReference, nil]
-        optional :tenant, -> { Cadenya::TenantReference }
+        #   @return [Cadenya::Models::TenantReference]
+        required :tenant, -> { Cadenya::TenantReference }
       end
 
-      # @!method initialize(objective_count: nil, tenant: nil)
+      # @!method initialize(objective_count:, tenant:)
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::SubjectInfo} for more details.
       #

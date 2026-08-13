@@ -5,10 +5,10 @@ module Cadenya
     class ObjectiveSecret < Cadenya::Internal::Type::BaseModel
       # @!attribute name
       #
-      #   @return [String, nil]
-      optional :name, String
+      #   @return [String]
+      required :name, String
 
-      # @!method initialize(name: nil)
+      # @!method initialize(name:)
       #   @param name [String]
     end
   end

@@ -10,12 +10,12 @@ module Cadenya
 
       # @!attribute tool_calls
       #
-      #   @return [Array<Cadenya::Models::AssistantToolCall>, nil]
-      optional :tool_calls,
+      #   @return [Array<Cadenya::Models::AssistantToolCall>]
+      required :tool_calls,
                -> { Cadenya::Internal::Type::ArrayOf[Cadenya::AssistantToolCall] },
                api_name: :toolCalls
 
-      # @!method initialize(content: nil, tool_calls: nil)
+      # @!method initialize(content: nil, tool_calls:)
       #   @param content [String]
       #   @param tool_calls [Array<Cadenya::Models::AssistantToolCall>]
     end

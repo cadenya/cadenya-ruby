@@ -6,15 +6,15 @@ module Cadenya
       class ResolvedSecret < Cadenya::Internal::Type::BaseModel
         # @!attribute key
         #
-        #   @return [String, nil]
-        optional :key, String
+        #   @return [String]
+        required :key, String
 
         # @!attribute source
         #
-        #   @return [Symbol, Cadenya::Models::Objectives::ResolvedSecret::Source, nil]
-        optional :source, enum: -> { Cadenya::Objectives::ResolvedSecret::Source }
+        #   @return [Symbol, Cadenya::Models::Objectives::ResolvedSecret::Source]
+        required :source, enum: -> { Cadenya::Objectives::ResolvedSecret::Source }
 
-        # @!method initialize(key: nil, source: nil)
+        # @!method initialize(key:, source:)
         #   ResolvedSecret is a resolved secret value from the workspace, toolset, or
         #   objective. When a tool is called, it will rely on secrets in the order of:
         #

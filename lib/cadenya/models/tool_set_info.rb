@@ -5,8 +5,8 @@ module Cadenya
     class ToolSetInfo < Cadenya::Internal::Type::BaseModel
       # @!attribute available_tools
       #
-      #   @return [Integer, nil]
-      optional :available_tools, Integer, api_name: :availableTools
+      #   @return [Integer]
+      required :available_tools, Integer, api_name: :availableTools
 
       # @!attribute created_by
       #   A profile identifies a user or non-human principal (such as an API key) at the
@@ -18,14 +18,14 @@ module Cadenya
 
       # @!attribute omitted_tools
       #
-      #   @return [Integer, nil]
-      optional :omitted_tools, Integer, api_name: :omittedTools
+      #   @return [Integer]
+      required :omitted_tools, Integer, api_name: :omittedTools
 
       response_only do
         # @!attribute agent_count
         #
-        #   @return [Integer, nil]
-        optional :agent_count, Integer, api_name: :agentCount
+        #   @return [Integer]
+        required :agent_count, Integer, api_name: :agentCount
 
         # @!attribute last_sync
         #
@@ -34,11 +34,11 @@ module Cadenya
 
         # @!attribute tool_count
         #
-        #   @return [Integer, nil]
-        optional :tool_count, Integer, api_name: :toolCount
+        #   @return [Integer]
+        required :tool_count, Integer, api_name: :toolCount
       end
 
-      # @!method initialize(agent_count: nil, available_tools: nil, created_by: nil, last_sync: nil, omitted_tools: nil, tool_count: nil)
+      # @!method initialize(agent_count:, available_tools:, created_by: nil, last_sync: nil, omitted_tools:, tool_count:)
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::ToolSetInfo} for more details.
       #

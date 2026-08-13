@@ -17,10 +17,10 @@ module Cadenya
 
       # @!attribute info
       #
-      #   @return [Cadenya::Models::MemoryLayerInfo, nil]
-      optional :info, -> { Cadenya::MemoryLayerInfo }
+      #   @return [Cadenya::Models::MemoryLayerInfo]
+      required :info, -> { Cadenya::MemoryLayerInfo }
 
-      # @!method initialize(metadata:, spec:, info: nil)
+      # @!method initialize(metadata:, spec:, info:)
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::MemoryLayer} for more details.
       #

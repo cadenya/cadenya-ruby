@@ -39,11 +39,8 @@ module Cadenya
       attr_writer :info
 
       # The tool set this event is associated with.
-      sig { returns(T.nilable(String)) }
-      attr_reader :tool_set_id
-
-      sig { params(tool_set_id: String).void }
-      attr_writer :tool_set_id
+      sig { returns(String) }
+      attr_accessor :tool_set_id
 
       # A single event in the tool set's operation timeline.
       sig do
@@ -55,8 +52,8 @@ module Cadenya
               Cadenya::ToolSetEventDataSyncCompleted::OrHash,
               Cadenya::ToolSetEventDataSyncFailed::OrHash
             ),
-          info: Cadenya::ToolSetEvent::Info::OrHash,
-          tool_set_id: String
+          tool_set_id: String,
+          info: Cadenya::ToolSetEvent::Info::OrHash
         ).returns(T.attached_class)
       end
       def self.new(
@@ -64,10 +61,10 @@ module Cadenya
         # runs)
         metadata:,
         # Event payload for a tool set operation.
-        event: nil,
-        info: nil,
+        event:,
         # The tool set this event is associated with.
-        tool_set_id: nil
+        tool_set_id:,
+        info: nil
       )
       end
 

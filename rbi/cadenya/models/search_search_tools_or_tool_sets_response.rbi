@@ -11,23 +11,14 @@ module Cadenya
           )
         end
 
-      sig { returns(T.nilable(T::Array[Cadenya::Agent])) }
-      attr_reader :agents
+      sig { returns(T::Array[Cadenya::Agent]) }
+      attr_accessor :agents
 
-      sig { params(agents: T::Array[Cadenya::Agent::OrHash]).void }
-      attr_writer :agents
+      sig { returns(T::Array[Cadenya::ToolSets::Tool]) }
+      attr_accessor :tools
 
-      sig { returns(T.nilable(T::Array[Cadenya::ToolSets::Tool])) }
-      attr_reader :tools
-
-      sig { params(tools: T::Array[Cadenya::ToolSets::Tool::OrHash]).void }
-      attr_writer :tools
-
-      sig { returns(T.nilable(T::Array[Cadenya::ToolSet])) }
-      attr_reader :tool_sets
-
-      sig { params(tool_sets: T::Array[Cadenya::ToolSet::OrHash]).void }
-      attr_writer :tool_sets
+      sig { returns(T::Array[Cadenya::ToolSet]) }
+      attr_accessor :tool_sets
 
       sig do
         params(

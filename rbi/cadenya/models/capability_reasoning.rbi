@@ -28,7 +28,7 @@ module Cadenya
       def self.new(
         # How reasoning is enabled for this model. Catalog data used to decide whether
         # thinking is requested for objective iterations on this model.
-        mode: nil
+        mode:
       )
       end
 

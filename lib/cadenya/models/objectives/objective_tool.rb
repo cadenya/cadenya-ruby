@@ -21,10 +21,10 @@ module Cadenya
         #   can change over time, snapshots are used to ensure tools don't change
         #   unexpectedly during an objective's lifecycle.
         #
-        #   @return [Cadenya::Models::ToolSets::Tool, nil]
-        optional :snapshot, -> { Cadenya::ToolSets::Tool }
+        #   @return [Cadenya::Models::ToolSets::Tool]
+        required :snapshot, -> { Cadenya::ToolSets::Tool }
 
-        # @!method initialize(metadata:, snapshot: nil)
+        # @!method initialize(metadata:, snapshot:)
         #   Some parameter documentations has been truncated, see
         #   {Cadenya::Models::Objectives::ObjectiveTool} for more details.
         #

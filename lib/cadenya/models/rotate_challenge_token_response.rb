@@ -6,10 +6,10 @@ module Cadenya
     class RotateChallengeTokenResponse < Cadenya::Internal::Type::BaseModel
       # @!attribute challenge_token
       #
-      #   @return [String, nil]
-      optional :challenge_token, String, api_name: :challengeToken
+      #   @return [String]
+      required :challenge_token, String, api_name: :challengeToken
 
-      # @!method initialize(challenge_token: nil)
+      # @!method initialize(challenge_token:)
       #   Response containing the newly generated challenge token.
       #
       #   @param challenge_token [String]

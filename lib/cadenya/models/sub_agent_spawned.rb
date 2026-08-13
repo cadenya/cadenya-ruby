@@ -6,22 +6,22 @@ module Cadenya
       # @!attribute agent
       #   Standard metadata for persistent, named resources (e.g., agents, tools, prompts)
       #
-      #   @return [Cadenya::Models::ResourceMetadata, nil]
-      optional :agent, -> { Cadenya::ResourceMetadata }
+      #   @return [Cadenya::Models::ResourceMetadata]
+      required :agent, -> { Cadenya::ResourceMetadata }
 
       # @!attribute objective
       #   Metadata for ephemeral operations and activities (e.g., objectives, executions,
       #   runs)
       #
-      #   @return [Cadenya::Models::OperationMetadata, nil]
-      optional :objective, -> { Cadenya::OperationMetadata }
+      #   @return [Cadenya::Models::OperationMetadata]
+      required :objective, -> { Cadenya::OperationMetadata }
 
       # @!attribute task
       #
-      #   @return [String, nil]
-      optional :task, String
+      #   @return [String]
+      required :task, String
 
-      # @!method initialize(agent: nil, objective: nil, task: nil)
+      # @!method initialize(agent:, objective:, task:)
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::SubAgentSpawned} for more details.
       #

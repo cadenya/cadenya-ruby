@@ -39,18 +39,16 @@ module Cadenya
 
         def next_fire_at=: (Time) -> Time
 
-        attr_reader total_fires: Integer?
-
-        def total_fires=: (Integer) -> Integer
+        attr_accessor total_fires: Integer
 
         def initialize: (
+          total_fires: Integer,
           ?created_by: Cadenya::Profile,
           ?last_fire_at: Time,
           ?last_objective_id: String,
           ?last_skipped_at: Time,
           ?last_skip_reason: String,
-          ?next_fire_at: Time,
-          ?total_fires: Integer
+          ?next_fire_at: Time
         ) -> void
 
         def to_hash: -> {

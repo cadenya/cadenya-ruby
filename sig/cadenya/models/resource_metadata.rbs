@@ -16,13 +16,9 @@ module Cadenya
     class ResourceMetadata < Cadenya::Internal::Type::BaseModel
       attr_accessor name: String
 
-      attr_reader external_id: String?
+      attr_accessor external_id: String
 
-      def external_id=: (String) -> String
-
-      attr_reader labels: ::Hash[Symbol, String]?
-
-      def labels=: (::Hash[Symbol, String]) -> ::Hash[Symbol, String]
+      attr_accessor labels: ::Hash[Symbol, String]
 
       attr_accessor id: String
 
@@ -45,8 +41,8 @@ module Cadenya
         name: String,
         profile_id: String,
         workspace_id: String,
-        ?external_id: String,
-        ?labels: ::Hash[Symbol, String],
+        external_id: String,
+        labels: ::Hash[Symbol, String],
         ?updated_at: Time
       ) -> void
 

@@ -6,20 +6,20 @@ module Cadenya
     class SearchSearchToolsOrToolSetsResponse < Cadenya::Internal::Type::BaseModel
       # @!attribute agents
       #
-      #   @return [Array<Cadenya::Models::Agent>, nil]
-      optional :agents, -> { Cadenya::Internal::Type::ArrayOf[Cadenya::Agent] }
+      #   @return [Array<Cadenya::Models::Agent>]
+      required :agents, -> { Cadenya::Internal::Type::ArrayOf[Cadenya::Agent] }
 
       # @!attribute tools
       #
-      #   @return [Array<Cadenya::Models::ToolSets::Tool>, nil]
-      optional :tools, -> { Cadenya::Internal::Type::ArrayOf[Cadenya::ToolSets::Tool] }
+      #   @return [Array<Cadenya::Models::ToolSets::Tool>]
+      required :tools, -> { Cadenya::Internal::Type::ArrayOf[Cadenya::ToolSets::Tool] }
 
       # @!attribute tool_sets
       #
-      #   @return [Array<Cadenya::Models::ToolSet>, nil]
-      optional :tool_sets, -> { Cadenya::Internal::Type::ArrayOf[Cadenya::ToolSet] }, api_name: :toolSets
+      #   @return [Array<Cadenya::Models::ToolSet>]
+      required :tool_sets, -> { Cadenya::Internal::Type::ArrayOf[Cadenya::ToolSet] }, api_name: :toolSets
 
-      # @!method initialize(agents: nil, tools: nil, tool_sets: nil)
+      # @!method initialize(agents:, tools:, tool_sets:)
       #   @param agents [Array<Cadenya::Models::Agent>]
       #   @param tools [Array<Cadenya::Models::ToolSets::Tool>]
       #   @param tool_sets [Array<Cadenya::Models::ToolSet>]

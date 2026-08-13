@@ -25,11 +25,8 @@ module Cadenya
       attr_writer :agent
 
       # Number of entries currently in this layer.
-      sig { returns(T.nilable(Integer)) }
-      attr_reader :entry_count
-
-      sig { params(entry_count: Integer).void }
-      attr_writer :entry_count
+      sig { returns(Integer) }
+      attr_accessor :entry_count
 
       # Timestamp of the most recent objective that resolved against this layer. Useful
       # for surfacing unused layers in the dashboard.
@@ -41,21 +38,21 @@ module Cadenya
 
       sig do
         params(
+          entry_count: Integer,
           agent: Cadenya::ResourceMetadata::OrHash,
           created_by: Cadenya::Profile::OrHash,
-          entry_count: Integer,
           last_used_at: Time
         ).returns(T.attached_class)
       end
       def self.new(
+        # Number of entries currently in this layer.
+        entry_count:,
         # Standard metadata for persistent, named resources (e.g., agents, tools, prompts)
         agent: nil,
         # A profile identifies a user or non-human principal (such as an API key) at the
         # account level. Profiles are account-scoped and can be granted access to multiple
         # workspaces.
         created_by: nil,
-        # Number of entries currently in this layer.
-        entry_count: nil,
         # Timestamp of the most recent objective that resolved against this layer. Useful
         # for surfacing unused layers in the dashboard.
         last_used_at: nil

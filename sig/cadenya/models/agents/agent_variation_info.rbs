@@ -22,57 +22,37 @@ module Cadenya
 
         def created_by=: (Cadenya::Profile) -> Cadenya::Profile
 
-        attr_reader feedback_count: Integer?
+        attr_accessor feedback_count: Integer
 
-        def feedback_count=: (Integer) -> Integer
+        attr_accessor score: Float
 
-        attr_reader score: Float?
+        attr_accessor assignments: ::Array[Cadenya::Models::Agents::variation_assignment]
 
-        def score=: (Float) -> Float
+        attr_accessor memory_layer_assignments: ::Array[Cadenya::Agents::VariationMemoryLayerAssignment]
 
-        attr_reader assignments: ::Array[Cadenya::Models::Agents::variation_assignment]?
-
-        def assignments=: (
-          ::Array[Cadenya::Models::Agents::variation_assignment]
-        ) -> ::Array[Cadenya::Models::Agents::variation_assignment]
-
-        attr_reader memory_layer_assignments: ::Array[Cadenya::Agents::VariationMemoryLayerAssignment]?
-
-        def memory_layer_assignments=: (
-          ::Array[Cadenya::Agents::VariationMemoryLayerAssignment]
-        ) -> ::Array[Cadenya::Agents::VariationMemoryLayerAssignment]
-
-        attr_reader memory_layer_count: Integer?
-
-        def memory_layer_count=: (Integer) -> Integer
+        attr_accessor memory_layer_count: Integer
 
         attr_reader model: Cadenya::ResourceMetadata?
 
         def model=: (Cadenya::ResourceMetadata) -> Cadenya::ResourceMetadata
 
-        attr_reader sub_agent_count: Integer?
+        attr_accessor sub_agent_count: Integer
 
-        def sub_agent_count=: (Integer) -> Integer
+        attr_accessor tool_count: Integer
 
-        attr_reader tool_count: Integer?
-
-        def tool_count=: (Integer) -> Integer
-
-        attr_reader tool_set_count: Integer?
-
-        def tool_set_count=: (Integer) -> Integer
+        attr_accessor tool_set_count: Integer
 
         def initialize: (
-          ?assignments: ::Array[Cadenya::Models::Agents::variation_assignment],
+          assignments: ::Array[Cadenya::Models::Agents::variation_assignment],
+          feedback_count: Integer,
+          memory_layer_assignments: ::Array[Cadenya::Agents::VariationMemoryLayerAssignment],
+          memory_layer_count: Integer,
+          score: Float,
+          sub_agent_count: Integer,
+          tool_count: Integer,
+          tool_set_count: Integer,
           ?created_by: Cadenya::Profile,
-          ?feedback_count: Integer,
-          ?memory_layer_assignments: ::Array[Cadenya::Agents::VariationMemoryLayerAssignment],
-          ?memory_layer_count: Integer,
-          ?model: Cadenya::ResourceMetadata,
-          ?score: Float,
-          ?sub_agent_count: Integer,
-          ?tool_count: Integer,
-          ?tool_set_count: Integer
+          ?model: Cadenya::ResourceMetadata
         ) -> void
 
         def to_hash: -> {

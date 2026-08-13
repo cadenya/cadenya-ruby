@@ -29,29 +29,26 @@ module Cadenya
         # sanitized llm_tool_name, description, and canonical parameters. Two tools with
         # the same llm_tool_name but different parameters or description (as MCP servers
         # may return per user) have distinct signatures.
-        sig { returns(T.nilable(String)) }
-        attr_reader :signature
-
-        sig { params(signature: String).void }
-        attr_writer :signature
+        sig { returns(String) }
+        attr_accessor :signature
 
         sig do
           params(
-            created_by: Cadenya::Profile::OrHash,
             signature: String,
+            created_by: Cadenya::Profile::OrHash,
             tool_set: Cadenya::ResourceMetadata::OrHash
           ).returns(T.attached_class)
         end
         def self.new(
-          # A profile identifies a user or non-human principal (such as an API key) at the
-          # account level. Profiles are account-scoped and can be granted access to multiple
-          # workspaces.
-          created_by: nil,
           # Content signature identifying the tool within its tool set: a hash of the
           # sanitized llm_tool_name, description, and canonical parameters. Two tools with
           # the same llm_tool_name but different parameters or description (as MCP servers
           # may return per user) have distinct signatures.
-          signature: nil,
+          signature:,
+          # A profile identifies a user or non-human principal (such as an API key) at the
+          # account level. Profiles are account-scoped and can be granted access to multiple
+          # workspaces.
+          created_by: nil,
           # Standard metadata for persistent, named resources (e.g., agents, tools, prompts)
           tool_set: nil
         )

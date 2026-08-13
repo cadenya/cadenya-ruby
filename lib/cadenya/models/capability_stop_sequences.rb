@@ -7,10 +7,10 @@ module Cadenya
       #   Maximum number of stop sequences the model accepts per request. 0 means the
       #   provider imposes no meaningful limit.
       #
-      #   @return [Integer, nil]
-      optional :limit, Integer
+      #   @return [Integer]
+      required :limit, Integer
 
-      # @!method initialize(limit: nil)
+      # @!method initialize(limit:)
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::CapabilityStopSequences} for more details.
       #

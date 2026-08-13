@@ -29,18 +29,15 @@ module Cadenya
 
       # Lifecycle status of the workspace. Archived workspaces reject all requests
       # scoped to them. Server-populated.
-      sig { returns(T.nilable(Cadenya::Workspace::Status::TaggedSymbol)) }
-      attr_reader :status
-
-      sig { params(status: Cadenya::Workspace::Status::OrSymbol).void }
-      attr_writer :status
+      sig { returns(Cadenya::Workspace::Status::TaggedSymbol) }
+      attr_accessor :status
 
       sig do
         params(
           metadata: Cadenya::AccountResourceMetadata::OrHash,
           spec: Cadenya::WorkspaceSpec::OrHash,
-          info: Cadenya::Workspace::Info::OrHash,
-          status: Cadenya::Workspace::Status::OrSymbol
+          status: Cadenya::Workspace::Status::OrSymbol,
+          info: Cadenya::Workspace::Info::OrHash
         ).returns(T.attached_class)
       end
       def self.new(
@@ -48,11 +45,11 @@ module Cadenya
         # account but not to a workspace.
         metadata:,
         spec:,
-        # WorkspaceInfo returns counts
-        info: nil,
         # Lifecycle status of the workspace. Archived workspaces reject all requests
         # scoped to them. Server-populated.
-        status: nil
+        status:,
+        # WorkspaceInfo returns counts
+        info: nil
       )
       end
 

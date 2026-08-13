@@ -26,11 +26,8 @@ module Cadenya
         attr_writer :spec
 
         # AgentVariationInfo provides read-only summary information about a variation
-        sig { returns(T.nilable(Cadenya::Agents::AgentVariationInfo)) }
-        attr_reader :info
-
-        sig { params(info: Cadenya::Agents::AgentVariationInfo::OrHash).void }
-        attr_writer :info
+        sig { returns(Cadenya::Agents::AgentVariationInfo) }
+        attr_accessor :info
 
         # AgentVariation resource
         sig do
@@ -46,7 +43,7 @@ module Cadenya
           # AgentVariationSpec defines the operational configuration for a variation
           spec:,
           # AgentVariationInfo provides read-only summary information about a variation
-          info: nil
+          info:
         )
         end
 

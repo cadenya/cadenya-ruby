@@ -17,15 +17,15 @@ module Cadenya
         #   exists) → CONSUMED (a resource referenced this upload), or → EXPIRED (URL
         #   elapsed without a PUT).
         #
-        #   @return [Symbol, Cadenya::Models::UploadInfo::Status, nil]
-        optional :status, enum: -> { Cadenya::UploadInfo::Status }
+        #   @return [Symbol, Cadenya::Models::UploadInfo::Status]
+        required :status, enum: -> { Cadenya::UploadInfo::Status }
 
         # @!attribute upload_url
         #   Presigned PUT URL. Short-lived. The client must PUT with the exact Content-Type
         #   declared in the spec, and the body length must match size_bytes.
         #
-        #   @return [String, nil]
-        optional :upload_url, String, api_name: :uploadUrl
+        #   @return [String]
+        required :upload_url, String, api_name: :uploadUrl
 
         # @!attribute upload_url_expires_at
         #   Absolute time at which upload_url stops working.
@@ -34,7 +34,7 @@ module Cadenya
         optional :upload_url_expires_at, Time, api_name: :uploadUrlExpiresAt
       end
 
-      # @!method initialize(created_by: nil, status: nil, upload_url: nil, upload_url_expires_at: nil)
+      # @!method initialize(created_by: nil, status:, upload_url:, upload_url_expires_at: nil)
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::UploadInfo} for more details.
       #

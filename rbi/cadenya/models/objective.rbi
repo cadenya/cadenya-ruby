@@ -41,21 +41,13 @@ module Cadenya
       # Size cap: the TOTAL effective cascade (this field + the variation's memory layer
       # assignments) must not exceed 10 entries. A request that would produce a larger
       # cascade is rejected with InvalidArgument.
-      sig { returns(T.nilable(T::Array[Cadenya::MemoryReference])) }
-      attr_reader :memory_cascade
-
-      sig do
-        params(memory_cascade: T::Array[Cadenya::MemoryReference::OrHash]).void
-      end
-      attr_writer :memory_cascade
+      sig { returns(T::Array[Cadenya::MemoryReference]) }
+      attr_accessor :memory_cascade
 
       # Secrets that can be used in the headers for tool calls using the secret
       # interpolation format.
-      sig { returns(T.nilable(T::Array[Cadenya::ObjectiveSecret])) }
-      attr_reader :secrets
-
-      sig { params(secrets: T::Array[Cadenya::ObjectiveSecret::OrHash]).void }
-      attr_writer :secrets
+      sig { returns(T::Array[Cadenya::ObjectiveSecret]) }
+      attr_accessor :secrets
 
       # ObjectiveConfigSnapshot is the point-in-time snapshot of the agent, variation,
       # and (when applicable) schedule that an objective was started with.
@@ -101,26 +93,17 @@ module Cadenya
 
       # A parent objective means the objective was spawned off using a separate agent to
       # complete an objective
-      sig { returns(T.nilable(String)) }
-      attr_reader :parent_objective_id
-
-      sig { params(parent_objective_id: String).void }
-      attr_writer :parent_objective_id
+      sig { returns(String) }
+      attr_accessor :parent_objective_id
 
       # Parameters forced onto this objective's tool calls, as provided at creation. See
       # CreateObjectiveRequest.pinned_parameters for semantics.
-      sig { returns(T.nilable(T::Hash[Symbol, String])) }
-      attr_reader :pinned_parameters
-
-      sig { params(pinned_parameters: T::Hash[Symbol, String]).void }
-      attr_writer :pinned_parameters
+      sig { returns(T::Hash[Symbol, String]) }
+      attr_accessor :pinned_parameters
 
       # Optional human-readable detail about the current state (e.g. a failure reason).
-      sig { returns(T.nilable(String)) }
-      attr_reader :state_message
-
-      sig { params(state_message: String).void }
-      attr_writer :state_message
+      sig { returns(String) }
+      attr_accessor :state_message
 
       # Arbitrary data rendered into the variation's system_prompt_template
       sig { returns(T.nilable(T::Hash[Symbol, T.anything])) }
@@ -139,15 +122,15 @@ module Cadenya
           metadata: Cadenya::OperationMetadata::OrHash,
           state: Cadenya::Objective::State::OrSymbol,
           system_prompt: String,
-          episodic_memory: Cadenya::Objective::EpisodicMemory::OrHash,
-          first_user_message_data: T::Hash[Symbol, T.anything],
-          info: Cadenya::ObjectiveInfo::OrHash,
           memory_cascade: T::Array[Cadenya::MemoryReference::OrHash],
-          output: T::Hash[Symbol, T.anything],
           parent_objective_id: String,
           pinned_parameters: T::Hash[Symbol, String],
           secrets: T::Array[Cadenya::ObjectiveSecret::OrHash],
           state_message: String,
+          episodic_memory: Cadenya::Objective::EpisodicMemory::OrHash,
+          first_user_message_data: T::Hash[Symbol, T.anything],
+          info: Cadenya::ObjectiveInfo::OrHash,
+          output: T::Hash[Symbol, T.anything],
           system_prompt_data: T::Hash[Symbol, T.anything]
         ).returns(T.attached_class)
       end
@@ -165,13 +148,6 @@ module Cadenya
         state:,
         # system_prompt is read-only, derived from the selected variation's prompt
         system_prompt:,
-        # Episodic is used to configure the episodic memory for the objective
-        episodic_memory: nil,
-        # Arbitrary data rendered into the variation's first_user_message_template
-        first_user_message_data: nil,
-        # ObjectiveInfo provides read-only aggregated statistics about an objective's
-        # execution
-        info: nil,
         # Memory layers/entries layered over the baseline cascade inherited from the
         # selected variation — element-level rules over inherited styles, in CSS terms.
         #
@@ -185,22 +161,29 @@ module Cadenya
         # Size cap: the TOTAL effective cascade (this field + the variation's memory layer
         # assignments) must not exceed 10 entries. A request that would produce a larger
         # cascade is rejected with InvalidArgument.
-        memory_cascade: nil,
+        memory_cascade:,
+        # A parent objective means the objective was spawned off using a separate agent to
+        # complete an objective
+        parent_objective_id:,
+        # Parameters forced onto this objective's tool calls, as provided at creation. See
+        # CreateObjectiveRequest.pinned_parameters for semantics.
+        pinned_parameters:,
+        # Secrets that can be used in the headers for tool calls using the secret
+        # interpolation format.
+        secrets:,
+        # Optional human-readable detail about the current state (e.g. a failure reason).
+        state_message:,
+        # Episodic is used to configure the episodic memory for the objective
+        episodic_memory: nil,
+        # Arbitrary data rendered into the variation's first_user_message_template
+        first_user_message_data: nil,
+        # ObjectiveInfo provides read-only aggregated statistics about an objective's
+        # execution
+        info: nil,
         # The output of the objective, populated when the objective completes. Will match
         # the schema of output_json_schema or output_json_inferred. This will only be set
         # if the state of the objective is set to STATE_FINALIZED
         output: nil,
-        # A parent objective means the objective was spawned off using a separate agent to
-        # complete an objective
-        parent_objective_id: nil,
-        # Parameters forced onto this objective's tool calls, as provided at creation. See
-        # CreateObjectiveRequest.pinned_parameters for semantics.
-        pinned_parameters: nil,
-        # Secrets that can be used in the headers for tool calls using the secret
-        # interpolation format.
-        secrets: nil,
-        # Optional human-readable detail about the current state (e.g. a failure reason).
-        state_message: nil,
         # Arbitrary data rendered into the variation's system_prompt_template
         system_prompt_data: nil
       )

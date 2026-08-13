@@ -6,26 +6,26 @@ module Cadenya
       # @!attribute memory_entry_id
       #   The specific entry that was read.
       #
-      #   @return [String, nil]
-      optional :memory_entry_id, String, api_name: :memoryEntryId
+      #   @return [String]
+      required :memory_entry_id, String, api_name: :memoryEntryId
 
       # @!attribute memory_layer_id
       #   The layer the entry resolved to. The top-most layer that contained the key —
       #   other layers beneath it that also contained the key are shadowed and not
       #   referenced here.
       #
-      #   @return [String, nil]
-      optional :memory_layer_id, String, api_name: :memoryLayerId
+      #   @return [String]
+      required :memory_layer_id, String, api_name: :memoryLayerId
 
       # @!attribute message
       #   Human-readable description of the read, set by the runtime. For example: "Loaded
       #   skill", "Resolved context key". Not machine-parsed; intended for UI display
       #   alongside the other events in an objective's timeline.
       #
-      #   @return [String, nil]
-      optional :message, String
+      #   @return [String]
+      required :message, String
 
-      # @!method initialize(memory_entry_id: nil, memory_layer_id: nil, message: nil)
+      # @!method initialize(memory_entry_id:, memory_layer_id:, message:)
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::MemoryRead} for more details.
       #

@@ -7,10 +7,10 @@ module Cadenya
       #   How reasoning is enabled for this model. Catalog data used to decide whether
       #   thinking is requested for objective iterations on this model.
       #
-      #   @return [Symbol, Cadenya::Models::CapabilityReasoning::Mode, nil]
-      optional :mode, enum: -> { Cadenya::CapabilityReasoning::Mode }
+      #   @return [Symbol, Cadenya::Models::CapabilityReasoning::Mode]
+      required :mode, enum: -> { Cadenya::CapabilityReasoning::Mode }
 
-      # @!method initialize(mode: nil)
+      # @!method initialize(mode:)
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::CapabilityReasoning} for more details.
       #

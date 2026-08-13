@@ -17,19 +17,15 @@ module Cadenya
 
       def permissions=: (::Array[String]) -> ::Array[String]
 
-      attr_reader token: String?
+      attr_accessor token: String
 
-      def token=: (String) -> String
-
-      attr_reader system_: bool?
-
-      def system_=: (bool) -> bool
+      attr_accessor system_: bool
 
       def initialize: (
-        ?token: String,
+        token: String,
+        system_: bool,
         ?description: String,
-        ?permissions: ::Array[String],
-        ?system_: bool
+        ?permissions: ::Array[String]
       ) -> void
 
       def to_hash: -> {

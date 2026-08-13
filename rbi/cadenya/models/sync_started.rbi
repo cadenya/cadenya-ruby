@@ -7,17 +7,14 @@ module Cadenya
         T.type_alias { T.any(Cadenya::SyncStarted, Cadenya::Internal::AnyHash) }
 
       # Human-readable message describing the start of the sync.
-      sig { returns(T.nilable(String)) }
-      attr_reader :message
-
-      sig { params(message: String).void }
-      attr_writer :message
+      sig { returns(String) }
+      attr_accessor :message
 
       # Emitted when a tool set sync operation begins.
       sig { params(message: String).returns(T.attached_class) }
       def self.new(
         # Human-readable message describing the start of the sync.
-        message: nil
+        message:
       )
       end
 

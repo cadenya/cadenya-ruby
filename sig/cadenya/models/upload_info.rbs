@@ -13,24 +13,18 @@ module Cadenya
 
       def created_by=: (Cadenya::Profile) -> Cadenya::Profile
 
-      attr_reader status: Cadenya::Models::UploadInfo::status?
+      attr_accessor status: Cadenya::Models::UploadInfo::status
 
-      def status=: (
-        Cadenya::Models::UploadInfo::status
-      ) -> Cadenya::Models::UploadInfo::status
-
-      attr_reader upload_url: String?
-
-      def upload_url=: (String) -> String
+      attr_accessor upload_url: String
 
       attr_reader upload_url_expires_at: Time?
 
       def upload_url_expires_at=: (Time) -> Time
 
       def initialize: (
+        status: Cadenya::Models::UploadInfo::status,
+        upload_url: String,
         ?created_by: Cadenya::Profile,
-        ?status: Cadenya::Models::UploadInfo::status,
-        ?upload_url: String,
         ?upload_url_expires_at: Time
       ) -> void
 

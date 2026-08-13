@@ -58,11 +58,8 @@ module Cadenya
       # The session bearer token. Returned only on creation — subsequent reads omit it.
       # The token is short-lived; the widget refreshes it at the widget host without
       # involving the customer's backend.
-      sig { returns(T.nilable(String)) }
-      attr_reader :token
-
-      sig { params(token: String).void }
-      attr_writer :token
+      sig { returns(String) }
+      attr_accessor :token
 
       # Expiry of the token returned in `token`. Distinct from `expires_at`, which
       # bounds the session itself.
@@ -91,7 +88,7 @@ module Cadenya
         # The session bearer token. Returned only on creation — subsequent reads omit it.
         # The token is short-lived; the widget refreshes it at the widget host without
         # involving the customer's backend.
-        token: nil,
+        token:,
         # Hard session expiry. Tokens never outlive it; after it passes the session
         # transitions to STATE_EXPIRED. Defaults to a server-chosen horizon when unset.
         expires_at: nil,

@@ -21,19 +21,13 @@ module Cadenya
 
       # Server-set on episodic layers: the agent this layer belongs to. Unset for
       # non-episodic layers.
-      sig { returns(T.nilable(String)) }
-      attr_reader :agent_id
-
-      sig { params(agent_id: String).void }
-      attr_writer :agent_id
+      sig { returns(String) }
+      attr_accessor :agent_id
 
       # Server-set on episodic layers: the caller-supplied episodic key the layer was
       # created for. Unset for non-episodic layers.
-      sig { returns(T.nilable(String)) }
-      attr_reader :episodic_key
-
-      sig { params(episodic_key: String).void }
-      attr_writer :episodic_key
+      sig { returns(String) }
+      attr_accessor :episodic_key
 
       # For layers with a finite lifetime (e.g., episodic), the time at which the layer
       # becomes eligible for cleanup. Set by the system; unset for persistent layers.
@@ -47,41 +41,38 @@ module Cadenya
       # automatically when an objective uses an episodic_key). System-managed layers
       # cannot be assigned to objective cascades via the API and cannot be mutated by
       # clients — their lifecycle is controlled entirely by the runtime.
-      sig { returns(T.nilable(T::Boolean)) }
-      attr_reader :system_managed
-
-      sig { params(system_managed: T::Boolean).void }
-      attr_writer :system_managed
+      sig { returns(T::Boolean) }
+      attr_accessor :system_managed
 
       sig do
         params(
           type: Cadenya::MemoryLayerSpec::Type::OrSymbol,
           agent_id: String,
-          description: String,
           episodic_key: String,
-          expires_at: Time,
-          system_managed: T::Boolean
+          system_managed: T::Boolean,
+          description: String,
+          expires_at: Time
         ).returns(T.attached_class)
       end
       def self.new(
         type:,
         # Server-set on episodic layers: the agent this layer belongs to. Unset for
         # non-episodic layers.
-        agent_id: nil,
-        # Human-readable description of the layer's purpose. Encouraged for user-created
-        # layers; system-managed layers may have a generated description.
-        description: nil,
+        agent_id:,
         # Server-set on episodic layers: the caller-supplied episodic key the layer was
         # created for. Unset for non-episodic layers.
-        episodic_key: nil,
-        # For layers with a finite lifetime (e.g., episodic), the time at which the layer
-        # becomes eligible for cleanup. Set by the system; unset for persistent layers.
-        expires_at: nil,
+        episodic_key:,
         # Server-set. True for layers managed by the system (e.g., episodic layers created
         # automatically when an objective uses an episodic_key). System-managed layers
         # cannot be assigned to objective cascades via the API and cannot be mutated by
         # clients — their lifecycle is controlled entirely by the runtime.
-        system_managed: nil
+        system_managed:,
+        # Human-readable description of the layer's purpose. Encouraged for user-created
+        # layers; system-managed layers may have a generated description.
+        description: nil,
+        # For layers with a finite lifetime (e.g., episodic), the time at which the layer
+        # becomes eligible for cleanup. Set by the system; unset for persistent layers.
+        expires_at: nil
       )
       end
 

@@ -16,8 +16,8 @@ module Cadenya
         # @!attribute arguments
         #   The arguments passed to the tool
         #
-        #   @return [Hash{Symbol=>Object}, nil]
-        optional :arguments, Cadenya::Internal::Type::HashOf[Cadenya::Internal::Type::Unknown]
+        #   @return [Hash{Symbol=>Object}]
+        required :arguments, Cadenya::Internal::Type::HashOf[Cadenya::Internal::Type::Unknown]
 
         # @!attribute memo
         #   A memo supplied by the reviewer when denying the tool call
@@ -29,8 +29,8 @@ module Cadenya
           # @!attribute resolved_secrets
           #   List of resolved secrets used by the tool call
           #
-          #   @return [Array<Cadenya::Models::Objectives::ResolvedSecret>, nil]
-          optional :resolved_secrets,
+          #   @return [Array<Cadenya::Models::Objectives::ResolvedSecret>]
+          required :resolved_secrets,
                    -> { Cadenya::Internal::Type::ArrayOf[Cadenya::Objectives::ResolvedSecret] },
                    api_name: :resolvedSecrets
 
@@ -43,7 +43,7 @@ module Cadenya
           optional :status_changed_by, -> { Cadenya::Profile }, api_name: :statusChangedBy
         end
 
-        # @!method initialize(callable:, arguments: nil, memo: nil, resolved_secrets: nil, status_changed_by: nil)
+        # @!method initialize(callable:, arguments:, memo: nil, resolved_secrets:, status_changed_by: nil)
         #   Some parameter documentations has been truncated, see
         #   {Cadenya::Models::Objectives::ObjectiveToolCallData} for more details.
         #

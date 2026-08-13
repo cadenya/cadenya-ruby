@@ -15,9 +15,7 @@ module Cadenya
 
       attr_accessor metadata: Cadenya::OperationMetadata
 
-      attr_reader context_window_id: String?
-
-      def context_window_id=: (String) -> String
+      attr_accessor context_window_id: String
 
       attr_reader info: Cadenya::ObjectiveEventInfo?
 
@@ -34,7 +32,7 @@ module Cadenya
       def initialize: (
         data: Cadenya::Models::objective_event_data,
         metadata: Cadenya::OperationMetadata,
-        ?context_window_id: String,
+        context_window_id: String,
         ?duration: String,
         ?info: Cadenya::ObjectiveEventInfo,
         ?started_at: Time

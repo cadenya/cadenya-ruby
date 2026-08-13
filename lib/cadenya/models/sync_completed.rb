@@ -6,16 +6,16 @@ module Cadenya
       # @!attribute message
       #   Optional message with additional details.
       #
-      #   @return [String, nil]
-      optional :message, String
+      #   @return [String]
+      required :message, String
 
       # @!attribute tools_synced
       #   Number of tools synced.
       #
-      #   @return [Integer, nil]
-      optional :tools_synced, Integer, api_name: :toolsSynced
+      #   @return [Integer]
+      required :tools_synced, Integer, api_name: :toolsSynced
 
-      # @!method initialize(message: nil, tools_synced: nil)
+      # @!method initialize(message:, tools_synced:)
       #   Emitted when a tool set sync operation completes successfully.
       #
       #   @param message [String] Optional message with additional details.

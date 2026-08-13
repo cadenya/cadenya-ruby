@@ -54,8 +54,8 @@ module Cadenya
         #   The token is short-lived; the widget refreshes it at the widget host without
         #   involving the customer's backend.
         #
-        #   @return [String, nil]
-        optional :token, String
+        #   @return [String]
+        required :token, String
 
         # @!attribute token_expires_at
         #   Expiry of the token returned in `token`. Distinct from `expires_at`, which
@@ -65,7 +65,7 @@ module Cadenya
         optional :token_expires_at, Time, api_name: :tokenExpiresAt
       end
 
-      # @!method initialize(widget_id:, token: nil, expires_at: nil, pinned_parameters: nil, subject: nil, tenant: nil, token_expires_at: nil)
+      # @!method initialize(widget_id:, token:, expires_at: nil, pinned_parameters: nil, subject: nil, tenant: nil, token_expires_at: nil)
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::WidgetSessionSpec} for more details.
       #

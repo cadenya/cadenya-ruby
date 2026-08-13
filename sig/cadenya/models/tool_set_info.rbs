@@ -11,37 +11,29 @@ module Cadenya
       }
 
     class ToolSetInfo < Cadenya::Internal::Type::BaseModel
-      attr_reader available_tools: Integer?
-
-      def available_tools=: (Integer) -> Integer
+      attr_accessor available_tools: Integer
 
       attr_reader created_by: Cadenya::Profile?
 
       def created_by=: (Cadenya::Profile) -> Cadenya::Profile
 
-      attr_reader omitted_tools: Integer?
+      attr_accessor omitted_tools: Integer
 
-      def omitted_tools=: (Integer) -> Integer
-
-      attr_reader agent_count: Integer?
-
-      def agent_count=: (Integer) -> Integer
+      attr_accessor agent_count: Integer
 
       attr_reader last_sync: Time?
 
       def last_sync=: (Time) -> Time
 
-      attr_reader tool_count: Integer?
-
-      def tool_count=: (Integer) -> Integer
+      attr_accessor tool_count: Integer
 
       def initialize: (
-        ?agent_count: Integer,
-        ?available_tools: Integer,
+        agent_count: Integer,
+        available_tools: Integer,
+        omitted_tools: Integer,
+        tool_count: Integer,
         ?created_by: Cadenya::Profile,
-        ?last_sync: Time,
-        ?omitted_tools: Integer,
-        ?tool_count: Integer
+        ?last_sync: Time
       ) -> void
 
       def to_hash: -> {

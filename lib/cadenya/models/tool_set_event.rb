@@ -14,8 +14,8 @@ module Cadenya
       # @!attribute event
       #   Event payload for a tool set operation.
       #
-      #   @return [Cadenya::Models::ToolSetEventDataSyncStarted, Cadenya::Models::ToolSetEventDataSyncCompleted, Cadenya::Models::ToolSetEventDataSyncFailed, nil]
-      optional :event, union: -> { Cadenya::ToolSetEventData }
+      #   @return [Cadenya::Models::ToolSetEventDataSyncStarted, Cadenya::Models::ToolSetEventDataSyncCompleted, Cadenya::Models::ToolSetEventDataSyncFailed]
+      required :event, union: -> { Cadenya::ToolSetEventData }
 
       # @!attribute info
       #
@@ -26,11 +26,11 @@ module Cadenya
         # @!attribute tool_set_id
         #   The tool set this event is associated with.
         #
-        #   @return [String, nil]
-        optional :tool_set_id, String, api_name: :toolSetId
+        #   @return [String]
+        required :tool_set_id, String, api_name: :toolSetId
       end
 
-      # @!method initialize(metadata:, event: nil, info: nil, tool_set_id: nil)
+      # @!method initialize(metadata:, event:, info: nil, tool_set_id:)
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::ToolSetEvent} for more details.
       #

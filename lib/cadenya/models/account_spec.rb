@@ -5,25 +5,25 @@ module Cadenya
     class AccountSpec < Cadenya::Internal::Type::BaseModel
       # @!attribute billing_email
       #
-      #   @return [String, nil]
-      optional :billing_email, String, api_name: :billingEmail
+      #   @return [String]
+      required :billing_email, String, api_name: :billingEmail
 
       # @!attribute description
       #
-      #   @return [String, nil]
-      optional :description, String
+      #   @return [String]
+      required :description, String
 
       # @!attribute domain
       #
-      #   @return [String, nil]
-      optional :domain, String
+      #   @return [String]
+      required :domain, String
 
       # @!attribute workspaces
       #
-      #   @return [Array<Cadenya::Models::Workspace>, nil]
-      optional :workspaces, -> { Cadenya::Internal::Type::ArrayOf[Cadenya::Workspace] }
+      #   @return [Array<Cadenya::Models::Workspace>]
+      required :workspaces, -> { Cadenya::Internal::Type::ArrayOf[Cadenya::Workspace] }
 
-      # @!method initialize(billing_email: nil, description: nil, domain: nil, workspaces: nil)
+      # @!method initialize(billing_email:, description:, domain:, workspaces:)
       #   Configuration for an account.
       #
       #   @param billing_email [String]

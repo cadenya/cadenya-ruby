@@ -4,17 +4,13 @@ module Cadenya
       { challenge_token: String, webhook_events_hmac_secret: String }
 
     class AccountInfo < Cadenya::Internal::Type::BaseModel
-      attr_reader challenge_token: String?
+      attr_accessor challenge_token: String
 
-      def challenge_token=: (String) -> String
-
-      attr_reader webhook_events_hmac_secret: String?
-
-      def webhook_events_hmac_secret=: (String) -> String
+      attr_accessor webhook_events_hmac_secret: String
 
       def initialize: (
-        ?challenge_token: String,
-        ?webhook_events_hmac_secret: String
+        challenge_token: String,
+        webhook_events_hmac_secret: String
       ) -> void
 
       def to_hash: -> {

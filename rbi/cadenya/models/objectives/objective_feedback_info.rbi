@@ -41,20 +41,21 @@ module Cadenya
         # A profile identifies a user or non-human principal (such as an API key) at the
         # account level. Profiles are account-scoped and can be granted access to multiple
         # workspaces.
-        sig { returns(T.nilable(Cadenya::Profile)) }
-        attr_reader :submitted_by
-
-        sig { params(submitted_by: Cadenya::Profile::OrHash).void }
-        attr_writer :submitted_by
+        sig { returns(Cadenya::Profile) }
+        attr_accessor :submitted_by
 
         sig do
           params(
+            submitted_by: Cadenya::Profile::OrHash,
             agent_variation: Cadenya::BareMetadata::OrHash,
-            objective: Cadenya::BareMetadata::OrHash,
-            submitted_by: Cadenya::Profile::OrHash
+            objective: Cadenya::BareMetadata::OrHash
           ).returns(T.attached_class)
         end
         def self.new(
+          # A profile identifies a user or non-human principal (such as an API key) at the
+          # account level. Profiles are account-scoped and can be granted access to multiple
+          # workspaces.
+          submitted_by:,
           # BareMetadata contains the minimal metadata for a resource: the ID and an
           # optional human-readable name. These are used for reference fields where the full
           # metadata (account scoping, timestamps, labels, external IDs) is not needed —
@@ -68,11 +69,7 @@ module Cadenya
           # e.g., the tool references inside an agent variation spec or the tools assigned
           # to an objective. Both fields are server-populated; clients provide IDs through
           # sibling fields rather than by constructing a BareMetadata themselves.
-          objective: nil,
-          # A profile identifies a user or non-human principal (such as an API key) at the
-          # account level. Profiles are account-scoped and can be granted access to multiple
-          # workspaces.
-          submitted_by: nil
+          objective: nil
         )
         end
 

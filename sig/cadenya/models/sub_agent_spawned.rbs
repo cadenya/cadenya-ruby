@@ -8,22 +8,16 @@ module Cadenya
       }
 
     class SubAgentSpawned < Cadenya::Internal::Type::BaseModel
-      attr_reader agent: Cadenya::ResourceMetadata?
+      attr_accessor agent: Cadenya::ResourceMetadata
 
-      def agent=: (Cadenya::ResourceMetadata) -> Cadenya::ResourceMetadata
+      attr_accessor objective: Cadenya::OperationMetadata
 
-      attr_reader objective: Cadenya::OperationMetadata?
-
-      def objective=: (Cadenya::OperationMetadata) -> Cadenya::OperationMetadata
-
-      attr_reader task: String?
-
-      def task=: (String) -> String
+      attr_accessor task: String
 
       def initialize: (
-        ?agent: Cadenya::ResourceMetadata,
-        ?objective: Cadenya::OperationMetadata,
-        ?task: String
+        agent: Cadenya::ResourceMetadata,
+        objective: Cadenya::OperationMetadata,
+        task: String
       ) -> void
 
       def to_hash: -> {

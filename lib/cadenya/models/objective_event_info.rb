@@ -8,8 +8,8 @@ module Cadenya
       #   account level. Profiles are account-scoped and can be granted access to multiple
       #   workspaces.
       #
-      #   @return [Cadenya::Models::Profile, nil]
-      optional :created_by, -> { Cadenya::Profile }, api_name: :createdBy
+      #   @return [Cadenya::Models::Profile]
+      required :created_by, -> { Cadenya::Profile }, api_name: :createdBy
 
       # @!attribute objective
       #   Metadata for ephemeral operations and activities (e.g., objectives, executions,
@@ -18,7 +18,7 @@ module Cadenya
       #   @return [Cadenya::Models::OperationMetadata, nil]
       optional :objective, -> { Cadenya::OperationMetadata }
 
-      # @!method initialize(created_by: nil, objective: nil)
+      # @!method initialize(created_by:, objective: nil)
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::ObjectiveEventInfo} for more details.
       #

@@ -44,15 +44,9 @@ module Cadenya
 
         attr_accessor webhook_url: String
 
-        attr_reader error_message: String?
+        attr_accessor error_message: String
 
-        def error_message=: (String) -> String
-
-        attr_reader response_headers: ::Hash[Symbol, String]?
-
-        def response_headers=: (
-          ::Hash[Symbol, String]
-        ) -> ::Hash[Symbol, String]
+        attr_accessor response_headers: ::Hash[Symbol, String]
 
         def initialize: (
           agent_id: String,
@@ -67,8 +61,8 @@ module Cadenya
           status: Cadenya::Models::Agents::WebhookDeliveryData::status,
           webhook_id: String,
           webhook_url: String,
-          ?error_message: String,
-          ?response_headers: ::Hash[Symbol, String]
+          error_message: String,
+          response_headers: ::Hash[Symbol, String]
         ) -> void
 
         def to_hash: -> {

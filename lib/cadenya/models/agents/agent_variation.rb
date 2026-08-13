@@ -21,11 +21,11 @@ module Cadenya
           # @!attribute info
           #   AgentVariationInfo provides read-only summary information about a variation
           #
-          #   @return [Cadenya::Models::Agents::AgentVariationInfo, nil]
-          optional :info, -> { Cadenya::Agents::AgentVariationInfo }
+          #   @return [Cadenya::Models::Agents::AgentVariationInfo]
+          required :info, -> { Cadenya::Agents::AgentVariationInfo }
         end
 
-        # @!method initialize(metadata:, spec:, info: nil)
+        # @!method initialize(metadata:, spec:, info:)
         #   Some parameter documentations has been truncated, see
         #   {Cadenya::Models::Agents::AgentVariation} for more details.
         #

@@ -21,36 +21,27 @@ module Cadenya
       # e.g., the tool references inside an agent variation spec or the tools assigned
       # to an objective. Both fields are server-populated; clients provide IDs through
       # sibling fields rather than by constructing a BareMetadata themselves.
-      sig { returns(T.nilable(Cadenya::BareMetadata)) }
-      attr_reader :agent
-
-      sig { params(agent: Cadenya::BareMetadata::OrHash).void }
-      attr_writer :agent
+      sig { returns(Cadenya::BareMetadata) }
+      attr_accessor :agent
 
       # The widget's DNS label — the single hostname label under the widgets domain.
       # Server-generated at creation, globally unique, immutable, and deliberately
       # unrelated to the widget's id.
-      sig { returns(T.nilable(String)) }
-      attr_reader :dns_label
-
-      sig { params(dns_label: String).void }
-      attr_writer :dns_label
+      sig { returns(String) }
+      attr_accessor :dns_label
 
       # The full hostname browsers talk to. Authoritative — clients must use this value
       # rather than constructing the hostname themselves.
-      sig { returns(T.nilable(String)) }
-      attr_reader :host
-
-      sig { params(host: String).void }
-      attr_writer :host
+      sig { returns(String) }
+      attr_accessor :host
 
       # WidgetInfo provides read-only server-derived data about a widget.
       sig do
         params(
           agent: Cadenya::BareMetadata::OrHash,
-          created_by: Cadenya::Profile::OrHash,
           dns_label: String,
-          host: String
+          host: String,
+          created_by: Cadenya::Profile::OrHash
         ).returns(T.attached_class)
       end
       def self.new(
@@ -60,18 +51,18 @@ module Cadenya
         # e.g., the tool references inside an agent variation spec or the tools assigned
         # to an objective. Both fields are server-populated; clients provide IDs through
         # sibling fields rather than by constructing a BareMetadata themselves.
-        agent: nil,
-        # A profile identifies a user or non-human principal (such as an API key) at the
-        # account level. Profiles are account-scoped and can be granted access to multiple
-        # workspaces.
-        created_by: nil,
+        agent:,
         # The widget's DNS label — the single hostname label under the widgets domain.
         # Server-generated at creation, globally unique, immutable, and deliberately
         # unrelated to the widget's id.
-        dns_label: nil,
+        dns_label:,
         # The full hostname browsers talk to. Authoritative — clients must use this value
         # rather than constructing the hostname themselves.
-        host: nil
+        host:,
+        # A profile identifies a user or non-human principal (such as an API key) at the
+        # account level. Profiles are account-scoped and can be granted access to multiple
+        # workspaces.
+        created_by: nil
       )
       end
 

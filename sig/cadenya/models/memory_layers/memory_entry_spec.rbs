@@ -6,11 +6,9 @@ module Cadenya
       class MemoryEntrySpec < Cadenya::Internal::Type::BaseModel
         attr_accessor key: String
 
-        attr_reader description: String?
+        attr_accessor description: String
 
-        def description=: (String) -> String
-
-        def initialize: (key: String, ?description: String) -> void
+        def initialize: (key: String, description: String) -> void
 
         def to_hash: -> { key: String, description: String }
       end

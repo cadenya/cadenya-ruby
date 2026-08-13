@@ -54,18 +54,8 @@ module Cadenya
         attr_accessor :execution_status
 
         # List of resolved secrets used by the tool call
-        sig do
-          returns(T.nilable(T::Array[Cadenya::Objectives::ResolvedSecret]))
-        end
-        attr_reader :resolved_secrets
-
-        sig do
-          params(
-            resolved_secrets:
-              T::Array[Cadenya::Objectives::ResolvedSecret::OrHash]
-          ).void
-        end
-        attr_writer :resolved_secrets
+        sig { returns(T::Array[Cadenya::Objectives::ResolvedSecret]) }
+        attr_accessor :resolved_secrets
 
         # ObjectiveToolCallResult is the content a tool returned after execution. Tools
         # can return multiple content blocks, and blocks can be multi-modal (text, image,
@@ -107,7 +97,7 @@ module Cadenya
           # Current status of the tool call
           status:,
           # List of resolved secrets used by the tool call
-          resolved_secrets: nil,
+          resolved_secrets:,
           # ObjectiveToolCallResult is the content a tool returned after execution. Tools
           # can return multiple content blocks, and blocks can be multi-modal (text, image,
           # audio). Media blocks are stored by Cadenya and served as short-lived signed URLs

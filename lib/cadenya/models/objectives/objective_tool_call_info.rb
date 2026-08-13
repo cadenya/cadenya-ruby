@@ -16,8 +16,8 @@ module Cadenya
         #   Metadata for ephemeral operations and activities (e.g., objectives, executions,
         #   runs)
         #
-        #   @return [Cadenya::Models::OperationMetadata, nil]
-        optional :objective, -> { Cadenya::OperationMetadata }
+        #   @return [Cadenya::Models::OperationMetadata]
+        required :objective, -> { Cadenya::OperationMetadata }
 
         # @!attribute tool
         #   BareMetadata contains the minimal metadata for a resource: the ID and an
@@ -41,7 +41,7 @@ module Cadenya
         #   @return [Cadenya::Models::BareMetadata, nil]
         optional :tool_set, -> { Cadenya::BareMetadata }, api_name: :toolSet
 
-        # @!method initialize(created_by: nil, objective: nil, tool: nil, tool_set: nil)
+        # @!method initialize(created_by: nil, objective:, tool: nil, tool_set: nil)
         #   Some parameter documentations has been truncated, see
         #   {Cadenya::Models::Objectives::ObjectiveToolCallInfo} for more details.
         #

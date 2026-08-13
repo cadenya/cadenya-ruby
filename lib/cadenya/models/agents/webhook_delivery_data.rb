@@ -75,16 +75,16 @@ module Cadenya
 
         # @!attribute error_message
         #
-        #   @return [String, nil]
-        optional :error_message, String, api_name: :errorMessage
+        #   @return [String]
+        required :error_message, String, api_name: :errorMessage
 
         # @!attribute response_headers
         #   Response headers received from the webhook endpoint
         #
-        #   @return [Hash{Symbol=>String}, nil]
-        optional :response_headers, Cadenya::Internal::Type::HashOf[String], api_name: :responseHeaders
+        #   @return [Hash{Symbol=>String}]
+        required :response_headers, Cadenya::Internal::Type::HashOf[String], api_name: :responseHeaders
 
-        # @!method initialize(agent_id:, attempt_count:, event_type:, http_status_code:, last_attempt_at:, latency_ms:, objective_event_id:, objective_id:, response_content_length:, status:, webhook_id:, webhook_url:, error_message: nil, response_headers: nil)
+        # @!method initialize(agent_id:, attempt_count:, event_type:, http_status_code:, last_attempt_at:, latency_ms:, objective_event_id:, objective_id:, response_content_length:, status:, webhook_id:, webhook_url:, error_message:, response_headers:)
         #   @param agent_id [String] Related resources
         #
         #   @param attempt_count [Integer]

@@ -16,11 +16,7 @@ module Cadenya
 
         def created_by=: (Cadenya::Profile) -> Cadenya::Profile
 
-        attr_reader objective: Cadenya::OperationMetadata?
-
-        def objective=: (
-          Cadenya::OperationMetadata
-        ) -> Cadenya::OperationMetadata
+        attr_accessor objective: Cadenya::OperationMetadata
 
         attr_reader tool: Cadenya::BareMetadata?
 
@@ -31,8 +27,8 @@ module Cadenya
         def tool_set=: (Cadenya::BareMetadata) -> Cadenya::BareMetadata
 
         def initialize: (
+          objective: Cadenya::OperationMetadata,
           ?created_by: Cadenya::Profile,
-          ?objective: Cadenya::OperationMetadata,
           ?tool: Cadenya::BareMetadata,
           ?tool_set: Cadenya::BareMetadata
         ) -> void

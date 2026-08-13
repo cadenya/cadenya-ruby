@@ -19,11 +19,8 @@ module Cadenya
       sig { params(metadata: Cadenya::OperationMetadata::OrHash).void }
       attr_writer :metadata
 
-      sig { returns(T.nilable(String)) }
-      attr_reader :context_window_id
-
-      sig { params(context_window_id: String).void }
-      attr_writer :context_window_id
+      sig { returns(String) }
+      attr_accessor :context_window_id
 
       sig { returns(T.nilable(Cadenya::ObjectiveEventInfo)) }
       attr_reader :info
@@ -86,7 +83,7 @@ module Cadenya
         # Metadata for ephemeral operations and activities (e.g., objectives, executions,
         # runs)
         metadata:,
-        context_window_id: nil,
+        context_window_id:,
         # Elapsed time of the work this event records, when it is known at write time
         # (e.g. assistant message generation, tool execution for result/error events).
         # Unset means the event is instantaneous or the duration is not measurable.

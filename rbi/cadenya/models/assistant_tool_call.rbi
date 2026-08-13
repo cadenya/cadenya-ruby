@@ -8,17 +8,11 @@ module Cadenya
           T.any(Cadenya::AssistantToolCall, Cadenya::Internal::AnyHash)
         end
 
-      sig { returns(T.nilable(String)) }
-      attr_reader :arguments
+      sig { returns(String) }
+      attr_accessor :arguments
 
-      sig { params(arguments: String).void }
-      attr_writer :arguments
-
-      sig { returns(T.nilable(String)) }
-      attr_reader :function_name
-
-      sig { params(function_name: String).void }
-      attr_writer :function_name
+      sig { returns(String) }
+      attr_accessor :function_name
 
       # CallableTool is a union that represents a tool that can be called by an agent.
       # In Cadenya, a tool that is used within an agent objective might be a
@@ -52,8 +46,8 @@ module Cadenya
         ).returns(T.attached_class)
       end
       def self.new(
-        arguments: nil,
-        function_name: nil,
+        arguments:,
+        function_name:,
         # CallableTool is a union that represents a tool that can be called by an agent.
         # In Cadenya, a tool that is used within an agent objective might be a
         # user-defined tool (IE: MCP, HTTP), another Agent (useful to separate context),

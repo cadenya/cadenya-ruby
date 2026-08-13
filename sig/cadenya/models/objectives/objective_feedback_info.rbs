@@ -19,14 +19,12 @@ module Cadenya
 
         def objective=: (Cadenya::BareMetadata) -> Cadenya::BareMetadata
 
-        attr_reader submitted_by: Cadenya::Profile?
-
-        def submitted_by=: (Cadenya::Profile) -> Cadenya::Profile
+        attr_accessor submitted_by: Cadenya::Profile
 
         def initialize: (
+          submitted_by: Cadenya::Profile,
           ?agent_variation: Cadenya::BareMetadata,
-          ?objective: Cadenya::BareMetadata,
-          ?submitted_by: Cadenya::Profile
+          ?objective: Cadenya::BareMetadata
         ) -> void
 
         def to_hash: -> {

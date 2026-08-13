@@ -9,18 +9,12 @@ module Cadenya
         end
 
       # Optional message with additional details.
-      sig { returns(T.nilable(String)) }
-      attr_reader :message
-
-      sig { params(message: String).void }
-      attr_writer :message
+      sig { returns(String) }
+      attr_accessor :message
 
       # Number of tools synced.
-      sig { returns(T.nilable(Integer)) }
-      attr_reader :tools_synced
-
-      sig { params(tools_synced: Integer).void }
-      attr_writer :tools_synced
+      sig { returns(Integer) }
+      attr_accessor :tools_synced
 
       # Emitted when a tool set sync operation completes successfully.
       sig do
@@ -28,9 +22,9 @@ module Cadenya
       end
       def self.new(
         # Optional message with additional details.
-        message: nil,
+        message:,
         # Number of tools synced.
-        tools_synced: nil
+        tools_synced:
       )
       end
 

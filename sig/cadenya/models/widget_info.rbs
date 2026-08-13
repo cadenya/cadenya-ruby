@@ -13,23 +13,17 @@ module Cadenya
 
       def created_by=: (Cadenya::Profile) -> Cadenya::Profile
 
-      attr_reader agent: Cadenya::BareMetadata?
+      attr_accessor agent: Cadenya::BareMetadata
 
-      def agent=: (Cadenya::BareMetadata) -> Cadenya::BareMetadata
+      attr_accessor dns_label: String
 
-      attr_reader dns_label: String?
-
-      def dns_label=: (String) -> String
-
-      attr_reader host: String?
-
-      def host=: (String) -> String
+      attr_accessor host: String
 
       def initialize: (
-        ?agent: Cadenya::BareMetadata,
-        ?created_by: Cadenya::Profile,
-        ?dns_label: String,
-        ?host: String
+        agent: Cadenya::BareMetadata,
+        dns_label: String,
+        host: String,
+        ?created_by: Cadenya::Profile
       ) -> void
 
       def to_hash: -> {

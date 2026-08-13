@@ -26,11 +26,8 @@ module Cadenya
         attr_writer :spec
 
         # AgentScheduleInfo provides read-only runtime data about a schedule.
-        sig { returns(T.nilable(Cadenya::Agents::AgentScheduleInfo)) }
-        attr_reader :info
-
-        sig { params(info: Cadenya::Agents::AgentScheduleInfo::OrHash).void }
-        attr_writer :info
+        sig { returns(Cadenya::Agents::AgentScheduleInfo) }
+        attr_accessor :info
 
         # The current lifecycle state of the schedule. Output only. Schedules are created
         # STATE_ACTIVE; use the :pause, :resume, and :archive actions to transition
@@ -58,7 +55,7 @@ module Cadenya
           # between states.
           state:,
           # AgentScheduleInfo provides read-only runtime data about a schedule.
-          info: nil
+          info:
         )
         end
 

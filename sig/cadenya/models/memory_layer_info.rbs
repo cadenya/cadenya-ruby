@@ -17,18 +17,16 @@ module Cadenya
 
       def agent=: (Cadenya::ResourceMetadata) -> Cadenya::ResourceMetadata
 
-      attr_reader entry_count: Integer?
-
-      def entry_count=: (Integer) -> Integer
+      attr_accessor entry_count: Integer
 
       attr_reader last_used_at: Time?
 
       def last_used_at=: (Time) -> Time
 
       def initialize: (
+        entry_count: Integer,
         ?agent: Cadenya::ResourceMetadata,
         ?created_by: Cadenya::Profile,
-        ?entry_count: Integer,
         ?last_used_at: Time
       ) -> void
 

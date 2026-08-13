@@ -18,8 +18,8 @@ module Cadenya
 
       # @!attribute context_window_id
       #
-      #   @return [String, nil]
-      optional :context_window_id, String, api_name: :contextWindowId
+      #   @return [String]
+      required :context_window_id, String, api_name: :contextWindowId
 
       # @!attribute info
       #
@@ -46,7 +46,7 @@ module Cadenya
         optional :started_at, Time, api_name: :startedAt
       end
 
-      # @!method initialize(data:, metadata:, context_window_id: nil, duration: nil, info: nil, started_at: nil)
+      # @!method initialize(data:, metadata:, context_window_id:, duration: nil, info: nil, started_at: nil)
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::ObjectiveEvent} for more details.
       #

@@ -7,19 +7,13 @@ module Cadenya
         T.type_alias { T.any(Cadenya::SubjectInfo, Cadenya::Internal::AnyHash) }
 
       # Number of objectives associated with this subject.
-      sig { returns(T.nilable(Integer)) }
-      attr_reader :objective_count
-
-      sig { params(objective_count: Integer).void }
-      attr_writer :objective_count
+      sig { returns(Integer) }
+      attr_accessor :objective_count
 
       # TenantReference is the read-only echo of a resource's tenant association,
       # carrying both Cadenya's canonical id and the customer's own key.
-      sig { returns(T.nilable(Cadenya::TenantReference)) }
-      attr_reader :tenant
-
-      sig { params(tenant: Cadenya::TenantReference::OrHash).void }
-      attr_writer :tenant
+      sig { returns(Cadenya::TenantReference) }
+      attr_accessor :tenant
 
       # SubjectInfo provides read-only server-derived data about a subject.
       sig do
@@ -30,10 +24,10 @@ module Cadenya
       end
       def self.new(
         # Number of objectives associated with this subject.
-        objective_count: nil,
+        objective_count:,
         # TenantReference is the read-only echo of a resource's tenant association,
         # carrying both Cadenya's canonical id and the customer's own key.
-        tenant: nil
+        tenant:
       )
       end
 

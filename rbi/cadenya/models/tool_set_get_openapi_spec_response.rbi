@@ -12,16 +12,13 @@ module Cadenya
         end
 
       # The consumed OpenAPI specification as a JSON string.
-      sig { returns(T.nilable(String)) }
-      attr_reader :spec
-
-      sig { params(spec: String).void }
-      attr_writer :spec
+      sig { returns(String) }
+      attr_accessor :spec
 
       sig { params(spec: String).returns(T.attached_class) }
       def self.new(
         # The consumed OpenAPI specification as a JSON string.
-        spec: nil
+        spec:
       )
       end
 

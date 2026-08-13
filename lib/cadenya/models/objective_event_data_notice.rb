@@ -33,21 +33,21 @@ module Cadenya
         #   "tool_set_load_failed", "tool_archived"). Clients can switch on it or use it as
         #   an i18n key; the message is the English fallback.
         #
-        #   @return [String, nil]
-        optional :key, String
+        #   @return [String]
+        required :key, String
 
         # @!attribute level
         #
-        #   @return [Symbol, Cadenya::Models::ObjectiveEventDataNotice::Notice::Level, nil]
-        optional :level, enum: -> { Cadenya::ObjectiveEventDataNotice::Notice::Level }
+        #   @return [Symbol, Cadenya::Models::ObjectiveEventDataNotice::Notice::Level]
+        required :level, enum: -> { Cadenya::ObjectiveEventDataNotice::Notice::Level }
 
         # @!attribute message
         #   Human-readable description of what happened.
         #
-        #   @return [String, nil]
-        optional :message, String
+        #   @return [String]
+        required :message, String
 
-        # @!method initialize(key: nil, level: nil, message: nil)
+        # @!method initialize(key:, level:, message:)
         #   Some parameter documentations has been truncated, see
         #   {Cadenya::Models::ObjectiveEventDataNotice::Notice} for more details.
         #

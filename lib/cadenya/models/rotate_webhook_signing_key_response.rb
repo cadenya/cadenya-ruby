@@ -6,10 +6,10 @@ module Cadenya
     class RotateWebhookSigningKeyResponse < Cadenya::Internal::Type::BaseModel
       # @!attribute webhook_events_hmac_secret
       #
-      #   @return [String, nil]
-      optional :webhook_events_hmac_secret, String, api_name: :webhookEventsHmacSecret
+      #   @return [String]
+      required :webhook_events_hmac_secret, String, api_name: :webhookEventsHmacSecret
 
-      # @!method initialize(webhook_events_hmac_secret: nil)
+      # @!method initialize(webhook_events_hmac_secret:)
       #   Response containing the newly generated webhook signing secret.
       #
       #   @param webhook_events_hmac_secret [String]

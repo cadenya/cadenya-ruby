@@ -16,36 +16,24 @@ module Cadenya
 
       attr_accessor provider: String
 
-      attr_reader capabilities: ::Array[Cadenya::Models::model_spec_capability]?
+      attr_accessor capabilities: ::Array[Cadenya::Models::model_spec_capability]
 
-      def capabilities=: (
-        ::Array[Cadenya::Models::model_spec_capability]
-      ) -> ::Array[Cadenya::Models::model_spec_capability]
+      attr_accessor input_price_per_million_tokens: String
 
-      attr_reader input_price_per_million_tokens: String?
+      attr_accessor max_input_tokens: Integer
 
-      def input_price_per_million_tokens=: (String) -> String
+      attr_accessor max_output_tokens: Integer
 
-      attr_reader max_input_tokens: Integer?
-
-      def max_input_tokens=: (Integer) -> Integer
-
-      attr_reader max_output_tokens: Integer?
-
-      def max_output_tokens=: (Integer) -> Integer
-
-      attr_reader output_price_per_million_tokens: String?
-
-      def output_price_per_million_tokens=: (String) -> String
+      attr_accessor output_price_per_million_tokens: String
 
       def initialize: (
         family: String,
         provider: String,
-        ?capabilities: ::Array[Cadenya::Models::model_spec_capability],
-        ?input_price_per_million_tokens: String,
-        ?max_input_tokens: Integer,
-        ?max_output_tokens: Integer,
-        ?output_price_per_million_tokens: String
+        capabilities: ::Array[Cadenya::Models::model_spec_capability],
+        input_price_per_million_tokens: String,
+        max_input_tokens: Integer,
+        max_output_tokens: Integer,
+        output_price_per_million_tokens: String
       ) -> void
 
       def to_hash: -> {

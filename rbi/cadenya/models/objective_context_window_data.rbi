@@ -10,43 +10,28 @@ module Cadenya
 
       # The instructions for this window to continue from a previous window's chat
       # history.
-      sig { returns(T.nilable(String)) }
-      attr_reader :previous_window_continue_instructions
-
-      sig { params(previous_window_continue_instructions: String).void }
-      attr_writer :previous_window_continue_instructions
+      sig { returns(String) }
+      attr_accessor :previous_window_continue_instructions
 
       # A calculated value for how many completion tokens (output tokens) have been used
       # in this context window
-      sig { returns(T.nilable(Integer)) }
-      attr_reader :completion_tokens
-
-      sig { params(completion_tokens: Integer).void }
-      attr_writer :completion_tokens
+      sig { returns(Integer) }
+      attr_accessor :completion_tokens
 
       # The objective's ID that this window belongs to
-      sig { returns(T.nilable(String)) }
-      attr_reader :objective_id
-
-      sig { params(objective_id: String).void }
-      attr_writer :objective_id
+      sig { returns(String) }
+      attr_accessor :objective_id
 
       # A calculated value for how many prompt tokens (input tokens) have been used in
       # this context window
-      sig { returns(T.nilable(Integer)) }
-      attr_reader :prompt_tokens
-
-      sig { params(prompt_tokens: Integer).void }
-      attr_writer :prompt_tokens
+      sig { returns(Integer) }
+      attr_accessor :prompt_tokens
 
       # sequence is a numeric representation of which context window this is. Sequences
       # are useful to perform a max(sequence) on in order to calculate how many context
       # windows an objective has.
-      sig { returns(T.nilable(Integer)) }
-      attr_reader :sequence
-
-      sig { params(sequence: Integer).void }
-      attr_writer :sequence
+      sig { returns(Integer) }
+      attr_accessor :sequence
 
       sig do
         params(
@@ -60,19 +45,19 @@ module Cadenya
       def self.new(
         # A calculated value for how many completion tokens (output tokens) have been used
         # in this context window
-        completion_tokens: nil,
+        completion_tokens:,
         # The objective's ID that this window belongs to
-        objective_id: nil,
+        objective_id:,
         # The instructions for this window to continue from a previous window's chat
         # history.
-        previous_window_continue_instructions: nil,
+        previous_window_continue_instructions:,
         # A calculated value for how many prompt tokens (input tokens) have been used in
         # this context window
-        prompt_tokens: nil,
+        prompt_tokens:,
         # sequence is a numeric representation of which context window this is. Sequences
         # are useful to perform a max(sequence) on in order to calculate how many context
         # windows an objective has.
-        sequence: nil
+        sequence:
       )
       end
 

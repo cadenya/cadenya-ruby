@@ -15,26 +15,23 @@ module Cadenya
       sig { params(created_by: Cadenya::Profile::OrHash).void }
       attr_writer :created_by
 
-      sig { returns(T.nilable(Integer)) }
-      attr_reader :variation_count
-
-      sig { params(variation_count: Integer).void }
-      attr_writer :variation_count
+      sig { returns(Integer) }
+      attr_accessor :variation_count
 
       # AgentInfo contains simple information about an agent for display or quick
       # reference
       sig do
         params(
-          created_by: Cadenya::Profile::OrHash,
-          variation_count: Integer
+          variation_count: Integer,
+          created_by: Cadenya::Profile::OrHash
         ).returns(T.attached_class)
       end
       def self.new(
+        variation_count:,
         # A profile identifies a user or non-human principal (such as an API key) at the
         # account level. Profiles are account-scoped and can be granted access to multiple
         # workspaces.
-        created_by: nil,
-        variation_count: nil
+        created_by: nil
       )
       end
 

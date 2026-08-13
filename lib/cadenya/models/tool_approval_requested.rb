@@ -7,10 +7,10 @@ module Cadenya
       #   The ID of the objective tool call record. Use this ID with the ApproveToolCall
       #   or DenyToolCall RPCs to approve or deny the tool call.
       #
-      #   @return [String, nil]
-      optional :tool_call_id, String, api_name: :toolCallId
+      #   @return [String]
+      required :tool_call_id, String, api_name: :toolCallId
 
-      # @!method initialize(tool_call_id: nil)
+      # @!method initialize(tool_call_id:)
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::ToolApprovalRequested} for more details.
       #

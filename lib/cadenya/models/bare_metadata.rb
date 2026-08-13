@@ -6,8 +6,8 @@ module Cadenya
       response_only do
         # @!attribute id
         #
-        #   @return [String, nil]
-        optional :id, String
+        #   @return [String]
+        required :id, String
 
         # @!attribute name
         #   Human-readable name of the referenced resource, populated by the server on reads
@@ -18,7 +18,7 @@ module Cadenya
         optional :name, String
       end
 
-      # @!method initialize(id: nil, name: nil)
+      # @!method initialize(id:, name: nil)
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::BareMetadata} for more details.
       #

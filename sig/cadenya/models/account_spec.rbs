@@ -9,29 +9,19 @@ module Cadenya
       }
 
     class AccountSpec < Cadenya::Internal::Type::BaseModel
-      attr_reader billing_email: String?
+      attr_accessor billing_email: String
 
-      def billing_email=: (String) -> String
+      attr_accessor description: String
 
-      attr_reader description: String?
+      attr_accessor domain: String
 
-      def description=: (String) -> String
-
-      attr_reader domain: String?
-
-      def domain=: (String) -> String
-
-      attr_reader workspaces: ::Array[Cadenya::Workspace]?
-
-      def workspaces=: (
-        ::Array[Cadenya::Workspace]
-      ) -> ::Array[Cadenya::Workspace]
+      attr_accessor workspaces: ::Array[Cadenya::Workspace]
 
       def initialize: (
-        ?billing_email: String,
-        ?description: String,
-        ?domain: String,
-        ?workspaces: ::Array[Cadenya::Workspace]
+        billing_email: String,
+        description: String,
+        domain: String,
+        workspaces: ::Array[Cadenya::Workspace]
       ) -> void
 
       def to_hash: -> {

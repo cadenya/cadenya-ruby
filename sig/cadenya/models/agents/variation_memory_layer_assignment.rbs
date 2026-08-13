@@ -5,22 +5,16 @@ module Cadenya
         { id: String, memory_layer: Cadenya::BareMetadata, position: Integer }
 
       class VariationMemoryLayerAssignment < Cadenya::Internal::Type::BaseModel
-        attr_reader memory_layer: Cadenya::BareMetadata?
+        attr_accessor memory_layer: Cadenya::BareMetadata
 
-        def memory_layer=: (Cadenya::BareMetadata) -> Cadenya::BareMetadata
+        attr_accessor position: Integer
 
-        attr_reader position: Integer?
-
-        def position=: (Integer) -> Integer
-
-        attr_reader id: String?
-
-        def id=: (String) -> String
+        attr_accessor id: String
 
         def initialize: (
-          ?id: String,
-          ?memory_layer: Cadenya::BareMetadata,
-          ?position: Integer
+          id: String,
+          memory_layer: Cadenya::BareMetadata,
+          position: Integer
         ) -> void
 
         def to_hash: -> {
