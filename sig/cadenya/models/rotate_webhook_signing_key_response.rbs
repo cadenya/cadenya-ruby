@@ -4,11 +4,9 @@ module Cadenya
       { webhook_events_hmac_secret: String }
 
     class RotateWebhookSigningKeyResponse < Cadenya::Internal::Type::BaseModel
-      attr_reader webhook_events_hmac_secret: String?
+      attr_accessor webhook_events_hmac_secret: String
 
-      def webhook_events_hmac_secret=: (String) -> String
-
-      def initialize: (?webhook_events_hmac_secret: String) -> void
+      def initialize: (webhook_events_hmac_secret: String) -> void
 
       def to_hash: -> { webhook_events_hmac_secret: String }
     end

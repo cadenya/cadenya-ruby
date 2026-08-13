@@ -8,9 +8,7 @@ module Cadenya
       }
 
     class ObjectiveConfigSnapshot < Cadenya::Internal::Type::BaseModel
-      attr_reader agent: Cadenya::Agent?
-
-      def agent=: (Cadenya::Agent) -> Cadenya::Agent
+      attr_accessor agent: Cadenya::Agent
 
       attr_reader agent_schedule: Cadenya::Agents::AgentSchedule?
 
@@ -18,16 +16,12 @@ module Cadenya
         Cadenya::Agents::AgentSchedule
       ) -> Cadenya::Agents::AgentSchedule
 
-      attr_reader agent_variation: Cadenya::Agents::AgentVariation?
-
-      def agent_variation=: (
-        Cadenya::Agents::AgentVariation
-      ) -> Cadenya::Agents::AgentVariation
+      attr_accessor agent_variation: Cadenya::Agents::AgentVariation
 
       def initialize: (
-        ?agent: Cadenya::Agent,
-        ?agent_schedule: Cadenya::Agents::AgentSchedule,
-        ?agent_variation: Cadenya::Agents::AgentVariation
+        agent: Cadenya::Agent,
+        agent_variation: Cadenya::Agents::AgentVariation,
+        ?agent_schedule: Cadenya::Agents::AgentSchedule
       ) -> void
 
       def to_hash: -> {

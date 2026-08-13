@@ -20,8 +20,8 @@ module Cadenya
         # @!attribute info
         #   AgentScheduleInfo provides read-only runtime data about a schedule.
         #
-        #   @return [Cadenya::Models::Agents::AgentScheduleInfo, nil]
-        optional :info, -> { Cadenya::Agents::AgentScheduleInfo }
+        #   @return [Cadenya::Models::Agents::AgentScheduleInfo]
+        required :info, -> { Cadenya::Agents::AgentScheduleInfo }
 
         response_only do
           # @!attribute state
@@ -33,7 +33,7 @@ module Cadenya
           required :state, enum: -> { Cadenya::Agents::AgentSchedule::State }
         end
 
-        # @!method initialize(metadata:, spec:, state:, info: nil)
+        # @!method initialize(metadata:, spec:, state:, info:)
         #   Some parameter documentations has been truncated, see
         #   {Cadenya::Models::Agents::AgentSchedule} for more details.
         #

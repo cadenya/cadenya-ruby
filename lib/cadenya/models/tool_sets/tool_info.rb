@@ -25,11 +25,11 @@ module Cadenya
           #   the same llm_tool_name but different parameters or description (as MCP servers
           #   may return per user) have distinct signatures.
           #
-          #   @return [String, nil]
-          optional :signature, String
+          #   @return [String]
+          required :signature, String
         end
 
-        # @!method initialize(created_by: nil, signature: nil, tool_set: nil)
+        # @!method initialize(created_by: nil, signature:, tool_set: nil)
         #   Some parameter documentations has been truncated, see
         #   {Cadenya::Models::ToolSets::ToolInfo} for more details.
         #

@@ -5,13 +5,13 @@ module Cadenya
     class AssistantToolCall < Cadenya::Internal::Type::BaseModel
       # @!attribute arguments
       #
-      #   @return [String, nil]
-      optional :arguments, String
+      #   @return [String]
+      required :arguments, String
 
       # @!attribute function_name
       #
-      #   @return [String, nil]
-      optional :function_name, String, api_name: :functionName
+      #   @return [String]
+      required :function_name, String, api_name: :functionName
 
       # @!attribute tool
       #   CallableTool is a union that represents a tool that can be called by an agent.
@@ -22,7 +22,7 @@ module Cadenya
       #   @return [Cadenya::Models::CallableToolTool, Cadenya::Models::CallableToolAgent, Cadenya::Models::CallableToolCadenyaProvidedTool, nil]
       optional :tool, union: -> { Cadenya::CallableTool }
 
-      # @!method initialize(arguments: nil, function_name: nil, tool: nil)
+      # @!method initialize(arguments:, function_name:, tool: nil)
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::AssistantToolCall} for more details.
       #

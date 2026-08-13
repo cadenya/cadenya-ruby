@@ -31,10 +31,10 @@ module Cadenya
         #   "Cancelled" but this field leaves room for richer reasons (e.g. "Cancelled by
         #   user", "Cancelled by schedule sweep", "Credit balance exhausted").
         #
-        #   @return [String, nil]
-        optional :message, String
+        #   @return [String]
+        required :message, String
 
-        # @!method initialize(message: nil)
+        # @!method initialize(message:)
         #   Some parameter documentations has been truncated, see
         #   {Cadenya::Models::ObjectiveEventDataCancelled::Cancelled} for more details.
         #

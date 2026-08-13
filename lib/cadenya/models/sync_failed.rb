@@ -6,22 +6,22 @@ module Cadenya
       # @!attribute error
       #   Indicates this is an error event.
       #
-      #   @return [Boolean, nil]
-      optional :error, Cadenya::Internal::Type::Boolean
+      #   @return [Boolean]
+      required :error, Cadenya::Internal::Type::Boolean
 
       # @!attribute error_type
       #   Optional error type/code for programmatic handling.
       #
-      #   @return [String, nil]
-      optional :error_type, String, api_name: :errorType
+      #   @return [String]
+      required :error_type, String, api_name: :errorType
 
       # @!attribute message
       #   Error message describing what went wrong.
       #
-      #   @return [String, nil]
-      optional :message, String
+      #   @return [String]
+      required :message, String
 
-      # @!method initialize(error: nil, error_type: nil, message: nil)
+      # @!method initialize(error:, error_type:, message:)
       #   Emitted when a tool set sync operation fails.
       #
       #   @param error [Boolean] Indicates this is an error event.

@@ -14,11 +14,11 @@ module Cadenya
       response_only do
         # @!attribute variation_count
         #
-        #   @return [Integer, nil]
-        optional :variation_count, Integer, api_name: :variationCount
+        #   @return [Integer]
+        required :variation_count, Integer, api_name: :variationCount
       end
 
-      # @!method initialize(created_by: nil, variation_count: nil)
+      # @!method initialize(created_by: nil, variation_count:)
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::AgentInfo} for more details.
       #

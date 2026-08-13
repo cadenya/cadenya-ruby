@@ -31,19 +31,16 @@ module Cadenya
         attr_writer :description
 
         # See MemoryEntrySpec.key for the full rule set. Same constraints apply here.
-        sig { returns(T.nilable(String)) }
-        attr_reader :key
-
-        sig { params(key: String).void }
-        attr_writer :key
+        sig { returns(String) }
+        attr_accessor :key
 
         sig do
           params(
             type:
               Cadenya::MemoryLayers::MemoryEntryCreateSpecUploadID::Type::OrSymbol,
             upload_id: String,
-            description: String,
-            key: String
+            key: String,
+            description: String
           ).returns(T.attached_class)
         end
         def self.new(
@@ -51,9 +48,9 @@ module Cadenya
           # ID of a COMPLETE Upload. The server reads the object from storage, copies its
           # bytes into the entry, and marks the upload consumed.
           upload_id:,
-          description: nil,
           # See MemoryEntrySpec.key for the full rule set. Same constraints apply here.
-          key: nil
+          key:,
+          description: nil
         )
         end
 

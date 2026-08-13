@@ -7,25 +7,16 @@ module Cadenya
         T.type_alias { T.any(Cadenya::SyncFailed, Cadenya::Internal::AnyHash) }
 
       # Indicates this is an error event.
-      sig { returns(T.nilable(T::Boolean)) }
-      attr_reader :error
-
-      sig { params(error: T::Boolean).void }
-      attr_writer :error
+      sig { returns(T::Boolean) }
+      attr_accessor :error
 
       # Optional error type/code for programmatic handling.
-      sig { returns(T.nilable(String)) }
-      attr_reader :error_type
-
-      sig { params(error_type: String).void }
-      attr_writer :error_type
+      sig { returns(String) }
+      attr_accessor :error_type
 
       # Error message describing what went wrong.
-      sig { returns(T.nilable(String)) }
-      attr_reader :message
-
-      sig { params(message: String).void }
-      attr_writer :message
+      sig { returns(String) }
+      attr_accessor :message
 
       # Emitted when a tool set sync operation fails.
       sig do
@@ -35,11 +26,11 @@ module Cadenya
       end
       def self.new(
         # Indicates this is an error event.
-        error: nil,
+        error:,
         # Optional error type/code for programmatic handling.
-        error_type: nil,
+        error_type:,
         # Error message describing what went wrong.
-        message: nil
+        message:
       )
       end
 

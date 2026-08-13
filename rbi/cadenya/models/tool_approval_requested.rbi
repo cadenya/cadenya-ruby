@@ -10,17 +10,14 @@ module Cadenya
 
       # The ID of the objective tool call record. Use this ID with the ApproveToolCall
       # or DenyToolCall RPCs to approve or deny the tool call.
-      sig { returns(T.nilable(String)) }
-      attr_reader :tool_call_id
-
-      sig { params(tool_call_id: String).void }
-      attr_writer :tool_call_id
+      sig { returns(String) }
+      attr_accessor :tool_call_id
 
       sig { params(tool_call_id: String).returns(T.attached_class) }
       def self.new(
         # The ID of the objective tool call record. Use this ID with the ApproveToolCall
         # or DenyToolCall RPCs to approve or deny the tool call.
-        tool_call_id: nil
+        tool_call_id:
       )
       end
 

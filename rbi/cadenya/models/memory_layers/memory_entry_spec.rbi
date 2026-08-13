@@ -35,11 +35,8 @@ module Cadenya
         # entries. The model uses this to decide whether to load the body, so it should be
         # written for the model as the audience. Ignored for layer types that do not
         # advertise frontmatter.
-        sig { returns(T.nilable(String)) }
-        attr_reader :description
-
-        sig { params(description: String).void }
-        attr_writer :description
+        sig { returns(String) }
+        attr_accessor :description
 
         # MemoryEntrySpec is the metadata portion of an entry — the fields that identify
         # and describe it, without the body. It appears on both the summary (MemoryEntry)
@@ -69,7 +66,7 @@ module Cadenya
           # entries. The model uses this to decide whether to load the body, so it should be
           # written for the model as the audience. Ignored for layer types that do not
           # advertise frontmatter.
-          description: nil
+          description:
         )
         end
 

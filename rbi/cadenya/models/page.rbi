@@ -5,11 +5,8 @@ module Cadenya
     class Page < Cadenya::Internal::Type::BaseModel
       OrHash = T.type_alias { T.any(Cadenya::Page, Cadenya::Internal::AnyHash) }
 
-      sig { returns(T.nilable(String)) }
-      attr_reader :next_cursor
-
-      sig { params(next_cursor: String).void }
-      attr_writer :next_cursor
+      sig { returns(String) }
+      attr_accessor :next_cursor
 
       # Page carries cursor-based pagination state. There is no total: the cursor walks
       # the result set without ever counting it, and a count would cost a second query

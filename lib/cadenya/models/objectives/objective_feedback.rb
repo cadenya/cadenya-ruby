@@ -19,10 +19,10 @@ module Cadenya
 
         # @!attribute info
         #
-        #   @return [Cadenya::Models::Objectives::ObjectiveFeedbackInfo, nil]
-        optional :info, -> { Cadenya::Objectives::ObjectiveFeedbackInfo }
+        #   @return [Cadenya::Models::Objectives::ObjectiveFeedbackInfo]
+        required :info, -> { Cadenya::Objectives::ObjectiveFeedbackInfo }
 
-        # @!method initialize(data:, metadata:, info: nil)
+        # @!method initialize(data:, metadata:, info:)
         #   Some parameter documentations has been truncated, see
         #   {Cadenya::Models::Objectives::ObjectiveFeedback} for more details.
         #

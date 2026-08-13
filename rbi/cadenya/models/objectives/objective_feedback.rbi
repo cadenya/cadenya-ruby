@@ -30,13 +30,8 @@ module Cadenya
         sig { params(metadata: Cadenya::OperationMetadata::OrHash).void }
         attr_writer :metadata
 
-        sig { returns(T.nilable(Cadenya::Objectives::ObjectiveFeedbackInfo)) }
-        attr_reader :info
-
-        sig do
-          params(info: Cadenya::Objectives::ObjectiveFeedbackInfo::OrHash).void
-        end
-        attr_writer :info
+        sig { returns(Cadenya::Objectives::ObjectiveFeedbackInfo) }
+        attr_accessor :info
 
         # ObjectiveFeedback represents feedback submitted for an objective's execution.
         # Feedback is used to score agent variations and improve agent performance over
@@ -53,7 +48,7 @@ module Cadenya
           # Metadata for ephemeral operations and activities (e.g., objectives, executions,
           # runs)
           metadata:,
-          info: nil
+          info:
         )
         end
 

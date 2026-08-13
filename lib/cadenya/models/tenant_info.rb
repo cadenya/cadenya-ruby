@@ -10,23 +10,23 @@ module Cadenya
         #   footprint a delete would destroy, which is why it is worth the count query that
         #   populating `info` costs.
         #
-        #   @return [Integer, nil]
-        optional :objective_count, Integer, api_name: :objectiveCount
+        #   @return [Integer]
+        required :objective_count, Integer, api_name: :objectiveCount
 
         # @!attribute subject_count
         #   Number of subjects asserted under this tenant.
         #
-        #   @return [Integer, nil]
-        optional :subject_count, Integer, api_name: :subjectCount
+        #   @return [Integer]
+        required :subject_count, Integer, api_name: :subjectCount
 
         # @!attribute widget_session_count
         #   Number of widget sessions minted for this tenant that still exist.
         #
-        #   @return [Integer, nil]
-        optional :widget_session_count, Integer, api_name: :widgetSessionCount
+        #   @return [Integer]
+        required :widget_session_count, Integer, api_name: :widgetSessionCount
       end
 
-      # @!method initialize(objective_count: nil, subject_count: nil, widget_session_count: nil)
+      # @!method initialize(objective_count:, subject_count:, widget_session_count:)
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::TenantInfo} for more details.
       #

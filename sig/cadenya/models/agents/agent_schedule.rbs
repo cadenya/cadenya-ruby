@@ -16,11 +16,7 @@ module Cadenya
 
         attr_accessor spec: Cadenya::Agents::AgentScheduleSpec
 
-        attr_reader info: Cadenya::Agents::AgentScheduleInfo?
-
-        def info=: (
-          Cadenya::Agents::AgentScheduleInfo
-        ) -> Cadenya::Agents::AgentScheduleInfo
+        attr_accessor info: Cadenya::Agents::AgentScheduleInfo
 
         attr_accessor state: Cadenya::Models::Agents::AgentSchedule::state
 
@@ -28,7 +24,7 @@ module Cadenya
           metadata: Cadenya::ResourceMetadata,
           spec: Cadenya::Agents::AgentScheduleSpec,
           state: Cadenya::Models::Agents::AgentSchedule::state,
-          ?info: Cadenya::Agents::AgentScheduleInfo
+          info: Cadenya::Agents::AgentScheduleInfo
         ) -> void
 
         def to_hash: -> {

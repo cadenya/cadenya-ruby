@@ -3,15 +3,11 @@ module Cadenya
     type sync_completed = { message: String, tools_synced: Integer }
 
     class SyncCompleted < Cadenya::Internal::Type::BaseModel
-      attr_reader message: String?
+      attr_accessor message: String
 
-      def message=: (String) -> String
+      attr_accessor tools_synced: Integer
 
-      attr_reader tools_synced: Integer?
-
-      def tools_synced=: (Integer) -> Integer
-
-      def initialize: (?message: String, ?tools_synced: Integer) -> void
+      def initialize: (message: String, tools_synced: Integer) -> void
 
       def to_hash: -> { message: String, tools_synced: Integer }
     end

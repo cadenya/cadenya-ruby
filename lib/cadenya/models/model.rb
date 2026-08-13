@@ -65,8 +65,8 @@ module Cadenya
           #   Number of agent variations currently provisioned on this model. Useful for
           #   previewing how many variations a swap would affect.
           #
-          #   @return [Integer, nil]
-          optional :agent_variation_count, Integer, api_name: :agentVariationCount
+          #   @return [Integer]
+          required :agent_variation_count, Integer, api_name: :agentVariationCount
 
           # @!attribute ai_provider_key
           #   AIProviderKey is a credential for an AI provider, scoped to a workspace. Most
@@ -84,7 +84,7 @@ module Cadenya
           optional :last_used_at, Time, api_name: :lastUsedAt
         end
 
-        # @!method initialize(agent_variation_count: nil, ai_provider_key: nil, last_used_at: nil)
+        # @!method initialize(agent_variation_count:, ai_provider_key: nil, last_used_at: nil)
         #   Some parameter documentations has been truncated, see
         #   {Cadenya::Models::Model::Info} for more details.
         #

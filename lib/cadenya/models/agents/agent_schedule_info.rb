@@ -47,11 +47,11 @@ module Cadenya
           # @!attribute total_fires
           #   Lifetime count of objectives created by this schedule.
           #
-          #   @return [Integer, nil]
-          optional :total_fires, Integer, api_name: :totalFires
+          #   @return [Integer]
+          required :total_fires, Integer, api_name: :totalFires
         end
 
-        # @!method initialize(created_by: nil, last_fire_at: nil, last_objective_id: nil, last_skipped_at: nil, last_skip_reason: nil, next_fire_at: nil, total_fires: nil)
+        # @!method initialize(created_by: nil, last_fire_at: nil, last_objective_id: nil, last_skipped_at: nil, last_skip_reason: nil, next_fire_at: nil, total_fires:)
         #   Some parameter documentations has been truncated, see
         #   {Cadenya::Models::Agents::AgentScheduleInfo} for more details.
         #

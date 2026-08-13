@@ -24,10 +24,10 @@ module Cadenya
         # @!attribute key
         #   See MemoryEntrySpec.key for the full rule set. Same constraints apply here.
         #
-        #   @return [String, nil]
-        optional :key, String
+        #   @return [String]
+        required :key, String
 
-        # @!method initialize(type:, upload_id:, description: nil, key: nil)
+        # @!method initialize(type:, upload_id:, description: nil, key:)
         #   Some parameter documentations has been truncated, see
         #   {Cadenya::Models::MemoryLayers::MemoryEntryCreateSpecUploadID} for more details.
         #

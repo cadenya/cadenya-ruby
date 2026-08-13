@@ -25,11 +25,7 @@ module Cadenya
 
         attr_accessor execution_status: Cadenya::Models::Objectives::ObjectiveToolCallWithResult::execution_status
 
-        attr_reader resolved_secrets: ::Array[Cadenya::Objectives::ResolvedSecret]?
-
-        def resolved_secrets=: (
-          ::Array[Cadenya::Objectives::ResolvedSecret]
-        ) -> ::Array[Cadenya::Objectives::ResolvedSecret]
+        attr_accessor resolved_secrets: ::Array[Cadenya::Objectives::ResolvedSecret]
 
         attr_reader result: Cadenya::Objectives::ObjectiveToolCallResult?
 
@@ -43,7 +39,7 @@ module Cadenya
           info: Cadenya::Objectives::ObjectiveToolCallInfo,
           metadata: Cadenya::OperationMetadata,
           status: Cadenya::Models::Objectives::ObjectiveToolCallWithResult::status,
-          ?resolved_secrets: ::Array[Cadenya::Objectives::ResolvedSecret],
+          resolved_secrets: ::Array[Cadenya::Objectives::ResolvedSecret],
           ?result: Cadenya::Objectives::ObjectiveToolCallResult
         ) -> void
 

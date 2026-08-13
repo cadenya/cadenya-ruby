@@ -14,19 +14,13 @@ module Cadenya
       # e.g., the tool references inside an agent variation spec or the tools assigned
       # to an objective. Both fields are server-populated; clients provide IDs through
       # sibling fields rather than by constructing a BareMetadata themselves.
-      sig { returns(T.nilable(Cadenya::BareMetadata)) }
-      attr_reader :agent
-
-      sig { params(agent: Cadenya::BareMetadata::OrHash).void }
-      attr_writer :agent
+      sig { returns(Cadenya::BareMetadata) }
+      attr_accessor :agent
 
       # The widget hostname this session's tokens are bound to. Authoritative — clients
       # must use this value rather than constructing the hostname.
-      sig { returns(T.nilable(String)) }
-      attr_reader :host
-
-      sig { params(host: String).void }
-      attr_writer :host
+      sig { returns(String) }
+      attr_accessor :host
 
       # When the session last created a conversation, sent a message, or refreshed a
       # token.
@@ -38,11 +32,8 @@ module Cadenya
 
       # Number of conversation messages created through this session, counted against
       # the session's message cap.
-      sig { returns(T.nilable(Integer)) }
-      attr_reader :message_count
-
-      sig { params(message_count: Integer).void }
-      attr_writer :message_count
+      sig { returns(Integer) }
+      attr_accessor :message_count
 
       # SubjectReference is the read-only echo of a resource's subject association,
       # carrying both Cadenya's canonical id and the customer's own key.
@@ -66,22 +57,19 @@ module Cadenya
       # e.g., the tool references inside an agent variation spec or the tools assigned
       # to an objective. Both fields are server-populated; clients provide IDs through
       # sibling fields rather than by constructing a BareMetadata themselves.
-      sig { returns(T.nilable(Cadenya::BareMetadata)) }
-      attr_reader :widget
-
-      sig { params(widget: Cadenya::BareMetadata::OrHash).void }
-      attr_writer :widget
+      sig { returns(Cadenya::BareMetadata) }
+      attr_accessor :widget
 
       # WidgetSessionInfo provides read-only server-derived data about a session.
       sig do
         params(
           agent: Cadenya::BareMetadata::OrHash,
           host: String,
-          last_active_at: Time,
           message_count: Integer,
+          widget: Cadenya::BareMetadata::OrHash,
+          last_active_at: Time,
           subject: Cadenya::SubjectReference::OrHash,
-          tenant: Cadenya::TenantReference::OrHash,
-          widget: Cadenya::BareMetadata::OrHash
+          tenant: Cadenya::TenantReference::OrHash
         ).returns(T.attached_class)
       end
       def self.new(
@@ -91,29 +79,29 @@ module Cadenya
         # e.g., the tool references inside an agent variation spec or the tools assigned
         # to an objective. Both fields are server-populated; clients provide IDs through
         # sibling fields rather than by constructing a BareMetadata themselves.
-        agent: nil,
+        agent:,
         # The widget hostname this session's tokens are bound to. Authoritative — clients
         # must use this value rather than constructing the hostname.
-        host: nil,
-        # When the session last created a conversation, sent a message, or refreshed a
-        # token.
-        last_active_at: nil,
+        host:,
         # Number of conversation messages created through this session, counted against
         # the session's message cap.
-        message_count: nil,
-        # SubjectReference is the read-only echo of a resource's subject association,
-        # carrying both Cadenya's canonical id and the customer's own key.
-        subject: nil,
-        # TenantReference is the read-only echo of a resource's tenant association,
-        # carrying both Cadenya's canonical id and the customer's own key.
-        tenant: nil,
+        message_count:,
         # BareMetadata contains the minimal metadata for a resource: the ID and an
         # optional human-readable name. These are used for reference fields where the full
         # metadata (account scoping, timestamps, labels, external IDs) is not needed —
         # e.g., the tool references inside an agent variation spec or the tools assigned
         # to an objective. Both fields are server-populated; clients provide IDs through
         # sibling fields rather than by constructing a BareMetadata themselves.
-        widget: nil
+        widget:,
+        # When the session last created a conversation, sent a message, or refreshed a
+        # token.
+        last_active_at: nil,
+        # SubjectReference is the read-only echo of a resource's subject association,
+        # carrying both Cadenya's canonical id and the customer's own key.
+        subject: nil,
+        # TenantReference is the read-only echo of a resource's tenant association,
+        # carrying both Cadenya's canonical id and the customer's own key.
+        tenant: nil
       )
       end
 

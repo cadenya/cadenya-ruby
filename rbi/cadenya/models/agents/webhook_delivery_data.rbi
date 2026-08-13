@@ -57,18 +57,12 @@ module Cadenya
         sig { returns(String) }
         attr_accessor :webhook_url
 
-        sig { returns(T.nilable(String)) }
-        attr_reader :error_message
-
-        sig { params(error_message: String).void }
-        attr_writer :error_message
+        sig { returns(String) }
+        attr_accessor :error_message
 
         # Response headers received from the webhook endpoint
-        sig { returns(T.nilable(T::Hash[Symbol, String])) }
-        attr_reader :response_headers
-
-        sig { params(response_headers: T::Hash[Symbol, String]).void }
-        attr_writer :response_headers
+        sig { returns(T::Hash[Symbol, String]) }
+        attr_accessor :response_headers
 
         sig do
           params(
@@ -107,9 +101,9 @@ module Cadenya
           webhook_id:,
           # Webhook delivery details
           webhook_url:,
-          error_message: nil,
+          error_message:,
           # Response headers received from the webhook endpoint
-          response_headers: nil
+          response_headers:
         )
         end
 

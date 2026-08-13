@@ -25,17 +25,17 @@ module Cadenya
         # @!attribute email
         #   Email address of the member's profile.
         #
-        #   @return [String, nil]
-        optional :email, String
+        #   @return [String]
+        required :email, String
 
         # @!attribute name
         #   Display name of the member's profile.
         #
-        #   @return [String, nil]
-        optional :name, String
+        #   @return [String]
+        required :name, String
       end
 
-      # @!method initialize(actor_id:, profile_id:, added_at: nil, email: nil, name: nil)
+      # @!method initialize(actor_id:, profile_id:, added_at: nil, email:, name:)
       #   A member of a workspace: the profile granted access plus the actor row that
       #   links it to the workspace. Returned by member list/add operations.
       #

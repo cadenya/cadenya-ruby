@@ -29,10 +29,10 @@ module Cadenya
       # @!attribute tool_call_id
       #   The ID of the objective tool call record that was executed.
       #
-      #   @return [String, nil]
-      optional :tool_call_id, String, api_name: :toolCallId
+      #   @return [String]
+      required :tool_call_id, String, api_name: :toolCallId
 
-      # @!method initialize(arguments: nil, config: nil, tool: nil, tool_call_id: nil)
+      # @!method initialize(arguments: nil, config: nil, tool: nil, tool_call_id:)
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::ToolCalled} for more details.
       #

@@ -7,13 +7,11 @@ module Cadenya
 
       def created_by=: (Cadenya::Profile) -> Cadenya::Profile
 
-      attr_reader variation_count: Integer?
-
-      def variation_count=: (Integer) -> Integer
+      attr_accessor variation_count: Integer
 
       def initialize: (
-        ?created_by: Cadenya::Profile,
-        ?variation_count: Integer
+        variation_count: Integer,
+        ?created_by: Cadenya::Profile
       ) -> void
 
       def to_hash: -> { created_by: Cadenya::Profile, variation_count: Integer }

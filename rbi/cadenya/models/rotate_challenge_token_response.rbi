@@ -11,11 +11,8 @@ module Cadenya
           )
         end
 
-      sig { returns(T.nilable(String)) }
-      attr_reader :challenge_token
-
-      sig { params(challenge_token: String).void }
-      attr_writer :challenge_token
+      sig { returns(String) }
+      attr_accessor :challenge_token
 
       # Response containing the newly generated challenge token.
       sig { params(challenge_token: String).returns(T.attached_class) }

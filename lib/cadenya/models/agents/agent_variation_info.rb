@@ -15,15 +15,15 @@ module Cadenya
         # @!attribute feedback_count
         #   Total number of objective feedbacks received for this variation
         #
-        #   @return [Integer, nil]
-        optional :feedback_count, Integer, api_name: :feedbackCount
+        #   @return [Integer]
+        required :feedback_count, Integer, api_name: :feedbackCount
 
         # @!attribute score
         #   Thompson Sampling score: posterior mean of Beta(ts_alpha, ts_beta). Range [0, 1]
         #   where 0.5 = neutral, >0.5 = positive, <0.5 = negative.
         #
-        #   @return [Float, nil]
-        optional :score, Float
+        #   @return [Float]
+        required :score, Float
 
         response_only do
           # @!attribute assignments
@@ -31,8 +31,8 @@ module Cadenya
           #   reads so clients can render a variation's full assignment list without calling
           #   the add/remove endpoints just to enumerate.
           #
-          #   @return [Array<Cadenya::Models::Agents::VariationAssignmentTool, Cadenya::Models::Agents::VariationAssignmentToolSet, Cadenya::Models::Agents::VariationAssignmentAgent>, nil]
-          optional :assignments,
+          #   @return [Array<Cadenya::Models::Agents::VariationAssignmentTool, Cadenya::Models::Agents::VariationAssignmentToolSet, Cadenya::Models::Agents::VariationAssignmentAgent>]
+          required :assignments,
                    -> { Cadenya::Internal::Type::ArrayOf[union: Cadenya::Agents::VariationAssignment] }
 
           # @!attribute memory_layer_assignments
@@ -40,16 +40,16 @@ module Cadenya
           #   ascending `position` (most specific first — resolution order). Capped at 10
           #   entries.
           #
-          #   @return [Array<Cadenya::Models::Agents::VariationMemoryLayerAssignment>, nil]
-          optional :memory_layer_assignments,
+          #   @return [Array<Cadenya::Models::Agents::VariationMemoryLayerAssignment>]
+          required :memory_layer_assignments,
                    -> { Cadenya::Internal::Type::ArrayOf[Cadenya::Agents::VariationMemoryLayerAssignment] },
                    api_name: :memoryLayerAssignments
 
           # @!attribute memory_layer_count
           #   Count of memory layer assignments.
           #
-          #   @return [Integer, nil]
-          optional :memory_layer_count, Integer, api_name: :memoryLayerCount
+          #   @return [Integer]
+          required :memory_layer_count, Integer, api_name: :memoryLayerCount
 
           # @!attribute model
           #   Standard metadata for persistent, named resources (e.g., agents, tools, prompts)
@@ -60,23 +60,23 @@ module Cadenya
           # @!attribute sub_agent_count
           #   Number of sub-agents assigned to this variation
           #
-          #   @return [Integer, nil]
-          optional :sub_agent_count, Integer, api_name: :subAgentCount
+          #   @return [Integer]
+          required :sub_agent_count, Integer, api_name: :subAgentCount
 
           # @!attribute tool_count
           #   Number of individual tools assigned to this variation
           #
-          #   @return [Integer, nil]
-          optional :tool_count, Integer, api_name: :toolCount
+          #   @return [Integer]
+          required :tool_count, Integer, api_name: :toolCount
 
           # @!attribute tool_set_count
           #   Number of tool sets assigned to this variation
           #
-          #   @return [Integer, nil]
-          optional :tool_set_count, Integer, api_name: :toolSetCount
+          #   @return [Integer]
+          required :tool_set_count, Integer, api_name: :toolSetCount
         end
 
-        # @!method initialize(assignments: nil, created_by: nil, feedback_count: nil, memory_layer_assignments: nil, memory_layer_count: nil, model: nil, score: nil, sub_agent_count: nil, tool_count: nil, tool_set_count: nil)
+        # @!method initialize(assignments:, created_by: nil, feedback_count:, memory_layer_assignments:, memory_layer_count:, model: nil, score:, sub_agent_count:, tool_count:, tool_set_count:)
         #   Some parameter documentations has been truncated, see
         #   {Cadenya::Models::Agents::AgentVariationInfo} for more details.
         #

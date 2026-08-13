@@ -24,18 +24,12 @@ module Cadenya
       attr_writer :added_at
 
       # Email address of the member's profile.
-      sig { returns(T.nilable(String)) }
-      attr_reader :email
-
-      sig { params(email: String).void }
-      attr_writer :email
+      sig { returns(String) }
+      attr_accessor :email
 
       # Display name of the member's profile.
-      sig { returns(T.nilable(String)) }
-      attr_reader :name
-
-      sig { params(name: String).void }
-      attr_writer :name
+      sig { returns(String) }
+      attr_accessor :name
 
       # A member of a workspace: the profile granted access plus the actor row that
       # links it to the workspace. Returned by member list/add operations.
@@ -43,9 +37,9 @@ module Cadenya
         params(
           actor_id: String,
           profile_id: String,
-          added_at: Time,
           email: String,
-          name: String
+          name: String,
+          added_at: Time
         ).returns(T.attached_class)
       end
       def self.new(
@@ -53,12 +47,12 @@ module Cadenya
         actor_id:,
         # The account profile that has access to the workspace.
         profile_id:,
-        # When the member was added to the workspace.
-        added_at: nil,
         # Email address of the member's profile.
-        email: nil,
+        email:,
         # Display name of the member's profile.
-        name: nil
+        name:,
+        # When the member was added to the workspace.
+        added_at: nil
       )
       end
 

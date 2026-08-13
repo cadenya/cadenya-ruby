@@ -40,32 +40,20 @@ module Cadenya
       attr_writer :capabilities
 
       # Cost per million input tokens in cents (e.g., 300 = $3.00)
-      sig { returns(T.nilable(String)) }
-      attr_reader :input_price_per_million_tokens
-
-      sig { params(input_price_per_million_tokens: String).void }
-      attr_writer :input_price_per_million_tokens
+      sig { returns(String) }
+      attr_accessor :input_price_per_million_tokens
 
       # Maximum number of input tokens the model supports
-      sig { returns(T.nilable(Integer)) }
-      attr_reader :max_input_tokens
-
-      sig { params(max_input_tokens: Integer).void }
-      attr_writer :max_input_tokens
+      sig { returns(Integer) }
+      attr_accessor :max_input_tokens
 
       # Maximum number of output tokens the model can generate
-      sig { returns(T.nilable(Integer)) }
-      attr_reader :max_output_tokens
-
-      sig { params(max_output_tokens: Integer).void }
-      attr_writer :max_output_tokens
+      sig { returns(Integer) }
+      attr_accessor :max_output_tokens
 
       # Cost per million output tokens in cents (e.g., 1500 = $15.00)
-      sig { returns(T.nilable(String)) }
-      attr_reader :output_price_per_million_tokens
-
-      sig { params(output_price_per_million_tokens: String).void }
-      attr_writer :output_price_per_million_tokens
+      sig { returns(String) }
+      attr_accessor :output_price_per_million_tokens
 
       sig do
         params(
@@ -96,15 +84,15 @@ module Cadenya
         # The inference knobs this model supports. Catalog data; drives which ModelConfig
         # fields a variation on this model may set. Reasoning support (and its mode) lives
         # here too, as the "reasoning" capability.
-        capabilities: nil,
+        capabilities:,
         # Cost per million input tokens in cents (e.g., 300 = $3.00)
-        input_price_per_million_tokens: nil,
+        input_price_per_million_tokens:,
         # Maximum number of input tokens the model supports
-        max_input_tokens: nil,
+        max_input_tokens:,
         # Maximum number of output tokens the model can generate
-        max_output_tokens: nil,
+        max_output_tokens:,
         # Cost per million output tokens in cents (e.g., 1500 = $15.00)
-        output_price_per_million_tokens: nil
+        output_price_per_million_tokens:
       )
       end
 

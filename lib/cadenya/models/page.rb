@@ -5,10 +5,10 @@ module Cadenya
     class Page < Cadenya::Internal::Type::BaseModel
       # @!attribute next_cursor
       #
-      #   @return [String, nil]
-      optional :next_cursor, String, api_name: :nextCursor
+      #   @return [String]
+      required :next_cursor, String, api_name: :nextCursor
 
-      # @!method initialize(next_cursor: nil)
+      # @!method initialize(next_cursor:)
       #   Page carries cursor-based pagination state. There is no total: the cursor walks
       #   the result set without ever counting it, and a count would cost a second query
       #   on every list.

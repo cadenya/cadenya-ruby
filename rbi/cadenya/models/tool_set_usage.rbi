@@ -13,25 +13,16 @@ module Cadenya
       attr_accessor :assigned_at
 
       # Standard metadata for persistent, named resources (e.g., agents, tools, prompts)
-      sig { returns(T.nilable(Cadenya::ResourceMetadata)) }
-      attr_reader :agent
-
-      sig { params(agent: Cadenya::ResourceMetadata::OrHash).void }
-      attr_writer :agent
+      sig { returns(Cadenya::ResourceMetadata) }
+      attr_accessor :agent
 
       # Standard metadata for persistent, named resources (e.g., agents, tools, prompts)
-      sig { returns(T.nilable(Cadenya::ResourceMetadata)) }
-      attr_reader :agent_variation
-
-      sig { params(agent_variation: Cadenya::ResourceMetadata::OrHash).void }
-      attr_writer :agent_variation
+      sig { returns(Cadenya::ResourceMetadata) }
+      attr_accessor :agent_variation
 
       # Standard metadata for persistent, named resources (e.g., agents, tools, prompts)
-      sig { returns(T.nilable(Cadenya::ResourceMetadata)) }
-      attr_reader :model
-
-      sig { params(model: Cadenya::ResourceMetadata::OrHash).void }
-      attr_writer :model
+      sig { returns(Cadenya::ResourceMetadata) }
+      attr_accessor :model
 
       # ToolSetUsage describes one agent variation that uses the tool set (or, when
       # filtering by tool, an individual tool within it).
@@ -47,11 +38,11 @@ module Cadenya
         # When the assignment was created.
         assigned_at:,
         # Standard metadata for persistent, named resources (e.g., agents, tools, prompts)
-        agent: nil,
+        agent:,
         # Standard metadata for persistent, named resources (e.g., agents, tools, prompts)
-        agent_variation: nil,
+        agent_variation:,
         # Standard metadata for persistent, named resources (e.g., agents, tools, prompts)
-        model: nil
+        model:
       )
       end
 

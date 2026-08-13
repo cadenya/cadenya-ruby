@@ -32,11 +32,11 @@ module Cadenya
           #   account level. Profiles are account-scoped and can be granted access to multiple
           #   workspaces.
           #
-          #   @return [Cadenya::Models::Profile, nil]
-          optional :submitted_by, -> { Cadenya::Profile }, api_name: :submittedBy
+          #   @return [Cadenya::Models::Profile]
+          required :submitted_by, -> { Cadenya::Profile }, api_name: :submittedBy
         end
 
-        # @!method initialize(agent_variation: nil, objective: nil, submitted_by: nil)
+        # @!method initialize(agent_variation: nil, objective: nil, submitted_by:)
         #   Some parameter documentations has been truncated, see
         #   {Cadenya::Models::Objectives::ObjectiveFeedbackInfo} for more details.
         #

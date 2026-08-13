@@ -9,25 +9,16 @@ module Cadenya
         end
 
       # Standard metadata for persistent, named resources (e.g., agents, tools, prompts)
-      sig { returns(T.nilable(Cadenya::ResourceMetadata)) }
-      attr_reader :agent
-
-      sig { params(agent: Cadenya::ResourceMetadata::OrHash).void }
-      attr_writer :agent
+      sig { returns(Cadenya::ResourceMetadata) }
+      attr_accessor :agent
 
       # Metadata for ephemeral operations and activities (e.g., objectives, executions,
       # runs)
-      sig { returns(T.nilable(Cadenya::OperationMetadata)) }
-      attr_reader :objective
+      sig { returns(Cadenya::OperationMetadata) }
+      attr_accessor :objective
 
-      sig { params(objective: Cadenya::OperationMetadata::OrHash).void }
-      attr_writer :objective
-
-      sig { returns(T.nilable(String)) }
-      attr_reader :task
-
-      sig { params(task: String).void }
-      attr_writer :task
+      sig { returns(String) }
+      attr_accessor :task
 
       sig do
         params(
@@ -38,11 +29,11 @@ module Cadenya
       end
       def self.new(
         # Standard metadata for persistent, named resources (e.g., agents, tools, prompts)
-        agent: nil,
+        agent:,
         # Metadata for ephemeral operations and activities (e.g., objectives, executions,
         # runs)
-        objective: nil,
-        task: nil
+        objective:,
+        task:
       )
       end
 

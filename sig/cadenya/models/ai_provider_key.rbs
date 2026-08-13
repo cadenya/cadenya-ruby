@@ -36,22 +36,16 @@ module Cadenya
         }
 
       class Info < Cadenya::Internal::Type::BaseModel
-        attr_reader disabled_model_count: Integer?
+        attr_accessor disabled_model_count: Integer
 
-        def disabled_model_count=: (Integer) -> Integer
+        attr_accessor enabled_model_count: Integer
 
-        attr_reader enabled_model_count: Integer?
-
-        def enabled_model_count=: (Integer) -> Integer
-
-        attr_reader is_promotional: bool?
-
-        def is_promotional=: (bool) -> bool
+        attr_accessor is_promotional: bool
 
         def initialize: (
-          ?disabled_model_count: Integer,
-          ?enabled_model_count: Integer,
-          ?is_promotional: bool
+          disabled_model_count: Integer,
+          enabled_model_count: Integer,
+          is_promotional: bool
         ) -> void
 
         def to_hash: -> {

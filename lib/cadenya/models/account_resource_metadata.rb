@@ -13,8 +13,8 @@ module Cadenya
       # @!attribute external_id
       #   External ID for the resource (e.g., a workflow ID from an external system)
       #
-      #   @return [String, nil]
-      optional :external_id, String, api_name: :externalId
+      #   @return [String]
+      required :external_id, String, api_name: :externalId
 
       # @!attribute labels
       #   Key-value pairs for categorization and filtering. Values are 0-63 alphanumeric
@@ -23,8 +23,8 @@ module Cadenya
       #   of at most 253 characters. Examples: {"environment": "production", "team":
       #   "platform", "version": "v2"}
       #
-      #   @return [Hash{Symbol=>String}, nil]
-      optional :labels, Cadenya::Internal::Type::HashOf[String]
+      #   @return [Hash{Symbol=>String}]
+      required :labels, Cadenya::Internal::Type::HashOf[String]
 
       response_only do
         # @!attribute id
@@ -50,7 +50,7 @@ module Cadenya
         optional :created_at, Time, api_name: :createdAt
       end
 
-      # @!method initialize(id:, account_id:, name:, profile_id:, created_at: nil, external_id: nil, labels: nil)
+      # @!method initialize(id:, account_id:, name:, profile_id:, created_at: nil, external_id:, labels:)
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::AccountResourceMetadata} for more details.
       #

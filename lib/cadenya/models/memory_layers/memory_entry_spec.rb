@@ -31,10 +31,10 @@ module Cadenya
         #   written for the model as the audience. Ignored for layer types that do not
         #   advertise frontmatter.
         #
-        #   @return [String, nil]
-        optional :description, String
+        #   @return [String]
+        required :description, String
 
-        # @!method initialize(key:, description: nil)
+        # @!method initialize(key:, description:)
         #   Some parameter documentations has been truncated, see
         #   {Cadenya::Models::MemoryLayers::MemoryEntrySpec} for more details.
         #

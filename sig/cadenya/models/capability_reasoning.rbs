@@ -4,15 +4,9 @@ module Cadenya
       { mode: Cadenya::Models::CapabilityReasoning::mode }
 
     class CapabilityReasoning < Cadenya::Internal::Type::BaseModel
-      attr_reader mode: Cadenya::Models::CapabilityReasoning::mode?
+      attr_accessor mode: Cadenya::Models::CapabilityReasoning::mode
 
-      def mode=: (
-        Cadenya::Models::CapabilityReasoning::mode
-      ) -> Cadenya::Models::CapabilityReasoning::mode
-
-      def initialize: (
-        ?mode: Cadenya::Models::CapabilityReasoning::mode
-      ) -> void
+      def initialize: (mode: Cadenya::Models::CapabilityReasoning::mode) -> void
 
       def to_hash: -> { mode: Cadenya::Models::CapabilityReasoning::mode }
 

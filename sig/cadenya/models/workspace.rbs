@@ -17,17 +17,13 @@ module Cadenya
 
       def info=: (Cadenya::Workspace::Info) -> Cadenya::Workspace::Info
 
-      attr_reader status: Cadenya::Models::Workspace::status?
-
-      def status=: (
-        Cadenya::Models::Workspace::status
-      ) -> Cadenya::Models::Workspace::status
+      attr_accessor status: Cadenya::Models::Workspace::status
 
       def initialize: (
         metadata: Cadenya::AccountResourceMetadata,
         spec: Cadenya::WorkspaceSpec,
-        ?info: Cadenya::Workspace::Info,
-        ?status: Cadenya::Models::Workspace::status
+        status: Cadenya::Models::Workspace::status,
+        ?info: Cadenya::Workspace::Info
       ) -> void
 
       def to_hash: -> {

@@ -29,11 +29,11 @@ module Cadenya
         #   AgentInfo contains simple information about an agent for display or quick
         #   reference
         #
-        #   @return [Cadenya::Models::AgentInfo, nil]
-        optional :info, -> { Cadenya::AgentInfo }
+        #   @return [Cadenya::Models::AgentInfo]
+        required :info, -> { Cadenya::AgentInfo }
       end
 
-      # @!method initialize(metadata:, spec:, state:, info: nil)
+      # @!method initialize(metadata:, spec:, state:, info:)
       #   Some parameter documentations has been truncated, see {Cadenya::Models::Agent}
       #   for more details.
       #

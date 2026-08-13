@@ -6,11 +6,8 @@ module Cadenya
       OrHash =
         T.type_alias { T.any(Cadenya::ToolSetInfo, Cadenya::Internal::AnyHash) }
 
-      sig { returns(T.nilable(Integer)) }
-      attr_reader :available_tools
-
-      sig { params(available_tools: Integer).void }
-      attr_writer :available_tools
+      sig { returns(Integer) }
+      attr_accessor :available_tools
 
       # A profile identifies a user or non-human principal (such as an API key) at the
       # account level. Profiles are account-scoped and can be granted access to multiple
@@ -21,17 +18,11 @@ module Cadenya
       sig { params(created_by: Cadenya::Profile::OrHash).void }
       attr_writer :created_by
 
-      sig { returns(T.nilable(Integer)) }
-      attr_reader :omitted_tools
+      sig { returns(Integer) }
+      attr_accessor :omitted_tools
 
-      sig { params(omitted_tools: Integer).void }
-      attr_writer :omitted_tools
-
-      sig { returns(T.nilable(Integer)) }
-      attr_reader :agent_count
-
-      sig { params(agent_count: Integer).void }
-      attr_writer :agent_count
+      sig { returns(Integer) }
+      attr_accessor :agent_count
 
       sig { returns(T.nilable(Time)) }
       attr_reader :last_sync
@@ -39,32 +30,29 @@ module Cadenya
       sig { params(last_sync: Time).void }
       attr_writer :last_sync
 
-      sig { returns(T.nilable(Integer)) }
-      attr_reader :tool_count
-
-      sig { params(tool_count: Integer).void }
-      attr_writer :tool_count
+      sig { returns(Integer) }
+      attr_accessor :tool_count
 
       sig do
         params(
           agent_count: Integer,
           available_tools: Integer,
-          created_by: Cadenya::Profile::OrHash,
-          last_sync: Time,
           omitted_tools: Integer,
-          tool_count: Integer
+          tool_count: Integer,
+          created_by: Cadenya::Profile::OrHash,
+          last_sync: Time
         ).returns(T.attached_class)
       end
       def self.new(
-        agent_count: nil,
-        available_tools: nil,
+        agent_count:,
+        available_tools:,
+        omitted_tools:,
+        tool_count:,
         # A profile identifies a user or non-human principal (such as an API key) at the
         # account level. Profiles are account-scoped and can be granted access to multiple
         # workspaces.
         created_by: nil,
-        last_sync: nil,
-        omitted_tools: nil,
-        tool_count: nil
+        last_sync: nil
       )
       end
 

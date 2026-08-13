@@ -20,18 +20,14 @@ module Cadenya
 
       attr_accessor state: Cadenya::Models::WidgetSession::state
 
-      attr_reader secrets: ::Array[Cadenya::WidgetSession::Secret]?
-
-      def secrets=: (
-        ::Array[Cadenya::WidgetSession::Secret]
-      ) -> ::Array[Cadenya::WidgetSession::Secret]
+      attr_accessor secrets: ::Array[Cadenya::WidgetSession::Secret]
 
       def initialize: (
         metadata: Cadenya::OperationMetadata,
         spec: Cadenya::WidgetSessionSpec,
         state: Cadenya::Models::WidgetSession::state,
-        ?info: Cadenya::WidgetSessionInfo,
-        ?secrets: ::Array[Cadenya::WidgetSession::Secret]
+        secrets: ::Array[Cadenya::WidgetSession::Secret],
+        ?info: Cadenya::WidgetSessionInfo
       ) -> void
 
       def to_hash: -> {

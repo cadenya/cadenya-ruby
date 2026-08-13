@@ -65,11 +65,8 @@ module Cadenya
         # Optional human-readable note recorded at cancel time. Today the workflow sets
         # "Cancelled" but this field leaves room for richer reasons (e.g. "Cancelled by
         # user", "Cancelled by schedule sweep", "Credit balance exhausted").
-        sig { returns(T.nilable(String)) }
-        attr_reader :message
-
-        sig { params(message: String).void }
-        attr_writer :message
+        sig { returns(String) }
+        attr_accessor :message
 
         # ObjectiveCancelled is the terminal event written when an objective is cancelled.
         # After this event, the objective is super-terminal: no further iterations,
@@ -79,7 +76,7 @@ module Cadenya
           # Optional human-readable note recorded at cancel time. Today the workflow sets
           # "Cancelled" but this field leaves room for richer reasons (e.g. "Cancelled by
           # user", "Cancelled by schedule sweep", "Credit balance exhausted").
-          message: nil
+          message:
         )
         end
 

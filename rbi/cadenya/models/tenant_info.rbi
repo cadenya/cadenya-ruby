@@ -10,25 +10,16 @@ module Cadenya
       # conversations and objectives created directly against the API alike. This is the
       # footprint a delete would destroy, which is why it is worth the count query that
       # populating `info` costs.
-      sig { returns(T.nilable(Integer)) }
-      attr_reader :objective_count
-
-      sig { params(objective_count: Integer).void }
-      attr_writer :objective_count
+      sig { returns(Integer) }
+      attr_accessor :objective_count
 
       # Number of subjects asserted under this tenant.
-      sig { returns(T.nilable(Integer)) }
-      attr_reader :subject_count
-
-      sig { params(subject_count: Integer).void }
-      attr_writer :subject_count
+      sig { returns(Integer) }
+      attr_accessor :subject_count
 
       # Number of widget sessions minted for this tenant that still exist.
-      sig { returns(T.nilable(Integer)) }
-      attr_reader :widget_session_count
-
-      sig { params(widget_session_count: Integer).void }
-      attr_writer :widget_session_count
+      sig { returns(Integer) }
+      attr_accessor :widget_session_count
 
       # TenantInfo provides read-only server-derived data about a tenant.
       sig do
@@ -43,11 +34,11 @@ module Cadenya
         # conversations and objectives created directly against the API alike. This is the
         # footprint a delete would destroy, which is why it is worth the count query that
         # populating `info` costs.
-        objective_count: nil,
+        objective_count:,
         # Number of subjects asserted under this tenant.
-        subject_count: nil,
+        subject_count:,
         # Number of widget sessions minted for this tenant that still exist.
-        widget_session_count: nil
+        widget_session_count:
       )
       end
 

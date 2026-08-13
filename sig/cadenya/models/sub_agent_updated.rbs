@@ -21,17 +21,13 @@ module Cadenya
 
       def objective=: (Cadenya::BareMetadata) -> Cadenya::BareMetadata
 
-      attr_reader status: Cadenya::Models::SubAgentUpdated::status?
-
-      def status=: (
-        Cadenya::Models::SubAgentUpdated::status
-      ) -> Cadenya::Models::SubAgentUpdated::status
+      attr_accessor status: Cadenya::Models::SubAgentUpdated::status
 
       def initialize: (
+        status: Cadenya::Models::SubAgentUpdated::status,
         ?agent: Cadenya::BareMetadata,
         ?message: String,
-        ?objective: Cadenya::BareMetadata,
-        ?status: Cadenya::Models::SubAgentUpdated::status
+        ?objective: Cadenya::BareMetadata
       ) -> void
 
       def to_hash: -> {

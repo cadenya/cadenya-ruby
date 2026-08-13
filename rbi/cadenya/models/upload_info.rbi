@@ -18,19 +18,13 @@ module Cadenya
       # Lifecycle state. Transitions PENDING → COMPLETE (storage confirms the object
       # exists) → CONSUMED (a resource referenced this upload), or → EXPIRED (URL
       # elapsed without a PUT).
-      sig { returns(T.nilable(Cadenya::UploadInfo::Status::TaggedSymbol)) }
-      attr_reader :status
-
-      sig { params(status: Cadenya::UploadInfo::Status::OrSymbol).void }
-      attr_writer :status
+      sig { returns(Cadenya::UploadInfo::Status::TaggedSymbol) }
+      attr_accessor :status
 
       # Presigned PUT URL. Short-lived. The client must PUT with the exact Content-Type
       # declared in the spec, and the body length must match size_bytes.
-      sig { returns(T.nilable(String)) }
-      attr_reader :upload_url
-
-      sig { params(upload_url: String).void }
-      attr_writer :upload_url
+      sig { returns(String) }
+      attr_accessor :upload_url
 
       # Absolute time at which upload_url stops working.
       sig { returns(T.nilable(Time)) }
@@ -41,24 +35,24 @@ module Cadenya
 
       sig do
         params(
-          created_by: Cadenya::Profile::OrHash,
           status: Cadenya::UploadInfo::Status::OrSymbol,
           upload_url: String,
+          created_by: Cadenya::Profile::OrHash,
           upload_url_expires_at: Time
         ).returns(T.attached_class)
       end
       def self.new(
+        # Lifecycle state. Transitions PENDING → COMPLETE (storage confirms the object
+        # exists) → CONSUMED (a resource referenced this upload), or → EXPIRED (URL
+        # elapsed without a PUT).
+        status:,
+        # Presigned PUT URL. Short-lived. The client must PUT with the exact Content-Type
+        # declared in the spec, and the body length must match size_bytes.
+        upload_url:,
         # A profile identifies a user or non-human principal (such as an API key) at the
         # account level. Profiles are account-scoped and can be granted access to multiple
         # workspaces.
         created_by: nil,
-        # Lifecycle state. Transitions PENDING → COMPLETE (storage confirms the object
-        # exists) → CONSUMED (a resource referenced this upload), or → EXPIRED (URL
-        # elapsed without a PUT).
-        status: nil,
-        # Presigned PUT URL. Short-lived. The client must PUT with the exact Content-Type
-        # declared in the spec, and the body length must match size_bytes.
-        upload_url: nil,
         # Absolute time at which upload_url stops working.
         upload_url_expires_at: nil
       )

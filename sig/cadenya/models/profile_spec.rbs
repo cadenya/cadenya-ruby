@@ -6,18 +6,14 @@ module Cadenya
     class ProfileSpec < Cadenya::Internal::Type::BaseModel
       attr_accessor type: Cadenya::Models::ProfileSpec::type_
 
-      attr_reader email: String?
+      attr_accessor email: String
 
-      def email=: (String) -> String
-
-      attr_reader name: String?
-
-      def name=: (String) -> String
+      attr_accessor name: String
 
       def initialize: (
         type: Cadenya::Models::ProfileSpec::type_,
-        ?email: String,
-        ?name: String
+        email: String,
+        name: String
       ) -> void
 
       def to_hash: -> {

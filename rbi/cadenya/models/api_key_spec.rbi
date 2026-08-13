@@ -32,33 +32,30 @@ module Cadenya
 
       # The bearer token used to authenticate as this API key. Returned only on creation
       # and rotation; subsequent reads omit this field.
-      sig { returns(T.nilable(String)) }
-      attr_reader :token
-
-      sig { params(token: String).void }
-      attr_writer :token
+      sig { returns(String) }
+      attr_accessor :token
 
       # True when this key is managed by the system (i.e. the auto-provisioned global
       # account key). System keys cannot be deleted but can be rotated.
-      sig { returns(T.nilable(T::Boolean)) }
-      attr_reader :system_
-
-      sig { params(system_: T::Boolean).void }
-      attr_writer :system_
+      sig { returns(T::Boolean) }
+      attr_accessor :system_
 
       # Configuration for an API key.
       sig do
         params(
           token: String,
+          system_: T::Boolean,
           description: String,
-          permissions: T::Array[String],
-          system_: T::Boolean
+          permissions: T::Array[String]
         ).returns(T.attached_class)
       end
       def self.new(
         # The bearer token used to authenticate as this API key. Returned only on creation
         # and rotation; subsequent reads omit this field.
-        token: nil,
+        token:,
+        # True when this key is managed by the system (i.e. the auto-provisioned global
+        # account key). System keys cannot be deleted but can be rotated.
+        system_:,
         # Free-form description of what this API key is used for.
         description: nil,
         # Scopes granted to this key. Each entry is a colon-separated resource:verb string
@@ -72,10 +69,7 @@ module Cadenya
         #
         # Scopes are deny-by-default: a key with an empty list can call only scope-free
         # endpoints. Full access is always an explicit "\*" grant.
-        permissions: nil,
-        # True when this key is managed by the system (i.e. the auto-provisioned global
-        # account key). System keys cannot be deleted but can be rotated.
-        system_: nil
+        permissions: nil
       )
       end
 

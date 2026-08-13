@@ -24,11 +24,9 @@ module Cadenya
       type cancelled = { message: String }
 
       class Cancelled < Cadenya::Internal::Type::BaseModel
-        attr_reader message: String?
+        attr_accessor message: String
 
-        def message=: (String) -> String
-
-        def initialize: (?message: String) -> void
+        def initialize: (message: String) -> void
 
         def to_hash: -> { message: String }
       end

@@ -19,11 +19,8 @@ module Cadenya
       sig { params(spec: Cadenya::MemoryLayerSpec::OrHash).void }
       attr_writer :spec
 
-      sig { returns(T.nilable(Cadenya::MemoryLayerInfo)) }
-      attr_reader :info
-
-      sig { params(info: Cadenya::MemoryLayerInfo::OrHash).void }
-      attr_writer :info
+      sig { returns(Cadenya::MemoryLayerInfo) }
+      attr_accessor :info
 
       # MemoryLayer is a named container of memory entries that can be composed into an
       # objective's memory cascade. Layers are workspace-scoped resources. The layer
@@ -42,7 +39,7 @@ module Cadenya
         # Standard metadata for persistent, named resources (e.g., agents, tools, prompts)
         metadata:,
         spec:,
-        info: nil
+        info:
       )
       end
 

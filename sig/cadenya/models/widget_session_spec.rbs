@@ -30,9 +30,7 @@ module Cadenya
 
       def tenant=: (Cadenya::TenantAssertion) -> Cadenya::TenantAssertion
 
-      attr_reader token: String?
-
-      def token=: (String) -> String
+      attr_accessor token: String
 
       attr_reader token_expires_at: Time?
 
@@ -40,7 +38,7 @@ module Cadenya
 
       def initialize: (
         widget_id: String,
-        ?token: String,
+        token: String,
         ?expires_at: Time,
         ?pinned_parameters: ::Hash[Symbol, String],
         ?subject: Cadenya::SubjectAssertion,

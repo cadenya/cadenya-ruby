@@ -39,8 +39,8 @@ module Cadenya
           # @!attribute resolved_secrets
           #   List of resolved secrets used by the tool call
           #
-          #   @return [Array<Cadenya::Models::Objectives::ResolvedSecret>, nil]
-          optional :resolved_secrets,
+          #   @return [Array<Cadenya::Models::Objectives::ResolvedSecret>]
+          required :resolved_secrets,
                    -> { Cadenya::Internal::Type::ArrayOf[Cadenya::Objectives::ResolvedSecret] },
                    api_name: :resolvedSecrets
 
@@ -54,7 +54,7 @@ module Cadenya
           optional :result, -> { Cadenya::Objectives::ObjectiveToolCallResult }
         end
 
-        # @!method initialize(data:, execution_status:, info:, metadata:, status:, resolved_secrets: nil, result: nil)
+        # @!method initialize(data:, execution_status:, info:, metadata:, status:, resolved_secrets:, result: nil)
         #   Some parameter documentations has been truncated, see
         #   {Cadenya::Models::Objectives::ObjectiveToolCallWithResult} for more details.
         #

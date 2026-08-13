@@ -13,16 +13,12 @@ module Cadenya
 
         attr_accessor spec: Cadenya::MemoryLayers::MemoryEntrySpec
 
-        attr_reader info: Cadenya::MemoryLayers::MemoryEntryInfo?
-
-        def info=: (
-          Cadenya::MemoryLayers::MemoryEntryInfo
-        ) -> Cadenya::MemoryLayers::MemoryEntryInfo
+        attr_accessor info: Cadenya::MemoryLayers::MemoryEntryInfo
 
         def initialize: (
           metadata: Cadenya::ResourceMetadata,
           spec: Cadenya::MemoryLayers::MemoryEntrySpec,
-          ?info: Cadenya::MemoryLayers::MemoryEntryInfo
+          info: Cadenya::MemoryLayers::MemoryEntryInfo
         ) -> void
 
         def to_hash: -> {

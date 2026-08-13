@@ -60,25 +60,24 @@ module Cadenya
         attr_writer :next_fire_at
 
         # Lifetime count of objectives created by this schedule.
-        sig { returns(T.nilable(Integer)) }
-        attr_reader :total_fires
-
-        sig { params(total_fires: Integer).void }
-        attr_writer :total_fires
+        sig { returns(Integer) }
+        attr_accessor :total_fires
 
         # AgentScheduleInfo provides read-only runtime data about a schedule.
         sig do
           params(
+            total_fires: Integer,
             created_by: Cadenya::Profile::OrHash,
             last_fire_at: Time,
             last_objective_id: String,
             last_skipped_at: Time,
             last_skip_reason: String,
-            next_fire_at: Time,
-            total_fires: Integer
+            next_fire_at: Time
           ).returns(T.attached_class)
         end
         def self.new(
+          # Lifetime count of objectives created by this schedule.
+          total_fires:,
           # A profile identifies a user or non-human principal (such as an API key) at the
           # account level. Profiles are account-scoped and can be granted access to multiple
           # workspaces.
@@ -93,9 +92,7 @@ module Cadenya
           last_skip_reason: nil,
           # When the schedule will next fire. Computed from the spec; absent when the
           # schedule is STATE_PAUSED/STATE_ARCHIVED or has no future fire times.
-          next_fire_at: nil,
-          # Lifetime count of objectives created by this schedule.
-          total_fires: nil
+          next_fire_at: nil
         )
         end
 

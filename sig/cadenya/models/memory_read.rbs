@@ -4,22 +4,16 @@ module Cadenya
       { memory_entry_id: String, memory_layer_id: String, message: String }
 
     class MemoryRead < Cadenya::Internal::Type::BaseModel
-      attr_reader memory_entry_id: String?
+      attr_accessor memory_entry_id: String
 
-      def memory_entry_id=: (String) -> String
+      attr_accessor memory_layer_id: String
 
-      attr_reader memory_layer_id: String?
-
-      def memory_layer_id=: (String) -> String
-
-      attr_reader message: String?
-
-      def message=: (String) -> String
+      attr_accessor message: String
 
       def initialize: (
-        ?memory_entry_id: String,
-        ?memory_layer_id: String,
-        ?message: String
+        memory_entry_id: String,
+        memory_layer_id: String,
+        message: String
       ) -> void
 
       def to_hash: -> {

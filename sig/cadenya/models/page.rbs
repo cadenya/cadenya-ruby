@@ -3,11 +3,9 @@ module Cadenya
     type page = { next_cursor: String }
 
     class Page < Cadenya::Internal::Type::BaseModel
-      attr_reader next_cursor: String?
+      attr_accessor next_cursor: String
 
-      def next_cursor=: (String) -> String
-
-      def initialize: (?next_cursor: String) -> void
+      def initialize: (next_cursor: String) -> void
 
       def to_hash: -> { next_cursor: String }
     end

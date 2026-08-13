@@ -18,15 +18,13 @@ module Cadenya
 
         def description=: (String) -> String
 
-        attr_reader key: String?
-
-        def key=: (String) -> String
+        attr_accessor key: String
 
         def initialize: (
           type: Cadenya::Models::MemoryLayers::MemoryEntryCreateSpecUploadID::type_,
           upload_id: String,
-          ?description: String,
-          ?key: String
+          key: String,
+          ?description: String
         ) -> void
 
         def to_hash: -> {

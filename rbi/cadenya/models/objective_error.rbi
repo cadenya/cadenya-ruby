@@ -8,11 +8,8 @@ module Cadenya
           T.any(Cadenya::ObjectiveError, Cadenya::Internal::AnyHash)
         end
 
-      sig { returns(T.nilable(String)) }
-      attr_reader :message
-
-      sig { params(message: String).void }
-      attr_writer :message
+      sig { returns(String) }
+      attr_accessor :message
 
       sig { returns(T.nilable(String)) }
       attr_reader :type

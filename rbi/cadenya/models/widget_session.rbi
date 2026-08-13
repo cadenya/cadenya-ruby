@@ -38,13 +38,8 @@ module Cadenya
       # Names of the secrets attached to the session. Values are write-only: provided at
       # creation, encrypted at rest, and interpolated into tool-call headers server-side
       # — never returned by any API.
-      sig { returns(T.nilable(T::Array[Cadenya::WidgetSession::Secret])) }
-      attr_reader :secrets
-
-      sig do
-        params(secrets: T::Array[Cadenya::WidgetSession::Secret::OrHash]).void
-      end
-      attr_writer :secrets
+      sig { returns(T::Array[Cadenya::WidgetSession::Secret]) }
+      attr_accessor :secrets
 
       # WidgetSession is a delegated, narrowed credential for one visitor's use of a
       # widget, minted server-to-server by the customer's backend. The session carries
@@ -57,8 +52,8 @@ module Cadenya
           metadata: Cadenya::OperationMetadata::OrHash,
           spec: Cadenya::WidgetSessionSpec::OrHash,
           state: Cadenya::WidgetSession::State::OrSymbol,
-          info: Cadenya::WidgetSessionInfo::OrHash,
-          secrets: T::Array[Cadenya::WidgetSession::Secret::OrHash]
+          secrets: T::Array[Cadenya::WidgetSession::Secret::OrHash],
+          info: Cadenya::WidgetSessionInfo::OrHash
         ).returns(T.attached_class)
       end
       def self.new(
@@ -70,12 +65,12 @@ module Cadenya
         # The current lifecycle state of the session. Output only. Sessions are created
         # STATE_ACTIVE; use :revoke to end one early.
         state:,
-        # WidgetSessionInfo provides read-only server-derived data about a session.
-        info: nil,
         # Names of the secrets attached to the session. Values are write-only: provided at
         # creation, encrypted at rest, and interpolated into tool-call headers server-side
         # — never returned by any API.
-        secrets: nil
+        secrets:,
+        # WidgetSessionInfo provides read-only server-derived data about a session.
+        info: nil
       )
       end
 

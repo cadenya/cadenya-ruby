@@ -67,11 +67,8 @@ module Cadenya
 
         # Human-readable note recorded at timeout time (e.g. "Timed out after 2h of
         # inactivity").
-        sig { returns(T.nilable(String)) }
-        attr_reader :message
-
-        sig { params(message: String).void }
-        attr_writer :message
+        sig { returns(String) }
+        attr_accessor :message
 
         # ObjectiveTimedOut is the terminal event written when an objective is finalized
         # by the inactivity sweep because it saw no activity (no user messages, no LLM
@@ -83,7 +80,7 @@ module Cadenya
         def self.new(
           # Human-readable note recorded at timeout time (e.g. "Timed out after 2h of
           # inactivity").
-          message: nil
+          message:
         )
         end
 

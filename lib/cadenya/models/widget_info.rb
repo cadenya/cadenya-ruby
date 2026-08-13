@@ -20,26 +20,26 @@ module Cadenya
         #   to an objective. Both fields are server-populated; clients provide IDs through
         #   sibling fields rather than by constructing a BareMetadata themselves.
         #
-        #   @return [Cadenya::Models::BareMetadata, nil]
-        optional :agent, -> { Cadenya::BareMetadata }
+        #   @return [Cadenya::Models::BareMetadata]
+        required :agent, -> { Cadenya::BareMetadata }
 
         # @!attribute dns_label
         #   The widget's DNS label — the single hostname label under the widgets domain.
         #   Server-generated at creation, globally unique, immutable, and deliberately
         #   unrelated to the widget's id.
         #
-        #   @return [String, nil]
-        optional :dns_label, String, api_name: :dnsLabel
+        #   @return [String]
+        required :dns_label, String, api_name: :dnsLabel
 
         # @!attribute host
         #   The full hostname browsers talk to. Authoritative — clients must use this value
         #   rather than constructing the hostname themselves.
         #
-        #   @return [String, nil]
-        optional :host, String
+        #   @return [String]
+        required :host, String
       end
 
-      # @!method initialize(agent: nil, created_by: nil, dns_label: nil, host: nil)
+      # @!method initialize(agent:, created_by: nil, dns_label:, host:)
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::WidgetInfo} for more details.
       #

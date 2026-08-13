@@ -13,8 +13,8 @@ module Cadenya
         #   to an objective. Both fields are server-populated; clients provide IDs through
         #   sibling fields rather than by constructing a BareMetadata themselves.
         #
-        #   @return [Cadenya::Models::BareMetadata, nil]
-        optional :memory_layer, -> { Cadenya::BareMetadata }, api_name: :memoryLayer
+        #   @return [Cadenya::Models::BareMetadata]
+        required :memory_layer, -> { Cadenya::BareMetadata }, api_name: :memoryLayer
 
         # @!attribute position
         #   Position in the variation's baseline cascade. Position is specificity,
@@ -24,19 +24,19 @@ module Cadenya
         #   request that would collide with an existing assignment's position is rejected
         #   with InvalidArgument.
         #
-        #   @return [Integer, nil]
-        optional :position, Integer
+        #   @return [Integer]
+        required :position, Integer
 
         response_only do
           # @!attribute id
           #   Assignment row id — handle for removing the assignment. Distinct from the
           #   referenced memory layer's id.
           #
-          #   @return [String, nil]
-          optional :id, String
+          #   @return [String]
+          required :id, String
         end
 
-        # @!method initialize(id: nil, memory_layer: nil, position: nil)
+        # @!method initialize(id:, memory_layer:, position:)
         #   Some parameter documentations has been truncated, see
         #   {Cadenya::Models::Agents::VariationMemoryLayerAssignment} for more details.
         #

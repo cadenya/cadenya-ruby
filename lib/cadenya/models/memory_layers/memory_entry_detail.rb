@@ -30,10 +30,10 @@ module Cadenya
 
         # @!attribute info
         #
-        #   @return [Cadenya::Models::MemoryLayers::MemoryEntryInfo, nil]
-        optional :info, -> { Cadenya::MemoryLayers::MemoryEntryInfo }
+        #   @return [Cadenya::Models::MemoryLayers::MemoryEntryInfo]
+        required :info, -> { Cadenya::MemoryLayers::MemoryEntryInfo }
 
-        # @!method initialize(content:, metadata:, spec:, info: nil)
+        # @!method initialize(content:, metadata:, spec:, info:)
         #   Some parameter documentations has been truncated, see
         #   {Cadenya::Models::MemoryLayers::MemoryEntryDetail} for more details.
         #

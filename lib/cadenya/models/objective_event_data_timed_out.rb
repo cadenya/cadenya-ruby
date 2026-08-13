@@ -33,10 +33,10 @@ module Cadenya
         #   Human-readable note recorded at timeout time (e.g. "Timed out after 2h of
         #   inactivity").
         #
-        #   @return [String, nil]
-        optional :message, String
+        #   @return [String]
+        required :message, String
 
-        # @!method initialize(message: nil)
+        # @!method initialize(message:)
         #   Some parameter documentations has been truncated, see
         #   {Cadenya::Models::ObjectiveEventDataTimedOut::TimedOut} for more details.
         #

@@ -15,19 +15,13 @@ module Cadenya
       class ObjectiveToolCallData < Cadenya::Internal::Type::BaseModel
         attr_accessor callable: Cadenya::Models::callable_tool
 
-        attr_reader arguments: ::Hash[Symbol, top]?
-
-        def arguments=: (::Hash[Symbol, top]) -> ::Hash[Symbol, top]
+        attr_accessor arguments: ::Hash[Symbol, top]
 
         attr_reader memo: String?
 
         def memo=: (String) -> String
 
-        attr_reader resolved_secrets: ::Array[Cadenya::Objectives::ResolvedSecret]?
-
-        def resolved_secrets=: (
-          ::Array[Cadenya::Objectives::ResolvedSecret]
-        ) -> ::Array[Cadenya::Objectives::ResolvedSecret]
+        attr_accessor resolved_secrets: ::Array[Cadenya::Objectives::ResolvedSecret]
 
         attr_reader status_changed_by: Cadenya::Profile?
 
@@ -35,9 +29,9 @@ module Cadenya
 
         def initialize: (
           callable: Cadenya::Models::callable_tool,
-          ?arguments: ::Hash[Symbol, top],
+          arguments: ::Hash[Symbol, top],
+          resolved_secrets: ::Array[Cadenya::Objectives::ResolvedSecret],
           ?memo: String,
-          ?resolved_secrets: ::Array[Cadenya::Objectives::ResolvedSecret],
           ?status_changed_by: Cadenya::Profile
         ) -> void
 

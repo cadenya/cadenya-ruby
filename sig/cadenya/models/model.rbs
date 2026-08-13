@@ -53,9 +53,7 @@ module Cadenya
         }
 
       class Info < Cadenya::Internal::Type::BaseModel
-        attr_reader agent_variation_count: Integer?
-
-        def agent_variation_count=: (Integer) -> Integer
+        attr_accessor agent_variation_count: Integer
 
         attr_reader ai_provider_key: Cadenya::AIProviderKey?
 
@@ -66,7 +64,7 @@ module Cadenya
         def last_used_at=: (Time) -> Time
 
         def initialize: (
-          ?agent_variation_count: Integer,
+          agent_variation_count: Integer,
           ?ai_provider_key: Cadenya::AIProviderKey,
           ?last_used_at: Time
         ) -> void

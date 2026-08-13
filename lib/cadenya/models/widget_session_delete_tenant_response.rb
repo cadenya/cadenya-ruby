@@ -8,17 +8,17 @@ module Cadenya
         # @!attribute objectives_deleted
         #   Number of conversations (objectives) deleted along with the sessions.
         #
-        #   @return [Integer, nil]
-        optional :objectives_deleted, Integer, api_name: :objectivesDeleted
+        #   @return [Integer]
+        required :objectives_deleted, Integer, api_name: :objectivesDeleted
 
         # @!attribute sessions_deleted
         #   Number of sessions deleted.
         #
-        #   @return [Integer, nil]
-        optional :sessions_deleted, Integer, api_name: :sessionsDeleted
+        #   @return [Integer]
+        required :sessions_deleted, Integer, api_name: :sessionsDeleted
       end
 
-      # @!method initialize(objectives_deleted: nil, sessions_deleted: nil)
+      # @!method initialize(objectives_deleted:, sessions_deleted:)
       #   Delete tenant widget sessions response.
       #
       #   @param objectives_deleted [Integer] Number of conversations (objectives) deleted along with the sessions.

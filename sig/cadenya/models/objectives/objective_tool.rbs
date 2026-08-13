@@ -9,13 +9,11 @@ module Cadenya
       class ObjectiveTool < Cadenya::Internal::Type::BaseModel
         attr_accessor metadata: Cadenya::BareMetadata
 
-        attr_reader snapshot: Cadenya::ToolSets::Tool?
-
-        def snapshot=: (Cadenya::ToolSets::Tool) -> Cadenya::ToolSets::Tool
+        attr_accessor snapshot: Cadenya::ToolSets::Tool
 
         def initialize: (
           metadata: Cadenya::BareMetadata,
-          ?snapshot: Cadenya::ToolSets::Tool
+          snapshot: Cadenya::ToolSets::Tool
         ) -> void
 
         def to_hash: -> {

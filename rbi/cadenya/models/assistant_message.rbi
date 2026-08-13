@@ -14,13 +14,8 @@ module Cadenya
       sig { params(content: String).void }
       attr_writer :content
 
-      sig { returns(T.nilable(T::Array[Cadenya::AssistantToolCall])) }
-      attr_reader :tool_calls
-
-      sig do
-        params(tool_calls: T::Array[Cadenya::AssistantToolCall::OrHash]).void
-      end
-      attr_writer :tool_calls
+      sig { returns(T::Array[Cadenya::AssistantToolCall]) }
+      attr_accessor :tool_calls
 
       sig do
         params(

@@ -21,8 +21,8 @@ module Cadenya
         # @!attribute entry_count
         #   Number of entries currently in this layer.
         #
-        #   @return [Integer, nil]
-        optional :entry_count, Integer, api_name: :entryCount
+        #   @return [Integer]
+        required :entry_count, Integer, api_name: :entryCount
 
         # @!attribute last_used_at
         #   Timestamp of the most recent objective that resolved against this layer. Useful
@@ -32,7 +32,7 @@ module Cadenya
         optional :last_used_at, Time, api_name: :lastUsedAt
       end
 
-      # @!method initialize(agent: nil, created_by: nil, entry_count: nil, last_used_at: nil)
+      # @!method initialize(agent: nil, created_by: nil, entry_count:, last_used_at: nil)
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::MemoryLayerInfo} for more details.
       #

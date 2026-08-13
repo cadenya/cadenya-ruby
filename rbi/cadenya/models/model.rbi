@@ -94,11 +94,8 @@ module Cadenya
 
         # Number of agent variations currently provisioned on this model. Useful for
         # previewing how many variations a swap would affect.
-        sig { returns(T.nilable(Integer)) }
-        attr_reader :agent_variation_count
-
-        sig { params(agent_variation_count: Integer).void }
-        attr_writer :agent_variation_count
+        sig { returns(Integer) }
+        attr_accessor :agent_variation_count
 
         # AIProviderKey is a credential for an AI provider, scoped to a workspace. Most
         # keys are customer-provided (BYOK); Cadenya also provisions promotional keys (see
@@ -128,7 +125,7 @@ module Cadenya
         def self.new(
           # Number of agent variations currently provisioned on this model. Useful for
           # previewing how many variations a swap would affect.
-          agent_variation_count: nil,
+          agent_variation_count:,
           # AIProviderKey is a credential for an AI provider, scoped to a workspace. Most
           # keys are customer-provided (BYOK); Cadenya also provisions promotional keys (see
           # AIProviderKeyInfo.is_promotional), which cannot be modified or deleted by

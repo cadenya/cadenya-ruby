@@ -24,19 +24,13 @@ module Cadenya
         attr_writer :created_by
 
         # Total number of objective feedbacks received for this variation
-        sig { returns(T.nilable(Integer)) }
-        attr_reader :feedback_count
-
-        sig { params(feedback_count: Integer).void }
-        attr_writer :feedback_count
+        sig { returns(Integer) }
+        attr_accessor :feedback_count
 
         # Thompson Sampling score: posterior mean of Beta(ts_alpha, ts_beta). Range [0, 1]
         # where 0.5 = neutral, >0.5 = positive, <0.5 = negative.
-        sig { returns(T.nilable(Float)) }
-        attr_reader :score
-
-        sig { params(score: Float).void }
-        attr_writer :score
+        sig { returns(Float) }
+        attr_accessor :score
 
         # All tools, tool sets, and sub-agents assigned to this variation. Populated on
         # reads so clients can render a variation's full assignment list without calling
@@ -81,11 +75,8 @@ module Cadenya
         attr_writer :memory_layer_assignments
 
         # Count of memory layer assignments.
-        sig { returns(T.nilable(Integer)) }
-        attr_reader :memory_layer_count
-
-        sig { params(memory_layer_count: Integer).void }
-        attr_writer :memory_layer_count
+        sig { returns(Integer) }
+        attr_accessor :memory_layer_count
 
         # Standard metadata for persistent, named resources (e.g., agents, tools, prompts)
         sig { returns(T.nilable(Cadenya::ResourceMetadata)) }
@@ -95,25 +86,16 @@ module Cadenya
         attr_writer :model
 
         # Number of sub-agents assigned to this variation
-        sig { returns(T.nilable(Integer)) }
-        attr_reader :sub_agent_count
-
-        sig { params(sub_agent_count: Integer).void }
-        attr_writer :sub_agent_count
+        sig { returns(Integer) }
+        attr_accessor :sub_agent_count
 
         # Number of individual tools assigned to this variation
-        sig { returns(T.nilable(Integer)) }
-        attr_reader :tool_count
-
-        sig { params(tool_count: Integer).void }
-        attr_writer :tool_count
+        sig { returns(Integer) }
+        attr_accessor :tool_count
 
         # Number of tool sets assigned to this variation
-        sig { returns(T.nilable(Integer)) }
-        attr_reader :tool_set_count
-
-        sig { params(tool_set_count: Integer).void }
-        attr_writer :tool_set_count
+        sig { returns(Integer) }
+        attr_accessor :tool_set_count
 
         # AgentVariationInfo provides read-only summary information about a variation
         sig do
@@ -126,46 +108,46 @@ module Cadenya
                   Cadenya::Agents::VariationAssignmentAgent::OrHash
                 )
               ],
-            created_by: Cadenya::Profile::OrHash,
             feedback_count: Integer,
             memory_layer_assignments:
               T::Array[Cadenya::Agents::VariationMemoryLayerAssignment::OrHash],
             memory_layer_count: Integer,
-            model: Cadenya::ResourceMetadata::OrHash,
             score: Float,
             sub_agent_count: Integer,
             tool_count: Integer,
-            tool_set_count: Integer
+            tool_set_count: Integer,
+            created_by: Cadenya::Profile::OrHash,
+            model: Cadenya::ResourceMetadata::OrHash
           ).returns(T.attached_class)
         end
         def self.new(
           # All tools, tool sets, and sub-agents assigned to this variation. Populated on
           # reads so clients can render a variation's full assignment list without calling
           # the add/remove endpoints just to enumerate.
-          assignments: nil,
+          assignments:,
+          # Total number of objective feedbacks received for this variation
+          feedback_count:,
+          # Read-only list of memory layer assignments for this variation, returned in
+          # ascending `position` (most specific first — resolution order). Capped at 10
+          # entries.
+          memory_layer_assignments:,
+          # Count of memory layer assignments.
+          memory_layer_count:,
+          # Thompson Sampling score: posterior mean of Beta(ts_alpha, ts_beta). Range [0, 1]
+          # where 0.5 = neutral, >0.5 = positive, <0.5 = negative.
+          score:,
+          # Number of sub-agents assigned to this variation
+          sub_agent_count:,
+          # Number of individual tools assigned to this variation
+          tool_count:,
+          # Number of tool sets assigned to this variation
+          tool_set_count:,
           # A profile identifies a user or non-human principal (such as an API key) at the
           # account level. Profiles are account-scoped and can be granted access to multiple
           # workspaces.
           created_by: nil,
-          # Total number of objective feedbacks received for this variation
-          feedback_count: nil,
-          # Read-only list of memory layer assignments for this variation, returned in
-          # ascending `position` (most specific first — resolution order). Capped at 10
-          # entries.
-          memory_layer_assignments: nil,
-          # Count of memory layer assignments.
-          memory_layer_count: nil,
           # Standard metadata for persistent, named resources (e.g., agents, tools, prompts)
-          model: nil,
-          # Thompson Sampling score: posterior mean of Beta(ts_alpha, ts_beta). Range [0, 1]
-          # where 0.5 = neutral, >0.5 = positive, <0.5 = negative.
-          score: nil,
-          # Number of sub-agents assigned to this variation
-          sub_agent_count: nil,
-          # Number of individual tools assigned to this variation
-          tool_count: nil,
-          # Number of tool sets assigned to this variation
-          tool_set_count: nil
+          model: nil
         )
         end
 

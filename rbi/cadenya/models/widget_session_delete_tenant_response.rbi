@@ -12,18 +12,12 @@ module Cadenya
         end
 
       # Number of conversations (objectives) deleted along with the sessions.
-      sig { returns(T.nilable(Integer)) }
-      attr_reader :objectives_deleted
-
-      sig { params(objectives_deleted: Integer).void }
-      attr_writer :objectives_deleted
+      sig { returns(Integer) }
+      attr_accessor :objectives_deleted
 
       # Number of sessions deleted.
-      sig { returns(T.nilable(Integer)) }
-      attr_reader :sessions_deleted
-
-      sig { params(sessions_deleted: Integer).void }
-      attr_writer :sessions_deleted
+      sig { returns(Integer) }
+      attr_accessor :sessions_deleted
 
       # Delete tenant widget sessions response.
       sig do
@@ -33,9 +27,9 @@ module Cadenya
       end
       def self.new(
         # Number of conversations (objectives) deleted along with the sessions.
-        objectives_deleted: nil,
+        objectives_deleted:,
         # Number of sessions deleted.
-        sessions_deleted: nil
+        sessions_deleted:
       )
       end
 

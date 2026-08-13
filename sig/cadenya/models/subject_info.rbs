@@ -4,17 +4,13 @@ module Cadenya
       { objective_count: Integer, tenant: Cadenya::TenantReference }
 
     class SubjectInfo < Cadenya::Internal::Type::BaseModel
-      attr_reader objective_count: Integer?
+      attr_accessor objective_count: Integer
 
-      def objective_count=: (Integer) -> Integer
-
-      attr_reader tenant: Cadenya::TenantReference?
-
-      def tenant=: (Cadenya::TenantReference) -> Cadenya::TenantReference
+      attr_accessor tenant: Cadenya::TenantReference
 
       def initialize: (
-        ?objective_count: Integer,
-        ?tenant: Cadenya::TenantReference
+        objective_count: Integer,
+        tenant: Cadenya::TenantReference
       ) -> void
 
       def to_hash: -> {

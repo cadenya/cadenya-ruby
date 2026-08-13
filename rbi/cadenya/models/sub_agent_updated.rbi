@@ -38,21 +38,19 @@ module Cadenya
       sig { params(objective: Cadenya::BareMetadata::OrHash).void }
       attr_writer :objective
 
-      sig { returns(T.nilable(Cadenya::SubAgentUpdated::Status::TaggedSymbol)) }
-      attr_reader :status
-
-      sig { params(status: Cadenya::SubAgentUpdated::Status::OrSymbol).void }
-      attr_writer :status
+      sig { returns(Cadenya::SubAgentUpdated::Status::TaggedSymbol) }
+      attr_accessor :status
 
       sig do
         params(
+          status: Cadenya::SubAgentUpdated::Status::OrSymbol,
           agent: Cadenya::BareMetadata::OrHash,
           message: String,
-          objective: Cadenya::BareMetadata::OrHash,
-          status: Cadenya::SubAgentUpdated::Status::OrSymbol
+          objective: Cadenya::BareMetadata::OrHash
         ).returns(T.attached_class)
       end
       def self.new(
+        status:,
         # BareMetadata contains the minimal metadata for a resource: the ID and an
         # optional human-readable name. These are used for reference fields where the full
         # metadata (account scoping, timestamps, labels, external IDs) is not needed —
@@ -67,8 +65,7 @@ module Cadenya
         # e.g., the tool references inside an agent variation spec or the tools assigned
         # to an objective. Both fields are server-populated; clients provide IDs through
         # sibling fields rather than by constructing a BareMetadata themselves.
-        objective: nil,
-        status: nil
+        objective: nil
       )
       end
 

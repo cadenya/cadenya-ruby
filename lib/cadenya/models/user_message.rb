@@ -5,10 +5,10 @@ module Cadenya
     class UserMessage < Cadenya::Internal::Type::BaseModel
       # @!attribute content
       #
-      #   @return [String, nil]
-      optional :content, String
+      #   @return [String]
+      required :content, String
 
-      # @!method initialize(content: nil)
+      # @!method initialize(content:)
       #   @param content [String]
     end
   end

@@ -11,11 +11,8 @@ module Cadenya
           )
         end
 
-      sig { returns(T.nilable(String)) }
-      attr_reader :webhook_events_hmac_secret
-
-      sig { params(webhook_events_hmac_secret: String).void }
-      attr_writer :webhook_events_hmac_secret
+      sig { returns(String) }
+      attr_accessor :webhook_events_hmac_secret
 
       # Response containing the newly generated webhook signing secret.
       sig do

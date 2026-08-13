@@ -7,10 +7,10 @@ module Cadenya
       # @!attribute spec
       #   The consumed OpenAPI specification as a JSON string.
       #
-      #   @return [String, nil]
-      optional :spec, String
+      #   @return [String]
+      required :spec, String
 
-      # @!method initialize(spec: nil)
+      # @!method initialize(spec:)
       #   @param spec [String] The consumed OpenAPI specification as a JSON string.
     end
   end

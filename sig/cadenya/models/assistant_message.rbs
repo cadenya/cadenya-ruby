@@ -8,15 +8,11 @@ module Cadenya
 
       def content=: (String) -> String
 
-      attr_reader tool_calls: ::Array[Cadenya::AssistantToolCall]?
-
-      def tool_calls=: (
-        ::Array[Cadenya::AssistantToolCall]
-      ) -> ::Array[Cadenya::AssistantToolCall]
+      attr_accessor tool_calls: ::Array[Cadenya::AssistantToolCall]
 
       def initialize: (
-        ?content: String,
-        ?tool_calls: ::Array[Cadenya::AssistantToolCall]
+        tool_calls: ::Array[Cadenya::AssistantToolCall],
+        ?content: String
       ) -> void
 
       def to_hash: -> {

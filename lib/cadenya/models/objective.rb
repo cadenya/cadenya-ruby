@@ -39,8 +39,8 @@ module Cadenya
       #   assignments) must not exceed 10 entries. A request that would produce a larger
       #   cascade is rejected with InvalidArgument.
       #
-      #   @return [Array<Cadenya::Models::MemoryReference>, nil]
-      optional :memory_cascade,
+      #   @return [Array<Cadenya::Models::MemoryReference>]
+      required :memory_cascade,
                -> { Cadenya::Internal::Type::ArrayOf[Cadenya::MemoryReference] },
                api_name: :memoryCascade
 
@@ -48,8 +48,8 @@ module Cadenya
       #   Secrets that can be used in the headers for tool calls using the secret
       #   interpolation format.
       #
-      #   @return [Array<Cadenya::Models::ObjectiveSecret>, nil]
-      optional :secrets, -> { Cadenya::Internal::Type::ArrayOf[Cadenya::ObjectiveSecret] }
+      #   @return [Array<Cadenya::Models::ObjectiveSecret>]
+      required :secrets, -> { Cadenya::Internal::Type::ArrayOf[Cadenya::ObjectiveSecret] }
 
       response_only do
         # @!attribute config_snapshot
@@ -98,21 +98,21 @@ module Cadenya
         #   A parent objective means the objective was spawned off using a separate agent to
         #   complete an objective
         #
-        #   @return [String, nil]
-        optional :parent_objective_id, String, api_name: :parentObjectiveId
+        #   @return [String]
+        required :parent_objective_id, String, api_name: :parentObjectiveId
 
         # @!attribute pinned_parameters
         #   Parameters forced onto this objective's tool calls, as provided at creation. See
         #   CreateObjectiveRequest.pinned_parameters for semantics.
         #
-        #   @return [Hash{Symbol=>String}, nil]
-        optional :pinned_parameters, Cadenya::Internal::Type::HashOf[String], api_name: :pinnedParameters
+        #   @return [Hash{Symbol=>String}]
+        required :pinned_parameters, Cadenya::Internal::Type::HashOf[String], api_name: :pinnedParameters
 
         # @!attribute state_message
         #   Optional human-readable detail about the current state (e.g. a failure reason).
         #
-        #   @return [String, nil]
-        optional :state_message, String, api_name: :stateMessage
+        #   @return [String]
+        required :state_message, String, api_name: :stateMessage
 
         # @!attribute system_prompt_data
         #   Arbitrary data rendered into the variation's system_prompt_template
@@ -123,7 +123,7 @@ module Cadenya
                  api_name: :systemPromptData
       end
 
-      # @!method initialize(config_snapshot:, first_user_message:, metadata:, state:, system_prompt:, episodic_memory: nil, first_user_message_data: nil, info: nil, memory_cascade: nil, output: nil, parent_objective_id: nil, pinned_parameters: nil, secrets: nil, state_message: nil, system_prompt_data: nil)
+      # @!method initialize(config_snapshot:, first_user_message:, metadata:, state:, system_prompt:, episodic_memory: nil, first_user_message_data: nil, info: nil, memory_cascade:, output: nil, parent_objective_id:, pinned_parameters:, secrets:, state_message:, system_prompt_data: nil)
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::Objective} for more details.
       #

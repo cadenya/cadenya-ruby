@@ -37,13 +37,8 @@ module Cadenya
         end
         attr_writer :spec
 
-        sig { returns(T.nilable(Cadenya::MemoryLayers::MemoryEntryInfo)) }
-        attr_reader :info
-
-        sig do
-          params(info: Cadenya::MemoryLayers::MemoryEntryInfo::OrHash).void
-        end
-        attr_writer :info
+        sig { returns(Cadenya::MemoryLayers::MemoryEntryInfo) }
+        attr_accessor :info
 
         # MemoryEntryDetail is the full representation of an entry, including the resolved
         # content body. Returned by GetMemoryEntry, CreateMemoryEntry, and
@@ -68,7 +63,7 @@ module Cadenya
           # and describe it, without the body. It appears on both the summary (MemoryEntry)
           # and detail (MemoryEntryDetail) views.
           spec:,
-          info: nil
+          info:
         )
         end
 

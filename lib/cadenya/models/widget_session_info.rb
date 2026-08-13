@@ -12,15 +12,15 @@ module Cadenya
         #   to an objective. Both fields are server-populated; clients provide IDs through
         #   sibling fields rather than by constructing a BareMetadata themselves.
         #
-        #   @return [Cadenya::Models::BareMetadata, nil]
-        optional :agent, -> { Cadenya::BareMetadata }
+        #   @return [Cadenya::Models::BareMetadata]
+        required :agent, -> { Cadenya::BareMetadata }
 
         # @!attribute host
         #   The widget hostname this session's tokens are bound to. Authoritative — clients
         #   must use this value rather than constructing the hostname.
         #
-        #   @return [String, nil]
-        optional :host, String
+        #   @return [String]
+        required :host, String
 
         # @!attribute last_active_at
         #   When the session last created a conversation, sent a message, or refreshed a
@@ -33,8 +33,8 @@ module Cadenya
         #   Number of conversation messages created through this session, counted against
         #   the session's message cap.
         #
-        #   @return [Integer, nil]
-        optional :message_count, Integer, api_name: :messageCount
+        #   @return [Integer]
+        required :message_count, Integer, api_name: :messageCount
 
         # @!attribute subject
         #   SubjectReference is the read-only echo of a resource's subject association,
@@ -58,11 +58,11 @@ module Cadenya
         #   to an objective. Both fields are server-populated; clients provide IDs through
         #   sibling fields rather than by constructing a BareMetadata themselves.
         #
-        #   @return [Cadenya::Models::BareMetadata, nil]
-        optional :widget, -> { Cadenya::BareMetadata }
+        #   @return [Cadenya::Models::BareMetadata]
+        required :widget, -> { Cadenya::BareMetadata }
       end
 
-      # @!method initialize(agent: nil, host: nil, last_active_at: nil, message_count: nil, subject: nil, tenant: nil, widget: nil)
+      # @!method initialize(agent:, host:, last_active_at: nil, message_count:, subject: nil, tenant: nil, widget:)
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::WidgetSessionInfo} for more details.
       #

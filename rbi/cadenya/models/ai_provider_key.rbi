@@ -69,26 +69,17 @@ module Cadenya
           end
 
         # Number of disabled models provisioned on this key.
-        sig { returns(T.nilable(Integer)) }
-        attr_reader :disabled_model_count
-
-        sig { params(disabled_model_count: Integer).void }
-        attr_writer :disabled_model_count
+        sig { returns(Integer) }
+        attr_accessor :disabled_model_count
 
         # Number of enabled models provisioned on this key.
-        sig { returns(T.nilable(Integer)) }
-        attr_reader :enabled_model_count
-
-        sig { params(enabled_model_count: Integer).void }
-        attr_writer :enabled_model_count
+        sig { returns(Integer) }
+        attr_accessor :enabled_model_count
 
         # Cadenya includes promotional keys (one for onboarding, and potentially more in
         # the future). These are not added or maintained by account administrators.
-        sig { returns(T.nilable(T::Boolean)) }
-        attr_reader :is_promotional
-
-        sig { params(is_promotional: T::Boolean).void }
-        attr_writer :is_promotional
+        sig { returns(T::Boolean) }
+        attr_accessor :is_promotional
 
         # AIProviderKeyInfo carries server-derived, read-only details about a key, for AI
         # provider management UIs.
@@ -101,12 +92,12 @@ module Cadenya
         end
         def self.new(
           # Number of disabled models provisioned on this key.
-          disabled_model_count: nil,
+          disabled_model_count:,
           # Number of enabled models provisioned on this key.
-          enabled_model_count: nil,
+          enabled_model_count:,
           # Cadenya includes promotional keys (one for onboarding, and potentially more in
           # the future). These are not added or maintained by account administrators.
-          is_promotional: nil
+          is_promotional:
         )
         end
 

@@ -5,17 +5,17 @@ module Cadenya
     class ToolError < Cadenya::Internal::Type::BaseModel
       # @!attribute message
       #
-      #   @return [String, nil]
-      optional :message, String
+      #   @return [String]
+      required :message, String
 
       # @!attribute tool_call_id
       #   The ID of the objective tool call record that encountered an error during
       #   execution.
       #
-      #   @return [String, nil]
-      optional :tool_call_id, String, api_name: :toolCallId
+      #   @return [String]
+      required :tool_call_id, String, api_name: :toolCallId
 
-      # @!method initialize(message: nil, tool_call_id: nil)
+      # @!method initialize(message:, tool_call_id:)
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::ToolError} for more details.
       #

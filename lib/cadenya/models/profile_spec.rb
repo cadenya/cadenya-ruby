@@ -13,16 +13,16 @@ module Cadenya
       #   Email address of the profile. Required and unique within an account for user
       #   profiles.
       #
-      #   @return [String, nil]
-      optional :email, String
+      #   @return [String]
+      required :email, String
 
       # @!attribute name
       #   Display name (e.g., "Bobby Tables").
       #
-      #   @return [String, nil]
-      optional :name, String
+      #   @return [String]
+      required :name, String
 
-      # @!method initialize(type:, email: nil, name: nil)
+      # @!method initialize(type:, email:, name:)
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::ProfileSpec} for more details.
       #

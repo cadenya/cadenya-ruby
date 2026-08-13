@@ -3,15 +3,13 @@ module Cadenya
     type bare_metadata = { id: String, name: String }
 
     class BareMetadata < Cadenya::Internal::Type::BaseModel
-      attr_reader id: String?
-
-      def id=: (String) -> String
+      attr_accessor id: String
 
       attr_reader name: String?
 
       def name=: (String) -> String
 
-      def initialize: (?id: String, ?name: String) -> void
+      def initialize: (id: String, ?name: String) -> void
 
       def to_hash: -> { id: String, name: String }
     end

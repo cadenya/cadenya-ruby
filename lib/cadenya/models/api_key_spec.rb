@@ -30,18 +30,18 @@ module Cadenya
         #   The bearer token used to authenticate as this API key. Returned only on creation
         #   and rotation; subsequent reads omit this field.
         #
-        #   @return [String, nil]
-        optional :token, String
+        #   @return [String]
+        required :token, String
 
         # @!attribute system_
         #   True when this key is managed by the system (i.e. the auto-provisioned global
         #   account key). System keys cannot be deleted but can be rotated.
         #
-        #   @return [Boolean, nil]
-        optional :system_, Cadenya::Internal::Type::Boolean, api_name: :system
+        #   @return [Boolean]
+        required :system_, Cadenya::Internal::Type::Boolean, api_name: :system
       end
 
-      # @!method initialize(token: nil, description: nil, permissions: nil, system_: nil)
+      # @!method initialize(token:, description: nil, permissions: nil, system_:)
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::APIKeySpec} for more details.
       #

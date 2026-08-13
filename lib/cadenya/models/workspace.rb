@@ -27,11 +27,11 @@ module Cadenya
         #   Lifecycle status of the workspace. Archived workspaces reject all requests
         #   scoped to them. Server-populated.
         #
-        #   @return [Symbol, Cadenya::Models::Workspace::Status, nil]
-        optional :status, enum: -> { Cadenya::Workspace::Status }
+        #   @return [Symbol, Cadenya::Models::Workspace::Status]
+        required :status, enum: -> { Cadenya::Workspace::Status }
       end
 
-      # @!method initialize(metadata:, spec:, info: nil, status: nil)
+      # @!method initialize(metadata:, spec:, info: nil, status:)
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::Workspace} for more details.
       #

@@ -12,18 +12,12 @@ module Cadenya
 
       # Email address of the profile. Required and unique within an account for user
       # profiles.
-      sig { returns(T.nilable(String)) }
-      attr_reader :email
-
-      sig { params(email: String).void }
-      attr_writer :email
+      sig { returns(String) }
+      attr_accessor :email
 
       # Display name (e.g., "Bobby Tables").
-      sig { returns(T.nilable(String)) }
-      attr_reader :name
-
-      sig { params(name: String).void }
-      attr_writer :name
+      sig { returns(String) }
+      attr_accessor :name
 
       # Configuration for a profile.
       sig do
@@ -38,9 +32,9 @@ module Cadenya
         type:,
         # Email address of the profile. Required and unique within an account for user
         # profiles.
-        email: nil,
+        email:,
         # Display name (e.g., "Bobby Tables").
-        name: nil
+        name:
       )
       end
 

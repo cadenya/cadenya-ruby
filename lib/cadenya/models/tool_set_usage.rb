@@ -14,23 +14,23 @@ module Cadenya
         # @!attribute agent
         #   Standard metadata for persistent, named resources (e.g., agents, tools, prompts)
         #
-        #   @return [Cadenya::Models::ResourceMetadata, nil]
-        optional :agent, -> { Cadenya::ResourceMetadata }
+        #   @return [Cadenya::Models::ResourceMetadata]
+        required :agent, -> { Cadenya::ResourceMetadata }
 
         # @!attribute agent_variation
         #   Standard metadata for persistent, named resources (e.g., agents, tools, prompts)
         #
-        #   @return [Cadenya::Models::ResourceMetadata, nil]
-        optional :agent_variation, -> { Cadenya::ResourceMetadata }, api_name: :agentVariation
+        #   @return [Cadenya::Models::ResourceMetadata]
+        required :agent_variation, -> { Cadenya::ResourceMetadata }, api_name: :agentVariation
 
         # @!attribute model
         #   Standard metadata for persistent, named resources (e.g., agents, tools, prompts)
         #
-        #   @return [Cadenya::Models::ResourceMetadata, nil]
-        optional :model, -> { Cadenya::ResourceMetadata }
+        #   @return [Cadenya::Models::ResourceMetadata]
+        required :model, -> { Cadenya::ResourceMetadata }
       end
 
-      # @!method initialize(assigned_at:, agent: nil, agent_variation: nil, model: nil)
+      # @!method initialize(assigned_at:, agent:, agent_variation:, model:)
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::ToolSetUsage} for more details.
       #

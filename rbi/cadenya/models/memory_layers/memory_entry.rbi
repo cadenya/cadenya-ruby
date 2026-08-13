@@ -30,13 +30,8 @@ module Cadenya
         end
         attr_writer :spec
 
-        sig { returns(T.nilable(Cadenya::MemoryLayers::MemoryEntryInfo)) }
-        attr_reader :info
-
-        sig do
-          params(info: Cadenya::MemoryLayers::MemoryEntryInfo::OrHash).void
-        end
-        attr_writer :info
+        sig { returns(Cadenya::MemoryLayers::MemoryEntryInfo) }
+        attr_accessor :info
 
         # MemoryEntry is a single keyed value within a MemoryLayer. Entries are addressed
         # by their key, which follows the S3 object key safe-character convention (see
@@ -61,7 +56,7 @@ module Cadenya
           # and describe it, without the body. It appears on both the summary (MemoryEntry)
           # and detail (MemoryEntryDetail) views.
           spec:,
-          info: nil
+          info:
         )
         end
 

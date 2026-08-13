@@ -4,18 +4,14 @@ module Cadenya
       { adapter: Cadenya::Models::tool_set_adapter, description: String }
 
     class ToolSetSpec < Cadenya::Internal::Type::BaseModel
-      attr_reader adapter: Cadenya::Models::tool_set_adapter?
-
-      def adapter=: (
-        Cadenya::Models::tool_set_adapter
-      ) -> Cadenya::Models::tool_set_adapter
+      attr_accessor adapter: Cadenya::Models::tool_set_adapter
 
       attr_reader description: String?
 
       def description=: (String) -> String
 
       def initialize: (
-        ?adapter: Cadenya::Models::tool_set_adapter,
+        adapter: Cadenya::Models::tool_set_adapter,
         ?description: String
       ) -> void
 

@@ -11,19 +11,19 @@ module Cadenya
         #   requiring real auth on tools/call. Rotate with RotateChallengeToken; update any
         #   servers validating the token before rotating.
         #
-        #   @return [String, nil]
-        optional :challenge_token, String, api_name: :challengeToken
+        #   @return [String]
+        required :challenge_token, String, api_name: :challengeToken
 
         # @!attribute webhook_events_hmac_secret
         #   The generated secret that will sign all webhooks that are sent to your
         #   configured Webhook URL. Formatted as "wh_asdf1234" per the
         #   https://www.standardwebhooks.com/ format.
         #
-        #   @return [String, nil]
-        optional :webhook_events_hmac_secret, String, api_name: :webhookEventsHmacSecret
+        #   @return [String]
+        required :webhook_events_hmac_secret, String, api_name: :webhookEventsHmacSecret
       end
 
-      # @!method initialize(challenge_token: nil, webhook_events_hmac_secret: nil)
+      # @!method initialize(challenge_token:, webhook_events_hmac_secret:)
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::AccountInfo} for more details.
       #

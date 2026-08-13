@@ -45,24 +45,24 @@ module Cadenya
           # @!attribute disabled_model_count
           #   Number of disabled models provisioned on this key.
           #
-          #   @return [Integer, nil]
-          optional :disabled_model_count, Integer, api_name: :disabledModelCount
+          #   @return [Integer]
+          required :disabled_model_count, Integer, api_name: :disabledModelCount
 
           # @!attribute enabled_model_count
           #   Number of enabled models provisioned on this key.
           #
-          #   @return [Integer, nil]
-          optional :enabled_model_count, Integer, api_name: :enabledModelCount
+          #   @return [Integer]
+          required :enabled_model_count, Integer, api_name: :enabledModelCount
 
           # @!attribute is_promotional
           #   Cadenya includes promotional keys (one for onboarding, and potentially more in
           #   the future). These are not added or maintained by account administrators.
           #
-          #   @return [Boolean, nil]
-          optional :is_promotional, Cadenya::Internal::Type::Boolean, api_name: :isPromotional
+          #   @return [Boolean]
+          required :is_promotional, Cadenya::Internal::Type::Boolean, api_name: :isPromotional
         end
 
-        # @!method initialize(disabled_model_count: nil, enabled_model_count: nil, is_promotional: nil)
+        # @!method initialize(disabled_model_count:, enabled_model_count:, is_promotional:)
         #   Some parameter documentations has been truncated, see
         #   {Cadenya::Models::AIProviderKey::Info} for more details.
         #

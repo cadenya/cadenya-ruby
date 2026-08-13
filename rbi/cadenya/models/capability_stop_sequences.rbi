@@ -10,18 +10,15 @@ module Cadenya
 
       # Maximum number of stop sequences the model accepts per request. 0 means the
       # provider imposes no meaningful limit.
-      sig { returns(T.nilable(Integer)) }
-      attr_reader :limit
-
-      sig { params(limit: Integer).void }
-      attr_writer :limit
+      sig { returns(Integer) }
+      attr_accessor :limit
 
       # Custom stop sequences (ModelConfig.stop_sequences).
       sig { params(limit: Integer).returns(T.attached_class) }
       def self.new(
         # Maximum number of stop sequences the model accepts per request. 0 means the
         # provider imposes no meaningful limit.
-        limit: nil
+        limit:
       )
       end
 

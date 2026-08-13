@@ -29,11 +29,8 @@ module Cadenya
         # Snapshot of the tool at the time it was assigned to the objective. Because tools
         # can change over time, snapshots are used to ensure tools don't change
         # unexpectedly during an objective's lifecycle.
-        sig { returns(T.nilable(Cadenya::ToolSets::Tool)) }
-        attr_reader :snapshot
-
-        sig { params(snapshot: Cadenya::ToolSets::Tool::OrHash).void }
-        attr_writer :snapshot
+        sig { returns(Cadenya::ToolSets::Tool) }
+        attr_accessor :snapshot
 
         # ObjectiveTool represents a tool that was assigned to an objective.
         sig do
@@ -53,7 +50,7 @@ module Cadenya
           # Snapshot of the tool at the time it was assigned to the objective. Because tools
           # can change over time, snapshots are used to ensure tools don't change
           # unexpectedly during an objective's lifecycle.
-          snapshot: nil
+          snapshot:
         )
         end
 

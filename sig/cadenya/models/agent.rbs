@@ -15,15 +15,13 @@ module Cadenya
 
       attr_accessor state: Cadenya::Models::Agent::state
 
-      attr_reader info: Cadenya::AgentInfo?
-
-      def info=: (Cadenya::AgentInfo) -> Cadenya::AgentInfo
+      attr_accessor info: Cadenya::AgentInfo
 
       def initialize: (
         metadata: Cadenya::ResourceMetadata,
         spec: Cadenya::AgentSpec,
         state: Cadenya::Models::Agent::state,
-        ?info: Cadenya::AgentInfo
+        info: Cadenya::AgentInfo
       ) -> void
 
       def to_hash: -> {

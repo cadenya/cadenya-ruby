@@ -30,28 +30,25 @@ module Cadenya
         attr_writer :description
 
         # See MemoryEntrySpec.key for the full rule set. Same constraints apply here.
-        sig { returns(T.nilable(String)) }
-        attr_reader :key
-
-        sig { params(key: String).void }
-        attr_writer :key
+        sig { returns(String) }
+        attr_accessor :key
 
         sig do
           params(
             content: String,
             type:
               Cadenya::MemoryLayers::MemoryEntryCreateSpecContent::Type::OrSymbol,
-            description: String,
-            key: String
+            key: String,
+            description: String
           ).returns(T.attached_class)
         end
         def self.new(
           # Inline content, written directly into the entry.
           content:,
           type:,
-          description: nil,
           # See MemoryEntrySpec.key for the full rule set. Same constraints apply here.
-          key: nil
+          key:,
+          description: nil
         )
         end
 

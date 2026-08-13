@@ -28,11 +28,8 @@ module Cadenya
 
       # AgentInfo contains simple information about an agent for display or quick
       # reference
-      sig { returns(T.nilable(Cadenya::AgentInfo)) }
-      attr_reader :info
-
-      sig { params(info: Cadenya::AgentInfo::OrHash).void }
-      attr_writer :info
+      sig { returns(Cadenya::AgentInfo) }
+      attr_accessor :info
 
       # Agent resource
       sig do
@@ -54,7 +51,7 @@ module Cadenya
         state:,
         # AgentInfo contains simple information about an agent for display or quick
         # reference
-        info: nil
+        info:
       )
       end
 

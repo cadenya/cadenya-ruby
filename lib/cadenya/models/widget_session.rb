@@ -36,11 +36,11 @@ module Cadenya
         #   creation, encrypted at rest, and interpolated into tool-call headers server-side
         #   — never returned by any API.
         #
-        #   @return [Array<Cadenya::Models::WidgetSession::Secret>, nil]
-        optional :secrets, -> { Cadenya::Internal::Type::ArrayOf[Cadenya::WidgetSession::Secret] }
+        #   @return [Array<Cadenya::Models::WidgetSession::Secret>]
+        required :secrets, -> { Cadenya::Internal::Type::ArrayOf[Cadenya::WidgetSession::Secret] }
       end
 
-      # @!method initialize(metadata:, spec:, state:, info: nil, secrets: nil)
+      # @!method initialize(metadata:, spec:, state:, info: nil, secrets:)
       #   Some parameter documentations has been truncated, see
       #   {Cadenya::Models::WidgetSession} for more details.
       #

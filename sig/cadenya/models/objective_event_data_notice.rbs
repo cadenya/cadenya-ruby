@@ -29,24 +29,16 @@ module Cadenya
         }
 
       class Notice < Cadenya::Internal::Type::BaseModel
-        attr_reader key: String?
+        attr_accessor key: String
 
-        def key=: (String) -> String
+        attr_accessor level: Cadenya::Models::ObjectiveEventDataNotice::Notice::level
 
-        attr_reader level: Cadenya::Models::ObjectiveEventDataNotice::Notice::level?
-
-        def level=: (
-          Cadenya::Models::ObjectiveEventDataNotice::Notice::level
-        ) -> Cadenya::Models::ObjectiveEventDataNotice::Notice::level
-
-        attr_reader message: String?
-
-        def message=: (String) -> String
+        attr_accessor message: String
 
         def initialize: (
-          ?key: String,
-          ?level: Cadenya::Models::ObjectiveEventDataNotice::Notice::level,
-          ?message: String
+          key: String,
+          level: Cadenya::Models::ObjectiveEventDataNotice::Notice::level,
+          message: String
         ) -> void
 
         def to_hash: -> {
