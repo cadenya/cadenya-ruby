@@ -633,7 +633,7 @@ client.tool_sets.secrets.update(tool_set_id, id, workspace_id: nil, metadata: ni
 List tools
 
 ```ruby
-client.tool_sets.tools.list(tool_set_id, workspace_id: nil, limit: nil, cursor: nil, prefix: nil, query: nil, names: nil, states: nil, requires_approval: nil, labels: nil, sort_order: nil, include_info: nil) # => Cadenya::Page of Cadenya::Types::Tool
+client.tool_sets.tools.list(tool_set_id, workspace_id: nil, limit: nil, cursor: nil, prefix: nil, query: nil, names: nil, states: nil, requires_approval: nil, overlays: nil, labels: nil, sort_order: nil, include_info: nil) # => Cadenya::Page of Cadenya::Types::Tool
 ```
 Create a new tool
 
