@@ -1,0 +1,24 @@
+---
+http_interactions:
+- recorded_at: Thu, 01 Jan 2026 00:00:00 GMT
+  request:
+    body:
+      encoding: UTF-8
+      string: '{"metadata":{"name":"sample"},"spec":{}}'
+    headers:
+      Content-Type:
+      - application/json
+    method: post
+    uri: https://api.test.example/v1/account/workspaces
+  response:
+    body:
+      encoding: UTF-8
+      string: '{"metadata":{"accountId":"sample","externalId":"sample","id":"sample","labels":{},"name":"sample","profileId":"sample"},"spec":{},"status":"STATUS_ENABLED"}'
+    headers:
+      Content-Type:
+      - application/json
+    http_version: '1.1'
+    status:
+      code: 200
+      message: OK
+recorded_with: redwood (VCR 6.x format)

@@ -1,0 +1,22 @@
+---
+http_interactions:
+- recorded_at: Thu, 01 Jan 2026 00:00:00 GMT
+  request:
+    body:
+      encoding: UTF-8
+      string: ''
+    headers: {}
+    method: get
+    uri: https://api.test.example/v1/workspaces/sample/objectives/sample/diagnostics
+  response:
+    body:
+      encoding: UTF-8
+      string: '{"diagnostics":{"cachedInputTokens":1,"contextLengths":{"assistantMessages":1,"availableTools":1,"episodicMemory":1,"skillsMemory":1,"systemPrompt":1,"toolDefinitions":1,"toolResults":1,"userMessages":1},"inputTokens":1}}'
+    headers:
+      Content-Type:
+      - application/json
+    http_version: '1.1'
+    status:
+      code: 200
+      message: OK
+recorded_with: redwood (VCR 6.x format)

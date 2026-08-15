@@ -1,0 +1,22 @@
+---
+http_interactions:
+- recorded_at: Thu, 01 Jan 2026 00:00:00 GMT
+  request:
+    body:
+      encoding: UTF-8
+      string: ''
+    headers: {}
+    method: delete
+    uri: https://api.test.example/v1/workspaces/sample/widget_sessions?tenantId=sample
+  response:
+    body:
+      encoding: UTF-8
+      string: '{"objectivesDeleted":1,"sessionsDeleted":1}'
+    headers:
+      Content-Type:
+      - application/json
+    http_version: '1.1'
+    status:
+      code: 200
+      message: OK
+recorded_with: redwood (VCR 6.x format)

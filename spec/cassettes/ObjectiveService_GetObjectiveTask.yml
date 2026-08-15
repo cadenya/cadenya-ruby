@@ -1,0 +1,22 @@
+---
+http_interactions:
+- recorded_at: Thu, 01 Jan 2026 00:00:00 GMT
+  request:
+    body:
+      encoding: UTF-8
+      string: ''
+    headers: {}
+    method: get
+    uri: https://api.test.example/v1/workspaces/sample/objectives/sample/tasks/sample
+  response:
+    body:
+      encoding: UTF-8
+      string: '{"data":{"completed":true,"number":1,"task":"sample"},"metadata":{"id":"sample"}}'
+    headers:
+      Content-Type:
+      - application/json
+    http_version: '1.1'
+    status:
+      code: 200
+      message: OK
+recorded_with: redwood (VCR 6.x format)

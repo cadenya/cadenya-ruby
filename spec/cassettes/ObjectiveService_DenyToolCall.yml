@@ -1,0 +1,24 @@
+---
+http_interactions:
+- recorded_at: Thu, 01 Jan 2026 00:00:00 GMT
+  request:
+    body:
+      encoding: UTF-8
+      string: '{"memo":"sample"}'
+    headers:
+      Content-Type:
+      - application/json
+    method: post
+    uri: https://api.test.example/v1/workspaces/sample/objectives/sample/tool_calls/sample:deny
+  response:
+    body:
+      encoding: UTF-8
+      string: '{"data":{"arguments":{},"callable":{"tool":{"accountId":"sample","createdAt":"2026-01-01T00:00:00Z","externalId":"sample","id":"sample","labels":{},"name":"sample","profileId":"sample","workspaceId":"sample"},"type":"tool"},"resolvedSecrets":[{"key":"sample","source":"RESOLVED_SECRET_SOURCE_UNSPECIFIED"}]},"executionStatus":"TOOL_CALL_EXECUTION_STATUS_UNSPECIFIED","metadata":{"accountId":"sample","createdAt":"2026-01-01T00:00:00Z","externalId":"sample","id":"sample","labels":{},"profileId":"sample","workspaceId":"sample"},"status":"TOOL_CALL_STATUS_UNSPECIFIED"}'
+    headers:
+      Content-Type:
+      - application/json
+    http_version: '1.1'
+    status:
+      code: 200
+      message: OK
+recorded_with: redwood (VCR 6.x format)
