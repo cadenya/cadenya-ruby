@@ -8,7 +8,7 @@ RSpec.describe "client.tool_sets.tools" do
   describe "#list" do
     it "sends the golden request and decodes the response" do
       VCR.use_cassette("ToolService_ListTools") do
-        result = client.tool_sets.tools.list("sample", workspace_id: "sample", limit: 1, cursor: "sample", prefix: "sample", query: "sample", names: ["sample"], states: ["STATE_UNSPECIFIED"], requires_approval: true, labels: "sample", sort_order: "sample", include_info: true)
+        result = client.tool_sets.tools.list("sample", workspace_id: "sample", limit: 1, cursor: "sample", prefix: "sample", query: "sample", names: ["sample"], states: ["STATE_UNSPECIFIED"], requires_approval: true, overlays: ["sample"], labels: "sample", sort_order: "sample", include_info: true)
         items = result.to_a
         expect(items.length).to eq(2)
       end
@@ -19,7 +19,7 @@ RSpec.describe "client.tool_sets.tools" do
         stub = stub_request(:get, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/tool_sets/sample/tools")
           .with(query: hash_including({}))
           .to_return(status: 200, body: "{\"items\":[{\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{\"config\":{\"http\":{\"requestMethod\":\"HTTP_METHOD_UNSPECIFIED\"},\"type\":\"http\"},\"description\":\"sample\",\"parameters\":{},\"requiresApproval\":true},\"state\":\"STATE_UNSPECIFIED\"}],\"pagination\":{\"nextCursor\":\"\"}}", headers: { "Content-Type" => "application/json" })
-        client.tool_sets.tools.list("sample", limit: 1, cursor: "sample", prefix: "sample", query: "sample", names: ["sample"], states: ["STATE_UNSPECIFIED"], requires_approval: true, labels: "sample", sort_order: "sample", include_info: true)
+        client.tool_sets.tools.list("sample", limit: 1, cursor: "sample", prefix: "sample", query: "sample", names: ["sample"], states: ["STATE_UNSPECIFIED"], requires_approval: true, overlays: ["sample"], labels: "sample", sort_order: "sample", include_info: true)
         expect(stub).to have_been_requested
       end
     end
