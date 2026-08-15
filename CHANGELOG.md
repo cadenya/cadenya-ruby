@@ -1,5 +1,23 @@
 # Changelog
 
+## [0.52.0](https://github.com/cadenya/cadenya-ruby/compare/v0.51.1...v0.52.0) (2026-08-15)
+
+
+### Features
+
+* regenerate from spec with webhooks and discriminator overlays ([#57](https://github.com/cadenya/cadenya-ruby/issues/57)) ([8a05f27](https://github.com/cadenya/cadenya-ruby/commit/8a05f27fedfc351069d2f77baeb501aafac02498))
+* sync SDKs to current API spec and add stlc promote/sync workflows ([8a05f27](https://github.com/cadenya/cadenya-ruby/commit/8a05f27fedfc351069d2f77baeb501aafac02498))
+
+
+### Bug Fixes
+
+* mark always-present response fields as required across 80+ models ([#59](https://github.com/cadenya/cadenya-ruby/issues/59)) ([52470b3](https://github.com/cadenya/cadenya-ruby/commit/52470b32bbb50a451551aa2c41cac297d17ddd6c))
+
+
+### Chores
+
+* disable Lint/UselessTimes (generator emits 1.times with max_retries: 0) ([8a05f27](https://github.com/cadenya/cadenya-ruby/commit/8a05f27fedfc351069d2f77baeb501aafac02498))
+
 ## 0.51.1 (2026-08-06)
 
 Full Changelog: [v0.51.0...v0.51.1](https://github.com/cadenya/cadenya-ruby/compare/v0.51.0...v0.51.1)
