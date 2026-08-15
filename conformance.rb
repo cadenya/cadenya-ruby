@@ -146,7 +146,7 @@ run("ToolService_CreateToolSetSecret") { client.tool_sets.secrets.create("sample
 run("ToolService_GetToolSetSecret") { client.tool_sets.secrets.retrieve("sample", "sample", workspace_id: "sample") }
 run("ToolService_DeleteToolSetSecret") { client.tool_sets.secrets.delete("sample", "sample", workspace_id: "sample") }
 run("ToolService_UpdateToolSetSecret") { client.tool_sets.secrets.update("sample", "sample", workspace_id: "sample", metadata: {"name" => "sample"}, spec: {}, update_mask: "sample") }
-run("ToolService_ListTools") { check_page(client.tool_sets.tools.list("sample", workspace_id: "sample", limit: 1, cursor: "sample", prefix: "sample", query: "sample", names: ["sample"], states: ["STATE_UNSPECIFIED"], requires_approval: true, labels: "sample", sort_order: "sample", include_info: true)) }
+run("ToolService_ListTools") { check_page(client.tool_sets.tools.list("sample", workspace_id: "sample", limit: 1, cursor: "sample", prefix: "sample", query: "sample", names: ["sample"], states: ["STATE_UNSPECIFIED"], requires_approval: true, overlays: ["sample"], labels: "sample", sort_order: "sample", include_info: true)) }
 run("ToolService_CreateTool") { client.tool_sets.tools.create("sample", workspace_id: "sample", metadata: {"name" => "sample"}, spec: {"config" => {"http" => {"request_method" => "HTTP_METHOD_UNSPECIFIED"}, "type" => "http"}, "description" => "sample", "parameters" => {}, "requires_approval" => true}) }
 run("ToolService_GetTool") { client.tool_sets.tools.retrieve("sample", "sample", workspace_id: "sample") }
 run("ToolService_DeleteTool") { client.tool_sets.tools.delete("sample", "sample", workspace_id: "sample") }

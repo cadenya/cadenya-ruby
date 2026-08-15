@@ -10,11 +10,12 @@ module Cadenya
       end
 
       # List tools
-      def list(tool_set_id, workspace_id: nil, limit: nil, cursor: nil, prefix: nil, query: nil, names: nil, states: nil, requires_approval: nil, labels: nil, sort_order: nil, include_info: nil, request_options: nil)
+      def list(tool_set_id, workspace_id: nil, limit: nil, cursor: nil, prefix: nil, query: nil, names: nil, states: nil, requires_approval: nil, overlays: nil, labels: nil, sort_order: nil, include_info: nil, request_options: nil)
         workspace_id = @core.resolve_default("workspaceId", "CADENYA_WORKSPACE_ID", workspace_id)
         _path = "/v1/workspaces/#{Util.path_param('workspaceId', workspace_id)}/tool_sets/#{Util.path_param('toolSetId', tool_set_id)}/tools"
         names = names.dup if names.is_a?(Array)
         states = states.dup if states.is_a?(Array)
+        overlays = overlays.dup if overlays.is_a?(Array)
         _query = {
           "limit" => limit,
           "cursor" => cursor,
@@ -23,6 +24,7 @@ module Cadenya
           "names" => names,
           "states" => states,
           "requiresApproval" => requires_approval,
+          "overlays" => overlays,
           "labels" => labels,
           "sortOrder" => sort_order,
           "includeInfo" => include_info,
@@ -31,7 +33,7 @@ module Cadenya
         _items = (_data["items"] || []).map { |item| Types::Tool.from_json(item) }
         _next_cursor = (((_data)["pagination"] || {}))["nextCursor"].to_s
         Page.new(_items, _next_cursor) do |_c|
-          list(tool_set_id, workspace_id: workspace_id, limit: limit, cursor: _c, prefix: prefix, query: query, names: names, states: states, requires_approval: requires_approval, labels: labels, sort_order: sort_order, include_info: include_info, request_options: request_options)
+          list(tool_set_id, workspace_id: workspace_id, limit: limit, cursor: _c, prefix: prefix, query: query, names: names, states: states, requires_approval: requires_approval, overlays: overlays, labels: labels, sort_order: sort_order, include_info: include_info, request_options: request_options)
         end
       end
 
