@@ -1,30 +1,21 @@
 # frozen_string_literal: true
 
-require_relative "lib/cadenya/version"
-
-Gem::Specification.new do |s|
-  s.name = "cadenya"
-  s.version = Cadenya::VERSION
-  s.summary = "Ruby library to access the Cadenya API"
-  s.authors = ["Cadenya"]
-  s.email = "support@cadenya.com"
-  s.homepage = "https://gemdocs.org/gems/cadenya"
-  s.metadata["homepage_uri"] = s.homepage
-  s.metadata["source_code_uri"] = "https://github.com/cadenya/cadenya-ruby"
-  s.metadata["rubygems_mfa_required"] = false.to_s
-  s.required_ruby_version = ">= 3.2.0"
-
-  s.files = Dir[
-    "lib/**/*.rb",
-    "rbi/**/*.rbi",
-    "sig/**/*.rbs",
-    "manifest.yaml",
-    "SECURITY.md",
-    "CHANGELOG.md",
-    ".ignore"
-  ]
-  s.extra_rdoc_files = ["README.md"]
-  s.add_dependency "cgi"
-  s.add_dependency "connection_pool"
-  s.add_dependency "standardwebhooks"
+Gem::Specification.new do |spec|
+  spec.name = "cadenya"
+  spec.version = "1.0.0"
+  spec.summary = "The official Ruby SDK for the Cadenya API"
+  spec.description = "Generated client for the Cadenya API: resources, pagination, SSE streaming, and webhook verification. See README.md and api.md."
+  spec.authors = ["Cadenya"]
+  spec.license = "Apache-2.0"
+  spec.homepage = "https://cadenya.com"
+  spec.files = Dir["lib/**/*.rb"] + ["README.md", "api.md"]
+  spec.required_ruby_version = ">= 3.1"
+  spec.metadata = {
+    "homepage_uri" => "https://cadenya.com",
+    "rubygems_mfa_required" => "true"
+  }
+  spec.add_dependency "faraday", "~> 2.0"
+  # base64 left the default gem set in Ruby 3.4; webhooks.rb requires it,
+  # and the root file loads webhooks eagerly.
+  spec.add_dependency "base64", ">= 0.1"
 end

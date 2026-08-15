@@ -1,9 +1,0 @@
-module Cadenya
-  module Resources
-    class Profiles
-      def whoami: (?request_options: Cadenya::request_opts) -> Cadenya::Profile
-
-      def initialize: (client: Cadenya::Client) -> void
-    end
-  end
-end
