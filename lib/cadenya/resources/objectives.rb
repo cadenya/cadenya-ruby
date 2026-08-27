@@ -85,7 +85,7 @@ module Cadenya
         end
       end
 
-      # Get objective context diagnostics
+      # Get objective context usage
       def retrieve_diagnostics(objective_id, workspace_id: nil, request_options: nil)
         workspace_id = @core.resolve_default("workspaceId", "CADENYA_WORKSPACE_ID", workspace_id)
         _path = "/v1/workspaces/#{Util.path_param('workspaceId', workspace_id)}/objectives/#{Util.path_param('objectiveId', objective_id)}/diagnostics"
