@@ -4794,27 +4794,30 @@ module Cadenya
       end
     end
 
-    ResultActionTransformOnRenderError = ["ON_RENDER_ERROR_UNSPECIFIED", "ON_RENDER_ERROR_RAW_CONTENT", "ON_RENDER_ERROR_FAIL"].freeze
+    ResultActionTransformOnError = ["ON_ERROR_UNSPECIFIED", "ON_ERROR_RAW_CONTENT", "ON_ERROR_FAIL"].freeze
 
     class ResultAction_Transform
-      attr_reader :content_template, :on_render_error
+      attr_reader :content_template, :on_error, :expect_json
 
-      def initialize(content_template: nil, on_render_error: nil)
+      def initialize(content_template: nil, on_error: nil, expect_json: nil)
         @content_template = content_template
-        @on_render_error = on_render_error
+        @on_error = on_error
+        @expect_json = expect_json
       end
 
       def self.from_json(data)
         new(
           content_template: data["contentTemplate"],
-          on_render_error: data["onRenderError"],
+          on_error: data["onError"],
+          expect_json: data["expectJson"],
         )
       end
 
       def to_h
         {
           content_template: Util.plain(@content_template),
-          on_render_error: Util.plain(@on_render_error),
+          on_error: Util.plain(@on_error),
+          expect_json: Util.plain(@expect_json),
         }.reject { |_k, v| v.nil? }
       end
     end
@@ -5668,13 +5671,14 @@ module Cadenya
     end
 
     class ToolCalled
-      attr_reader :tool_call_id, :tool, :config, :arguments
+      attr_reader :tool_call_id, :tool, :config, :arguments, :arguments_exposed_in_widgets
 
-      def initialize(tool_call_id: nil, tool: nil, config: nil, arguments: nil)
+      def initialize(tool_call_id: nil, tool: nil, config: nil, arguments: nil, arguments_exposed_in_widgets: nil)
         @tool_call_id = tool_call_id
         @tool = tool
         @config = config
         @arguments = arguments
+        @arguments_exposed_in_widgets = arguments_exposed_in_widgets
       end
 
       def self.from_json(data)
@@ -5683,6 +5687,7 @@ module Cadenya
           tool: data["tool"].nil? ? nil : Types.decode_CallableTool(data["tool"]),
           config: data["config"].nil? ? nil : Types.decode_ToolSpec_Config(data["config"]),
           arguments: data["arguments"],
+          arguments_exposed_in_widgets: data["argumentsExposedInWidgets"],
         )
       end
 
@@ -5692,6 +5697,7 @@ module Cadenya
           tool: Util.plain(@tool),
           config: Util.plain(@config),
           arguments: Util.plain(@arguments),
+          arguments_exposed_in_widgets: Util.plain(@arguments_exposed_in_widgets),
         }.reject { |_k, v| v.nil? }
       end
     end
@@ -5775,14 +5781,15 @@ module Cadenya
     end
 
     class ToolOverlay
-      attr_reader :key, :selector, :parameter_actions, :result_actions, :disabled
+      attr_reader :key, :selector, :parameter_actions, :result_actions, :disabled, :widget_argument_exposure
 
-      def initialize(key: nil, selector: nil, parameter_actions: nil, result_actions: nil, disabled: nil)
+      def initialize(key: nil, selector: nil, parameter_actions: nil, result_actions: nil, disabled: nil, widget_argument_exposure: nil)
         @key = key
         @selector = selector
         @parameter_actions = parameter_actions
         @result_actions = result_actions
         @disabled = disabled
+        @widget_argument_exposure = widget_argument_exposure
       end
 
       def self.from_json(data)
@@ -5792,6 +5799,7 @@ module Cadenya
           parameter_actions: data["parameterActions"].nil? ? nil : (data["parameterActions"]).map { |item| Types.decode_ToolOverlay_ParameterAction(item) },
           result_actions: data["resultActions"].nil? ? nil : (data["resultActions"]).map { |item| Types.decode_ToolOverlay_ResultAction(item) },
           disabled: data["disabled"],
+          widget_argument_exposure: data["widgetArgumentExposure"].nil? ? nil : Types::ToolOverlay_WidgetArgumentExposure.from_json(data["widgetArgumentExposure"]),
         )
       end
 
@@ -5802,6 +5810,7 @@ module Cadenya
           parameter_actions: Util.plain(@parameter_actions),
           result_actions: Util.plain(@result_actions),
           disabled: Util.plain(@disabled),
+          widget_argument_exposure: Util.plain(@widget_argument_exposure),
         }.reject { |_k, v| v.nil? }
       end
     end
@@ -5871,6 +5880,26 @@ module Cadenya
         {
           conditions: Util.plain(@conditions),
           operator: Util.plain(@operator),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    class ToolOverlay_WidgetArgumentExposure
+      attr_reader :enabled
+
+      def initialize(enabled: nil)
+        @enabled = enabled
+      end
+
+      def self.from_json(data)
+        new(
+          enabled: data["enabled"],
+        )
+      end
+
+      def to_h
+        {
+          enabled: Util.plain(@enabled),
         }.reject { |_k, v| v.nil? }
       end
     end
@@ -10038,8 +10067,10 @@ module Cadenya
     ENCODE_RESULT_ACTION_TRANSFORM = {
       "content_template" => ["contentTemplate", nil],
       "contentTemplate" => ["contentTemplate", nil],
-      "on_render_error" => ["onRenderError", nil],
-      "onRenderError" => ["onRenderError", nil],
+      "on_error" => ["onError", nil],
+      "onError" => ["onError", nil],
+      "expect_json" => ["expectJson", nil],
+      "expectJson" => ["expectJson", nil],
     }.freeze
 
     def self.encode_ResultAction_Transform(data)
@@ -10193,6 +10224,8 @@ module Cadenya
       "result_actions" => ["resultActions", ->(_v) { _v.is_a?(Array) ? _v.map { |_i| (->(_v) { encode_ToolOverlay_ResultAction(_v) }).call(_i) } : _v }],
       "resultActions" => ["resultActions", ->(_v) { _v.is_a?(Array) ? _v.map { |_i| (->(_v) { encode_ToolOverlay_ResultAction(_v) }).call(_i) } : _v }],
       "disabled" => ["disabled", nil],
+      "widget_argument_exposure" => ["widgetArgumentExposure", ->(_v) { encode_ToolOverlay_WidgetArgumentExposure(_v) }],
+      "widgetArgumentExposure" => ["widgetArgumentExposure", ->(_v) { encode_ToolOverlay_WidgetArgumentExposure(_v) }],
     }.freeze
 
     def self.encode_ToolOverlay(data)
@@ -10246,6 +10279,14 @@ module Cadenya
 
     def self.encode_ToolOverlay_Selector(data)
       encode_fields(ENCODE_TOOL_OVERLAY_SELECTOR, data)
+    end
+
+    ENCODE_TOOL_OVERLAY_WIDGET_ARGUMENT_EXPOSURE = {
+      "enabled" => ["enabled", nil],
+    }.freeze
+
+    def self.encode_ToolOverlay_WidgetArgumentExposure(data)
+      encode_fields(ENCODE_TOOL_OVERLAY_WIDGET_ARGUMENT_EXPOSURE, data)
     end
 
     def self.encode_ToolSetAdapter(data)

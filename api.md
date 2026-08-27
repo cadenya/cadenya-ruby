@@ -435,7 +435,7 @@ List objective context windows
 ```ruby
 client.objectives.list_context_windows(objective_id, workspace_id: nil, limit: nil, cursor: nil, include_info: nil, labels: nil) # => Cadenya::Page of Cadenya::Types::ObjectiveContextWindow
 ```
-Get objective context diagnostics
+Get objective context usage
 
 ```ruby
 client.objectives.retrieve_diagnostics(objective_id, workspace_id: nil) # => Cadenya::Types::GetObjectiveDiagnosticsResponse
