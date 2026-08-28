@@ -60,10 +60,8 @@
     }
   ],
   "release-type": "ruby",
+  "version-file": "lib/cadenya/version.rb",
   "extra-files": [
-    {
-      "type": "generic",
-      "path": "cadenya.gemspec"
-    }
+    "README.md"
   ]
 }
