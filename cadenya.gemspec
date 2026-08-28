@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |spec|
   spec.name = "cadenya"
-  spec.version = "1.0.1" # x-release-please-version
+  spec.version = "1.0.2" # x-release-please-version
   spec.summary = "The official Ruby SDK for the Cadenya API"
   spec.description = "Generated client for the Cadenya API: resources, pagination, SSE streaming, and webhook verification. See README.md and api.md."
   spec.authors = ["Cadenya"]
