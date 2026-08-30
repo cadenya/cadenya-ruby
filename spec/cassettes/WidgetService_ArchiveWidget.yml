@@ -11,7 +11,7 @@ http_interactions:
   response:
     body:
       encoding: UTF-8
-      string: '{"metadata":{"accountId":"sample","createdAt":"2026-01-01T00:00:00Z","externalId":"sample","id":"sample","labels":{},"name":"sample","profileId":"sample","workspaceId":"sample"},"spec":{"agentId":"sample"},"state":"STATE_UNSPECIFIED"}'
+      string: '{"metadata":{"accountId":"sample","createdAt":"2026-01-01T00:00:00Z","externalId":"sample","id":"sample","labels":{},"name":"sample","profileId":"sample","workspaceId":"sample"},"spec":{"agentId":"sample"},"state":"STATE_ACTIVE"}'
     headers:
       Content-Type:
       - application/json

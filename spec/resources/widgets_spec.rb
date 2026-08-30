@@ -18,7 +18,7 @@ RSpec.describe "client.widgets" do
       it "resolves the client-level value" do
         stub = stub_request(:get, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/widgets")
           .with(query: hash_including({}))
-          .to_return(status: 200, body: "{\"items\":[{\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{\"agentId\":\"sample\"},\"state\":\"STATE_UNSPECIFIED\"}],\"pagination\":{\"nextCursor\":\"\"}}", headers: { "Content-Type" => "application/json" })
+          .to_return(status: 200, body: "{\"items\":[{\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{\"agentId\":\"sample\"},\"state\":\"STATE_ACTIVE\"}],\"pagination\":{\"nextCursor\":\"\"}}", headers: { "Content-Type" => "application/json" })
         client.widgets.list(limit: 1, cursor: "sample", agent_id: "sample", labels: "sample", sort_order: "sample", include_info: true)
         expect(stub).to have_been_requested
       end
@@ -36,7 +36,7 @@ RSpec.describe "client.widgets" do
     context "when workspace_id falls back to the client default" do
       it "resolves the client-level value" do
         stub = stub_request(:post, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/widgets")
-          .to_return(status: 200, body: "{\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{\"agentId\":\"sample\"},\"state\":\"STATE_UNSPECIFIED\"}", headers: { "Content-Type" => "application/json" })
+          .to_return(status: 200, body: "{\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{\"agentId\":\"sample\"},\"state\":\"STATE_ACTIVE\"}", headers: { "Content-Type" => "application/json" })
         client.widgets.create(metadata: {"name" => "sample"}, spec: {"agent_id" => "sample"})
         expect(stub).to have_been_requested
       end
@@ -54,7 +54,7 @@ RSpec.describe "client.widgets" do
     context "when workspace_id falls back to the client default" do
       it "resolves the client-level value" do
         stub = stub_request(:get, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/widgets/sample")
-          .to_return(status: 200, body: "{\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{\"agentId\":\"sample\"},\"state\":\"STATE_UNSPECIFIED\"}", headers: { "Content-Type" => "application/json" })
+          .to_return(status: 200, body: "{\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{\"agentId\":\"sample\"},\"state\":\"STATE_ACTIVE\"}", headers: { "Content-Type" => "application/json" })
         client.widgets.retrieve("sample")
         expect(stub).to have_been_requested
       end
@@ -90,7 +90,7 @@ RSpec.describe "client.widgets" do
     context "when workspace_id falls back to the client default" do
       it "resolves the client-level value" do
         stub = stub_request(:patch, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/widgets/sample")
-          .to_return(status: 200, body: "{\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{\"agentId\":\"sample\"},\"state\":\"STATE_UNSPECIFIED\"}", headers: { "Content-Type" => "application/json" })
+          .to_return(status: 200, body: "{\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{\"agentId\":\"sample\"},\"state\":\"STATE_ACTIVE\"}", headers: { "Content-Type" => "application/json" })
         client.widgets.update("sample", metadata: {"name" => "sample"}, spec: {"agent_id" => "sample"}, update_mask: "sample")
         expect(stub).to have_been_requested
       end
@@ -108,7 +108,7 @@ RSpec.describe "client.widgets" do
     context "when workspace_id falls back to the client default" do
       it "resolves the client-level value" do
         stub = stub_request(:post, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/widgets/sample:archive")
-          .to_return(status: 200, body: "{\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{\"agentId\":\"sample\"},\"state\":\"STATE_UNSPECIFIED\"}", headers: { "Content-Type" => "application/json" })
+          .to_return(status: 200, body: "{\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{\"agentId\":\"sample\"},\"state\":\"STATE_ACTIVE\"}", headers: { "Content-Type" => "application/json" })
         client.widgets.archive("sample")
         expect(stub).to have_been_requested
       end
@@ -126,7 +126,7 @@ RSpec.describe "client.widgets" do
     context "when workspace_id falls back to the client default" do
       it "resolves the client-level value" do
         stub = stub_request(:post, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/widgets/sample:unarchive")
-          .to_return(status: 200, body: "{\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{\"agentId\":\"sample\"},\"state\":\"STATE_UNSPECIFIED\"}", headers: { "Content-Type" => "application/json" })
+          .to_return(status: 200, body: "{\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{\"agentId\":\"sample\"},\"state\":\"STATE_ACTIVE\"}", headers: { "Content-Type" => "application/json" })
         client.widgets.unarchive("sample")
         expect(stub).to have_been_requested
       end

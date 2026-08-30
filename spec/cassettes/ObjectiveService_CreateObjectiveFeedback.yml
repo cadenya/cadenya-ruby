@@ -13,7 +13,7 @@ http_interactions:
   response:
     body:
       encoding: UTF-8
-      string: '{"data":{},"info":{"submittedBy":{"metadata":{"accountId":"sample","externalId":"sample","id":"sample","labels":{},"name":"sample","profileId":"sample"},"spec":{"email":"sample","name":"sample","type":"PROFILE_TYPE_UNSPECIFIED"}}},"metadata":{"accountId":"sample","createdAt":"2026-01-01T00:00:00Z","externalId":"sample","id":"sample","labels":{},"profileId":"sample","workspaceId":"sample"}}'
+      string: '{"data":{},"info":{"submittedBy":{"metadata":{"accountId":"sample","externalId":"sample","id":"sample","labels":{},"name":"sample","profileId":"sample"},"spec":{"email":"sample","name":"sample","type":"PROFILE_TYPE_USER"}}},"metadata":{"accountId":"sample","createdAt":"2026-01-01T00:00:00Z","externalId":"sample","id":"sample","labels":{},"profileId":"sample","workspaceId":"sample"}}'
     headers:
       Content-Type:
       - application/json

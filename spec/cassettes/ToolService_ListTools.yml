@@ -7,11 +7,11 @@ http_interactions:
       string: ''
     headers: {}
     method: get
-    uri: https://api.test.example/v1/workspaces/sample/tool_sets/sample/tools?limit=1&cursor=sample&prefix=sample&query=sample&names=sample&states=STATE_UNSPECIFIED&requiresApproval=true&overlays=sample&labels=sample&sortOrder=sample&includeInfo=true
+    uri: https://api.test.example/v1/workspaces/sample/tool_sets/sample/tools?limit=1&cursor=sample&prefix=sample&query=sample&names=sample&states=STATE_AVAILABLE&requiresApproval=true&overlays=sample&labels=sample&sortOrder=sample&includeInfo=true
   response:
     body:
       encoding: UTF-8
-      string: '{"items":[{"metadata":{"accountId":"sample","createdAt":"2026-01-01T00:00:00Z","externalId":"sample","id":"sample","labels":{},"name":"sample","profileId":"sample","workspaceId":"sample"},"spec":{"config":{"http":{"requestMethod":"HTTP_METHOD_UNSPECIFIED"},"type":"http"},"description":"sample","parameters":{},"requiresApproval":true},"state":"STATE_UNSPECIFIED"}],"pagination":{"nextCursor":"cursor_page_2"}}'
+      string: '{"items":[{"metadata":{"accountId":"sample","createdAt":"2026-01-01T00:00:00Z","externalId":"sample","id":"sample","labels":{},"name":"sample","profileId":"sample","workspaceId":"sample"},"spec":{"config":{"http":{"requestMethod":"GET"},"type":"http"},"description":"sample","parameters":{},"requiresApproval":true},"state":"STATE_AVAILABLE"}],"pagination":{"nextCursor":"cursor_page_2"}}'
     headers:
       Content-Type:
       - application/json
@@ -26,11 +26,11 @@ http_interactions:
       string: ''
     headers: {}
     method: get
-    uri: https://api.test.example/v1/workspaces/sample/tool_sets/sample/tools?limit=1&cursor=cursor_page_2&prefix=sample&query=sample&names=sample&states=STATE_UNSPECIFIED&requiresApproval=true&overlays=sample&labels=sample&sortOrder=sample&includeInfo=true
+    uri: https://api.test.example/v1/workspaces/sample/tool_sets/sample/tools?limit=1&cursor=cursor_page_2&prefix=sample&query=sample&names=sample&states=STATE_AVAILABLE&requiresApproval=true&overlays=sample&labels=sample&sortOrder=sample&includeInfo=true
   response:
     body:
       encoding: UTF-8
-      string: '{"items":[{"metadata":{"accountId":"sample","createdAt":"2026-01-01T00:00:00Z","externalId":"sample","id":"sample","labels":{},"name":"sample","profileId":"sample","workspaceId":"sample"},"spec":{"config":{"http":{"requestMethod":"HTTP_METHOD_UNSPECIFIED"},"type":"http"},"description":"sample","parameters":{},"requiresApproval":true},"state":"STATE_UNSPECIFIED"}],"pagination":{"nextCursor":""}}'
+      string: '{"items":[{"metadata":{"accountId":"sample","createdAt":"2026-01-01T00:00:00Z","externalId":"sample","id":"sample","labels":{},"name":"sample","profileId":"sample","workspaceId":"sample"},"spec":{"config":{"http":{"requestMethod":"GET"},"type":"http"},"description":"sample","parameters":{},"requiresApproval":true},"state":"STATE_AVAILABLE"}],"pagination":{"nextCursor":""}}'
     headers:
       Content-Type:
       - application/json

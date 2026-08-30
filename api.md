@@ -460,16 +460,6 @@ Submit feedback for an objective
 ```ruby
 client.objectives.create_feedback(objective_id, metadata:, data:, workspace_id: nil) # => Cadenya::Types::ObjectiveFeedback
 ```
-List objective tasks
-
-```ruby
-client.objectives.list_tasks(objective_id, workspace_id: nil, limit: nil, cursor: nil, sort_order: nil) # => Cadenya::Page of Cadenya::Types::ObjectiveTask
-```
-Get an objective task by ID
-
-```ruby
-client.objectives.retrieve_task(objective_id, id, workspace_id: nil) # => Cadenya::Types::ObjectiveTask
-```
 List objective tool calls
 
 ```ruby

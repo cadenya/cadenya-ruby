@@ -11,7 +11,7 @@ http_interactions:
   response:
     body:
       encoding: UTF-8
-      string: '{"info":{"status":"UPLOAD_STATUS_UNSPECIFIED","uploadUrl":"sample"},"metadata":{"accountId":"sample","createdAt":"2026-01-01T00:00:00Z","externalId":"sample","id":"sample","labels":{},"name":"sample","profileId":"sample","workspaceId":"sample"},"spec":{"contentType":"sample","filename":"sample","sizeBytes":"sample"}}'
+      string: '{"info":{"status":"UPLOAD_STATUS_PENDING","uploadUrl":"sample"},"metadata":{"accountId":"sample","createdAt":"2026-01-01T00:00:00Z","externalId":"sample","id":"sample","labels":{},"name":"sample","profileId":"sample","workspaceId":"sample"},"spec":{"contentType":"sample","filename":"sample","sizeBytes":"sample"}}'
     headers:
       Content-Type:
       - application/json

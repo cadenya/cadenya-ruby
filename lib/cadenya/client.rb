@@ -37,7 +37,7 @@ module Cadenya
         auth_header: ["Authorization", "Bearer #{api_key}"],
         max_retries: max_retries,
         defaults: defaults,
-        user_agent: "cadenya-ruby/1.0.0 (api 1.0)",
+        user_agent: "cadenya-ruby/1.0.1 (api 1.0)",
         connection: connection,
         stream_transport: stream_transport
       )

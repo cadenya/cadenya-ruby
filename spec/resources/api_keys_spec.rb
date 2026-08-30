@@ -54,7 +54,7 @@ RSpec.describe "client.api_keys" do
       it "resolves the client-level value" do
         stub = stub_request(:get, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/api_keys")
           .with(query: hash_including({}))
-          .to_return(status: 200, body: "{\"items\":[{\"metadata\":{\"accountId\":\"sample\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\"},\"spec\":{\"system\":true,\"token\":\"sample\"},\"state\":\"STATE_UNSPECIFIED\"}],\"pagination\":{\"nextCursor\":\"\"}}", headers: { "Content-Type" => "application/json" })
+          .to_return(status: 200, body: "{\"items\":[{\"metadata\":{\"accountId\":\"sample\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\"},\"spec\":{\"system\":true,\"token\":\"sample\"},\"state\":\"STATE_ENABLED\"}],\"pagination\":{\"nextCursor\":\"\"}}", headers: { "Content-Type" => "application/json" })
         client.api_keys.list(limit: 1, cursor: "sample", prefix: "sample", query: "sample", labels: "sample", sort_order: "sample", include_info: true)
         expect(stub).to have_been_requested
       end
@@ -72,7 +72,7 @@ RSpec.describe "client.api_keys" do
     context "when workspace_id falls back to the client default" do
       it "resolves the client-level value" do
         stub = stub_request(:post, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/api_keys")
-          .to_return(status: 200, body: "{\"metadata\":{\"accountId\":\"sample\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\"},\"spec\":{\"system\":true,\"token\":\"sample\"},\"state\":\"STATE_UNSPECIFIED\"}", headers: { "Content-Type" => "application/json" })
+          .to_return(status: 200, body: "{\"metadata\":{\"accountId\":\"sample\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\"},\"spec\":{\"system\":true,\"token\":\"sample\"},\"state\":\"STATE_ENABLED\"}", headers: { "Content-Type" => "application/json" })
         client.api_keys.create(metadata: {"name" => "sample"}, spec: {})
         expect(stub).to have_been_requested
       end
@@ -90,7 +90,7 @@ RSpec.describe "client.api_keys" do
     context "when workspace_id falls back to the client default" do
       it "resolves the client-level value" do
         stub = stub_request(:get, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/api_keys/sample")
-          .to_return(status: 200, body: "{\"metadata\":{\"accountId\":\"sample\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\"},\"spec\":{\"system\":true,\"token\":\"sample\"},\"state\":\"STATE_UNSPECIFIED\"}", headers: { "Content-Type" => "application/json" })
+          .to_return(status: 200, body: "{\"metadata\":{\"accountId\":\"sample\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\"},\"spec\":{\"system\":true,\"token\":\"sample\"},\"state\":\"STATE_ENABLED\"}", headers: { "Content-Type" => "application/json" })
         client.api_keys.retrieve("sample")
         expect(stub).to have_been_requested
       end
@@ -126,7 +126,7 @@ RSpec.describe "client.api_keys" do
     context "when workspace_id falls back to the client default" do
       it "resolves the client-level value" do
         stub = stub_request(:patch, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/api_keys/sample")
-          .to_return(status: 200, body: "{\"metadata\":{\"accountId\":\"sample\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\"},\"spec\":{\"system\":true,\"token\":\"sample\"},\"state\":\"STATE_UNSPECIFIED\"}", headers: { "Content-Type" => "application/json" })
+          .to_return(status: 200, body: "{\"metadata\":{\"accountId\":\"sample\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\"},\"spec\":{\"system\":true,\"token\":\"sample\"},\"state\":\"STATE_ENABLED\"}", headers: { "Content-Type" => "application/json" })
         client.api_keys.update("sample", metadata: {"name" => "sample"}, spec: {}, update_mask: "sample")
         expect(stub).to have_been_requested
       end
@@ -144,7 +144,7 @@ RSpec.describe "client.api_keys" do
     context "when workspace_id falls back to the client default" do
       it "resolves the client-level value" do
         stub = stub_request(:post, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/api_keys/sample:disable")
-          .to_return(status: 200, body: "{\"metadata\":{\"accountId\":\"sample\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\"},\"spec\":{\"system\":true,\"token\":\"sample\"},\"state\":\"STATE_UNSPECIFIED\"}", headers: { "Content-Type" => "application/json" })
+          .to_return(status: 200, body: "{\"metadata\":{\"accountId\":\"sample\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\"},\"spec\":{\"system\":true,\"token\":\"sample\"},\"state\":\"STATE_ENABLED\"}", headers: { "Content-Type" => "application/json" })
         client.api_keys.disable("sample")
         expect(stub).to have_been_requested
       end
@@ -162,7 +162,7 @@ RSpec.describe "client.api_keys" do
     context "when workspace_id falls back to the client default" do
       it "resolves the client-level value" do
         stub = stub_request(:post, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/api_keys/sample:enable")
-          .to_return(status: 200, body: "{\"metadata\":{\"accountId\":\"sample\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\"},\"spec\":{\"system\":true,\"token\":\"sample\"},\"state\":\"STATE_UNSPECIFIED\"}", headers: { "Content-Type" => "application/json" })
+          .to_return(status: 200, body: "{\"metadata\":{\"accountId\":\"sample\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\"},\"spec\":{\"system\":true,\"token\":\"sample\"},\"state\":\"STATE_ENABLED\"}", headers: { "Content-Type" => "application/json" })
         client.api_keys.enable("sample")
         expect(stub).to have_been_requested
       end
@@ -180,7 +180,7 @@ RSpec.describe "client.api_keys" do
     context "when workspace_id falls back to the client default" do
       it "resolves the client-level value" do
         stub = stub_request(:post, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/api_keys/sample:rotate")
-          .to_return(status: 200, body: "{\"metadata\":{\"accountId\":\"sample\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\"},\"spec\":{\"system\":true,\"token\":\"sample\"},\"state\":\"STATE_UNSPECIFIED\"}", headers: { "Content-Type" => "application/json" })
+          .to_return(status: 200, body: "{\"metadata\":{\"accountId\":\"sample\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\"},\"spec\":{\"system\":true,\"token\":\"sample\"},\"state\":\"STATE_ENABLED\"}", headers: { "Content-Type" => "application/json" })
         client.api_keys.rotate("sample")
         expect(stub).to have_been_requested
       end
