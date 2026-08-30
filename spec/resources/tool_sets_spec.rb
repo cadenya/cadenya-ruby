@@ -8,7 +8,7 @@ RSpec.describe "client.tool_sets" do
   describe "#list" do
     it "sends the golden request and decodes the response" do
       VCR.use_cassette("ToolService_ListToolSets") do
-        result = client.tool_sets.list(workspace_id: "sample", limit: 1, cursor: "sample", prefix: "sample", query: "sample", state: "STATE_UNSPECIFIED", labels: "sample", sort_order: "sample", include_info: true)
+        result = client.tool_sets.list(workspace_id: "sample", limit: 1, cursor: "sample", prefix: "sample", query: "sample", state: "STATE_ACTIVE", labels: "sample", sort_order: "sample", include_info: true)
         items = result.to_a
         expect(items.length).to eq(2)
       end
@@ -18,8 +18,8 @@ RSpec.describe "client.tool_sets" do
       it "resolves the client-level value" do
         stub = stub_request(:get, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/tool_sets")
           .with(query: hash_including({}))
-          .to_return(status: 200, body: "{\"items\":[{\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{\"adapter\":{\"mcp\":{},\"type\":\"mcp\"}},\"state\":\"STATE_UNSPECIFIED\"}],\"pagination\":{\"nextCursor\":\"\"}}", headers: { "Content-Type" => "application/json" })
-        client.tool_sets.list(limit: 1, cursor: "sample", prefix: "sample", query: "sample", state: "STATE_UNSPECIFIED", labels: "sample", sort_order: "sample", include_info: true)
+          .to_return(status: 200, body: "{\"items\":[{\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{\"adapter\":{\"mcp\":{},\"type\":\"mcp\"}},\"state\":\"STATE_ACTIVE\"}],\"pagination\":{\"nextCursor\":\"\"}}", headers: { "Content-Type" => "application/json" })
+        client.tool_sets.list(limit: 1, cursor: "sample", prefix: "sample", query: "sample", state: "STATE_ACTIVE", labels: "sample", sort_order: "sample", include_info: true)
         expect(stub).to have_been_requested
       end
     end
@@ -36,7 +36,7 @@ RSpec.describe "client.tool_sets" do
     context "when workspace_id falls back to the client default" do
       it "resolves the client-level value" do
         stub = stub_request(:post, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/tool_sets")
-          .to_return(status: 200, body: "{\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{\"adapter\":{\"mcp\":{},\"type\":\"mcp\"}},\"state\":\"STATE_UNSPECIFIED\"}", headers: { "Content-Type" => "application/json" })
+          .to_return(status: 200, body: "{\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{\"adapter\":{\"mcp\":{},\"type\":\"mcp\"}},\"state\":\"STATE_ACTIVE\"}", headers: { "Content-Type" => "application/json" })
         client.tool_sets.create(metadata: {"name" => "sample"}, spec: {"adapter" => {"mcp" => {}, "type" => "mcp"}})
         expect(stub).to have_been_requested
       end
@@ -54,7 +54,7 @@ RSpec.describe "client.tool_sets" do
     context "when workspace_id falls back to the client default" do
       it "resolves the client-level value" do
         stub = stub_request(:get, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/tool_sets/sample")
-          .to_return(status: 200, body: "{\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{\"adapter\":{\"mcp\":{},\"type\":\"mcp\"}},\"state\":\"STATE_UNSPECIFIED\"}", headers: { "Content-Type" => "application/json" })
+          .to_return(status: 200, body: "{\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{\"adapter\":{\"mcp\":{},\"type\":\"mcp\"}},\"state\":\"STATE_ACTIVE\"}", headers: { "Content-Type" => "application/json" })
         client.tool_sets.retrieve("sample")
         expect(stub).to have_been_requested
       end
@@ -90,7 +90,7 @@ RSpec.describe "client.tool_sets" do
     context "when workspace_id falls back to the client default" do
       it "resolves the client-level value" do
         stub = stub_request(:patch, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/tool_sets/sample")
-          .to_return(status: 200, body: "{\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{\"adapter\":{\"mcp\":{},\"type\":\"mcp\"}},\"state\":\"STATE_UNSPECIFIED\"}", headers: { "Content-Type" => "application/json" })
+          .to_return(status: 200, body: "{\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{\"adapter\":{\"mcp\":{},\"type\":\"mcp\"}},\"state\":\"STATE_ACTIVE\"}", headers: { "Content-Type" => "application/json" })
         client.tool_sets.update("sample", metadata: {"name" => "sample"}, spec: {"adapter" => {"mcp" => {}, "type" => "mcp"}}, update_mask: "sample")
         expect(stub).to have_been_requested
       end
@@ -108,7 +108,7 @@ RSpec.describe "client.tool_sets" do
     context "when workspace_id falls back to the client default" do
       it "resolves the client-level value" do
         stub = stub_request(:post, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/tool_sets/sample:archive")
-          .to_return(status: 200, body: "{\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{\"adapter\":{\"mcp\":{},\"type\":\"mcp\"}},\"state\":\"STATE_UNSPECIFIED\"}", headers: { "Content-Type" => "application/json" })
+          .to_return(status: 200, body: "{\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{\"adapter\":{\"mcp\":{},\"type\":\"mcp\"}},\"state\":\"STATE_ACTIVE\"}", headers: { "Content-Type" => "application/json" })
         client.tool_sets.archive("sample")
         expect(stub).to have_been_requested
       end
@@ -126,7 +126,7 @@ RSpec.describe "client.tool_sets" do
     context "when workspace_id falls back to the client default" do
       it "resolves the client-level value" do
         stub = stub_request(:post, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/tool_sets/sample:unarchive")
-          .to_return(status: 200, body: "{\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{\"adapter\":{\"mcp\":{},\"type\":\"mcp\"}},\"state\":\"STATE_UNSPECIFIED\"}", headers: { "Content-Type" => "application/json" })
+          .to_return(status: 200, body: "{\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{\"adapter\":{\"mcp\":{},\"type\":\"mcp\"}},\"state\":\"STATE_ACTIVE\"}", headers: { "Content-Type" => "application/json" })
         client.tool_sets.unarchive("sample")
         expect(stub).to have_been_requested
       end

@@ -7,11 +7,11 @@ http_interactions:
       string: ''
     headers: {}
     method: get
-    uri: https://api.test.example/v1/workspaces/sample/models?limit=1&cursor=sample&prefix=sample&query=sample&state=STATE_UNSPECIFIED&aiProviderKeyId=sample&isAssigned=true&labels=sample&sortOrder=sample&includeInfo=true
+    uri: https://api.test.example/v1/workspaces/sample/models?limit=1&cursor=sample&prefix=sample&query=sample&state=STATE_ENABLED&aiProviderKeyId=sample&isAssigned=true&labels=sample&sortOrder=sample&includeInfo=true
   response:
     body:
       encoding: UTF-8
-      string: '{"items":[{"metadata":{"accountId":"sample","createdAt":"2026-01-01T00:00:00Z","externalId":"sample","id":"sample","labels":{},"name":"sample","profileId":"sample","workspaceId":"sample"},"spec":{"capabilities":[{"temperature":{},"type":"temperature"}],"family":"sample","inputPricePerMillionTokens":"sample","maxInputTokens":1,"maxOutputTokens":1,"outputPricePerMillionTokens":"sample","provider":"sample"},"state":"STATE_UNSPECIFIED"}],"pagination":{"nextCursor":"cursor_page_2"}}'
+      string: '{"items":[{"metadata":{"accountId":"sample","createdAt":"2026-01-01T00:00:00Z","externalId":"sample","id":"sample","labels":{},"name":"sample","profileId":"sample","workspaceId":"sample"},"spec":{"capabilities":[{"temperature":{},"type":"temperature"}],"family":"sample","inputPricePerMillionTokens":"sample","maxInputTokens":1,"maxOutputTokens":1,"outputPricePerMillionTokens":"sample","provider":"sample"},"state":"STATE_ENABLED"}],"pagination":{"nextCursor":"cursor_page_2"}}'
     headers:
       Content-Type:
       - application/json
@@ -26,11 +26,11 @@ http_interactions:
       string: ''
     headers: {}
     method: get
-    uri: https://api.test.example/v1/workspaces/sample/models?limit=1&cursor=cursor_page_2&prefix=sample&query=sample&state=STATE_UNSPECIFIED&aiProviderKeyId=sample&isAssigned=true&labels=sample&sortOrder=sample&includeInfo=true
+    uri: https://api.test.example/v1/workspaces/sample/models?limit=1&cursor=cursor_page_2&prefix=sample&query=sample&state=STATE_ENABLED&aiProviderKeyId=sample&isAssigned=true&labels=sample&sortOrder=sample&includeInfo=true
   response:
     body:
       encoding: UTF-8
-      string: '{"items":[{"metadata":{"accountId":"sample","createdAt":"2026-01-01T00:00:00Z","externalId":"sample","id":"sample","labels":{},"name":"sample","profileId":"sample","workspaceId":"sample"},"spec":{"capabilities":[{"temperature":{},"type":"temperature"}],"family":"sample","inputPricePerMillionTokens":"sample","maxInputTokens":1,"maxOutputTokens":1,"outputPricePerMillionTokens":"sample","provider":"sample"},"state":"STATE_UNSPECIFIED"}],"pagination":{"nextCursor":""}}'
+      string: '{"items":[{"metadata":{"accountId":"sample","createdAt":"2026-01-01T00:00:00Z","externalId":"sample","id":"sample","labels":{},"name":"sample","profileId":"sample","workspaceId":"sample"},"spec":{"capabilities":[{"temperature":{},"type":"temperature"}],"family":"sample","inputPricePerMillionTokens":"sample","maxInputTokens":1,"maxOutputTokens":1,"outputPricePerMillionTokens":"sample","provider":"sample"},"state":"STATE_ENABLED"}],"pagination":{"nextCursor":""}}'
     headers:
       Content-Type:
       - application/json

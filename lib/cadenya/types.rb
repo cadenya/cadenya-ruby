@@ -2625,29 +2625,6 @@ module Cadenya
       end
     end
 
-    class ListObjectiveTasksResponse
-      attr_reader :items, :pagination
-
-      def initialize(items: nil, pagination: nil)
-        @items = items
-        @pagination = pagination
-      end
-
-      def self.from_json(data)
-        new(
-          items: data["items"].nil? ? nil : (data["items"]).map { |item| Types::ObjectiveTask.from_json(item) },
-          pagination: data["pagination"].nil? ? nil : Types::Page.from_json(data["pagination"]),
-        )
-      end
-
-      def to_h
-        {
-          items: Util.plain(@items),
-          pagination: Util.plain(@pagination),
-        }.reject { |_k, v| v.nil? }
-      end
-    end
-
     class ListObjectiveToolCallsResponse
       attr_reader :items, :pagination
 
@@ -3991,58 +3968,6 @@ module Cadenya
           tenant: Util.plain(@tenant),
           subject: Util.plain(@subject),
           widget: Util.plain(@widget),
-        }.reject { |_k, v| v.nil? }
-      end
-    end
-
-    class ObjectiveTask
-      attr_reader :metadata, :data
-
-      def initialize(metadata: nil, data: nil)
-        @metadata = metadata
-        @data = data
-      end
-
-      def self.from_json(data)
-        new(
-          metadata: data["metadata"].nil? ? nil : Types::BareMetadata.from_json(data["metadata"]),
-          data: data["data"].nil? ? nil : Types::ObjectiveTaskData.from_json(data["data"]),
-        )
-      end
-
-      def to_h
-        {
-          metadata: Util.plain(@metadata),
-          data: Util.plain(@data),
-        }.reject { |_k, v| v.nil? }
-      end
-    end
-
-    class ObjectiveTaskData
-      attr_reader :number, :task, :completed, :completed_at
-
-      def initialize(number: nil, task: nil, completed: nil, completed_at: nil)
-        @number = number
-        @task = task
-        @completed = completed
-        @completed_at = completed_at
-      end
-
-      def self.from_json(data)
-        new(
-          number: data["number"],
-          task: data["task"],
-          completed: data["completed"],
-          completed_at: data["completedAt"].nil? ? nil : Time.iso8601(data["completedAt"]),
-        )
-      end
-
-      def to_h
-        {
-          number: Util.plain(@number),
-          task: Util.plain(@task),
-          completed: Util.plain(@completed),
-          completed_at: Util.plain(@completed_at),
         }.reject { |_k, v| v.nil? }
       end
     end

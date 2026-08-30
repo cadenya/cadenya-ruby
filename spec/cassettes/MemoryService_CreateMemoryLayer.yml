@@ -4,7 +4,7 @@ http_interactions:
   request:
     body:
       encoding: UTF-8
-      string: '{"metadata":{"name":"sample"},"spec":{"type":"MEMORY_LAYER_TYPE_UNSPECIFIED"}}'
+      string: '{"metadata":{"name":"sample"},"spec":{"type":"MEMORY_LAYER_TYPE_EPISODIC"}}'
     headers:
       Content-Type:
       - application/json
@@ -13,7 +13,7 @@ http_interactions:
   response:
     body:
       encoding: UTF-8
-      string: '{"info":{"entryCount":1},"metadata":{"accountId":"sample","createdAt":"2026-01-01T00:00:00Z","externalId":"sample","id":"sample","labels":{},"name":"sample","profileId":"sample","workspaceId":"sample"},"spec":{"agentId":"sample","episodicKey":"sample","systemManaged":true,"type":"MEMORY_LAYER_TYPE_UNSPECIFIED"}}'
+      string: '{"info":{"entryCount":1},"metadata":{"accountId":"sample","createdAt":"2026-01-01T00:00:00Z","externalId":"sample","id":"sample","labels":{},"name":"sample","profileId":"sample","workspaceId":"sample"},"spec":{"agentId":"sample","episodicKey":"sample","systemManaged":true,"type":"MEMORY_LAYER_TYPE_EPISODIC"}}'
     headers:
       Content-Type:
       - application/json

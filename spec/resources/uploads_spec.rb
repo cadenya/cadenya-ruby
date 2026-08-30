@@ -16,7 +16,7 @@ RSpec.describe "client.uploads" do
     context "when workspace_id falls back to the client default" do
       it "resolves the client-level value" do
         stub = stub_request(:post, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/uploads")
-          .to_return(status: 200, body: "{\"info\":{\"status\":\"UPLOAD_STATUS_UNSPECIFIED\",\"uploadUrl\":\"sample\"},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{\"contentType\":\"sample\",\"filename\":\"sample\",\"sizeBytes\":\"sample\"}}", headers: { "Content-Type" => "application/json" })
+          .to_return(status: 200, body: "{\"info\":{\"status\":\"UPLOAD_STATUS_PENDING\",\"uploadUrl\":\"sample\"},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{\"contentType\":\"sample\",\"filename\":\"sample\",\"sizeBytes\":\"sample\"}}", headers: { "Content-Type" => "application/json" })
         client.uploads.create(metadata: {"name" => "sample"}, spec: {"content_type" => "sample", "filename" => "sample", "size_bytes" => "sample"})
         expect(stub).to have_been_requested
       end
@@ -34,7 +34,7 @@ RSpec.describe "client.uploads" do
     context "when workspace_id falls back to the client default" do
       it "resolves the client-level value" do
         stub = stub_request(:get, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/uploads/sample")
-          .to_return(status: 200, body: "{\"info\":{\"status\":\"UPLOAD_STATUS_UNSPECIFIED\",\"uploadUrl\":\"sample\"},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{\"contentType\":\"sample\",\"filename\":\"sample\",\"sizeBytes\":\"sample\"}}", headers: { "Content-Type" => "application/json" })
+          .to_return(status: 200, body: "{\"info\":{\"status\":\"UPLOAD_STATUS_PENDING\",\"uploadUrl\":\"sample\"},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{\"contentType\":\"sample\",\"filename\":\"sample\",\"sizeBytes\":\"sample\"}}", headers: { "Content-Type" => "application/json" })
         client.uploads.retrieve("sample")
         expect(stub).to have_been_requested
       end

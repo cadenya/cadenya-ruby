@@ -7,11 +7,11 @@ http_interactions:
       string: ''
     headers: {}
     method: get
-    uri: https://api.test.example/v1/workspaces/sample/agents?limit=1&cursor=sample&prefix=sample&query=sample&state=STATE_UNSPECIFIED&variationSelectionMode=VARIATION_SELECTION_MODE_UNSPECIFIED&labels=sample&sortOrder=sample&includeInfo=true
+    uri: https://api.test.example/v1/workspaces/sample/agents?limit=1&cursor=sample&prefix=sample&query=sample&state=STATE_DRAFT&variationSelectionMode=VARIATION_SELECTION_MODE_RANDOM&labels=sample&sortOrder=sample&includeInfo=true
   response:
     body:
       encoding: UTF-8
-      string: '{"items":[{"info":{"variationCount":1},"metadata":{"accountId":"sample","createdAt":"2026-01-01T00:00:00Z","externalId":"sample","id":"sample","labels":{},"name":"sample","profileId":"sample","workspaceId":"sample"},"spec":{"variationSelectionMode":"VARIATION_SELECTION_MODE_UNSPECIFIED"},"state":"STATE_UNSPECIFIED"}],"pagination":{"nextCursor":"cursor_page_2"}}'
+      string: '{"items":[{"info":{"variationCount":1},"metadata":{"accountId":"sample","createdAt":"2026-01-01T00:00:00Z","externalId":"sample","id":"sample","labels":{},"name":"sample","profileId":"sample","workspaceId":"sample"},"spec":{"variationSelectionMode":"VARIATION_SELECTION_MODE_RANDOM"},"state":"STATE_DRAFT"}],"pagination":{"nextCursor":"cursor_page_2"}}'
     headers:
       Content-Type:
       - application/json
@@ -26,11 +26,11 @@ http_interactions:
       string: ''
     headers: {}
     method: get
-    uri: https://api.test.example/v1/workspaces/sample/agents?limit=1&cursor=cursor_page_2&prefix=sample&query=sample&state=STATE_UNSPECIFIED&variationSelectionMode=VARIATION_SELECTION_MODE_UNSPECIFIED&labels=sample&sortOrder=sample&includeInfo=true
+    uri: https://api.test.example/v1/workspaces/sample/agents?limit=1&cursor=cursor_page_2&prefix=sample&query=sample&state=STATE_DRAFT&variationSelectionMode=VARIATION_SELECTION_MODE_RANDOM&labels=sample&sortOrder=sample&includeInfo=true
   response:
     body:
       encoding: UTF-8
-      string: '{"items":[{"info":{"variationCount":1},"metadata":{"accountId":"sample","createdAt":"2026-01-01T00:00:00Z","externalId":"sample","id":"sample","labels":{},"name":"sample","profileId":"sample","workspaceId":"sample"},"spec":{"variationSelectionMode":"VARIATION_SELECTION_MODE_UNSPECIFIED"},"state":"STATE_UNSPECIFIED"}],"pagination":{"nextCursor":""}}'
+      string: '{"items":[{"info":{"variationCount":1},"metadata":{"accountId":"sample","createdAt":"2026-01-01T00:00:00Z","externalId":"sample","id":"sample","labels":{},"name":"sample","profileId":"sample","workspaceId":"sample"},"spec":{"variationSelectionMode":"VARIATION_SELECTION_MODE_RANDOM"},"state":"STATE_DRAFT"}],"pagination":{"nextCursor":""}}'
     headers:
       Content-Type:
       - application/json

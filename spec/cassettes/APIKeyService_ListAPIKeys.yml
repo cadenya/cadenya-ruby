@@ -11,7 +11,7 @@ http_interactions:
   response:
     body:
       encoding: UTF-8
-      string: '{"items":[{"metadata":{"accountId":"sample","externalId":"sample","id":"sample","labels":{},"name":"sample","profileId":"sample"},"spec":{"system":true,"token":"sample"},"state":"STATE_UNSPECIFIED"}],"pagination":{"nextCursor":"cursor_page_2"}}'
+      string: '{"items":[{"metadata":{"accountId":"sample","externalId":"sample","id":"sample","labels":{},"name":"sample","profileId":"sample"},"spec":{"system":true,"token":"sample"},"state":"STATE_ENABLED"}],"pagination":{"nextCursor":"cursor_page_2"}}'
     headers:
       Content-Type:
       - application/json
@@ -30,7 +30,7 @@ http_interactions:
   response:
     body:
       encoding: UTF-8
-      string: '{"items":[{"metadata":{"accountId":"sample","externalId":"sample","id":"sample","labels":{},"name":"sample","profileId":"sample"},"spec":{"system":true,"token":"sample"},"state":"STATE_UNSPECIFIED"}],"pagination":{"nextCursor":""}}'
+      string: '{"items":[{"metadata":{"accountId":"sample","externalId":"sample","id":"sample","labels":{},"name":"sample","profileId":"sample"},"spec":{"system":true,"token":"sample"},"state":"STATE_ENABLED"}],"pagination":{"nextCursor":""}}'
     headers:
       Content-Type:
       - application/json

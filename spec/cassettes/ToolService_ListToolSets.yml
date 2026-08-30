@@ -7,11 +7,11 @@ http_interactions:
       string: ''
     headers: {}
     method: get
-    uri: https://api.test.example/v1/workspaces/sample/tool_sets?limit=1&cursor=sample&prefix=sample&query=sample&state=STATE_UNSPECIFIED&labels=sample&sortOrder=sample&includeInfo=true
+    uri: https://api.test.example/v1/workspaces/sample/tool_sets?limit=1&cursor=sample&prefix=sample&query=sample&state=STATE_ACTIVE&labels=sample&sortOrder=sample&includeInfo=true
   response:
     body:
       encoding: UTF-8
-      string: '{"items":[{"metadata":{"accountId":"sample","createdAt":"2026-01-01T00:00:00Z","externalId":"sample","id":"sample","labels":{},"name":"sample","profileId":"sample","workspaceId":"sample"},"spec":{"adapter":{"mcp":{},"type":"mcp"}},"state":"STATE_UNSPECIFIED"}],"pagination":{"nextCursor":"cursor_page_2"}}'
+      string: '{"items":[{"metadata":{"accountId":"sample","createdAt":"2026-01-01T00:00:00Z","externalId":"sample","id":"sample","labels":{},"name":"sample","profileId":"sample","workspaceId":"sample"},"spec":{"adapter":{"mcp":{},"type":"mcp"}},"state":"STATE_ACTIVE"}],"pagination":{"nextCursor":"cursor_page_2"}}'
     headers:
       Content-Type:
       - application/json
@@ -26,11 +26,11 @@ http_interactions:
       string: ''
     headers: {}
     method: get
-    uri: https://api.test.example/v1/workspaces/sample/tool_sets?limit=1&cursor=cursor_page_2&prefix=sample&query=sample&state=STATE_UNSPECIFIED&labels=sample&sortOrder=sample&includeInfo=true
+    uri: https://api.test.example/v1/workspaces/sample/tool_sets?limit=1&cursor=cursor_page_2&prefix=sample&query=sample&state=STATE_ACTIVE&labels=sample&sortOrder=sample&includeInfo=true
   response:
     body:
       encoding: UTF-8
-      string: '{"items":[{"metadata":{"accountId":"sample","createdAt":"2026-01-01T00:00:00Z","externalId":"sample","id":"sample","labels":{},"name":"sample","profileId":"sample","workspaceId":"sample"},"spec":{"adapter":{"mcp":{},"type":"mcp"}},"state":"STATE_UNSPECIFIED"}],"pagination":{"nextCursor":""}}'
+      string: '{"items":[{"metadata":{"accountId":"sample","createdAt":"2026-01-01T00:00:00Z","externalId":"sample","id":"sample","labels":{},"name":"sample","profileId":"sample","workspaceId":"sample"},"spec":{"adapter":{"mcp":{},"type":"mcp"}},"state":"STATE_ACTIVE"}],"pagination":{"nextCursor":""}}'
     headers:
       Content-Type:
       - application/json

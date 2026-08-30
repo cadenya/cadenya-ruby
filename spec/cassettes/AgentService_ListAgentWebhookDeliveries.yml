@@ -7,11 +7,11 @@ http_interactions:
       string: ''
     headers: {}
     method: get
-    uri: https://api.test.example/v1/workspaces/sample/agents/sample/webhook_deliveries?cursor=sample&limit=1&objectiveId=sample&eventType=OBJECTIVE_EVENT_TYPE_UNSPECIFIED&labels=sample
+    uri: https://api.test.example/v1/workspaces/sample/agents/sample/webhook_deliveries?cursor=sample&limit=1&objectiveId=sample&eventType=OBJECTIVE_EVENT_TYPE_USER_MESSAGE&labels=sample
   response:
     body:
       encoding: UTF-8
-      string: '{"items":[{"data":{"agentId":"sample","attemptCount":1,"errorMessage":"sample","eventType":"OBJECTIVE_EVENT_TYPE_UNSPECIFIED","httpStatusCode":1,"lastAttemptAt":"2026-01-01T00:00:00Z","latencyMs":1,"objectiveEventId":"sample","objectiveId":"sample","responseContentLength":"sample","responseHeaders":{},"status":"WEBHOOK_DELIVERY_STATUS_UNSPECIFIED","webhookId":"sample","webhookUrl":"sample"},"metadata":{"accountId":"sample","createdAt":"2026-01-01T00:00:00Z","externalId":"sample","id":"sample","labels":{},"profileId":"sample","workspaceId":"sample"}}],"pagination":{"nextCursor":"cursor_page_2"}}'
+      string: '{"items":[{"data":{"agentId":"sample","attemptCount":1,"errorMessage":"sample","eventType":"OBJECTIVE_EVENT_TYPE_USER_MESSAGE","httpStatusCode":1,"lastAttemptAt":"2026-01-01T00:00:00Z","latencyMs":1,"objectiveEventId":"sample","objectiveId":"sample","responseContentLength":"sample","responseHeaders":{},"status":"WEBHOOK_DELIVERY_STATUS_PENDING","webhookId":"sample","webhookUrl":"sample"},"metadata":{"accountId":"sample","createdAt":"2026-01-01T00:00:00Z","externalId":"sample","id":"sample","labels":{},"profileId":"sample","workspaceId":"sample"}}],"pagination":{"nextCursor":"cursor_page_2"}}'
     headers:
       Content-Type:
       - application/json
@@ -26,11 +26,11 @@ http_interactions:
       string: ''
     headers: {}
     method: get
-    uri: https://api.test.example/v1/workspaces/sample/agents/sample/webhook_deliveries?cursor=cursor_page_2&limit=1&objectiveId=sample&eventType=OBJECTIVE_EVENT_TYPE_UNSPECIFIED&labels=sample
+    uri: https://api.test.example/v1/workspaces/sample/agents/sample/webhook_deliveries?cursor=cursor_page_2&limit=1&objectiveId=sample&eventType=OBJECTIVE_EVENT_TYPE_USER_MESSAGE&labels=sample
   response:
     body:
       encoding: UTF-8
-      string: '{"items":[{"data":{"agentId":"sample","attemptCount":1,"errorMessage":"sample","eventType":"OBJECTIVE_EVENT_TYPE_UNSPECIFIED","httpStatusCode":1,"lastAttemptAt":"2026-01-01T00:00:00Z","latencyMs":1,"objectiveEventId":"sample","objectiveId":"sample","responseContentLength":"sample","responseHeaders":{},"status":"WEBHOOK_DELIVERY_STATUS_UNSPECIFIED","webhookId":"sample","webhookUrl":"sample"},"metadata":{"accountId":"sample","createdAt":"2026-01-01T00:00:00Z","externalId":"sample","id":"sample","labels":{},"profileId":"sample","workspaceId":"sample"}}],"pagination":{"nextCursor":""}}'
+      string: '{"items":[{"data":{"agentId":"sample","attemptCount":1,"errorMessage":"sample","eventType":"OBJECTIVE_EVENT_TYPE_USER_MESSAGE","httpStatusCode":1,"lastAttemptAt":"2026-01-01T00:00:00Z","latencyMs":1,"objectiveEventId":"sample","objectiveId":"sample","responseContentLength":"sample","responseHeaders":{},"status":"WEBHOOK_DELIVERY_STATUS_PENDING","webhookId":"sample","webhookUrl":"sample"},"metadata":{"accountId":"sample","createdAt":"2026-01-01T00:00:00Z","externalId":"sample","id":"sample","labels":{},"profileId":"sample","workspaceId":"sample"}}],"pagination":{"nextCursor":""}}'
     headers:
       Content-Type:
       - application/json

@@ -155,31 +155,6 @@ module Cadenya
         Types::ObjectiveFeedback.from_json(_data)
       end
 
-      # List objective tasks
-      def list_tasks(objective_id, workspace_id: nil, limit: nil, cursor: nil, sort_order: nil, request_options: nil)
-        workspace_id = @core.resolve_default("workspaceId", "CADENYA_WORKSPACE_ID", workspace_id)
-        _path = "/v1/workspaces/#{Util.path_param('workspaceId', workspace_id)}/objectives/#{Util.path_param('objectiveId', objective_id)}/tasks"
-        _query = {
-          "limit" => limit,
-          "cursor" => cursor,
-          "sortOrder" => sort_order,
-        }
-        _data = @core.request(:get, _path, query: _query, request_options: request_options) || {}
-        _items = (_data["items"] || []).map { |item| Types::ObjectiveTask.from_json(item) }
-        _next_cursor = (((_data)["pagination"] || {}))["nextCursor"].to_s
-        Page.new(_items, _next_cursor) do |_c|
-          list_tasks(objective_id, workspace_id: workspace_id, limit: limit, cursor: _c, sort_order: sort_order, request_options: request_options)
-        end
-      end
-
-      # Get an objective task by ID
-      def retrieve_task(objective_id, id, workspace_id: nil, request_options: nil)
-        workspace_id = @core.resolve_default("workspaceId", "CADENYA_WORKSPACE_ID", workspace_id)
-        _path = "/v1/workspaces/#{Util.path_param('workspaceId', workspace_id)}/objectives/#{Util.path_param('objectiveId', objective_id)}/tasks/#{Util.path_param('id', id)}"
-        _data = @core.request(:get, _path, request_options: request_options)
-        Types::ObjectiveTask.from_json(_data)
-      end
-
       # List objective tool calls
       def list_tool_calls(objective_id, workspace_id: nil, limit: nil, cursor: nil, status: nil, include_info: nil, execution_status: nil, labels: nil, request_options: nil)
         workspace_id = @core.resolve_default("workspaceId", "CADENYA_WORKSPACE_ID", workspace_id)

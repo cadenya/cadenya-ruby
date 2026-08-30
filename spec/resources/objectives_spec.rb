@@ -8,7 +8,7 @@ RSpec.describe "client.objectives" do
   describe "#list" do
     it "sends the golden request and decodes the response" do
       VCR.use_cassette("ObjectiveService_ListObjectives") do
-        result = client.objectives.list(workspace_id: "sample", limit: 1, cursor: "sample", agent_id: "sample", parent_objective_id: "sample", state: "STATE_UNSPECIFIED", profile_id: "sample", sort_order: "sample", include_info: true, agent_schedule_id: "sample", labels: "sample", tenant_id: "sample", subject_id: "sample", widget_id: "sample", widget_session_id: "sample")
+        result = client.objectives.list(workspace_id: "sample", limit: 1, cursor: "sample", agent_id: "sample", parent_objective_id: "sample", state: "STATE_PENDING", profile_id: "sample", sort_order: "sample", include_info: true, agent_schedule_id: "sample", labels: "sample", tenant_id: "sample", subject_id: "sample", widget_id: "sample", widget_session_id: "sample")
         items = result.to_a
         expect(items.length).to eq(2)
       end
@@ -18,8 +18,8 @@ RSpec.describe "client.objectives" do
       it "resolves the client-level value" do
         stub = stub_request(:get, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/objectives")
           .with(query: hash_including({}))
-          .to_return(status: 200, body: "{\"items\":[{\"configSnapshot\":{\"agent\":{\"info\":{\"variationCount\":1},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{\"variationSelectionMode\":\"VARIATION_SELECTION_MODE_UNSPECIFIED\"},\"state\":\"STATE_UNSPECIFIED\"},\"agentVariation\":{\"info\":{\"assignments\":[{\"id\":\"sample\",\"tool\":{\"id\":\"sample\"},\"type\":\"tool\"}],\"feedbackCount\":1,\"memoryLayerAssignments\":[{\"id\":\"sample\",\"memoryLayer\":{\"id\":\"sample\"},\"position\":1}],\"memoryLayerCount\":1,\"score\":1.5,\"subAgentCount\":1,\"toolCount\":1,\"toolSetCount\":1},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{}}},\"firstUserMessage\":\"sample\",\"memoryCascade\":[{\"memoryLayerId\":\"sample\"}],\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"parentObjectiveId\":\"sample\",\"pinnedParameters\":{},\"secrets\":[{\"name\":\"sample\"}],\"state\":\"STATE_UNSPECIFIED\",\"stateMessage\":\"sample\",\"systemPrompt\":\"sample\"}],\"pagination\":{\"nextCursor\":\"\"}}", headers: { "Content-Type" => "application/json" })
-        client.objectives.list(limit: 1, cursor: "sample", agent_id: "sample", parent_objective_id: "sample", state: "STATE_UNSPECIFIED", profile_id: "sample", sort_order: "sample", include_info: true, agent_schedule_id: "sample", labels: "sample", tenant_id: "sample", subject_id: "sample", widget_id: "sample", widget_session_id: "sample")
+          .to_return(status: 200, body: "{\"items\":[{\"configSnapshot\":{\"agent\":{\"info\":{\"variationCount\":1},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{\"variationSelectionMode\":\"VARIATION_SELECTION_MODE_RANDOM\"},\"state\":\"STATE_DRAFT\"},\"agentVariation\":{\"info\":{\"assignments\":[{\"id\":\"sample\",\"tool\":{\"id\":\"sample\"},\"type\":\"tool\"}],\"feedbackCount\":1,\"memoryLayerAssignments\":[{\"id\":\"sample\",\"memoryLayer\":{\"id\":\"sample\"},\"position\":1}],\"memoryLayerCount\":1,\"score\":1.5,\"subAgentCount\":1,\"toolCount\":1,\"toolSetCount\":1},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{}}},\"firstUserMessage\":\"sample\",\"memoryCascade\":[{\"memoryLayerId\":\"sample\"}],\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"parentObjectiveId\":\"sample\",\"pinnedParameters\":{},\"secrets\":[{\"name\":\"sample\"}],\"state\":\"STATE_PENDING\",\"stateMessage\":\"sample\",\"systemPrompt\":\"sample\"}],\"pagination\":{\"nextCursor\":\"\"}}", headers: { "Content-Type" => "application/json" })
+        client.objectives.list(limit: 1, cursor: "sample", agent_id: "sample", parent_objective_id: "sample", state: "STATE_PENDING", profile_id: "sample", sort_order: "sample", include_info: true, agent_schedule_id: "sample", labels: "sample", tenant_id: "sample", subject_id: "sample", widget_id: "sample", widget_session_id: "sample")
         expect(stub).to have_been_requested
       end
     end
@@ -36,7 +36,7 @@ RSpec.describe "client.objectives" do
     context "when workspace_id falls back to the client default" do
       it "resolves the client-level value" do
         stub = stub_request(:post, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/objectives")
-          .to_return(status: 200, body: "{\"configSnapshot\":{\"agent\":{\"info\":{\"variationCount\":1},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{\"variationSelectionMode\":\"VARIATION_SELECTION_MODE_UNSPECIFIED\"},\"state\":\"STATE_UNSPECIFIED\"},\"agentVariation\":{\"info\":{\"assignments\":[{\"id\":\"sample\",\"tool\":{\"id\":\"sample\"},\"type\":\"tool\"}],\"feedbackCount\":1,\"memoryLayerAssignments\":[{\"id\":\"sample\",\"memoryLayer\":{\"id\":\"sample\"},\"position\":1}],\"memoryLayerCount\":1,\"score\":1.5,\"subAgentCount\":1,\"toolCount\":1,\"toolSetCount\":1},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{}}},\"firstUserMessage\":\"sample\",\"memoryCascade\":[{\"memoryLayerId\":\"sample\"}],\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"parentObjectiveId\":\"sample\",\"pinnedParameters\":{},\"secrets\":[{\"name\":\"sample\"}],\"state\":\"STATE_UNSPECIFIED\",\"stateMessage\":\"sample\",\"systemPrompt\":\"sample\"}", headers: { "Content-Type" => "application/json" })
+          .to_return(status: 200, body: "{\"configSnapshot\":{\"agent\":{\"info\":{\"variationCount\":1},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{\"variationSelectionMode\":\"VARIATION_SELECTION_MODE_RANDOM\"},\"state\":\"STATE_DRAFT\"},\"agentVariation\":{\"info\":{\"assignments\":[{\"id\":\"sample\",\"tool\":{\"id\":\"sample\"},\"type\":\"tool\"}],\"feedbackCount\":1,\"memoryLayerAssignments\":[{\"id\":\"sample\",\"memoryLayer\":{\"id\":\"sample\"},\"position\":1}],\"memoryLayerCount\":1,\"score\":1.5,\"subAgentCount\":1,\"toolCount\":1,\"toolSetCount\":1},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{}}},\"firstUserMessage\":\"sample\",\"memoryCascade\":[{\"memoryLayerId\":\"sample\"}],\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"parentObjectiveId\":\"sample\",\"pinnedParameters\":{},\"secrets\":[{\"name\":\"sample\"}],\"state\":\"STATE_PENDING\",\"stateMessage\":\"sample\",\"systemPrompt\":\"sample\"}", headers: { "Content-Type" => "application/json" })
         client.objectives.create(agent_id: "sample", variation_id: "sample", metadata: {}, system_prompt_data: {}, first_user_message: "sample", secrets: [{}], memory_cascade: [{"memory_layer_id" => "sample"}], first_user_message_data: {}, episodic_memory: {"key" => "sample"}, tenant: {"id" => "sample"}, subject: {"id" => "sample"}, pinned_parameters: {})
         expect(stub).to have_been_requested
       end
@@ -54,7 +54,7 @@ RSpec.describe "client.objectives" do
     context "when workspace_id falls back to the client default" do
       it "resolves the client-level value" do
         stub = stub_request(:get, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/objectives/sample")
-          .to_return(status: 200, body: "{\"configSnapshot\":{\"agent\":{\"info\":{\"variationCount\":1},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{\"variationSelectionMode\":\"VARIATION_SELECTION_MODE_UNSPECIFIED\"},\"state\":\"STATE_UNSPECIFIED\"},\"agentVariation\":{\"info\":{\"assignments\":[{\"id\":\"sample\",\"tool\":{\"id\":\"sample\"},\"type\":\"tool\"}],\"feedbackCount\":1,\"memoryLayerAssignments\":[{\"id\":\"sample\",\"memoryLayer\":{\"id\":\"sample\"},\"position\":1}],\"memoryLayerCount\":1,\"score\":1.5,\"subAgentCount\":1,\"toolCount\":1,\"toolSetCount\":1},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{}}},\"firstUserMessage\":\"sample\",\"memoryCascade\":[{\"memoryLayerId\":\"sample\"}],\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"parentObjectiveId\":\"sample\",\"pinnedParameters\":{},\"secrets\":[{\"name\":\"sample\"}],\"state\":\"STATE_UNSPECIFIED\",\"stateMessage\":\"sample\",\"systemPrompt\":\"sample\"}", headers: { "Content-Type" => "application/json" })
+          .to_return(status: 200, body: "{\"configSnapshot\":{\"agent\":{\"info\":{\"variationCount\":1},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{\"variationSelectionMode\":\"VARIATION_SELECTION_MODE_RANDOM\"},\"state\":\"STATE_DRAFT\"},\"agentVariation\":{\"info\":{\"assignments\":[{\"id\":\"sample\",\"tool\":{\"id\":\"sample\"},\"type\":\"tool\"}],\"feedbackCount\":1,\"memoryLayerAssignments\":[{\"id\":\"sample\",\"memoryLayer\":{\"id\":\"sample\"},\"position\":1}],\"memoryLayerCount\":1,\"score\":1.5,\"subAgentCount\":1,\"toolCount\":1,\"toolSetCount\":1},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{}}},\"firstUserMessage\":\"sample\",\"memoryCascade\":[{\"memoryLayerId\":\"sample\"}],\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"parentObjectiveId\":\"sample\",\"pinnedParameters\":{},\"secrets\":[{\"name\":\"sample\"}],\"state\":\"STATE_PENDING\",\"stateMessage\":\"sample\",\"systemPrompt\":\"sample\"}", headers: { "Content-Type" => "application/json" })
         client.objectives.retrieve("sample")
         expect(stub).to have_been_requested
       end
@@ -152,7 +152,7 @@ RSpec.describe "client.objectives" do
       it "resolves the client-level value" do
         stub = stub_request(:get, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/objectives/sample/feedback")
           .with(query: hash_including({}))
-          .to_return(status: 200, body: "{\"items\":[{\"data\":{},\"info\":{\"submittedBy\":{\"metadata\":{\"accountId\":\"sample\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\"},\"spec\":{\"email\":\"sample\",\"name\":\"sample\",\"type\":\"PROFILE_TYPE_UNSPECIFIED\"}}},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"profileId\":\"sample\",\"workspaceId\":\"sample\"}}],\"pagination\":{\"nextCursor\":\"\"}}", headers: { "Content-Type" => "application/json" })
+          .to_return(status: 200, body: "{\"items\":[{\"data\":{},\"info\":{\"submittedBy\":{\"metadata\":{\"accountId\":\"sample\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\"},\"spec\":{\"email\":\"sample\",\"name\":\"sample\",\"type\":\"PROFILE_TYPE_USER\"}}},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"profileId\":\"sample\",\"workspaceId\":\"sample\"}}],\"pagination\":{\"nextCursor\":\"\"}}", headers: { "Content-Type" => "application/json" })
         client.objectives.list_feedback("sample", limit: 1, cursor: "sample", labels: "sample")
         expect(stub).to have_been_requested
       end
@@ -170,46 +170,8 @@ RSpec.describe "client.objectives" do
     context "when workspace_id falls back to the client default" do
       it "resolves the client-level value" do
         stub = stub_request(:post, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/objectives/sample/feedback")
-          .to_return(status: 200, body: "{\"data\":{},\"info\":{\"submittedBy\":{\"metadata\":{\"accountId\":\"sample\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\"},\"spec\":{\"email\":\"sample\",\"name\":\"sample\",\"type\":\"PROFILE_TYPE_UNSPECIFIED\"}}},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"profileId\":\"sample\",\"workspaceId\":\"sample\"}}", headers: { "Content-Type" => "application/json" })
+          .to_return(status: 200, body: "{\"data\":{},\"info\":{\"submittedBy\":{\"metadata\":{\"accountId\":\"sample\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\"},\"spec\":{\"email\":\"sample\",\"name\":\"sample\",\"type\":\"PROFILE_TYPE_USER\"}}},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"profileId\":\"sample\",\"workspaceId\":\"sample\"}}", headers: { "Content-Type" => "application/json" })
         client.objectives.create_feedback("sample", metadata: {}, data: {})
-        expect(stub).to have_been_requested
-      end
-    end
-  end
-
-  describe "#list_tasks" do
-    it "sends the golden request and decodes the response" do
-      VCR.use_cassette("ObjectiveService_ListObjectiveTasks") do
-        result = client.objectives.list_tasks("sample", workspace_id: "sample", limit: 1, cursor: "sample", sort_order: "sample")
-        items = result.to_a
-        expect(items.length).to eq(2)
-      end
-    end
-
-    context "when workspace_id falls back to the client default" do
-      it "resolves the client-level value" do
-        stub = stub_request(:get, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/objectives/sample/tasks")
-          .with(query: hash_including({}))
-          .to_return(status: 200, body: "{\"items\":[{\"data\":{\"completed\":true,\"number\":1,\"task\":\"sample\"},\"metadata\":{\"id\":\"sample\"}}],\"pagination\":{\"nextCursor\":\"\"}}", headers: { "Content-Type" => "application/json" })
-        client.objectives.list_tasks("sample", limit: 1, cursor: "sample", sort_order: "sample")
-        expect(stub).to have_been_requested
-      end
-    end
-  end
-
-  describe "#retrieve_task" do
-    it "sends the golden request and decodes the response" do
-      VCR.use_cassette("ObjectiveService_GetObjectiveTask") do
-        result = client.objectives.retrieve_task("sample", "sample", workspace_id: "sample")
-        expect(result).to be_a(Cadenya::Types::ObjectiveTask)
-      end
-    end
-
-    context "when workspace_id falls back to the client default" do
-      it "resolves the client-level value" do
-        stub = stub_request(:get, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/objectives/sample/tasks/sample")
-          .to_return(status: 200, body: "{\"data\":{\"completed\":true,\"number\":1,\"task\":\"sample\"},\"metadata\":{\"id\":\"sample\"}}", headers: { "Content-Type" => "application/json" })
-        client.objectives.retrieve_task("sample", "sample")
         expect(stub).to have_been_requested
       end
     end
@@ -218,7 +180,7 @@ RSpec.describe "client.objectives" do
   describe "#list_tool_calls" do
     it "sends the golden request and decodes the response" do
       VCR.use_cassette("ObjectiveService_ListObjectiveToolCalls") do
-        result = client.objectives.list_tool_calls("sample", workspace_id: "sample", limit: 1, cursor: "sample", status: "TOOL_CALL_STATUS_UNSPECIFIED", include_info: true, execution_status: "TOOL_CALL_EXECUTION_STATUS_UNSPECIFIED", labels: "sample")
+        result = client.objectives.list_tool_calls("sample", workspace_id: "sample", limit: 1, cursor: "sample", status: "TOOL_CALL_STATUS_AUTO_APPROVED", include_info: true, execution_status: "TOOL_CALL_EXECUTION_STATUS_PENDING", labels: "sample")
         items = result.to_a
         expect(items.length).to eq(2)
       end
@@ -228,8 +190,8 @@ RSpec.describe "client.objectives" do
       it "resolves the client-level value" do
         stub = stub_request(:get, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/objectives/sample/tool_calls")
           .with(query: hash_including({}))
-          .to_return(status: 200, body: "{\"items\":[{\"data\":{\"arguments\":{},\"callable\":{\"tool\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"type\":\"tool\"},\"resolvedSecrets\":[{\"key\":\"sample\",\"source\":\"RESOLVED_SECRET_SOURCE_UNSPECIFIED\"}]},\"executionStatus\":\"TOOL_CALL_EXECUTION_STATUS_UNSPECIFIED\",\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"status\":\"TOOL_CALL_STATUS_UNSPECIFIED\"}],\"pagination\":{\"nextCursor\":\"\"}}", headers: { "Content-Type" => "application/json" })
-        client.objectives.list_tool_calls("sample", limit: 1, cursor: "sample", status: "TOOL_CALL_STATUS_UNSPECIFIED", include_info: true, execution_status: "TOOL_CALL_EXECUTION_STATUS_UNSPECIFIED", labels: "sample")
+          .to_return(status: 200, body: "{\"items\":[{\"data\":{\"arguments\":{},\"callable\":{\"tool\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"type\":\"tool\"},\"resolvedSecrets\":[{\"key\":\"sample\",\"source\":\"RESOLVED_SECRET_SOURCE_WORKSPACE\"}]},\"executionStatus\":\"TOOL_CALL_EXECUTION_STATUS_PENDING\",\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"status\":\"TOOL_CALL_STATUS_AUTO_APPROVED\"}],\"pagination\":{\"nextCursor\":\"\"}}", headers: { "Content-Type" => "application/json" })
+        client.objectives.list_tool_calls("sample", limit: 1, cursor: "sample", status: "TOOL_CALL_STATUS_AUTO_APPROVED", include_info: true, execution_status: "TOOL_CALL_EXECUTION_STATUS_PENDING", labels: "sample")
         expect(stub).to have_been_requested
       end
     end
@@ -246,7 +208,7 @@ RSpec.describe "client.objectives" do
     context "when workspace_id falls back to the client default" do
       it "resolves the client-level value" do
         stub = stub_request(:get, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/objectives/sample/tool_calls/sample")
-          .to_return(status: 200, body: "{\"data\":{\"arguments\":{},\"callable\":{\"tool\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"type\":\"tool\"},\"resolvedSecrets\":[{\"key\":\"sample\",\"source\":\"RESOLVED_SECRET_SOURCE_UNSPECIFIED\"}]},\"executionStatus\":\"TOOL_CALL_EXECUTION_STATUS_UNSPECIFIED\",\"info\":{\"objective\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"profileId\":\"sample\",\"workspaceId\":\"sample\"}},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"resolvedSecrets\":[{\"key\":\"sample\",\"source\":\"RESOLVED_SECRET_SOURCE_UNSPECIFIED\"}],\"status\":\"TOOL_CALL_STATUS_UNSPECIFIED\"}", headers: { "Content-Type" => "application/json" })
+          .to_return(status: 200, body: "{\"data\":{\"arguments\":{},\"callable\":{\"tool\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"type\":\"tool\"},\"resolvedSecrets\":[{\"key\":\"sample\",\"source\":\"RESOLVED_SECRET_SOURCE_WORKSPACE\"}]},\"executionStatus\":\"TOOL_CALL_EXECUTION_STATUS_PENDING\",\"info\":{\"objective\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"profileId\":\"sample\",\"workspaceId\":\"sample\"}},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"resolvedSecrets\":[{\"key\":\"sample\",\"source\":\"RESOLVED_SECRET_SOURCE_WORKSPACE\"}],\"status\":\"TOOL_CALL_STATUS_AUTO_APPROVED\"}", headers: { "Content-Type" => "application/json" })
         client.objectives.retrieve_tool_call("sample", "sample")
         expect(stub).to have_been_requested
       end
@@ -264,7 +226,7 @@ RSpec.describe "client.objectives" do
     context "when workspace_id falls back to the client default" do
       it "resolves the client-level value" do
         stub = stub_request(:post, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/objectives/sample/tool_calls/sample:approve")
-          .to_return(status: 200, body: "{\"data\":{\"arguments\":{},\"callable\":{\"tool\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"type\":\"tool\"},\"resolvedSecrets\":[{\"key\":\"sample\",\"source\":\"RESOLVED_SECRET_SOURCE_UNSPECIFIED\"}]},\"executionStatus\":\"TOOL_CALL_EXECUTION_STATUS_UNSPECIFIED\",\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"status\":\"TOOL_CALL_STATUS_UNSPECIFIED\"}", headers: { "Content-Type" => "application/json" })
+          .to_return(status: 200, body: "{\"data\":{\"arguments\":{},\"callable\":{\"tool\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"type\":\"tool\"},\"resolvedSecrets\":[{\"key\":\"sample\",\"source\":\"RESOLVED_SECRET_SOURCE_WORKSPACE\"}]},\"executionStatus\":\"TOOL_CALL_EXECUTION_STATUS_PENDING\",\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"status\":\"TOOL_CALL_STATUS_AUTO_APPROVED\"}", headers: { "Content-Type" => "application/json" })
         client.objectives.approve_tool_call("sample", "sample")
         expect(stub).to have_been_requested
       end
@@ -282,7 +244,7 @@ RSpec.describe "client.objectives" do
     context "when workspace_id falls back to the client default" do
       it "resolves the client-level value" do
         stub = stub_request(:post, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/objectives/sample/tool_calls/sample:deny")
-          .to_return(status: 200, body: "{\"data\":{\"arguments\":{},\"callable\":{\"tool\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"type\":\"tool\"},\"resolvedSecrets\":[{\"key\":\"sample\",\"source\":\"RESOLVED_SECRET_SOURCE_UNSPECIFIED\"}]},\"executionStatus\":\"TOOL_CALL_EXECUTION_STATUS_UNSPECIFIED\",\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"status\":\"TOOL_CALL_STATUS_UNSPECIFIED\"}", headers: { "Content-Type" => "application/json" })
+          .to_return(status: 200, body: "{\"data\":{\"arguments\":{},\"callable\":{\"tool\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"type\":\"tool\"},\"resolvedSecrets\":[{\"key\":\"sample\",\"source\":\"RESOLVED_SECRET_SOURCE_WORKSPACE\"}]},\"executionStatus\":\"TOOL_CALL_EXECUTION_STATUS_PENDING\",\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"status\":\"TOOL_CALL_STATUS_AUTO_APPROVED\"}", headers: { "Content-Type" => "application/json" })
         client.objectives.deny_tool_call("sample", "sample", memo: "sample")
         expect(stub).to have_been_requested
       end
@@ -300,7 +262,7 @@ RSpec.describe "client.objectives" do
     context "when workspace_id falls back to the client default" do
       it "resolves the client-level value" do
         stub = stub_request(:post, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/objectives/sample/tool_calls/sample:setContent")
-          .to_return(status: 200, body: "{\"data\":{\"arguments\":{},\"callable\":{\"tool\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"type\":\"tool\"},\"resolvedSecrets\":[{\"key\":\"sample\",\"source\":\"RESOLVED_SECRET_SOURCE_UNSPECIFIED\"}]},\"executionStatus\":\"TOOL_CALL_EXECUTION_STATUS_UNSPECIFIED\",\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"status\":\"TOOL_CALL_STATUS_UNSPECIFIED\"}", headers: { "Content-Type" => "application/json" })
+          .to_return(status: 200, body: "{\"data\":{\"arguments\":{},\"callable\":{\"tool\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"type\":\"tool\"},\"resolvedSecrets\":[{\"key\":\"sample\",\"source\":\"RESOLVED_SECRET_SOURCE_WORKSPACE\"}]},\"executionStatus\":\"TOOL_CALL_EXECUTION_STATUS_PENDING\",\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"status\":\"TOOL_CALL_STATUS_AUTO_APPROVED\"}", headers: { "Content-Type" => "application/json" })
         client.objectives.set_tool_call_content("sample", "sample", content: [{"text" => {"text" => "sample"}, "type" => "text"}])
         expect(stub).to have_been_requested
       end
@@ -320,7 +282,7 @@ RSpec.describe "client.objectives" do
       it "resolves the client-level value" do
         stub = stub_request(:get, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/objectives/sample/tools")
           .with(query: hash_including({}))
-          .to_return(status: 200, body: "{\"items\":[{\"metadata\":{\"id\":\"sample\"},\"snapshot\":{\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{\"config\":{\"http\":{\"requestMethod\":\"HTTP_METHOD_UNSPECIFIED\"},\"type\":\"http\"},\"description\":\"sample\",\"parameters\":{},\"requiresApproval\":true},\"state\":\"STATE_UNSPECIFIED\"}}],\"pagination\":{\"nextCursor\":\"\"}}", headers: { "Content-Type" => "application/json" })
+          .to_return(status: 200, body: "{\"items\":[{\"metadata\":{\"id\":\"sample\"},\"snapshot\":{\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{\"config\":{\"http\":{\"requestMethod\":\"GET\"},\"type\":\"http\"},\"description\":\"sample\",\"parameters\":{},\"requiresApproval\":true},\"state\":\"STATE_AVAILABLE\"}}],\"pagination\":{\"nextCursor\":\"\"}}", headers: { "Content-Type" => "application/json" })
         client.objectives.list_tools("sample", limit: 1, cursor: "sample")
         expect(stub).to have_been_requested
       end
@@ -338,7 +300,7 @@ RSpec.describe "client.objectives" do
     context "when workspace_id falls back to the client default" do
       it "resolves the client-level value" do
         stub = stub_request(:post, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/objectives/sample:cancel")
-          .to_return(status: 200, body: "{\"configSnapshot\":{\"agent\":{\"info\":{\"variationCount\":1},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{\"variationSelectionMode\":\"VARIATION_SELECTION_MODE_UNSPECIFIED\"},\"state\":\"STATE_UNSPECIFIED\"},\"agentVariation\":{\"info\":{\"assignments\":[{\"id\":\"sample\",\"tool\":{\"id\":\"sample\"},\"type\":\"tool\"}],\"feedbackCount\":1,\"memoryLayerAssignments\":[{\"id\":\"sample\",\"memoryLayer\":{\"id\":\"sample\"},\"position\":1}],\"memoryLayerCount\":1,\"score\":1.5,\"subAgentCount\":1,\"toolCount\":1,\"toolSetCount\":1},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{}}},\"firstUserMessage\":\"sample\",\"memoryCascade\":[{\"memoryLayerId\":\"sample\"}],\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"parentObjectiveId\":\"sample\",\"pinnedParameters\":{},\"secrets\":[{\"name\":\"sample\"}],\"state\":\"STATE_UNSPECIFIED\",\"stateMessage\":\"sample\",\"systemPrompt\":\"sample\"}", headers: { "Content-Type" => "application/json" })
+          .to_return(status: 200, body: "{\"configSnapshot\":{\"agent\":{\"info\":{\"variationCount\":1},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{\"variationSelectionMode\":\"VARIATION_SELECTION_MODE_RANDOM\"},\"state\":\"STATE_DRAFT\"},\"agentVariation\":{\"info\":{\"assignments\":[{\"id\":\"sample\",\"tool\":{\"id\":\"sample\"},\"type\":\"tool\"}],\"feedbackCount\":1,\"memoryLayerAssignments\":[{\"id\":\"sample\",\"memoryLayer\":{\"id\":\"sample\"},\"position\":1}],\"memoryLayerCount\":1,\"score\":1.5,\"subAgentCount\":1,\"toolCount\":1,\"toolSetCount\":1},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{}}},\"firstUserMessage\":\"sample\",\"memoryCascade\":[{\"memoryLayerId\":\"sample\"}],\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"parentObjectiveId\":\"sample\",\"pinnedParameters\":{},\"secrets\":[{\"name\":\"sample\"}],\"state\":\"STATE_PENDING\",\"stateMessage\":\"sample\",\"systemPrompt\":\"sample\"}", headers: { "Content-Type" => "application/json" })
         client.objectives.cancel("sample", reason: "sample")
         expect(stub).to have_been_requested
       end
