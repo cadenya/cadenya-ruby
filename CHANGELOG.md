@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.1.0](https://github.com/cadenya/cadenya-ruby/compare/v1.0.1...v1.1.0) (2026-09-09)
+
+
+### Features
+
+* add provider credentials and model management ([bdafc7a](https://github.com/cadenya/cadenya-ruby/commit/bdafc7aaa7685fe9618ca54465552125da703735))
+
+
+### Bug Fixes
+
+* **release:** publish gems with the configured API key ([#66](https://github.com/cadenya/cadenya-ruby/issues/66)) ([62261f3](https://github.com/cadenya/cadenya-ruby/commit/62261f388a37e9e4d0e497ec7c6979d0800ba33f))
+* **release:** publish the generated gem with OIDC ([#69](https://github.com/cadenya/cadenya-ruby/issues/69)) ([8414ea9](https://github.com/cadenya/cadenya-ruby/commit/8414ea93e764e719d1b753fc16aad275ffc992cc))
+
+
+### Chores
+
+* assorted updates ([#71](https://github.com/cadenya/cadenya-ruby/issues/71)) ([b8b0347](https://github.com/cadenya/cadenya-ruby/commit/b8b03477086989881a888b4935a5bef3a3b098b6))
+* **release:** require RubyGems trusted publishing ([#68](https://github.com/cadenya/cadenya-ruby/issues/68)) ([6553828](https://github.com/cadenya/cadenya-ruby/commit/65538282e26cf264531bdedcff43c7f114b882e4))
+
 ## [1.0.1](https://github.com/cadenya/cadenya-ruby/compare/v1.0.0...v1.0.1) (2026-08-27)
 
 
