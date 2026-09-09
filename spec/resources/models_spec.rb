@@ -5,6 +5,24 @@
 RSpec.describe "client.models" do
   let(:client) { build_client }
 
+  describe "#create" do
+    it "sends the golden request and decodes the response" do
+      VCR.use_cassette("ModelService_CreateModel") do
+        result = client.models.create("sample", workspace_id: "sample", metadata: {"name" => "sample"}, spec: {"capabilities" => [{"temperature" => {}, "type" => "temperature"}], "family" => "sample", "input_price_per_million_tokens" => "sample", "max_input_tokens" => 1, "max_output_tokens" => 1, "output_price_per_million_tokens" => "sample", "provider" => "sample", "provider_model_id" => "sample"})
+        expect(result).to be_a(Cadenya::Types::Model)
+      end
+    end
+
+    context "when workspace_id falls back to the client default" do
+      it "resolves the client-level value" do
+        stub = stub_request(:post, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/ai_provider_keys/sample/models")
+          .to_return(status: 200, body: "{\"basePricing\":{\"inputPricePerMillionTokens\":\"sample\",\"outputPricePerMillionTokens\":\"sample\"},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"provenance\":\"PROVENANCE_SYNCED_FROM_PROVIDER\",\"spec\":{\"capabilities\":[{\"temperature\":{},\"type\":\"temperature\"}],\"family\":\"sample\",\"inputPricePerMillionTokens\":\"sample\",\"maxInputTokens\":1,\"maxOutputTokens\":1,\"outputPricePerMillionTokens\":\"sample\",\"provider\":\"sample\",\"providerModelId\":\"sample\"},\"state\":\"STATE_ENABLED\"}", headers: { "Content-Type" => "application/json" })
+        client.models.create("sample", metadata: {"name" => "sample"}, spec: {"capabilities" => [{"temperature" => {}, "type" => "temperature"}], "family" => "sample", "input_price_per_million_tokens" => "sample", "max_input_tokens" => 1, "max_output_tokens" => 1, "output_price_per_million_tokens" => "sample", "provider" => "sample", "provider_model_id" => "sample"})
+        expect(stub).to have_been_requested
+      end
+    end
+  end
+
   describe "#list" do
     it "sends the golden request and decodes the response" do
       VCR.use_cassette("ModelService_ListModels") do
@@ -18,7 +36,7 @@ RSpec.describe "client.models" do
       it "resolves the client-level value" do
         stub = stub_request(:get, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/models")
           .with(query: hash_including({}))
-          .to_return(status: 200, body: "{\"items\":[{\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{\"capabilities\":[{\"temperature\":{},\"type\":\"temperature\"}],\"family\":\"sample\",\"inputPricePerMillionTokens\":\"sample\",\"maxInputTokens\":1,\"maxOutputTokens\":1,\"outputPricePerMillionTokens\":\"sample\",\"provider\":\"sample\"},\"state\":\"STATE_ENABLED\"}],\"pagination\":{\"nextCursor\":\"\"}}", headers: { "Content-Type" => "application/json" })
+          .to_return(status: 200, body: "{\"items\":[{\"basePricing\":{\"inputPricePerMillionTokens\":\"sample\",\"outputPricePerMillionTokens\":\"sample\"},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"provenance\":\"PROVENANCE_SYNCED_FROM_PROVIDER\",\"spec\":{\"capabilities\":[{\"temperature\":{},\"type\":\"temperature\"}],\"family\":\"sample\",\"inputPricePerMillionTokens\":\"sample\",\"maxInputTokens\":1,\"maxOutputTokens\":1,\"outputPricePerMillionTokens\":\"sample\",\"provider\":\"sample\",\"providerModelId\":\"sample\"},\"state\":\"STATE_ENABLED\"}],\"pagination\":{\"nextCursor\":\"\"}}", headers: { "Content-Type" => "application/json" })
         client.models.list(limit: 1, cursor: "sample", prefix: "sample", query: "sample", state: "STATE_ENABLED", ai_provider_key_id: "sample", is_assigned: true, labels: "sample", sort_order: "sample", include_info: true)
         expect(stub).to have_been_requested
       end
@@ -36,8 +54,26 @@ RSpec.describe "client.models" do
     context "when workspace_id falls back to the client default" do
       it "resolves the client-level value" do
         stub = stub_request(:get, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/models/sample")
-          .to_return(status: 200, body: "{\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{\"capabilities\":[{\"temperature\":{},\"type\":\"temperature\"}],\"family\":\"sample\",\"inputPricePerMillionTokens\":\"sample\",\"maxInputTokens\":1,\"maxOutputTokens\":1,\"outputPricePerMillionTokens\":\"sample\",\"provider\":\"sample\"},\"state\":\"STATE_ENABLED\"}", headers: { "Content-Type" => "application/json" })
+          .to_return(status: 200, body: "{\"basePricing\":{\"inputPricePerMillionTokens\":\"sample\",\"outputPricePerMillionTokens\":\"sample\"},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"provenance\":\"PROVENANCE_SYNCED_FROM_PROVIDER\",\"spec\":{\"capabilities\":[{\"temperature\":{},\"type\":\"temperature\"}],\"family\":\"sample\",\"inputPricePerMillionTokens\":\"sample\",\"maxInputTokens\":1,\"maxOutputTokens\":1,\"outputPricePerMillionTokens\":\"sample\",\"provider\":\"sample\",\"providerModelId\":\"sample\"},\"state\":\"STATE_ENABLED\"}", headers: { "Content-Type" => "application/json" })
         client.models.retrieve("sample")
+        expect(stub).to have_been_requested
+      end
+    end
+  end
+
+  describe "#update" do
+    it "sends the golden request and decodes the response" do
+      VCR.use_cassette("ModelService_UpdateModel") do
+        result = client.models.update("sample", workspace_id: "sample", metadata: {"name" => "sample"}, spec: {"capabilities" => [{"temperature" => {}, "type" => "temperature"}], "family" => "sample", "input_price_per_million_tokens" => "sample", "max_input_tokens" => 1, "max_output_tokens" => 1, "output_price_per_million_tokens" => "sample", "provider" => "sample", "provider_model_id" => "sample"}, pricing_override: {}, update_mask: "sample")
+        expect(result).to be_a(Cadenya::Types::Model)
+      end
+    end
+
+    context "when workspace_id falls back to the client default" do
+      it "resolves the client-level value" do
+        stub = stub_request(:patch, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/models/sample")
+          .to_return(status: 200, body: "{\"basePricing\":{\"inputPricePerMillionTokens\":\"sample\",\"outputPricePerMillionTokens\":\"sample\"},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"provenance\":\"PROVENANCE_SYNCED_FROM_PROVIDER\",\"spec\":{\"capabilities\":[{\"temperature\":{},\"type\":\"temperature\"}],\"family\":\"sample\",\"inputPricePerMillionTokens\":\"sample\",\"maxInputTokens\":1,\"maxOutputTokens\":1,\"outputPricePerMillionTokens\":\"sample\",\"provider\":\"sample\",\"providerModelId\":\"sample\"},\"state\":\"STATE_ENABLED\"}", headers: { "Content-Type" => "application/json" })
+        client.models.update("sample", metadata: {"name" => "sample"}, spec: {"capabilities" => [{"temperature" => {}, "type" => "temperature"}], "family" => "sample", "input_price_per_million_tokens" => "sample", "max_input_tokens" => 1, "max_output_tokens" => 1, "output_price_per_million_tokens" => "sample", "provider" => "sample", "provider_model_id" => "sample"}, pricing_override: {}, update_mask: "sample")
         expect(stub).to have_been_requested
       end
     end
@@ -54,7 +90,7 @@ RSpec.describe "client.models" do
     context "when workspace_id falls back to the client default" do
       it "resolves the client-level value" do
         stub = stub_request(:post, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/models/sample:disable")
-          .to_return(status: 200, body: "{\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{\"capabilities\":[{\"temperature\":{},\"type\":\"temperature\"}],\"family\":\"sample\",\"inputPricePerMillionTokens\":\"sample\",\"maxInputTokens\":1,\"maxOutputTokens\":1,\"outputPricePerMillionTokens\":\"sample\",\"provider\":\"sample\"},\"state\":\"STATE_ENABLED\"}", headers: { "Content-Type" => "application/json" })
+          .to_return(status: 200, body: "{\"basePricing\":{\"inputPricePerMillionTokens\":\"sample\",\"outputPricePerMillionTokens\":\"sample\"},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"provenance\":\"PROVENANCE_SYNCED_FROM_PROVIDER\",\"spec\":{\"capabilities\":[{\"temperature\":{},\"type\":\"temperature\"}],\"family\":\"sample\",\"inputPricePerMillionTokens\":\"sample\",\"maxInputTokens\":1,\"maxOutputTokens\":1,\"outputPricePerMillionTokens\":\"sample\",\"provider\":\"sample\",\"providerModelId\":\"sample\"},\"state\":\"STATE_ENABLED\"}", headers: { "Content-Type" => "application/json" })
         client.models.disable("sample")
         expect(stub).to have_been_requested
       end
@@ -72,7 +108,7 @@ RSpec.describe "client.models" do
     context "when workspace_id falls back to the client default" do
       it "resolves the client-level value" do
         stub = stub_request(:post, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/models/sample:enable")
-          .to_return(status: 200, body: "{\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{\"capabilities\":[{\"temperature\":{},\"type\":\"temperature\"}],\"family\":\"sample\",\"inputPricePerMillionTokens\":\"sample\",\"maxInputTokens\":1,\"maxOutputTokens\":1,\"outputPricePerMillionTokens\":\"sample\",\"provider\":\"sample\"},\"state\":\"STATE_ENABLED\"}", headers: { "Content-Type" => "application/json" })
+          .to_return(status: 200, body: "{\"basePricing\":{\"inputPricePerMillionTokens\":\"sample\",\"outputPricePerMillionTokens\":\"sample\"},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"provenance\":\"PROVENANCE_SYNCED_FROM_PROVIDER\",\"spec\":{\"capabilities\":[{\"temperature\":{},\"type\":\"temperature\"}],\"family\":\"sample\",\"inputPricePerMillionTokens\":\"sample\",\"maxInputTokens\":1,\"maxOutputTokens\":1,\"outputPricePerMillionTokens\":\"sample\",\"provider\":\"sample\",\"providerModelId\":\"sample\"},\"state\":\"STATE_ENABLED\"}", headers: { "Content-Type" => "application/json" })
         client.models.enable("sample")
         expect(stub).to have_been_requested
       end

@@ -4,7 +4,7 @@ http_interactions:
   request:
     body:
       encoding: UTF-8
-      string: '{"metadata":{"name":"sample"},"spec":{},"updateMask":"sample"}'
+      string: '{"credentialPatch":{},"metadata":{"name":"sample"},"spec":{},"updateMask":"sample"}'
     headers:
       Content-Type:
       - application/json

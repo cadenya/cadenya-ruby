@@ -44,10 +44,13 @@ module Cadenya
       end
 
       # Get an AI provider key by ID
-      def retrieve(id, workspace_id: nil, request_options: nil)
+      def retrieve(id, workspace_id: nil, include_info: nil, request_options: nil)
         workspace_id = @core.resolve_default("workspaceId", "CADENYA_WORKSPACE_ID", workspace_id)
         _path = "/v1/workspaces/#{Util.path_param('workspaceId', workspace_id)}/ai_provider_keys/#{Util.path_param('id', id)}"
-        _data = @core.request(:get, _path, request_options: request_options)
+        _query = {
+          "includeInfo" => include_info,
+        }
+        _data = @core.request(:get, _path, query: _query, request_options: request_options)
         Types::AIProviderKey.from_json(_data)
       end
 
@@ -60,13 +63,14 @@ module Cadenya
       end
 
       # Update an AI provider key
-      def update(id, workspace_id: nil, metadata: nil, spec: nil, update_mask: nil, request_options: nil)
+      def update(id, workspace_id: nil, metadata: nil, spec: nil, update_mask: nil, credential_patch: nil, request_options: nil)
         workspace_id = @core.resolve_default("workspaceId", "CADENYA_WORKSPACE_ID", workspace_id)
         _path = "/v1/workspaces/#{Util.path_param('workspaceId', workspace_id)}/ai_provider_keys/#{Util.path_param('id', id)}"
         _body = {
           "metadata" => metadata.nil? ? nil : (->(_v) { Types.encode_UpdateResourceMetadata(_v) }).call(metadata),
           "spec" => spec.nil? ? nil : (->(_v) { Types.encode_AIProviderKeySpec(_v) }).call(spec),
           "updateMask" => update_mask,
+          "credentialPatch" => credential_patch.nil? ? nil : (->(_v) { Types.encode_AIProviderCredentialPatch(_v) }).call(credential_patch),
         }.reject { |_k, v| v.nil? }
         _data = @core.request(:patch, _path, body: _body, request_options: request_options)
         Types::AIProviderKey.from_json(_data)

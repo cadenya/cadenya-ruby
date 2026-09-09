@@ -15,6 +15,10 @@ module Cadenya
         Types::AIProviderConfig_Openai.from_json(data)
       when "openaiCompatible"
         Types::AIProviderConfig_OpenaiCompatible.from_json(data)
+      when "vertex"
+        Types::AIProviderConfig_Vertex.from_json(data)
+      when "bedrock"
+        Types::AIProviderConfig_Bedrock.from_json(data)
       else
         raise ArgumentError, "AIProviderConfig: unknown type #{data["type"].inspect}"
       end
@@ -27,8 +31,87 @@ module Cadenya
         Types::AIProviderCredential_ApiKey.from_json(data)
       when "headers"
         Types::AIProviderCredential_Headers.from_json(data)
+      when "googleServiceAccount"
+        Types::AIProviderCredential_GoogleServiceAccount.from_json(data)
+      when "awsAccessKey"
+        Types::AIProviderCredential_AwsAccessKey.from_json(data)
       else
         raise ArgumentError, "AIProviderCredential: unknown type #{data["type"].inspect}"
+      end
+    end
+
+    class AIProviderCredentialFieldStatus
+      attr_reader :name, :sensitive, :configured, :value
+
+      def initialize(name: nil, sensitive: nil, configured: nil, value: nil)
+        @name = name
+        @sensitive = sensitive
+        @configured = configured
+        @value = value
+      end
+
+      def self.from_json(data)
+        new(
+          name: data["name"],
+          sensitive: data["sensitive"],
+          configured: data["configured"],
+          value: data["value"],
+        )
+      end
+
+      def to_h
+        {
+          name: Util.plain(@name),
+          sensitive: Util.plain(@sensitive),
+          configured: Util.plain(@configured),
+          value: Util.plain(@value),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    class AIProviderCredentialPatch
+      attr_reader :credentials, :clear_fields
+
+      def initialize(credentials: nil, clear_fields: nil)
+        @credentials = credentials
+        @clear_fields = clear_fields
+      end
+
+      def self.from_json(data)
+        new(
+          credentials: data["credentials"].nil? ? nil : Types.decode_AIProviderCredential(data["credentials"]),
+          clear_fields: data["clearFields"],
+        )
+      end
+
+      def to_h
+        {
+          credentials: Util.plain(@credentials),
+          clear_fields: Util.plain(@clear_fields),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    class AIProviderCredentialStatus
+      attr_reader :type, :fields
+
+      def initialize(type: nil, fields: nil)
+        @type = type
+        @fields = fields
+      end
+
+      def self.from_json(data)
+        new(
+          type: data["type"],
+          fields: data["fields"].nil? ? nil : (data["fields"]).map { |item| Types::AIProviderCredentialFieldStatus.from_json(item) },
+        )
+      end
+
+      def to_h
+        {
+          type: Util.plain(@type),
+          fields: Util.plain(@fields),
+        }.reject { |_k, v| v.nil? }
       end
     end
 
@@ -58,13 +141,17 @@ module Cadenya
       end
     end
 
-    class AIProviderKeyInfo
-      attr_reader :enabled_model_count, :disabled_model_count, :is_promotional
+    AiProviderKeyInfoModelManagement = ["MODEL_MANAGEMENT_UNSPECIFIED", "MODEL_MANAGEMENT_CADENYA", "MODEL_MANAGEMENT_SYNCED", "MODEL_MANAGEMENT_CUSTOMIZABLE", "MODEL_MANAGEMENT_MANUAL"].freeze
 
-      def initialize(enabled_model_count: nil, disabled_model_count: nil, is_promotional: nil)
+    class AIProviderKeyInfo
+      attr_reader :enabled_model_count, :disabled_model_count, :is_promotional, :credential_status, :model_management
+
+      def initialize(enabled_model_count: nil, disabled_model_count: nil, is_promotional: nil, credential_status: nil, model_management: nil)
         @enabled_model_count = enabled_model_count
         @disabled_model_count = disabled_model_count
         @is_promotional = is_promotional
+        @credential_status = credential_status
+        @model_management = model_management
       end
 
       def self.from_json(data)
@@ -72,6 +159,8 @@ module Cadenya
           enabled_model_count: data["enabledModelCount"],
           disabled_model_count: data["disabledModelCount"],
           is_promotional: data["isPromotional"],
+          credential_status: data["credentialStatus"].nil? ? nil : Types::AIProviderCredentialStatus.from_json(data["credentialStatus"]),
+          model_management: data["modelManagement"],
         )
       end
 
@@ -80,11 +169,13 @@ module Cadenya
           enabled_model_count: Util.plain(@enabled_model_count),
           disabled_model_count: Util.plain(@disabled_model_count),
           is_promotional: Util.plain(@is_promotional),
+          credential_status: Util.plain(@credential_status),
+          model_management: Util.plain(@model_management),
         }.reject { |_k, v| v.nil? }
       end
     end
 
-    AiProviderKeySpecProvider = ["AI_PROVIDER_UNSPECIFIED", "AI_PROVIDER_OPENROUTER", "AI_PROVIDER_OPENAI", "AI_PROVIDER_ANTHROPIC", "AI_PROVIDER_GEMINI", "AI_PROVIDER_OPENAI_COMPATIBLE"].freeze
+    AiProviderKeySpecProvider = ["AI_PROVIDER_UNSPECIFIED", "AI_PROVIDER_OPENROUTER", "AI_PROVIDER_OPENAI", "AI_PROVIDER_ANTHROPIC", "AI_PROVIDER_GEMINI", "AI_PROVIDER_OPENAI_COMPATIBLE", "AI_PROVIDER_VERTEX", "AI_PROVIDER_BEDROCK"].freeze
 
     class AIProviderKeySpec
       attr_reader :provider, :credentials, :config
@@ -1028,6 +1119,26 @@ module Cadenya
       end
     end
 
+    class BedrockConfig
+      attr_reader :region
+
+      def initialize(region: nil)
+        @region = region
+      end
+
+      def self.from_json(data)
+        new(
+          region: data["region"],
+        )
+      end
+
+      def to_h
+        {
+          region: Util.plain(@region),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
     def self.decode_CallableTool(data)
       return nil if data.nil? || data["type"].to_s.empty?
       case data["type"]
@@ -1665,6 +1776,35 @@ module Cadenya
       end
     end
 
+    class CreateModelRequest
+      attr_reader :workspace_id, :ai_provider_key_id, :metadata, :spec
+
+      def initialize(workspace_id: nil, ai_provider_key_id: nil, metadata: nil, spec: nil)
+        @workspace_id = workspace_id
+        @ai_provider_key_id = ai_provider_key_id
+        @metadata = metadata
+        @spec = spec
+      end
+
+      def self.from_json(data)
+        new(
+          workspace_id: data["workspaceId"],
+          ai_provider_key_id: data["aiProviderKeyId"],
+          metadata: data["metadata"].nil? ? nil : Types::CreateResourceMetadata.from_json(data["metadata"]),
+          spec: data["spec"].nil? ? nil : Types::ModelSpec.from_json(data["spec"]),
+        )
+      end
+
+      def to_h
+        {
+          workspace_id: Util.plain(@workspace_id),
+          ai_provider_key_id: Util.plain(@ai_provider_key_id),
+          metadata: Util.plain(@metadata),
+          spec: Util.plain(@spec),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
     class CreateObjectiveFeedbackRequest
       attr_reader :workspace_id, :objective_id, :metadata, :data
 
@@ -2075,6 +2215,52 @@ module Cadenya
       def to_h
         {
           api_key: Util.plain(@api_key),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    class CredentialAWSAccessKey
+      attr_reader :access_key_id, :secret_access_key, :session_token
+
+      def initialize(access_key_id: nil, secret_access_key: nil, session_token: nil)
+        @access_key_id = access_key_id
+        @secret_access_key = secret_access_key
+        @session_token = session_token
+      end
+
+      def self.from_json(data)
+        new(
+          access_key_id: data["accessKeyId"],
+          secret_access_key: data["secretAccessKey"],
+          session_token: data["sessionToken"],
+        )
+      end
+
+      def to_h
+        {
+          access_key_id: Util.plain(@access_key_id),
+          secret_access_key: Util.plain(@secret_access_key),
+          session_token: Util.plain(@session_token),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    class CredentialGoogleServiceAccount
+      attr_reader :json
+
+      def initialize(json: nil)
+        @json = json
+      end
+
+      def self.from_json(data)
+        new(
+          json: data["json"],
+        )
+      end
+
+      def to_h
+        {
+          json: Util.plain(@json),
         }.reject { |_k, v| v.nil? }
       end
     end
@@ -3310,14 +3496,19 @@ module Cadenya
 
     ModelState = ["STATE_UNSPECIFIED", "STATE_ENABLED", "STATE_DISABLED"].freeze
 
-    class Model
-      attr_reader :metadata, :spec, :info, :state
+    ModelProvenance = ["PROVENANCE_UNSPECIFIED", "PROVENANCE_SYNCED_FROM_PROVIDER", "PROVENANCE_MANUALLY_ENTERED"].freeze
 
-      def initialize(metadata: nil, spec: nil, info: nil, state: nil)
+    class Model
+      attr_reader :metadata, :spec, :info, :state, :provenance, :pricing_override, :base_pricing
+
+      def initialize(metadata: nil, spec: nil, info: nil, state: nil, provenance: nil, pricing_override: nil, base_pricing: nil)
         @metadata = metadata
         @spec = spec
         @info = info
         @state = state
+        @provenance = provenance
+        @pricing_override = pricing_override
+        @base_pricing = base_pricing
       end
 
       def self.from_json(data)
@@ -3326,6 +3517,9 @@ module Cadenya
           spec: data["spec"].nil? ? nil : Types::ModelSpec.from_json(data["spec"]),
           info: data["info"].nil? ? nil : Types::ModelInfo.from_json(data["info"]),
           state: data["state"],
+          provenance: data["provenance"],
+          pricing_override: data["pricingOverride"].nil? ? nil : Types::ModelPricingOverride.from_json(data["pricingOverride"]),
+          base_pricing: data["basePricing"].nil? ? nil : Types::ModelBasePricing.from_json(data["basePricing"]),
         )
       end
 
@@ -3335,6 +3529,32 @@ module Cadenya
           spec: Util.plain(@spec),
           info: Util.plain(@info),
           state: Util.plain(@state),
+          provenance: Util.plain(@provenance),
+          pricing_override: Util.plain(@pricing_override),
+          base_pricing: Util.plain(@base_pricing),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    class ModelBasePricing
+      attr_reader :input_price_per_million_tokens, :output_price_per_million_tokens
+
+      def initialize(input_price_per_million_tokens: nil, output_price_per_million_tokens: nil)
+        @input_price_per_million_tokens = input_price_per_million_tokens
+        @output_price_per_million_tokens = output_price_per_million_tokens
+      end
+
+      def self.from_json(data)
+        new(
+          input_price_per_million_tokens: data["inputPricePerMillionTokens"],
+          output_price_per_million_tokens: data["outputPricePerMillionTokens"],
+        )
+      end
+
+      def to_h
+        {
+          input_price_per_million_tokens: Util.plain(@input_price_per_million_tokens),
+          output_price_per_million_tokens: Util.plain(@output_price_per_million_tokens),
         }.reject { |_k, v| v.nil? }
       end
     end
@@ -3365,10 +3585,33 @@ module Cadenya
       end
     end
 
-    class ModelSpec
-      attr_reader :provider, :family, :max_input_tokens, :max_output_tokens, :input_price_per_million_tokens, :output_price_per_million_tokens, :capabilities
+    class ModelPricingOverride
+      attr_reader :input_price_per_million_tokens, :output_price_per_million_tokens
 
-      def initialize(provider: nil, family: nil, max_input_tokens: nil, max_output_tokens: nil, input_price_per_million_tokens: nil, output_price_per_million_tokens: nil, capabilities: nil)
+      def initialize(input_price_per_million_tokens: nil, output_price_per_million_tokens: nil)
+        @input_price_per_million_tokens = input_price_per_million_tokens
+        @output_price_per_million_tokens = output_price_per_million_tokens
+      end
+
+      def self.from_json(data)
+        new(
+          input_price_per_million_tokens: data["inputPricePerMillionTokens"],
+          output_price_per_million_tokens: data["outputPricePerMillionTokens"],
+        )
+      end
+
+      def to_h
+        {
+          input_price_per_million_tokens: Util.plain(@input_price_per_million_tokens),
+          output_price_per_million_tokens: Util.plain(@output_price_per_million_tokens),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    class ModelSpec
+      attr_reader :provider, :family, :max_input_tokens, :max_output_tokens, :input_price_per_million_tokens, :output_price_per_million_tokens, :capabilities, :provider_model_id
+
+      def initialize(provider: nil, family: nil, max_input_tokens: nil, max_output_tokens: nil, input_price_per_million_tokens: nil, output_price_per_million_tokens: nil, capabilities: nil, provider_model_id: nil)
         @provider = provider
         @family = family
         @max_input_tokens = max_input_tokens
@@ -3376,6 +3619,7 @@ module Cadenya
         @input_price_per_million_tokens = input_price_per_million_tokens
         @output_price_per_million_tokens = output_price_per_million_tokens
         @capabilities = capabilities
+        @provider_model_id = provider_model_id
       end
 
       def self.from_json(data)
@@ -3387,6 +3631,7 @@ module Cadenya
           input_price_per_million_tokens: data["inputPricePerMillionTokens"],
           output_price_per_million_tokens: data["outputPricePerMillionTokens"],
           capabilities: data["capabilities"].nil? ? nil : (data["capabilities"]).map { |item| Types.decode_ModelSpec_Capability(item) },
+          provider_model_id: data["providerModelId"],
         )
       end
 
@@ -3399,6 +3644,7 @@ module Cadenya
           input_price_per_million_tokens: Util.plain(@input_price_per_million_tokens),
           output_price_per_million_tokens: Util.plain(@output_price_per_million_tokens),
           capabilities: Util.plain(@capabilities),
+          provider_model_id: Util.plain(@provider_model_id),
         }.reject { |_k, v| v.nil? }
       end
     end
@@ -4205,21 +4451,24 @@ module Cadenya
     end
 
     class ObjectiveToolCallResult_TextBlock
-      attr_reader :text
+      attr_reader :text, :size_bytes
 
-      def initialize(text: nil)
+      def initialize(text: nil, size_bytes: nil)
         @text = text
+        @size_bytes = size_bytes
       end
 
       def self.from_json(data)
         new(
           text: data["text"],
+          size_bytes: data["sizeBytes"],
         )
       end
 
       def to_h
         {
           text: Util.plain(@text),
+          size_bytes: Util.plain(@size_bytes),
         }.reject { |_k, v| v.nil? }
       end
     end
@@ -6458,14 +6707,15 @@ module Cadenya
     end
 
     class UpdateAIProviderKeyRequest
-      attr_reader :workspace_id, :id, :metadata, :spec, :update_mask
+      attr_reader :workspace_id, :id, :metadata, :spec, :update_mask, :credential_patch
 
-      def initialize(workspace_id: nil, id: nil, metadata: nil, spec: nil, update_mask: nil)
+      def initialize(workspace_id: nil, id: nil, metadata: nil, spec: nil, update_mask: nil, credential_patch: nil)
         @workspace_id = workspace_id
         @id = id
         @metadata = metadata
         @spec = spec
         @update_mask = update_mask
+        @credential_patch = credential_patch
       end
 
       def self.from_json(data)
@@ -6475,6 +6725,7 @@ module Cadenya
           metadata: data["metadata"].nil? ? nil : Types::UpdateResourceMetadata.from_json(data["metadata"]),
           spec: data["spec"].nil? ? nil : Types::AIProviderKeySpec.from_json(data["spec"]),
           update_mask: data["updateMask"],
+          credential_patch: data["credentialPatch"].nil? ? nil : Types::AIProviderCredentialPatch.from_json(data["credentialPatch"]),
         )
       end
 
@@ -6485,6 +6736,7 @@ module Cadenya
           metadata: Util.plain(@metadata),
           spec: Util.plain(@spec),
           update_mask: Util.plain(@update_mask),
+          credential_patch: Util.plain(@credential_patch),
         }.reject { |_k, v| v.nil? }
       end
     end
@@ -6743,6 +6995,41 @@ module Cadenya
           id: Util.plain(@id),
           metadata: Util.plain(@metadata),
           spec: Util.plain(@spec),
+          update_mask: Util.plain(@update_mask),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    class UpdateModelRequest
+      attr_reader :workspace_id, :id, :metadata, :spec, :pricing_override, :update_mask
+
+      def initialize(workspace_id: nil, id: nil, metadata: nil, spec: nil, pricing_override: nil, update_mask: nil)
+        @workspace_id = workspace_id
+        @id = id
+        @metadata = metadata
+        @spec = spec
+        @pricing_override = pricing_override
+        @update_mask = update_mask
+      end
+
+      def self.from_json(data)
+        new(
+          workspace_id: data["workspaceId"],
+          id: data["id"],
+          metadata: data["metadata"].nil? ? nil : Types::UpdateResourceMetadata.from_json(data["metadata"]),
+          spec: data["spec"].nil? ? nil : Types::ModelSpec.from_json(data["spec"]),
+          pricing_override: data["pricingOverride"].nil? ? nil : Types::ModelPricingOverride.from_json(data["pricingOverride"]),
+          update_mask: data["updateMask"],
+        )
+      end
+
+      def to_h
+        {
+          workspace_id: Util.plain(@workspace_id),
+          id: Util.plain(@id),
+          metadata: Util.plain(@metadata),
+          spec: Util.plain(@spec),
+          pricing_override: Util.plain(@pricing_override),
           update_mask: Util.plain(@update_mask),
         }.reject { |_k, v| v.nil? }
       end
@@ -7108,6 +7395,29 @@ module Cadenya
           id: Util.plain(@id),
           memory_layer: Util.plain(@memory_layer),
           position: Util.plain(@position),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    class VertexConfig
+      attr_reader :project_id, :location
+
+      def initialize(project_id: nil, location: nil)
+        @project_id = project_id
+        @location = location
+      end
+
+      def self.from_json(data)
+        new(
+          project_id: data["projectId"],
+          location: data["location"],
+        )
+      end
+
+      def to_h
+        {
+          project_id: Util.plain(@project_id),
+          location: Util.plain(@location),
         }.reject { |_k, v| v.nil? }
       end
     end
@@ -9221,6 +9531,52 @@ module Cadenya
       end
     end
 
+    class AIProviderCredential_GoogleServiceAccount
+      attr_reader :type, :google_service_account
+
+      def initialize(type: nil, google_service_account: nil)
+        @type = type
+        @google_service_account = google_service_account
+      end
+
+      def self.from_json(data)
+        new(
+          type: data["type"],
+          google_service_account: data["googleServiceAccount"].nil? ? nil : Types::CredentialGoogleServiceAccount.from_json(data["googleServiceAccount"]),
+        )
+      end
+
+      def to_h
+        {
+          type: Util.plain(@type),
+          google_service_account: Util.plain(@google_service_account),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    class AIProviderCredential_AwsAccessKey
+      attr_reader :type, :aws_access_key
+
+      def initialize(type: nil, aws_access_key: nil)
+        @type = type
+        @aws_access_key = aws_access_key
+      end
+
+      def self.from_json(data)
+        new(
+          type: data["type"],
+          aws_access_key: data["awsAccessKey"].nil? ? nil : Types::CredentialAWSAccessKey.from_json(data["awsAccessKey"]),
+        )
+      end
+
+      def to_h
+        {
+          type: Util.plain(@type),
+          aws_access_key: Util.plain(@aws_access_key),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
     class AIProviderConfig_Openrouter
       attr_reader :type, :openrouter
 
@@ -9286,6 +9642,52 @@ module Cadenya
         {
           type: Util.plain(@type),
           openai_compatible: Util.plain(@openai_compatible),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    class AIProviderConfig_Vertex
+      attr_reader :type, :vertex
+
+      def initialize(type: nil, vertex: nil)
+        @type = type
+        @vertex = vertex
+      end
+
+      def self.from_json(data)
+        new(
+          type: data["type"],
+          vertex: data["vertex"].nil? ? nil : Types::VertexConfig.from_json(data["vertex"]),
+        )
+      end
+
+      def to_h
+        {
+          type: Util.plain(@type),
+          vertex: Util.plain(@vertex),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    class AIProviderConfig_Bedrock
+      attr_reader :type, :bedrock
+
+      def initialize(type: nil, bedrock: nil)
+        @type = type
+        @bedrock = bedrock
+      end
+
+      def self.from_json(data)
+        new(
+          type: data["type"],
+          bedrock: data["bedrock"].nil? ? nil : Types::BedrockConfig.from_json(data["bedrock"]),
+        )
+      end
+
+      def to_h
+        {
+          type: Util.plain(@type),
+          bedrock: Util.plain(@bedrock),
         }.reject { |_k, v| v.nil? }
       end
     end
@@ -9525,6 +9927,10 @@ module Cadenya
         (->(_v) { encode_AIProviderConfig_Openai(_v) }).call(data)
       when "openaiCompatible"
         (->(_v) { encode_AIProviderConfig_OpenaiCompatible(_v) }).call(data)
+      when "vertex"
+        (->(_v) { encode_AIProviderConfig_Vertex(_v) }).call(data)
+      when "bedrock"
+        (->(_v) { encode_AIProviderConfig_Bedrock(_v) }).call(data)
       else
         data
       end
@@ -9541,9 +9947,23 @@ module Cadenya
         (->(_v) { encode_AIProviderCredential_ApiKey(_v) }).call(data)
       when "headers"
         (->(_v) { encode_AIProviderCredential_Headers(_v) }).call(data)
+      when "googleServiceAccount"
+        (->(_v) { encode_AIProviderCredential_GoogleServiceAccount(_v) }).call(data)
+      when "awsAccessKey"
+        (->(_v) { encode_AIProviderCredential_AwsAccessKey(_v) }).call(data)
       else
         data
       end
+    end
+
+    ENCODE_AI_PROVIDER_CREDENTIAL_PATCH = {
+      "credentials" => ["credentials", ->(_v) { encode_AIProviderCredential(_v) }],
+      "clear_fields" => ["clearFields", nil],
+      "clearFields" => ["clearFields", nil],
+    }.freeze
+
+    def self.encode_AIProviderCredentialPatch(data)
+      encode_fields(ENCODE_AI_PROVIDER_CREDENTIAL_PATCH, data)
     end
 
     ENCODE_AI_PROVIDER_KEY_SPEC = {
@@ -9709,6 +10129,30 @@ module Cadenya
       encode_fields(ENCODE_AGENT_VARIATION_SPEC_PROGRESSIVE_DISCOVERY, data)
     end
 
+    ENCODE_BEDROCK_CONFIG = {
+      "region" => ["region", nil],
+    }.freeze
+
+    def self.encode_BedrockConfig(data)
+      encode_fields(ENCODE_BEDROCK_CONFIG, data)
+    end
+
+    ENCODE_CAPABILITY_REASONING = {
+      "mode" => ["mode", nil],
+    }.freeze
+
+    def self.encode_Capability_Reasoning(data)
+      encode_fields(ENCODE_CAPABILITY_REASONING, data)
+    end
+
+    ENCODE_CAPABILITY_STOP_SEQUENCES = {
+      "limit" => ["limit", nil],
+    }.freeze
+
+    def self.encode_Capability_StopSequences(data)
+      encode_fields(ENCODE_CAPABILITY_STOP_SEQUENCES, data)
+    end
+
     ENCODE_COMPACTION_CONFIG_SUMMARIZATION_STRATEGY = {
       "instructions" => ["instructions", nil],
     }.freeze
@@ -9838,6 +10282,27 @@ module Cadenya
       encode_fields(ENCODE_CREDENTIAL_API_KEY, data)
     end
 
+    ENCODE_CREDENTIAL_AWS_ACCESS_KEY = {
+      "access_key_id" => ["accessKeyId", nil],
+      "accessKeyId" => ["accessKeyId", nil],
+      "secret_access_key" => ["secretAccessKey", nil],
+      "secretAccessKey" => ["secretAccessKey", nil],
+      "session_token" => ["sessionToken", nil],
+      "sessionToken" => ["sessionToken", nil],
+    }.freeze
+
+    def self.encode_CredentialAWSAccessKey(data)
+      encode_fields(ENCODE_CREDENTIAL_AWS_ACCESS_KEY, data)
+    end
+
+    ENCODE_CREDENTIAL_GOOGLE_SERVICE_ACCOUNT = {
+      "json" => ["json", nil],
+    }.freeze
+
+    def self.encode_CredentialGoogleServiceAccount(data)
+      encode_fields(ENCODE_CREDENTIAL_GOOGLE_SERVICE_ACCOUNT, data)
+    end
+
     ENCODE_CREDENTIAL_HEADERS = {
       "headers" => ["headers", nil],
     }.freeze
@@ -9910,6 +10375,63 @@ module Cadenya
 
     def self.encode_MemoryReference(data)
       encode_fields(ENCODE_MEMORY_REFERENCE, data)
+    end
+
+    ENCODE_MODEL_PRICING_OVERRIDE = {
+      "input_price_per_million_tokens" => ["inputPricePerMillionTokens", nil],
+      "inputPricePerMillionTokens" => ["inputPricePerMillionTokens", nil],
+      "output_price_per_million_tokens" => ["outputPricePerMillionTokens", nil],
+      "outputPricePerMillionTokens" => ["outputPricePerMillionTokens", nil],
+    }.freeze
+
+    def self.encode_ModelPricingOverride(data)
+      encode_fields(ENCODE_MODEL_PRICING_OVERRIDE, data)
+    end
+
+    ENCODE_MODEL_SPEC = {
+      "provider" => ["provider", nil],
+      "family" => ["family", nil],
+      "max_input_tokens" => ["maxInputTokens", nil],
+      "maxInputTokens" => ["maxInputTokens", nil],
+      "max_output_tokens" => ["maxOutputTokens", nil],
+      "maxOutputTokens" => ["maxOutputTokens", nil],
+      "input_price_per_million_tokens" => ["inputPricePerMillionTokens", nil],
+      "inputPricePerMillionTokens" => ["inputPricePerMillionTokens", nil],
+      "output_price_per_million_tokens" => ["outputPricePerMillionTokens", nil],
+      "outputPricePerMillionTokens" => ["outputPricePerMillionTokens", nil],
+      "capabilities" => ["capabilities", ->(_v) { _v.is_a?(Array) ? _v.map { |_i| (->(_v) { encode_ModelSpec_Capability(_v) }).call(_i) } : _v }],
+      "provider_model_id" => ["providerModelId", nil],
+      "providerModelId" => ["providerModelId", nil],
+    }.freeze
+
+    def self.encode_ModelSpec(data)
+      encode_fields(ENCODE_MODEL_SPEC, data)
+    end
+
+    def self.encode_ModelSpec_Capability(data)
+      data = data.to_h if !data.is_a?(Hash) && data.class.name.to_s.start_with?(name.split("::").first + "::Types")
+      unless data.is_a?(Hash)
+        raise TypeError, "expected a Hash (or a decoded Types value object), got #{data.class}"
+      end
+
+      case data["type"] || data[:type]
+      when "temperature"
+        (->(_v) { encode_ModelSpec_Capability_Temperature(_v) }).call(data)
+      when "topP"
+        (->(_v) { encode_ModelSpec_Capability_TopP(_v) }).call(data)
+      when "topK"
+        (->(_v) { encode_ModelSpec_Capability_TopK(_v) }).call(data)
+      when "stopSequences"
+        (->(_v) { encode_ModelSpec_Capability_StopSequences(_v) }).call(data)
+      when "maxOutputTokens"
+        (->(_v) { encode_ModelSpec_Capability_MaxOutputTokens(_v) }).call(data)
+      when "reasoning"
+        (->(_v) { encode_ModelSpec_Capability_Reasoning(_v) }).call(data)
+      when "caching"
+        (->(_v) { encode_ModelSpec_Capability_Caching(_v) }).call(data)
+      else
+        data
+      end
     end
 
     ENCODE_OBJECTIVE_EPISODIC_CONFIG = {
@@ -10438,6 +10960,16 @@ module Cadenya
       encode_fields(ENCODE_UPLOAD_SPEC, data)
     end
 
+    ENCODE_VERTEX_CONFIG = {
+      "project_id" => ["projectId", nil],
+      "projectId" => ["projectId", nil],
+      "location" => ["location", nil],
+    }.freeze
+
+    def self.encode_VertexConfig(data)
+      encode_fields(ENCODE_VERTEX_CONFIG, data)
+    end
+
     ENCODE_WIDGET_SESSION_SPEC = {
       "widget_id" => ["widgetId", nil],
       "widgetId" => ["widgetId", nil],
@@ -10841,6 +11373,26 @@ module Cadenya
       encode_fields(ENCODE_AI_PROVIDER_CREDENTIAL_HEADERS, data)
     end
 
+    ENCODE_AI_PROVIDER_CREDENTIAL_GOOGLE_SERVICE_ACCOUNT = {
+      "type" => ["type", nil],
+      "google_service_account" => ["googleServiceAccount", ->(_v) { encode_CredentialGoogleServiceAccount(_v) }],
+      "googleServiceAccount" => ["googleServiceAccount", ->(_v) { encode_CredentialGoogleServiceAccount(_v) }],
+    }.freeze
+
+    def self.encode_AIProviderCredential_GoogleServiceAccount(data)
+      encode_fields(ENCODE_AI_PROVIDER_CREDENTIAL_GOOGLE_SERVICE_ACCOUNT, data)
+    end
+
+    ENCODE_AI_PROVIDER_CREDENTIAL_AWS_ACCESS_KEY = {
+      "type" => ["type", nil],
+      "aws_access_key" => ["awsAccessKey", ->(_v) { encode_CredentialAWSAccessKey(_v) }],
+      "awsAccessKey" => ["awsAccessKey", ->(_v) { encode_CredentialAWSAccessKey(_v) }],
+    }.freeze
+
+    def self.encode_AIProviderCredential_AwsAccessKey(data)
+      encode_fields(ENCODE_AI_PROVIDER_CREDENTIAL_AWS_ACCESS_KEY, data)
+    end
+
     ENCODE_AI_PROVIDER_CONFIG_OPENROUTER = {
       "type" => ["type", nil],
       "openrouter" => ["openrouter", ->(_v) { encode_OpenRouterConfig(_v) }],
@@ -10867,6 +11419,91 @@ module Cadenya
 
     def self.encode_AIProviderConfig_OpenaiCompatible(data)
       encode_fields(ENCODE_AI_PROVIDER_CONFIG_OPENAI_COMPATIBLE, data)
+    end
+
+    ENCODE_AI_PROVIDER_CONFIG_VERTEX = {
+      "type" => ["type", nil],
+      "vertex" => ["vertex", ->(_v) { encode_VertexConfig(_v) }],
+    }.freeze
+
+    def self.encode_AIProviderConfig_Vertex(data)
+      encode_fields(ENCODE_AI_PROVIDER_CONFIG_VERTEX, data)
+    end
+
+    ENCODE_AI_PROVIDER_CONFIG_BEDROCK = {
+      "type" => ["type", nil],
+      "bedrock" => ["bedrock", ->(_v) { encode_BedrockConfig(_v) }],
+    }.freeze
+
+    def self.encode_AIProviderConfig_Bedrock(data)
+      encode_fields(ENCODE_AI_PROVIDER_CONFIG_BEDROCK, data)
+    end
+
+    ENCODE_MODEL_SPEC_CAPABILITY_TEMPERATURE = {
+      "type" => ["type", nil],
+      "temperature" => ["temperature", nil],
+    }.freeze
+
+    def self.encode_ModelSpec_Capability_Temperature(data)
+      encode_fields(ENCODE_MODEL_SPEC_CAPABILITY_TEMPERATURE, data)
+    end
+
+    ENCODE_MODEL_SPEC_CAPABILITY_TOP_P = {
+      "type" => ["type", nil],
+      "top_p" => ["topP", nil],
+      "topP" => ["topP", nil],
+    }.freeze
+
+    def self.encode_ModelSpec_Capability_TopP(data)
+      encode_fields(ENCODE_MODEL_SPEC_CAPABILITY_TOP_P, data)
+    end
+
+    ENCODE_MODEL_SPEC_CAPABILITY_TOP_K = {
+      "type" => ["type", nil],
+      "top_k" => ["topK", nil],
+      "topK" => ["topK", nil],
+    }.freeze
+
+    def self.encode_ModelSpec_Capability_TopK(data)
+      encode_fields(ENCODE_MODEL_SPEC_CAPABILITY_TOP_K, data)
+    end
+
+    ENCODE_MODEL_SPEC_CAPABILITY_STOP_SEQUENCES = {
+      "type" => ["type", nil],
+      "stop_sequences" => ["stopSequences", ->(_v) { encode_Capability_StopSequences(_v) }],
+      "stopSequences" => ["stopSequences", ->(_v) { encode_Capability_StopSequences(_v) }],
+    }.freeze
+
+    def self.encode_ModelSpec_Capability_StopSequences(data)
+      encode_fields(ENCODE_MODEL_SPEC_CAPABILITY_STOP_SEQUENCES, data)
+    end
+
+    ENCODE_MODEL_SPEC_CAPABILITY_MAX_OUTPUT_TOKENS = {
+      "type" => ["type", nil],
+      "max_output_tokens" => ["maxOutputTokens", nil],
+      "maxOutputTokens" => ["maxOutputTokens", nil],
+    }.freeze
+
+    def self.encode_ModelSpec_Capability_MaxOutputTokens(data)
+      encode_fields(ENCODE_MODEL_SPEC_CAPABILITY_MAX_OUTPUT_TOKENS, data)
+    end
+
+    ENCODE_MODEL_SPEC_CAPABILITY_REASONING = {
+      "type" => ["type", nil],
+      "reasoning" => ["reasoning", ->(_v) { encode_Capability_Reasoning(_v) }],
+    }.freeze
+
+    def self.encode_ModelSpec_Capability_Reasoning(data)
+      encode_fields(ENCODE_MODEL_SPEC_CAPABILITY_REASONING, data)
+    end
+
+    ENCODE_MODEL_SPEC_CAPABILITY_CACHING = {
+      "type" => ["type", nil],
+      "caching" => ["caching", nil],
+    }.freeze
+
+    def self.encode_ModelSpec_Capability_Caching(data)
+      encode_fields(ENCODE_MODEL_SPEC_CAPABILITY_CACHING, data)
     end
 
   end

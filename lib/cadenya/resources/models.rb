@@ -9,6 +9,18 @@ module Cadenya
         @core = core
       end
 
+      # Create a model
+      def create(ai_provider_key_id, metadata:, spec:, workspace_id: nil, request_options: nil)
+        workspace_id = @core.resolve_default("workspaceId", "CADENYA_WORKSPACE_ID", workspace_id)
+        _path = "/v1/workspaces/#{Util.path_param('workspaceId', workspace_id)}/ai_provider_keys/#{Util.path_param('aiProviderKeyId', ai_provider_key_id)}/models"
+        _body = {
+          "metadata" => metadata.nil? ? nil : (->(_v) { Types.encode_CreateResourceMetadata(_v) }).call(metadata),
+          "spec" => spec.nil? ? nil : (->(_v) { Types.encode_ModelSpec(_v) }).call(spec),
+        }.reject { |_k, v| v.nil? }
+        _data = @core.request(:post, _path, body: _body, request_options: request_options)
+        Types::Model.from_json(_data)
+      end
+
       # List models
       def list(workspace_id: nil, limit: nil, cursor: nil, prefix: nil, query: nil, state: nil, ai_provider_key_id: nil, is_assigned: nil, labels: nil, sort_order: nil, include_info: nil, request_options: nil)
         workspace_id = @core.resolve_default("workspaceId", "CADENYA_WORKSPACE_ID", workspace_id)
@@ -38,6 +50,20 @@ module Cadenya
         workspace_id = @core.resolve_default("workspaceId", "CADENYA_WORKSPACE_ID", workspace_id)
         _path = "/v1/workspaces/#{Util.path_param('workspaceId', workspace_id)}/models/#{Util.path_param('id', id)}"
         _data = @core.request(:get, _path, request_options: request_options)
+        Types::Model.from_json(_data)
+      end
+
+      # Update a model
+      def update(id, workspace_id: nil, metadata: nil, spec: nil, pricing_override: nil, update_mask: nil, request_options: nil)
+        workspace_id = @core.resolve_default("workspaceId", "CADENYA_WORKSPACE_ID", workspace_id)
+        _path = "/v1/workspaces/#{Util.path_param('workspaceId', workspace_id)}/models/#{Util.path_param('id', id)}"
+        _body = {
+          "metadata" => metadata.nil? ? nil : (->(_v) { Types.encode_UpdateResourceMetadata(_v) }).call(metadata),
+          "spec" => spec.nil? ? nil : (->(_v) { Types.encode_ModelSpec(_v) }).call(spec),
+          "pricingOverride" => pricing_override.nil? ? nil : (->(_v) { Types.encode_ModelPricingOverride(_v) }).call(pricing_override),
+          "updateMask" => update_mask,
+        }.reject { |_k, v| v.nil? }
+        _data = @core.request(:patch, _path, body: _body, request_options: request_options)
         Types::Model.from_json(_data)
       end
 
