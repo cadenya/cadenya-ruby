@@ -316,7 +316,7 @@ client.ai_provider_keys.create(metadata:, spec:, workspace_id: nil) # => Cadenya
 Get an AI provider key by ID
 
 ```ruby
-client.ai_provider_keys.retrieve(id, workspace_id: nil) # => Cadenya::Types::AIProviderKey
+client.ai_provider_keys.retrieve(id, workspace_id: nil, include_info: nil) # => Cadenya::Types::AIProviderKey
 ```
 Delete an AI provider key
 
@@ -326,7 +326,45 @@ client.ai_provider_keys.delete(id, workspace_id: nil) # => nil
 Update an AI provider key
 
 ```ruby
-client.ai_provider_keys.update(id, workspace_id: nil, metadata: nil, spec: nil, update_mask: nil) # => Cadenya::Types::AIProviderKey
+client.ai_provider_keys.update(id, workspace_id: nil, metadata: nil, spec: nil, update_mask: nil, credential_patch: nil) # => Cadenya::Types::AIProviderKey
+```
+
+## client.models
+
+Create a model
+
+```ruby
+client.models.create(ai_provider_key_id, metadata:, spec:, workspace_id: nil) # => Cadenya::Types::Model
+```
+List models
+
+```ruby
+client.models.list(workspace_id: nil, limit: nil, cursor: nil, prefix: nil, query: nil, state: nil, ai_provider_key_id: nil, is_assigned: nil, labels: nil, sort_order: nil, include_info: nil) # => Cadenya::Page of Cadenya::Types::Model
+```
+Get a model by ID
+
+```ruby
+client.models.retrieve(id, workspace_id: nil) # => Cadenya::Types::Model
+```
+Update a model
+
+```ruby
+client.models.update(id, workspace_id: nil, metadata: nil, spec: nil, pricing_override: nil, update_mask: nil) # => Cadenya::Types::Model
+```
+Disable a model
+
+```ruby
+client.models.disable(id, workspace_id: nil) # => Cadenya::Types::Model
+```
+Enable a model
+
+```ruby
+client.models.enable(id, workspace_id: nil) # => Cadenya::Types::Model
+```
+Swap models on agent variations
+
+```ruby
+client.models.swap_on_variations(workspace_id: nil, model_swaps: nil) # => nil
 ```
 
 ## client.memory_layers
@@ -383,34 +421,6 @@ Update a memory entry
 
 ```ruby
 client.memory_layers.entries.update(memory_layer_id, id, workspace_id: nil, metadata: nil, spec: nil, update_mask: nil) # => Cadenya::Types::MemoryEntryDetail
-```
-
-## client.models
-
-List models
-
-```ruby
-client.models.list(workspace_id: nil, limit: nil, cursor: nil, prefix: nil, query: nil, state: nil, ai_provider_key_id: nil, is_assigned: nil, labels: nil, sort_order: nil, include_info: nil) # => Cadenya::Page of Cadenya::Types::Model
-```
-Get a model by ID
-
-```ruby
-client.models.retrieve(id, workspace_id: nil) # => Cadenya::Types::Model
-```
-Disable a model
-
-```ruby
-client.models.disable(id, workspace_id: nil) # => Cadenya::Types::Model
-```
-Enable a model
-
-```ruby
-client.models.enable(id, workspace_id: nil) # => Cadenya::Types::Model
-```
-Swap models on agent variations
-
-```ruby
-client.models.swap_on_variations(workspace_id: nil, model_swaps: nil) # => nil
 ```
 
 ## client.objectives

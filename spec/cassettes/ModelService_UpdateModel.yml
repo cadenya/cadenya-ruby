@@ -4,9 +4,11 @@ http_interactions:
   request:
     body:
       encoding: UTF-8
-      string: ''
-    headers: {}
-    method: get
+      string: '{"metadata":{"name":"sample"},"pricingOverride":{},"spec":{"capabilities":[{"temperature":{},"type":"temperature"}],"family":"sample","inputPricePerMillionTokens":"sample","maxInputTokens":1,"maxOutputTokens":1,"outputPricePerMillionTokens":"sample","provider":"sample","providerModelId":"sample"},"updateMask":"sample"}'
+    headers:
+      Content-Type:
+      - application/json
+    method: patch
     uri: https://api.test.example/v1/workspaces/sample/models/sample
   response:
     body:

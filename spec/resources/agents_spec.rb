@@ -18,7 +18,7 @@ RSpec.describe "client.agents" do
       it "resolves the client-level value" do
         stub = stub_request(:get, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/agents")
           .with(query: hash_including({}))
-          .to_return(status: 200, body: "{\"items\":[{\"info\":{\"variationCount\":1},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{\"variationSelectionMode\":\"VARIATION_SELECTION_MODE_RANDOM\"},\"state\":\"STATE_DRAFT\"}],\"pagination\":{\"nextCursor\":\"\"}}", headers: { "Content-Type" => "application/json" })
+          .to_return(status: 200, body: "{\"items\":[{\"info\":{\"variationCount\":1},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{},\"state\":\"STATE_DRAFT\"}],\"pagination\":{\"nextCursor\":\"\"}}", headers: { "Content-Type" => "application/json" })
         client.agents.list(limit: 1, cursor: "sample", prefix: "sample", query: "sample", state: "STATE_DRAFT", variation_selection_mode: "VARIATION_SELECTION_MODE_RANDOM", labels: "sample", sort_order: "sample", include_info: true)
         expect(stub).to have_been_requested
       end
@@ -28,7 +28,7 @@ RSpec.describe "client.agents" do
   describe "#create" do
     it "sends the golden request and decodes the response" do
       VCR.use_cassette("AgentService_CreateAgent") do
-        result = client.agents.create(workspace_id: "sample", metadata: {"name" => "sample"}, spec: {"variation_selection_mode" => "VARIATION_SELECTION_MODE_RANDOM"}, default_variation: {"metadata" => {"name" => "sample"}, "spec" => {}})
+        result = client.agents.create(workspace_id: "sample", metadata: {"name" => "sample"}, spec: {}, default_variation: {"metadata" => {"name" => "sample"}, "spec" => {}})
         expect(result).to be_a(Cadenya::Types::Agent)
       end
     end
@@ -36,8 +36,8 @@ RSpec.describe "client.agents" do
     context "when workspace_id falls back to the client default" do
       it "resolves the client-level value" do
         stub = stub_request(:post, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/agents")
-          .to_return(status: 200, body: "{\"info\":{\"variationCount\":1},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{\"variationSelectionMode\":\"VARIATION_SELECTION_MODE_RANDOM\"},\"state\":\"STATE_DRAFT\"}", headers: { "Content-Type" => "application/json" })
-        client.agents.create(metadata: {"name" => "sample"}, spec: {"variation_selection_mode" => "VARIATION_SELECTION_MODE_RANDOM"}, default_variation: {"metadata" => {"name" => "sample"}, "spec" => {}})
+          .to_return(status: 200, body: "{\"info\":{\"variationCount\":1},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{},\"state\":\"STATE_DRAFT\"}", headers: { "Content-Type" => "application/json" })
+        client.agents.create(metadata: {"name" => "sample"}, spec: {}, default_variation: {"metadata" => {"name" => "sample"}, "spec" => {}})
         expect(stub).to have_been_requested
       end
     end
@@ -94,7 +94,7 @@ RSpec.describe "client.agents" do
     context "when workspace_id falls back to the client default" do
       it "resolves the client-level value" do
         stub = stub_request(:get, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/agents/sample")
-          .to_return(status: 200, body: "{\"info\":{\"variationCount\":1},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{\"variationSelectionMode\":\"VARIATION_SELECTION_MODE_RANDOM\"},\"state\":\"STATE_DRAFT\"}", headers: { "Content-Type" => "application/json" })
+          .to_return(status: 200, body: "{\"info\":{\"variationCount\":1},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{},\"state\":\"STATE_DRAFT\"}", headers: { "Content-Type" => "application/json" })
         client.agents.retrieve("sample")
         expect(stub).to have_been_requested
       end
@@ -122,7 +122,7 @@ RSpec.describe "client.agents" do
   describe "#update" do
     it "sends the golden request and decodes the response" do
       VCR.use_cassette("AgentService_UpdateAgent") do
-        result = client.agents.update("sample", workspace_id: "sample", metadata: {"name" => "sample"}, spec: {"variation_selection_mode" => "VARIATION_SELECTION_MODE_RANDOM"}, update_mask: "sample")
+        result = client.agents.update("sample", workspace_id: "sample", metadata: {"name" => "sample"}, spec: {}, update_mask: "sample")
         expect(result).to be_a(Cadenya::Types::Agent)
       end
     end
@@ -130,8 +130,8 @@ RSpec.describe "client.agents" do
     context "when workspace_id falls back to the client default" do
       it "resolves the client-level value" do
         stub = stub_request(:patch, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/agents/sample")
-          .to_return(status: 200, body: "{\"info\":{\"variationCount\":1},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{\"variationSelectionMode\":\"VARIATION_SELECTION_MODE_RANDOM\"},\"state\":\"STATE_DRAFT\"}", headers: { "Content-Type" => "application/json" })
-        client.agents.update("sample", metadata: {"name" => "sample"}, spec: {"variation_selection_mode" => "VARIATION_SELECTION_MODE_RANDOM"}, update_mask: "sample")
+          .to_return(status: 200, body: "{\"info\":{\"variationCount\":1},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{},\"state\":\"STATE_DRAFT\"}", headers: { "Content-Type" => "application/json" })
+        client.agents.update("sample", metadata: {"name" => "sample"}, spec: {}, update_mask: "sample")
         expect(stub).to have_been_requested
       end
     end
@@ -148,7 +148,7 @@ RSpec.describe "client.agents" do
     context "when workspace_id falls back to the client default" do
       it "resolves the client-level value" do
         stub = stub_request(:post, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/agents/sample:archive")
-          .to_return(status: 200, body: "{\"info\":{\"variationCount\":1},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{\"variationSelectionMode\":\"VARIATION_SELECTION_MODE_RANDOM\"},\"state\":\"STATE_DRAFT\"}", headers: { "Content-Type" => "application/json" })
+          .to_return(status: 200, body: "{\"info\":{\"variationCount\":1},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{},\"state\":\"STATE_DRAFT\"}", headers: { "Content-Type" => "application/json" })
         client.agents.archive("sample")
         expect(stub).to have_been_requested
       end
@@ -166,7 +166,7 @@ RSpec.describe "client.agents" do
     context "when workspace_id falls back to the client default" do
       it "resolves the client-level value" do
         stub = stub_request(:post, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/agents/sample:publish")
-          .to_return(status: 200, body: "{\"info\":{\"variationCount\":1},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{\"variationSelectionMode\":\"VARIATION_SELECTION_MODE_RANDOM\"},\"state\":\"STATE_DRAFT\"}", headers: { "Content-Type" => "application/json" })
+          .to_return(status: 200, body: "{\"info\":{\"variationCount\":1},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{},\"state\":\"STATE_DRAFT\"}", headers: { "Content-Type" => "application/json" })
         client.agents.publish("sample")
         expect(stub).to have_been_requested
       end
@@ -184,7 +184,7 @@ RSpec.describe "client.agents" do
     context "when workspace_id falls back to the client default" do
       it "resolves the client-level value" do
         stub = stub_request(:post, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/agents/sample:unarchive")
-          .to_return(status: 200, body: "{\"info\":{\"variationCount\":1},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{\"variationSelectionMode\":\"VARIATION_SELECTION_MODE_RANDOM\"},\"state\":\"STATE_DRAFT\"}", headers: { "Content-Type" => "application/json" })
+          .to_return(status: 200, body: "{\"info\":{\"variationCount\":1},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{},\"state\":\"STATE_DRAFT\"}", headers: { "Content-Type" => "application/json" })
         client.agents.unarchive("sample")
         expect(stub).to have_been_requested
       end
@@ -202,7 +202,7 @@ RSpec.describe "client.agents" do
     context "when workspace_id falls back to the client default" do
       it "resolves the client-level value" do
         stub = stub_request(:post, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/agents/sample:unpublish")
-          .to_return(status: 200, body: "{\"info\":{\"variationCount\":1},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{\"variationSelectionMode\":\"VARIATION_SELECTION_MODE_RANDOM\"},\"state\":\"STATE_DRAFT\"}", headers: { "Content-Type" => "application/json" })
+          .to_return(status: 200, body: "{\"info\":{\"variationCount\":1},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{},\"state\":\"STATE_DRAFT\"}", headers: { "Content-Type" => "application/json" })
         client.agents.unpublish("sample")
         expect(stub).to have_been_requested
       end

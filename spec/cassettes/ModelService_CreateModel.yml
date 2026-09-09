@@ -4,10 +4,12 @@ http_interactions:
   request:
     body:
       encoding: UTF-8
-      string: ''
-    headers: {}
-    method: get
-    uri: https://api.test.example/v1/workspaces/sample/models/sample
+      string: '{"metadata":{"name":"sample"},"spec":{"capabilities":[{"temperature":{},"type":"temperature"}],"family":"sample","inputPricePerMillionTokens":"sample","maxInputTokens":1,"maxOutputTokens":1,"outputPricePerMillionTokens":"sample","provider":"sample","providerModelId":"sample"}}'
+    headers:
+      Content-Type:
+      - application/json
+    method: post
+    uri: https://api.test.example/v1/workspaces/sample/ai_provider_keys/sample/models
   response:
     body:
       encoding: UTF-8

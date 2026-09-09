@@ -7,7 +7,7 @@ http_interactions:
       string: ''
     headers: {}
     method: get
-    uri: https://api.test.example/v1/workspaces/sample/ai_provider_keys/sample
+    uri: https://api.test.example/v1/workspaces/sample/ai_provider_keys/sample?includeInfo=true
   response:
     body:
       encoding: UTF-8

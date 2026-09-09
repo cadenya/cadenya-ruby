@@ -46,7 +46,7 @@ RSpec.describe "client.ai_provider_keys" do
   describe "#retrieve" do
     it "sends the golden request and decodes the response" do
       VCR.use_cassette("AIProviderKeyService_GetAIProviderKey") do
-        result = client.ai_provider_keys.retrieve("sample", workspace_id: "sample")
+        result = client.ai_provider_keys.retrieve("sample", workspace_id: "sample", include_info: true)
         expect(result).to be_a(Cadenya::Types::AIProviderKey)
       end
     end
@@ -54,8 +54,9 @@ RSpec.describe "client.ai_provider_keys" do
     context "when workspace_id falls back to the client default" do
       it "resolves the client-level value" do
         stub = stub_request(:get, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/ai_provider_keys/sample")
+          .with(query: hash_including({}))
           .to_return(status: 200, body: "{\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{}}", headers: { "Content-Type" => "application/json" })
-        client.ai_provider_keys.retrieve("sample")
+        client.ai_provider_keys.retrieve("sample", include_info: true)
         expect(stub).to have_been_requested
       end
     end
@@ -82,7 +83,7 @@ RSpec.describe "client.ai_provider_keys" do
   describe "#update" do
     it "sends the golden request and decodes the response" do
       VCR.use_cassette("AIProviderKeyService_UpdateAIProviderKey") do
-        result = client.ai_provider_keys.update("sample", workspace_id: "sample", metadata: {"name" => "sample"}, spec: {}, update_mask: "sample")
+        result = client.ai_provider_keys.update("sample", workspace_id: "sample", metadata: {"name" => "sample"}, spec: {}, update_mask: "sample", credential_patch: {})
         expect(result).to be_a(Cadenya::Types::AIProviderKey)
       end
     end
@@ -91,7 +92,7 @@ RSpec.describe "client.ai_provider_keys" do
       it "resolves the client-level value" do
         stub = stub_request(:patch, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/ai_provider_keys/sample")
           .to_return(status: 200, body: "{\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{}}", headers: { "Content-Type" => "application/json" })
-        client.ai_provider_keys.update("sample", metadata: {"name" => "sample"}, spec: {}, update_mask: "sample")
+        client.ai_provider_keys.update("sample", metadata: {"name" => "sample"}, spec: {}, update_mask: "sample", credential_patch: {})
         expect(stub).to have_been_requested
       end
     end

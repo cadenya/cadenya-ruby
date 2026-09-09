@@ -8,7 +8,7 @@ module Cadenya
   # The Cadenya API client. Resource groups are readers; unset options are
   # read from the environment.
   class Client
-    attr_reader :accounts, :api_keys, :workspace_admin, :profiles, :workspaces, :agents, :ai_provider_keys, :memory_layers, :models, :objectives, :tool_search, :tenants, :tool_sets, :uploads, :widget_sessions, :widgets, :workspace_secrets
+    attr_reader :accounts, :api_keys, :workspace_admin, :profiles, :workspaces, :agents, :ai_provider_keys, :models, :memory_layers, :objectives, :tool_search, :tenants, :tool_sets, :uploads, :widget_sessions, :widgets, :workspace_secrets
 
     def initialize(api_key: nil, base_url: nil, webhook_secret: nil, max_retries: 0, connection: nil, stream_transport: nil, workspace_id: nil)
       if !api_key.nil? && api_key.to_s.strip.empty?
@@ -48,8 +48,8 @@ module Cadenya
       @workspaces = Resources::Workspaces.new(core)
       @agents = Resources::Agents.new(core)
       @ai_provider_keys = Resources::AiProviderKeys.new(core)
-      @memory_layers = Resources::MemoryLayers.new(core)
       @models = Resources::Models.new(core)
+      @memory_layers = Resources::MemoryLayers.new(core)
       @objectives = Resources::Objectives.new(core)
       @tool_search = Resources::ToolSearch.new(core)
       @tenants = Resources::Tenants.new(core)

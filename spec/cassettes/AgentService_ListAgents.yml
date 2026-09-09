@@ -11,7 +11,7 @@ http_interactions:
   response:
     body:
       encoding: UTF-8
-      string: '{"items":[{"info":{"variationCount":1},"metadata":{"accountId":"sample","createdAt":"2026-01-01T00:00:00Z","externalId":"sample","id":"sample","labels":{},"name":"sample","profileId":"sample","workspaceId":"sample"},"spec":{"variationSelectionMode":"VARIATION_SELECTION_MODE_RANDOM"},"state":"STATE_DRAFT"}],"pagination":{"nextCursor":"cursor_page_2"}}'
+      string: '{"items":[{"info":{"variationCount":1},"metadata":{"accountId":"sample","createdAt":"2026-01-01T00:00:00Z","externalId":"sample","id":"sample","labels":{},"name":"sample","profileId":"sample","workspaceId":"sample"},"spec":{},"state":"STATE_DRAFT"}],"pagination":{"nextCursor":"cursor_page_2"}}'
     headers:
       Content-Type:
       - application/json
@@ -30,7 +30,7 @@ http_interactions:
   response:
     body:
       encoding: UTF-8
-      string: '{"items":[{"info":{"variationCount":1},"metadata":{"accountId":"sample","createdAt":"2026-01-01T00:00:00Z","externalId":"sample","id":"sample","labels":{},"name":"sample","profileId":"sample","workspaceId":"sample"},"spec":{"variationSelectionMode":"VARIATION_SELECTION_MODE_RANDOM"},"state":"STATE_DRAFT"}],"pagination":{"nextCursor":""}}'
+      string: '{"items":[{"info":{"variationCount":1},"metadata":{"accountId":"sample","createdAt":"2026-01-01T00:00:00Z","externalId":"sample","id":"sample","labels":{},"name":"sample","profileId":"sample","workspaceId":"sample"},"spec":{},"state":"STATE_DRAFT"}],"pagination":{"nextCursor":""}}'
     headers:
       Content-Type:
       - application/json
