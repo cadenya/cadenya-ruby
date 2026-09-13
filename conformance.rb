@@ -82,10 +82,10 @@ run("AgentVariationService_GetAgentVariation") { client.agents.variations.retrie
 run("AgentVariationService_DeleteAgentVariation") { client.agents.variations.delete("sample", "sample", workspace_id: "sample") }
 run("AgentVariationService_UpdateAgentVariation") { client.agents.variations.update("sample", "sample", workspace_id: "sample", metadata: {"name" => "sample"}, spec: {}, update_mask: "sample") }
 run("AgentVariationService_AddAgentVariationAssignment") { client.agents.variations.add_assignment("sample", "sample", workspace_id: "sample", body: {"tool_id" => "sample", "type" => "toolId"}) }
-run("AgentVariationService_RemoveAgentVariationAssignment") { client.agents.variations.remove_assignment("sample", "sample", "sample", workspace_id: "sample") }
 run("AgentVariationService_AddAgentVariationMemoryLayer") { client.agents.variations.add_memory_layer("sample", "sample", workspace_id: "sample", memory_layer_id: "sample", position: 1) }
-run("AgentVariationService_RemoveAgentVariationMemoryLayer") { client.agents.variations.remove_memory_layer("sample", "sample", "sample", workspace_id: "sample") }
-run("AgentVariationService_UpdateAgentVariationMemoryLayer") { client.agents.variations.update_memory_layer("sample", "sample", "sample", workspace_id: "sample", position: 1) }
+run("AgentVariationService_RemoveAgentVariationAssignment") { client.agents.variations.remove_assignment("sample", "sample", workspace_id: "sample", body: {"tool_id" => "sample", "type" => "toolId"}) }
+run("AgentVariationService_RemoveAgentVariationMemoryLayer") { client.agents.variations.remove_memory_layer("sample", "sample", workspace_id: "sample", memory_layer_id: "sample") }
+run("AgentVariationService_UpdateAgentVariationMemoryLayer") { client.agents.variations.update_memory_layer("sample", "sample", workspace_id: "sample", memory_layer_id: "sample", position: 1) }
 run("AIProviderKeyService_ListAIProviderKeys") { check_page(client.ai_provider_keys.list(workspace_id: "sample", limit: 1, cursor: "sample", prefix: "sample", query: "sample", promotional: true, labels: "sample", sort_order: "sample", include_info: true)) }
 run("AIProviderKeyService_CreateAIProviderKey") { client.ai_provider_keys.create(workspace_id: "sample", metadata: {"name" => "sample"}, spec: {}) }
 run("AIProviderKeyService_GetAIProviderKey") { client.ai_provider_keys.retrieve("sample", workspace_id: "sample", include_info: true) }
@@ -108,7 +108,7 @@ run("MemoryService_CreateMemoryEntry") { client.memory_layers.entries.create("sa
 run("MemoryService_GetMemoryEntry") { client.memory_layers.entries.retrieve("sample", "sample", workspace_id: "sample") }
 run("MemoryService_DeleteMemoryEntry") { client.memory_layers.entries.delete("sample", "sample", workspace_id: "sample") }
 run("MemoryService_UpdateMemoryEntry") { client.memory_layers.entries.update("sample", "sample", workspace_id: "sample", metadata: {"name" => "sample"}, spec: {}, update_mask: "sample") }
-run("ObjectiveService_ListObjectives") { check_page(client.objectives.list(workspace_id: "sample", limit: 1, cursor: "sample", agent_id: "sample", parent_objective_id: "sample", state: "STATE_PENDING", profile_id: "sample", sort_order: "sample", include_info: true, agent_schedule_id: "sample", labels: "sample", tenant_id: "sample", subject_id: "sample", widget_id: "sample", widget_session_id: "sample")) }
+run("ObjectiveService_ListObjectives") { check_page(client.objectives.list(workspace_id: "sample", limit: 1, cursor: "sample", agent_id: "sample", parent_objective_id: "sample", state: "OBJECTIVE_STATE_PENDING", profile_id: "sample", sort_order: "sample", include_info: true, agent_schedule_id: "sample", labels: "sample", tenant_id: "sample", subject_id: "sample", widget_id: "sample", widget_session_id: "sample")) }
 run("ObjectiveService_CreateObjective") { client.objectives.create(workspace_id: "sample", agent_id: "sample", variation_id: "sample", metadata: {}, system_prompt_data: {}, first_user_message: "sample", secrets: [{}], memory_cascade: [{"memory_layer_id" => "sample"}], first_user_message_data: {}, episodic_memory: {"key" => "sample"}, tenant: {"id" => "sample"}, subject: {"id" => "sample"}, pinned_parameters: {}) }
 run("ObjectiveService_GetObjective") { client.objectives.retrieve("sample", workspace_id: "sample") }
 run("ObjectiveService_ListObjectiveContextWindows") { check_page(client.objectives.list_context_windows("sample", workspace_id: "sample", limit: 1, cursor: "sample", include_info: true, labels: "sample")) }
