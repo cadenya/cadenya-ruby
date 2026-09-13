@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/cadenya/cadenya-ruby/compare/v1.1.0...v1.2.0) (2026-09-13)
+
+
+### Features
+
+* add declarative variation assignments ([e0da514](https://github.com/cadenya/cadenya-ruby/commit/e0da51428f540539afb517b932e03af62f26d334))
+
 ## [1.1.0](https://github.com/cadenya/cadenya-ruby/compare/v1.0.1...v1.1.0) (2026-09-09)
 
 
