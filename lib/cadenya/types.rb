@@ -724,9 +724,9 @@ module Cadenya
     end
 
     class AgentVariationInfo
-      attr_reader :tool_count, :tool_set_count, :sub_agent_count, :created_by, :model, :score, :feedback_count, :assignments, :memory_layer_assignments, :memory_layer_count
+      attr_reader :tool_count, :tool_set_count, :sub_agent_count, :created_by, :model, :score, :feedback_count, :memory_layer_count, :effective_tool_count
 
-      def initialize(tool_count: nil, tool_set_count: nil, sub_agent_count: nil, created_by: nil, model: nil, score: nil, feedback_count: nil, assignments: nil, memory_layer_assignments: nil, memory_layer_count: nil)
+      def initialize(tool_count: nil, tool_set_count: nil, sub_agent_count: nil, created_by: nil, model: nil, score: nil, feedback_count: nil, memory_layer_count: nil, effective_tool_count: nil)
         @tool_count = tool_count
         @tool_set_count = tool_set_count
         @sub_agent_count = sub_agent_count
@@ -734,9 +734,8 @@ module Cadenya
         @model = model
         @score = score
         @feedback_count = feedback_count
-        @assignments = assignments
-        @memory_layer_assignments = memory_layer_assignments
         @memory_layer_count = memory_layer_count
+        @effective_tool_count = effective_tool_count
       end
 
       def self.from_json(data)
@@ -748,9 +747,8 @@ module Cadenya
           model: data["model"].nil? ? nil : Types::ResourceMetadata.from_json(data["model"]),
           score: data["score"],
           feedback_count: data["feedbackCount"],
-          assignments: data["assignments"].nil? ? nil : (data["assignments"]).map { |item| Types.decode_VariationAssignment(item) },
-          memory_layer_assignments: data["memoryLayerAssignments"].nil? ? nil : (data["memoryLayerAssignments"]).map { |item| Types::VariationMemoryLayerAssignment.from_json(item) },
           memory_layer_count: data["memoryLayerCount"],
+          effective_tool_count: data["effectiveToolCount"],
         )
       end
 
@@ -763,17 +761,16 @@ module Cadenya
           model: Util.plain(@model),
           score: Util.plain(@score),
           feedback_count: Util.plain(@feedback_count),
-          assignments: Util.plain(@assignments),
-          memory_layer_assignments: Util.plain(@memory_layer_assignments),
           memory_layer_count: Util.plain(@memory_layer_count),
+          effective_tool_count: Util.plain(@effective_tool_count),
         }.reject { |_k, v| v.nil? }
       end
     end
 
     class AgentVariationSpec
-      attr_reader :system_prompt_template, :progressive_discovery, :constraints, :description, :model_config, :compaction_config, :first_user_message_template
+      attr_reader :system_prompt_template, :progressive_discovery, :constraints, :description, :model_config, :compaction_config, :first_user_message_template, :assignments, :memory_layer_assignments
 
-      def initialize(system_prompt_template: nil, progressive_discovery: nil, constraints: nil, description: nil, model_config: nil, compaction_config: nil, first_user_message_template: nil)
+      def initialize(system_prompt_template: nil, progressive_discovery: nil, constraints: nil, description: nil, model_config: nil, compaction_config: nil, first_user_message_template: nil, assignments: nil, memory_layer_assignments: nil)
         @system_prompt_template = system_prompt_template
         @progressive_discovery = progressive_discovery
         @constraints = constraints
@@ -781,6 +778,8 @@ module Cadenya
         @model_config = model_config
         @compaction_config = compaction_config
         @first_user_message_template = first_user_message_template
+        @assignments = assignments
+        @memory_layer_assignments = memory_layer_assignments
       end
 
       def self.from_json(data)
@@ -792,6 +791,8 @@ module Cadenya
           model_config: data["modelConfig"].nil? ? nil : Types::AgentVariationSpec_ModelConfig.from_json(data["modelConfig"]),
           compaction_config: data["compactionConfig"].nil? ? nil : Types::AgentVariationSpec_CompactionConfig.from_json(data["compactionConfig"]),
           first_user_message_template: data["firstUserMessageTemplate"],
+          assignments: data["assignments"].nil? ? nil : (data["assignments"]).map { |item| Types.decode_VariationAssignment(item) },
+          memory_layer_assignments: data["memoryLayerAssignments"].nil? ? nil : (data["memoryLayerAssignments"]).map { |item| Types::VariationMemoryLayerAssignment.from_json(item) },
         )
       end
 
@@ -804,6 +805,8 @@ module Cadenya
           model_config: Util.plain(@model_config),
           compaction_config: Util.plain(@compaction_config),
           first_user_message_template: Util.plain(@first_user_message_template),
+          assignments: Util.plain(@assignments),
+          memory_layer_assignments: Util.plain(@memory_layer_assignments),
         }.reject { |_k, v| v.nil? }
       end
     end
@@ -3699,7 +3702,7 @@ module Cadenya
       end
     end
 
-    ObjectiveState = ["STATE_UNSPECIFIED", "STATE_PENDING", "STATE_RUNNING", "STATE_WAITING", "STATE_FAILED", "STATE_CANCELLED", "STATE_FINALIZED", "STATE_TIMED_OUT"].freeze
+    ObjectiveState = ["OBJECTIVE_STATE_UNSPECIFIED", "OBJECTIVE_STATE_PENDING", "OBJECTIVE_STATE_RUNNING", "OBJECTIVE_STATE_WAITING", "OBJECTIVE_STATE_FAILED", "OBJECTIVE_STATE_CANCELLED", "OBJECTIVE_STATE_FINALIZED", "OBJECTIVE_STATE_TIMED_OUT"].freeze
 
     class Objective
       attr_reader :metadata, :config_snapshot, :state, :state_message, :info, :system_prompt, :first_user_message, :parent_objective_id, :secrets, :system_prompt_data, :memory_cascade, :output, :first_user_message_data, :episodic_memory, :pinned_parameters
@@ -4036,6 +4039,8 @@ module Cadenya
         Types::ObjectiveEventData_TimedOut.from_json(data)
       when "reasoning"
         Types::ObjectiveEventData_Reasoning.from_json(data)
+      when "stateChanged"
+        Types::ObjectiveEventData_StateChanged.from_json(data)
       else
         raise ArgumentError, "ObjectiveEventData: unknown type #{data["type"].inspect}"
       end
@@ -4214,6 +4219,36 @@ module Cadenya
           tenant: Util.plain(@tenant),
           subject: Util.plain(@subject),
           widget: Util.plain(@widget),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    ObjectiveStateChangedFromState = ["OBJECTIVE_STATE_UNSPECIFIED", "OBJECTIVE_STATE_PENDING", "OBJECTIVE_STATE_RUNNING", "OBJECTIVE_STATE_WAITING", "OBJECTIVE_STATE_FAILED", "OBJECTIVE_STATE_CANCELLED", "OBJECTIVE_STATE_FINALIZED", "OBJECTIVE_STATE_TIMED_OUT"].freeze
+
+    ObjectiveStateChangedToState = ["OBJECTIVE_STATE_UNSPECIFIED", "OBJECTIVE_STATE_PENDING", "OBJECTIVE_STATE_RUNNING", "OBJECTIVE_STATE_WAITING", "OBJECTIVE_STATE_FAILED", "OBJECTIVE_STATE_CANCELLED", "OBJECTIVE_STATE_FINALIZED", "OBJECTIVE_STATE_TIMED_OUT"].freeze
+
+    class ObjectiveStateChanged
+      attr_reader :from_state, :to_state, :message
+
+      def initialize(from_state: nil, to_state: nil, message: nil)
+        @from_state = from_state
+        @to_state = to_state
+        @message = message
+      end
+
+      def self.from_json(data)
+        new(
+          from_state: data["fromState"],
+          to_state: data["toState"],
+          message: data["message"],
+        )
+      end
+
+      def to_h
+        {
+          from_state: Util.plain(@from_state),
+          to_state: Util.plain(@to_state),
+          message: Util.plain(@message),
         }.reject { |_k, v| v.nil? }
       end
     end
@@ -4869,6 +4904,49 @@ module Cadenya
       def to_h
         {
           content: Util.plain(@content),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    def self.decode_RemoveAgentVariationAssignmentRequest(data)
+      return nil if data.nil? || data["type"].to_s.empty?
+      case data["type"]
+      when "toolId"
+        Types::RemoveAgentVariationAssignmentRequest_ToolId.from_json(data)
+      when "toolSetId"
+        Types::RemoveAgentVariationAssignmentRequest_ToolSetId.from_json(data)
+      when "subAgentId"
+        Types::RemoveAgentVariationAssignmentRequest_SubAgentId.from_json(data)
+      else
+        raise ArgumentError, "RemoveAgentVariationAssignmentRequest: unknown type #{data["type"].inspect}"
+      end
+    end
+
+    class RemoveAgentVariationMemoryLayerRequest
+      attr_reader :workspace_id, :agent_id, :variation_id, :memory_layer_id
+
+      def initialize(workspace_id: nil, agent_id: nil, variation_id: nil, memory_layer_id: nil)
+        @workspace_id = workspace_id
+        @agent_id = agent_id
+        @variation_id = variation_id
+        @memory_layer_id = memory_layer_id
+      end
+
+      def self.from_json(data)
+        new(
+          workspace_id: data["workspaceId"],
+          agent_id: data["agentId"],
+          variation_id: data["variationId"],
+          memory_layer_id: data["memoryLayerId"],
+        )
+      end
+
+      def to_h
+        {
+          workspace_id: Util.plain(@workspace_id),
+          agent_id: Util.plain(@agent_id),
+          variation_id: Util.plain(@variation_id),
+          memory_layer_id: Util.plain(@memory_layer_id),
         }.reject { |_k, v| v.nil? }
       end
     end
@@ -6867,13 +6945,13 @@ module Cadenya
     end
 
     class UpdateAgentVariationMemoryLayerRequest
-      attr_reader :workspace_id, :agent_id, :variation_id, :id, :position
+      attr_reader :workspace_id, :agent_id, :variation_id, :memory_layer_id, :position
 
-      def initialize(workspace_id: nil, agent_id: nil, variation_id: nil, id: nil, position: nil)
+      def initialize(workspace_id: nil, agent_id: nil, variation_id: nil, memory_layer_id: nil, position: nil)
         @workspace_id = workspace_id
         @agent_id = agent_id
         @variation_id = variation_id
-        @id = id
+        @memory_layer_id = memory_layer_id
         @position = position
       end
 
@@ -6882,7 +6960,7 @@ module Cadenya
           workspace_id: data["workspaceId"],
           agent_id: data["agentId"],
           variation_id: data["variationId"],
-          id: data["id"],
+          memory_layer_id: data["memoryLayerId"],
           position: data["position"],
         )
       end
@@ -6892,7 +6970,7 @@ module Cadenya
           workspace_id: Util.plain(@workspace_id),
           agent_id: Util.plain(@agent_id),
           variation_id: Util.plain(@variation_id),
-          id: Util.plain(@id),
+          memory_layer_id: Util.plain(@memory_layer_id),
           position: Util.plain(@position),
         }.reject { |_k, v| v.nil? }
       end
@@ -7362,38 +7440,35 @@ module Cadenya
     def self.decode_VariationAssignment(data)
       return nil if data.nil? || data["type"].to_s.empty?
       case data["type"]
-      when "tool"
-        Types::VariationAssignment_Tool.from_json(data)
-      when "toolSet"
-        Types::VariationAssignment_ToolSet.from_json(data)
-      when "agent"
-        Types::VariationAssignment_Agent.from_json(data)
+      when "toolId"
+        Types::VariationAssignment_ToolId.from_json(data)
+      when "toolSetId"
+        Types::VariationAssignment_ToolSetId.from_json(data)
+      when "subAgentId"
+        Types::VariationAssignment_SubAgentId.from_json(data)
       else
         raise ArgumentError, "VariationAssignment: unknown type #{data["type"].inspect}"
       end
     end
 
     class VariationMemoryLayerAssignment
-      attr_reader :id, :memory_layer, :position
+      attr_reader :memory_layer_id, :position
 
-      def initialize(id: nil, memory_layer: nil, position: nil)
-        @id = id
-        @memory_layer = memory_layer
+      def initialize(memory_layer_id: nil, position: nil)
+        @memory_layer_id = memory_layer_id
         @position = position
       end
 
       def self.from_json(data)
         new(
-          id: data["id"],
-          memory_layer: data["memoryLayer"].nil? ? nil : Types::BareMetadata.from_json(data["memoryLayer"]),
+          memory_layer_id: data["memoryLayerId"],
           position: data["position"],
         )
       end
 
       def to_h
         {
-          id: Util.plain(@id),
-          memory_layer: Util.plain(@memory_layer),
+          memory_layer_id: Util.plain(@memory_layer_id),
           position: Util.plain(@position),
         }.reject { |_k, v| v.nil? }
       end
@@ -7447,7 +7522,7 @@ module Cadenya
 
     WebhookDeliveryDataStatus = ["WEBHOOK_DELIVERY_STATUS_UNSPECIFIED", "WEBHOOK_DELIVERY_STATUS_PENDING", "WEBHOOK_DELIVERY_STATUS_COMPLETED", "WEBHOOK_DELIVERY_STATUS_FAILED", "WEBHOOK_DELIVERY_STATUS_DISABLED"].freeze
 
-    WebhookDeliveryDataEventType = ["OBJECTIVE_EVENT_TYPE_UNSPECIFIED", "OBJECTIVE_EVENT_TYPE_USER_MESSAGE", "OBJECTIVE_EVENT_TYPE_TOOL_APPROVAL_REQUESTED", "OBJECTIVE_EVENT_TYPE_TOOL_APPROVED", "OBJECTIVE_EVENT_TYPE_TOOL_DENIED", "OBJECTIVE_EVENT_TYPE_TOOL_CALLED", "OBJECTIVE_EVENT_TYPE_ERROR", "OBJECTIVE_EVENT_TYPE_ASSISTANT_MESSAGE", "OBJECTIVE_EVENT_TYPE_TOOL_RESULT", "OBJECTIVE_EVENT_TYPE_TOOL_ERROR", "OBJECTIVE_EVENT_TYPE_CONTEXT_WINDOW_COMPACTED", "OBJECTIVE_EVENT_TYPE_MEMORY_READ", "OBJECTIVE_EVENT_TYPE_CANCELLED", "OBJECTIVE_EVENT_TYPE_SUB_AGENT_SPAWNED", "OBJECTIVE_EVENT_TYPE_SUB_AGENT_UPDATED", "OBJECTIVE_EVENT_TYPE_FINALIZED", "OBJECTIVE_EVENT_TYPE_NOTICE", "OBJECTIVE_EVENT_TYPE_TIMED_OUT", "OBJECTIVE_EVENT_TYPE_REASONING"].freeze
+    WebhookDeliveryDataEventType = ["OBJECTIVE_EVENT_TYPE_UNSPECIFIED", "OBJECTIVE_EVENT_TYPE_USER_MESSAGE", "OBJECTIVE_EVENT_TYPE_TOOL_APPROVAL_REQUESTED", "OBJECTIVE_EVENT_TYPE_TOOL_APPROVED", "OBJECTIVE_EVENT_TYPE_TOOL_DENIED", "OBJECTIVE_EVENT_TYPE_TOOL_CALLED", "OBJECTIVE_EVENT_TYPE_ERROR", "OBJECTIVE_EVENT_TYPE_ASSISTANT_MESSAGE", "OBJECTIVE_EVENT_TYPE_TOOL_RESULT", "OBJECTIVE_EVENT_TYPE_TOOL_ERROR", "OBJECTIVE_EVENT_TYPE_CONTEXT_WINDOW_COMPACTED", "OBJECTIVE_EVENT_TYPE_MEMORY_READ", "OBJECTIVE_EVENT_TYPE_CANCELLED", "OBJECTIVE_EVENT_TYPE_SUB_AGENT_SPAWNED", "OBJECTIVE_EVENT_TYPE_SUB_AGENT_UPDATED", "OBJECTIVE_EVENT_TYPE_FINALIZED", "OBJECTIVE_EVENT_TYPE_NOTICE", "OBJECTIVE_EVENT_TYPE_TIMED_OUT", "OBJECTIVE_EVENT_TYPE_REASONING", "OBJECTIVE_EVENT_TYPE_STATE_CHANGED"].freeze
 
     class WebhookDeliveryData
       attr_reader :agent_id, :objective_id, :objective_event_id, :webhook_url, :webhook_id, :status, :attempt_count, :last_attempt_at, :http_status_code, :error_message, :latency_ms, :event_type, :response_headers, :response_content_length
@@ -7960,80 +8035,71 @@ module Cadenya
       end
     end
 
-    class VariationAssignment_Tool
-      attr_reader :type, :tool, :id
+    class VariationAssignment_ToolId
+      attr_reader :type, :tool_id
 
-      def initialize(type: nil, tool: nil, id: nil)
+      def initialize(type: nil, tool_id: nil)
         @type = type
-        @tool = tool
-        @id = id
+        @tool_id = tool_id
       end
 
       def self.from_json(data)
         new(
           type: data["type"],
-          tool: data["tool"].nil? ? nil : Types::BareMetadata.from_json(data["tool"]),
-          id: data["id"],
+          tool_id: data["toolId"],
         )
       end
 
       def to_h
         {
           type: Util.plain(@type),
-          tool: Util.plain(@tool),
-          id: Util.plain(@id),
+          tool_id: Util.plain(@tool_id),
         }.reject { |_k, v| v.nil? }
       end
     end
 
-    class VariationAssignment_ToolSet
-      attr_reader :type, :tool_set, :id
+    class VariationAssignment_ToolSetId
+      attr_reader :type, :tool_set_id
 
-      def initialize(type: nil, tool_set: nil, id: nil)
+      def initialize(type: nil, tool_set_id: nil)
         @type = type
-        @tool_set = tool_set
-        @id = id
+        @tool_set_id = tool_set_id
       end
 
       def self.from_json(data)
         new(
           type: data["type"],
-          tool_set: data["toolSet"].nil? ? nil : Types::BareMetadata.from_json(data["toolSet"]),
-          id: data["id"],
+          tool_set_id: data["toolSetId"],
         )
       end
 
       def to_h
         {
           type: Util.plain(@type),
-          tool_set: Util.plain(@tool_set),
-          id: Util.plain(@id),
+          tool_set_id: Util.plain(@tool_set_id),
         }.reject { |_k, v| v.nil? }
       end
     end
 
-    class VariationAssignment_Agent
-      attr_reader :type, :agent, :id
+    class VariationAssignment_SubAgentId
+      attr_reader :type, :sub_agent_id
 
-      def initialize(type: nil, agent: nil, id: nil)
+      def initialize(type: nil, sub_agent_id: nil)
         @type = type
-        @agent = agent
-        @id = id
+        @sub_agent_id = sub_agent_id
       end
 
       def self.from_json(data)
         new(
           type: data["type"],
-          agent: data["agent"].nil? ? nil : Types::BareMetadata.from_json(data["agent"]),
-          id: data["id"],
+          sub_agent_id: data["subAgentId"],
         )
       end
 
       def to_h
         {
           type: Util.plain(@type),
-          agent: Util.plain(@agent),
-          id: Util.plain(@id),
+          sub_agent_id: Util.plain(@sub_agent_id),
         }.reject { |_k, v| v.nil? }
       end
     end
@@ -9193,6 +9259,29 @@ module Cadenya
       end
     end
 
+    class ObjectiveEventData_StateChanged
+      attr_reader :type, :state_changed
+
+      def initialize(type: nil, state_changed: nil)
+        @type = type
+        @state_changed = state_changed
+      end
+
+      def self.from_json(data)
+        new(
+          type: data["type"],
+          state_changed: data["stateChanged"].nil? ? nil : Types::ObjectiveStateChanged.from_json(data["stateChanged"]),
+        )
+      end
+
+      def to_h
+        {
+          type: Util.plain(@type),
+          state_changed: Util.plain(@state_changed),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
     class CallableTool_Tool
       attr_reader :type, :tool
 
@@ -9454,6 +9543,102 @@ module Cadenya
     end
 
     class AddAgentVariationAssignmentRequest_SubAgentId
+      attr_reader :type, :sub_agent_id, :workspace_id, :agent_id, :variation_id
+
+      def initialize(type: nil, sub_agent_id: nil, workspace_id: nil, agent_id: nil, variation_id: nil)
+        @type = type
+        @sub_agent_id = sub_agent_id
+        @workspace_id = workspace_id
+        @agent_id = agent_id
+        @variation_id = variation_id
+      end
+
+      def self.from_json(data)
+        new(
+          type: data["type"],
+          sub_agent_id: data["subAgentId"],
+          workspace_id: data["workspaceId"],
+          agent_id: data["agentId"],
+          variation_id: data["variationId"],
+        )
+      end
+
+      def to_h
+        {
+          type: Util.plain(@type),
+          sub_agent_id: Util.plain(@sub_agent_id),
+          workspace_id: Util.plain(@workspace_id),
+          agent_id: Util.plain(@agent_id),
+          variation_id: Util.plain(@variation_id),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    class RemoveAgentVariationAssignmentRequest_ToolId
+      attr_reader :type, :tool_id, :workspace_id, :agent_id, :variation_id
+
+      def initialize(type: nil, tool_id: nil, workspace_id: nil, agent_id: nil, variation_id: nil)
+        @type = type
+        @tool_id = tool_id
+        @workspace_id = workspace_id
+        @agent_id = agent_id
+        @variation_id = variation_id
+      end
+
+      def self.from_json(data)
+        new(
+          type: data["type"],
+          tool_id: data["toolId"],
+          workspace_id: data["workspaceId"],
+          agent_id: data["agentId"],
+          variation_id: data["variationId"],
+        )
+      end
+
+      def to_h
+        {
+          type: Util.plain(@type),
+          tool_id: Util.plain(@tool_id),
+          workspace_id: Util.plain(@workspace_id),
+          agent_id: Util.plain(@agent_id),
+          variation_id: Util.plain(@variation_id),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    class RemoveAgentVariationAssignmentRequest_ToolSetId
+      attr_reader :type, :tool_set_id, :workspace_id, :agent_id, :variation_id
+
+      def initialize(type: nil, tool_set_id: nil, workspace_id: nil, agent_id: nil, variation_id: nil)
+        @type = type
+        @tool_set_id = tool_set_id
+        @workspace_id = workspace_id
+        @agent_id = agent_id
+        @variation_id = variation_id
+      end
+
+      def self.from_json(data)
+        new(
+          type: data["type"],
+          tool_set_id: data["toolSetId"],
+          workspace_id: data["workspaceId"],
+          agent_id: data["agentId"],
+          variation_id: data["variationId"],
+        )
+      end
+
+      def to_h
+        {
+          type: Util.plain(@type),
+          tool_set_id: Util.plain(@tool_set_id),
+          workspace_id: Util.plain(@workspace_id),
+          agent_id: Util.plain(@agent_id),
+          variation_id: Util.plain(@variation_id),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    class RemoveAgentVariationAssignmentRequest_SubAgentId
       attr_reader :type, :sub_agent_id, :workspace_id, :agent_id, :variation_id
 
       def initialize(type: nil, sub_agent_id: nil, workspace_id: nil, agent_id: nil, variation_id: nil)
@@ -9859,13 +10044,13 @@ module Cadenya
 
     AgentServiceListAgentFeedbackSentiment = ["FEEDBACK_SENTIMENT_UNSPECIFIED", "FEEDBACK_SENTIMENT_POSITIVE", "FEEDBACK_SENTIMENT_NEGATIVE"].freeze
 
-    AgentServiceListAgentWebhookDeliveriesEventType = ["OBJECTIVE_EVENT_TYPE_UNSPECIFIED", "OBJECTIVE_EVENT_TYPE_USER_MESSAGE", "OBJECTIVE_EVENT_TYPE_TOOL_APPROVAL_REQUESTED", "OBJECTIVE_EVENT_TYPE_TOOL_APPROVED", "OBJECTIVE_EVENT_TYPE_TOOL_DENIED", "OBJECTIVE_EVENT_TYPE_TOOL_CALLED", "OBJECTIVE_EVENT_TYPE_ERROR", "OBJECTIVE_EVENT_TYPE_ASSISTANT_MESSAGE", "OBJECTIVE_EVENT_TYPE_TOOL_RESULT", "OBJECTIVE_EVENT_TYPE_TOOL_ERROR", "OBJECTIVE_EVENT_TYPE_CONTEXT_WINDOW_COMPACTED", "OBJECTIVE_EVENT_TYPE_MEMORY_READ", "OBJECTIVE_EVENT_TYPE_CANCELLED", "OBJECTIVE_EVENT_TYPE_SUB_AGENT_SPAWNED", "OBJECTIVE_EVENT_TYPE_SUB_AGENT_UPDATED", "OBJECTIVE_EVENT_TYPE_FINALIZED", "OBJECTIVE_EVENT_TYPE_NOTICE", "OBJECTIVE_EVENT_TYPE_TIMED_OUT", "OBJECTIVE_EVENT_TYPE_REASONING"].freeze
+    AgentServiceListAgentWebhookDeliveriesEventType = ["OBJECTIVE_EVENT_TYPE_UNSPECIFIED", "OBJECTIVE_EVENT_TYPE_USER_MESSAGE", "OBJECTIVE_EVENT_TYPE_TOOL_APPROVAL_REQUESTED", "OBJECTIVE_EVENT_TYPE_TOOL_APPROVED", "OBJECTIVE_EVENT_TYPE_TOOL_DENIED", "OBJECTIVE_EVENT_TYPE_TOOL_CALLED", "OBJECTIVE_EVENT_TYPE_ERROR", "OBJECTIVE_EVENT_TYPE_ASSISTANT_MESSAGE", "OBJECTIVE_EVENT_TYPE_TOOL_RESULT", "OBJECTIVE_EVENT_TYPE_TOOL_ERROR", "OBJECTIVE_EVENT_TYPE_CONTEXT_WINDOW_COMPACTED", "OBJECTIVE_EVENT_TYPE_MEMORY_READ", "OBJECTIVE_EVENT_TYPE_CANCELLED", "OBJECTIVE_EVENT_TYPE_SUB_AGENT_SPAWNED", "OBJECTIVE_EVENT_TYPE_SUB_AGENT_UPDATED", "OBJECTIVE_EVENT_TYPE_FINALIZED", "OBJECTIVE_EVENT_TYPE_NOTICE", "OBJECTIVE_EVENT_TYPE_TIMED_OUT", "OBJECTIVE_EVENT_TYPE_REASONING", "OBJECTIVE_EVENT_TYPE_STATE_CHANGED"].freeze
 
     MemoryServiceListMemoryLayersType = ["MEMORY_LAYER_TYPE_UNSPECIFIED", "MEMORY_LAYER_TYPE_EPISODIC", "MEMORY_LAYER_TYPE_SKILLS"].freeze
 
     ModelServiceListModelsState = ["STATE_UNSPECIFIED", "STATE_ENABLED", "STATE_DISABLED"].freeze
 
-    ObjectiveServiceListObjectivesState = ["STATE_UNSPECIFIED", "STATE_PENDING", "STATE_RUNNING", "STATE_WAITING", "STATE_FAILED", "STATE_CANCELLED", "STATE_FINALIZED", "STATE_TIMED_OUT"].freeze
+    ObjectiveServiceListObjectivesState = ["OBJECTIVE_STATE_UNSPECIFIED", "OBJECTIVE_STATE_PENDING", "OBJECTIVE_STATE_RUNNING", "OBJECTIVE_STATE_WAITING", "OBJECTIVE_STATE_FAILED", "OBJECTIVE_STATE_CANCELLED", "OBJECTIVE_STATE_FINALIZED", "OBJECTIVE_STATE_TIMED_OUT"].freeze
 
     ObjectiveServiceListObjectiveToolCallsStatus = ["TOOL_CALL_STATUS_UNSPECIFIED", "TOOL_CALL_STATUS_AUTO_APPROVED", "TOOL_CALL_STATUS_WAITING_FOR_APPROVAL", "TOOL_CALL_STATUS_APPROVED", "TOOL_CALL_STATUS_DENIED"].freeze
 
@@ -10066,6 +10251,9 @@ module Cadenya
       "compactionConfig" => ["compactionConfig", ->(_v) { encode_AgentVariationSpec_CompactionConfig(_v) }],
       "first_user_message_template" => ["firstUserMessageTemplate", nil],
       "firstUserMessageTemplate" => ["firstUserMessageTemplate", nil],
+      "assignments" => ["assignments", ->(_v) { _v.is_a?(Array) ? _v.map { |_i| (->(_v) { encode_VariationAssignment(_v) }).call(_i) } : _v }],
+      "memory_layer_assignments" => ["memoryLayerAssignments", ->(_v) { _v.is_a?(Array) ? _v.map { |_i| (->(_v) { encode_VariationMemoryLayerAssignment(_v) }).call(_i) } : _v }],
+      "memoryLayerAssignments" => ["memoryLayerAssignments", ->(_v) { _v.is_a?(Array) ? _v.map { |_i| (->(_v) { encode_VariationMemoryLayerAssignment(_v) }).call(_i) } : _v }],
     }.freeze
 
     def self.encode_AgentVariationSpec(data)
@@ -10509,6 +10697,24 @@ module Cadenya
 
     def self.encode_ParameterAction_Set(data)
       encode_fields(ENCODE_PARAMETER_ACTION_SET, data)
+    end
+
+    def self.encode_RemoveAgentVariationAssignmentRequest(data)
+      data = data.to_h if !data.is_a?(Hash) && data.class.name.to_s.start_with?(name.split("::").first + "::Types")
+      unless data.is_a?(Hash)
+        raise TypeError, "expected a Hash (or a decoded Types value object), got #{data.class}"
+      end
+
+      case data["type"] || data[:type]
+      when "toolId"
+        (->(_v) { encode_RemoveAgentVariationAssignmentRequest_ToolId(_v) }).call(data)
+      when "toolSetId"
+        (->(_v) { encode_RemoveAgentVariationAssignmentRequest_ToolSetId(_v) }).call(data)
+      when "subAgentId"
+        (->(_v) { encode_RemoveAgentVariationAssignmentRequest_SubAgentId(_v) }).call(data)
+      else
+        data
+      end
     end
 
     ENCODE_RESULT_ACTION_TRANSFORM = {
@@ -10960,6 +11166,34 @@ module Cadenya
       encode_fields(ENCODE_UPLOAD_SPEC, data)
     end
 
+    def self.encode_VariationAssignment(data)
+      data = data.to_h if !data.is_a?(Hash) && data.class.name.to_s.start_with?(name.split("::").first + "::Types")
+      unless data.is_a?(Hash)
+        raise TypeError, "expected a Hash (or a decoded Types value object), got #{data.class}"
+      end
+
+      case data["type"] || data[:type]
+      when "toolId"
+        (->(_v) { encode_VariationAssignment_ToolId(_v) }).call(data)
+      when "toolSetId"
+        (->(_v) { encode_VariationAssignment_ToolSetId(_v) }).call(data)
+      when "subAgentId"
+        (->(_v) { encode_VariationAssignment_SubAgentId(_v) }).call(data)
+      else
+        data
+      end
+    end
+
+    ENCODE_VARIATION_MEMORY_LAYER_ASSIGNMENT = {
+      "memory_layer_id" => ["memoryLayerId", nil],
+      "memoryLayerId" => ["memoryLayerId", nil],
+      "position" => ["position", nil],
+    }.freeze
+
+    def self.encode_VariationMemoryLayerAssignment(data)
+      encode_fields(ENCODE_VARIATION_MEMORY_LAYER_ASSIGNMENT, data)
+    end
+
     ENCODE_VERTEX_CONFIG = {
       "project_id" => ["projectId", nil],
       "projectId" => ["projectId", nil],
@@ -11014,6 +11248,36 @@ module Cadenya
 
     def self.encode_WorkspaceSpec(data)
       encode_fields(ENCODE_WORKSPACE_SPEC, data)
+    end
+
+    ENCODE_VARIATION_ASSIGNMENT_TOOL_ID = {
+      "type" => ["type", nil],
+      "tool_id" => ["toolId", nil],
+      "toolId" => ["toolId", nil],
+    }.freeze
+
+    def self.encode_VariationAssignment_ToolId(data)
+      encode_fields(ENCODE_VARIATION_ASSIGNMENT_TOOL_ID, data)
+    end
+
+    ENCODE_VARIATION_ASSIGNMENT_TOOL_SET_ID = {
+      "type" => ["type", nil],
+      "tool_set_id" => ["toolSetId", nil],
+      "toolSetId" => ["toolSetId", nil],
+    }.freeze
+
+    def self.encode_VariationAssignment_ToolSetId(data)
+      encode_fields(ENCODE_VARIATION_ASSIGNMENT_TOOL_SET_ID, data)
+    end
+
+    ENCODE_VARIATION_ASSIGNMENT_SUB_AGENT_ID = {
+      "type" => ["type", nil],
+      "sub_agent_id" => ["subAgentId", nil],
+      "subAgentId" => ["subAgentId", nil],
+    }.freeze
+
+    def self.encode_VariationAssignment_SubAgentId(data)
+      encode_fields(ENCODE_VARIATION_ASSIGNMENT_SUB_AGENT_ID, data)
     end
 
     ENCODE_TOOL_SET_ADAPTER_MCP_VARIANT = {
@@ -11352,6 +11616,42 @@ module Cadenya
 
     def self.encode_AddAgentVariationAssignmentRequest_SubAgentId(data)
       encode_fields(ENCODE_ADD_AGENT_VARIATION_ASSIGNMENT_REQUEST_SUB_AGENT_ID, data, drop: DROP_ADD_AGENT_VARIATION_ASSIGNMENT_REQUEST_SUB_AGENT_ID)
+    end
+
+    ENCODE_REMOVE_AGENT_VARIATION_ASSIGNMENT_REQUEST_TOOL_ID = {
+      "type" => ["type", nil],
+      "tool_id" => ["toolId", nil],
+      "toolId" => ["toolId", nil],
+    }.freeze
+
+    DROP_REMOVE_AGENT_VARIATION_ASSIGNMENT_REQUEST_TOOL_ID = ["agentId", "agent_id", "variationId", "variation_id", "workspaceId", "workspace_id"].freeze
+
+    def self.encode_RemoveAgentVariationAssignmentRequest_ToolId(data)
+      encode_fields(ENCODE_REMOVE_AGENT_VARIATION_ASSIGNMENT_REQUEST_TOOL_ID, data, drop: DROP_REMOVE_AGENT_VARIATION_ASSIGNMENT_REQUEST_TOOL_ID)
+    end
+
+    ENCODE_REMOVE_AGENT_VARIATION_ASSIGNMENT_REQUEST_TOOL_SET_ID = {
+      "type" => ["type", nil],
+      "tool_set_id" => ["toolSetId", nil],
+      "toolSetId" => ["toolSetId", nil],
+    }.freeze
+
+    DROP_REMOVE_AGENT_VARIATION_ASSIGNMENT_REQUEST_TOOL_SET_ID = ["agentId", "agent_id", "variationId", "variation_id", "workspaceId", "workspace_id"].freeze
+
+    def self.encode_RemoveAgentVariationAssignmentRequest_ToolSetId(data)
+      encode_fields(ENCODE_REMOVE_AGENT_VARIATION_ASSIGNMENT_REQUEST_TOOL_SET_ID, data, drop: DROP_REMOVE_AGENT_VARIATION_ASSIGNMENT_REQUEST_TOOL_SET_ID)
+    end
+
+    ENCODE_REMOVE_AGENT_VARIATION_ASSIGNMENT_REQUEST_SUB_AGENT_ID = {
+      "type" => ["type", nil],
+      "sub_agent_id" => ["subAgentId", nil],
+      "subAgentId" => ["subAgentId", nil],
+    }.freeze
+
+    DROP_REMOVE_AGENT_VARIATION_ASSIGNMENT_REQUEST_SUB_AGENT_ID = ["agentId", "agent_id", "variationId", "variation_id", "workspaceId", "workspace_id"].freeze
+
+    def self.encode_RemoveAgentVariationAssignmentRequest_SubAgentId(data)
+      encode_fields(ENCODE_REMOVE_AGENT_VARIATION_ASSIGNMENT_REQUEST_SUB_AGENT_ID, data, drop: DROP_REMOVE_AGENT_VARIATION_ASSIGNMENT_REQUEST_SUB_AGENT_ID)
     end
 
     ENCODE_AI_PROVIDER_CREDENTIAL_API_KEY = {

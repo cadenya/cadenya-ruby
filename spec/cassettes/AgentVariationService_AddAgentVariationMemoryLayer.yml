@@ -9,11 +9,11 @@ http_interactions:
       Content-Type:
       - application/json
     method: post
-    uri: https://api.test.example/v1/workspaces/sample/agents/sample/variations/sample/memory_layer_assignments
+    uri: https://api.test.example/v1/workspaces/sample/agents/sample/variations/sample:addMemoryLayer
   response:
     body:
       encoding: UTF-8
-      string: '{"id":"sample","memoryLayer":{"id":"sample"},"position":1}'
+      string: '{"info":{"effectiveToolCount":1,"feedbackCount":1,"memoryLayerCount":1,"score":1.5,"subAgentCount":1,"toolCount":1,"toolSetCount":1},"metadata":{"accountId":"sample","createdAt":"2026-01-01T00:00:00Z","externalId":"sample","id":"sample","labels":{},"name":"sample","profileId":"sample","workspaceId":"sample"},"spec":{}}'
     headers:
       Content-Type:
       - application/json

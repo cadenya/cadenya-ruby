@@ -278,27 +278,27 @@ client.agents.variations.update(agent_id, id, workspace_id: nil, metadata: nil, 
 Add an assignment to a variation
 
 ```ruby
-client.agents.variations.add_assignment(agent_id, variation_id, body:, workspace_id: nil) # => Cadenya::Types::VariationAssignment
-```
-Remove an assignment from a variation
-
-```ruby
-client.agents.variations.remove_assignment(agent_id, variation_id, id, workspace_id: nil) # => nil
+client.agents.variations.add_assignment(agent_id, variation_id, body:, workspace_id: nil) # => Cadenya::Types::AgentVariation
 ```
 Attach a memory layer to a variation
 
 ```ruby
-client.agents.variations.add_memory_layer(agent_id, variation_id, memory_layer_id:, workspace_id: nil, position: nil) # => Cadenya::Types::VariationMemoryLayerAssignment
+client.agents.variations.add_memory_layer(agent_id, variation_id, memory_layer_id:, workspace_id: nil, position: nil) # => Cadenya::Types::AgentVariation
+```
+Remove an assignment from a variation
+
+```ruby
+client.agents.variations.remove_assignment(agent_id, variation_id, body:, workspace_id: nil) # => Cadenya::Types::AgentVariation
 ```
 Remove a memory layer assignment from a variation
 
 ```ruby
-client.agents.variations.remove_memory_layer(agent_id, variation_id, id, workspace_id: nil) # => nil
+client.agents.variations.remove_memory_layer(agent_id, variation_id, memory_layer_id:, workspace_id: nil) # => Cadenya::Types::AgentVariation
 ```
 Update a variation's memory layer assignment
 
 ```ruby
-client.agents.variations.update_memory_layer(agent_id, variation_id, id, workspace_id: nil, position: nil) # => Cadenya::Types::VariationMemoryLayerAssignment
+client.agents.variations.update_memory_layer(agent_id, variation_id, memory_layer_id:, position:, workspace_id: nil) # => Cadenya::Types::AgentVariation
 ```
 
 ## client.ai_provider_keys

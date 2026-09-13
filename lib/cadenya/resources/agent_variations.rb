@@ -72,48 +72,52 @@ module Cadenya
       # Add an assignment to a variation
       def add_assignment(agent_id, variation_id, body:, workspace_id: nil, request_options: nil)
         workspace_id = @core.resolve_default("workspaceId", "CADENYA_WORKSPACE_ID", workspace_id)
-        _path = "/v1/workspaces/#{Util.path_param('workspaceId', workspace_id)}/agents/#{Util.path_param('agentId', agent_id)}/variations/#{Util.path_param('variationId', variation_id)}/assignments"
+        _path = "/v1/workspaces/#{Util.path_param('workspaceId', workspace_id)}/agents/#{Util.path_param('agentId', agent_id)}/variations/#{Util.path_param('variationId', variation_id)}:addAssignment"
         _data = @core.request(:post, _path, body: (->(_v) { Types.encode_AddAgentVariationAssignmentRequest(_v) }).call(body), request_options: request_options)
-        Types.decode_VariationAssignment(_data)
-      end
-
-      # Remove an assignment from a variation
-      def remove_assignment(agent_id, variation_id, id, workspace_id: nil, request_options: nil)
-        workspace_id = @core.resolve_default("workspaceId", "CADENYA_WORKSPACE_ID", workspace_id)
-        _path = "/v1/workspaces/#{Util.path_param('workspaceId', workspace_id)}/agents/#{Util.path_param('agentId', agent_id)}/variations/#{Util.path_param('variationId', variation_id)}/assignments/#{Util.path_param('id', id)}"
-        @core.request(:delete, _path, expects_body: false, request_options: request_options)
-        nil
+        Types::AgentVariation.from_json(_data)
       end
 
       # Attach a memory layer to a variation
       def add_memory_layer(agent_id, variation_id, memory_layer_id:, workspace_id: nil, position: nil, request_options: nil)
         workspace_id = @core.resolve_default("workspaceId", "CADENYA_WORKSPACE_ID", workspace_id)
-        _path = "/v1/workspaces/#{Util.path_param('workspaceId', workspace_id)}/agents/#{Util.path_param('agentId', agent_id)}/variations/#{Util.path_param('variationId', variation_id)}/memory_layer_assignments"
+        _path = "/v1/workspaces/#{Util.path_param('workspaceId', workspace_id)}/agents/#{Util.path_param('agentId', agent_id)}/variations/#{Util.path_param('variationId', variation_id)}:addMemoryLayer"
         _body = {
           "memoryLayerId" => memory_layer_id,
           "position" => position,
         }.reject { |_k, v| v.nil? }
         _data = @core.request(:post, _path, body: _body, request_options: request_options)
-        Types::VariationMemoryLayerAssignment.from_json(_data)
+        Types::AgentVariation.from_json(_data)
+      end
+
+      # Remove an assignment from a variation
+      def remove_assignment(agent_id, variation_id, body:, workspace_id: nil, request_options: nil)
+        workspace_id = @core.resolve_default("workspaceId", "CADENYA_WORKSPACE_ID", workspace_id)
+        _path = "/v1/workspaces/#{Util.path_param('workspaceId', workspace_id)}/agents/#{Util.path_param('agentId', agent_id)}/variations/#{Util.path_param('variationId', variation_id)}:removeAssignment"
+        _data = @core.request(:post, _path, body: (->(_v) { Types.encode_RemoveAgentVariationAssignmentRequest(_v) }).call(body), request_options: request_options)
+        Types::AgentVariation.from_json(_data)
       end
 
       # Remove a memory layer assignment from a variation
-      def remove_memory_layer(agent_id, variation_id, id, workspace_id: nil, request_options: nil)
+      def remove_memory_layer(agent_id, variation_id, memory_layer_id:, workspace_id: nil, request_options: nil)
         workspace_id = @core.resolve_default("workspaceId", "CADENYA_WORKSPACE_ID", workspace_id)
-        _path = "/v1/workspaces/#{Util.path_param('workspaceId', workspace_id)}/agents/#{Util.path_param('agentId', agent_id)}/variations/#{Util.path_param('variationId', variation_id)}/memory_layer_assignments/#{Util.path_param('id', id)}"
-        @core.request(:delete, _path, expects_body: false, request_options: request_options)
-        nil
+        _path = "/v1/workspaces/#{Util.path_param('workspaceId', workspace_id)}/agents/#{Util.path_param('agentId', agent_id)}/variations/#{Util.path_param('variationId', variation_id)}:removeMemoryLayer"
+        _body = {
+          "memoryLayerId" => memory_layer_id,
+        }.reject { |_k, v| v.nil? }
+        _data = @core.request(:post, _path, body: _body, request_options: request_options)
+        Types::AgentVariation.from_json(_data)
       end
 
       # Update a variation's memory layer assignment
-      def update_memory_layer(agent_id, variation_id, id, workspace_id: nil, position: nil, request_options: nil)
+      def update_memory_layer(agent_id, variation_id, memory_layer_id:, position:, workspace_id: nil, request_options: nil)
         workspace_id = @core.resolve_default("workspaceId", "CADENYA_WORKSPACE_ID", workspace_id)
-        _path = "/v1/workspaces/#{Util.path_param('workspaceId', workspace_id)}/agents/#{Util.path_param('agentId', agent_id)}/variations/#{Util.path_param('variationId', variation_id)}/memory_layer_assignments/#{Util.path_param('id', id)}"
+        _path = "/v1/workspaces/#{Util.path_param('workspaceId', workspace_id)}/agents/#{Util.path_param('agentId', agent_id)}/variations/#{Util.path_param('variationId', variation_id)}:updateMemoryLayer"
         _body = {
+          "memoryLayerId" => memory_layer_id,
           "position" => position,
         }.reject { |_k, v| v.nil? }
-        _data = @core.request(:patch, _path, body: _body, request_options: request_options)
-        Types::VariationMemoryLayerAssignment.from_json(_data)
+        _data = @core.request(:post, _path, body: _body, request_options: request_options)
+        Types::AgentVariation.from_json(_data)
       end
     end
   end
