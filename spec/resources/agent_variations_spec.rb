@@ -18,7 +18,7 @@ RSpec.describe "client.agents.variations" do
       it "resolves the client-level value" do
         stub = stub_request(:get, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/agents/sample/variations")
           .with(query: hash_including({}))
-          .to_return(status: 200, body: "{\"items\":[{\"info\":{\"effectiveToolCount\":1,\"feedbackCount\":1,\"memoryLayerCount\":1,\"score\":1.5,\"subAgentCount\":1,\"toolCount\":1,\"toolSetCount\":1},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{}}],\"pagination\":{\"nextCursor\":\"\"}}", headers: { "Content-Type" => "application/json" })
+          .to_return(status: 200, body: "{\"items\":[{\"info\":{\"assignmentMetadata\":{},\"effectiveToolCount\":1,\"feedbackCount\":1,\"memoryLayerCount\":1,\"score\":1.5,\"subAgentCount\":1,\"toolCount\":1,\"toolSetCount\":1},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{}}],\"pagination\":{\"nextCursor\":\"\"}}", headers: { "Content-Type" => "application/json" })
         client.agents.variations.list("sample", limit: 1, cursor: "sample", sort_order: "sample", include_info: true, labels: "sample")
         expect(stub).to have_been_requested
       end
@@ -36,7 +36,7 @@ RSpec.describe "client.agents.variations" do
     context "when workspace_id falls back to the client default" do
       it "resolves the client-level value" do
         stub = stub_request(:post, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/agents/sample/variations")
-          .to_return(status: 200, body: "{\"info\":{\"effectiveToolCount\":1,\"feedbackCount\":1,\"memoryLayerCount\":1,\"score\":1.5,\"subAgentCount\":1,\"toolCount\":1,\"toolSetCount\":1},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{}}", headers: { "Content-Type" => "application/json" })
+          .to_return(status: 200, body: "{\"info\":{\"assignmentMetadata\":{},\"effectiveToolCount\":1,\"feedbackCount\":1,\"memoryLayerCount\":1,\"score\":1.5,\"subAgentCount\":1,\"toolCount\":1,\"toolSetCount\":1},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{}}", headers: { "Content-Type" => "application/json" })
         client.agents.variations.create("sample", metadata: {"name" => "sample"}, spec: {})
         expect(stub).to have_been_requested
       end
@@ -54,7 +54,7 @@ RSpec.describe "client.agents.variations" do
     context "when workspace_id falls back to the client default" do
       it "resolves the client-level value" do
         stub = stub_request(:get, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/agents/sample/variations/sample")
-          .to_return(status: 200, body: "{\"info\":{\"effectiveToolCount\":1,\"feedbackCount\":1,\"memoryLayerCount\":1,\"score\":1.5,\"subAgentCount\":1,\"toolCount\":1,\"toolSetCount\":1},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{}}", headers: { "Content-Type" => "application/json" })
+          .to_return(status: 200, body: "{\"info\":{\"assignmentMetadata\":{},\"effectiveToolCount\":1,\"feedbackCount\":1,\"memoryLayerCount\":1,\"score\":1.5,\"subAgentCount\":1,\"toolCount\":1,\"toolSetCount\":1},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{}}", headers: { "Content-Type" => "application/json" })
         client.agents.variations.retrieve("sample", "sample")
         expect(stub).to have_been_requested
       end
@@ -90,7 +90,7 @@ RSpec.describe "client.agents.variations" do
     context "when workspace_id falls back to the client default" do
       it "resolves the client-level value" do
         stub = stub_request(:patch, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/agents/sample/variations/sample")
-          .to_return(status: 200, body: "{\"info\":{\"effectiveToolCount\":1,\"feedbackCount\":1,\"memoryLayerCount\":1,\"score\":1.5,\"subAgentCount\":1,\"toolCount\":1,\"toolSetCount\":1},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{}}", headers: { "Content-Type" => "application/json" })
+          .to_return(status: 200, body: "{\"info\":{\"assignmentMetadata\":{},\"effectiveToolCount\":1,\"feedbackCount\":1,\"memoryLayerCount\":1,\"score\":1.5,\"subAgentCount\":1,\"toolCount\":1,\"toolSetCount\":1},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{}}", headers: { "Content-Type" => "application/json" })
         client.agents.variations.update("sample", "sample", metadata: {"name" => "sample"}, spec: {}, update_mask: "sample")
         expect(stub).to have_been_requested
       end
@@ -108,7 +108,7 @@ RSpec.describe "client.agents.variations" do
     context "when workspace_id falls back to the client default" do
       it "resolves the client-level value" do
         stub = stub_request(:post, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/agents/sample/variations/sample:addAssignment")
-          .to_return(status: 200, body: "{\"info\":{\"effectiveToolCount\":1,\"feedbackCount\":1,\"memoryLayerCount\":1,\"score\":1.5,\"subAgentCount\":1,\"toolCount\":1,\"toolSetCount\":1},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{}}", headers: { "Content-Type" => "application/json" })
+          .to_return(status: 200, body: "{\"info\":{\"assignmentMetadata\":{},\"effectiveToolCount\":1,\"feedbackCount\":1,\"memoryLayerCount\":1,\"score\":1.5,\"subAgentCount\":1,\"toolCount\":1,\"toolSetCount\":1},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{}}", headers: { "Content-Type" => "application/json" })
         client.agents.variations.add_assignment("sample", "sample", body: {"tool_id" => "sample", "type" => "toolId"})
         expect(stub).to have_been_requested
       end
@@ -126,7 +126,7 @@ RSpec.describe "client.agents.variations" do
     context "when workspace_id falls back to the client default" do
       it "resolves the client-level value" do
         stub = stub_request(:post, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/agents/sample/variations/sample:addMemoryLayer")
-          .to_return(status: 200, body: "{\"info\":{\"effectiveToolCount\":1,\"feedbackCount\":1,\"memoryLayerCount\":1,\"score\":1.5,\"subAgentCount\":1,\"toolCount\":1,\"toolSetCount\":1},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{}}", headers: { "Content-Type" => "application/json" })
+          .to_return(status: 200, body: "{\"info\":{\"assignmentMetadata\":{},\"effectiveToolCount\":1,\"feedbackCount\":1,\"memoryLayerCount\":1,\"score\":1.5,\"subAgentCount\":1,\"toolCount\":1,\"toolSetCount\":1},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{}}", headers: { "Content-Type" => "application/json" })
         client.agents.variations.add_memory_layer("sample", "sample", memory_layer_id: "sample", position: 1)
         expect(stub).to have_been_requested
       end
@@ -144,7 +144,7 @@ RSpec.describe "client.agents.variations" do
     context "when workspace_id falls back to the client default" do
       it "resolves the client-level value" do
         stub = stub_request(:post, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/agents/sample/variations/sample:removeAssignment")
-          .to_return(status: 200, body: "{\"info\":{\"effectiveToolCount\":1,\"feedbackCount\":1,\"memoryLayerCount\":1,\"score\":1.5,\"subAgentCount\":1,\"toolCount\":1,\"toolSetCount\":1},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{}}", headers: { "Content-Type" => "application/json" })
+          .to_return(status: 200, body: "{\"info\":{\"assignmentMetadata\":{},\"effectiveToolCount\":1,\"feedbackCount\":1,\"memoryLayerCount\":1,\"score\":1.5,\"subAgentCount\":1,\"toolCount\":1,\"toolSetCount\":1},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{}}", headers: { "Content-Type" => "application/json" })
         client.agents.variations.remove_assignment("sample", "sample", body: {"tool_id" => "sample", "type" => "toolId"})
         expect(stub).to have_been_requested
       end
@@ -162,7 +162,7 @@ RSpec.describe "client.agents.variations" do
     context "when workspace_id falls back to the client default" do
       it "resolves the client-level value" do
         stub = stub_request(:post, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/agents/sample/variations/sample:removeMemoryLayer")
-          .to_return(status: 200, body: "{\"info\":{\"effectiveToolCount\":1,\"feedbackCount\":1,\"memoryLayerCount\":1,\"score\":1.5,\"subAgentCount\":1,\"toolCount\":1,\"toolSetCount\":1},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{}}", headers: { "Content-Type" => "application/json" })
+          .to_return(status: 200, body: "{\"info\":{\"assignmentMetadata\":{},\"effectiveToolCount\":1,\"feedbackCount\":1,\"memoryLayerCount\":1,\"score\":1.5,\"subAgentCount\":1,\"toolCount\":1,\"toolSetCount\":1},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{}}", headers: { "Content-Type" => "application/json" })
         client.agents.variations.remove_memory_layer("sample", "sample", memory_layer_id: "sample")
         expect(stub).to have_been_requested
       end
@@ -180,7 +180,7 @@ RSpec.describe "client.agents.variations" do
     context "when workspace_id falls back to the client default" do
       it "resolves the client-level value" do
         stub = stub_request(:post, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/agents/sample/variations/sample:updateMemoryLayer")
-          .to_return(status: 200, body: "{\"info\":{\"effectiveToolCount\":1,\"feedbackCount\":1,\"memoryLayerCount\":1,\"score\":1.5,\"subAgentCount\":1,\"toolCount\":1,\"toolSetCount\":1},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{}}", headers: { "Content-Type" => "application/json" })
+          .to_return(status: 200, body: "{\"info\":{\"assignmentMetadata\":{},\"effectiveToolCount\":1,\"feedbackCount\":1,\"memoryLayerCount\":1,\"score\":1.5,\"subAgentCount\":1,\"toolCount\":1,\"toolSetCount\":1},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{}}", headers: { "Content-Type" => "application/json" })
         client.agents.variations.update_memory_layer("sample", "sample", memory_layer_id: "sample", position: 1)
         expect(stub).to have_been_requested
       end

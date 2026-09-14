@@ -724,9 +724,9 @@ module Cadenya
     end
 
     class AgentVariationInfo
-      attr_reader :tool_count, :tool_set_count, :sub_agent_count, :created_by, :model, :score, :feedback_count, :memory_layer_count, :effective_tool_count
+      attr_reader :tool_count, :tool_set_count, :sub_agent_count, :created_by, :model, :score, :feedback_count, :memory_layer_count, :effective_tool_count, :assignment_metadata
 
-      def initialize(tool_count: nil, tool_set_count: nil, sub_agent_count: nil, created_by: nil, model: nil, score: nil, feedback_count: nil, memory_layer_count: nil, effective_tool_count: nil)
+      def initialize(tool_count: nil, tool_set_count: nil, sub_agent_count: nil, created_by: nil, model: nil, score: nil, feedback_count: nil, memory_layer_count: nil, effective_tool_count: nil, assignment_metadata: nil)
         @tool_count = tool_count
         @tool_set_count = tool_set_count
         @sub_agent_count = sub_agent_count
@@ -736,6 +736,7 @@ module Cadenya
         @feedback_count = feedback_count
         @memory_layer_count = memory_layer_count
         @effective_tool_count = effective_tool_count
+        @assignment_metadata = assignment_metadata
       end
 
       def self.from_json(data)
@@ -749,6 +750,7 @@ module Cadenya
           feedback_count: data["feedbackCount"],
           memory_layer_count: data["memoryLayerCount"],
           effective_tool_count: data["effectiveToolCount"],
+          assignment_metadata: data["assignmentMetadata"].nil? ? nil : (data["assignmentMetadata"]).transform_values { |v| Types::BareMetadata.from_json(v) },
         )
       end
 
@@ -763,6 +765,7 @@ module Cadenya
           feedback_count: Util.plain(@feedback_count),
           memory_layer_count: Util.plain(@memory_layer_count),
           effective_tool_count: Util.plain(@effective_tool_count),
+          assignment_metadata: Util.plain(@assignment_metadata),
         }.reject { |_k, v| v.nil? }
       end
     end
