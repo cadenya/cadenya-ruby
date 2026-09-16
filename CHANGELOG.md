@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0](https://github.com/cadenya/cadenya-ruby/compare/v1.3.0...v1.4.0) (2026-09-16)
+
+
+### Features
+
+* support objective heartbeat events ([8f43667](https://github.com/cadenya/cadenya-ruby/commit/8f43667deb5a7d82c400e2f7a9f379658e0ba5df))
+
 ## [1.3.0](https://github.com/cadenya/cadenya-ruby/compare/v1.2.0...v1.3.0) (2026-09-14)
 
 
