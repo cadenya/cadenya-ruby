@@ -18,7 +18,7 @@ RSpec.describe "client.widget_sessions" do
       it "resolves the client-level value" do
         stub = stub_request(:get, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/widget_sessions")
           .with(query: hash_including({}))
-          .to_return(status: 200, body: "{\"items\":[{\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"secrets\":[{\"name\":\"sample\"}],\"spec\":{\"token\":\"sample\",\"widgetId\":\"sample\"},\"state\":\"STATE_ACTIVE\"}],\"pagination\":{\"nextCursor\":\"\"}}", headers: { "Content-Type" => "application/json" })
+          .to_return(status: 200, body: "{\"items\":[{\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"secrets\":[{\"name\":\"sample\"}],\"spec\":{\"subject\":{\"id\":\"sample\"},\"tenant\":{\"id\":\"sample\"},\"token\":\"sample\",\"widgetId\":\"sample\"},\"state\":\"STATE_ACTIVE\"}],\"pagination\":{\"nextCursor\":\"\"}}", headers: { "Content-Type" => "application/json" })
         client.widget_sessions.list(limit: 1, cursor: "sample", widget_id: "sample", tenant_id: "sample", subject_id: "sample", state: "STATE_ACTIVE", labels: "sample", sort_order: "sample", include_info: true)
         expect(stub).to have_been_requested
       end
@@ -28,7 +28,7 @@ RSpec.describe "client.widget_sessions" do
   describe "#create" do
     it "sends the golden request and decodes the response" do
       VCR.use_cassette("WidgetSessionService_CreateWidgetSession") do
-        result = client.widget_sessions.create(workspace_id: "sample", metadata: {}, spec: {"widget_id" => "sample"}, secrets: [{}])
+        result = client.widget_sessions.create(workspace_id: "sample", metadata: {}, spec: {"subject" => {"id" => "sample"}, "tenant" => {"id" => "sample"}, "widget_id" => "sample"}, secrets: [{}])
         expect(result).to be_a(Cadenya::Types::WidgetSession)
       end
     end
@@ -36,8 +36,8 @@ RSpec.describe "client.widget_sessions" do
     context "when workspace_id falls back to the client default" do
       it "resolves the client-level value" do
         stub = stub_request(:post, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/widget_sessions")
-          .to_return(status: 200, body: "{\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"secrets\":[{\"name\":\"sample\"}],\"spec\":{\"token\":\"sample\",\"widgetId\":\"sample\"},\"state\":\"STATE_ACTIVE\"}", headers: { "Content-Type" => "application/json" })
-        client.widget_sessions.create(metadata: {}, spec: {"widget_id" => "sample"}, secrets: [{}])
+          .to_return(status: 200, body: "{\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"secrets\":[{\"name\":\"sample\"}],\"spec\":{\"subject\":{\"id\":\"sample\"},\"tenant\":{\"id\":\"sample\"},\"token\":\"sample\",\"widgetId\":\"sample\"},\"state\":\"STATE_ACTIVE\"}", headers: { "Content-Type" => "application/json" })
+        client.widget_sessions.create(metadata: {}, spec: {"subject" => {"id" => "sample"}, "tenant" => {"id" => "sample"}, "widget_id" => "sample"}, secrets: [{}])
         expect(stub).to have_been_requested
       end
     end
@@ -73,7 +73,7 @@ RSpec.describe "client.widget_sessions" do
     context "when workspace_id falls back to the client default" do
       it "resolves the client-level value" do
         stub = stub_request(:get, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/widget_sessions/sample")
-          .to_return(status: 200, body: "{\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"secrets\":[{\"name\":\"sample\"}],\"spec\":{\"token\":\"sample\",\"widgetId\":\"sample\"},\"state\":\"STATE_ACTIVE\"}", headers: { "Content-Type" => "application/json" })
+          .to_return(status: 200, body: "{\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"secrets\":[{\"name\":\"sample\"}],\"spec\":{\"subject\":{\"id\":\"sample\"},\"tenant\":{\"id\":\"sample\"},\"token\":\"sample\",\"widgetId\":\"sample\"},\"state\":\"STATE_ACTIVE\"}", headers: { "Content-Type" => "application/json" })
         client.widget_sessions.retrieve("sample")
         expect(stub).to have_been_requested
       end
@@ -109,7 +109,7 @@ RSpec.describe "client.widget_sessions" do
     context "when workspace_id falls back to the client default" do
       it "resolves the client-level value" do
         stub = stub_request(:post, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/widget_sessions/sample:revoke")
-          .to_return(status: 200, body: "{\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"secrets\":[{\"name\":\"sample\"}],\"spec\":{\"token\":\"sample\",\"widgetId\":\"sample\"},\"state\":\"STATE_ACTIVE\"}", headers: { "Content-Type" => "application/json" })
+          .to_return(status: 200, body: "{\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"secrets\":[{\"name\":\"sample\"}],\"spec\":{\"subject\":{\"id\":\"sample\"},\"tenant\":{\"id\":\"sample\"},\"token\":\"sample\",\"widgetId\":\"sample\"},\"state\":\"STATE_ACTIVE\"}", headers: { "Content-Type" => "application/json" })
         client.widget_sessions.revoke("sample")
         expect(stub).to have_been_requested
       end

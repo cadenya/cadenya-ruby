@@ -5457,6 +5457,12 @@ module Cadenya
       end
     end
 
+    def self.decode_StatusDetails(data)
+      return Types::WidgetSessionErrorInfo.from_json(data) if data.is_a?(Hash) && ["@type", "domain", "reason"].all? { |k| data.key?(k) }
+      return Types::GoogleProtobufAny.from_json(data) if data.is_a?(Hash)
+      raise ArgumentError, "StatusDetails: no variant matched"
+    end
+
     class Status
       attr_reader :code, :message, :details
 
@@ -5470,7 +5476,7 @@ module Cadenya
         new(
           code: data["code"],
           message: data["message"],
-          details: data["details"].nil? ? nil : (data["details"]).map { |item| Types::GoogleProtobufAny.from_json(item) },
+          details: data["details"].nil? ? nil : (data["details"]).map { |item| Types.decode_StatusDetails(item) },
         )
       end
 
@@ -7661,14 +7667,15 @@ module Cadenya
     WidgetSessionState = ["STATE_UNSPECIFIED", "STATE_ACTIVE", "STATE_EXPIRED", "STATE_REVOKED", "STATE_EXHAUSTED"].freeze
 
     class WidgetSession
-      attr_reader :metadata, :spec, :info, :state, :secrets
+      attr_reader :metadata, :spec, :info, :state, :secrets, :credentials
 
-      def initialize(metadata: nil, spec: nil, info: nil, state: nil, secrets: nil)
+      def initialize(metadata: nil, spec: nil, info: nil, state: nil, secrets: nil, credentials: nil)
         @metadata = metadata
         @spec = spec
         @info = info
         @state = state
         @secrets = secrets
+        @credentials = credentials
       end
 
       def self.from_json(data)
@@ -7678,6 +7685,7 @@ module Cadenya
           info: data["info"].nil? ? nil : Types::WidgetSessionInfo.from_json(data["info"]),
           state: data["state"],
           secrets: data["secrets"].nil? ? nil : (data["secrets"]).map { |item| Types::WidgetSession_Secret.from_json(item) },
+          credentials: data["credentials"].nil? ? nil : Types::WidgetSessionCredentials.from_json(data["credentials"]),
         )
       end
 
@@ -7688,6 +7696,39 @@ module Cadenya
           info: Util.plain(@info),
           state: Util.plain(@state),
           secrets: Util.plain(@secrets),
+          credentials: Util.plain(@credentials),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    class WidgetSessionCredentials
+      attr_reader :session_id, :host, :token, :token_expires_at, :session_expires_at
+
+      def initialize(session_id: nil, host: nil, token: nil, token_expires_at: nil, session_expires_at: nil)
+        @session_id = session_id
+        @host = host
+        @token = token
+        @token_expires_at = token_expires_at
+        @session_expires_at = session_expires_at
+      end
+
+      def self.from_json(data)
+        new(
+          session_id: data["sessionId"],
+          host: data["host"],
+          token: data["token"],
+          token_expires_at: data["tokenExpiresAt"].nil? ? nil : Time.iso8601(data["tokenExpiresAt"]),
+          session_expires_at: data["sessionExpiresAt"].nil? ? nil : Time.iso8601(data["sessionExpiresAt"]),
+        )
+      end
+
+      def to_h
+        {
+          session_id: Util.plain(@session_id),
+          host: Util.plain(@host),
+          token: Util.plain(@token),
+          token_expires_at: Util.plain(@token_expires_at),
+          session_expires_at: Util.plain(@session_expires_at),
         }.reject { |_k, v| v.nil? }
       end
     end
@@ -10072,6 +10113,37 @@ module Cadenya
         {
           type: Util.plain(@type),
           caching: Util.plain(@caching),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    WidgetSessionErrorReason = ["TOKEN_EXPIRED", "SESSION_REVOKED", "SESSION_EXPIRED", "SESSION_EXHAUSTED"].freeze
+
+    class WidgetSessionErrorInfo
+      attr_reader :type, :domain, :reason, :metadata
+
+      def initialize(type: nil, domain: nil, reason: nil, metadata: nil)
+        @type = type
+        @domain = domain
+        @reason = reason
+        @metadata = metadata
+      end
+
+      def self.from_json(data)
+        new(
+          type: data["@type"],
+          domain: data["domain"],
+          reason: data["reason"],
+          metadata: data["metadata"],
+        )
+      end
+
+      def to_h
+        {
+          type: Util.plain(@type),
+          domain: Util.plain(@domain),
+          reason: Util.plain(@reason),
+          metadata: Util.plain(@metadata),
         }.reject { |_k, v| v.nil? }
       end
     end

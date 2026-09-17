@@ -156,7 +156,7 @@ run("ToolService_RestoreTool") { client.tool_sets.tools.restore("sample", "sampl
 run("UploadService_CreateUpload") { client.uploads.create(workspace_id: "sample", metadata: {"name" => "sample"}, spec: {"content_type" => "sample", "filename" => "sample", "size_bytes" => "sample"}) }
 run("UploadService_GetUpload") { client.uploads.retrieve("sample", workspace_id: "sample") }
 run("WidgetSessionService_ListWidgetSessions") { check_page(client.widget_sessions.list(workspace_id: "sample", limit: 1, cursor: "sample", widget_id: "sample", tenant_id: "sample", subject_id: "sample", state: "STATE_ACTIVE", labels: "sample", sort_order: "sample", include_info: true)) }
-run("WidgetSessionService_CreateWidgetSession") { client.widget_sessions.create(workspace_id: "sample", metadata: {}, spec: {"widget_id" => "sample"}, secrets: [{}]) }
+run("WidgetSessionService_CreateWidgetSession") { client.widget_sessions.create(workspace_id: "sample", metadata: {}, spec: {"subject" => {"id" => "sample"}, "tenant" => {"id" => "sample"}, "widget_id" => "sample"}, secrets: [{}]) }
 run("WidgetSessionService_DeleteTenantWidgetSessions") { client.widget_sessions.delete_tenant(workspace_id: "sample", tenant_id: "sample") }
 run("WidgetSessionService_GetWidgetSession") { client.widget_sessions.retrieve("sample", workspace_id: "sample") }
 run("WidgetSessionService_DeleteWidgetSession") { client.widget_sessions.delete("sample", workspace_id: "sample") }
