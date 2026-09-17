@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.0](https://github.com/cadenya/cadenya-ruby/compare/v1.4.0...v1.5.0) (2026-09-17)
+
+
+### Features
+
+* expose widget session credentials and required identity ([#80](https://github.com/cadenya/cadenya-ruby/issues/80)) ([2ed583e](https://github.com/cadenya/cadenya-ruby/commit/2ed583edf9643c77f1f038d7673aab258dc4c095))
+
 ## [1.4.0](https://github.com/cadenya/cadenya-ruby/compare/v1.3.0...v1.4.0) (2026-09-16)
 
 
