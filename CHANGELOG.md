@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.0](https://github.com/cadenya/cadenya-ruby/compare/v1.5.0...v1.6.0) (2026-09-18)
+
+
+### Features
+
+* add agent pools and callable identity ([ac7af65](https://github.com/cadenya/cadenya-ruby/commit/ac7af650699245c87b5715f73629d8ca97c9cfc4))
+
 ## [1.5.0](https://github.com/cadenya/cadenya-ruby/compare/v1.4.0...v1.5.0) (2026-09-17)
 
 
