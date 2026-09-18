@@ -147,6 +147,54 @@ List workspaces
 client.workspaces.list(limit: nil, cursor: nil, sort_order: nil, include_info: nil, labels: nil) # => Cadenya::Page of Cadenya::Types::Workspace
 ```
 
+## client.agent_pools
+
+List agent pools
+
+```ruby
+client.agent_pools.list(workspace_id: nil, limit: nil, cursor: nil, prefix: nil, query: nil, state: nil, labels: nil, sort_order: nil, include_info: nil) # => Cadenya::Page of Cadenya::Types::AgentPool
+```
+Create a new agent pool
+
+```ruby
+client.agent_pools.create(metadata:, spec:, workspace_id: nil) # => Cadenya::Types::AgentPool
+```
+Get an agent pool by ID
+
+```ruby
+client.agent_pools.retrieve(id, workspace_id: nil) # => Cadenya::Types::AgentPool
+```
+Delete an agent pool
+
+```ruby
+client.agent_pools.delete(id, workspace_id: nil) # => nil
+```
+Update an agent pool
+
+```ruby
+client.agent_pools.update(id, workspace_id: nil, metadata: nil, spec: nil, update_mask: nil) # => Cadenya::Types::AgentPool
+```
+Activate an agent pool
+
+```ruby
+client.agent_pools.activate(id, workspace_id: nil) # => Cadenya::Types::AgentPool
+```
+Archive an agent pool
+
+```ruby
+client.agent_pools.archive(id, workspace_id: nil) # => Cadenya::Types::AgentPool
+```
+Deactivate an agent pool
+
+```ruby
+client.agent_pools.deactivate(id, workspace_id: nil) # => Cadenya::Types::AgentPool
+```
+Unarchive an agent pool
+
+```ruby
+client.agent_pools.unarchive(id, workspace_id: nil) # => Cadenya::Types::AgentPool
+```
+
 ## client.agents
 
 List agents

@@ -9,11 +9,11 @@ http_interactions:
       Content-Type:
       - application/json
     method: patch
-    uri: https://api.test.example/v1/workspaces/sample/agents/sample/variations/sample
+    uri: https://api.test.example/v1/workspaces/sample/agent_pools/sample
   response:
     body:
       encoding: UTF-8
-      string: '{"info":{"agentPoolCount":1,"assignmentMetadata":{},"effectiveToolCount":1,"feedbackCount":1,"memoryLayerCount":1,"score":1.5,"subAgentCount":1,"toolCount":1,"toolSetCount":1},"metadata":{"accountId":"sample","createdAt":"2026-01-01T00:00:00Z","externalId":"sample","id":"sample","labels":{},"name":"sample","profileId":"sample","workspaceId":"sample"},"spec":{}}'
+      string: '{"metadata":{"accountId":"sample","createdAt":"2026-01-01T00:00:00Z","externalId":"sample","id":"sample","labels":{},"name":"sample","profileId":"sample","workspaceId":"sample"},"spec":{"assignments":[{"agentId":"sample"}],"description":"sample"},"state":"AGENT_POOL_STATE_ACTIVE"}'
     headers:
       Content-Type:
       - application/json
