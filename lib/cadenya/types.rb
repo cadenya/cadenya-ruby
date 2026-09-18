@@ -399,6 +399,29 @@ module Cadenya
       end
     end
 
+    class ActivateAgentPoolRequest
+      attr_reader :workspace_id, :id
+
+      def initialize(workspace_id: nil, id: nil)
+        @workspace_id = workspace_id
+        @id = id
+      end
+
+      def self.from_json(data)
+        new(
+          workspace_id: data["workspaceId"],
+          id: data["id"],
+        )
+      end
+
+      def to_h
+        {
+          workspace_id: Util.plain(@workspace_id),
+          id: Util.plain(@id),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
     def self.decode_AddAgentVariationAssignmentRequest(data)
       return nil if data.nil? || data["type"].to_s.empty?
       case data["type"]
@@ -408,6 +431,8 @@ module Cadenya
         Types::AddAgentVariationAssignmentRequest_ToolSetId.from_json(data)
       when "subAgentId"
         Types::AddAgentVariationAssignmentRequest_SubAgentId.from_json(data)
+      when "agentPoolId"
+        Types::AddAgentVariationAssignmentRequest_AgentPoolId.from_json(data)
       else
         raise ArgumentError, "AddAgentVariationAssignmentRequest: unknown type #{data["type"].inspect}"
       end
@@ -521,6 +546,138 @@ module Cadenya
         {
           variation_count: Util.plain(@variation_count),
           created_by: Util.plain(@created_by),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    AgentPoolState = ["AGENT_POOL_STATE_UNSPECIFIED", "AGENT_POOL_STATE_ACTIVE", "AGENT_POOL_STATE_INACTIVE", "AGENT_POOL_STATE_ARCHIVED"].freeze
+
+    class AgentPool
+      attr_reader :metadata, :spec, :info, :state
+
+      def initialize(metadata: nil, spec: nil, info: nil, state: nil)
+        @metadata = metadata
+        @spec = spec
+        @info = info
+        @state = state
+      end
+
+      def self.from_json(data)
+        new(
+          metadata: data["metadata"].nil? ? nil : Types::ResourceMetadata.from_json(data["metadata"]),
+          spec: data["spec"].nil? ? nil : Types::AgentPoolSpec.from_json(data["spec"]),
+          info: data["info"].nil? ? nil : Types::AgentPoolInfo.from_json(data["info"]),
+          state: data["state"],
+        )
+      end
+
+      def to_h
+        {
+          metadata: Util.plain(@metadata),
+          spec: Util.plain(@spec),
+          info: Util.plain(@info),
+          state: Util.plain(@state),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    class AgentPoolAssignment
+      attr_reader :agent_id
+
+      def initialize(agent_id: nil)
+        @agent_id = agent_id
+      end
+
+      def self.from_json(data)
+        new(
+          agent_id: data["agentId"],
+        )
+      end
+
+      def to_h
+        {
+          agent_id: Util.plain(@agent_id),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    class AgentPoolInfo
+      attr_reader :assigned_agents, :created_by
+
+      def initialize(assigned_agents: nil, created_by: nil)
+        @assigned_agents = assigned_agents
+        @created_by = created_by
+      end
+
+      def self.from_json(data)
+        new(
+          assigned_agents: data["assignedAgents"],
+          created_by: data["createdBy"].nil? ? nil : Types::Profile.from_json(data["createdBy"]),
+        )
+      end
+
+      def to_h
+        {
+          assigned_agents: Util.plain(@assigned_agents),
+          created_by: Util.plain(@created_by),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    class AgentPoolSpec
+      attr_reader :description, :state, :assignments, :instructions
+
+      def initialize(description: nil, state: nil, assignments: nil, instructions: nil)
+        @description = description
+        @state = state
+        @assignments = assignments
+        @instructions = instructions
+      end
+
+      def self.from_json(data)
+        new(
+          description: data["description"],
+          state: data["state"],
+          assignments: data["assignments"].nil? ? nil : (data["assignments"]).map { |item| Types::AgentPoolAssignment.from_json(item) },
+          instructions: data["instructions"],
+        )
+      end
+
+      def to_h
+        {
+          description: Util.plain(@description),
+          state: Util.plain(@state),
+          assignments: Util.plain(@assignments),
+          instructions: Util.plain(@instructions),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    class AgentPoolUpdateSpec
+      attr_reader :description, :state, :assignments, :instructions
+
+      def initialize(description: nil, state: nil, assignments: nil, instructions: nil)
+        @description = description
+        @state = state
+        @assignments = assignments
+        @instructions = instructions
+      end
+
+      def self.from_json(data)
+        new(
+          description: data["description"],
+          state: data["state"],
+          assignments: data["assignments"].nil? ? nil : (data["assignments"]).map { |item| Types::AgentPoolAssignment.from_json(item) },
+          instructions: data["instructions"],
+        )
+      end
+
+      def to_h
+        {
+          description: Util.plain(@description),
+          state: Util.plain(@state),
+          assignments: Util.plain(@assignments),
+          instructions: Util.plain(@instructions),
         }.reject { |_k, v| v.nil? }
       end
     end
@@ -724,9 +881,9 @@ module Cadenya
     end
 
     class AgentVariationInfo
-      attr_reader :tool_count, :tool_set_count, :sub_agent_count, :created_by, :model, :score, :feedback_count, :memory_layer_count, :effective_tool_count, :assignment_metadata
+      attr_reader :tool_count, :tool_set_count, :sub_agent_count, :created_by, :model, :score, :feedback_count, :memory_layer_count, :effective_tool_count, :assignment_metadata, :agent_pool_count
 
-      def initialize(tool_count: nil, tool_set_count: nil, sub_agent_count: nil, created_by: nil, model: nil, score: nil, feedback_count: nil, memory_layer_count: nil, effective_tool_count: nil, assignment_metadata: nil)
+      def initialize(tool_count: nil, tool_set_count: nil, sub_agent_count: nil, created_by: nil, model: nil, score: nil, feedback_count: nil, memory_layer_count: nil, effective_tool_count: nil, assignment_metadata: nil, agent_pool_count: nil)
         @tool_count = tool_count
         @tool_set_count = tool_set_count
         @sub_agent_count = sub_agent_count
@@ -737,6 +894,7 @@ module Cadenya
         @memory_layer_count = memory_layer_count
         @effective_tool_count = effective_tool_count
         @assignment_metadata = assignment_metadata
+        @agent_pool_count = agent_pool_count
       end
 
       def self.from_json(data)
@@ -751,6 +909,7 @@ module Cadenya
           memory_layer_count: data["memoryLayerCount"],
           effective_tool_count: data["effectiveToolCount"],
           assignment_metadata: data["assignmentMetadata"].nil? ? nil : (data["assignmentMetadata"]).transform_values { |v| Types::BareMetadata.from_json(v) },
+          agent_pool_count: data["agentPoolCount"],
         )
       end
 
@@ -766,6 +925,7 @@ module Cadenya
           memory_layer_count: Util.plain(@memory_layer_count),
           effective_tool_count: Util.plain(@effective_tool_count),
           assignment_metadata: Util.plain(@assignment_metadata),
+          agent_pool_count: Util.plain(@agent_pool_count),
         }.reject { |_k, v| v.nil? }
       end
     end
@@ -954,6 +1114,29 @@ module Cadenya
           workspace_id: Util.plain(@workspace_id),
           objective_id: Util.plain(@objective_id),
           tool_call_id: Util.plain(@tool_call_id),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    class ArchiveAgentPoolRequest
+      attr_reader :workspace_id, :id
+
+      def initialize(workspace_id: nil, id: nil)
+        @workspace_id = workspace_id
+        @id = id
+      end
+
+      def self.from_json(data)
+        new(
+          workspace_id: data["workspaceId"],
+          id: data["id"],
+        )
+      end
+
+      def to_h
+        {
+          workspace_id: Util.plain(@workspace_id),
+          id: Util.plain(@id),
         }.reject { |_k, v| v.nil? }
       end
     end
@@ -1154,6 +1337,8 @@ module Cadenya
         Types::CallableTool_Agent.from_json(data)
       when "cadenyaProvidedTool"
         Types::CallableTool_CadenyaProvidedTool.from_json(data)
+      when "agentPool"
+        Types::CallableTool_AgentPool.from_json(data)
       else
         raise ArgumentError, "CallableTool: unknown type #{data["type"].inspect}"
       end
@@ -1636,6 +1821,32 @@ module Cadenya
           name: Util.plain(@name),
           external_id: Util.plain(@external_id),
           labels: Util.plain(@labels),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    class CreateAgentPoolRequest
+      attr_reader :workspace_id, :metadata, :spec
+
+      def initialize(workspace_id: nil, metadata: nil, spec: nil)
+        @workspace_id = workspace_id
+        @metadata = metadata
+        @spec = spec
+      end
+
+      def self.from_json(data)
+        new(
+          workspace_id: data["workspaceId"],
+          metadata: data["metadata"].nil? ? nil : Types::CreateResourceMetadata.from_json(data["metadata"]),
+          spec: data["spec"].nil? ? nil : Types::AgentPoolSpec.from_json(data["spec"]),
+        )
+      end
+
+      def to_h
+        {
+          workspace_id: Util.plain(@workspace_id),
+          metadata: Util.plain(@metadata),
+          spec: Util.plain(@spec),
         }.reject { |_k, v| v.nil? }
       end
     end
@@ -2291,6 +2502,29 @@ module Cadenya
       end
     end
 
+    class DeactivateAgentPoolRequest
+      attr_reader :workspace_id, :id
+
+      def initialize(workspace_id: nil, id: nil)
+        @workspace_id = workspace_id
+        @id = id
+      end
+
+      def self.from_json(data)
+        new(
+          workspace_id: data["workspaceId"],
+          id: data["id"],
+        )
+      end
+
+      def to_h
+        {
+          workspace_id: Util.plain(@workspace_id),
+          id: Util.plain(@id),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
     class DeleteTenantWidgetSessionsResponse
       attr_reader :sessions_deleted, :objectives_deleted
 
@@ -2575,6 +2809,29 @@ module Cadenya
       def self.from_json(data)
         new(
           items: data["items"].nil? ? nil : (data["items"]).map { |item| Types::ObjectiveFeedback.from_json(item) },
+          pagination: data["pagination"].nil? ? nil : Types::Page.from_json(data["pagination"]),
+        )
+      end
+
+      def to_h
+        {
+          items: Util.plain(@items),
+          pagination: Util.plain(@pagination),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    class ListAgentPoolsResponse
+      attr_reader :items, :pagination
+
+      def initialize(items: nil, pagination: nil)
+        @items = items
+        @pagination = pagination
+      end
+
+      def self.from_json(data)
+        new(
+          items: data["items"].nil? ? nil : (data["items"]).map { |item| Types::AgentPool.from_json(item) },
           pagination: data["pagination"].nil? ? nil : Types::Page.from_json(data["pagination"]),
         )
       end
@@ -4932,6 +5189,8 @@ module Cadenya
         Types::RemoveAgentVariationAssignmentRequest_ToolSetId.from_json(data)
       when "subAgentId"
         Types::RemoveAgentVariationAssignmentRequest_SubAgentId.from_json(data)
+      when "agentPoolId"
+        Types::RemoveAgentVariationAssignmentRequest_AgentPoolId.from_json(data)
       else
         raise ArgumentError, "RemoveAgentVariationAssignmentRequest: unknown type #{data["type"].inspect}"
       end
@@ -6713,6 +6972,29 @@ module Cadenya
       end
     end
 
+    class UnarchiveAgentPoolRequest
+      attr_reader :workspace_id, :id
+
+      def initialize(workspace_id: nil, id: nil)
+        @workspace_id = workspace_id
+        @id = id
+      end
+
+      def self.from_json(data)
+        new(
+          workspace_id: data["workspaceId"],
+          id: data["id"],
+        )
+      end
+
+      def to_h
+        {
+          workspace_id: Util.plain(@workspace_id),
+          id: Util.plain(@id),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
     class UnarchiveAgentRequest
       attr_reader :workspace_id, :id
 
@@ -6894,6 +7176,38 @@ module Cadenya
           name: Util.plain(@name),
           external_id: Util.plain(@external_id),
           labels: Util.plain(@labels),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    class UpdateAgentPoolRequest
+      attr_reader :workspace_id, :id, :metadata, :spec, :update_mask
+
+      def initialize(workspace_id: nil, id: nil, metadata: nil, spec: nil, update_mask: nil)
+        @workspace_id = workspace_id
+        @id = id
+        @metadata = metadata
+        @spec = spec
+        @update_mask = update_mask
+      end
+
+      def self.from_json(data)
+        new(
+          workspace_id: data["workspaceId"],
+          id: data["id"],
+          metadata: data["metadata"].nil? ? nil : Types::UpdateResourceMetadata.from_json(data["metadata"]),
+          spec: data["spec"].nil? ? nil : Types::AgentPoolUpdateSpec.from_json(data["spec"]),
+          update_mask: data["updateMask"],
+        )
+      end
+
+      def to_h
+        {
+          workspace_id: Util.plain(@workspace_id),
+          id: Util.plain(@id),
+          metadata: Util.plain(@metadata),
+          spec: Util.plain(@spec),
+          update_mask: Util.plain(@update_mask),
         }.reject { |_k, v| v.nil? }
       end
     end
@@ -7467,6 +7781,8 @@ module Cadenya
         Types::VariationAssignment_ToolSetId.from_json(data)
       when "subAgentId"
         Types::VariationAssignment_SubAgentId.from_json(data)
+      when "agentPoolId"
+        Types::VariationAssignment_AgentPoolId.from_json(data)
       else
         raise ArgumentError, "VariationAssignment: unknown type #{data["type"].inspect}"
       end
@@ -8156,6 +8472,29 @@ module Cadenya
         {
           type: Util.plain(@type),
           sub_agent_id: Util.plain(@sub_agent_id),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    class VariationAssignment_AgentPoolId
+      attr_reader :type, :agent_pool_id
+
+      def initialize(type: nil, agent_pool_id: nil)
+        @type = type
+        @agent_pool_id = agent_pool_id
+      end
+
+      def self.from_json(data)
+        new(
+          type: data["type"],
+          agent_pool_id: data["agentPoolId"],
+        )
+      end
+
+      def to_h
+        {
+          type: Util.plain(@type),
+          agent_pool_id: Util.plain(@agent_pool_id),
         }.reject { |_k, v| v.nil? }
       end
     end
@@ -9430,6 +9769,29 @@ module Cadenya
       end
     end
 
+    class CallableTool_AgentPool
+      attr_reader :type, :agent_pool
+
+      def initialize(type: nil, agent_pool: nil)
+        @type = type
+        @agent_pool = agent_pool
+      end
+
+      def self.from_json(data)
+        new(
+          type: data["type"],
+          agent_pool: data["agentPool"].nil? ? nil : Types::ResourceMetadata.from_json(data["agentPool"]),
+        )
+      end
+
+      def to_h
+        {
+          type: Util.plain(@type),
+          agent_pool: Util.plain(@agent_pool),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
     class MemoryEntryCreateSpec_Content
       attr_reader :type, :content, :key, :description
 
@@ -9653,6 +10015,38 @@ module Cadenya
       end
     end
 
+    class AddAgentVariationAssignmentRequest_AgentPoolId
+      attr_reader :type, :agent_pool_id, :workspace_id, :agent_id, :variation_id
+
+      def initialize(type: nil, agent_pool_id: nil, workspace_id: nil, agent_id: nil, variation_id: nil)
+        @type = type
+        @agent_pool_id = agent_pool_id
+        @workspace_id = workspace_id
+        @agent_id = agent_id
+        @variation_id = variation_id
+      end
+
+      def self.from_json(data)
+        new(
+          type: data["type"],
+          agent_pool_id: data["agentPoolId"],
+          workspace_id: data["workspaceId"],
+          agent_id: data["agentId"],
+          variation_id: data["variationId"],
+        )
+      end
+
+      def to_h
+        {
+          type: Util.plain(@type),
+          agent_pool_id: Util.plain(@agent_pool_id),
+          workspace_id: Util.plain(@workspace_id),
+          agent_id: Util.plain(@agent_id),
+          variation_id: Util.plain(@variation_id),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
     class RemoveAgentVariationAssignmentRequest_ToolId
       attr_reader :type, :tool_id, :workspace_id, :agent_id, :variation_id
 
@@ -9742,6 +10136,38 @@ module Cadenya
         {
           type: Util.plain(@type),
           sub_agent_id: Util.plain(@sub_agent_id),
+          workspace_id: Util.plain(@workspace_id),
+          agent_id: Util.plain(@agent_id),
+          variation_id: Util.plain(@variation_id),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    class RemoveAgentVariationAssignmentRequest_AgentPoolId
+      attr_reader :type, :agent_pool_id, :workspace_id, :agent_id, :variation_id
+
+      def initialize(type: nil, agent_pool_id: nil, workspace_id: nil, agent_id: nil, variation_id: nil)
+        @type = type
+        @agent_pool_id = agent_pool_id
+        @workspace_id = workspace_id
+        @agent_id = agent_id
+        @variation_id = variation_id
+      end
+
+      def self.from_json(data)
+        new(
+          type: data["type"],
+          agent_pool_id: data["agentPoolId"],
+          workspace_id: data["workspaceId"],
+          agent_id: data["agentId"],
+          variation_id: data["variationId"],
+        )
+      end
+
+      def to_h
+        {
+          type: Util.plain(@type),
+          agent_pool_id: Util.plain(@agent_pool_id),
           workspace_id: Util.plain(@workspace_id),
           agent_id: Util.plain(@agent_id),
           variation_id: Util.plain(@variation_id),
@@ -10148,6 +10574,8 @@ module Cadenya
       end
     end
 
+    AgentPoolServiceListAgentPoolsState = ["AGENT_POOL_STATE_UNSPECIFIED", "AGENT_POOL_STATE_ACTIVE", "AGENT_POOL_STATE_INACTIVE", "AGENT_POOL_STATE_ARCHIVED"].freeze
+
     AgentServiceListAgentsState = ["STATE_UNSPECIFIED", "STATE_DRAFT", "STATE_PUBLISHED", "STATE_ARCHIVED"].freeze
 
     AgentServiceListAgentsVariationSelectionMode = ["VARIATION_SELECTION_MODE_UNSPECIFIED", "VARIATION_SELECTION_MODE_RANDOM", "VARIATION_SELECTION_MODE_WEIGHTED"].freeze
@@ -10295,9 +10723,42 @@ module Cadenya
         (->(_v) { encode_AddAgentVariationAssignmentRequest_ToolSetId(_v) }).call(data)
       when "subAgentId"
         (->(_v) { encode_AddAgentVariationAssignmentRequest_SubAgentId(_v) }).call(data)
+      when "agentPoolId"
+        (->(_v) { encode_AddAgentVariationAssignmentRequest_AgentPoolId(_v) }).call(data)
       else
         data
       end
+    end
+
+    ENCODE_AGENT_POOL_ASSIGNMENT = {
+      "agent_id" => ["agentId", nil],
+      "agentId" => ["agentId", nil],
+    }.freeze
+
+    def self.encode_AgentPoolAssignment(data)
+      encode_fields(ENCODE_AGENT_POOL_ASSIGNMENT, data)
+    end
+
+    ENCODE_AGENT_POOL_SPEC = {
+      "description" => ["description", nil],
+      "state" => ["state", nil],
+      "assignments" => ["assignments", ->(_v) { _v.is_a?(Array) ? _v.map { |_i| (->(_v) { encode_AgentPoolAssignment(_v) }).call(_i) } : _v }],
+      "instructions" => ["instructions", nil],
+    }.freeze
+
+    def self.encode_AgentPoolSpec(data)
+      encode_fields(ENCODE_AGENT_POOL_SPEC, data)
+    end
+
+    ENCODE_AGENT_POOL_UPDATE_SPEC = {
+      "description" => ["description", nil],
+      "state" => ["state", nil],
+      "assignments" => ["assignments", ->(_v) { _v.is_a?(Array) ? _v.map { |_i| (->(_v) { encode_AgentPoolAssignment(_v) }).call(_i) } : _v }],
+      "instructions" => ["instructions", nil],
+    }.freeze
+
+    def self.encode_AgentPoolUpdateSpec(data)
+      encode_fields(ENCODE_AGENT_POOL_UPDATE_SPEC, data)
     end
 
     ENCODE_AGENT_SCHEDULE_SPEC = {
@@ -10822,6 +11283,8 @@ module Cadenya
         (->(_v) { encode_RemoveAgentVariationAssignmentRequest_ToolSetId(_v) }).call(data)
       when "subAgentId"
         (->(_v) { encode_RemoveAgentVariationAssignmentRequest_SubAgentId(_v) }).call(data)
+      when "agentPoolId"
+        (->(_v) { encode_RemoveAgentVariationAssignmentRequest_AgentPoolId(_v) }).call(data)
       else
         data
       end
@@ -11289,6 +11752,8 @@ module Cadenya
         (->(_v) { encode_VariationAssignment_ToolSetId(_v) }).call(data)
       when "subAgentId"
         (->(_v) { encode_VariationAssignment_SubAgentId(_v) }).call(data)
+      when "agentPoolId"
+        (->(_v) { encode_VariationAssignment_AgentPoolId(_v) }).call(data)
       else
         data
       end
@@ -11388,6 +11853,16 @@ module Cadenya
 
     def self.encode_VariationAssignment_SubAgentId(data)
       encode_fields(ENCODE_VARIATION_ASSIGNMENT_SUB_AGENT_ID, data)
+    end
+
+    ENCODE_VARIATION_ASSIGNMENT_AGENT_POOL_ID = {
+      "type" => ["type", nil],
+      "agent_pool_id" => ["agentPoolId", nil],
+      "agentPoolId" => ["agentPoolId", nil],
+    }.freeze
+
+    def self.encode_VariationAssignment_AgentPoolId(data)
+      encode_fields(ENCODE_VARIATION_ASSIGNMENT_AGENT_POOL_ID, data)
     end
 
     ENCODE_TOOL_SET_ADAPTER_MCP_VARIANT = {
@@ -11728,6 +12203,18 @@ module Cadenya
       encode_fields(ENCODE_ADD_AGENT_VARIATION_ASSIGNMENT_REQUEST_SUB_AGENT_ID, data, drop: DROP_ADD_AGENT_VARIATION_ASSIGNMENT_REQUEST_SUB_AGENT_ID)
     end
 
+    ENCODE_ADD_AGENT_VARIATION_ASSIGNMENT_REQUEST_AGENT_POOL_ID = {
+      "type" => ["type", nil],
+      "agent_pool_id" => ["agentPoolId", nil],
+      "agentPoolId" => ["agentPoolId", nil],
+    }.freeze
+
+    DROP_ADD_AGENT_VARIATION_ASSIGNMENT_REQUEST_AGENT_POOL_ID = ["agentId", "agent_id", "variationId", "variation_id", "workspaceId", "workspace_id"].freeze
+
+    def self.encode_AddAgentVariationAssignmentRequest_AgentPoolId(data)
+      encode_fields(ENCODE_ADD_AGENT_VARIATION_ASSIGNMENT_REQUEST_AGENT_POOL_ID, data, drop: DROP_ADD_AGENT_VARIATION_ASSIGNMENT_REQUEST_AGENT_POOL_ID)
+    end
+
     ENCODE_REMOVE_AGENT_VARIATION_ASSIGNMENT_REQUEST_TOOL_ID = {
       "type" => ["type", nil],
       "tool_id" => ["toolId", nil],
@@ -11762,6 +12249,18 @@ module Cadenya
 
     def self.encode_RemoveAgentVariationAssignmentRequest_SubAgentId(data)
       encode_fields(ENCODE_REMOVE_AGENT_VARIATION_ASSIGNMENT_REQUEST_SUB_AGENT_ID, data, drop: DROP_REMOVE_AGENT_VARIATION_ASSIGNMENT_REQUEST_SUB_AGENT_ID)
+    end
+
+    ENCODE_REMOVE_AGENT_VARIATION_ASSIGNMENT_REQUEST_AGENT_POOL_ID = {
+      "type" => ["type", nil],
+      "agent_pool_id" => ["agentPoolId", nil],
+      "agentPoolId" => ["agentPoolId", nil],
+    }.freeze
+
+    DROP_REMOVE_AGENT_VARIATION_ASSIGNMENT_REQUEST_AGENT_POOL_ID = ["agentId", "agent_id", "variationId", "variation_id", "workspaceId", "workspace_id"].freeze
+
+    def self.encode_RemoveAgentVariationAssignmentRequest_AgentPoolId(data)
+      encode_fields(ENCODE_REMOVE_AGENT_VARIATION_ASSIGNMENT_REQUEST_AGENT_POOL_ID, data, drop: DROP_REMOVE_AGENT_VARIATION_ASSIGNMENT_REQUEST_AGENT_POOL_ID)
     end
 
     ENCODE_AI_PROVIDER_CREDENTIAL_API_KEY = {

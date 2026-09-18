@@ -8,7 +8,7 @@ module Cadenya
   # The Cadenya API client. Resource groups are readers; unset options are
   # read from the environment.
   class Client
-    attr_reader :accounts, :api_keys, :workspace_admin, :profiles, :workspaces, :agents, :ai_provider_keys, :models, :memory_layers, :objectives, :tool_search, :tenants, :tool_sets, :uploads, :widget_sessions, :widgets, :workspace_secrets
+    attr_reader :accounts, :api_keys, :workspace_admin, :profiles, :workspaces, :agent_pools, :agents, :ai_provider_keys, :models, :memory_layers, :objectives, :tool_search, :tenants, :tool_sets, :uploads, :widget_sessions, :widgets, :workspace_secrets
 
     def initialize(api_key: nil, base_url: nil, webhook_secret: nil, max_retries: 0, connection: nil, stream_transport: nil, workspace_id: nil)
       if !api_key.nil? && api_key.to_s.strip.empty?
@@ -37,7 +37,7 @@ module Cadenya
         auth_header: ["Authorization", "Bearer #{api_key}"],
         max_retries: max_retries,
         defaults: defaults,
-        user_agent: "cadenya-ruby/1.3.0 (api 1.0)",
+        user_agent: "cadenya-ruby/1.5.0 (api 1.0)",
         connection: connection,
         stream_transport: stream_transport
       )
@@ -46,6 +46,7 @@ module Cadenya
       @workspace_admin = Resources::WorkspaceAdmin.new(core)
       @profiles = Resources::Profiles.new(core)
       @workspaces = Resources::Workspaces.new(core)
+      @agent_pools = Resources::AgentPools.new(core)
       @agents = Resources::Agents.new(core)
       @ai_provider_keys = Resources::AiProviderKeys.new(core)
       @models = Resources::Models.new(core)

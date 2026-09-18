@@ -57,6 +57,15 @@ run("WorkspaceAdminService_AddWorkspaceMember") { client.workspace_admin.add_mem
 run("WorkspaceAdminService_RemoveWorkspaceMember") { client.workspace_admin.remove_member("sample", workspace_id: "sample") }
 run("ProfilesService_Whoami") { client.profiles.whoami() }
 run("WorkspaceService_ListWorkspaces") { check_page(client.workspaces.list(limit: 1, cursor: "sample", sort_order: "sample", include_info: true, labels: "sample")) }
+run("AgentPoolService_ListAgentPools") { check_page(client.agent_pools.list(workspace_id: "sample", limit: 1, cursor: "sample", prefix: "sample", query: "sample", state: "AGENT_POOL_STATE_ACTIVE", labels: "sample", sort_order: "sample", include_info: true)) }
+run("AgentPoolService_CreateAgentPool") { client.agent_pools.create(workspace_id: "sample", metadata: {"name" => "sample"}, spec: {"assignments" => [{"agent_id" => "sample"}], "description" => "sample"}) }
+run("AgentPoolService_GetAgentPool") { client.agent_pools.retrieve("sample", workspace_id: "sample") }
+run("AgentPoolService_DeleteAgentPool") { client.agent_pools.delete("sample", workspace_id: "sample") }
+run("AgentPoolService_UpdateAgentPool") { client.agent_pools.update("sample", workspace_id: "sample", metadata: {"name" => "sample"}, spec: {}, update_mask: "sample") }
+run("AgentPoolService_ActivateAgentPool") { client.agent_pools.activate("sample", workspace_id: "sample") }
+run("AgentPoolService_ArchiveAgentPool") { client.agent_pools.archive("sample", workspace_id: "sample") }
+run("AgentPoolService_DeactivateAgentPool") { client.agent_pools.deactivate("sample", workspace_id: "sample") }
+run("AgentPoolService_UnarchiveAgentPool") { client.agent_pools.unarchive("sample", workspace_id: "sample") }
 run("AgentService_ListAgents") { check_page(client.agents.list(workspace_id: "sample", limit: 1, cursor: "sample", prefix: "sample", query: "sample", state: "STATE_DRAFT", variation_selection_mode: "VARIATION_SELECTION_MODE_RANDOM", labels: "sample", sort_order: "sample", include_info: true)) }
 run("AgentService_CreateAgent") { client.agents.create(workspace_id: "sample", metadata: {"name" => "sample"}, spec: {}, default_variation: {"metadata" => {"name" => "sample"}, "spec" => {}}) }
 run("AgentService_ListAgentFeedback") { check_page(client.agents.list_feedback("sample", workspace_id: "sample", limit: 1, cursor: "sample", query: "sample", sentiment: "FEEDBACK_SENTIMENT_POSITIVE", agent_variation_id: "sample", created_after: "2026-01-01T00:00:00Z", created_before: "2026-01-01T00:00:00Z", labels: "sample", include_info: true)) }
