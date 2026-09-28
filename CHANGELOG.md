@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.0](https://github.com/cadenya/cadenya-ruby/compare/v1.6.0...v1.7.0) (2026-09-28)
+
+
+### Features
+
+* default workspace in whoami, objective queued actions and interrupts ([40bc9de](https://github.com/cadenya/cadenya-ruby/commit/40bc9ded864787e4711bfe40515fa3a1ba01ae11))
+
 ## [1.6.0](https://github.com/cadenya/cadenya-ruby/compare/v1.5.0...v1.6.0) (2026-09-18)
 
 
