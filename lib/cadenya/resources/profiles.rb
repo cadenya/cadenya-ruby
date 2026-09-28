@@ -13,7 +13,7 @@ module Cadenya
       def whoami(request_options: nil)
         _path = "/v1/whoami"
         _data = @core.request(:get, _path, request_options: request_options)
-        Types::Profile.from_json(_data)
+        Types::WhoamiResponse.from_json(_data)
       end
     end
   end

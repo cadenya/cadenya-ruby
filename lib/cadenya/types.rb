@@ -1488,26 +1488,6 @@ module Cadenya
       end
     end
 
-    class CompactObjectiveResponse
-      attr_reader :context_window
-
-      def initialize(context_window: nil)
-        @context_window = context_window
-      end
-
-      def self.from_json(data)
-        new(
-          context_window: data["contextWindow"].nil? ? nil : Types::ObjectiveContextWindowData.from_json(data["contextWindow"]),
-        )
-      end
-
-      def to_h
-        {
-          context_window: Util.plain(@context_window),
-        }.reject { |_k, v| v.nil? }
-      end
-    end
-
     class CompactionConfig_SummarizationStrategy
       attr_reader :instructions
 
@@ -1747,6 +1727,18 @@ module Cadenya
       end
     end
 
+    def self.decode_ContinueObjectiveResponse(data)
+      return nil if data.nil? || data["type"].to_s.empty?
+      case data["type"]
+      when "event"
+        Types::ContinueObjectiveResponse_Event.from_json(data)
+      when "queuedAction"
+        Types::ContinueObjectiveResponse_QueuedAction.from_json(data)
+      else
+        raise ArgumentError, "ContinueObjectiveResponse: unknown type #{data["type"].inspect}"
+      end
+    end
+
     class CreateAIProviderKeyRequest
       attr_reader :workspace_id, :metadata, :spec
 
@@ -1935,6 +1927,97 @@ module Cadenya
           metadata: Util.plain(@metadata),
           spec: Util.plain(@spec),
         }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    class CreateAndStreamObjectiveRequest
+      attr_reader :workspace_id, :agent_id, :variation_id, :metadata, :system_prompt_data, :first_user_message, :secrets, :memory_cascade, :first_user_message_data, :episodic_memory, :tenant, :subject, :pinned_parameters
+
+      def initialize(workspace_id: nil, agent_id: nil, variation_id: nil, metadata: nil, system_prompt_data: nil, first_user_message: nil, secrets: nil, memory_cascade: nil, first_user_message_data: nil, episodic_memory: nil, tenant: nil, subject: nil, pinned_parameters: nil)
+        @workspace_id = workspace_id
+        @agent_id = agent_id
+        @variation_id = variation_id
+        @metadata = metadata
+        @system_prompt_data = system_prompt_data
+        @first_user_message = first_user_message
+        @secrets = secrets
+        @memory_cascade = memory_cascade
+        @first_user_message_data = first_user_message_data
+        @episodic_memory = episodic_memory
+        @tenant = tenant
+        @subject = subject
+        @pinned_parameters = pinned_parameters
+      end
+
+      def self.from_json(data)
+        new(
+          workspace_id: data["workspaceId"],
+          agent_id: data["agentId"],
+          variation_id: data["variationId"],
+          metadata: data["metadata"].nil? ? nil : Types::CreateAndStreamObjectiveRequest_Metadata.from_json(data["metadata"]),
+          system_prompt_data: data["systemPromptData"],
+          first_user_message: data["firstUserMessage"],
+          secrets: data["secrets"].nil? ? nil : (data["secrets"]).map { |item| Types::CreateObjectiveRequest_Secret.from_json(item) },
+          memory_cascade: data["memoryCascade"].nil? ? nil : (data["memoryCascade"]).map { |item| Types::MemoryReference.from_json(item) },
+          first_user_message_data: data["firstUserMessageData"],
+          episodic_memory: data["episodicMemory"].nil? ? nil : Types::ObjectiveEpisodicConfig.from_json(data["episodicMemory"]),
+          tenant: data["tenant"].nil? ? nil : Types::TenantAssertion.from_json(data["tenant"]),
+          subject: data["subject"].nil? ? nil : Types::SubjectAssertion.from_json(data["subject"]),
+          pinned_parameters: data["pinnedParameters"],
+        )
+      end
+
+      def to_h
+        {
+          workspace_id: Util.plain(@workspace_id),
+          agent_id: Util.plain(@agent_id),
+          variation_id: Util.plain(@variation_id),
+          metadata: Util.plain(@metadata),
+          system_prompt_data: Util.plain(@system_prompt_data),
+          first_user_message: Util.plain(@first_user_message),
+          secrets: Util.plain(@secrets),
+          memory_cascade: Util.plain(@memory_cascade),
+          first_user_message_data: Util.plain(@first_user_message_data),
+          episodic_memory: Util.plain(@episodic_memory),
+          tenant: Util.plain(@tenant),
+          subject: Util.plain(@subject),
+          pinned_parameters: Util.plain(@pinned_parameters),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    class CreateAndStreamObjectiveRequest_Metadata
+      attr_reader :labels, :external_id
+
+      def initialize(labels: nil, external_id: nil)
+        @labels = labels
+        @external_id = external_id
+      end
+
+      def self.from_json(data)
+        new(
+          labels: data["labels"],
+          external_id: data["externalId"],
+        )
+      end
+
+      def to_h
+        {
+          labels: Util.plain(@labels),
+          external_id: Util.plain(@external_id),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    def self.decode_CreateAndStreamObjectiveResponse(data)
+      return nil if data.nil? || data["type"].to_s.empty?
+      case data["type"]
+      when "objective"
+        Types::CreateAndStreamObjectiveResponse_Objective.from_json(data)
+      when "event"
+        Types::CreateAndStreamObjectiveResponse_Event.from_json(data)
+      else
+        raise ArgumentError, "CreateAndStreamObjectiveResponse: unknown type #{data["type"].inspect}"
       end
     end
 
@@ -2729,6 +2812,29 @@ module Cadenya
       end
     end
 
+    class InterruptObjectiveRequest
+      attr_reader :workspace_id, :objective_id
+
+      def initialize(workspace_id: nil, objective_id: nil)
+        @workspace_id = workspace_id
+        @objective_id = objective_id
+      end
+
+      def self.from_json(data)
+        new(
+          workspace_id: data["workspaceId"],
+          objective_id: data["objectiveId"],
+        )
+      end
+
+      def to_h
+        {
+          workspace_id: Util.plain(@workspace_id),
+          objective_id: Util.plain(@objective_id),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
     class ListAIProviderKeysResponse
       attr_reader :items, :pagination
 
@@ -3062,6 +3168,29 @@ module Cadenya
       def self.from_json(data)
         new(
           items: data["items"].nil? ? nil : (data["items"]).map { |item| Types::ObjectiveFeedback.from_json(item) },
+          pagination: data["pagination"].nil? ? nil : Types::Page.from_json(data["pagination"]),
+        )
+      end
+
+      def to_h
+        {
+          items: Util.plain(@items),
+          pagination: Util.plain(@pagination),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    class ListObjectiveQueuedActionsResponse
+      attr_reader :items, :pagination
+
+      def initialize(items: nil, pagination: nil)
+        @items = items
+        @pagination = pagination
+      end
+
+      def self.from_json(data)
+        new(
+          items: data["items"].nil? ? nil : (data["items"]).map { |item| Types::ObjectiveQueuedAction.from_json(item) },
           pagination: data["pagination"].nil? ? nil : Types::Page.from_json(data["pagination"]),
         )
       end
@@ -3800,17 +3929,19 @@ module Cadenya
     end
 
     class ModelBasePricing
-      attr_reader :input_price_per_million_tokens, :output_price_per_million_tokens
+      attr_reader :input_price_per_million_tokens, :output_price_per_million_tokens, :cached_input_price_per_million_tokens
 
-      def initialize(input_price_per_million_tokens: nil, output_price_per_million_tokens: nil)
+      def initialize(input_price_per_million_tokens: nil, output_price_per_million_tokens: nil, cached_input_price_per_million_tokens: nil)
         @input_price_per_million_tokens = input_price_per_million_tokens
         @output_price_per_million_tokens = output_price_per_million_tokens
+        @cached_input_price_per_million_tokens = cached_input_price_per_million_tokens
       end
 
       def self.from_json(data)
         new(
           input_price_per_million_tokens: data["inputPricePerMillionTokens"],
           output_price_per_million_tokens: data["outputPricePerMillionTokens"],
+          cached_input_price_per_million_tokens: data["cachedInputPricePerMillionTokens"],
         )
       end
 
@@ -3818,6 +3949,7 @@ module Cadenya
         {
           input_price_per_million_tokens: Util.plain(@input_price_per_million_tokens),
           output_price_per_million_tokens: Util.plain(@output_price_per_million_tokens),
+          cached_input_price_per_million_tokens: Util.plain(@cached_input_price_per_million_tokens),
         }.reject { |_k, v| v.nil? }
       end
     end
@@ -3849,17 +3981,19 @@ module Cadenya
     end
 
     class ModelPricingOverride
-      attr_reader :input_price_per_million_tokens, :output_price_per_million_tokens
+      attr_reader :input_price_per_million_tokens, :output_price_per_million_tokens, :cached_input_price_per_million_tokens
 
-      def initialize(input_price_per_million_tokens: nil, output_price_per_million_tokens: nil)
+      def initialize(input_price_per_million_tokens: nil, output_price_per_million_tokens: nil, cached_input_price_per_million_tokens: nil)
         @input_price_per_million_tokens = input_price_per_million_tokens
         @output_price_per_million_tokens = output_price_per_million_tokens
+        @cached_input_price_per_million_tokens = cached_input_price_per_million_tokens
       end
 
       def self.from_json(data)
         new(
           input_price_per_million_tokens: data["inputPricePerMillionTokens"],
           output_price_per_million_tokens: data["outputPricePerMillionTokens"],
+          cached_input_price_per_million_tokens: data["cachedInputPricePerMillionTokens"],
         )
       end
 
@@ -3867,20 +4001,22 @@ module Cadenya
         {
           input_price_per_million_tokens: Util.plain(@input_price_per_million_tokens),
           output_price_per_million_tokens: Util.plain(@output_price_per_million_tokens),
+          cached_input_price_per_million_tokens: Util.plain(@cached_input_price_per_million_tokens),
         }.reject { |_k, v| v.nil? }
       end
     end
 
     class ModelSpec
-      attr_reader :provider, :family, :max_input_tokens, :max_output_tokens, :input_price_per_million_tokens, :output_price_per_million_tokens, :capabilities, :provider_model_id
+      attr_reader :provider, :family, :max_input_tokens, :max_output_tokens, :input_price_per_million_tokens, :output_price_per_million_tokens, :cached_input_price_per_million_tokens, :capabilities, :provider_model_id
 
-      def initialize(provider: nil, family: nil, max_input_tokens: nil, max_output_tokens: nil, input_price_per_million_tokens: nil, output_price_per_million_tokens: nil, capabilities: nil, provider_model_id: nil)
+      def initialize(provider: nil, family: nil, max_input_tokens: nil, max_output_tokens: nil, input_price_per_million_tokens: nil, output_price_per_million_tokens: nil, cached_input_price_per_million_tokens: nil, capabilities: nil, provider_model_id: nil)
         @provider = provider
         @family = family
         @max_input_tokens = max_input_tokens
         @max_output_tokens = max_output_tokens
         @input_price_per_million_tokens = input_price_per_million_tokens
         @output_price_per_million_tokens = output_price_per_million_tokens
+        @cached_input_price_per_million_tokens = cached_input_price_per_million_tokens
         @capabilities = capabilities
         @provider_model_id = provider_model_id
       end
@@ -3893,6 +4029,7 @@ module Cadenya
           max_output_tokens: data["maxOutputTokens"],
           input_price_per_million_tokens: data["inputPricePerMillionTokens"],
           output_price_per_million_tokens: data["outputPricePerMillionTokens"],
+          cached_input_price_per_million_tokens: data["cachedInputPricePerMillionTokens"],
           capabilities: data["capabilities"].nil? ? nil : (data["capabilities"]).map { |item| Types.decode_ModelSpec_Capability(item) },
           provider_model_id: data["providerModelId"],
         )
@@ -3906,6 +4043,7 @@ module Cadenya
           max_output_tokens: Util.plain(@max_output_tokens),
           input_price_per_million_tokens: Util.plain(@input_price_per_million_tokens),
           output_price_per_million_tokens: Util.plain(@output_price_per_million_tokens),
+          cached_input_price_per_million_tokens: Util.plain(@cached_input_price_per_million_tokens),
           capabilities: Util.plain(@capabilities),
           provider_model_id: Util.plain(@provider_model_id),
         }.reject { |_k, v| v.nil? }
@@ -3962,7 +4100,7 @@ module Cadenya
       end
     end
 
-    ObjectiveState = ["OBJECTIVE_STATE_UNSPECIFIED", "OBJECTIVE_STATE_PENDING", "OBJECTIVE_STATE_RUNNING", "OBJECTIVE_STATE_WAITING", "OBJECTIVE_STATE_FAILED", "OBJECTIVE_STATE_CANCELLED", "OBJECTIVE_STATE_FINALIZED", "OBJECTIVE_STATE_TIMED_OUT"].freeze
+    ObjectiveState = ["OBJECTIVE_STATE_UNSPECIFIED", "OBJECTIVE_STATE_PENDING", "OBJECTIVE_STATE_RUNNING", "OBJECTIVE_STATE_WAITING", "OBJECTIVE_STATE_FAILED", "OBJECTIVE_STATE_CANCELLED", "OBJECTIVE_STATE_FINALIZED", "OBJECTIVE_STATE_TIMED_OUT", "OBJECTIVE_STATE_INTERRUPTING"].freeze
 
     class Objective
       attr_reader :metadata, :config_snapshot, :state, :state_message, :info, :system_prompt, :first_user_message, :parent_objective_id, :secrets, :system_prompt_data, :memory_cascade, :output, :first_user_message_data, :episodic_memory, :pinned_parameters
@@ -4303,6 +4441,8 @@ module Cadenya
         Types::ObjectiveEventData_StateChanged.from_json(data)
       when "heartbeat"
         Types::ObjectiveEventData_Heartbeat.from_json(data)
+      when "interrupted"
+        Types::ObjectiveEventData_Interrupted.from_json(data)
       else
         raise ArgumentError, "ObjectiveEventData: unknown type #{data["type"].inspect}"
       end
@@ -4495,9 +4635,78 @@ module Cadenya
       end
     end
 
-    ObjectiveStateChangedFromState = ["OBJECTIVE_STATE_UNSPECIFIED", "OBJECTIVE_STATE_PENDING", "OBJECTIVE_STATE_RUNNING", "OBJECTIVE_STATE_WAITING", "OBJECTIVE_STATE_FAILED", "OBJECTIVE_STATE_CANCELLED", "OBJECTIVE_STATE_FINALIZED", "OBJECTIVE_STATE_TIMED_OUT"].freeze
+    class ObjectiveInterrupted
+      attr_reader :message
 
-    ObjectiveStateChangedToState = ["OBJECTIVE_STATE_UNSPECIFIED", "OBJECTIVE_STATE_PENDING", "OBJECTIVE_STATE_RUNNING", "OBJECTIVE_STATE_WAITING", "OBJECTIVE_STATE_FAILED", "OBJECTIVE_STATE_CANCELLED", "OBJECTIVE_STATE_FINALIZED", "OBJECTIVE_STATE_TIMED_OUT"].freeze
+      def initialize(message: nil)
+        @message = message
+      end
+
+      def self.from_json(data)
+        new(
+          message: data["message"],
+        )
+      end
+
+      def to_h
+        {
+          message: Util.plain(@message),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    ObjectiveQueuedActionState = ["STATE_UNSPECIFIED", "STATE_QUEUED", "STATE_SENT", "STATE_REMOVED", "STATE_DISCARDED"].freeze
+
+    class ObjectiveQueuedAction
+      attr_reader :metadata, :objective_id, :data, :state, :sent_at, :objective_event_id
+
+      def initialize(metadata: nil, objective_id: nil, data: nil, state: nil, sent_at: nil, objective_event_id: nil)
+        @metadata = metadata
+        @objective_id = objective_id
+        @data = data
+        @state = state
+        @sent_at = sent_at
+        @objective_event_id = objective_event_id
+      end
+
+      def self.from_json(data)
+        new(
+          metadata: data["metadata"].nil? ? nil : Types::OperationMetadata.from_json(data["metadata"]),
+          objective_id: data["objectiveId"],
+          data: data["data"].nil? ? nil : Types.decode_ObjectiveQueuedActionData(data["data"]),
+          state: data["state"],
+          sent_at: data["sentAt"].nil? ? nil : Time.iso8601(data["sentAt"]),
+          objective_event_id: data["objectiveEventId"],
+        )
+      end
+
+      def to_h
+        {
+          metadata: Util.plain(@metadata),
+          objective_id: Util.plain(@objective_id),
+          data: Util.plain(@data),
+          state: Util.plain(@state),
+          sent_at: Util.plain(@sent_at),
+          objective_event_id: Util.plain(@objective_event_id),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    def self.decode_ObjectiveQueuedActionData(data)
+      return nil if data.nil? || data["type"].to_s.empty?
+      case data["type"]
+      when "userMessage"
+        Types::ObjectiveQueuedActionData_UserMessage.from_json(data)
+      when "compaction"
+        Types::ObjectiveQueuedActionData_Compaction.from_json(data)
+      else
+        raise ArgumentError, "ObjectiveQueuedActionData: unknown type #{data["type"].inspect}"
+      end
+    end
+
+    ObjectiveStateChangedFromState = ["OBJECTIVE_STATE_UNSPECIFIED", "OBJECTIVE_STATE_PENDING", "OBJECTIVE_STATE_RUNNING", "OBJECTIVE_STATE_WAITING", "OBJECTIVE_STATE_FAILED", "OBJECTIVE_STATE_CANCELLED", "OBJECTIVE_STATE_FINALIZED", "OBJECTIVE_STATE_TIMED_OUT", "OBJECTIVE_STATE_INTERRUPTING"].freeze
+
+    ObjectiveStateChangedToState = ["OBJECTIVE_STATE_UNSPECIFIED", "OBJECTIVE_STATE_PENDING", "OBJECTIVE_STATE_RUNNING", "OBJECTIVE_STATE_WAITING", "OBJECTIVE_STATE_FAILED", "OBJECTIVE_STATE_CANCELLED", "OBJECTIVE_STATE_FINALIZED", "OBJECTIVE_STATE_TIMED_OUT", "OBJECTIVE_STATE_INTERRUPTING"].freeze
 
     class ObjectiveStateChanged
       attr_reader :from_state, :to_state, :message
@@ -4570,7 +4779,7 @@ module Cadenya
 
     ObjectiveToolCallStatus = ["TOOL_CALL_STATUS_UNSPECIFIED", "TOOL_CALL_STATUS_AUTO_APPROVED", "TOOL_CALL_STATUS_WAITING_FOR_APPROVAL", "TOOL_CALL_STATUS_APPROVED", "TOOL_CALL_STATUS_DENIED"].freeze
 
-    ObjectiveToolCallExecutionStatus = ["TOOL_CALL_EXECUTION_STATUS_UNSPECIFIED", "TOOL_CALL_EXECUTION_STATUS_PENDING", "TOOL_CALL_EXECUTION_STATUS_RUNNING", "TOOL_CALL_EXECUTION_STATUS_COMPLETED", "TOOL_CALL_EXECUTION_STATUS_ERRORED", "TOOL_CALL_EXECUTION_STATUS_WAITING_FOR_CONTENT"].freeze
+    ObjectiveToolCallExecutionStatus = ["TOOL_CALL_EXECUTION_STATUS_UNSPECIFIED", "TOOL_CALL_EXECUTION_STATUS_PENDING", "TOOL_CALL_EXECUTION_STATUS_RUNNING", "TOOL_CALL_EXECUTION_STATUS_COMPLETED", "TOOL_CALL_EXECUTION_STATUS_ERRORED", "TOOL_CALL_EXECUTION_STATUS_WAITING_FOR_CONTENT", "TOOL_CALL_EXECUTION_STATUS_INTERRUPTED"].freeze
 
     class ObjectiveToolCall
       attr_reader :metadata, :data, :status, :info, :execution_status
@@ -4782,7 +4991,7 @@ module Cadenya
 
     ObjectiveToolCallWithResultStatus = ["TOOL_CALL_STATUS_UNSPECIFIED", "TOOL_CALL_STATUS_AUTO_APPROVED", "TOOL_CALL_STATUS_WAITING_FOR_APPROVAL", "TOOL_CALL_STATUS_APPROVED", "TOOL_CALL_STATUS_DENIED"].freeze
 
-    ObjectiveToolCallWithResultExecutionStatus = ["TOOL_CALL_EXECUTION_STATUS_UNSPECIFIED", "TOOL_CALL_EXECUTION_STATUS_PENDING", "TOOL_CALL_EXECUTION_STATUS_RUNNING", "TOOL_CALL_EXECUTION_STATUS_COMPLETED", "TOOL_CALL_EXECUTION_STATUS_ERRORED", "TOOL_CALL_EXECUTION_STATUS_WAITING_FOR_CONTENT"].freeze
+    ObjectiveToolCallWithResultExecutionStatus = ["TOOL_CALL_EXECUTION_STATUS_UNSPECIFIED", "TOOL_CALL_EXECUTION_STATUS_PENDING", "TOOL_CALL_EXECUTION_STATUS_RUNNING", "TOOL_CALL_EXECUTION_STATUS_COMPLETED", "TOOL_CALL_EXECUTION_STATUS_ERRORED", "TOOL_CALL_EXECUTION_STATUS_WAITING_FOR_CONTENT", "TOOL_CALL_EXECUTION_STATUS_INTERRUPTED"].freeze
 
     class ObjectiveToolCallWithResult
       attr_reader :metadata, :data, :status, :info, :execution_status, :result, :resolved_secrets
@@ -5160,6 +5369,46 @@ module Cadenya
       end
     end
 
+    class QueuedCompaction
+      attr_reader :compaction_config
+
+      def initialize(compaction_config: nil)
+        @compaction_config = compaction_config
+      end
+
+      def self.from_json(data)
+        new(
+          compaction_config: data["compactionConfig"].nil? ? nil : Types::AgentVariationSpec_CompactionConfig.from_json(data["compactionConfig"]),
+        )
+      end
+
+      def to_h
+        {
+          compaction_config: Util.plain(@compaction_config),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    class QueuedUserMessage
+      attr_reader :content
+
+      def initialize(content: nil)
+        @content = content
+      end
+
+      def self.from_json(data)
+        new(
+          content: data["content"],
+        )
+      end
+
+      def to_h
+        {
+          content: Util.plain(@content),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
     class Reasoning
       attr_reader :content
 
@@ -5221,6 +5470,32 @@ module Cadenya
           agent_id: Util.plain(@agent_id),
           variation_id: Util.plain(@variation_id),
           memory_layer_id: Util.plain(@memory_layer_id),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    class RemoveObjectiveQueuedActionRequest
+      attr_reader :workspace_id, :objective_id, :queued_action_id
+
+      def initialize(workspace_id: nil, objective_id: nil, queued_action_id: nil)
+        @workspace_id = workspace_id
+        @objective_id = objective_id
+        @queued_action_id = queued_action_id
+      end
+
+      def self.from_json(data)
+        new(
+          workspace_id: data["workspaceId"],
+          objective_id: data["objectiveId"],
+          queued_action_id: data["queuedActionId"],
+        )
+      end
+
+      def to_h
+        {
+          workspace_id: Util.plain(@workspace_id),
+          objective_id: Util.plain(@objective_id),
+          queued_action_id: Util.plain(@queued_action_id),
         }.reject { |_k, v| v.nil? }
       end
     end
@@ -6870,12 +7145,13 @@ module Cadenya
     end
 
     class ToolSetSpec
-      attr_reader :description, :adapter, :overlays
+      attr_reader :description, :adapter, :overlays, :secrets
 
-      def initialize(description: nil, adapter: nil, overlays: nil)
+      def initialize(description: nil, adapter: nil, overlays: nil, secrets: nil)
         @description = description
         @adapter = adapter
         @overlays = overlays
+        @secrets = secrets
       end
 
       def self.from_json(data)
@@ -6883,6 +7159,7 @@ module Cadenya
           description: data["description"],
           adapter: data["adapter"].nil? ? nil : Types.decode_ToolSetAdapter(data["adapter"]),
           overlays: data["overlays"].nil? ? nil : (data["overlays"]).map { |item| Types::ToolOverlay.from_json(item) },
+          secrets: data["secrets"].nil? ? nil : (data["secrets"]).map { |item| Types::ToolSetSpec_Secret.from_json(item) },
         )
       end
 
@@ -6891,6 +7168,30 @@ module Cadenya
           description: Util.plain(@description),
           adapter: Util.plain(@adapter),
           overlays: Util.plain(@overlays),
+          secrets: Util.plain(@secrets),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    class ToolSetSpec_Secret
+      attr_reader :name, :value
+
+      def initialize(name: nil, value: nil)
+        @name = name
+        @value = value
+      end
+
+      def self.from_json(data)
+        new(
+          name: data["name"],
+          value: data["value"],
+        )
+      end
+
+      def to_h
+        {
+          name: Util.plain(@name),
+          value: Util.plain(@value),
         }.reject { |_k, v| v.nil? }
       end
     end
@@ -7859,7 +8160,7 @@ module Cadenya
 
     WebhookDeliveryDataStatus = ["WEBHOOK_DELIVERY_STATUS_UNSPECIFIED", "WEBHOOK_DELIVERY_STATUS_PENDING", "WEBHOOK_DELIVERY_STATUS_COMPLETED", "WEBHOOK_DELIVERY_STATUS_FAILED", "WEBHOOK_DELIVERY_STATUS_DISABLED"].freeze
 
-    WebhookDeliveryDataEventType = ["OBJECTIVE_EVENT_TYPE_UNSPECIFIED", "OBJECTIVE_EVENT_TYPE_USER_MESSAGE", "OBJECTIVE_EVENT_TYPE_TOOL_APPROVAL_REQUESTED", "OBJECTIVE_EVENT_TYPE_TOOL_APPROVED", "OBJECTIVE_EVENT_TYPE_TOOL_DENIED", "OBJECTIVE_EVENT_TYPE_TOOL_CALLED", "OBJECTIVE_EVENT_TYPE_ERROR", "OBJECTIVE_EVENT_TYPE_ASSISTANT_MESSAGE", "OBJECTIVE_EVENT_TYPE_TOOL_RESULT", "OBJECTIVE_EVENT_TYPE_TOOL_ERROR", "OBJECTIVE_EVENT_TYPE_CONTEXT_WINDOW_COMPACTED", "OBJECTIVE_EVENT_TYPE_MEMORY_READ", "OBJECTIVE_EVENT_TYPE_CANCELLED", "OBJECTIVE_EVENT_TYPE_SUB_AGENT_SPAWNED", "OBJECTIVE_EVENT_TYPE_SUB_AGENT_UPDATED", "OBJECTIVE_EVENT_TYPE_FINALIZED", "OBJECTIVE_EVENT_TYPE_NOTICE", "OBJECTIVE_EVENT_TYPE_TIMED_OUT", "OBJECTIVE_EVENT_TYPE_REASONING", "OBJECTIVE_EVENT_TYPE_STATE_CHANGED", "OBJECTIVE_EVENT_TYPE_HEARTBEAT"].freeze
+    WebhookDeliveryDataEventType = ["OBJECTIVE_EVENT_TYPE_UNSPECIFIED", "OBJECTIVE_EVENT_TYPE_USER_MESSAGE", "OBJECTIVE_EVENT_TYPE_TOOL_APPROVAL_REQUESTED", "OBJECTIVE_EVENT_TYPE_TOOL_APPROVED", "OBJECTIVE_EVENT_TYPE_TOOL_DENIED", "OBJECTIVE_EVENT_TYPE_TOOL_CALLED", "OBJECTIVE_EVENT_TYPE_ERROR", "OBJECTIVE_EVENT_TYPE_ASSISTANT_MESSAGE", "OBJECTIVE_EVENT_TYPE_TOOL_RESULT", "OBJECTIVE_EVENT_TYPE_TOOL_ERROR", "OBJECTIVE_EVENT_TYPE_CONTEXT_WINDOW_COMPACTED", "OBJECTIVE_EVENT_TYPE_MEMORY_READ", "OBJECTIVE_EVENT_TYPE_CANCELLED", "OBJECTIVE_EVENT_TYPE_SUB_AGENT_SPAWNED", "OBJECTIVE_EVENT_TYPE_SUB_AGENT_UPDATED", "OBJECTIVE_EVENT_TYPE_FINALIZED", "OBJECTIVE_EVENT_TYPE_NOTICE", "OBJECTIVE_EVENT_TYPE_TIMED_OUT", "OBJECTIVE_EVENT_TYPE_REASONING", "OBJECTIVE_EVENT_TYPE_STATE_CHANGED", "OBJECTIVE_EVENT_TYPE_HEARTBEAT", "OBJECTIVE_EVENT_TYPE_INTERRUPTED"].freeze
 
     class WebhookDeliveryData
       attr_reader :agent_id, :objective_id, :objective_event_id, :webhook_url, :webhook_id, :status, :attempt_count, :last_attempt_at, :http_status_code, :error_message, :latency_ms, :event_type, :response_headers, :response_content_length
@@ -7916,6 +8217,29 @@ module Cadenya
           event_type: Util.plain(@event_type),
           response_headers: Util.plain(@response_headers),
           response_content_length: Util.plain(@response_content_length),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    class WhoamiResponse
+      attr_reader :profile, :default_workspace
+
+      def initialize(profile: nil, default_workspace: nil)
+        @profile = profile
+        @default_workspace = default_workspace
+      end
+
+      def self.from_json(data)
+        new(
+          profile: data["profile"].nil? ? nil : Types::Profile.from_json(data["profile"]),
+          default_workspace: data["defaultWorkspace"].nil? ? nil : Types::AccountResourceMetadata.from_json(data["defaultWorkspace"]),
+        )
+      end
+
+      def to_h
+        {
+          profile: Util.plain(@profile),
+          default_workspace: Util.plain(@default_workspace),
         }.reject { |_k, v| v.nil? }
       end
     end
@@ -9700,6 +10024,29 @@ module Cadenya
       end
     end
 
+    class ObjectiveEventData_Interrupted
+      attr_reader :type, :interrupted
+
+      def initialize(type: nil, interrupted: nil)
+        @type = type
+        @interrupted = interrupted
+      end
+
+      def self.from_json(data)
+        new(
+          type: data["type"],
+          interrupted: data["interrupted"].nil? ? nil : Types::ObjectiveInterrupted.from_json(data["interrupted"]),
+        )
+      end
+
+      def to_h
+        {
+          type: Util.plain(@type),
+          interrupted: Util.plain(@interrupted),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
     class CallableTool_Tool
       attr_reader :type, :tool
 
@@ -9846,6 +10193,98 @@ module Cadenya
           upload_id: Util.plain(@upload_id),
           key: Util.plain(@key),
           description: Util.plain(@description),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    class ObjectiveQueuedActionData_UserMessage
+      attr_reader :type, :user_message
+
+      def initialize(type: nil, user_message: nil)
+        @type = type
+        @user_message = user_message
+      end
+
+      def self.from_json(data)
+        new(
+          type: data["type"],
+          user_message: data["userMessage"].nil? ? nil : Types::QueuedUserMessage.from_json(data["userMessage"]),
+        )
+      end
+
+      def to_h
+        {
+          type: Util.plain(@type),
+          user_message: Util.plain(@user_message),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    class ObjectiveQueuedActionData_Compaction
+      attr_reader :type, :compaction
+
+      def initialize(type: nil, compaction: nil)
+        @type = type
+        @compaction = compaction
+      end
+
+      def self.from_json(data)
+        new(
+          type: data["type"],
+          compaction: data["compaction"].nil? ? nil : Types::QueuedCompaction.from_json(data["compaction"]),
+        )
+      end
+
+      def to_h
+        {
+          type: Util.plain(@type),
+          compaction: Util.plain(@compaction),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    class ContinueObjectiveResponse_Event
+      attr_reader :type, :event
+
+      def initialize(type: nil, event: nil)
+        @type = type
+        @event = event
+      end
+
+      def self.from_json(data)
+        new(
+          type: data["type"],
+          event: data["event"].nil? ? nil : Types::ObjectiveEvent.from_json(data["event"]),
+        )
+      end
+
+      def to_h
+        {
+          type: Util.plain(@type),
+          event: Util.plain(@event),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    class ContinueObjectiveResponse_QueuedAction
+      attr_reader :type, :queued_action
+
+      def initialize(type: nil, queued_action: nil)
+        @type = type
+        @queued_action = queued_action
+      end
+
+      def self.from_json(data)
+        new(
+          type: data["type"],
+          queued_action: data["queuedAction"].nil? ? nil : Types::ObjectiveQueuedAction.from_json(data["queuedAction"]),
+        )
+      end
+
+      def to_h
+        {
+          type: Util.plain(@type),
+          queued_action: Util.plain(@queued_action),
         }.reject { |_k, v| v.nil? }
       end
     end
@@ -10543,6 +10982,52 @@ module Cadenya
       end
     end
 
+    class CreateAndStreamObjectiveResponse_Objective
+      attr_reader :type, :objective
+
+      def initialize(type: nil, objective: nil)
+        @type = type
+        @objective = objective
+      end
+
+      def self.from_json(data)
+        new(
+          type: data["type"],
+          objective: data["objective"].nil? ? nil : Types::Objective.from_json(data["objective"]),
+        )
+      end
+
+      def to_h
+        {
+          type: Util.plain(@type),
+          objective: Util.plain(@objective),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    class CreateAndStreamObjectiveResponse_Event
+      attr_reader :type, :event
+
+      def initialize(type: nil, event: nil)
+        @type = type
+        @event = event
+      end
+
+      def self.from_json(data)
+        new(
+          type: data["type"],
+          event: data["event"].nil? ? nil : Types::ObjectiveEvent.from_json(data["event"]),
+        )
+      end
+
+      def to_h
+        {
+          type: Util.plain(@type),
+          event: Util.plain(@event),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
     WidgetSessionErrorReason = ["TOKEN_EXPIRED", "SESSION_REVOKED", "SESSION_EXPIRED", "SESSION_EXHAUSTED"].freeze
 
     class WidgetSessionErrorInfo
@@ -10582,17 +11067,19 @@ module Cadenya
 
     AgentServiceListAgentFeedbackSentiment = ["FEEDBACK_SENTIMENT_UNSPECIFIED", "FEEDBACK_SENTIMENT_POSITIVE", "FEEDBACK_SENTIMENT_NEGATIVE"].freeze
 
-    AgentServiceListAgentWebhookDeliveriesEventType = ["OBJECTIVE_EVENT_TYPE_UNSPECIFIED", "OBJECTIVE_EVENT_TYPE_USER_MESSAGE", "OBJECTIVE_EVENT_TYPE_TOOL_APPROVAL_REQUESTED", "OBJECTIVE_EVENT_TYPE_TOOL_APPROVED", "OBJECTIVE_EVENT_TYPE_TOOL_DENIED", "OBJECTIVE_EVENT_TYPE_TOOL_CALLED", "OBJECTIVE_EVENT_TYPE_ERROR", "OBJECTIVE_EVENT_TYPE_ASSISTANT_MESSAGE", "OBJECTIVE_EVENT_TYPE_TOOL_RESULT", "OBJECTIVE_EVENT_TYPE_TOOL_ERROR", "OBJECTIVE_EVENT_TYPE_CONTEXT_WINDOW_COMPACTED", "OBJECTIVE_EVENT_TYPE_MEMORY_READ", "OBJECTIVE_EVENT_TYPE_CANCELLED", "OBJECTIVE_EVENT_TYPE_SUB_AGENT_SPAWNED", "OBJECTIVE_EVENT_TYPE_SUB_AGENT_UPDATED", "OBJECTIVE_EVENT_TYPE_FINALIZED", "OBJECTIVE_EVENT_TYPE_NOTICE", "OBJECTIVE_EVENT_TYPE_TIMED_OUT", "OBJECTIVE_EVENT_TYPE_REASONING", "OBJECTIVE_EVENT_TYPE_STATE_CHANGED", "OBJECTIVE_EVENT_TYPE_HEARTBEAT"].freeze
+    AgentServiceListAgentWebhookDeliveriesEventType = ["OBJECTIVE_EVENT_TYPE_UNSPECIFIED", "OBJECTIVE_EVENT_TYPE_USER_MESSAGE", "OBJECTIVE_EVENT_TYPE_TOOL_APPROVAL_REQUESTED", "OBJECTIVE_EVENT_TYPE_TOOL_APPROVED", "OBJECTIVE_EVENT_TYPE_TOOL_DENIED", "OBJECTIVE_EVENT_TYPE_TOOL_CALLED", "OBJECTIVE_EVENT_TYPE_ERROR", "OBJECTIVE_EVENT_TYPE_ASSISTANT_MESSAGE", "OBJECTIVE_EVENT_TYPE_TOOL_RESULT", "OBJECTIVE_EVENT_TYPE_TOOL_ERROR", "OBJECTIVE_EVENT_TYPE_CONTEXT_WINDOW_COMPACTED", "OBJECTIVE_EVENT_TYPE_MEMORY_READ", "OBJECTIVE_EVENT_TYPE_CANCELLED", "OBJECTIVE_EVENT_TYPE_SUB_AGENT_SPAWNED", "OBJECTIVE_EVENT_TYPE_SUB_AGENT_UPDATED", "OBJECTIVE_EVENT_TYPE_FINALIZED", "OBJECTIVE_EVENT_TYPE_NOTICE", "OBJECTIVE_EVENT_TYPE_TIMED_OUT", "OBJECTIVE_EVENT_TYPE_REASONING", "OBJECTIVE_EVENT_TYPE_STATE_CHANGED", "OBJECTIVE_EVENT_TYPE_HEARTBEAT", "OBJECTIVE_EVENT_TYPE_INTERRUPTED"].freeze
 
     MemoryServiceListMemoryLayersType = ["MEMORY_LAYER_TYPE_UNSPECIFIED", "MEMORY_LAYER_TYPE_EPISODIC", "MEMORY_LAYER_TYPE_SKILLS"].freeze
 
     ModelServiceListModelsState = ["STATE_UNSPECIFIED", "STATE_ENABLED", "STATE_DISABLED"].freeze
 
-    ObjectiveServiceListObjectivesState = ["OBJECTIVE_STATE_UNSPECIFIED", "OBJECTIVE_STATE_PENDING", "OBJECTIVE_STATE_RUNNING", "OBJECTIVE_STATE_WAITING", "OBJECTIVE_STATE_FAILED", "OBJECTIVE_STATE_CANCELLED", "OBJECTIVE_STATE_FINALIZED", "OBJECTIVE_STATE_TIMED_OUT"].freeze
+    ObjectiveServiceListObjectivesState = ["OBJECTIVE_STATE_UNSPECIFIED", "OBJECTIVE_STATE_PENDING", "OBJECTIVE_STATE_RUNNING", "OBJECTIVE_STATE_WAITING", "OBJECTIVE_STATE_FAILED", "OBJECTIVE_STATE_CANCELLED", "OBJECTIVE_STATE_FINALIZED", "OBJECTIVE_STATE_TIMED_OUT", "OBJECTIVE_STATE_INTERRUPTING"].freeze
+
+    ObjectiveServiceListObjectiveQueuedActionsState = ["STATE_UNSPECIFIED", "STATE_QUEUED", "STATE_SENT", "STATE_REMOVED", "STATE_DISCARDED"].freeze
 
     ObjectiveServiceListObjectiveToolCallsStatus = ["TOOL_CALL_STATUS_UNSPECIFIED", "TOOL_CALL_STATUS_AUTO_APPROVED", "TOOL_CALL_STATUS_WAITING_FOR_APPROVAL", "TOOL_CALL_STATUS_APPROVED", "TOOL_CALL_STATUS_DENIED"].freeze
 
-    ObjectiveServiceListObjectiveToolCallsExecutionStatus = ["TOOL_CALL_EXECUTION_STATUS_UNSPECIFIED", "TOOL_CALL_EXECUTION_STATUS_PENDING", "TOOL_CALL_EXECUTION_STATUS_RUNNING", "TOOL_CALL_EXECUTION_STATUS_COMPLETED", "TOOL_CALL_EXECUTION_STATUS_ERRORED", "TOOL_CALL_EXECUTION_STATUS_WAITING_FOR_CONTENT"].freeze
+    ObjectiveServiceListObjectiveToolCallsExecutionStatus = ["TOOL_CALL_EXECUTION_STATUS_UNSPECIFIED", "TOOL_CALL_EXECUTION_STATUS_PENDING", "TOOL_CALL_EXECUTION_STATUS_RUNNING", "TOOL_CALL_EXECUTION_STATUS_COMPLETED", "TOOL_CALL_EXECUTION_STATUS_ERRORED", "TOOL_CALL_EXECUTION_STATUS_WAITING_FOR_CONTENT", "TOOL_CALL_EXECUTION_STATUS_INTERRUPTED"].freeze
 
     ToolServiceListToolSetsState = ["STATE_UNSPECIFIED", "STATE_ACTIVE", "STATE_ARCHIVED"].freeze
 
@@ -10993,6 +11480,16 @@ module Cadenya
       encode_fields(ENCODE_CREATE_AGENT_VARIATION_REQUEST, data, drop: DROP_CREATE_AGENT_VARIATION_REQUEST)
     end
 
+    ENCODE_CREATE_AND_STREAM_OBJECTIVE_REQUEST_METADATA = {
+      "labels" => ["labels", nil],
+      "external_id" => ["externalId", nil],
+      "externalId" => ["externalId", nil],
+    }.freeze
+
+    def self.encode_CreateAndStreamObjectiveRequest_Metadata(data)
+      encode_fields(ENCODE_CREATE_AND_STREAM_OBJECTIVE_REQUEST_METADATA, data)
+    end
+
     ENCODE_CREATE_OBJECTIVE_REQUEST_SECRET = {
       "name" => ["name", nil],
       "value" => ["value", nil],
@@ -11141,6 +11638,8 @@ module Cadenya
       "inputPricePerMillionTokens" => ["inputPricePerMillionTokens", nil],
       "output_price_per_million_tokens" => ["outputPricePerMillionTokens", nil],
       "outputPricePerMillionTokens" => ["outputPricePerMillionTokens", nil],
+      "cached_input_price_per_million_tokens" => ["cachedInputPricePerMillionTokens", nil],
+      "cachedInputPricePerMillionTokens" => ["cachedInputPricePerMillionTokens", nil],
     }.freeze
 
     def self.encode_ModelPricingOverride(data)
@@ -11158,6 +11657,8 @@ module Cadenya
       "inputPricePerMillionTokens" => ["inputPricePerMillionTokens", nil],
       "output_price_per_million_tokens" => ["outputPricePerMillionTokens", nil],
       "outputPricePerMillionTokens" => ["outputPricePerMillionTokens", nil],
+      "cached_input_price_per_million_tokens" => ["cachedInputPricePerMillionTokens", nil],
+      "cachedInputPricePerMillionTokens" => ["cachedInputPricePerMillionTokens", nil],
       "capabilities" => ["capabilities", ->(_v) { _v.is_a?(Array) ? _v.map { |_i| (->(_v) { encode_ModelSpec_Capability(_v) }).call(_i) } : _v }],
       "provider_model_id" => ["providerModelId", nil],
       "providerModelId" => ["providerModelId", nil],
@@ -11665,10 +12166,20 @@ module Cadenya
       "description" => ["description", nil],
       "adapter" => ["adapter", ->(_v) { encode_ToolSetAdapter(_v) }],
       "overlays" => ["overlays", ->(_v) { _v.is_a?(Array) ? _v.map { |_i| (->(_v) { encode_ToolOverlay(_v) }).call(_i) } : _v }],
+      "secrets" => ["secrets", ->(_v) { _v.is_a?(Array) ? _v.map { |_i| (->(_v) { encode_ToolSetSpec_Secret(_v) }).call(_i) } : _v }],
     }.freeze
 
     def self.encode_ToolSetSpec(data)
       encode_fields(ENCODE_TOOL_SET_SPEC, data)
+    end
+
+    ENCODE_TOOL_SET_SPEC_SECRET = {
+      "name" => ["name", nil],
+      "value" => ["value", nil],
+    }.freeze
+
+    def self.encode_ToolSetSpec_Secret(data)
+      encode_fields(ENCODE_TOOL_SET_SPEC_SECRET, data)
     end
 
     ENCODE_TOOL_SPEC = {

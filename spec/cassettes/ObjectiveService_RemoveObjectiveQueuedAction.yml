@@ -4,12 +4,10 @@ http_interactions:
   request:
     body:
       encoding: UTF-8
-      string: '{"compactionConfig":{}}'
-    headers:
-      Content-Type:
-      - application/json
+      string: ''
+    headers: {}
     method: post
-    uri: https://api.test.example/v1/workspaces/sample/objectives/sample:compact
+    uri: https://api.test.example/v1/workspaces/sample/objectives/sample/queued_actions/sample:remove
   response:
     body:
       encoding: UTF-8

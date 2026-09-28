@@ -136,7 +136,7 @@ client.workspace_admin.remove_member(profile_id, workspace_id: nil) # => nil
 Retrieves the profile for the credentials accessing the API
 
 ```ruby
-client.profiles.whoami() # => Cadenya::Types::Profile
+client.profiles.whoami() # => Cadenya::Types::WhoamiResponse
 ```
 
 ## client.workspaces
@@ -481,7 +481,7 @@ client.objectives.list(workspace_id: nil, limit: nil, cursor: nil, agent_id: nil
 Create a new objective
 
 ```ruby
-client.objectives.create(agent_id:, system_prompt_data:, workspace_id: nil, variation_id: nil, metadata: nil, first_user_message: nil, secrets: nil, memory_cascade: nil, first_user_message_data: nil, episodic_memory: nil, tenant: nil, subject: nil, pinned_parameters: nil) # => Cadenya::Types::Objective
+client.objectives.create(agent_id:, workspace_id: nil, variation_id: nil, metadata: nil, system_prompt_data: nil, first_user_message: nil, secrets: nil, memory_cascade: nil, first_user_message_data: nil, episodic_memory: nil, tenant: nil, subject: nil, pinned_parameters: nil) # => Cadenya::Types::Objective
 ```
 Get an objective by ID
 
@@ -517,6 +517,16 @@ Submit feedback for an objective
 
 ```ruby
 client.objectives.create_feedback(objective_id, metadata:, data:, workspace_id: nil) # => Cadenya::Types::ObjectiveFeedback
+```
+List objective queued actions
+
+```ruby
+client.objectives.list_queued_actions(objective_id, workspace_id: nil, limit: nil, cursor: nil, state: nil) # => Cadenya::Page of Cadenya::Types::ObjectiveQueuedAction
+```
+Remove a queued action
+
+```ruby
+client.objectives.remove_queued_action(objective_id, queued_action_id:, workspace_id: nil) # => Cadenya::Types::ObjectiveQueuedAction
 ```
 List objective tool calls
 
@@ -556,12 +566,22 @@ client.objectives.cancel(objective_id, workspace_id: nil, reason: nil) # => Cade
 Compact an objective
 
 ```ruby
-client.objectives.compact(objective_id, workspace_id: nil, compaction_config: nil) # => Cadenya::Types::CompactObjectiveResponse
+client.objectives.compact(objective_id, workspace_id: nil, compaction_config: nil) # => Cadenya::Types::ObjectiveQueuedAction
 ```
 Continue an objective
 
 ```ruby
-client.objectives.continue(objective_id, message:, workspace_id: nil, enqueue: nil) # => Cadenya::Types::ObjectiveEvent
+client.objectives.continue(objective_id, message:, workspace_id: nil, enqueue: nil) # => Cadenya::Types::ContinueObjectiveResponse
+```
+Interrupt an objective
+
+```ruby
+client.objectives.interrupt(objective_id, workspace_id: nil) # => Cadenya::Types::ObjectiveEvent
+```
+Create an objective and stream its events
+
+```ruby
+client.objectives.create_and_stream(agent_id:, metadata:, workspace_id: nil, variation_id: nil, system_prompt_data: nil, first_user_message: nil, secrets: nil, memory_cascade: nil, first_user_message_data: nil, episodic_memory: nil, tenant: nil, subject: nil, pinned_parameters: nil, last_event_id: nil) # => Cadenya::Stream
 ```
 
 ## client.tool_search

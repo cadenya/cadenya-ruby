@@ -38,7 +38,7 @@ module Cadenya
       end
 
       # Create a new objective
-      def create(agent_id:, system_prompt_data:, workspace_id: nil, variation_id: nil, metadata: nil, first_user_message: nil, secrets: nil, memory_cascade: nil, first_user_message_data: nil, episodic_memory: nil, tenant: nil, subject: nil, pinned_parameters: nil, request_options: nil)
+      def create(agent_id:, workspace_id: nil, variation_id: nil, metadata: nil, system_prompt_data: nil, first_user_message: nil, secrets: nil, memory_cascade: nil, first_user_message_data: nil, episodic_memory: nil, tenant: nil, subject: nil, pinned_parameters: nil, request_options: nil)
         workspace_id = @core.resolve_default("workspaceId", "CADENYA_WORKSPACE_ID", workspace_id)
         _path = "/v1/workspaces/#{Util.path_param('workspaceId', workspace_id)}/objectives"
         _body = {
@@ -155,6 +155,31 @@ module Cadenya
         Types::ObjectiveFeedback.from_json(_data)
       end
 
+      # List objective queued actions
+      def list_queued_actions(objective_id, workspace_id: nil, limit: nil, cursor: nil, state: nil, request_options: nil)
+        workspace_id = @core.resolve_default("workspaceId", "CADENYA_WORKSPACE_ID", workspace_id)
+        _path = "/v1/workspaces/#{Util.path_param('workspaceId', workspace_id)}/objectives/#{Util.path_param('objectiveId', objective_id)}/queued_actions"
+        _query = {
+          "limit" => limit,
+          "cursor" => cursor,
+          "state" => state,
+        }
+        _data = @core.request(:get, _path, query: _query, request_options: request_options) || {}
+        _items = (_data["items"] || []).map { |item| Types::ObjectiveQueuedAction.from_json(item) }
+        _next_cursor = (((_data)["pagination"] || {}))["nextCursor"].to_s
+        Page.new(_items, _next_cursor) do |_c|
+          list_queued_actions(objective_id, workspace_id: workspace_id, limit: limit, cursor: _c, state: state, request_options: request_options)
+        end
+      end
+
+      # Remove a queued action
+      def remove_queued_action(objective_id, queued_action_id:, workspace_id: nil, request_options: nil)
+        workspace_id = @core.resolve_default("workspaceId", "CADENYA_WORKSPACE_ID", workspace_id)
+        _path = "/v1/workspaces/#{Util.path_param('workspaceId', workspace_id)}/objectives/#{Util.path_param('objectiveId', objective_id)}/queued_actions/#{Util.path_param('queuedActionId', queued_action_id)}:remove"
+        _data = @core.request(:post, _path, request_options: request_options)
+        Types::ObjectiveQueuedAction.from_json(_data)
+      end
+
       # List objective tool calls
       def list_tool_calls(objective_id, workspace_id: nil, limit: nil, cursor: nil, status: nil, include_info: nil, execution_status: nil, labels: nil, request_options: nil)
         workspace_id = @core.resolve_default("workspaceId", "CADENYA_WORKSPACE_ID", workspace_id)
@@ -248,7 +273,7 @@ module Cadenya
           "compactionConfig" => compaction_config.nil? ? nil : (->(_v) { Types.encode_AgentVariationSpec_CompactionConfig(_v) }).call(compaction_config),
         }.reject { |_k, v| v.nil? }
         _data = @core.request(:post, _path, body: _body, request_options: request_options)
-        Types::CompactObjectiveResponse.from_json(_data)
+        Types::ObjectiveQueuedAction.from_json(_data)
       end
 
       # Continue an objective
@@ -260,7 +285,41 @@ module Cadenya
           "enqueue" => enqueue,
         }.reject { |_k, v| v.nil? }
         _data = @core.request(:post, _path, body: _body, request_options: request_options)
+        Types.decode_ContinueObjectiveResponse(_data)
+      end
+
+      # Interrupt an objective
+      def interrupt(objective_id, workspace_id: nil, request_options: nil)
+        workspace_id = @core.resolve_default("workspaceId", "CADENYA_WORKSPACE_ID", workspace_id)
+        _path = "/v1/workspaces/#{Util.path_param('workspaceId', workspace_id)}/objectives/#{Util.path_param('objectiveId', objective_id)}:interrupt"
+        _data = @core.request(:post, _path, request_options: request_options)
         Types::ObjectiveEvent.from_json(_data)
+      end
+
+      # Create an objective and stream its events
+      def create_and_stream(agent_id:, metadata:, workspace_id: nil, variation_id: nil, system_prompt_data: nil, first_user_message: nil, secrets: nil, memory_cascade: nil, first_user_message_data: nil, episodic_memory: nil, tenant: nil, subject: nil, pinned_parameters: nil, last_event_id: nil, request_options: nil)
+        workspace_id = @core.resolve_default("workspaceId", "CADENYA_WORKSPACE_ID", workspace_id)
+        _path = "/v1/workspaces/#{Util.path_param('workspaceId', workspace_id)}/objectives:stream"
+        _body = {
+          "agentId" => agent_id,
+          "variationId" => variation_id,
+          "metadata" => metadata.nil? ? nil : (->(_v) { Types.encode_CreateAndStreamObjectiveRequest_Metadata(_v) }).call(metadata),
+          "systemPromptData" => system_prompt_data,
+          "firstUserMessage" => first_user_message,
+          "secrets" => secrets.nil? ? nil : (->(_v) { _v.is_a?(Array) ? _v.map { |_i| (->(_v) { Types.encode_CreateObjectiveRequest_Secret(_v) }).call(_i) } : _v }).call(secrets),
+          "memoryCascade" => memory_cascade.nil? ? nil : (->(_v) { _v.is_a?(Array) ? _v.map { |_i| (->(_v) { Types.encode_MemoryReference(_v) }).call(_i) } : _v }).call(memory_cascade),
+          "firstUserMessageData" => first_user_message_data,
+          "episodicMemory" => episodic_memory.nil? ? nil : (->(_v) { Types.encode_ObjectiveEpisodicConfig(_v) }).call(episodic_memory),
+          "tenant" => tenant.nil? ? nil : (->(_v) { Types.encode_TenantAssertion(_v) }).call(tenant),
+          "subject" => subject.nil? ? nil : (->(_v) { Types.encode_SubjectAssertion(_v) }).call(subject),
+          "pinnedParameters" => pinned_parameters,
+        }.reject { |_k, v| v.nil? }
+        _headers = last_event_id ? { "Last-Event-ID" => last_event_id } : nil
+        _decoder = ->(event) { Types.decode_CreateAndStreamObjectiveResponse(event) }
+        _auto_reconnect = !(request_options && request_options[:reconnect] == false)
+        Stream.new(_decoder, last_event_id: last_event_id, skip_events: ["ping", "open"], auto_reconnect: _auto_reconnect) do |_cancel, _resume, &on_chunk|
+          @core.stream_request(:post, _path, body: _body, headers: (_resume ? { "Last-Event-ID" => _resume } : nil), request_options: request_options, cancel: _cancel, &on_chunk)
+        end
       end
     end
   end
