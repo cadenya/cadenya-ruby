@@ -126,6 +126,8 @@ run("ObjectiveService_ListObjectiveEvents") { check_page(client.objectives.list_
 run("ObjectiveEventStreamsService_StreamObjectiveEvents") { check_stream(client.objectives.stream_events("sample", workspace_id: "sample")) }
 run("ObjectiveService_ListObjectiveFeedback") { check_page(client.objectives.list_feedback("sample", workspace_id: "sample", limit: 1, cursor: "sample", labels: "sample")) }
 run("ObjectiveService_CreateObjectiveFeedback") { client.objectives.create_feedback("sample", workspace_id: "sample", metadata: {}, data: {}) }
+run("ObjectiveService_ListObjectiveQueuedActions") { check_page(client.objectives.list_queued_actions("sample", workspace_id: "sample", limit: 1, cursor: "sample", state: "STATE_QUEUED")) }
+run("ObjectiveService_RemoveObjectiveQueuedAction") { client.objectives.remove_queued_action("sample", workspace_id: "sample", queued_action_id: "sample") }
 run("ObjectiveService_ListObjectiveToolCalls") { check_page(client.objectives.list_tool_calls("sample", workspace_id: "sample", limit: 1, cursor: "sample", status: "TOOL_CALL_STATUS_AUTO_APPROVED", include_info: true, execution_status: "TOOL_CALL_EXECUTION_STATUS_PENDING", labels: "sample")) }
 run("ObjectiveService_GetObjectiveToolCall") { client.objectives.retrieve_tool_call("sample", "sample", workspace_id: "sample") }
 run("ObjectiveService_ApproveToolCall") { client.objectives.approve_tool_call("sample", "sample", workspace_id: "sample") }
@@ -135,6 +137,8 @@ run("ObjectiveService_ListObjectiveTools") { check_page(client.objectives.list_t
 run("ObjectiveService_CancelObjective") { client.objectives.cancel("sample", workspace_id: "sample", reason: "sample") }
 run("ObjectiveService_CompactObjective") { client.objectives.compact("sample", workspace_id: "sample", compaction_config: {}) }
 run("ObjectiveService_ContinueObjective") { client.objectives.continue("sample", workspace_id: "sample", message: "sample", enqueue: true) }
+run("ObjectiveService_InterruptObjective") { client.objectives.interrupt("sample", workspace_id: "sample") }
+run("ObjectiveEventStreamsService_CreateAndStreamObjective") { check_stream(client.objectives.create_and_stream(workspace_id: "sample", agent_id: "sample", variation_id: "sample", metadata: {"external_id" => "sample"}, system_prompt_data: {}, first_user_message: "sample", secrets: [{}], memory_cascade: [{"memory_layer_id" => "sample"}], first_user_message_data: {}, episodic_memory: {"key" => "sample"}, tenant: {"id" => "sample"}, subject: {"id" => "sample"}, pinned_parameters: {})) }
 run("SearchService_SearchToolsOrToolSets") { client.tool_search.search_or_sets(workspace_id: "sample", query: "sample") }
 run("TenantService_ListTenants") { check_page(client.tenants.list(workspace_id: "sample", limit: 1, cursor: "sample", query: "sample", labels: "sample", sort_order: "sample", include_info: true)) }
 run("TenantService_GetTenant") { client.tenants.retrieve("sample", workspace_id: "sample", include_info: true) }

@@ -9,7 +9,7 @@ RSpec.describe "client.profiles" do
     it "sends the golden request and decodes the response" do
       VCR.use_cassette("ProfilesService_Whoami") do
         result = client.profiles.whoami
-        expect(result).to be_a(Cadenya::Types::Profile)
+        expect(result).to be_a(Cadenya::Types::WhoamiResponse)
       end
     end
   end
