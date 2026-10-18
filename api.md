@@ -22,26 +22,6 @@ client.accounts.rotate_webhook_signing_key() # => Cadenya::Types::RotateWebhookE
 
 ## client.api_keys
 
-Get the global API key
-
-```ruby
-client.api_keys.retrieve_global() # => Cadenya::Types::APIKey
-```
-Disable the global API key
-
-```ruby
-client.api_keys.disable_global() # => Cadenya::Types::APIKey
-```
-Enable the global API key
-
-```ruby
-client.api_keys.enable_global() # => Cadenya::Types::APIKey
-```
-Rotate the global API key
-
-```ruby
-client.api_keys.rotate_global() # => Cadenya::Types::APIKey
-```
 List API keys
 
 ```ruby
@@ -50,37 +30,52 @@ client.api_keys.list(workspace_id: nil, limit: nil, cursor: nil, prefix: nil, qu
 Create a new API key
 
 ```ruby
-client.api_keys.create(metadata:, spec:, workspace_id: nil) # => Cadenya::Types::APIKey
+client.api_keys.create(metadata:, spec:) # => Cadenya::Types::APIKey
 ```
 Get an API key by ID
 
 ```ruby
-client.api_keys.retrieve(id, workspace_id: nil) # => Cadenya::Types::APIKey
+client.api_keys.retrieve(id) # => Cadenya::Types::APIKey
 ```
 Delete an API key
 
 ```ruby
-client.api_keys.delete(id, workspace_id: nil) # => nil
+client.api_keys.delete(id) # => nil
 ```
 Update an API key
 
 ```ruby
-client.api_keys.update(id, workspace_id: nil, metadata: nil, spec: nil, update_mask: nil) # => Cadenya::Types::APIKey
+client.api_keys.update(id, metadata: nil, spec: nil, update_mask: nil) # => Cadenya::Types::APIKey
+```
+Assign a workspace to an API key
+
+```ruby
+client.api_keys.add_workspace(id, workspace_id:) # => Cadenya::Types::APIKey
 ```
 Disable an API key
 
 ```ruby
-client.api_keys.disable(id, workspace_id: nil) # => Cadenya::Types::APIKey
+client.api_keys.disable(id) # => Cadenya::Types::APIKey
 ```
 Enable an API key
 
 ```ruby
-client.api_keys.enable(id, workspace_id: nil) # => Cadenya::Types::APIKey
+client.api_keys.enable(id) # => Cadenya::Types::APIKey
+```
+Remove a workspace from an API key
+
+```ruby
+client.api_keys.remove_workspace(id, workspace_id:) # => Cadenya::Types::APIKey
+```
+Reveal an API key's token
+
+```ruby
+client.api_keys.reveal(id) # => Cadenya::Types::APIKey
 ```
 Rotate an API key
 
 ```ruby
-client.api_keys.rotate(id, workspace_id: nil) # => Cadenya::Types::APIKey
+client.api_keys.rotate(id) # => Cadenya::Types::APIKey
 ```
 
 ## client.workspace_admin
@@ -129,6 +124,34 @@ Remove a member from a workspace
 
 ```ruby
 client.workspace_admin.remove_member(profile_id, workspace_id: nil) # => nil
+```
+
+## client.trusted_endpoints
+
+List trusted endpoints
+
+```ruby
+client.trusted_endpoints.list(limit: nil, cursor: nil, labels: nil) # => Cadenya::Page of Cadenya::Types::TrustedEndpoint
+```
+Create a trusted endpoint
+
+```ruby
+client.trusted_endpoints.create(metadata:, spec:) # => Cadenya::Types::TrustedEndpoint
+```
+Get a trusted endpoint by ID
+
+```ruby
+client.trusted_endpoints.retrieve(id) # => Cadenya::Types::TrustedEndpoint
+```
+Delete a trusted endpoint
+
+```ruby
+client.trusted_endpoints.delete(id) # => nil
+```
+Verify a URL against the trusted endpoints
+
+```ruby
+client.trusted_endpoints.verify(url:) # => Cadenya::Types::VerifyTrustedEndpointResponse
 ```
 
 ## client.profiles
@@ -420,12 +443,12 @@ client.models.swap_on_variations(workspace_id: nil, model_swaps: nil) # => nil
 List memory layers
 
 ```ruby
-client.memory_layers.list(workspace_id: nil, limit: nil, cursor: nil, prefix: nil, query: nil, type: nil, agent_id: nil, episodic_key_prefix: nil, labels: nil, sort_order: nil, include_info: nil) # => Cadenya::Page of Cadenya::Types::MemoryLayer
+client.memory_layers.list(workspace_id: nil, limit: nil, cursor: nil, prefix: nil, query: nil, type: nil, agent_id: nil, episodic_key_prefix: nil, labels: nil, tenant_id: nil, subject_id: nil, sort_order: nil, include_info: nil) # => Cadenya::Page of Cadenya::Types::MemoryLayer
 ```
 Create a new memory layer
 
 ```ruby
-client.memory_layers.create(metadata:, spec:, workspace_id: nil) # => Cadenya::Types::MemoryLayer
+client.memory_layers.create(metadata:, spec:, workspace_id: nil, tenant: nil, subject: nil) # => Cadenya::Types::MemoryLayer
 ```
 Get a memory layer by ID
 

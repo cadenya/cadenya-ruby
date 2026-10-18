@@ -7,7 +7,7 @@ http_interactions:
       string: ''
     headers: {}
     method: delete
-    uri: https://api.test.example/v1/workspaces/sample/api_keys/sample
+    uri: https://api.test.example/v1/account/api_keys/sample
   response:
     body:
       encoding: UTF-8

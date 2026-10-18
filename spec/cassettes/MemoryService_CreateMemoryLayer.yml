@@ -4,7 +4,7 @@ http_interactions:
   request:
     body:
       encoding: UTF-8
-      string: '{"metadata":{"name":"sample"},"spec":{"type":"MEMORY_LAYER_TYPE_EPISODIC"}}'
+      string: '{"metadata":{"name":"sample"},"spec":{"type":"MEMORY_LAYER_TYPE_EPISODIC"},"subject":{"id":"sample"},"tenant":{"id":"sample"}}'
     headers:
       Content-Type:
       - application/json

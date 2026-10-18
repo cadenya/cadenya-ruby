@@ -5,42 +5,6 @@
 RSpec.describe "client.api_keys" do
   let(:client) { build_client }
 
-  describe "#retrieve_global" do
-    it "sends the golden request and decodes the response" do
-      VCR.use_cassette("GlobalAPIKeyService_GetGlobalAPIKey") do
-        result = client.api_keys.retrieve_global
-        expect(result).to be_a(Cadenya::Types::APIKey)
-      end
-    end
-  end
-
-  describe "#disable_global" do
-    it "sends the golden request and decodes the response" do
-      VCR.use_cassette("GlobalAPIKeyService_DisableGlobalAPIKey") do
-        result = client.api_keys.disable_global
-        expect(result).to be_a(Cadenya::Types::APIKey)
-      end
-    end
-  end
-
-  describe "#enable_global" do
-    it "sends the golden request and decodes the response" do
-      VCR.use_cassette("GlobalAPIKeyService_EnableGlobalAPIKey") do
-        result = client.api_keys.enable_global
-        expect(result).to be_a(Cadenya::Types::APIKey)
-      end
-    end
-  end
-
-  describe "#rotate_global" do
-    it "sends the golden request and decodes the response" do
-      VCR.use_cassette("GlobalAPIKeyService_RotateGlobalAPIKey") do
-        result = client.api_keys.rotate_global
-        expect(result).to be_a(Cadenya::Types::APIKey)
-      end
-    end
-  end
-
   describe "#list" do
     it "sends the golden request and decodes the response" do
       VCR.use_cassette("APIKeyService_ListAPIKeys") do
@@ -52,11 +16,12 @@ RSpec.describe "client.api_keys" do
 
     context "when workspace_id falls back to the client default" do
       it "resolves the client-level value" do
-        stub = stub_request(:get, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/api_keys")
+        stub = stub_request(:get, %r{\A#{Regexp.escape(SPEC_BASE_URL)}})
           .with(query: hash_including({}))
-          .to_return(status: 200, body: "{\"items\":[{\"metadata\":{\"accountId\":\"sample\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\"},\"spec\":{\"system\":true,\"token\":\"sample\"},\"state\":\"STATE_ENABLED\"}],\"pagination\":{\"nextCursor\":\"\"}}", headers: { "Content-Type" => "application/json" })
+          .to_return(status: 200, body: "{\"items\":[{\"metadata\":{\"accountId\":\"sample\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\"},\"spec\":{\"allWorkspaces\":true,\"default\":true,\"token\":\"sample\",\"workspaceAssignments\":[{\"workspaceId\":\"sample\"}]},\"state\":\"STATE_ENABLED\"}],\"pagination\":{\"nextCursor\":\"\"}}", headers: { "Content-Type" => "application/json" })
         client.api_keys.list(limit: 1, cursor: "sample", prefix: "sample", query: "sample", labels: "sample", sort_order: "sample", include_info: true)
         expect(stub).to have_been_requested
+        expect(WebMock).to have_requested(:get, %r{.*}).with(query: hash_including("workspaceId" => "default_workspace_id"))
       end
     end
   end
@@ -64,17 +29,8 @@ RSpec.describe "client.api_keys" do
   describe "#create" do
     it "sends the golden request and decodes the response" do
       VCR.use_cassette("APIKeyService_CreateAPIKey") do
-        result = client.api_keys.create(workspace_id: "sample", metadata: {"name" => "sample"}, spec: {})
+        result = client.api_keys.create(metadata: {"name" => "sample"}, spec: {"all_workspaces" => true, "workspace_assignments" => [{"workspace_id" => "sample"}]})
         expect(result).to be_a(Cadenya::Types::APIKey)
-      end
-    end
-
-    context "when workspace_id falls back to the client default" do
-      it "resolves the client-level value" do
-        stub = stub_request(:post, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/api_keys")
-          .to_return(status: 200, body: "{\"metadata\":{\"accountId\":\"sample\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\"},\"spec\":{\"system\":true,\"token\":\"sample\"},\"state\":\"STATE_ENABLED\"}", headers: { "Content-Type" => "application/json" })
-        client.api_keys.create(metadata: {"name" => "sample"}, spec: {})
-        expect(stub).to have_been_requested
       end
     end
   end
@@ -82,17 +38,8 @@ RSpec.describe "client.api_keys" do
   describe "#retrieve" do
     it "sends the golden request and decodes the response" do
       VCR.use_cassette("APIKeyService_GetAPIKey") do
-        result = client.api_keys.retrieve("sample", workspace_id: "sample")
+        result = client.api_keys.retrieve("sample")
         expect(result).to be_a(Cadenya::Types::APIKey)
-      end
-    end
-
-    context "when workspace_id falls back to the client default" do
-      it "resolves the client-level value" do
-        stub = stub_request(:get, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/api_keys/sample")
-          .to_return(status: 200, body: "{\"metadata\":{\"accountId\":\"sample\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\"},\"spec\":{\"system\":true,\"token\":\"sample\"},\"state\":\"STATE_ENABLED\"}", headers: { "Content-Type" => "application/json" })
-        client.api_keys.retrieve("sample")
-        expect(stub).to have_been_requested
       end
     end
   end
@@ -100,17 +47,8 @@ RSpec.describe "client.api_keys" do
   describe "#delete" do
     it "sends the golden request and decodes the response" do
       VCR.use_cassette("APIKeyService_DeleteAPIKey") do
-        result = client.api_keys.delete("sample", workspace_id: "sample")
+        result = client.api_keys.delete("sample")
         expect(result).to be_nil
-      end
-    end
-
-    context "when workspace_id falls back to the client default" do
-      it "resolves the client-level value" do
-        stub = stub_request(:delete, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/api_keys/sample")
-          .to_return(status: 204, body: "")
-        client.api_keys.delete("sample")
-        expect(stub).to have_been_requested
       end
     end
   end
@@ -118,17 +56,17 @@ RSpec.describe "client.api_keys" do
   describe "#update" do
     it "sends the golden request and decodes the response" do
       VCR.use_cassette("APIKeyService_UpdateAPIKey") do
-        result = client.api_keys.update("sample", workspace_id: "sample", metadata: {"name" => "sample"}, spec: {}, update_mask: "sample")
+        result = client.api_keys.update("sample", metadata: {"name" => "sample"}, spec: {"all_workspaces" => true, "workspace_assignments" => [{"workspace_id" => "sample"}]}, update_mask: "sample")
         expect(result).to be_a(Cadenya::Types::APIKey)
       end
     end
+  end
 
-    context "when workspace_id falls back to the client default" do
-      it "resolves the client-level value" do
-        stub = stub_request(:patch, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/api_keys/sample")
-          .to_return(status: 200, body: "{\"metadata\":{\"accountId\":\"sample\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\"},\"spec\":{\"system\":true,\"token\":\"sample\"},\"state\":\"STATE_ENABLED\"}", headers: { "Content-Type" => "application/json" })
-        client.api_keys.update("sample", metadata: {"name" => "sample"}, spec: {}, update_mask: "sample")
-        expect(stub).to have_been_requested
+  describe "#add_workspace" do
+    it "sends the golden request and decodes the response" do
+      VCR.use_cassette("APIKeyService_AddAPIKeyWorkspace") do
+        result = client.api_keys.add_workspace("sample", workspace_id: "sample")
+        expect(result).to be_a(Cadenya::Types::APIKey)
       end
     end
   end
@@ -136,17 +74,8 @@ RSpec.describe "client.api_keys" do
   describe "#disable" do
     it "sends the golden request and decodes the response" do
       VCR.use_cassette("APIKeyService_DisableAPIKey") do
-        result = client.api_keys.disable("sample", workspace_id: "sample")
+        result = client.api_keys.disable("sample")
         expect(result).to be_a(Cadenya::Types::APIKey)
-      end
-    end
-
-    context "when workspace_id falls back to the client default" do
-      it "resolves the client-level value" do
-        stub = stub_request(:post, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/api_keys/sample:disable")
-          .to_return(status: 200, body: "{\"metadata\":{\"accountId\":\"sample\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\"},\"spec\":{\"system\":true,\"token\":\"sample\"},\"state\":\"STATE_ENABLED\"}", headers: { "Content-Type" => "application/json" })
-        client.api_keys.disable("sample")
-        expect(stub).to have_been_requested
       end
     end
   end
@@ -154,17 +83,26 @@ RSpec.describe "client.api_keys" do
   describe "#enable" do
     it "sends the golden request and decodes the response" do
       VCR.use_cassette("APIKeyService_EnableAPIKey") do
-        result = client.api_keys.enable("sample", workspace_id: "sample")
+        result = client.api_keys.enable("sample")
         expect(result).to be_a(Cadenya::Types::APIKey)
       end
     end
+  end
 
-    context "when workspace_id falls back to the client default" do
-      it "resolves the client-level value" do
-        stub = stub_request(:post, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/api_keys/sample:enable")
-          .to_return(status: 200, body: "{\"metadata\":{\"accountId\":\"sample\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\"},\"spec\":{\"system\":true,\"token\":\"sample\"},\"state\":\"STATE_ENABLED\"}", headers: { "Content-Type" => "application/json" })
-        client.api_keys.enable("sample")
-        expect(stub).to have_been_requested
+  describe "#remove_workspace" do
+    it "sends the golden request and decodes the response" do
+      VCR.use_cassette("APIKeyService_RemoveAPIKeyWorkspace") do
+        result = client.api_keys.remove_workspace("sample", workspace_id: "sample")
+        expect(result).to be_a(Cadenya::Types::APIKey)
+      end
+    end
+  end
+
+  describe "#reveal" do
+    it "sends the golden request and decodes the response" do
+      VCR.use_cassette("APIKeyService_RevealAPIKey") do
+        result = client.api_keys.reveal("sample")
+        expect(result).to be_a(Cadenya::Types::APIKey)
       end
     end
   end
@@ -172,17 +110,8 @@ RSpec.describe "client.api_keys" do
   describe "#rotate" do
     it "sends the golden request and decodes the response" do
       VCR.use_cassette("APIKeyService_RotateAPIKey") do
-        result = client.api_keys.rotate("sample", workspace_id: "sample")
+        result = client.api_keys.rotate("sample")
         expect(result).to be_a(Cadenya::Types::APIKey)
-      end
-    end
-
-    context "when workspace_id falls back to the client default" do
-      it "resolves the client-level value" do
-        stub = stub_request(:post, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/api_keys/sample:rotate")
-          .to_return(status: 200, body: "{\"metadata\":{\"accountId\":\"sample\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\"},\"spec\":{\"system\":true,\"token\":\"sample\"},\"state\":\"STATE_ENABLED\"}", headers: { "Content-Type" => "application/json" })
-        client.api_keys.rotate("sample")
-        expect(stub).to have_been_requested
       end
     end
   end

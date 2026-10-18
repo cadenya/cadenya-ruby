@@ -235,33 +235,38 @@ module Cadenya
     end
 
     class APIKeyInfo
-      attr_reader :created_by
+      attr_reader :created_by, :workspaces
 
-      def initialize(created_by: nil)
+      def initialize(created_by: nil, workspaces: nil)
         @created_by = created_by
+        @workspaces = workspaces
       end
 
       def self.from_json(data)
         new(
           created_by: data["createdBy"].nil? ? nil : Types::Profile.from_json(data["createdBy"]),
+          workspaces: data["workspaces"].nil? ? nil : (data["workspaces"]).map { |item| Types::AccountResourceMetadata.from_json(item) },
         )
       end
 
       def to_h
         {
           created_by: Util.plain(@created_by),
+          workspaces: Util.plain(@workspaces),
         }.reject { |_k, v| v.nil? }
       end
     end
 
     class APIKeySpec
-      attr_reader :token, :description, :permissions, :system
+      attr_reader :token, :description, :permissions, :all_workspaces, :workspace_assignments, :default
 
-      def initialize(token: nil, description: nil, permissions: nil, system: nil)
+      def initialize(token: nil, description: nil, permissions: nil, all_workspaces: nil, workspace_assignments: nil, default: nil)
         @token = token
         @description = description
         @permissions = permissions
-        @system = system
+        @all_workspaces = all_workspaces
+        @workspace_assignments = workspace_assignments
+        @default = default
       end
 
       def self.from_json(data)
@@ -269,7 +274,9 @@ module Cadenya
           token: data["token"],
           description: data["description"],
           permissions: data["permissions"],
-          system: data["system"],
+          all_workspaces: data["allWorkspaces"],
+          workspace_assignments: data["workspaceAssignments"].nil? ? nil : (data["workspaceAssignments"]).map { |item| Types::APIKeyWorkspaceAssignment.from_json(item) },
+          default: data["default"],
         )
       end
 
@@ -278,7 +285,29 @@ module Cadenya
           token: Util.plain(@token),
           description: Util.plain(@description),
           permissions: Util.plain(@permissions),
-          system: Util.plain(@system),
+          all_workspaces: Util.plain(@all_workspaces),
+          workspace_assignments: Util.plain(@workspace_assignments),
+          default: Util.plain(@default),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    class APIKeyWorkspaceAssignment
+      attr_reader :workspace_id
+
+      def initialize(workspace_id: nil)
+        @workspace_id = workspace_id
+      end
+
+      def self.from_json(data)
+        new(
+          workspace_id: data["workspaceId"],
+        )
+      end
+
+      def to_h
+        {
+          workspace_id: Util.plain(@workspace_id),
         }.reject { |_k, v| v.nil? }
       end
     end
@@ -418,6 +447,29 @@ module Cadenya
         {
           workspace_id: Util.plain(@workspace_id),
           id: Util.plain(@id),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    class AddAPIKeyWorkspaceRequest
+      attr_reader :id, :workspace_id
+
+      def initialize(id: nil, workspace_id: nil)
+        @id = id
+        @workspace_id = workspace_id
+      end
+
+      def self.from_json(data)
+        new(
+          id: data["id"],
+          workspace_id: data["workspaceId"],
+        )
+      end
+
+      def to_h
+        {
+          id: Util.plain(@id),
+          workspace_id: Util.plain(@workspace_id),
         }.reject { |_k, v| v.nil? }
       end
     end
@@ -817,9 +869,9 @@ module Cadenya
     AgentSpecVariationSelectionMode = ["VARIATION_SELECTION_MODE_UNSPECIFIED", "VARIATION_SELECTION_MODE_RANDOM", "VARIATION_SELECTION_MODE_WEIGHTED"].freeze
 
     class AgentSpec
-      attr_reader :description, :webhook_events_url, :variation_selection_mode, :system_prompt_data_schema, :output_definition, :enable_episodic_memory, :episodic_memory_ttl
+      attr_reader :description, :webhook_events_url, :variation_selection_mode, :system_prompt_data_schema, :output_definition, :enable_episodic_memory, :episodic_memory_ttl, :always_include_subject_memories
 
-      def initialize(description: nil, webhook_events_url: nil, variation_selection_mode: nil, system_prompt_data_schema: nil, output_definition: nil, enable_episodic_memory: nil, episodic_memory_ttl: nil)
+      def initialize(description: nil, webhook_events_url: nil, variation_selection_mode: nil, system_prompt_data_schema: nil, output_definition: nil, enable_episodic_memory: nil, episodic_memory_ttl: nil, always_include_subject_memories: nil)
         @description = description
         @webhook_events_url = webhook_events_url
         @variation_selection_mode = variation_selection_mode
@@ -827,6 +879,7 @@ module Cadenya
         @output_definition = output_definition
         @enable_episodic_memory = enable_episodic_memory
         @episodic_memory_ttl = episodic_memory_ttl
+        @always_include_subject_memories = always_include_subject_memories
       end
 
       def self.from_json(data)
@@ -838,6 +891,7 @@ module Cadenya
           output_definition: data["outputDefinition"],
           enable_episodic_memory: data["enableEpisodicMemory"],
           episodic_memory_ttl: data["episodicMemoryTtl"],
+          always_include_subject_memories: data["alwaysIncludeSubjectMemories"],
         )
       end
 
@@ -850,6 +904,7 @@ module Cadenya
           output_definition: Util.plain(@output_definition),
           enable_episodic_memory: Util.plain(@enable_episodic_memory),
           episodic_memory_ttl: Util.plain(@episodic_memory_ttl),
+          always_include_subject_memories: Util.plain(@always_include_subject_memories),
         }.reject { |_k, v| v.nil? }
       end
     end
@@ -1237,17 +1292,21 @@ module Cadenya
     end
 
     class AssistantMessage
-      attr_reader :content, :tool_calls
+      attr_reader :content, :tool_calls, :usage, :model
 
-      def initialize(content: nil, tool_calls: nil)
+      def initialize(content: nil, tool_calls: nil, usage: nil, model: nil)
         @content = content
         @tool_calls = tool_calls
+        @usage = usage
+        @model = model
       end
 
       def self.from_json(data)
         new(
           content: data["content"],
           tool_calls: data["toolCalls"].nil? ? nil : (data["toolCalls"]).map { |item| Types::AssistantToolCall.from_json(item) },
+          usage: data["usage"].nil? ? nil : Types::TokenUsage.from_json(data["usage"]),
+          model: data["model"].nil? ? nil : Types::ResourceMetadata.from_json(data["model"]),
         )
       end
 
@@ -1255,17 +1314,20 @@ module Cadenya
         {
           content: Util.plain(@content),
           tool_calls: Util.plain(@tool_calls),
+          usage: Util.plain(@usage),
+          model: Util.plain(@model),
         }.reject { |_k, v| v.nil? }
       end
     end
 
     class AssistantToolCall
-      attr_reader :tool, :arguments, :function_name
+      attr_reader :tool, :arguments, :function_name, :tool_call_id
 
-      def initialize(tool: nil, arguments: nil, function_name: nil)
+      def initialize(tool: nil, arguments: nil, function_name: nil, tool_call_id: nil)
         @tool = tool
         @arguments = arguments
         @function_name = function_name
+        @tool_call_id = tool_call_id
       end
 
       def self.from_json(data)
@@ -1273,6 +1335,7 @@ module Cadenya
           tool: data["tool"].nil? ? nil : Types.decode_CallableTool(data["tool"]),
           arguments: data["arguments"],
           function_name: data["functionName"],
+          tool_call_id: data["toolCallId"],
         )
       end
 
@@ -1281,6 +1344,58 @@ module Cadenya
           tool: Util.plain(@tool),
           arguments: Util.plain(@arguments),
           function_name: Util.plain(@function_name),
+          tool_call_id: Util.plain(@tool_call_id),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    AutoModeConfigPassingMode = ["PASSING_MODE_UNSPECIFIED", "PASSING_MODE_ALL", "PASSING_MODE_NONE", "PASSING_MODE_MOST"].freeze
+
+    class AutoModeConfig
+      attr_reader :questions, :passing_mode, :failure_message
+
+      def initialize(questions: nil, passing_mode: nil, failure_message: nil)
+        @questions = questions
+        @passing_mode = passing_mode
+        @failure_message = failure_message
+      end
+
+      def self.from_json(data)
+        new(
+          questions: data["questions"].nil? ? nil : (data["questions"]).map { |item| Types::AutoModeQuestion.from_json(item) },
+          passing_mode: data["passingMode"],
+          failure_message: data["failureMessage"],
+        )
+      end
+
+      def to_h
+        {
+          questions: Util.plain(@questions),
+          passing_mode: Util.plain(@passing_mode),
+          failure_message: Util.plain(@failure_message),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    class AutoModeQuestion
+      attr_reader :question, :threshold
+
+      def initialize(question: nil, threshold: nil)
+        @question = question
+        @threshold = threshold
+      end
+
+      def self.from_json(data)
+        new(
+          question: data["question"],
+          threshold: data["threshold"],
+        )
+      end
+
+      def to_h
+        {
+          question: Util.plain(@question),
+          threshold: Util.plain(@threshold),
         }.reject { |_k, v| v.nil? }
       end
     end
@@ -1606,17 +1721,19 @@ module Cadenya
     end
 
     class Config_OpenAPI
-      attr_reader :path, :method
+      attr_reader :path, :method, :server_url
 
-      def initialize(path: nil, method: nil)
+      def initialize(path: nil, method: nil, server_url: nil)
         @path = path
         @method = method
+        @server_url = server_url
       end
 
       def self.from_json(data)
         new(
           path: data["path"],
           method: data["method"],
+          server_url: data["serverUrl"],
         )
       end
 
@@ -1624,6 +1741,7 @@ module Cadenya
         {
           path: Util.plain(@path),
           method: Util.plain(@method),
+          server_url: Util.plain(@server_url),
         }.reject { |_k, v| v.nil? }
       end
     end
@@ -1766,19 +1884,17 @@ module Cadenya
     end
 
     class CreateAPIKeyRequest
-      attr_reader :metadata, :spec, :workspace_id
+      attr_reader :metadata, :spec
 
-      def initialize(metadata: nil, spec: nil, workspace_id: nil)
+      def initialize(metadata: nil, spec: nil)
         @metadata = metadata
         @spec = spec
-        @workspace_id = workspace_id
       end
 
       def self.from_json(data)
         new(
           metadata: data["metadata"].nil? ? nil : Types::CreateAccountResourceMetadata.from_json(data["metadata"]),
           spec: data["spec"].nil? ? nil : Types::APIKeySpec.from_json(data["spec"]),
-          workspace_id: data["workspaceId"],
         )
       end
 
@@ -1786,7 +1902,6 @@ module Cadenya
         {
           metadata: Util.plain(@metadata),
           spec: Util.plain(@spec),
-          workspace_id: Util.plain(@workspace_id),
         }.reject { |_k, v| v.nil? }
       end
     end
@@ -2051,12 +2166,14 @@ module Cadenya
     end
 
     class CreateMemoryLayerRequest
-      attr_reader :workspace_id, :metadata, :spec
+      attr_reader :workspace_id, :metadata, :spec, :tenant, :subject
 
-      def initialize(workspace_id: nil, metadata: nil, spec: nil)
+      def initialize(workspace_id: nil, metadata: nil, spec: nil, tenant: nil, subject: nil)
         @workspace_id = workspace_id
         @metadata = metadata
         @spec = spec
+        @tenant = tenant
+        @subject = subject
       end
 
       def self.from_json(data)
@@ -2064,6 +2181,8 @@ module Cadenya
           workspace_id: data["workspaceId"],
           metadata: data["metadata"].nil? ? nil : Types::CreateResourceMetadata.from_json(data["metadata"]),
           spec: data["spec"].nil? ? nil : Types::MemoryLayerSpec.from_json(data["spec"]),
+          tenant: data["tenant"].nil? ? nil : Types::TenantAssertion.from_json(data["tenant"]),
+          subject: data["subject"].nil? ? nil : Types::SubjectAssertion.from_json(data["subject"]),
         )
       end
 
@@ -2072,6 +2191,8 @@ module Cadenya
           workspace_id: Util.plain(@workspace_id),
           metadata: Util.plain(@metadata),
           spec: Util.plain(@spec),
+          tenant: Util.plain(@tenant),
+          subject: Util.plain(@subject),
         }.reject { |_k, v| v.nil? }
       end
     end
@@ -2340,6 +2461,29 @@ module Cadenya
         {
           workspace_id: Util.plain(@workspace_id),
           tool_set_id: Util.plain(@tool_set_id),
+          metadata: Util.plain(@metadata),
+          spec: Util.plain(@spec),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    class CreateTrustedEndpointRequest
+      attr_reader :metadata, :spec
+
+      def initialize(metadata: nil, spec: nil)
+        @metadata = metadata
+        @spec = spec
+      end
+
+      def self.from_json(data)
+        new(
+          metadata: data["metadata"].nil? ? nil : Types::CreateAccountResourceMetadata.from_json(data["metadata"]),
+          spec: data["spec"].nil? ? nil : Types::TrustedEndpointSpec.from_json(data["spec"]),
+        )
+      end
+
+      def to_h
+        {
           metadata: Util.plain(@metadata),
           spec: Util.plain(@spec),
         }.reject { |_k, v| v.nil? }
@@ -2661,23 +2805,20 @@ module Cadenya
     end
 
     class DisableAPIKeyRequest
-      attr_reader :workspace_id, :id
+      attr_reader :id
 
-      def initialize(workspace_id: nil, id: nil)
-        @workspace_id = workspace_id
+      def initialize(id: nil)
         @id = id
       end
 
       def self.from_json(data)
         new(
-          workspace_id: data["workspaceId"],
           id: data["id"],
         )
       end
 
       def to_h
         {
-          workspace_id: Util.plain(@workspace_id),
           id: Util.plain(@id),
         }.reject { |_k, v| v.nil? }
       end
@@ -2707,23 +2848,20 @@ module Cadenya
     end
 
     class EnableAPIKeyRequest
-      attr_reader :workspace_id, :id
+      attr_reader :id
 
-      def initialize(workspace_id: nil, id: nil)
-        @workspace_id = workspace_id
+      def initialize(id: nil)
         @id = id
       end
 
       def self.from_json(data)
         new(
-          workspace_id: data["workspaceId"],
           id: data["id"],
         )
       end
 
       def to_h
         {
-          workspace_id: Util.plain(@workspace_id),
           id: Util.plain(@id),
         }.reject { |_k, v| v.nil? }
       end
@@ -3456,6 +3594,29 @@ module Cadenya
       end
     end
 
+    class ListTrustedEndpointsResponse
+      attr_reader :items, :pagination
+
+      def initialize(items: nil, pagination: nil)
+        @items = items
+        @pagination = pagination
+      end
+
+      def self.from_json(data)
+        new(
+          items: data["items"].nil? ? nil : (data["items"]).map { |item| Types::TrustedEndpoint.from_json(item) },
+          pagination: data["pagination"].nil? ? nil : Types::Page.from_json(data["pagination"]),
+        )
+      end
+
+      def to_h
+        {
+          items: Util.plain(@items),
+          pagination: Util.plain(@pagination),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
     class ListWidgetSessionsResponse
       attr_reader :items, :pagination
 
@@ -3772,13 +3933,15 @@ module Cadenya
     end
 
     class MemoryLayerInfo
-      attr_reader :entry_count, :created_by, :last_used_at, :agent
+      attr_reader :entry_count, :created_by, :last_used_at, :agent, :tenant, :subject
 
-      def initialize(entry_count: nil, created_by: nil, last_used_at: nil, agent: nil)
+      def initialize(entry_count: nil, created_by: nil, last_used_at: nil, agent: nil, tenant: nil, subject: nil)
         @entry_count = entry_count
         @created_by = created_by
         @last_used_at = last_used_at
         @agent = agent
+        @tenant = tenant
+        @subject = subject
       end
 
       def self.from_json(data)
@@ -3787,6 +3950,8 @@ module Cadenya
           created_by: data["createdBy"].nil? ? nil : Types::Profile.from_json(data["createdBy"]),
           last_used_at: data["lastUsedAt"].nil? ? nil : Time.iso8601(data["lastUsedAt"]),
           agent: data["agent"].nil? ? nil : Types::ResourceMetadata.from_json(data["agent"]),
+          tenant: data["tenant"].nil? ? nil : Types::TenantReference.from_json(data["tenant"]),
+          subject: data["subject"].nil? ? nil : Types::SubjectReference.from_json(data["subject"]),
         )
       end
 
@@ -3796,6 +3961,8 @@ module Cadenya
           created_by: Util.plain(@created_by),
           last_used_at: Util.plain(@last_used_at),
           agent: Util.plain(@agent),
+          tenant: Util.plain(@tenant),
+          subject: Util.plain(@subject),
         }.reject { |_k, v| v.nil? }
       end
     end
@@ -3803,15 +3970,17 @@ module Cadenya
     MemoryLayerSpecType = ["MEMORY_LAYER_TYPE_UNSPECIFIED", "MEMORY_LAYER_TYPE_EPISODIC", "MEMORY_LAYER_TYPE_SKILLS"].freeze
 
     class MemoryLayerSpec
-      attr_reader :type, :description, :system_managed, :expires_at, :agent_id, :episodic_key
+      attr_reader :type, :description, :system_managed, :expires_at, :agent_id, :episodic_key, :tenant_id, :subject_id
 
-      def initialize(type: nil, description: nil, system_managed: nil, expires_at: nil, agent_id: nil, episodic_key: nil)
+      def initialize(type: nil, description: nil, system_managed: nil, expires_at: nil, agent_id: nil, episodic_key: nil, tenant_id: nil, subject_id: nil)
         @type = type
         @description = description
         @system_managed = system_managed
         @expires_at = expires_at
         @agent_id = agent_id
         @episodic_key = episodic_key
+        @tenant_id = tenant_id
+        @subject_id = subject_id
       end
 
       def self.from_json(data)
@@ -3822,6 +3991,8 @@ module Cadenya
           expires_at: data["expiresAt"].nil? ? nil : Time.iso8601(data["expiresAt"]),
           agent_id: data["agentId"],
           episodic_key: data["episodicKey"],
+          tenant_id: data["tenantId"],
+          subject_id: data["subjectId"],
         )
       end
 
@@ -3833,6 +4004,8 @@ module Cadenya
           expires_at: Util.plain(@expires_at),
           agent_id: Util.plain(@agent_id),
           episodic_key: Util.plain(@episodic_key),
+          tenant_id: Util.plain(@tenant_id),
+          subject_id: Util.plain(@subject_id),
         }.reject { |_k, v| v.nil? }
       end
     end
@@ -4318,17 +4491,19 @@ module Cadenya
     end
 
     class ObjectiveEpisodicConfig
-      attr_reader :key, :memory_layer_id
+      attr_reader :key, :memory_layer_id, :included_memory_layer_ids
 
-      def initialize(key: nil, memory_layer_id: nil)
+      def initialize(key: nil, memory_layer_id: nil, included_memory_layer_ids: nil)
         @key = key
         @memory_layer_id = memory_layer_id
+        @included_memory_layer_ids = included_memory_layer_ids
       end
 
       def self.from_json(data)
         new(
           key: data["key"],
           memory_layer_id: data["memoryLayerId"],
+          included_memory_layer_ids: data["includedMemoryLayerIds"],
         )
       end
 
@@ -4336,6 +4511,7 @@ module Cadenya
         {
           key: Util.plain(@key),
           memory_layer_id: Util.plain(@memory_layer_id),
+          included_memory_layer_ids: Util.plain(@included_memory_layer_ids),
         }.reject { |_k, v| v.nil? }
       end
     end
@@ -4814,14 +4990,15 @@ module Cadenya
     end
 
     class ObjectiveToolCallData
-      attr_reader :callable, :arguments, :memo, :status_changed_by, :resolved_secrets
+      attr_reader :callable, :arguments, :memo, :status_changed_by, :resolved_secrets, :decision_scores
 
-      def initialize(callable: nil, arguments: nil, memo: nil, status_changed_by: nil, resolved_secrets: nil)
+      def initialize(callable: nil, arguments: nil, memo: nil, status_changed_by: nil, resolved_secrets: nil, decision_scores: nil)
         @callable = callable
         @arguments = arguments
         @memo = memo
         @status_changed_by = status_changed_by
         @resolved_secrets = resolved_secrets
+        @decision_scores = decision_scores
       end
 
       def self.from_json(data)
@@ -4831,6 +5008,7 @@ module Cadenya
           memo: data["memo"],
           status_changed_by: data["statusChangedBy"].nil? ? nil : Types::Profile.from_json(data["statusChangedBy"]),
           resolved_secrets: data["resolvedSecrets"].nil? ? nil : (data["resolvedSecrets"]).map { |item| Types::ResolvedSecret.from_json(item) },
+          decision_scores: data["decisionScores"].nil? ? nil : Types::ToolCallDecisionScores.from_json(data["decisionScores"]),
         )
       end
 
@@ -4841,6 +5019,7 @@ module Cadenya
           memo: Util.plain(@memo),
           status_changed_by: Util.plain(@status_changed_by),
           resolved_secrets: Util.plain(@resolved_secrets),
+          decision_scores: Util.plain(@decision_scores),
         }.reject { |_k, v| v.nil? }
       end
     end
@@ -5429,6 +5608,29 @@ module Cadenya
       end
     end
 
+    class RemoveAPIKeyWorkspaceRequest
+      attr_reader :id, :workspace_id
+
+      def initialize(id: nil, workspace_id: nil)
+        @id = id
+        @workspace_id = workspace_id
+      end
+
+      def self.from_json(data)
+        new(
+          id: data["id"],
+          workspace_id: data["workspaceId"],
+        )
+      end
+
+      def to_h
+        {
+          id: Util.plain(@id),
+          workspace_id: Util.plain(@workspace_id),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
     def self.decode_RemoveAgentVariationAssignmentRequest(data)
       return nil if data.nil? || data["type"].to_s.empty?
       case data["type"]
@@ -5649,6 +5851,26 @@ module Cadenya
       end
     end
 
+    class RevealAPIKeyRequest
+      attr_reader :id
+
+      def initialize(id: nil)
+        @id = id
+      end
+
+      def self.from_json(data)
+        new(
+          id: data["id"],
+        )
+      end
+
+      def to_h
+        {
+          id: Util.plain(@id),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
     class RevokeWidgetSessionRequest
       attr_reader :workspace_id, :id
 
@@ -5673,23 +5895,20 @@ module Cadenya
     end
 
     class RotateAPIKeyRequest
-      attr_reader :workspace_id, :id
+      attr_reader :id
 
-      def initialize(workspace_id: nil, id: nil)
-        @workspace_id = workspace_id
+      def initialize(id: nil)
         @id = id
       end
 
       def self.from_json(data)
         new(
-          workspace_id: data["workspaceId"],
           id: data["id"],
         )
       end
 
       def to_h
         {
-          workspace_id: Util.plain(@workspace_id),
           id: Util.plain(@id),
         }.reject { |_k, v| v.nil? }
       end
@@ -6406,6 +6625,38 @@ module Cadenya
       end
     end
 
+    class TokenUsage
+      attr_reader :input_tokens, :cache_read_input_tokens, :cache_write_input_tokens, :output_tokens, :reasoning_output_tokens
+
+      def initialize(input_tokens: nil, cache_read_input_tokens: nil, cache_write_input_tokens: nil, output_tokens: nil, reasoning_output_tokens: nil)
+        @input_tokens = input_tokens
+        @cache_read_input_tokens = cache_read_input_tokens
+        @cache_write_input_tokens = cache_write_input_tokens
+        @output_tokens = output_tokens
+        @reasoning_output_tokens = reasoning_output_tokens
+      end
+
+      def self.from_json(data)
+        new(
+          input_tokens: data["inputTokens"],
+          cache_read_input_tokens: data["cacheReadInputTokens"],
+          cache_write_input_tokens: data["cacheWriteInputTokens"],
+          output_tokens: data["outputTokens"],
+          reasoning_output_tokens: data["reasoningOutputTokens"],
+        )
+      end
+
+      def to_h
+        {
+          input_tokens: Util.plain(@input_tokens),
+          cache_read_input_tokens: Util.plain(@cache_read_input_tokens),
+          cache_write_input_tokens: Util.plain(@cache_write_input_tokens),
+          output_tokens: Util.plain(@output_tokens),
+          reasoning_output_tokens: Util.plain(@reasoning_output_tokens),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
     ToolState = ["STATE_UNSPECIFIED", "STATE_AVAILABLE", "STATE_OMITTED", "STATE_ARCHIVED"].freeze
 
     class Tool
@@ -6473,6 +6724,55 @@ module Cadenya
       def to_h
         {
           tool_call_id: Util.plain(@tool_call_id),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    class ToolCallDecisionScore
+      attr_reader :score, :passed
+
+      def initialize(score: nil, passed: nil)
+        @score = score
+        @passed = passed
+      end
+
+      def self.from_json(data)
+        new(
+          score: data["score"],
+          passed: data["passed"],
+        )
+      end
+
+      def to_h
+        {
+          score: Util.plain(@score),
+          passed: Util.plain(@passed),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    class ToolCallDecisionScores
+      attr_reader :auto_mode, :scores, :approved
+
+      def initialize(auto_mode: nil, scores: nil, approved: nil)
+        @auto_mode = auto_mode
+        @scores = scores
+        @approved = approved
+      end
+
+      def self.from_json(data)
+        new(
+          auto_mode: data["autoMode"].nil? ? nil : Types::AutoModeConfig.from_json(data["autoMode"]),
+          scores: data["scores"].nil? ? nil : (data["scores"]).map { |item| Types::ToolCallDecisionScore.from_json(item) },
+          approved: data["approved"],
+        )
+      end
+
+      def to_h
+        {
+          auto_mode: Util.plain(@auto_mode),
+          scores: Util.plain(@scores),
+          approved: Util.plain(@approved),
         }.reject { |_k, v| v.nil? }
       end
     end
@@ -6588,15 +6888,16 @@ module Cadenya
     end
 
     class ToolOverlay
-      attr_reader :key, :selector, :parameter_actions, :result_actions, :disabled, :widget_argument_exposure
+      attr_reader :key, :selector, :parameter_actions, :result_actions, :disabled, :widget_argument_exposure, :auto_mode
 
-      def initialize(key: nil, selector: nil, parameter_actions: nil, result_actions: nil, disabled: nil, widget_argument_exposure: nil)
+      def initialize(key: nil, selector: nil, parameter_actions: nil, result_actions: nil, disabled: nil, widget_argument_exposure: nil, auto_mode: nil)
         @key = key
         @selector = selector
         @parameter_actions = parameter_actions
         @result_actions = result_actions
         @disabled = disabled
         @widget_argument_exposure = widget_argument_exposure
+        @auto_mode = auto_mode
       end
 
       def self.from_json(data)
@@ -6607,6 +6908,7 @@ module Cadenya
           result_actions: data["resultActions"].nil? ? nil : (data["resultActions"]).map { |item| Types.decode_ToolOverlay_ResultAction(item) },
           disabled: data["disabled"],
           widget_argument_exposure: data["widgetArgumentExposure"].nil? ? nil : Types::ToolOverlay_WidgetArgumentExposure.from_json(data["widgetArgumentExposure"]),
+          auto_mode: data["autoMode"].nil? ? nil : Types::AutoModeConfig.from_json(data["autoMode"]),
         )
       end
 
@@ -6618,6 +6920,7 @@ module Cadenya
           result_actions: Util.plain(@result_actions),
           disabled: Util.plain(@disabled),
           widget_argument_exposure: Util.plain(@widget_argument_exposure),
+          auto_mode: Util.plain(@auto_mode),
         }.reject { |_k, v| v.nil? }
       end
     end
@@ -7273,6 +7576,72 @@ module Cadenya
       end
     end
 
+    class TrustedEndpoint
+      attr_reader :metadata, :spec, :info
+
+      def initialize(metadata: nil, spec: nil, info: nil)
+        @metadata = metadata
+        @spec = spec
+        @info = info
+      end
+
+      def self.from_json(data)
+        new(
+          metadata: data["metadata"].nil? ? nil : Types::AccountResourceMetadata.from_json(data["metadata"]),
+          spec: data["spec"].nil? ? nil : Types::TrustedEndpointSpec.from_json(data["spec"]),
+          info: data["info"].nil? ? nil : Types::TrustedEndpointInfo.from_json(data["info"]),
+        )
+      end
+
+      def to_h
+        {
+          metadata: Util.plain(@metadata),
+          spec: Util.plain(@spec),
+          info: Util.plain(@info),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    class TrustedEndpointInfo
+      attr_reader :created_by
+
+      def initialize(created_by: nil)
+        @created_by = created_by
+      end
+
+      def self.from_json(data)
+        new(
+          created_by: data["createdBy"].nil? ? nil : Types::Profile.from_json(data["createdBy"]),
+        )
+      end
+
+      def to_h
+        {
+          created_by: Util.plain(@created_by),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    class TrustedEndpointSpec
+      attr_reader :host
+
+      def initialize(host: nil)
+        @host = host
+      end
+
+      def self.from_json(data)
+        new(
+          host: data["host"],
+        )
+      end
+
+      def to_h
+        {
+          host: Util.plain(@host),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
     class UnarchiveAgentPoolRequest
       attr_reader :workspace_id, :id
 
@@ -7424,10 +7793,9 @@ module Cadenya
     end
 
     class UpdateAPIKeyRequest
-      attr_reader :workspace_id, :id, :metadata, :spec, :update_mask
+      attr_reader :id, :metadata, :spec, :update_mask
 
-      def initialize(workspace_id: nil, id: nil, metadata: nil, spec: nil, update_mask: nil)
-        @workspace_id = workspace_id
+      def initialize(id: nil, metadata: nil, spec: nil, update_mask: nil)
         @id = id
         @metadata = metadata
         @spec = spec
@@ -7436,7 +7804,6 @@ module Cadenya
 
       def self.from_json(data)
         new(
-          workspace_id: data["workspaceId"],
           id: data["id"],
           metadata: data["metadata"].nil? ? nil : Types::UpdateAccountResourceMetadata.from_json(data["metadata"]),
           spec: data["spec"].nil? ? nil : Types::APIKeySpec.from_json(data["spec"]),
@@ -7446,7 +7813,6 @@ module Cadenya
 
       def to_h
         {
-          workspace_id: Util.plain(@workspace_id),
           id: Util.plain(@id),
           metadata: Util.plain(@metadata),
           spec: Util.plain(@spec),
@@ -8108,6 +8474,54 @@ module Cadenya
         {
           memory_layer_id: Util.plain(@memory_layer_id),
           position: Util.plain(@position),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    class VerifyTrustedEndpointRequest
+      attr_reader :url
+
+      def initialize(url: nil)
+        @url = url
+      end
+
+      def self.from_json(data)
+        new(
+          url: data["url"],
+        )
+      end
+
+      def to_h
+        {
+          url: Util.plain(@url),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    VerifyTrustedEndpointResponseResult = ["RESULT_UNSPECIFIED", "RESULT_TRUSTED", "RESULT_UNTRUSTED", "RESULT_TEMPLATED"].freeze
+
+    class VerifyTrustedEndpointResponse
+      attr_reader :result, :host, :trusted_endpoint
+
+      def initialize(result: nil, host: nil, trusted_endpoint: nil)
+        @result = result
+        @host = host
+        @trusted_endpoint = trusted_endpoint
+      end
+
+      def self.from_json(data)
+        new(
+          result: data["result"],
+          host: data["host"],
+          trusted_endpoint: data["trustedEndpoint"].nil? ? nil : Types::TrustedEndpoint.from_json(data["trustedEndpoint"]),
+        )
+      end
+
+      def to_h
+        {
+          result: Util.plain(@result),
+          host: Util.plain(@host),
+          trusted_endpoint: Util.plain(@trusted_endpoint),
         }.reject { |_k, v| v.nil? }
       end
     end
@@ -11189,12 +11603,25 @@ module Cadenya
     ENCODE_API_KEY_SPEC = {
       "description" => ["description", nil],
       "permissions" => ["permissions", nil],
+      "all_workspaces" => ["allWorkspaces", nil],
+      "allWorkspaces" => ["allWorkspaces", nil],
+      "workspace_assignments" => ["workspaceAssignments", ->(_v) { _v.is_a?(Array) ? _v.map { |_i| (->(_v) { encode_APIKeyWorkspaceAssignment(_v) }).call(_i) } : _v }],
+      "workspaceAssignments" => ["workspaceAssignments", ->(_v) { _v.is_a?(Array) ? _v.map { |_i| (->(_v) { encode_APIKeyWorkspaceAssignment(_v) }).call(_i) } : _v }],
     }.freeze
 
-    DROP_API_KEY_SPEC = ["system", "token"].freeze
+    DROP_API_KEY_SPEC = ["default", "token"].freeze
 
     def self.encode_APIKeySpec(data)
       encode_fields(ENCODE_API_KEY_SPEC, data, drop: DROP_API_KEY_SPEC)
+    end
+
+    ENCODE_API_KEY_WORKSPACE_ASSIGNMENT = {
+      "workspace_id" => ["workspaceId", nil],
+      "workspaceId" => ["workspaceId", nil],
+    }.freeze
+
+    def self.encode_APIKeyWorkspaceAssignment(data)
+      encode_fields(ENCODE_API_KEY_WORKSPACE_ASSIGNMENT, data)
     end
 
     def self.encode_AddAgentVariationAssignmentRequest(data)
@@ -11290,6 +11717,8 @@ module Cadenya
       "enableEpisodicMemory" => ["enableEpisodicMemory", nil],
       "episodic_memory_ttl" => ["episodicMemoryTtl", nil],
       "episodicMemoryTtl" => ["episodicMemoryTtl", nil],
+      "always_include_subject_memories" => ["alwaysIncludeSubjectMemories", nil],
+      "alwaysIncludeSubjectMemories" => ["alwaysIncludeSubjectMemories", nil],
     }.freeze
 
     def self.encode_AgentSpec(data)
@@ -11375,6 +11804,27 @@ module Cadenya
       encode_fields(ENCODE_AGENT_VARIATION_SPEC_PROGRESSIVE_DISCOVERY, data)
     end
 
+    ENCODE_AUTO_MODE_CONFIG = {
+      "questions" => ["questions", ->(_v) { _v.is_a?(Array) ? _v.map { |_i| (->(_v) { encode_AutoModeQuestion(_v) }).call(_i) } : _v }],
+      "passing_mode" => ["passingMode", nil],
+      "passingMode" => ["passingMode", nil],
+      "failure_message" => ["failureMessage", nil],
+      "failureMessage" => ["failureMessage", nil],
+    }.freeze
+
+    def self.encode_AutoModeConfig(data)
+      encode_fields(ENCODE_AUTO_MODE_CONFIG, data)
+    end
+
+    ENCODE_AUTO_MODE_QUESTION = {
+      "question" => ["question", nil],
+      "threshold" => ["threshold", nil],
+    }.freeze
+
+    def self.encode_AutoModeQuestion(data)
+      encode_fields(ENCODE_AUTO_MODE_QUESTION, data)
+    end
+
     ENCODE_BEDROCK_CONFIG = {
       "region" => ["region", nil],
     }.freeze
@@ -11454,8 +11904,10 @@ module Cadenya
       "method" => ["method", nil],
     }.freeze
 
+    DROP_CONFIG_OPEN_API = ["serverUrl", "server_url"].freeze
+
     def self.encode_Config_OpenAPI(data)
-      encode_fields(ENCODE_CONFIG_OPEN_API, data)
+      encode_fields(ENCODE_CONFIG_OPEN_API, data, drop: DROP_CONFIG_OPEN_API)
     end
 
     ENCODE_CREATE_ACCOUNT_RESOURCE_METADATA = {
@@ -11616,7 +12068,7 @@ module Cadenya
       "description" => ["description", nil],
     }.freeze
 
-    DROP_MEMORY_LAYER_SPEC = ["agentId", "agent_id", "episodicKey", "episodic_key", "expiresAt", "expires_at", "systemManaged", "system_managed"].freeze
+    DROP_MEMORY_LAYER_SPEC = ["agentId", "agent_id", "episodicKey", "episodic_key", "expiresAt", "expires_at", "subjectId", "subject_id", "systemManaged", "system_managed", "tenantId", "tenant_id"].freeze
 
     def self.encode_MemoryLayerSpec(data)
       encode_fields(ENCODE_MEMORY_LAYER_SPEC, data, drop: DROP_MEMORY_LAYER_SPEC)
@@ -11698,7 +12150,7 @@ module Cadenya
       "key" => ["key", nil],
     }.freeze
 
-    DROP_OBJECTIVE_EPISODIC_CONFIG = ["memoryLayerId", "memory_layer_id"].freeze
+    DROP_OBJECTIVE_EPISODIC_CONFIG = ["includedMemoryLayerIds", "included_memory_layer_ids", "memoryLayerId", "memory_layer_id"].freeze
 
     def self.encode_ObjectiveEpisodicConfig(data)
       encode_fields(ENCODE_OBJECTIVE_EPISODIC_CONFIG, data, drop: DROP_OBJECTIVE_EPISODIC_CONFIG)
@@ -11953,6 +12405,8 @@ module Cadenya
       "disabled" => ["disabled", nil],
       "widget_argument_exposure" => ["widgetArgumentExposure", ->(_v) { encode_ToolOverlay_WidgetArgumentExposure(_v) }],
       "widgetArgumentExposure" => ["widgetArgumentExposure", ->(_v) { encode_ToolOverlay_WidgetArgumentExposure(_v) }],
+      "auto_mode" => ["autoMode", ->(_v) { encode_AutoModeConfig(_v) }],
+      "autoMode" => ["autoMode", ->(_v) { encode_AutoModeConfig(_v) }],
     }.freeze
 
     def self.encode_ToolOverlay(data)
@@ -12214,6 +12668,14 @@ module Cadenya
       else
         data
       end
+    end
+
+    ENCODE_TRUSTED_ENDPOINT_SPEC = {
+      "host" => ["host", nil],
+    }.freeze
+
+    def self.encode_TrustedEndpointSpec(data)
+      encode_fields(ENCODE_TRUSTED_ENDPOINT_SPEC, data)
     end
 
     ENCODE_UPDATE_ACCOUNT_RESOURCE_METADATA = {

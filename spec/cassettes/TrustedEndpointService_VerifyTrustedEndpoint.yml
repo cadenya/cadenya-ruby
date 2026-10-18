@@ -4,14 +4,16 @@ http_interactions:
   request:
     body:
       encoding: UTF-8
-      string: ''
-    headers: {}
-    method: get
-    uri: https://api.test.example/v1/account/global_api_key
+      string: '{"url":"sample"}'
+    headers:
+      Content-Type:
+      - application/json
+    method: post
+    uri: https://api.test.example/v1/account/trusted_endpoints:verify
   response:
     body:
       encoding: UTF-8
-      string: '{"metadata":{"accountId":"sample","externalId":"sample","id":"sample","labels":{},"name":"sample","profileId":"sample"},"spec":{"system":true,"token":"sample"},"state":"STATE_ENABLED"}'
+      string: '{"host":"sample","result":"RESULT_TRUSTED"}'
     headers:
       Content-Type:
       - application/json

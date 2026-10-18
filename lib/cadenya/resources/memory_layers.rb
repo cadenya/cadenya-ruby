@@ -13,7 +13,7 @@ module Cadenya
       end
 
       # List memory layers
-      def list(workspace_id: nil, limit: nil, cursor: nil, prefix: nil, query: nil, type: nil, agent_id: nil, episodic_key_prefix: nil, labels: nil, sort_order: nil, include_info: nil, request_options: nil)
+      def list(workspace_id: nil, limit: nil, cursor: nil, prefix: nil, query: nil, type: nil, agent_id: nil, episodic_key_prefix: nil, labels: nil, tenant_id: nil, subject_id: nil, sort_order: nil, include_info: nil, request_options: nil)
         workspace_id = @core.resolve_default("workspaceId", "CADENYA_WORKSPACE_ID", workspace_id)
         _path = "/v1/workspaces/#{Util.path_param('workspaceId', workspace_id)}/memory_layers"
         _query = {
@@ -25,6 +25,8 @@ module Cadenya
           "agentId" => agent_id,
           "episodicKeyPrefix" => episodic_key_prefix,
           "labels" => labels,
+          "tenantId" => tenant_id,
+          "subjectId" => subject_id,
           "sortOrder" => sort_order,
           "includeInfo" => include_info,
         }
@@ -32,17 +34,19 @@ module Cadenya
         _items = (_data["items"] || []).map { |item| Types::MemoryLayer.from_json(item) }
         _next_cursor = (((_data)["pagination"] || {}))["nextCursor"].to_s
         Page.new(_items, _next_cursor) do |_c|
-          list(workspace_id: workspace_id, limit: limit, cursor: _c, prefix: prefix, query: query, type: type, agent_id: agent_id, episodic_key_prefix: episodic_key_prefix, labels: labels, sort_order: sort_order, include_info: include_info, request_options: request_options)
+          list(workspace_id: workspace_id, limit: limit, cursor: _c, prefix: prefix, query: query, type: type, agent_id: agent_id, episodic_key_prefix: episodic_key_prefix, labels: labels, tenant_id: tenant_id, subject_id: subject_id, sort_order: sort_order, include_info: include_info, request_options: request_options)
         end
       end
 
       # Create a new memory layer
-      def create(metadata:, spec:, workspace_id: nil, request_options: nil)
+      def create(metadata:, spec:, workspace_id: nil, tenant: nil, subject: nil, request_options: nil)
         workspace_id = @core.resolve_default("workspaceId", "CADENYA_WORKSPACE_ID", workspace_id)
         _path = "/v1/workspaces/#{Util.path_param('workspaceId', workspace_id)}/memory_layers"
         _body = {
           "metadata" => metadata.nil? ? nil : (->(_v) { Types.encode_CreateResourceMetadata(_v) }).call(metadata),
           "spec" => spec.nil? ? nil : (->(_v) { Types.encode_MemoryLayerSpec(_v) }).call(spec),
+          "tenant" => tenant.nil? ? nil : (->(_v) { Types.encode_TenantAssertion(_v) }).call(tenant),
+          "subject" => subject.nil? ? nil : (->(_v) { Types.encode_SubjectAssertion(_v) }).call(subject),
         }.reject { |_k, v| v.nil? }
         _data = @core.request(:post, _path, body: _body, request_options: request_options)
         Types::MemoryLayer.from_json(_data)
