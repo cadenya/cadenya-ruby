@@ -7,7 +7,7 @@ http_interactions:
       string: ''
     headers: {}
     method: get
-    uri: https://api.test.example/v1/workspaces/sample/memory_layers?limit=1&cursor=sample&prefix=sample&query=sample&type=MEMORY_LAYER_TYPE_EPISODIC&agentId=sample&episodicKeyPrefix=sample&labels=sample&sortOrder=sample&includeInfo=true
+    uri: https://api.test.example/v1/workspaces/sample/memory_layers?limit=1&cursor=sample&prefix=sample&query=sample&type=MEMORY_LAYER_TYPE_EPISODIC&agentId=sample&episodicKeyPrefix=sample&labels=sample&tenantId=sample&subjectId=sample&sortOrder=sample&includeInfo=true
   response:
     body:
       encoding: UTF-8
@@ -26,7 +26,7 @@ http_interactions:
       string: ''
     headers: {}
     method: get
-    uri: https://api.test.example/v1/workspaces/sample/memory_layers?limit=1&cursor=cursor_page_2&prefix=sample&query=sample&type=MEMORY_LAYER_TYPE_EPISODIC&agentId=sample&episodicKeyPrefix=sample&labels=sample&sortOrder=sample&includeInfo=true
+    uri: https://api.test.example/v1/workspaces/sample/memory_layers?limit=1&cursor=cursor_page_2&prefix=sample&query=sample&type=MEMORY_LAYER_TYPE_EPISODIC&agentId=sample&episodicKeyPrefix=sample&labels=sample&tenantId=sample&subjectId=sample&sortOrder=sample&includeInfo=true
   response:
     body:
       encoding: UTF-8

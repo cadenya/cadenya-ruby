@@ -31,7 +31,7 @@ JSON/map fields is never rewritten.
 ```ruby
 client.api_keys.create(
   metadata: {"name" => "sample"},
-  spec: {}
+  spec: {"all_workspaces" => true, "workspace_assignments" => [{"workspace_id" => "sample"}]}
 )
 ```
 
