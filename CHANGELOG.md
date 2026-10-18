@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.8.0](https://github.com/cadenya/cadenya-ruby/compare/v1.7.0...v1.8.0) (2026-10-18)
+
+
+### Features
+
+* trusted endpoints, API key workspace management, remove global API key service ([#87](https://github.com/cadenya/cadenya-ruby/issues/87)) ([b2e81ae](https://github.com/cadenya/cadenya-ruby/commit/b2e81ae20394743c8cefab636412d74ce165cc55))
+
 ## [1.7.0](https://github.com/cadenya/cadenya-ruby/compare/v1.6.0...v1.7.0) (2026-09-28)
 
 
