@@ -110,16 +110,16 @@ RSpec.describe "retries" do
   context "when a mutation hits a retryable status" do
     it "does NOT retry by default" do
       client = build_client(max_retries: 2)
-      stub = stub_request(:post, "#{SPEC_BASE_URL}/v1/workspaces/sample/api_keys").to_return(status: 503, body: "")
-      expect { client.api_keys.create(workspace_id: "sample", metadata: {"name" => "sample"}, spec: {}) }.to raise_error(Cadenya::APIError)
+      stub = stub_request(:post, "#{SPEC_BASE_URL}/v1/account/api_keys").to_return(status: 503, body: "")
+      expect { client.api_keys.create(metadata: {"name" => "sample"}, spec: {"all_workspaces" => true, "workspace_assignments" => [{"workspace_id" => "sample"}]}) }.to raise_error(Cadenya::APIError)
       expect(stub).to have_been_requested.times(1)
     end
 
     it "retries when the CALLER opts this call in via request_options" do
       client = build_client
-      stub = stub_request(:post, "#{SPEC_BASE_URL}/v1/workspaces/sample/api_keys")
-        .to_return({ status: 503, body: "" }, { status: 200, body: "{\"metadata\":{\"accountId\":\"sample\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\"},\"spec\":{\"system\":true,\"token\":\"sample\"},\"state\":\"STATE_ENABLED\"}", headers: { "Content-Type" => "application/json" } })
-      client.api_keys.create(workspace_id: "sample", metadata: {"name" => "sample"}, spec: {}, request_options: { max_retries: 2 })
+      stub = stub_request(:post, "#{SPEC_BASE_URL}/v1/account/api_keys")
+        .to_return({ status: 503, body: "" }, { status: 200, body: "{\"metadata\":{\"accountId\":\"sample\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\"},\"spec\":{\"allWorkspaces\":true,\"default\":true,\"token\":\"sample\",\"workspaceAssignments\":[{\"workspaceId\":\"sample\"}]},\"state\":\"STATE_ENABLED\"}", headers: { "Content-Type" => "application/json" } })
+      client.api_keys.create(metadata: {"name" => "sample"}, spec: {"all_workspaces" => true, "workspace_assignments" => [{"workspace_id" => "sample"}]}, request_options: { max_retries: 2 })
       expect(stub).to have_been_requested.times(2)
     end
   end
@@ -165,19 +165,19 @@ end
 RSpec.describe "request encoding" do
   let(:client) { build_client }
   it "translates snake_case keys to the exact golden wire body" do
-    stub_request(:post, "#{SPEC_BASE_URL}/v1/workspaces/sample/api_keys").to_return(status: 200, body: "{\"metadata\":{\"accountId\":\"sample\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\"},\"spec\":{\"system\":true,\"token\":\"sample\"},\"state\":\"STATE_ENABLED\"}", headers: { "Content-Type" => "application/json" })
-    client.api_keys.create(workspace_id: "sample", metadata: {"name" => "sample"}, spec: {})
-    expect(WebMock).to(have_requested(:post, %r{.*}).with { |req| JSON.parse(req.body) == JSON.parse("{\"metadata\":{\"name\":\"sample\"},\"spec\":{}}") })
+    stub_request(:post, "#{SPEC_BASE_URL}/v1/account/api_keys").to_return(status: 200, body: "{\"metadata\":{\"accountId\":\"sample\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\"},\"spec\":{\"allWorkspaces\":true,\"default\":true,\"token\":\"sample\",\"workspaceAssignments\":[{\"workspaceId\":\"sample\"}]},\"state\":\"STATE_ENABLED\"}", headers: { "Content-Type" => "application/json" })
+    client.api_keys.create(metadata: {"name" => "sample"}, spec: {"all_workspaces" => true, "workspace_assignments" => [{"workspace_id" => "sample"}]})
+    expect(WebMock).to(have_requested(:post, %r{.*}).with { |req| JSON.parse(req.body) == JSON.parse("{\"metadata\":{\"name\":\"sample\"},\"spec\":{\"allWorkspaces\":true,\"workspaceAssignments\":[{\"workspaceId\":\"sample\"}]}}") })
   end
 
   context "when a fetched value still carries server-owned fields" do
     it "drops readOnly keys instead of echoing server state" do
-      stub_request(:post, "#{SPEC_BASE_URL}/v1/workspaces/sample/api_keys").to_return(status: 200, body: "{\"metadata\":{\"accountId\":\"sample\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\"},\"spec\":{\"system\":true,\"token\":\"sample\"},\"state\":\"STATE_ENABLED\"}", headers: { "Content-Type" => "application/json" })
-      client.api_keys.create(workspace_id: "sample", metadata: {"name" => "sample"}, spec: {"system" => "server-owned", "token" => "server-owned"})
+      stub_request(:post, "#{SPEC_BASE_URL}/v1/account/api_keys").to_return(status: 200, body: "{\"metadata\":{\"accountId\":\"sample\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\"},\"spec\":{\"allWorkspaces\":true,\"default\":true,\"token\":\"sample\",\"workspaceAssignments\":[{\"workspaceId\":\"sample\"}]},\"state\":\"STATE_ENABLED\"}", headers: { "Content-Type" => "application/json" })
+      client.api_keys.create(metadata: {"name" => "sample"}, spec: {"all_workspaces" => true, "default" => "server-owned", "token" => "server-owned", "workspace_assignments" => [{"workspace_id" => "sample"}]})
       expect(WebMock).to(have_requested(:post, %r{.*}).with do |req|
         sent = JSON.parse(req.body).fetch("spec", {})
         !sent.key?("token") &&
-        !sent.key?("system") &&
+        !sent.key?("default") &&
           true
       end)
     end

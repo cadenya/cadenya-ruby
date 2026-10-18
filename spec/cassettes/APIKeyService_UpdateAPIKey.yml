@@ -4,16 +4,16 @@ http_interactions:
   request:
     body:
       encoding: UTF-8
-      string: '{"metadata":{"name":"sample"},"spec":{},"updateMask":"sample"}'
+      string: '{"metadata":{"name":"sample"},"spec":{"allWorkspaces":true,"workspaceAssignments":[{"workspaceId":"sample"}]},"updateMask":"sample"}'
     headers:
       Content-Type:
       - application/json
     method: patch
-    uri: https://api.test.example/v1/workspaces/sample/api_keys/sample
+    uri: https://api.test.example/v1/account/api_keys/sample
   response:
     body:
       encoding: UTF-8
-      string: '{"metadata":{"accountId":"sample","externalId":"sample","id":"sample","labels":{},"name":"sample","profileId":"sample"},"spec":{"system":true,"token":"sample"},"state":"STATE_ENABLED"}'
+      string: '{"metadata":{"accountId":"sample","externalId":"sample","id":"sample","labels":{},"name":"sample","profileId":"sample"},"spec":{"allWorkspaces":true,"default":true,"token":"sample","workspaceAssignments":[{"workspaceId":"sample"}]},"state":"STATE_ENABLED"}'
     headers:
       Content-Type:
       - application/json

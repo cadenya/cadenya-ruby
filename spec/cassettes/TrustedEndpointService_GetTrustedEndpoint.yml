@@ -6,12 +6,12 @@ http_interactions:
       encoding: UTF-8
       string: ''
     headers: {}
-    method: post
-    uri: https://api.test.example/v1/account/global_api_key:disable
+    method: get
+    uri: https://api.test.example/v1/account/trusted_endpoints/sample
   response:
     body:
       encoding: UTF-8
-      string: '{"metadata":{"accountId":"sample","externalId":"sample","id":"sample","labels":{},"name":"sample","profileId":"sample"},"spec":{"system":true,"token":"sample"},"state":"STATE_ENABLED"}'
+      string: '{"metadata":{"accountId":"sample","externalId":"sample","id":"sample","labels":{},"name":"sample","profileId":"sample"},"spec":{"host":"sample"}}'
     headers:
       Content-Type:
       - application/json

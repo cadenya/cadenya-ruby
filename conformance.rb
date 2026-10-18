@@ -34,18 +34,17 @@ client = Cadenya::Client.new(api_key: "conformance-key", base_url: ENV.fetch("MO
 run("AccountService_GetAccount") { client.accounts.retrieve() }
 run("AccountService_RotateChallengeToken") { client.accounts.rotate_challenge_token() }
 run("AccountService_RotateWebhookSigningKey") { client.accounts.rotate_webhook_signing_key() }
-run("GlobalAPIKeyService_GetGlobalAPIKey") { client.api_keys.retrieve_global() }
-run("GlobalAPIKeyService_DisableGlobalAPIKey") { client.api_keys.disable_global() }
-run("GlobalAPIKeyService_EnableGlobalAPIKey") { client.api_keys.enable_global() }
-run("GlobalAPIKeyService_RotateGlobalAPIKey") { client.api_keys.rotate_global() }
 run("APIKeyService_ListAPIKeys") { check_page(client.api_keys.list(workspace_id: "sample", limit: 1, cursor: "sample", prefix: "sample", query: "sample", labels: "sample", sort_order: "sample", include_info: true)) }
-run("APIKeyService_CreateAPIKey") { client.api_keys.create(workspace_id: "sample", metadata: {"name" => "sample"}, spec: {}) }
-run("APIKeyService_GetAPIKey") { client.api_keys.retrieve("sample", workspace_id: "sample") }
-run("APIKeyService_DeleteAPIKey") { client.api_keys.delete("sample", workspace_id: "sample") }
-run("APIKeyService_UpdateAPIKey") { client.api_keys.update("sample", workspace_id: "sample", metadata: {"name" => "sample"}, spec: {}, update_mask: "sample") }
-run("APIKeyService_DisableAPIKey") { client.api_keys.disable("sample", workspace_id: "sample") }
-run("APIKeyService_EnableAPIKey") { client.api_keys.enable("sample", workspace_id: "sample") }
-run("APIKeyService_RotateAPIKey") { client.api_keys.rotate("sample", workspace_id: "sample") }
+run("APIKeyService_CreateAPIKey") { client.api_keys.create(metadata: {"name" => "sample"}, spec: {"all_workspaces" => true, "workspace_assignments" => [{"workspace_id" => "sample"}]}) }
+run("APIKeyService_GetAPIKey") { client.api_keys.retrieve("sample") }
+run("APIKeyService_DeleteAPIKey") { client.api_keys.delete("sample") }
+run("APIKeyService_UpdateAPIKey") { client.api_keys.update("sample", metadata: {"name" => "sample"}, spec: {"all_workspaces" => true, "workspace_assignments" => [{"workspace_id" => "sample"}]}, update_mask: "sample") }
+run("APIKeyService_AddAPIKeyWorkspace") { client.api_keys.add_workspace("sample", workspace_id: "sample") }
+run("APIKeyService_DisableAPIKey") { client.api_keys.disable("sample") }
+run("APIKeyService_EnableAPIKey") { client.api_keys.enable("sample") }
+run("APIKeyService_RemoveAPIKeyWorkspace") { client.api_keys.remove_workspace("sample", workspace_id: "sample") }
+run("APIKeyService_RevealAPIKey") { client.api_keys.reveal("sample") }
+run("APIKeyService_RotateAPIKey") { client.api_keys.rotate("sample") }
 run("WorkspaceAdminService_ListProfiles") { check_page(client.workspace_admin.list_profiles(limit: 1, cursor: "sample", query: "sample", labels: "sample")) }
 run("WorkspaceAdminService_ListAccountWorkspaces") { check_page(client.workspace_admin.list_account(limit: 1, cursor: "sample", include_archived: true, labels: "sample")) }
 run("WorkspaceAdminService_CreateWorkspace") { client.workspace_admin.create(metadata: {"name" => "sample"}, spec: {}) }
@@ -55,6 +54,11 @@ run("WorkspaceAdminService_UpdateWorkspace") { client.workspace_admin.update(wor
 run("WorkspaceAdminService_ListWorkspaceMembers") { check_page(client.workspace_admin.list_members(workspace_id: "sample", limit: 1, cursor: "sample")) }
 run("WorkspaceAdminService_AddWorkspaceMember") { client.workspace_admin.add_member(workspace_id: "sample", profile_id: "sample", email: "sample") }
 run("WorkspaceAdminService_RemoveWorkspaceMember") { client.workspace_admin.remove_member("sample", workspace_id: "sample") }
+run("TrustedEndpointService_ListTrustedEndpoints") { check_page(client.trusted_endpoints.list(limit: 1, cursor: "sample", labels: "sample")) }
+run("TrustedEndpointService_CreateTrustedEndpoint") { client.trusted_endpoints.create(metadata: {"name" => "sample"}, spec: {"host" => "sample"}) }
+run("TrustedEndpointService_GetTrustedEndpoint") { client.trusted_endpoints.retrieve("sample") }
+run("TrustedEndpointService_DeleteTrustedEndpoint") { client.trusted_endpoints.delete("sample") }
+run("TrustedEndpointService_VerifyTrustedEndpoint") { client.trusted_endpoints.verify(url: "sample") }
 run("ProfilesService_Whoami") { client.profiles.whoami() }
 run("WorkspaceService_ListWorkspaces") { check_page(client.workspaces.list(limit: 1, cursor: "sample", sort_order: "sample", include_info: true, labels: "sample")) }
 run("AgentPoolService_ListAgentPools") { check_page(client.agent_pools.list(workspace_id: "sample", limit: 1, cursor: "sample", prefix: "sample", query: "sample", state: "AGENT_POOL_STATE_ACTIVE", labels: "sample", sort_order: "sample", include_info: true)) }
@@ -107,8 +111,8 @@ run("ModelService_UpdateModel") { client.models.update("sample", workspace_id: "
 run("ModelService_DisableModel") { client.models.disable("sample", workspace_id: "sample") }
 run("ModelService_EnableModel") { client.models.enable("sample", workspace_id: "sample") }
 run("ModelService_SwapModelOnVariations") { client.models.swap_on_variations(workspace_id: "sample", model_swaps: [{}]) }
-run("MemoryService_ListMemoryLayers") { check_page(client.memory_layers.list(workspace_id: "sample", limit: 1, cursor: "sample", prefix: "sample", query: "sample", type: "MEMORY_LAYER_TYPE_EPISODIC", agent_id: "sample", episodic_key_prefix: "sample", labels: "sample", sort_order: "sample", include_info: true)) }
-run("MemoryService_CreateMemoryLayer") { client.memory_layers.create(workspace_id: "sample", metadata: {"name" => "sample"}, spec: {"type" => "MEMORY_LAYER_TYPE_EPISODIC"}) }
+run("MemoryService_ListMemoryLayers") { check_page(client.memory_layers.list(workspace_id: "sample", limit: 1, cursor: "sample", prefix: "sample", query: "sample", type: "MEMORY_LAYER_TYPE_EPISODIC", agent_id: "sample", episodic_key_prefix: "sample", labels: "sample", tenant_id: "sample", subject_id: "sample", sort_order: "sample", include_info: true)) }
+run("MemoryService_CreateMemoryLayer") { client.memory_layers.create(workspace_id: "sample", metadata: {"name" => "sample"}, spec: {"type" => "MEMORY_LAYER_TYPE_EPISODIC"}, tenant: {"id" => "sample"}, subject: {"id" => "sample"}) }
 run("MemoryService_GetMemoryLayer") { client.memory_layers.retrieve("sample", workspace_id: "sample") }
 run("MemoryService_DeleteMemoryLayer") { client.memory_layers.delete("sample", workspace_id: "sample") }
 run("MemoryService_UpdateMemoryLayer") { client.memory_layers.update("sample", workspace_id: "sample", metadata: {"name" => "sample"}, spec: {"type" => "MEMORY_LAYER_TYPE_EPISODIC"}, update_mask: "sample") }

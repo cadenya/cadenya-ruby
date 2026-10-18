@@ -9,39 +9,12 @@ module Cadenya
         @core = core
       end
 
-      # Get the global API key
-      def retrieve_global(request_options: nil)
-        _path = "/v1/account/global_api_key"
-        _data = @core.request(:get, _path, request_options: request_options)
-        Types::APIKey.from_json(_data)
-      end
-
-      # Disable the global API key
-      def disable_global(request_options: nil)
-        _path = "/v1/account/global_api_key:disable"
-        _data = @core.request(:post, _path, request_options: request_options)
-        Types::APIKey.from_json(_data)
-      end
-
-      # Enable the global API key
-      def enable_global(request_options: nil)
-        _path = "/v1/account/global_api_key:enable"
-        _data = @core.request(:post, _path, request_options: request_options)
-        Types::APIKey.from_json(_data)
-      end
-
-      # Rotate the global API key
-      def rotate_global(request_options: nil)
-        _path = "/v1/account/global_api_key:rotate"
-        _data = @core.request(:post, _path, request_options: request_options)
-        Types::APIKey.from_json(_data)
-      end
-
       # List API keys
       def list(workspace_id: nil, limit: nil, cursor: nil, prefix: nil, query: nil, labels: nil, sort_order: nil, include_info: nil, request_options: nil)
         workspace_id = @core.resolve_default("workspaceId", "CADENYA_WORKSPACE_ID", workspace_id)
-        _path = "/v1/workspaces/#{Util.path_param('workspaceId', workspace_id)}/api_keys"
+        _path = "/v1/account/api_keys"
         _query = {
+          "workspaceId" => workspace_id,
           "limit" => limit,
           "cursor" => cursor,
           "prefix" => prefix,
@@ -59,9 +32,8 @@ module Cadenya
       end
 
       # Create a new API key
-      def create(metadata:, spec:, workspace_id: nil, request_options: nil)
-        workspace_id = @core.resolve_default("workspaceId", "CADENYA_WORKSPACE_ID", workspace_id)
-        _path = "/v1/workspaces/#{Util.path_param('workspaceId', workspace_id)}/api_keys"
+      def create(metadata:, spec:, request_options: nil)
+        _path = "/v1/account/api_keys"
         _body = {
           "metadata" => metadata.nil? ? nil : (->(_v) { Types.encode_CreateAccountResourceMetadata(_v) }).call(metadata),
           "spec" => spec.nil? ? nil : (->(_v) { Types.encode_APIKeySpec(_v) }).call(spec),
@@ -71,25 +43,22 @@ module Cadenya
       end
 
       # Get an API key by ID
-      def retrieve(id, workspace_id: nil, request_options: nil)
-        workspace_id = @core.resolve_default("workspaceId", "CADENYA_WORKSPACE_ID", workspace_id)
-        _path = "/v1/workspaces/#{Util.path_param('workspaceId', workspace_id)}/api_keys/#{Util.path_param('id', id)}"
+      def retrieve(id, request_options: nil)
+        _path = "/v1/account/api_keys/#{Util.path_param('id', id)}"
         _data = @core.request(:get, _path, request_options: request_options)
         Types::APIKey.from_json(_data)
       end
 
       # Delete an API key
-      def delete(id, workspace_id: nil, request_options: nil)
-        workspace_id = @core.resolve_default("workspaceId", "CADENYA_WORKSPACE_ID", workspace_id)
-        _path = "/v1/workspaces/#{Util.path_param('workspaceId', workspace_id)}/api_keys/#{Util.path_param('id', id)}"
+      def delete(id, request_options: nil)
+        _path = "/v1/account/api_keys/#{Util.path_param('id', id)}"
         @core.request(:delete, _path, expects_body: false, request_options: request_options)
         nil
       end
 
       # Update an API key
-      def update(id, workspace_id: nil, metadata: nil, spec: nil, update_mask: nil, request_options: nil)
-        workspace_id = @core.resolve_default("workspaceId", "CADENYA_WORKSPACE_ID", workspace_id)
-        _path = "/v1/workspaces/#{Util.path_param('workspaceId', workspace_id)}/api_keys/#{Util.path_param('id', id)}"
+      def update(id, metadata: nil, spec: nil, update_mask: nil, request_options: nil)
+        _path = "/v1/account/api_keys/#{Util.path_param('id', id)}"
         _body = {
           "metadata" => metadata.nil? ? nil : (->(_v) { Types.encode_UpdateAccountResourceMetadata(_v) }).call(metadata),
           "spec" => spec.nil? ? nil : (->(_v) { Types.encode_APIKeySpec(_v) }).call(spec),
@@ -99,26 +68,50 @@ module Cadenya
         Types::APIKey.from_json(_data)
       end
 
+      # Assign a workspace to an API key
+      def add_workspace(id, workspace_id:, request_options: nil)
+        _path = "/v1/account/api_keys/#{Util.path_param('id', id)}:addWorkspace"
+        _body = {
+          "workspaceId" => workspace_id,
+        }.reject { |_k, v| v.nil? }
+        _data = @core.request(:post, _path, body: _body, request_options: request_options)
+        Types::APIKey.from_json(_data)
+      end
+
       # Disable an API key
-      def disable(id, workspace_id: nil, request_options: nil)
-        workspace_id = @core.resolve_default("workspaceId", "CADENYA_WORKSPACE_ID", workspace_id)
-        _path = "/v1/workspaces/#{Util.path_param('workspaceId', workspace_id)}/api_keys/#{Util.path_param('id', id)}:disable"
+      def disable(id, request_options: nil)
+        _path = "/v1/account/api_keys/#{Util.path_param('id', id)}:disable"
         _data = @core.request(:post, _path, request_options: request_options)
         Types::APIKey.from_json(_data)
       end
 
       # Enable an API key
-      def enable(id, workspace_id: nil, request_options: nil)
-        workspace_id = @core.resolve_default("workspaceId", "CADENYA_WORKSPACE_ID", workspace_id)
-        _path = "/v1/workspaces/#{Util.path_param('workspaceId', workspace_id)}/api_keys/#{Util.path_param('id', id)}:enable"
+      def enable(id, request_options: nil)
+        _path = "/v1/account/api_keys/#{Util.path_param('id', id)}:enable"
+        _data = @core.request(:post, _path, request_options: request_options)
+        Types::APIKey.from_json(_data)
+      end
+
+      # Remove a workspace from an API key
+      def remove_workspace(id, workspace_id:, request_options: nil)
+        _path = "/v1/account/api_keys/#{Util.path_param('id', id)}:removeWorkspace"
+        _body = {
+          "workspaceId" => workspace_id,
+        }.reject { |_k, v| v.nil? }
+        _data = @core.request(:post, _path, body: _body, request_options: request_options)
+        Types::APIKey.from_json(_data)
+      end
+
+      # Reveal an API key's token
+      def reveal(id, request_options: nil)
+        _path = "/v1/account/api_keys/#{Util.path_param('id', id)}:reveal"
         _data = @core.request(:post, _path, request_options: request_options)
         Types::APIKey.from_json(_data)
       end
 
       # Rotate an API key
-      def rotate(id, workspace_id: nil, request_options: nil)
-        workspace_id = @core.resolve_default("workspaceId", "CADENYA_WORKSPACE_ID", workspace_id)
-        _path = "/v1/workspaces/#{Util.path_param('workspaceId', workspace_id)}/api_keys/#{Util.path_param('id', id)}:rotate"
+      def rotate(id, request_options: nil)
+        _path = "/v1/account/api_keys/#{Util.path_param('id', id)}:rotate"
         _data = @core.request(:post, _path, request_options: request_options)
         Types::APIKey.from_json(_data)
       end
