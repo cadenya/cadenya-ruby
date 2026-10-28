@@ -4,7 +4,7 @@ http_interactions:
   request:
     body:
       encoding: UTF-8
-      string: '{"agentId":"sample","episodicMemory":{"key":"sample"},"firstUserMessage":"sample","firstUserMessageData":{},"memoryCascade":[{"memoryLayerId":"sample"}],"metadata":{"externalId":"sample"},"pinnedParameters":{},"secrets":[{}],"subject":{"id":"sample"},"systemPromptData":{},"tenant":{"id":"sample"},"variationId":"sample"}'
+      string: '{"agentId":"sample","clientTools":{"definitions":[{"name":"sample"}]},"episodicMemory":{"key":"sample"},"firstUserMessage":"sample","firstUserMessageData":{},"includeDeltas":true,"memoryCascade":[{"memoryLayerId":"sample"}],"metadata":{"externalId":"sample"},"pinnedParameters":{},"secrets":[{}],"subject":{"id":"sample"},"systemPromptData":{},"tenant":{"id":"sample"},"variationId":"sample"}'
     headers:
       Content-Type:
       - application/json

@@ -28,7 +28,7 @@ RSpec.describe "client.objectives" do
   describe "#create" do
     it "sends the golden request and decodes the response" do
       VCR.use_cassette("ObjectiveService_CreateObjective") do
-        result = client.objectives.create(workspace_id: "sample", agent_id: "sample", variation_id: "sample", metadata: {}, system_prompt_data: {}, first_user_message: "sample", secrets: [{}], memory_cascade: [{"memory_layer_id" => "sample"}], first_user_message_data: {}, episodic_memory: {"key" => "sample"}, tenant: {"id" => "sample"}, subject: {"id" => "sample"}, pinned_parameters: {})
+        result = client.objectives.create(workspace_id: "sample", agent_id: "sample", variation_id: "sample", metadata: {}, system_prompt_data: {}, first_user_message: "sample", secrets: [{}], memory_cascade: [{"memory_layer_id" => "sample"}], first_user_message_data: {}, episodic_memory: {"key" => "sample"}, tenant: {"id" => "sample"}, subject: {"id" => "sample"}, pinned_parameters: {}, client_tools: {"definitions" => [{"name" => "sample"}]})
         expect(result).to be_a(Cadenya::Types::Objective)
       end
     end
@@ -37,7 +37,7 @@ RSpec.describe "client.objectives" do
       it "resolves the client-level value" do
         stub = stub_request(:post, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/objectives")
           .to_return(status: 200, body: "{\"configSnapshot\":{\"agent\":{\"info\":{\"variationCount\":1},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{},\"state\":\"STATE_DRAFT\"},\"agentVariation\":{\"info\":{\"agentPoolCount\":1,\"assignmentMetadata\":{},\"effectiveToolCount\":1,\"feedbackCount\":1,\"memoryLayerCount\":1,\"score\":1.5,\"subAgentCount\":1,\"toolCount\":1,\"toolSetCount\":1},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{}}},\"firstUserMessage\":\"sample\",\"memoryCascade\":[{\"memoryLayerId\":\"sample\"}],\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"parentObjectiveId\":\"sample\",\"pinnedParameters\":{},\"secrets\":[{\"name\":\"sample\"}],\"state\":\"OBJECTIVE_STATE_PENDING\",\"stateMessage\":\"sample\",\"systemPrompt\":\"sample\"}", headers: { "Content-Type" => "application/json" })
-        client.objectives.create(agent_id: "sample", variation_id: "sample", metadata: {}, system_prompt_data: {}, first_user_message: "sample", secrets: [{}], memory_cascade: [{"memory_layer_id" => "sample"}], first_user_message_data: {}, episodic_memory: {"key" => "sample"}, tenant: {"id" => "sample"}, subject: {"id" => "sample"}, pinned_parameters: {})
+        client.objectives.create(agent_id: "sample", variation_id: "sample", metadata: {}, system_prompt_data: {}, first_user_message: "sample", secrets: [{}], memory_cascade: [{"memory_layer_id" => "sample"}], first_user_message_data: {}, episodic_memory: {"key" => "sample"}, tenant: {"id" => "sample"}, subject: {"id" => "sample"}, pinned_parameters: {}, client_tools: {"definitions" => [{"name" => "sample"}]})
         expect(stub).to have_been_requested
       end
     end
@@ -122,7 +122,7 @@ RSpec.describe "client.objectives" do
   describe "#stream_events" do
     it "sends the golden request and decodes the response" do
       VCR.use_cassette("ObjectiveEventStreamsService_StreamObjectiveEvents") do
-        result = client.objectives.stream_events("sample", workspace_id: "sample")
+        result = client.objectives.stream_events("sample", workspace_id: "sample", include_deltas: true)
         events = result.to_a
         expect(events.length).to eq(2)
         expect(result.last_event_id).to eq("e2")
@@ -132,8 +132,9 @@ RSpec.describe "client.objectives" do
     context "when workspace_id falls back to the client default" do
       it "resolves the client-level value" do
         stub = stub_request(:get, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/objectives/sample/events:stream")
+          .with(query: hash_including({}))
           .to_return(status: 200, body: "id: e1\ndata: {\"contextWindowId\":\"sample\",\"data\":{\"type\":\"userMessage\",\"userMessage\":{\"content\":\"sample\"}},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"profileId\":\"sample\",\"workspaceId\":\"sample\"}}\n\nevent: ping\ndata: not-json-housekeeping\n\nid: e2\ndata: {\"contextWindowId\":\"sample\",\"data\":{\"type\":\"userMessage\",\"userMessage\":{\"content\":\"sample\"}},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"profileId\":\"sample\",\"workspaceId\":\"sample\"}}\n\n", headers: { "Content-Type" => "text/event-stream" })
-        (client.objectives.stream_events("sample")).to_a
+        (client.objectives.stream_events("sample", include_deltas: true)).to_a
         expect(stub).to have_been_requested
       end
     end
@@ -402,7 +403,7 @@ RSpec.describe "client.objectives" do
   describe "#create_and_stream" do
     it "sends the golden request and decodes the response" do
       VCR.use_cassette("ObjectiveEventStreamsService_CreateAndStreamObjective") do
-        result = client.objectives.create_and_stream(workspace_id: "sample", agent_id: "sample", variation_id: "sample", metadata: {"external_id" => "sample"}, system_prompt_data: {}, first_user_message: "sample", secrets: [{}], memory_cascade: [{"memory_layer_id" => "sample"}], first_user_message_data: {}, episodic_memory: {"key" => "sample"}, tenant: {"id" => "sample"}, subject: {"id" => "sample"}, pinned_parameters: {})
+        result = client.objectives.create_and_stream(workspace_id: "sample", agent_id: "sample", variation_id: "sample", metadata: {"external_id" => "sample"}, system_prompt_data: {}, first_user_message: "sample", secrets: [{}], memory_cascade: [{"memory_layer_id" => "sample"}], first_user_message_data: {}, episodic_memory: {"key" => "sample"}, tenant: {"id" => "sample"}, subject: {"id" => "sample"}, pinned_parameters: {}, client_tools: {"definitions" => [{"name" => "sample"}]}, include_deltas: true)
         events = result.to_a
         expect(events.length).to eq(2)
         expect(result.last_event_id).to eq("e2")
@@ -413,7 +414,7 @@ RSpec.describe "client.objectives" do
       it "resolves the client-level value" do
         stub = stub_request(:post, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/objectives:stream")
           .to_return(status: 200, body: "id: e1\ndata: {\"objective\":{\"configSnapshot\":{\"agent\":{\"info\":{\"variationCount\":1},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{},\"state\":\"STATE_DRAFT\"},\"agentVariation\":{\"info\":{\"agentPoolCount\":1,\"assignmentMetadata\":{},\"effectiveToolCount\":1,\"feedbackCount\":1,\"memoryLayerCount\":1,\"score\":1.5,\"subAgentCount\":1,\"toolCount\":1,\"toolSetCount\":1},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{}}},\"firstUserMessage\":\"sample\",\"memoryCascade\":[{\"memoryLayerId\":\"sample\"}],\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"parentObjectiveId\":\"sample\",\"pinnedParameters\":{},\"secrets\":[{\"name\":\"sample\"}],\"state\":\"OBJECTIVE_STATE_PENDING\",\"stateMessage\":\"sample\",\"systemPrompt\":\"sample\"},\"type\":\"objective\"}\n\nevent: ping\ndata: not-json-housekeeping\n\nid: e2\ndata: {\"objective\":{\"configSnapshot\":{\"agent\":{\"info\":{\"variationCount\":1},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{},\"state\":\"STATE_DRAFT\"},\"agentVariation\":{\"info\":{\"agentPoolCount\":1,\"assignmentMetadata\":{},\"effectiveToolCount\":1,\"feedbackCount\":1,\"memoryLayerCount\":1,\"score\":1.5,\"subAgentCount\":1,\"toolCount\":1,\"toolSetCount\":1},\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"name\":\"sample\",\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"spec\":{}}},\"firstUserMessage\":\"sample\",\"memoryCascade\":[{\"memoryLayerId\":\"sample\"}],\"metadata\":{\"accountId\":\"sample\",\"createdAt\":\"2026-01-01T00:00:00Z\",\"externalId\":\"sample\",\"id\":\"sample\",\"labels\":{},\"profileId\":\"sample\",\"workspaceId\":\"sample\"},\"parentObjectiveId\":\"sample\",\"pinnedParameters\":{},\"secrets\":[{\"name\":\"sample\"}],\"state\":\"OBJECTIVE_STATE_PENDING\",\"stateMessage\":\"sample\",\"systemPrompt\":\"sample\"},\"type\":\"objective\"}\n\n", headers: { "Content-Type" => "text/event-stream" })
-        (client.objectives.create_and_stream(agent_id: "sample", variation_id: "sample", metadata: {"external_id" => "sample"}, system_prompt_data: {}, first_user_message: "sample", secrets: [{}], memory_cascade: [{"memory_layer_id" => "sample"}], first_user_message_data: {}, episodic_memory: {"key" => "sample"}, tenant: {"id" => "sample"}, subject: {"id" => "sample"}, pinned_parameters: {})).to_a
+        (client.objectives.create_and_stream(agent_id: "sample", variation_id: "sample", metadata: {"external_id" => "sample"}, system_prompt_data: {}, first_user_message: "sample", secrets: [{}], memory_cascade: [{"memory_layer_id" => "sample"}], first_user_message_data: {}, episodic_memory: {"key" => "sample"}, tenant: {"id" => "sample"}, subject: {"id" => "sample"}, pinned_parameters: {}, client_tools: {"definitions" => [{"name" => "sample"}]}, include_deltas: true)).to_a
         expect(stub).to have_been_requested
       end
     end

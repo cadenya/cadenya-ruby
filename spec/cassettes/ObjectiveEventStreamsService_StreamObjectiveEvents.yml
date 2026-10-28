@@ -7,7 +7,7 @@ http_interactions:
       string: ''
     headers: {}
     method: get
-    uri: https://api.test.example/v1/workspaces/sample/objectives/sample/events:stream
+    uri: https://api.test.example/v1/workspaces/sample/objectives/sample/events:stream?includeDeltas=true
   response:
     body:
       encoding: UTF-8

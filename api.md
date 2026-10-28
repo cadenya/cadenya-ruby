@@ -504,7 +504,7 @@ client.objectives.list(workspace_id: nil, limit: nil, cursor: nil, agent_id: nil
 Create a new objective
 
 ```ruby
-client.objectives.create(agent_id:, workspace_id: nil, variation_id: nil, metadata: nil, system_prompt_data: nil, first_user_message: nil, secrets: nil, memory_cascade: nil, first_user_message_data: nil, episodic_memory: nil, tenant: nil, subject: nil, pinned_parameters: nil) # => Cadenya::Types::Objective
+client.objectives.create(agent_id:, workspace_id: nil, variation_id: nil, metadata: nil, system_prompt_data: nil, first_user_message: nil, secrets: nil, memory_cascade: nil, first_user_message_data: nil, episodic_memory: nil, tenant: nil, subject: nil, pinned_parameters: nil, client_tools: nil) # => Cadenya::Types::Objective
 ```
 Get an objective by ID
 
@@ -529,7 +529,7 @@ client.objectives.list_events(objective_id, workspace_id: nil, limit: nil, curso
 Stream objective events
 
 ```ruby
-client.objectives.stream_events(objective_id, workspace_id: nil, last_event_id: nil) # => Cadenya::Stream
+client.objectives.stream_events(objective_id, workspace_id: nil, include_deltas: nil, last_event_id: nil) # => Cadenya::Stream
 ```
 List feedback for an objective
 
@@ -604,7 +604,7 @@ client.objectives.interrupt(objective_id, workspace_id: nil) # => Cadenya::Types
 Create an objective and stream its events
 
 ```ruby
-client.objectives.create_and_stream(agent_id:, metadata:, workspace_id: nil, variation_id: nil, system_prompt_data: nil, first_user_message: nil, secrets: nil, memory_cascade: nil, first_user_message_data: nil, episodic_memory: nil, tenant: nil, subject: nil, pinned_parameters: nil, last_event_id: nil) # => Cadenya::Stream
+client.objectives.create_and_stream(agent_id:, metadata:, workspace_id: nil, variation_id: nil, system_prompt_data: nil, first_user_message: nil, secrets: nil, memory_cascade: nil, first_user_message_data: nil, episodic_memory: nil, tenant: nil, subject: nil, pinned_parameters: nil, client_tools: nil, include_deltas: nil, last_event_id: nil) # => Cadenya::Stream
 ```
 
 ## client.tool_search
