@@ -1084,9 +1084,9 @@ module Cadenya
     AgentVariationSpecModelConfigReasoningEffort = ["REASONING_EFFORT_UNSPECIFIED", "REASONING_EFFORT_NONE", "REASONING_EFFORT_LOW", "REASONING_EFFORT_MEDIUM", "REASONING_EFFORT_HIGH"].freeze
 
     class AgentVariationSpec_ModelConfig
-      attr_reader :model_id, :temperature, :top_p, :top_k, :stop_sequences, :max_output_tokens, :reasoning_effort, :caching_enabled
+      attr_reader :model_id, :temperature, :top_p, :top_k, :stop_sequences, :max_output_tokens, :reasoning_effort, :caching_enabled, :streaming_enabled
 
-      def initialize(model_id: nil, temperature: nil, top_p: nil, top_k: nil, stop_sequences: nil, max_output_tokens: nil, reasoning_effort: nil, caching_enabled: nil)
+      def initialize(model_id: nil, temperature: nil, top_p: nil, top_k: nil, stop_sequences: nil, max_output_tokens: nil, reasoning_effort: nil, caching_enabled: nil, streaming_enabled: nil)
         @model_id = model_id
         @temperature = temperature
         @top_p = top_p
@@ -1095,6 +1095,7 @@ module Cadenya
         @max_output_tokens = max_output_tokens
         @reasoning_effort = reasoning_effort
         @caching_enabled = caching_enabled
+        @streaming_enabled = streaming_enabled
       end
 
       def self.from_json(data)
@@ -1107,6 +1108,7 @@ module Cadenya
           max_output_tokens: data["maxOutputTokens"],
           reasoning_effort: data["reasoningEffort"],
           caching_enabled: data["cachingEnabled"],
+          streaming_enabled: data["streamingEnabled"],
         )
       end
 
@@ -1120,6 +1122,7 @@ module Cadenya
           max_output_tokens: Util.plain(@max_output_tokens),
           reasoning_effort: Util.plain(@reasoning_effort),
           caching_enabled: Util.plain(@caching_enabled),
+          streaming_enabled: Util.plain(@streaming_enabled),
         }.reject { |_k, v| v.nil? }
       end
     end
@@ -1292,13 +1295,14 @@ module Cadenya
     end
 
     class AssistantMessage
-      attr_reader :content, :tool_calls, :usage, :model
+      attr_reader :content, :tool_calls, :usage, :model, :completion_id
 
-      def initialize(content: nil, tool_calls: nil, usage: nil, model: nil)
+      def initialize(content: nil, tool_calls: nil, usage: nil, model: nil, completion_id: nil)
         @content = content
         @tool_calls = tool_calls
         @usage = usage
         @model = model
+        @completion_id = completion_id
       end
 
       def self.from_json(data)
@@ -1307,6 +1311,7 @@ module Cadenya
           tool_calls: data["toolCalls"].nil? ? nil : (data["toolCalls"]).map { |item| Types::AssistantToolCall.from_json(item) },
           usage: data["usage"].nil? ? nil : Types::TokenUsage.from_json(data["usage"]),
           model: data["model"].nil? ? nil : Types::ResourceMetadata.from_json(data["model"]),
+          completion_id: data["completionId"],
         )
       end
 
@@ -1316,6 +1321,36 @@ module Cadenya
           tool_calls: Util.plain(@tool_calls),
           usage: Util.plain(@usage),
           model: Util.plain(@model),
+          completion_id: Util.plain(@completion_id),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    class AssistantMessageDelta
+      attr_reader :completion_id, :text, :after_sequence, :offset
+
+      def initialize(completion_id: nil, text: nil, after_sequence: nil, offset: nil)
+        @completion_id = completion_id
+        @text = text
+        @after_sequence = after_sequence
+        @offset = offset
+      end
+
+      def self.from_json(data)
+        new(
+          completion_id: data["completionId"],
+          text: data["text"],
+          after_sequence: data["afterSequence"],
+          offset: data["offset"],
+        )
+      end
+
+      def to_h
+        {
+          completion_id: Util.plain(@completion_id),
+          text: Util.plain(@text),
+          after_sequence: Util.plain(@after_sequence),
+          offset: Util.plain(@offset),
         }.reject { |_k, v| v.nil? }
       end
     end
@@ -1547,6 +1582,16 @@ module Cadenya
       end
     end
 
+    class Capability_Streaming
+      def self.from_json(_data)
+        new
+      end
+
+      def to_h
+        {}
+      end
+    end
+
     class Capability_Temperature
       def self.from_json(_data)
         new
@@ -1574,6 +1619,55 @@ module Cadenya
 
       def to_h
         {}
+      end
+    end
+
+    class ClientToolDefinition
+      attr_reader :name, :description, :parameters, :requires_approval
+
+      def initialize(name: nil, description: nil, parameters: nil, requires_approval: nil)
+        @name = name
+        @description = description
+        @parameters = parameters
+        @requires_approval = requires_approval
+      end
+
+      def self.from_json(data)
+        new(
+          name: data["name"],
+          description: data["description"],
+          parameters: data["parameters"],
+          requires_approval: data["requiresApproval"],
+        )
+      end
+
+      def to_h
+        {
+          name: Util.plain(@name),
+          description: Util.plain(@description),
+          parameters: Util.plain(@parameters),
+          requires_approval: Util.plain(@requires_approval),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    class ClientTools
+      attr_reader :definitions
+
+      def initialize(definitions: nil)
+        @definitions = definitions
+      end
+
+      def self.from_json(data)
+        new(
+          definitions: data["definitions"].nil? ? nil : (data["definitions"]).map { |item| Types::ClientToolDefinition.from_json(item) },
+        )
+      end
+
+      def to_h
+        {
+          definitions: Util.plain(@definitions),
+        }.reject { |_k, v| v.nil? }
       end
     end
 
@@ -2046,9 +2140,9 @@ module Cadenya
     end
 
     class CreateAndStreamObjectiveRequest
-      attr_reader :workspace_id, :agent_id, :variation_id, :metadata, :system_prompt_data, :first_user_message, :secrets, :memory_cascade, :first_user_message_data, :episodic_memory, :tenant, :subject, :pinned_parameters
+      attr_reader :workspace_id, :agent_id, :variation_id, :metadata, :system_prompt_data, :first_user_message, :secrets, :memory_cascade, :first_user_message_data, :episodic_memory, :tenant, :subject, :pinned_parameters, :client_tools, :include_deltas
 
-      def initialize(workspace_id: nil, agent_id: nil, variation_id: nil, metadata: nil, system_prompt_data: nil, first_user_message: nil, secrets: nil, memory_cascade: nil, first_user_message_data: nil, episodic_memory: nil, tenant: nil, subject: nil, pinned_parameters: nil)
+      def initialize(workspace_id: nil, agent_id: nil, variation_id: nil, metadata: nil, system_prompt_data: nil, first_user_message: nil, secrets: nil, memory_cascade: nil, first_user_message_data: nil, episodic_memory: nil, tenant: nil, subject: nil, pinned_parameters: nil, client_tools: nil, include_deltas: nil)
         @workspace_id = workspace_id
         @agent_id = agent_id
         @variation_id = variation_id
@@ -2062,6 +2156,8 @@ module Cadenya
         @tenant = tenant
         @subject = subject
         @pinned_parameters = pinned_parameters
+        @client_tools = client_tools
+        @include_deltas = include_deltas
       end
 
       def self.from_json(data)
@@ -2079,6 +2175,8 @@ module Cadenya
           tenant: data["tenant"].nil? ? nil : Types::TenantAssertion.from_json(data["tenant"]),
           subject: data["subject"].nil? ? nil : Types::SubjectAssertion.from_json(data["subject"]),
           pinned_parameters: data["pinnedParameters"],
+          client_tools: data["clientTools"].nil? ? nil : Types::ClientTools.from_json(data["clientTools"]),
+          include_deltas: data["includeDeltas"],
         )
       end
 
@@ -2097,6 +2195,8 @@ module Cadenya
           tenant: Util.plain(@tenant),
           subject: Util.plain(@subject),
           pinned_parameters: Util.plain(@pinned_parameters),
+          client_tools: Util.plain(@client_tools),
+          include_deltas: Util.plain(@include_deltas),
         }.reject { |_k, v| v.nil? }
       end
     end
@@ -2256,9 +2356,9 @@ module Cadenya
     end
 
     class CreateObjectiveRequest
-      attr_reader :workspace_id, :agent_id, :variation_id, :metadata, :system_prompt_data, :first_user_message, :secrets, :memory_cascade, :first_user_message_data, :episodic_memory, :tenant, :subject, :pinned_parameters
+      attr_reader :workspace_id, :agent_id, :variation_id, :metadata, :system_prompt_data, :first_user_message, :secrets, :memory_cascade, :first_user_message_data, :episodic_memory, :tenant, :subject, :pinned_parameters, :client_tools
 
-      def initialize(workspace_id: nil, agent_id: nil, variation_id: nil, metadata: nil, system_prompt_data: nil, first_user_message: nil, secrets: nil, memory_cascade: nil, first_user_message_data: nil, episodic_memory: nil, tenant: nil, subject: nil, pinned_parameters: nil)
+      def initialize(workspace_id: nil, agent_id: nil, variation_id: nil, metadata: nil, system_prompt_data: nil, first_user_message: nil, secrets: nil, memory_cascade: nil, first_user_message_data: nil, episodic_memory: nil, tenant: nil, subject: nil, pinned_parameters: nil, client_tools: nil)
         @workspace_id = workspace_id
         @agent_id = agent_id
         @variation_id = variation_id
@@ -2272,6 +2372,7 @@ module Cadenya
         @tenant = tenant
         @subject = subject
         @pinned_parameters = pinned_parameters
+        @client_tools = client_tools
       end
 
       def self.from_json(data)
@@ -2289,6 +2390,7 @@ module Cadenya
           tenant: data["tenant"].nil? ? nil : Types::TenantAssertion.from_json(data["tenant"]),
           subject: data["subject"].nil? ? nil : Types::SubjectAssertion.from_json(data["subject"]),
           pinned_parameters: data["pinnedParameters"],
+          client_tools: data["clientTools"].nil? ? nil : Types::ClientTools.from_json(data["clientTools"]),
         )
       end
 
@@ -2307,6 +2409,7 @@ module Cadenya
           tenant: Util.plain(@tenant),
           subject: Util.plain(@subject),
           pinned_parameters: Util.plain(@pinned_parameters),
+          client_tools: Util.plain(@client_tools),
         }.reject { |_k, v| v.nil? }
       end
     end
@@ -4240,6 +4343,8 @@ module Cadenya
         Types::ModelSpec_Capability_Reasoning.from_json(data)
       when "caching"
         Types::ModelSpec_Capability_Caching.from_json(data)
+      when "streaming"
+        Types::ModelSpec_Capability_Streaming.from_json(data)
       else
         raise ArgumentError, "ModelSpec_Capability: unknown type #{data["type"].inspect}"
       end
@@ -4540,15 +4645,16 @@ module Cadenya
     end
 
     class ObjectiveEvent
-      attr_reader :metadata, :data, :context_window_id, :info, :duration, :started_at
+      attr_reader :metadata, :data, :context_window_id, :info, :duration, :started_at, :sequence
 
-      def initialize(metadata: nil, data: nil, context_window_id: nil, info: nil, duration: nil, started_at: nil)
+      def initialize(metadata: nil, data: nil, context_window_id: nil, info: nil, duration: nil, started_at: nil, sequence: nil)
         @metadata = metadata
         @data = data
         @context_window_id = context_window_id
         @info = info
         @duration = duration
         @started_at = started_at
+        @sequence = sequence
       end
 
       def self.from_json(data)
@@ -4559,6 +4665,7 @@ module Cadenya
           info: data["info"].nil? ? nil : Types::ObjectiveEventInfo.from_json(data["info"]),
           duration: data["duration"],
           started_at: data["startedAt"].nil? ? nil : Time.iso8601(data["startedAt"]),
+          sequence: data["sequence"],
         )
       end
 
@@ -4570,6 +4677,7 @@ module Cadenya
           info: Util.plain(@info),
           duration: Util.plain(@duration),
           started_at: Util.plain(@started_at),
+          sequence: Util.plain(@sequence),
         }.reject { |_k, v| v.nil? }
       end
     end
@@ -4619,6 +4727,10 @@ module Cadenya
         Types::ObjectiveEventData_Heartbeat.from_json(data)
       when "interrupted"
         Types::ObjectiveEventData_Interrupted.from_json(data)
+      when "assistantMessageDelta"
+        Types::ObjectiveEventData_AssistantMessageDelta.from_json(data)
+      when "reasoningDelta"
+        Types::ObjectiveEventData_ReasoningDelta.from_json(data)
       else
         raise ArgumentError, "ObjectiveEventData: unknown type #{data["type"].inspect}"
       end
@@ -4743,12 +4855,22 @@ module Cadenya
     end
 
     class ObjectiveHeartbeat
-      def self.from_json(_data)
-        new
+      attr_reader :last_sequence
+
+      def initialize(last_sequence: nil)
+        @last_sequence = last_sequence
+      end
+
+      def self.from_json(data)
+        new(
+          last_sequence: data["lastSequence"],
+        )
       end
 
       def to_h
-        {}
+        {
+          last_sequence: Util.plain(@last_sequence),
+        }.reject { |_k, v| v.nil? }
       end
     end
 
@@ -4875,6 +4997,8 @@ module Cadenya
         Types::ObjectiveQueuedActionData_UserMessage.from_json(data)
       when "compaction"
         Types::ObjectiveQueuedActionData_Compaction.from_json(data)
+      when "subAgentUpdated"
+        Types::ObjectiveQueuedActionData_SubAgentUpdated.from_json(data)
       else
         raise ArgumentError, "ObjectiveQueuedActionData: unknown type #{data["type"].inspect}"
       end
@@ -5589,21 +5713,53 @@ module Cadenya
     end
 
     class Reasoning
-      attr_reader :content
+      attr_reader :content, :completion_id
 
-      def initialize(content: nil)
+      def initialize(content: nil, completion_id: nil)
         @content = content
+        @completion_id = completion_id
       end
 
       def self.from_json(data)
         new(
           content: data["content"],
+          completion_id: data["completionId"],
         )
       end
 
       def to_h
         {
           content: Util.plain(@content),
+          completion_id: Util.plain(@completion_id),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    class ReasoningDelta
+      attr_reader :completion_id, :text, :after_sequence, :offset
+
+      def initialize(completion_id: nil, text: nil, after_sequence: nil, offset: nil)
+        @completion_id = completion_id
+        @text = text
+        @after_sequence = after_sequence
+        @offset = offset
+      end
+
+      def self.from_json(data)
+        new(
+          completion_id: data["completionId"],
+          text: data["text"],
+          after_sequence: data["afterSequence"],
+          offset: data["offset"],
+        )
+      end
+
+      def to_h
+        {
+          completion_id: Util.plain(@completion_id),
+          text: Util.plain(@text),
+          after_sequence: Util.plain(@after_sequence),
+          offset: Util.plain(@offset),
         }.reject { |_k, v| v.nil? }
       end
     end
@@ -6268,7 +6424,7 @@ module Cadenya
       end
     end
 
-    SubAgentUpdatedStatus = ["STATUS_UNSPECIFIED", "STATUS_PENDING", "STATUS_RUNNING", "STATUS_COMPLETED", "STATUS_FAILED", "STATUS_CANCELLED"].freeze
+    SubAgentUpdatedStatus = ["STATUS_UNSPECIFIED", "STATUS_PENDING", "STATUS_RUNNING", "STATUS_COMPLETED", "STATUS_FAILED", "STATUS_CANCELLED", "STATUS_WAITING", "STATUS_TIMED_OUT"].freeze
 
     class SubAgentUpdated
       attr_reader :agent, :objective, :status, :message
@@ -6689,41 +6845,56 @@ module Cadenya
     end
 
     class ToolApprovalRequested
-      attr_reader :tool_call_id
+      attr_reader :tool_call_id, :tool, :llm_tool_name, :arguments
 
-      def initialize(tool_call_id: nil)
+      def initialize(tool_call_id: nil, tool: nil, llm_tool_name: nil, arguments: nil)
         @tool_call_id = tool_call_id
+        @tool = tool
+        @llm_tool_name = llm_tool_name
+        @arguments = arguments
       end
 
       def self.from_json(data)
         new(
           tool_call_id: data["toolCallId"],
+          tool: data["tool"].nil? ? nil : Types.decode_CallableTool(data["tool"]),
+          llm_tool_name: data["llmToolName"],
+          arguments: data["arguments"],
         )
       end
 
       def to_h
         {
           tool_call_id: Util.plain(@tool_call_id),
+          tool: Util.plain(@tool),
+          llm_tool_name: Util.plain(@llm_tool_name),
+          arguments: Util.plain(@arguments),
         }.reject { |_k, v| v.nil? }
       end
     end
 
     class ToolApproved
-      attr_reader :tool_call_id
+      attr_reader :tool_call_id, :tool, :llm_tool_name
 
-      def initialize(tool_call_id: nil)
+      def initialize(tool_call_id: nil, tool: nil, llm_tool_name: nil)
         @tool_call_id = tool_call_id
+        @tool = tool
+        @llm_tool_name = llm_tool_name
       end
 
       def self.from_json(data)
         new(
           tool_call_id: data["toolCallId"],
+          tool: data["tool"].nil? ? nil : Types.decode_CallableTool(data["tool"]),
+          llm_tool_name: data["llmToolName"],
         )
       end
 
       def to_h
         {
           tool_call_id: Util.plain(@tool_call_id),
+          tool: Util.plain(@tool),
+          llm_tool_name: Util.plain(@llm_tool_name),
         }.reject { |_k, v| v.nil? }
       end
     end
@@ -6778,14 +6949,15 @@ module Cadenya
     end
 
     class ToolCalled
-      attr_reader :tool_call_id, :tool, :config, :arguments, :arguments_exposed_in_widgets
+      attr_reader :tool_call_id, :tool, :config, :arguments, :arguments_exposed_in_widgets, :llm_tool_name
 
-      def initialize(tool_call_id: nil, tool: nil, config: nil, arguments: nil, arguments_exposed_in_widgets: nil)
+      def initialize(tool_call_id: nil, tool: nil, config: nil, arguments: nil, arguments_exposed_in_widgets: nil, llm_tool_name: nil)
         @tool_call_id = tool_call_id
         @tool = tool
         @config = config
         @arguments = arguments
         @arguments_exposed_in_widgets = arguments_exposed_in_widgets
+        @llm_tool_name = llm_tool_name
       end
 
       def self.from_json(data)
@@ -6795,6 +6967,7 @@ module Cadenya
           config: data["config"].nil? ? nil : Types.decode_ToolSpec_Config(data["config"]),
           arguments: data["arguments"],
           arguments_exposed_in_widgets: data["argumentsExposedInWidgets"],
+          llm_tool_name: data["llmToolName"],
         )
       end
 
@@ -6805,22 +6978,27 @@ module Cadenya
           config: Util.plain(@config),
           arguments: Util.plain(@arguments),
           arguments_exposed_in_widgets: Util.plain(@arguments_exposed_in_widgets),
+          llm_tool_name: Util.plain(@llm_tool_name),
         }.reject { |_k, v| v.nil? }
       end
     end
 
     class ToolDenied
-      attr_reader :tool_call_id, :memo
+      attr_reader :tool_call_id, :memo, :tool, :llm_tool_name
 
-      def initialize(tool_call_id: nil, memo: nil)
+      def initialize(tool_call_id: nil, memo: nil, tool: nil, llm_tool_name: nil)
         @tool_call_id = tool_call_id
         @memo = memo
+        @tool = tool
+        @llm_tool_name = llm_tool_name
       end
 
       def self.from_json(data)
         new(
           tool_call_id: data["toolCallId"],
           memo: data["memo"],
+          tool: data["tool"].nil? ? nil : Types.decode_CallableTool(data["tool"]),
+          llm_tool_name: data["llmToolName"],
         )
       end
 
@@ -6828,22 +7006,28 @@ module Cadenya
         {
           tool_call_id: Util.plain(@tool_call_id),
           memo: Util.plain(@memo),
+          tool: Util.plain(@tool),
+          llm_tool_name: Util.plain(@llm_tool_name),
         }.reject { |_k, v| v.nil? }
       end
     end
 
     class ToolError
-      attr_reader :tool_call_id, :message
+      attr_reader :tool_call_id, :message, :tool, :llm_tool_name
 
-      def initialize(tool_call_id: nil, message: nil)
+      def initialize(tool_call_id: nil, message: nil, tool: nil, llm_tool_name: nil)
         @tool_call_id = tool_call_id
         @message = message
+        @tool = tool
+        @llm_tool_name = llm_tool_name
       end
 
       def self.from_json(data)
         new(
           tool_call_id: data["toolCallId"],
           message: data["message"],
+          tool: data["tool"].nil? ? nil : Types.decode_CallableTool(data["tool"]),
+          llm_tool_name: data["llmToolName"],
         )
       end
 
@@ -6851,6 +7035,8 @@ module Cadenya
         {
           tool_call_id: Util.plain(@tool_call_id),
           message: Util.plain(@message),
+          tool: Util.plain(@tool),
+          llm_tool_name: Util.plain(@llm_tool_name),
         }.reject { |_k, v| v.nil? }
       end
     end
@@ -7015,17 +7201,21 @@ module Cadenya
     end
 
     class ToolResult
-      attr_reader :tool_call_id, :result
+      attr_reader :tool_call_id, :result, :tool, :llm_tool_name
 
-      def initialize(tool_call_id: nil, result: nil)
+      def initialize(tool_call_id: nil, result: nil, tool: nil, llm_tool_name: nil)
         @tool_call_id = tool_call_id
         @result = result
+        @tool = tool
+        @llm_tool_name = llm_tool_name
       end
 
       def self.from_json(data)
         new(
           tool_call_id: data["toolCallId"],
           result: data["result"].nil? ? nil : Types::ObjectiveToolCallResult.from_json(data["result"]),
+          tool: data["tool"].nil? ? nil : Types.decode_CallableTool(data["tool"]),
+          llm_tool_name: data["llmToolName"],
         )
       end
 
@@ -7033,6 +7223,8 @@ module Cadenya
         {
           tool_call_id: Util.plain(@tool_call_id),
           result: Util.plain(@result),
+          tool: Util.plain(@tool),
+          llm_tool_name: Util.plain(@llm_tool_name),
         }.reject { |_k, v| v.nil? }
       end
     end
@@ -7040,13 +7232,14 @@ module Cadenya
     ToolSetState = ["STATE_UNSPECIFIED", "STATE_ACTIVE", "STATE_ARCHIVED"].freeze
 
     class ToolSet
-      attr_reader :metadata, :spec, :info, :state
+      attr_reader :metadata, :spec, :info, :state, :client_tools_agent_id
 
-      def initialize(metadata: nil, spec: nil, info: nil, state: nil)
+      def initialize(metadata: nil, spec: nil, info: nil, state: nil, client_tools_agent_id: nil)
         @metadata = metadata
         @spec = spec
         @info = info
         @state = state
+        @client_tools_agent_id = client_tools_agent_id
       end
 
       def self.from_json(data)
@@ -7055,6 +7248,7 @@ module Cadenya
           spec: data["spec"].nil? ? nil : Types::ToolSetSpec.from_json(data["spec"]),
           info: data["info"].nil? ? nil : Types::ToolSetInfo.from_json(data["info"]),
           state: data["state"],
+          client_tools_agent_id: data["clientToolsAgentId"],
         )
       end
 
@@ -7064,6 +7258,7 @@ module Cadenya
           spec: Util.plain(@spec),
           info: Util.plain(@info),
           state: Util.plain(@state),
+          client_tools_agent_id: Util.plain(@client_tools_agent_id),
         }.reject { |_k, v| v.nil? }
       end
     end
@@ -8574,7 +8769,7 @@ module Cadenya
 
     WebhookDeliveryDataStatus = ["WEBHOOK_DELIVERY_STATUS_UNSPECIFIED", "WEBHOOK_DELIVERY_STATUS_PENDING", "WEBHOOK_DELIVERY_STATUS_COMPLETED", "WEBHOOK_DELIVERY_STATUS_FAILED", "WEBHOOK_DELIVERY_STATUS_DISABLED"].freeze
 
-    WebhookDeliveryDataEventType = ["OBJECTIVE_EVENT_TYPE_UNSPECIFIED", "OBJECTIVE_EVENT_TYPE_USER_MESSAGE", "OBJECTIVE_EVENT_TYPE_TOOL_APPROVAL_REQUESTED", "OBJECTIVE_EVENT_TYPE_TOOL_APPROVED", "OBJECTIVE_EVENT_TYPE_TOOL_DENIED", "OBJECTIVE_EVENT_TYPE_TOOL_CALLED", "OBJECTIVE_EVENT_TYPE_ERROR", "OBJECTIVE_EVENT_TYPE_ASSISTANT_MESSAGE", "OBJECTIVE_EVENT_TYPE_TOOL_RESULT", "OBJECTIVE_EVENT_TYPE_TOOL_ERROR", "OBJECTIVE_EVENT_TYPE_CONTEXT_WINDOW_COMPACTED", "OBJECTIVE_EVENT_TYPE_MEMORY_READ", "OBJECTIVE_EVENT_TYPE_CANCELLED", "OBJECTIVE_EVENT_TYPE_SUB_AGENT_SPAWNED", "OBJECTIVE_EVENT_TYPE_SUB_AGENT_UPDATED", "OBJECTIVE_EVENT_TYPE_FINALIZED", "OBJECTIVE_EVENT_TYPE_NOTICE", "OBJECTIVE_EVENT_TYPE_TIMED_OUT", "OBJECTIVE_EVENT_TYPE_REASONING", "OBJECTIVE_EVENT_TYPE_STATE_CHANGED", "OBJECTIVE_EVENT_TYPE_HEARTBEAT", "OBJECTIVE_EVENT_TYPE_INTERRUPTED"].freeze
+    WebhookDeliveryDataEventType = ["OBJECTIVE_EVENT_TYPE_UNSPECIFIED", "OBJECTIVE_EVENT_TYPE_USER_MESSAGE", "OBJECTIVE_EVENT_TYPE_TOOL_APPROVAL_REQUESTED", "OBJECTIVE_EVENT_TYPE_TOOL_APPROVED", "OBJECTIVE_EVENT_TYPE_TOOL_DENIED", "OBJECTIVE_EVENT_TYPE_TOOL_CALLED", "OBJECTIVE_EVENT_TYPE_ERROR", "OBJECTIVE_EVENT_TYPE_ASSISTANT_MESSAGE", "OBJECTIVE_EVENT_TYPE_TOOL_RESULT", "OBJECTIVE_EVENT_TYPE_TOOL_ERROR", "OBJECTIVE_EVENT_TYPE_CONTEXT_WINDOW_COMPACTED", "OBJECTIVE_EVENT_TYPE_MEMORY_READ", "OBJECTIVE_EVENT_TYPE_CANCELLED", "OBJECTIVE_EVENT_TYPE_SUB_AGENT_SPAWNED", "OBJECTIVE_EVENT_TYPE_SUB_AGENT_UPDATED", "OBJECTIVE_EVENT_TYPE_FINALIZED", "OBJECTIVE_EVENT_TYPE_NOTICE", "OBJECTIVE_EVENT_TYPE_TIMED_OUT", "OBJECTIVE_EVENT_TYPE_REASONING", "OBJECTIVE_EVENT_TYPE_STATE_CHANGED", "OBJECTIVE_EVENT_TYPE_HEARTBEAT", "OBJECTIVE_EVENT_TYPE_INTERRUPTED", "OBJECTIVE_EVENT_TYPE_ASSISTANT_MESSAGE_DELTA", "OBJECTIVE_EVENT_TYPE_REASONING_DELTA"].freeze
 
     class WebhookDeliveryData
       attr_reader :agent_id, :objective_id, :objective_event_id, :webhook_url, :webhook_id, :status, :attempt_count, :last_attempt_at, :http_status_code, :error_message, :latency_ms, :event_type, :response_headers, :response_content_length
@@ -10461,18 +10656,66 @@ module Cadenya
       end
     end
 
-    class CallableTool_Tool
-      attr_reader :type, :tool
+    class ObjectiveEventData_AssistantMessageDelta
+      attr_reader :type, :assistant_message_delta
 
-      def initialize(type: nil, tool: nil)
+      def initialize(type: nil, assistant_message_delta: nil)
+        @type = type
+        @assistant_message_delta = assistant_message_delta
+      end
+
+      def self.from_json(data)
+        new(
+          type: data["type"],
+          assistant_message_delta: data["assistantMessageDelta"].nil? ? nil : Types::AssistantMessageDelta.from_json(data["assistantMessageDelta"]),
+        )
+      end
+
+      def to_h
+        {
+          type: Util.plain(@type),
+          assistant_message_delta: Util.plain(@assistant_message_delta),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    class ObjectiveEventData_ReasoningDelta
+      attr_reader :type, :reasoning_delta
+
+      def initialize(type: nil, reasoning_delta: nil)
+        @type = type
+        @reasoning_delta = reasoning_delta
+      end
+
+      def self.from_json(data)
+        new(
+          type: data["type"],
+          reasoning_delta: data["reasoningDelta"].nil? ? nil : Types::ReasoningDelta.from_json(data["reasoningDelta"]),
+        )
+      end
+
+      def to_h
+        {
+          type: Util.plain(@type),
+          reasoning_delta: Util.plain(@reasoning_delta),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    class CallableTool_Tool
+      attr_reader :type, :tool, :client_tool
+
+      def initialize(type: nil, tool: nil, client_tool: nil)
         @type = type
         @tool = tool
+        @client_tool = client_tool
       end
 
       def self.from_json(data)
         new(
           type: data["type"],
           tool: data["tool"].nil? ? nil : Types::ResourceMetadata.from_json(data["tool"]),
+          client_tool: data["clientTool"],
         )
       end
 
@@ -10480,22 +10723,25 @@ module Cadenya
         {
           type: Util.plain(@type),
           tool: Util.plain(@tool),
+          client_tool: Util.plain(@client_tool),
         }.reject { |_k, v| v.nil? }
       end
     end
 
     class CallableTool_Agent
-      attr_reader :type, :agent
+      attr_reader :type, :agent, :client_tool
 
-      def initialize(type: nil, agent: nil)
+      def initialize(type: nil, agent: nil, client_tool: nil)
         @type = type
         @agent = agent
+        @client_tool = client_tool
       end
 
       def self.from_json(data)
         new(
           type: data["type"],
           agent: data["agent"].nil? ? nil : Types::ResourceMetadata.from_json(data["agent"]),
+          client_tool: data["clientTool"],
         )
       end
 
@@ -10503,22 +10749,25 @@ module Cadenya
         {
           type: Util.plain(@type),
           agent: Util.plain(@agent),
+          client_tool: Util.plain(@client_tool),
         }.reject { |_k, v| v.nil? }
       end
     end
 
     class CallableTool_CadenyaProvidedTool
-      attr_reader :type, :cadenya_provided_tool
+      attr_reader :type, :cadenya_provided_tool, :client_tool
 
-      def initialize(type: nil, cadenya_provided_tool: nil)
+      def initialize(type: nil, cadenya_provided_tool: nil, client_tool: nil)
         @type = type
         @cadenya_provided_tool = cadenya_provided_tool
+        @client_tool = client_tool
       end
 
       def self.from_json(data)
         new(
           type: data["type"],
           cadenya_provided_tool: data["cadenyaProvidedTool"].nil? ? nil : Types::ResourceMetadata.from_json(data["cadenyaProvidedTool"]),
+          client_tool: data["clientTool"],
         )
       end
 
@@ -10526,22 +10775,25 @@ module Cadenya
         {
           type: Util.plain(@type),
           cadenya_provided_tool: Util.plain(@cadenya_provided_tool),
+          client_tool: Util.plain(@client_tool),
         }.reject { |_k, v| v.nil? }
       end
     end
 
     class CallableTool_AgentPool
-      attr_reader :type, :agent_pool
+      attr_reader :type, :agent_pool, :client_tool
 
-      def initialize(type: nil, agent_pool: nil)
+      def initialize(type: nil, agent_pool: nil, client_tool: nil)
         @type = type
         @agent_pool = agent_pool
+        @client_tool = client_tool
       end
 
       def self.from_json(data)
         new(
           type: data["type"],
           agent_pool: data["agentPool"].nil? ? nil : Types::ResourceMetadata.from_json(data["agentPool"]),
+          client_tool: data["clientTool"],
         )
       end
 
@@ -10549,6 +10801,7 @@ module Cadenya
         {
           type: Util.plain(@type),
           agent_pool: Util.plain(@agent_pool),
+          client_tool: Util.plain(@client_tool),
         }.reject { |_k, v| v.nil? }
       end
     end
@@ -10653,6 +10906,29 @@ module Cadenya
         {
           type: Util.plain(@type),
           compaction: Util.plain(@compaction),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    class ObjectiveQueuedActionData_SubAgentUpdated
+      attr_reader :type, :sub_agent_updated
+
+      def initialize(type: nil, sub_agent_updated: nil)
+        @type = type
+        @sub_agent_updated = sub_agent_updated
+      end
+
+      def self.from_json(data)
+        new(
+          type: data["type"],
+          sub_agent_updated: data["subAgentUpdated"].nil? ? nil : Types::SubAgentUpdated.from_json(data["subAgentUpdated"]),
+        )
+      end
+
+      def to_h
+        {
+          type: Util.plain(@type),
+          sub_agent_updated: Util.plain(@sub_agent_updated),
         }.reject { |_k, v| v.nil? }
       end
     end
@@ -11396,6 +11672,29 @@ module Cadenya
       end
     end
 
+    class ModelSpec_Capability_Streaming
+      attr_reader :type, :streaming
+
+      def initialize(type: nil, streaming: nil)
+        @type = type
+        @streaming = streaming
+      end
+
+      def self.from_json(data)
+        new(
+          type: data["type"],
+          streaming: data["streaming"].nil? ? nil : Types::Capability_Streaming.from_json(data["streaming"]),
+        )
+      end
+
+      def to_h
+        {
+          type: Util.plain(@type),
+          streaming: Util.plain(@streaming),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
     class CreateAndStreamObjectiveResponse_Objective
       attr_reader :type, :objective
 
@@ -11481,7 +11780,7 @@ module Cadenya
 
     AgentServiceListAgentFeedbackSentiment = ["FEEDBACK_SENTIMENT_UNSPECIFIED", "FEEDBACK_SENTIMENT_POSITIVE", "FEEDBACK_SENTIMENT_NEGATIVE"].freeze
 
-    AgentServiceListAgentWebhookDeliveriesEventType = ["OBJECTIVE_EVENT_TYPE_UNSPECIFIED", "OBJECTIVE_EVENT_TYPE_USER_MESSAGE", "OBJECTIVE_EVENT_TYPE_TOOL_APPROVAL_REQUESTED", "OBJECTIVE_EVENT_TYPE_TOOL_APPROVED", "OBJECTIVE_EVENT_TYPE_TOOL_DENIED", "OBJECTIVE_EVENT_TYPE_TOOL_CALLED", "OBJECTIVE_EVENT_TYPE_ERROR", "OBJECTIVE_EVENT_TYPE_ASSISTANT_MESSAGE", "OBJECTIVE_EVENT_TYPE_TOOL_RESULT", "OBJECTIVE_EVENT_TYPE_TOOL_ERROR", "OBJECTIVE_EVENT_TYPE_CONTEXT_WINDOW_COMPACTED", "OBJECTIVE_EVENT_TYPE_MEMORY_READ", "OBJECTIVE_EVENT_TYPE_CANCELLED", "OBJECTIVE_EVENT_TYPE_SUB_AGENT_SPAWNED", "OBJECTIVE_EVENT_TYPE_SUB_AGENT_UPDATED", "OBJECTIVE_EVENT_TYPE_FINALIZED", "OBJECTIVE_EVENT_TYPE_NOTICE", "OBJECTIVE_EVENT_TYPE_TIMED_OUT", "OBJECTIVE_EVENT_TYPE_REASONING", "OBJECTIVE_EVENT_TYPE_STATE_CHANGED", "OBJECTIVE_EVENT_TYPE_HEARTBEAT", "OBJECTIVE_EVENT_TYPE_INTERRUPTED"].freeze
+    AgentServiceListAgentWebhookDeliveriesEventType = ["OBJECTIVE_EVENT_TYPE_UNSPECIFIED", "OBJECTIVE_EVENT_TYPE_USER_MESSAGE", "OBJECTIVE_EVENT_TYPE_TOOL_APPROVAL_REQUESTED", "OBJECTIVE_EVENT_TYPE_TOOL_APPROVED", "OBJECTIVE_EVENT_TYPE_TOOL_DENIED", "OBJECTIVE_EVENT_TYPE_TOOL_CALLED", "OBJECTIVE_EVENT_TYPE_ERROR", "OBJECTIVE_EVENT_TYPE_ASSISTANT_MESSAGE", "OBJECTIVE_EVENT_TYPE_TOOL_RESULT", "OBJECTIVE_EVENT_TYPE_TOOL_ERROR", "OBJECTIVE_EVENT_TYPE_CONTEXT_WINDOW_COMPACTED", "OBJECTIVE_EVENT_TYPE_MEMORY_READ", "OBJECTIVE_EVENT_TYPE_CANCELLED", "OBJECTIVE_EVENT_TYPE_SUB_AGENT_SPAWNED", "OBJECTIVE_EVENT_TYPE_SUB_AGENT_UPDATED", "OBJECTIVE_EVENT_TYPE_FINALIZED", "OBJECTIVE_EVENT_TYPE_NOTICE", "OBJECTIVE_EVENT_TYPE_TIMED_OUT", "OBJECTIVE_EVENT_TYPE_REASONING", "OBJECTIVE_EVENT_TYPE_STATE_CHANGED", "OBJECTIVE_EVENT_TYPE_HEARTBEAT", "OBJECTIVE_EVENT_TYPE_INTERRUPTED", "OBJECTIVE_EVENT_TYPE_ASSISTANT_MESSAGE_DELTA", "OBJECTIVE_EVENT_TYPE_REASONING_DELTA"].freeze
 
     MemoryServiceListMemoryLayersType = ["MEMORY_LAYER_TYPE_UNSPECIFIED", "MEMORY_LAYER_TYPE_EPISODIC", "MEMORY_LAYER_TYPE_SKILLS"].freeze
 
@@ -11788,6 +12087,8 @@ module Cadenya
       "reasoningEffort" => ["reasoningEffort", nil],
       "caching_enabled" => ["cachingEnabled", nil],
       "cachingEnabled" => ["cachingEnabled", nil],
+      "streaming_enabled" => ["streamingEnabled", nil],
+      "streamingEnabled" => ["streamingEnabled", nil],
     }.freeze
 
     def self.encode_AgentVariationSpec_ModelConfig(data)
@@ -11847,6 +12148,26 @@ module Cadenya
 
     def self.encode_Capability_StopSequences(data)
       encode_fields(ENCODE_CAPABILITY_STOP_SEQUENCES, data)
+    end
+
+    ENCODE_CLIENT_TOOL_DEFINITION = {
+      "name" => ["name", nil],
+      "description" => ["description", nil],
+      "parameters" => ["parameters", nil],
+      "requires_approval" => ["requiresApproval", nil],
+      "requiresApproval" => ["requiresApproval", nil],
+    }.freeze
+
+    def self.encode_ClientToolDefinition(data)
+      encode_fields(ENCODE_CLIENT_TOOL_DEFINITION, data)
+    end
+
+    ENCODE_CLIENT_TOOLS = {
+      "definitions" => ["definitions", ->(_v) { _v.is_a?(Array) ? _v.map { |_i| (->(_v) { encode_ClientToolDefinition(_v) }).call(_i) } : _v }],
+    }.freeze
+
+    def self.encode_ClientTools(data)
+      encode_fields(ENCODE_CLIENT_TOOLS, data)
     end
 
     ENCODE_COMPACTION_CONFIG_SUMMARIZATION_STRATEGY = {
@@ -12141,6 +12462,8 @@ module Cadenya
         (->(_v) { encode_ModelSpec_Capability_Reasoning(_v) }).call(data)
       when "caching"
         (->(_v) { encode_ModelSpec_Capability_Caching(_v) }).call(data)
+      when "streaming"
+        (->(_v) { encode_ModelSpec_Capability_Streaming(_v) }).call(data)
       else
         data
       end
@@ -13386,6 +13709,15 @@ module Cadenya
 
     def self.encode_ModelSpec_Capability_Caching(data)
       encode_fields(ENCODE_MODEL_SPEC_CAPABILITY_CACHING, data)
+    end
+
+    ENCODE_MODEL_SPEC_CAPABILITY_STREAMING = {
+      "type" => ["type", nil],
+      "streaming" => ["streaming", nil],
+    }.freeze
+
+    def self.encode_ModelSpec_Capability_Streaming(data)
+      encode_fields(ENCODE_MODEL_SPEC_CAPABILITY_STREAMING, data)
     end
 
   end
