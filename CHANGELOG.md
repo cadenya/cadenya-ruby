@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.9.0](https://github.com/cadenya/cadenya-ruby/compare/v1.8.0...v1.9.0) (2026-10-28)
+
+
+### Features
+
+* accept client tools when an objective is created ([0619b8d](https://github.com/cadenya/cadenya-ruby/commit/0619b8d409813ec60c7a72b7a4e0230f97c8441a))
+
 ## [1.8.0](https://github.com/cadenya/cadenya-ruby/compare/v1.7.0...v1.8.0) (2026-10-18)
 
 
