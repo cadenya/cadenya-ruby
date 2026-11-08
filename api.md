@@ -169,6 +169,11 @@ List workspaces
 ```ruby
 client.workspaces.list(limit: nil, cursor: nil, sort_order: nil, include_info: nil, labels: nil) # => Cadenya::Page of Cadenya::Types::Workspace
 ```
+Get temporary workspace claim status
+
+```ruby
+client.workspaces.retrieve_temporary(workspace_id) # => Cadenya::Types::TemporaryWorkspace
+```
 
 ## client.agent_pools
 

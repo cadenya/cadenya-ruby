@@ -14,4 +14,13 @@ RSpec.describe "client.workspaces" do
       end
     end
   end
+
+  describe "#retrieve_temporary" do
+    it "sends the golden request and decodes the response" do
+      VCR.use_cassette("WorkspaceService_GetTemporaryWorkspace") do
+        result = client.workspaces.retrieve_temporary("sample")
+        expect(result).to be_a(Cadenya::Types::TemporaryWorkspace)
+      end
+    end
+  end
 end

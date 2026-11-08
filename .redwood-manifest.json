@@ -195,6 +195,7 @@
   "spec/cassettes/WorkspaceSecretService_GetWorkspaceSecret.yml",
   "spec/cassettes/WorkspaceSecretService_ListWorkspaceSecrets.yml",
   "spec/cassettes/WorkspaceSecretService_UpdateWorkspaceSecret.yml",
+  "spec/cassettes/WorkspaceService_GetTemporaryWorkspace.yml",
   "spec/cassettes/WorkspaceService_ListWorkspaces.yml",
   "spec/resources/accounts_spec.rb",
   "spec/resources/agent_pools_spec.rb",
