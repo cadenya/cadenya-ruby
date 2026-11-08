@@ -26,6 +26,13 @@ module Cadenya
           list(limit: limit, cursor: _c, sort_order: sort_order, include_info: include_info, labels: labels, request_options: request_options)
         end
       end
+
+      # Get temporary workspace claim status
+      def retrieve_temporary(workspace_id, request_options: nil)
+        _path = "/v1/workspaces/#{Util.path_param('workspaceId', workspace_id)}/temporary"
+        _data = @core.request(:get, _path, request_options: request_options)
+        Types::TemporaryWorkspace.from_json(_data)
+      end
     end
   end
 end
