@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.10.0](https://github.com/cadenya/cadenya-ruby/compare/v1.9.0...v1.10.0) (2026-11-08)
+
+
+### Features
+
+* temporary workspace claim status, duration fields typed as strings ([#92](https://github.com/cadenya/cadenya-ruby/issues/92)) ([7730605](https://github.com/cadenya/cadenya-ruby/commit/773060585b3f7739528d1f9af05d83295d7e06f0))
+
 ## [1.9.0](https://github.com/cadenya/cadenya-ruby/compare/v1.8.0...v1.9.0) (2026-10-28)
 
 
