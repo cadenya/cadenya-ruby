@@ -61,6 +61,7 @@ run("TrustedEndpointService_DeleteTrustedEndpoint") { client.trusted_endpoints.d
 run("TrustedEndpointService_VerifyTrustedEndpoint") { client.trusted_endpoints.verify(url: "sample") }
 run("ProfilesService_Whoami") { client.profiles.whoami() }
 run("WorkspaceService_ListWorkspaces") { check_page(client.workspaces.list(limit: 1, cursor: "sample", sort_order: "sample", include_info: true, labels: "sample")) }
+run("WorkspaceService_GetTemporaryWorkspace") { client.workspaces.retrieve_temporary("sample") }
 run("AgentPoolService_ListAgentPools") { check_page(client.agent_pools.list(workspace_id: "sample", limit: 1, cursor: "sample", prefix: "sample", query: "sample", state: "AGENT_POOL_STATE_ACTIVE", labels: "sample", sort_order: "sample", include_info: true)) }
 run("AgentPoolService_CreateAgentPool") { client.agent_pools.create(workspace_id: "sample", metadata: {"name" => "sample"}, spec: {"assignments" => [{"agent_id" => "sample"}], "description" => "sample"}) }
 run("AgentPoolService_GetAgentPool") { client.agent_pools.retrieve("sample", workspace_id: "sample") }
