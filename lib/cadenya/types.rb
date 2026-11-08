@@ -175,7 +175,7 @@ module Cadenya
       end
     end
 
-    AiProviderKeySpecProvider = ["AI_PROVIDER_UNSPECIFIED", "AI_PROVIDER_OPENROUTER", "AI_PROVIDER_OPENAI", "AI_PROVIDER_ANTHROPIC", "AI_PROVIDER_GEMINI", "AI_PROVIDER_OPENAI_COMPATIBLE", "AI_PROVIDER_VERTEX", "AI_PROVIDER_BEDROCK"].freeze
+    AiProviderKeySpecProvider = ["AI_PROVIDER_UNSPECIFIED", "AI_PROVIDER_OPENROUTER", "AI_PROVIDER_OPENAI", "AI_PROVIDER_ANTHROPIC", "AI_PROVIDER_GEMINI", "AI_PROVIDER_OPENAI_COMPATIBLE", "AI_PROVIDER_VERTEX", "AI_PROVIDER_BEDROCK", "AI_PROVIDER_DEMO"].freeze
 
     class AIProviderKeySpec
       attr_reader :provider, :credentials, :config
@@ -6678,6 +6678,40 @@ module Cadenya
       end
     end
 
+    TemporaryWorkspaceState = ["STATE_UNSPECIFIED", "STATE_UNCLAIMED", "STATE_PENDING", "STATE_CLAIMED", "STATE_EXPIRED"].freeze
+
+    class TemporaryWorkspace
+      attr_reader :workspace_id, :state, :expires_at, :claimed_at, :poll_interval
+
+      def initialize(workspace_id: nil, state: nil, expires_at: nil, claimed_at: nil, poll_interval: nil)
+        @workspace_id = workspace_id
+        @state = state
+        @expires_at = expires_at
+        @claimed_at = claimed_at
+        @poll_interval = poll_interval
+      end
+
+      def self.from_json(data)
+        new(
+          workspace_id: data["workspaceId"],
+          state: data["state"],
+          expires_at: data["expiresAt"].nil? ? nil : Time.iso8601(data["expiresAt"]),
+          claimed_at: data["claimedAt"].nil? ? nil : Time.iso8601(data["claimedAt"]),
+          poll_interval: data["pollInterval"],
+        )
+      end
+
+      def to_h
+        {
+          workspace_id: Util.plain(@workspace_id),
+          state: Util.plain(@state),
+          expires_at: Util.plain(@expires_at),
+          claimed_at: Util.plain(@claimed_at),
+          poll_interval: Util.plain(@poll_interval),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
     TenantState = ["STATE_UNSPECIFIED", "STATE_ACTIVE", "STATE_ERASING"].freeze
 
     class Tenant
@@ -9107,13 +9141,14 @@ module Cadenya
     WorkspaceStatus = ["STATUS_ENABLED", "STATUS_DISABLED", "STATUS_ARCHIVED"].freeze
 
     class Workspace
-      attr_reader :metadata, :spec, :status, :info
+      attr_reader :metadata, :spec, :status, :info, :expires_at
 
-      def initialize(metadata: nil, spec: nil, status: nil, info: nil)
+      def initialize(metadata: nil, spec: nil, status: nil, info: nil, expires_at: nil)
         @metadata = metadata
         @spec = spec
         @status = status
         @info = info
+        @expires_at = expires_at
       end
 
       def self.from_json(data)
@@ -9122,6 +9157,7 @@ module Cadenya
           spec: data["spec"].nil? ? nil : Types::WorkspaceSpec.from_json(data["spec"]),
           status: data["status"],
           info: data["info"].nil? ? nil : Types::WorkspaceInfo.from_json(data["info"]),
+          expires_at: data["expiresAt"].nil? ? nil : Time.iso8601(data["expiresAt"]),
         )
       end
 
@@ -9131,6 +9167,7 @@ module Cadenya
           spec: Util.plain(@spec),
           status: Util.plain(@status),
           info: Util.plain(@info),
+          expires_at: Util.plain(@expires_at),
         }.reject { |_k, v| v.nil? }
       end
     end
