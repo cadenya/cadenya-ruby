@@ -38,7 +38,7 @@ module Cadenya
       end
 
       # Create a new objective
-      def create(agent_id:, workspace_id: nil, variation_id: nil, metadata: nil, system_prompt_data: nil, first_user_message: nil, secrets: nil, memory_cascade: nil, first_user_message_data: nil, episodic_memory: nil, tenant: nil, subject: nil, pinned_parameters: nil, client_tools: nil, request_options: nil)
+      def create(agent_id:, workspace_id: nil, variation_id: nil, metadata: nil, system_prompt_data: nil, first_user_message: nil, secrets: nil, memory_cascade: nil, first_user_message_data: nil, episodic_memory: nil, tenant: nil, subject: nil, pinned_parameters: nil, client_tools: nil, system_prompt: nil, request_options: nil)
         workspace_id = @core.resolve_default("workspaceId", "CADENYA_WORKSPACE_ID", workspace_id)
         _path = "/v1/workspaces/#{Util.path_param('workspaceId', workspace_id)}/objectives"
         _body = {
@@ -55,6 +55,7 @@ module Cadenya
           "subject" => subject.nil? ? nil : (->(_v) { Types.encode_SubjectAssertion(_v) }).call(subject),
           "pinnedParameters" => pinned_parameters,
           "clientTools" => client_tools.nil? ? nil : (->(_v) { Types.encode_ClientTools(_v) }).call(client_tools),
+          "systemPrompt" => system_prompt,
         }.reject { |_k, v| v.nil? }
         _data = @core.request(:post, _path, body: _body, request_options: request_options)
         Types::Objective.from_json(_data)
@@ -301,7 +302,7 @@ module Cadenya
       end
 
       # Create an objective and stream its events
-      def create_and_stream(agent_id:, metadata:, workspace_id: nil, variation_id: nil, system_prompt_data: nil, first_user_message: nil, secrets: nil, memory_cascade: nil, first_user_message_data: nil, episodic_memory: nil, tenant: nil, subject: nil, pinned_parameters: nil, client_tools: nil, include_deltas: nil, last_event_id: nil, request_options: nil)
+      def create_and_stream(agent_id:, metadata:, workspace_id: nil, variation_id: nil, system_prompt_data: nil, first_user_message: nil, secrets: nil, memory_cascade: nil, first_user_message_data: nil, episodic_memory: nil, tenant: nil, subject: nil, pinned_parameters: nil, client_tools: nil, system_prompt: nil, include_deltas: nil, last_event_id: nil, request_options: nil)
         workspace_id = @core.resolve_default("workspaceId", "CADENYA_WORKSPACE_ID", workspace_id)
         _path = "/v1/workspaces/#{Util.path_param('workspaceId', workspace_id)}/objectives:stream"
         _body = {
@@ -318,6 +319,7 @@ module Cadenya
           "subject" => subject.nil? ? nil : (->(_v) { Types.encode_SubjectAssertion(_v) }).call(subject),
           "pinnedParameters" => pinned_parameters,
           "clientTools" => client_tools.nil? ? nil : (->(_v) { Types.encode_ClientTools(_v) }).call(client_tools),
+          "systemPrompt" => system_prompt,
           "includeDeltas" => include_deltas,
         }.reject { |_k, v| v.nil? }
         _headers = last_event_id ? { "Last-Event-ID" => last_event_id } : nil

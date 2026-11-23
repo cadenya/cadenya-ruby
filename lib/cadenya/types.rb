@@ -2140,9 +2140,9 @@ module Cadenya
     end
 
     class CreateAndStreamObjectiveRequest
-      attr_reader :workspace_id, :agent_id, :variation_id, :metadata, :system_prompt_data, :first_user_message, :secrets, :memory_cascade, :first_user_message_data, :episodic_memory, :tenant, :subject, :pinned_parameters, :client_tools, :include_deltas
+      attr_reader :workspace_id, :agent_id, :variation_id, :metadata, :system_prompt_data, :first_user_message, :secrets, :memory_cascade, :first_user_message_data, :episodic_memory, :tenant, :subject, :pinned_parameters, :client_tools, :system_prompt, :include_deltas
 
-      def initialize(workspace_id: nil, agent_id: nil, variation_id: nil, metadata: nil, system_prompt_data: nil, first_user_message: nil, secrets: nil, memory_cascade: nil, first_user_message_data: nil, episodic_memory: nil, tenant: nil, subject: nil, pinned_parameters: nil, client_tools: nil, include_deltas: nil)
+      def initialize(workspace_id: nil, agent_id: nil, variation_id: nil, metadata: nil, system_prompt_data: nil, first_user_message: nil, secrets: nil, memory_cascade: nil, first_user_message_data: nil, episodic_memory: nil, tenant: nil, subject: nil, pinned_parameters: nil, client_tools: nil, system_prompt: nil, include_deltas: nil)
         @workspace_id = workspace_id
         @agent_id = agent_id
         @variation_id = variation_id
@@ -2157,6 +2157,7 @@ module Cadenya
         @subject = subject
         @pinned_parameters = pinned_parameters
         @client_tools = client_tools
+        @system_prompt = system_prompt
         @include_deltas = include_deltas
       end
 
@@ -2176,6 +2177,7 @@ module Cadenya
           subject: data["subject"].nil? ? nil : Types::SubjectAssertion.from_json(data["subject"]),
           pinned_parameters: data["pinnedParameters"],
           client_tools: data["clientTools"].nil? ? nil : Types::ClientTools.from_json(data["clientTools"]),
+          system_prompt: data["systemPrompt"],
           include_deltas: data["includeDeltas"],
         )
       end
@@ -2196,6 +2198,7 @@ module Cadenya
           subject: Util.plain(@subject),
           pinned_parameters: Util.plain(@pinned_parameters),
           client_tools: Util.plain(@client_tools),
+          system_prompt: Util.plain(@system_prompt),
           include_deltas: Util.plain(@include_deltas),
         }.reject { |_k, v| v.nil? }
       end
@@ -2356,9 +2359,9 @@ module Cadenya
     end
 
     class CreateObjectiveRequest
-      attr_reader :workspace_id, :agent_id, :variation_id, :metadata, :system_prompt_data, :first_user_message, :secrets, :memory_cascade, :first_user_message_data, :episodic_memory, :tenant, :subject, :pinned_parameters, :client_tools
+      attr_reader :workspace_id, :agent_id, :variation_id, :metadata, :system_prompt_data, :first_user_message, :secrets, :memory_cascade, :first_user_message_data, :episodic_memory, :tenant, :subject, :pinned_parameters, :client_tools, :system_prompt
 
-      def initialize(workspace_id: nil, agent_id: nil, variation_id: nil, metadata: nil, system_prompt_data: nil, first_user_message: nil, secrets: nil, memory_cascade: nil, first_user_message_data: nil, episodic_memory: nil, tenant: nil, subject: nil, pinned_parameters: nil, client_tools: nil)
+      def initialize(workspace_id: nil, agent_id: nil, variation_id: nil, metadata: nil, system_prompt_data: nil, first_user_message: nil, secrets: nil, memory_cascade: nil, first_user_message_data: nil, episodic_memory: nil, tenant: nil, subject: nil, pinned_parameters: nil, client_tools: nil, system_prompt: nil)
         @workspace_id = workspace_id
         @agent_id = agent_id
         @variation_id = variation_id
@@ -2373,6 +2376,7 @@ module Cadenya
         @subject = subject
         @pinned_parameters = pinned_parameters
         @client_tools = client_tools
+        @system_prompt = system_prompt
       end
 
       def self.from_json(data)
@@ -2391,6 +2395,7 @@ module Cadenya
           subject: data["subject"].nil? ? nil : Types::SubjectAssertion.from_json(data["subject"]),
           pinned_parameters: data["pinnedParameters"],
           client_tools: data["clientTools"].nil? ? nil : Types::ClientTools.from_json(data["clientTools"]),
+          system_prompt: data["systemPrompt"],
         )
       end
 
@@ -2410,6 +2415,7 @@ module Cadenya
           subject: Util.plain(@subject),
           pinned_parameters: Util.plain(@pinned_parameters),
           client_tools: Util.plain(@client_tools),
+          system_prompt: Util.plain(@system_prompt),
         }.reject { |_k, v| v.nil? }
       end
     end
@@ -2537,6 +2543,47 @@ module Cadenya
           workspace_id: Util.plain(@workspace_id),
           metadata: Util.plain(@metadata),
           spec: Util.plain(@spec),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    class CreateToolSetRuleRequest
+      attr_reader :workspace_id, :tool_set_id, :name, :description, :when_, :actions, :disabled, :position
+
+      def initialize(workspace_id: nil, tool_set_id: nil, name: nil, description: nil, when_: nil, actions: nil, disabled: nil, position: nil)
+        @workspace_id = workspace_id
+        @tool_set_id = tool_set_id
+        @name = name
+        @description = description
+        @when_ = when_
+        @actions = actions
+        @disabled = disabled
+        @position = position
+      end
+
+      def self.from_json(data)
+        new(
+          workspace_id: data["workspaceId"],
+          tool_set_id: data["toolSetId"],
+          name: data["name"],
+          description: data["description"],
+          when_: data["when"],
+          actions: data["actions"].nil? ? nil : Types::ToolActions.from_json(data["actions"]),
+          disabled: data["disabled"],
+          position: data["position"],
+        )
+      end
+
+      def to_h
+        {
+          workspace_id: Util.plain(@workspace_id),
+          tool_set_id: Util.plain(@tool_set_id),
+          name: Util.plain(@name),
+          description: Util.plain(@description),
+          when_: Util.plain(@when_),
+          actions: Util.plain(@actions),
+          disabled: Util.plain(@disabled),
+          position: Util.plain(@position),
         }.reject { |_k, v| v.nil? }
       end
     end
@@ -3605,6 +3652,29 @@ module Cadenya
       end
     end
 
+    class ListToolSetRulesResponse
+      attr_reader :items, :pagination
+
+      def initialize(items: nil, pagination: nil)
+        @items = items
+        @pagination = pagination
+      end
+
+      def self.from_json(data)
+        new(
+          items: data["items"].nil? ? nil : (data["items"]).map { |item| Types::ToolRule.from_json(item) },
+          pagination: data["pagination"].nil? ? nil : Types::Page.from_json(data["pagination"]),
+        )
+      end
+
+      def to_h
+        {
+          items: Util.plain(@items),
+          pagination: Util.plain(@pagination),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
     class ListToolSetSecretsResponse
       attr_reader :items, :pagination
 
@@ -4381,9 +4451,9 @@ module Cadenya
     ObjectiveState = ["OBJECTIVE_STATE_UNSPECIFIED", "OBJECTIVE_STATE_PENDING", "OBJECTIVE_STATE_RUNNING", "OBJECTIVE_STATE_WAITING", "OBJECTIVE_STATE_FAILED", "OBJECTIVE_STATE_CANCELLED", "OBJECTIVE_STATE_FINALIZED", "OBJECTIVE_STATE_TIMED_OUT", "OBJECTIVE_STATE_INTERRUPTING"].freeze
 
     class Objective
-      attr_reader :metadata, :config_snapshot, :state, :state_message, :info, :system_prompt, :first_user_message, :parent_objective_id, :secrets, :system_prompt_data, :memory_cascade, :output, :first_user_message_data, :episodic_memory, :pinned_parameters
+      attr_reader :metadata, :config_snapshot, :state, :state_message, :info, :system_prompt, :first_user_message, :parent_objective_id, :secrets, :system_prompt_data, :memory_cascade, :output, :first_user_message_data, :episodic_memory, :pinned_parameters, :system_prompt_overridden
 
-      def initialize(metadata: nil, config_snapshot: nil, state: nil, state_message: nil, info: nil, system_prompt: nil, first_user_message: nil, parent_objective_id: nil, secrets: nil, system_prompt_data: nil, memory_cascade: nil, output: nil, first_user_message_data: nil, episodic_memory: nil, pinned_parameters: nil)
+      def initialize(metadata: nil, config_snapshot: nil, state: nil, state_message: nil, info: nil, system_prompt: nil, first_user_message: nil, parent_objective_id: nil, secrets: nil, system_prompt_data: nil, memory_cascade: nil, output: nil, first_user_message_data: nil, episodic_memory: nil, pinned_parameters: nil, system_prompt_overridden: nil)
         @metadata = metadata
         @config_snapshot = config_snapshot
         @state = state
@@ -4399,6 +4469,7 @@ module Cadenya
         @first_user_message_data = first_user_message_data
         @episodic_memory = episodic_memory
         @pinned_parameters = pinned_parameters
+        @system_prompt_overridden = system_prompt_overridden
       end
 
       def self.from_json(data)
@@ -4418,6 +4489,7 @@ module Cadenya
           first_user_message_data: data["firstUserMessageData"],
           episodic_memory: data["episodicMemory"].nil? ? nil : Types::ObjectiveEpisodicConfig.from_json(data["episodicMemory"]),
           pinned_parameters: data["pinnedParameters"],
+          system_prompt_overridden: data["systemPromptOverridden"],
         )
       end
 
@@ -4438,6 +4510,7 @@ module Cadenya
           first_user_message_data: Util.plain(@first_user_message_data),
           episodic_memory: Util.plain(@episodic_memory),
           pinned_parameters: Util.plain(@pinned_parameters),
+          system_prompt_overridden: Util.plain(@system_prompt_overridden),
         }.reject { |_k, v| v.nil? }
       end
     end
@@ -4645,9 +4718,9 @@ module Cadenya
     end
 
     class ObjectiveEvent
-      attr_reader :metadata, :data, :context_window_id, :info, :duration, :started_at, :sequence
+      attr_reader :metadata, :data, :context_window_id, :info, :duration, :started_at, :sequence, :iteration_id
 
-      def initialize(metadata: nil, data: nil, context_window_id: nil, info: nil, duration: nil, started_at: nil, sequence: nil)
+      def initialize(metadata: nil, data: nil, context_window_id: nil, info: nil, duration: nil, started_at: nil, sequence: nil, iteration_id: nil)
         @metadata = metadata
         @data = data
         @context_window_id = context_window_id
@@ -4655,6 +4728,7 @@ module Cadenya
         @duration = duration
         @started_at = started_at
         @sequence = sequence
+        @iteration_id = iteration_id
       end
 
       def self.from_json(data)
@@ -4666,6 +4740,7 @@ module Cadenya
           duration: data["duration"],
           started_at: data["startedAt"].nil? ? nil : Time.iso8601(data["startedAt"]),
           sequence: data["sequence"],
+          iteration_id: data["iterationId"],
         )
       end
 
@@ -4678,6 +4753,7 @@ module Cadenya
           duration: Util.plain(@duration),
           started_at: Util.plain(@started_at),
           sequence: Util.plain(@sequence),
+          iteration_id: Util.plain(@iteration_id),
         }.reject { |_k, v| v.nil? }
       end
     end
@@ -5501,77 +5577,6 @@ module Cadenya
       end
     end
 
-    ParameterActionPinOnMissing = ["ON_MISSING_UNSPECIFIED", "ON_MISSING_FAIL", "ON_MISSING_SKIP"].freeze
-
-    class ParameterAction_Pin
-      attr_reader :path, :pinned_parameter, :on_missing
-
-      def initialize(path: nil, pinned_parameter: nil, on_missing: nil)
-        @path = path
-        @pinned_parameter = pinned_parameter
-        @on_missing = on_missing
-      end
-
-      def self.from_json(data)
-        new(
-          path: data["path"],
-          pinned_parameter: data["pinnedParameter"],
-          on_missing: data["onMissing"],
-        )
-      end
-
-      def to_h
-        {
-          path: Util.plain(@path),
-          pinned_parameter: Util.plain(@pinned_parameter),
-          on_missing: Util.plain(@on_missing),
-        }.reject { |_k, v| v.nil? }
-      end
-    end
-
-    class ParameterAction_Remove
-      attr_reader :path
-
-      def initialize(path: nil)
-        @path = path
-      end
-
-      def self.from_json(data)
-        new(
-          path: data["path"],
-        )
-      end
-
-      def to_h
-        {
-          path: Util.plain(@path),
-        }.reject { |_k, v| v.nil? }
-      end
-    end
-
-    class ParameterAction_Set
-      attr_reader :path, :value_template
-
-      def initialize(path: nil, value_template: nil)
-        @path = path
-        @value_template = value_template
-      end
-
-      def self.from_json(data)
-        new(
-          path: data["path"],
-          value_template: data["valueTemplate"],
-        )
-      end
-
-      def to_h
-        {
-          path: Util.plain(@path),
-          value_template: Util.plain(@value_template),
-        }.reject { |_k, v| v.nil? }
-      end
-    end
-
     class PauseAgentScheduleRequest
       attr_reader :workspace_id, :agent_id, :id
 
@@ -5953,34 +5958,6 @@ module Cadenya
       end
     end
 
-    ResultActionTransformOnError = ["ON_ERROR_UNSPECIFIED", "ON_ERROR_RAW_CONTENT", "ON_ERROR_FAIL"].freeze
-
-    class ResultAction_Transform
-      attr_reader :content_template, :on_error, :expect_json
-
-      def initialize(content_template: nil, on_error: nil, expect_json: nil)
-        @content_template = content_template
-        @on_error = on_error
-        @expect_json = expect_json
-      end
-
-      def self.from_json(data)
-        new(
-          content_template: data["contentTemplate"],
-          on_error: data["onError"],
-          expect_json: data["expectJson"],
-        )
-      end
-
-      def to_h
-        {
-          content_template: Util.plain(@content_template),
-          on_error: Util.plain(@on_error),
-          expect_json: Util.plain(@expect_json),
-        }.reject { |_k, v| v.nil? }
-      end
-    end
-
     class ResumeAgentScheduleRequest
       attr_reader :workspace_id, :agent_id, :id
 
@@ -6223,40 +6200,6 @@ module Cadenya
       end
     end
 
-    def self.decode_Selector_Condition(data)
-      return nil if data.nil? || data["type"].to_s.empty?
-      case data["type"]
-      when "attribute"
-        Types::Selector_Condition_Attribute.from_json(data)
-      when "hasParameter"
-        Types::Selector_Condition_HasParameter.from_json(data)
-      when "tools"
-        Types::Selector_Condition_Tools.from_json(data)
-      else
-        raise ArgumentError, "Selector_Condition: unknown type #{data["type"].inspect}"
-      end
-    end
-
-    class Selector_ToolNames
-      attr_reader :names
-
-      def initialize(names: nil)
-        @names = names
-      end
-
-      def self.from_json(data)
-        new(
-          names: data["names"],
-        )
-      end
-
-      def to_h
-        {
-          names: Util.plain(@names),
-        }.reject { |_k, v| v.nil? }
-      end
-    end
-
     class SetToolCallContentRequest
       attr_reader :workspace_id, :objective_id, :tool_call_id, :content
 
@@ -6363,6 +6306,39 @@ module Cadenya
         {
           text: Util.plain(@text),
         }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    class Source_Rule
+      attr_reader :id, :name
+
+      def initialize(id: nil, name: nil)
+        @id = id
+        @name = name
+      end
+
+      def self.from_json(data)
+        new(
+          id: data["id"],
+          name: data["name"],
+        )
+      end
+
+      def to_h
+        {
+          id: Util.plain(@id),
+          name: Util.plain(@name),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    class Source_Tool
+      def self.from_json(_data)
+        new
+      end
+
+      def to_h
+        {}
       end
     end
 
@@ -6632,6 +6608,26 @@ module Cadenya
       end
     end
 
+    class SyncDisabled
+      attr_reader :message
+
+      def initialize(message: nil)
+        @message = message
+      end
+
+      def self.from_json(data)
+        new(
+          message: data["message"],
+        )
+      end
+
+      def to_h
+        {
+          message: Util.plain(@message),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
     class SyncFailed
       attr_reader :error, :message, :error_type
 
@@ -6674,6 +6670,29 @@ module Cadenya
       def to_h
         {
           message: Util.plain(@message),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    class SyncToolSetRequest
+      attr_reader :workspace_id, :id
+
+      def initialize(workspace_id: nil, id: nil)
+        @workspace_id = workspace_id
+        @id = id
+      end
+
+      def self.from_json(data)
+        new(
+          workspace_id: data["workspaceId"],
+          id: data["id"],
+        )
+      end
+
+      def to_h
+        {
+          workspace_id: Util.plain(@workspace_id),
+          id: Util.plain(@id),
         }.reject { |_k, v| v.nil? }
       end
     end
@@ -6878,6 +6897,35 @@ module Cadenya
       end
     end
 
+    class ToolActions
+      attr_reader :parameter_actions, :result_actions, :widget_argument_exposure, :auto_mode
+
+      def initialize(parameter_actions: nil, result_actions: nil, widget_argument_exposure: nil, auto_mode: nil)
+        @parameter_actions = parameter_actions
+        @result_actions = result_actions
+        @widget_argument_exposure = widget_argument_exposure
+        @auto_mode = auto_mode
+      end
+
+      def self.from_json(data)
+        new(
+          parameter_actions: data["parameterActions"].nil? ? nil : (data["parameterActions"]).map { |item| Types.decode_ToolParameterAction(item) },
+          result_actions: data["resultActions"].nil? ? nil : (data["resultActions"]).map { |item| Types.decode_ToolResultAction(item) },
+          widget_argument_exposure: data["widgetArgumentExposure"].nil? ? nil : Types::ToolWidgetArgumentExposure.from_json(data["widgetArgumentExposure"]),
+          auto_mode: data["autoMode"].nil? ? nil : Types::AutoModeConfig.from_json(data["autoMode"]),
+        )
+      end
+
+      def to_h
+        {
+          parameter_actions: Util.plain(@parameter_actions),
+          result_actions: Util.plain(@result_actions),
+          widget_argument_exposure: Util.plain(@widget_argument_exposure),
+          auto_mode: Util.plain(@auto_mode),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
     class ToolApprovalRequested
       attr_reader :tool_call_id, :tool, :llm_tool_name, :arguments
 
@@ -7046,6 +7094,174 @@ module Cadenya
       end
     end
 
+    class ToolEffective
+      attr_reader :parameters, :parameter_actions, :result_actions, :auto_mode, :widget_argument_exposure, :requires_approval, :rule_errors
+
+      def initialize(parameters: nil, parameter_actions: nil, result_actions: nil, auto_mode: nil, widget_argument_exposure: nil, requires_approval: nil, rule_errors: nil)
+        @parameters = parameters
+        @parameter_actions = parameter_actions
+        @result_actions = result_actions
+        @auto_mode = auto_mode
+        @widget_argument_exposure = widget_argument_exposure
+        @requires_approval = requires_approval
+        @rule_errors = rule_errors
+      end
+
+      def self.from_json(data)
+        new(
+          parameters: data["parameters"],
+          parameter_actions: data["parameterActions"].nil? ? nil : (data["parameterActions"]).map { |item| Types::ToolEffective_ParameterAction.from_json(item) },
+          result_actions: data["resultActions"].nil? ? nil : (data["resultActions"]).map { |item| Types::ToolEffective_ResultAction.from_json(item) },
+          auto_mode: data["autoMode"].nil? ? nil : Types::ToolEffective_AutoMode.from_json(data["autoMode"]),
+          widget_argument_exposure: data["widgetArgumentExposure"].nil? ? nil : Types::ToolEffective_WidgetArgumentExposure.from_json(data["widgetArgumentExposure"]),
+          requires_approval: data["requiresApproval"],
+          rule_errors: data["ruleErrors"].nil? ? nil : (data["ruleErrors"]).map { |item| Types::ToolEffective_RuleError.from_json(item) },
+        )
+      end
+
+      def to_h
+        {
+          parameters: Util.plain(@parameters),
+          parameter_actions: Util.plain(@parameter_actions),
+          result_actions: Util.plain(@result_actions),
+          auto_mode: Util.plain(@auto_mode),
+          widget_argument_exposure: Util.plain(@widget_argument_exposure),
+          requires_approval: Util.plain(@requires_approval),
+          rule_errors: Util.plain(@rule_errors),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    class ToolEffective_AutoMode
+      attr_reader :config, :source
+
+      def initialize(config: nil, source: nil)
+        @config = config
+        @source = source
+      end
+
+      def self.from_json(data)
+        new(
+          config: data["config"].nil? ? nil : Types::AutoModeConfig.from_json(data["config"]),
+          source: data["source"].nil? ? nil : Types.decode_ToolEffective_Source(data["source"]),
+        )
+      end
+
+      def to_h
+        {
+          config: Util.plain(@config),
+          source: Util.plain(@source),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    class ToolEffective_ParameterAction
+      attr_reader :action, :source
+
+      def initialize(action: nil, source: nil)
+        @action = action
+        @source = source
+      end
+
+      def self.from_json(data)
+        new(
+          action: data["action"].nil? ? nil : Types.decode_ToolParameterAction(data["action"]),
+          source: data["source"].nil? ? nil : Types.decode_ToolEffective_Source(data["source"]),
+        )
+      end
+
+      def to_h
+        {
+          action: Util.plain(@action),
+          source: Util.plain(@source),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    class ToolEffective_ResultAction
+      attr_reader :action, :source
+
+      def initialize(action: nil, source: nil)
+        @action = action
+        @source = source
+      end
+
+      def self.from_json(data)
+        new(
+          action: data["action"].nil? ? nil : Types.decode_ToolResultAction(data["action"]),
+          source: data["source"].nil? ? nil : Types.decode_ToolEffective_Source(data["source"]),
+        )
+      end
+
+      def to_h
+        {
+          action: Util.plain(@action),
+          source: Util.plain(@source),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    class ToolEffective_RuleError
+      attr_reader :rule, :message, :applied
+
+      def initialize(rule: nil, message: nil, applied: nil)
+        @rule = rule
+        @message = message
+        @applied = applied
+      end
+
+      def self.from_json(data)
+        new(
+          rule: data["rule"].nil? ? nil : Types::Source_Rule.from_json(data["rule"]),
+          message: data["message"],
+          applied: data["applied"],
+        )
+      end
+
+      def to_h
+        {
+          rule: Util.plain(@rule),
+          message: Util.plain(@message),
+          applied: Util.plain(@applied),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    def self.decode_ToolEffective_Source(data)
+      return nil if data.nil? || data["type"].to_s.empty?
+      case data["type"]
+      when "rule"
+        Types::ToolEffective_Source_Rule.from_json(data)
+      when "tool"
+        Types::ToolEffective_Source_Tool.from_json(data)
+      else
+        raise ArgumentError, "ToolEffective_Source: unknown type #{data["type"].inspect}"
+      end
+    end
+
+    class ToolEffective_WidgetArgumentExposure
+      attr_reader :enabled, :source
+
+      def initialize(enabled: nil, source: nil)
+        @enabled = enabled
+        @source = source
+      end
+
+      def self.from_json(data)
+        new(
+          enabled: data["enabled"],
+          source: data["source"].nil? ? nil : Types.decode_ToolEffective_Source(data["source"]),
+        )
+      end
+
+      def to_h
+        {
+          enabled: Util.plain(@enabled),
+          source: Util.plain(@source),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
     class ToolError
       attr_reader :tool_call_id, :message, :tool, :llm_tool_name
 
@@ -7076,14 +7292,13 @@ module Cadenya
     end
 
     class ToolInfo
-      attr_reader :tool_set, :created_by, :signature, :overlays, :effective_parameters
+      attr_reader :tool_set, :created_by, :signature, :effective
 
-      def initialize(tool_set: nil, created_by: nil, signature: nil, overlays: nil, effective_parameters: nil)
+      def initialize(tool_set: nil, created_by: nil, signature: nil, effective: nil)
         @tool_set = tool_set
         @created_by = created_by
         @signature = signature
-        @overlays = overlays
-        @effective_parameters = effective_parameters
+        @effective = effective
       end
 
       def self.from_json(data)
@@ -7091,8 +7306,7 @@ module Cadenya
           tool_set: data["toolSet"].nil? ? nil : Types::ResourceMetadata.from_json(data["toolSet"]),
           created_by: data["createdBy"].nil? ? nil : Types::Profile.from_json(data["createdBy"]),
           signature: data["signature"],
-          overlays: data["overlays"],
-          effective_parameters: data["effectiveParameters"],
+          effective: data["effective"].nil? ? nil : Types::ToolEffective.from_json(data["effective"]),
         )
       end
 
@@ -7101,65 +7315,54 @@ module Cadenya
           tool_set: Util.plain(@tool_set),
           created_by: Util.plain(@created_by),
           signature: Util.plain(@signature),
-          overlays: Util.plain(@overlays),
-          effective_parameters: Util.plain(@effective_parameters),
+          effective: Util.plain(@effective),
         }.reject { |_k, v| v.nil? }
       end
     end
 
-    class ToolOverlay
-      attr_reader :key, :selector, :parameter_actions, :result_actions, :disabled, :widget_argument_exposure, :auto_mode
+    def self.decode_ToolParameterAction(data)
+      return nil if data.nil? || data["type"].to_s.empty?
+      case data["type"]
+      when "remove"
+        Types::ToolParameterAction_RemoveVariant.from_json(data)
+      when "set"
+        Types::ToolParameterAction_SetVariant.from_json(data)
+      when "pin"
+        Types::ToolParameterAction_PinVariant.from_json(data)
+      else
+        raise ArgumentError, "ToolParameterAction: unknown type #{data["type"].inspect}"
+      end
+    end
 
-      def initialize(key: nil, selector: nil, parameter_actions: nil, result_actions: nil, disabled: nil, widget_argument_exposure: nil, auto_mode: nil)
-        @key = key
-        @selector = selector
-        @parameter_actions = parameter_actions
-        @result_actions = result_actions
-        @disabled = disabled
-        @widget_argument_exposure = widget_argument_exposure
-        @auto_mode = auto_mode
+    ToolParameterActionPinOnMissing = ["ON_MISSING_UNSPECIFIED", "ON_MISSING_FAIL", "ON_MISSING_SKIP"].freeze
+
+    class ToolParameterAction_Pin
+      attr_reader :path, :pinned_parameter, :on_missing
+
+      def initialize(path: nil, pinned_parameter: nil, on_missing: nil)
+        @path = path
+        @pinned_parameter = pinned_parameter
+        @on_missing = on_missing
       end
 
       def self.from_json(data)
         new(
-          key: data["key"],
-          selector: data["selector"].nil? ? nil : Types::ToolOverlay_Selector.from_json(data["selector"]),
-          parameter_actions: data["parameterActions"].nil? ? nil : (data["parameterActions"]).map { |item| Types.decode_ToolOverlay_ParameterAction(item) },
-          result_actions: data["resultActions"].nil? ? nil : (data["resultActions"]).map { |item| Types.decode_ToolOverlay_ResultAction(item) },
-          disabled: data["disabled"],
-          widget_argument_exposure: data["widgetArgumentExposure"].nil? ? nil : Types::ToolOverlay_WidgetArgumentExposure.from_json(data["widgetArgumentExposure"]),
-          auto_mode: data["autoMode"].nil? ? nil : Types::AutoModeConfig.from_json(data["autoMode"]),
+          path: data["path"],
+          pinned_parameter: data["pinnedParameter"],
+          on_missing: data["onMissing"],
         )
       end
 
       def to_h
         {
-          key: Util.plain(@key),
-          selector: Util.plain(@selector),
-          parameter_actions: Util.plain(@parameter_actions),
-          result_actions: Util.plain(@result_actions),
-          disabled: Util.plain(@disabled),
-          widget_argument_exposure: Util.plain(@widget_argument_exposure),
-          auto_mode: Util.plain(@auto_mode),
+          path: Util.plain(@path),
+          pinned_parameter: Util.plain(@pinned_parameter),
+          on_missing: Util.plain(@on_missing),
         }.reject { |_k, v| v.nil? }
       end
     end
 
-    def self.decode_ToolOverlay_ParameterAction(data)
-      return nil if data.nil? || data["type"].to_s.empty?
-      case data["type"]
-      when "remove"
-        Types::ToolOverlay_ParameterAction_Remove.from_json(data)
-      when "set"
-        Types::ToolOverlay_ParameterAction_Set.from_json(data)
-      when "pin"
-        Types::ToolOverlay_ParameterAction_Pin.from_json(data)
-      else
-        raise ArgumentError, "ToolOverlay_ParameterAction: unknown type #{data["type"].inspect}"
-      end
-    end
-
-    class ToolOverlay_ParameterPath
+    class ToolParameterAction_Remove
       attr_reader :path
 
       def initialize(path: nil)
@@ -7179,57 +7382,25 @@ module Cadenya
       end
     end
 
-    def self.decode_ToolOverlay_ResultAction(data)
-      return nil if data.nil? || data["type"].to_s.empty?
-      case data["type"]
-      when "transform"
-        Types::ToolOverlay_ResultAction_Transform.from_json(data)
-      else
-        raise ArgumentError, "ToolOverlay_ResultAction: unknown type #{data["type"].inspect}"
-      end
-    end
+    class ToolParameterAction_Set
+      attr_reader :path, :value_template
 
-    ToolOverlaySelectorOperator = ["OPERATOR_UNSPECIFIED", "OPERATOR_AND", "OPERATOR_OR"].freeze
-
-    class ToolOverlay_Selector
-      attr_reader :conditions, :operator
-
-      def initialize(conditions: nil, operator: nil)
-        @conditions = conditions
-        @operator = operator
+      def initialize(path: nil, value_template: nil)
+        @path = path
+        @value_template = value_template
       end
 
       def self.from_json(data)
         new(
-          conditions: data["conditions"].nil? ? nil : (data["conditions"]).map { |item| Types.decode_Selector_Condition(item) },
-          operator: data["operator"],
+          path: data["path"],
+          value_template: data["valueTemplate"],
         )
       end
 
       def to_h
         {
-          conditions: Util.plain(@conditions),
-          operator: Util.plain(@operator),
-        }.reject { |_k, v| v.nil? }
-      end
-    end
-
-    class ToolOverlay_WidgetArgumentExposure
-      attr_reader :enabled
-
-      def initialize(enabled: nil)
-        @enabled = enabled
-      end
-
-      def self.from_json(data)
-        new(
-          enabled: data["enabled"],
-        )
-      end
-
-      def to_h
-        {
-          enabled: Util.plain(@enabled),
+          path: Util.plain(@path),
+          value_template: Util.plain(@value_template),
         }.reject { |_k, v| v.nil? }
       end
     end
@@ -7259,6 +7430,88 @@ module Cadenya
           result: Util.plain(@result),
           tool: Util.plain(@tool),
           llm_tool_name: Util.plain(@llm_tool_name),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    def self.decode_ToolResultAction(data)
+      return nil if data.nil? || data["type"].to_s.empty?
+      case data["type"]
+      when "transform"
+        Types::ToolResultAction_TransformVariant.from_json(data)
+      else
+        raise ArgumentError, "ToolResultAction: unknown type #{data["type"].inspect}"
+      end
+    end
+
+    ToolResultActionTransformOnError = ["ON_ERROR_UNSPECIFIED", "ON_ERROR_RAW_CONTENT", "ON_ERROR_FAIL"].freeze
+
+    class ToolResultAction_Transform
+      attr_reader :content_template, :on_error, :expect_json
+
+      def initialize(content_template: nil, on_error: nil, expect_json: nil)
+        @content_template = content_template
+        @on_error = on_error
+        @expect_json = expect_json
+      end
+
+      def self.from_json(data)
+        new(
+          content_template: data["contentTemplate"],
+          on_error: data["onError"],
+          expect_json: data["expectJson"],
+        )
+      end
+
+      def to_h
+        {
+          content_template: Util.plain(@content_template),
+          on_error: Util.plain(@on_error),
+          expect_json: Util.plain(@expect_json),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    class ToolRule
+      attr_reader :id, :name, :description, :when_, :actions, :disabled, :position, :created_at, :updated_at
+
+      def initialize(id: nil, name: nil, description: nil, when_: nil, actions: nil, disabled: nil, position: nil, created_at: nil, updated_at: nil)
+        @id = id
+        @name = name
+        @description = description
+        @when_ = when_
+        @actions = actions
+        @disabled = disabled
+        @position = position
+        @created_at = created_at
+        @updated_at = updated_at
+      end
+
+      def self.from_json(data)
+        new(
+          id: data["id"],
+          name: data["name"],
+          description: data["description"],
+          when_: data["when"],
+          actions: data["actions"].nil? ? nil : Types::ToolActions.from_json(data["actions"]),
+          disabled: data["disabled"],
+          position: data["position"],
+          created_at: data["createdAt"].nil? ? nil : Time.iso8601(data["createdAt"]),
+          updated_at: data["updatedAt"].nil? ? nil : Time.iso8601(data["updatedAt"]),
+        )
+      end
+
+      def to_h
+        {
+          id: Util.plain(@id),
+          name: Util.plain(@name),
+          description: Util.plain(@description),
+          when_: Util.plain(@when_),
+          actions: Util.plain(@actions),
+          disabled: Util.plain(@disabled),
+          position: Util.plain(@position),
+          created_at: Util.plain(@created_at),
+          updated_at: Util.plain(@updated_at),
         }.reject { |_k, v| v.nil? }
       end
     end
@@ -7544,6 +7797,8 @@ module Cadenya
         Types::ToolSetEventData_SyncCompleted.from_json(data)
       when "syncFailed"
         Types::ToolSetEventData_SyncFailed.from_json(data)
+      when "syncDisabled"
+        Types::ToolSetEventData_SyncDisabled.from_json(data)
       else
         raise ArgumentError, "ToolSetEventData: unknown type #{data["type"].inspect}"
       end
@@ -7573,15 +7828,18 @@ module Cadenya
     end
 
     class ToolSetInfo
-      attr_reader :tool_count, :agent_count, :last_sync, :created_by, :available_tools, :omitted_tools
+      attr_reader :tool_count, :agent_count, :last_sync, :created_by, :available_tools, :omitted_tools, :sync_disabled, :consecutive_failure_count, :last_sync_error
 
-      def initialize(tool_count: nil, agent_count: nil, last_sync: nil, created_by: nil, available_tools: nil, omitted_tools: nil)
+      def initialize(tool_count: nil, agent_count: nil, last_sync: nil, created_by: nil, available_tools: nil, omitted_tools: nil, sync_disabled: nil, consecutive_failure_count: nil, last_sync_error: nil)
         @tool_count = tool_count
         @agent_count = agent_count
         @last_sync = last_sync
         @created_by = created_by
         @available_tools = available_tools
         @omitted_tools = omitted_tools
+        @sync_disabled = sync_disabled
+        @consecutive_failure_count = consecutive_failure_count
+        @last_sync_error = last_sync_error
       end
 
       def self.from_json(data)
@@ -7592,6 +7850,9 @@ module Cadenya
           created_by: data["createdBy"].nil? ? nil : Types::Profile.from_json(data["createdBy"]),
           available_tools: data["availableTools"],
           omitted_tools: data["omittedTools"],
+          sync_disabled: data["syncDisabled"],
+          consecutive_failure_count: data["consecutiveFailureCount"],
+          last_sync_error: data["lastSyncError"],
         )
       end
 
@@ -7603,6 +7864,9 @@ module Cadenya
           created_by: Util.plain(@created_by),
           available_tools: Util.plain(@available_tools),
           omitted_tools: Util.plain(@omitted_tools),
+          sync_disabled: Util.plain(@sync_disabled),
+          consecutive_failure_count: Util.plain(@consecutive_failure_count),
+          last_sync_error: Util.plain(@last_sync_error),
         }.reject { |_k, v| v.nil? }
       end
     end
@@ -7677,12 +7941,11 @@ module Cadenya
     end
 
     class ToolSetSpec
-      attr_reader :description, :adapter, :overlays, :secrets
+      attr_reader :description, :adapter, :secrets
 
-      def initialize(description: nil, adapter: nil, overlays: nil, secrets: nil)
+      def initialize(description: nil, adapter: nil, secrets: nil)
         @description = description
         @adapter = adapter
-        @overlays = overlays
         @secrets = secrets
       end
 
@@ -7690,7 +7953,6 @@ module Cadenya
         new(
           description: data["description"],
           adapter: data["adapter"].nil? ? nil : Types.decode_ToolSetAdapter(data["adapter"]),
-          overlays: data["overlays"].nil? ? nil : (data["overlays"]).map { |item| Types::ToolOverlay.from_json(item) },
           secrets: data["secrets"].nil? ? nil : (data["secrets"]).map { |item| Types::ToolSetSpec_Secret.from_json(item) },
         )
       end
@@ -7699,7 +7961,6 @@ module Cadenya
         {
           description: Util.plain(@description),
           adapter: Util.plain(@adapter),
-          overlays: Util.plain(@overlays),
           secrets: Util.plain(@secrets),
         }.reject { |_k, v| v.nil? }
       end
@@ -7758,14 +8019,15 @@ module Cadenya
     end
 
     class ToolSpec
-      attr_reader :description, :requires_approval, :parameters, :config, :llm_tool_name
+      attr_reader :description, :requires_approval, :parameters, :config, :llm_tool_name, :actions
 
-      def initialize(description: nil, requires_approval: nil, parameters: nil, config: nil, llm_tool_name: nil)
+      def initialize(description: nil, requires_approval: nil, parameters: nil, config: nil, llm_tool_name: nil, actions: nil)
         @description = description
         @requires_approval = requires_approval
         @parameters = parameters
         @config = config
         @llm_tool_name = llm_tool_name
+        @actions = actions
       end
 
       def self.from_json(data)
@@ -7775,6 +8037,7 @@ module Cadenya
           parameters: data["parameters"],
           config: data["config"].nil? ? nil : Types.decode_ToolSpec_Config(data["config"]),
           llm_tool_name: data["llmToolName"],
+          actions: data["actions"].nil? ? nil : Types::ToolActions.from_json(data["actions"]),
         )
       end
 
@@ -7785,6 +8048,7 @@ module Cadenya
           parameters: Util.plain(@parameters),
           config: Util.plain(@config),
           llm_tool_name: Util.plain(@llm_tool_name),
+          actions: Util.plain(@actions),
         }.reject { |_k, v| v.nil? }
       end
     end
@@ -7802,6 +8066,26 @@ module Cadenya
         Types::ToolSpec_Config_Bare.from_json(data)
       else
         raise ArgumentError, "ToolSpec_Config: unknown type #{data["type"].inspect}"
+      end
+    end
+
+    class ToolWidgetArgumentExposure
+      attr_reader :enabled
+
+      def initialize(enabled: nil)
+        @enabled = enabled
+      end
+
+      def self.from_json(data)
+        new(
+          enabled: data["enabled"],
+        )
+      end
+
+      def to_h
+        {
+          enabled: Util.plain(@enabled),
+        }.reject { |_k, v| v.nil? }
       end
     end
 
@@ -8432,6 +8716,53 @@ module Cadenya
           id: Util.plain(@id),
           metadata: Util.plain(@metadata),
           spec: Util.plain(@spec),
+          update_mask: Util.plain(@update_mask),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    class UpdateToolSetRuleRequest
+      attr_reader :workspace_id, :tool_set_id, :id, :name, :description, :when_, :actions, :disabled, :position, :update_mask
+
+      def initialize(workspace_id: nil, tool_set_id: nil, id: nil, name: nil, description: nil, when_: nil, actions: nil, disabled: nil, position: nil, update_mask: nil)
+        @workspace_id = workspace_id
+        @tool_set_id = tool_set_id
+        @id = id
+        @name = name
+        @description = description
+        @when_ = when_
+        @actions = actions
+        @disabled = disabled
+        @position = position
+        @update_mask = update_mask
+      end
+
+      def self.from_json(data)
+        new(
+          workspace_id: data["workspaceId"],
+          tool_set_id: data["toolSetId"],
+          id: data["id"],
+          name: data["name"],
+          description: data["description"],
+          when_: data["when"],
+          actions: data["actions"].nil? ? nil : Types::ToolActions.from_json(data["actions"]),
+          disabled: data["disabled"],
+          position: data["position"],
+          update_mask: data["updateMask"],
+        )
+      end
+
+      def to_h
+        {
+          workspace_id: Util.plain(@workspace_id),
+          tool_set_id: Util.plain(@tool_set_id),
+          id: Util.plain(@id),
+          name: Util.plain(@name),
+          description: Util.plain(@description),
+          when_: Util.plain(@when_),
+          actions: Util.plain(@actions),
+          disabled: Util.plain(@disabled),
+          position: Util.plain(@position),
           update_mask: Util.plain(@update_mask),
         }.reject { |_k, v| v.nil? }
       end
@@ -9323,13 +9654,15 @@ module Cadenya
     end
 
     class ObjectiveEventWebhookDataData
-      attr_reader :agent, :agent_variation, :objective, :objective_event
+      attr_reader :agent, :agent_variation, :objective, :objective_event, :parent_objective, :root_objective
 
-      def initialize(agent: nil, agent_variation: nil, objective: nil, objective_event: nil)
+      def initialize(agent: nil, agent_variation: nil, objective: nil, objective_event: nil, parent_objective: nil, root_objective: nil)
         @agent = agent
         @agent_variation = agent_variation
         @objective = objective
         @objective_event = objective_event
+        @parent_objective = parent_objective
+        @root_objective = root_objective
       end
 
       def self.from_json(data)
@@ -9338,6 +9671,8 @@ module Cadenya
           agent_variation: data["agentVariation"].nil? ? nil : Types::ResourceMetadata.from_json(data["agentVariation"]),
           objective: data["objective"].nil? ? nil : Types::OperationMetadata.from_json(data["objective"]),
           objective_event: data["objectiveEvent"].nil? ? nil : Types::ObjectiveEvent.from_json(data["objectiveEvent"]),
+          parent_objective: data["parentObjective"].nil? ? nil : Types::OperationMetadata.from_json(data["parentObjective"]),
+          root_objective: data["rootObjective"].nil? ? nil : Types::OperationMetadata.from_json(data["rootObjective"]),
         )
       end
 
@@ -9347,6 +9682,8 @@ module Cadenya
           agent_variation: Util.plain(@agent_variation),
           objective: Util.plain(@objective),
           objective_event: Util.plain(@objective_event),
+          parent_objective: Util.plain(@parent_objective),
+          root_objective: Util.plain(@root_objective),
         }.reject { |_k, v| v.nil? }
       end
     end
@@ -9603,6 +9940,29 @@ module Cadenya
         {
           type: Util.plain(@type),
           sync_failed: Util.plain(@sync_failed),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    class ToolSetEventData_SyncDisabled
+      attr_reader :type, :sync_disabled
+
+      def initialize(type: nil, sync_disabled: nil)
+        @type = type
+        @sync_disabled = sync_disabled
+      end
+
+      def self.from_json(data)
+        new(
+          type: data["type"],
+          sync_disabled: data["syncDisabled"].nil? ? nil : Types::SyncDisabled.from_json(data["syncDisabled"]),
+        )
+      end
+
+      def to_h
+        {
+          type: Util.plain(@type),
+          sync_disabled: Util.plain(@sync_disabled),
         }.reject { |_k, v| v.nil? }
       end
     end
@@ -9957,76 +10317,7 @@ module Cadenya
       end
     end
 
-    class Selector_Condition_Attribute
-      attr_reader :type, :attribute
-
-      def initialize(type: nil, attribute: nil)
-        @type = type
-        @attribute = attribute
-      end
-
-      def self.from_json(data)
-        new(
-          type: data["type"],
-          attribute: data["attribute"].nil? ? nil : Types::ToolSetAdapter_AttributeFilter.from_json(data["attribute"]),
-        )
-      end
-
-      def to_h
-        {
-          type: Util.plain(@type),
-          attribute: Util.plain(@attribute),
-        }.reject { |_k, v| v.nil? }
-      end
-    end
-
-    class Selector_Condition_HasParameter
-      attr_reader :type, :has_parameter
-
-      def initialize(type: nil, has_parameter: nil)
-        @type = type
-        @has_parameter = has_parameter
-      end
-
-      def self.from_json(data)
-        new(
-          type: data["type"],
-          has_parameter: data["hasParameter"].nil? ? nil : Types::ToolOverlay_ParameterPath.from_json(data["hasParameter"]),
-        )
-      end
-
-      def to_h
-        {
-          type: Util.plain(@type),
-          has_parameter: Util.plain(@has_parameter),
-        }.reject { |_k, v| v.nil? }
-      end
-    end
-
-    class Selector_Condition_Tools
-      attr_reader :type, :tools
-
-      def initialize(type: nil, tools: nil)
-        @type = type
-        @tools = tools
-      end
-
-      def self.from_json(data)
-        new(
-          type: data["type"],
-          tools: data["tools"].nil? ? nil : Types::Selector_ToolNames.from_json(data["tools"]),
-        )
-      end
-
-      def to_h
-        {
-          type: Util.plain(@type),
-          tools: Util.plain(@tools),
-        }.reject { |_k, v| v.nil? }
-      end
-    end
-
-    class ToolOverlay_ParameterAction_Remove
+    class ToolParameterAction_RemoveVariant
       attr_reader :type, :remove
 
       def initialize(type: nil, remove: nil)
@@ -10037,7 +10328,7 @@ module Cadenya
       def self.from_json(data)
         new(
           type: data["type"],
-          remove: data["remove"].nil? ? nil : Types::ParameterAction_Remove.from_json(data["remove"]),
+          remove: data["remove"].nil? ? nil : Types::ToolParameterAction_Remove.from_json(data["remove"]),
         )
       end
 
@@ -10049,7 +10340,7 @@ module Cadenya
       end
     end
 
-    class ToolOverlay_ParameterAction_Set
+    class ToolParameterAction_SetVariant
       attr_reader :type, :set
 
       def initialize(type: nil, set: nil)
@@ -10060,7 +10351,7 @@ module Cadenya
       def self.from_json(data)
         new(
           type: data["type"],
-          set: data["set"].nil? ? nil : Types::ParameterAction_Set.from_json(data["set"]),
+          set: data["set"].nil? ? nil : Types::ToolParameterAction_Set.from_json(data["set"]),
         )
       end
 
@@ -10072,7 +10363,7 @@ module Cadenya
       end
     end
 
-    class ToolOverlay_ParameterAction_Pin
+    class ToolParameterAction_PinVariant
       attr_reader :type, :pin
 
       def initialize(type: nil, pin: nil)
@@ -10083,7 +10374,7 @@ module Cadenya
       def self.from_json(data)
         new(
           type: data["type"],
-          pin: data["pin"].nil? ? nil : Types::ParameterAction_Pin.from_json(data["pin"]),
+          pin: data["pin"].nil? ? nil : Types::ToolParameterAction_Pin.from_json(data["pin"]),
         )
       end
 
@@ -10095,7 +10386,7 @@ module Cadenya
       end
     end
 
-    class ToolOverlay_ResultAction_Transform
+    class ToolResultAction_TransformVariant
       attr_reader :type, :transform
 
       def initialize(type: nil, transform: nil)
@@ -10106,7 +10397,7 @@ module Cadenya
       def self.from_json(data)
         new(
           type: data["type"],
-          transform: data["transform"].nil? ? nil : Types::ResultAction_Transform.from_json(data["transform"]),
+          transform: data["transform"].nil? ? nil : Types::ToolResultAction_Transform.from_json(data["transform"]),
         )
       end
 
@@ -10114,6 +10405,52 @@ module Cadenya
         {
           type: Util.plain(@type),
           transform: Util.plain(@transform),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    class ToolEffective_Source_Rule
+      attr_reader :type, :rule
+
+      def initialize(type: nil, rule: nil)
+        @type = type
+        @rule = rule
+      end
+
+      def self.from_json(data)
+        new(
+          type: data["type"],
+          rule: data["rule"].nil? ? nil : Types::Source_Rule.from_json(data["rule"]),
+        )
+      end
+
+      def to_h
+        {
+          type: Util.plain(@type),
+          rule: Util.plain(@rule),
+        }.reject { |_k, v| v.nil? }
+      end
+    end
+
+    class ToolEffective_Source_Tool
+      attr_reader :type, :tool
+
+      def initialize(type: nil, tool: nil)
+        @type = type
+        @tool = tool
+      end
+
+      def self.from_json(data)
+        new(
+          type: data["type"],
+          tool: data["tool"].nil? ? nil : Types::Source_Tool.from_json(data["tool"]),
+        )
+      end
+
+      def to_h
+        {
+          type: Util.plain(@type),
+          tool: Util.plain(@tool),
         }.reject { |_k, v| v.nil? }
       end
     end
@@ -12553,36 +12890,6 @@ module Cadenya
       encode_fields(ENCODE_OPEN_ROUTER_CONFIG, data)
     end
 
-    ENCODE_PARAMETER_ACTION_PIN = {
-      "path" => ["path", nil],
-      "pinned_parameter" => ["pinnedParameter", nil],
-      "pinnedParameter" => ["pinnedParameter", nil],
-      "on_missing" => ["onMissing", nil],
-      "onMissing" => ["onMissing", nil],
-    }.freeze
-
-    def self.encode_ParameterAction_Pin(data)
-      encode_fields(ENCODE_PARAMETER_ACTION_PIN, data)
-    end
-
-    ENCODE_PARAMETER_ACTION_REMOVE = {
-      "path" => ["path", nil],
-    }.freeze
-
-    def self.encode_ParameterAction_Remove(data)
-      encode_fields(ENCODE_PARAMETER_ACTION_REMOVE, data)
-    end
-
-    ENCODE_PARAMETER_ACTION_SET = {
-      "path" => ["path", nil],
-      "value_template" => ["valueTemplate", nil],
-      "valueTemplate" => ["valueTemplate", nil],
-    }.freeze
-
-    def self.encode_ParameterAction_Set(data)
-      encode_fields(ENCODE_PARAMETER_ACTION_SET, data)
-    end
-
     def self.encode_RemoveAgentVariationAssignmentRequest(data)
       data = data.to_h if !data.is_a?(Hash) && data.class.name.to_s.start_with?(name.split("::").first + "::Types")
       unless data.is_a?(Hash)
@@ -12601,19 +12908,6 @@ module Cadenya
       else
         data
       end
-    end
-
-    ENCODE_RESULT_ACTION_TRANSFORM = {
-      "content_template" => ["contentTemplate", nil],
-      "contentTemplate" => ["contentTemplate", nil],
-      "on_error" => ["onError", nil],
-      "onError" => ["onError", nil],
-      "expect_json" => ["expectJson", nil],
-      "expectJson" => ["expectJson", nil],
-    }.freeze
-
-    def self.encode_ResultAction_Transform(data)
-      encode_fields(ENCODE_RESULT_ACTION_TRANSFORM, data)
     end
 
     ENCODE_SCHEDULE_CALENDAR = {
@@ -12650,32 +12944,6 @@ module Cadenya
 
     def self.encode_Schedule_Range(data)
       encode_fields(ENCODE_SCHEDULE_RANGE, data)
-    end
-
-    def self.encode_Selector_Condition(data)
-      data = data.to_h if !data.is_a?(Hash) && data.class.name.to_s.start_with?(name.split("::").first + "::Types")
-      unless data.is_a?(Hash)
-        raise TypeError, "expected a Hash (or a decoded Types value object), got #{data.class}"
-      end
-
-      case data["type"] || data[:type]
-      when "attribute"
-        (->(_v) { encode_Selector_Condition_Attribute(_v) }).call(data)
-      when "hasParameter"
-        (->(_v) { encode_Selector_Condition_HasParameter(_v) }).call(data)
-      when "tools"
-        (->(_v) { encode_Selector_Condition_Tools(_v) }).call(data)
-      else
-        data
-      end
-    end
-
-    ENCODE_SELECTOR_TOOL_NAMES = {
-      "names" => ["names", nil],
-    }.freeze
-
-    def self.encode_Selector_ToolNames(data)
-      encode_fields(ENCODE_SELECTOR_TOOL_NAMES, data)
     end
 
     ENCODE_SET_TOOL_CALL_CONTENT_REQUEST_AUDIO_BLOCK = {
@@ -12755,25 +13023,22 @@ module Cadenya
       encode_fields(ENCODE_TENANT_ASSERTION, data)
     end
 
-    ENCODE_TOOL_OVERLAY = {
-      "key" => ["key", nil],
-      "selector" => ["selector", ->(_v) { encode_ToolOverlay_Selector(_v) }],
-      "parameter_actions" => ["parameterActions", ->(_v) { _v.is_a?(Array) ? _v.map { |_i| (->(_v) { encode_ToolOverlay_ParameterAction(_v) }).call(_i) } : _v }],
-      "parameterActions" => ["parameterActions", ->(_v) { _v.is_a?(Array) ? _v.map { |_i| (->(_v) { encode_ToolOverlay_ParameterAction(_v) }).call(_i) } : _v }],
-      "result_actions" => ["resultActions", ->(_v) { _v.is_a?(Array) ? _v.map { |_i| (->(_v) { encode_ToolOverlay_ResultAction(_v) }).call(_i) } : _v }],
-      "resultActions" => ["resultActions", ->(_v) { _v.is_a?(Array) ? _v.map { |_i| (->(_v) { encode_ToolOverlay_ResultAction(_v) }).call(_i) } : _v }],
-      "disabled" => ["disabled", nil],
-      "widget_argument_exposure" => ["widgetArgumentExposure", ->(_v) { encode_ToolOverlay_WidgetArgumentExposure(_v) }],
-      "widgetArgumentExposure" => ["widgetArgumentExposure", ->(_v) { encode_ToolOverlay_WidgetArgumentExposure(_v) }],
+    ENCODE_TOOL_ACTIONS = {
+      "parameter_actions" => ["parameterActions", ->(_v) { _v.is_a?(Array) ? _v.map { |_i| (->(_v) { encode_ToolParameterAction(_v) }).call(_i) } : _v }],
+      "parameterActions" => ["parameterActions", ->(_v) { _v.is_a?(Array) ? _v.map { |_i| (->(_v) { encode_ToolParameterAction(_v) }).call(_i) } : _v }],
+      "result_actions" => ["resultActions", ->(_v) { _v.is_a?(Array) ? _v.map { |_i| (->(_v) { encode_ToolResultAction(_v) }).call(_i) } : _v }],
+      "resultActions" => ["resultActions", ->(_v) { _v.is_a?(Array) ? _v.map { |_i| (->(_v) { encode_ToolResultAction(_v) }).call(_i) } : _v }],
+      "widget_argument_exposure" => ["widgetArgumentExposure", ->(_v) { encode_ToolWidgetArgumentExposure(_v) }],
+      "widgetArgumentExposure" => ["widgetArgumentExposure", ->(_v) { encode_ToolWidgetArgumentExposure(_v) }],
       "auto_mode" => ["autoMode", ->(_v) { encode_AutoModeConfig(_v) }],
       "autoMode" => ["autoMode", ->(_v) { encode_AutoModeConfig(_v) }],
     }.freeze
 
-    def self.encode_ToolOverlay(data)
-      encode_fields(ENCODE_TOOL_OVERLAY, data)
+    def self.encode_ToolActions(data)
+      encode_fields(ENCODE_TOOL_ACTIONS, data)
     end
 
-    def self.encode_ToolOverlay_ParameterAction(data)
+    def self.encode_ToolParameterAction(data)
       data = data.to_h if !data.is_a?(Hash) && data.class.name.to_s.start_with?(name.split("::").first + "::Types")
       unless data.is_a?(Hash)
         raise TypeError, "expected a Hash (or a decoded Types value object), got #{data.class}"
@@ -12781,25 +13046,47 @@ module Cadenya
 
       case data["type"] || data[:type]
       when "remove"
-        (->(_v) { encode_ToolOverlay_ParameterAction_Remove(_v) }).call(data)
+        (->(_v) { encode_ToolParameterAction_RemoveVariant(_v) }).call(data)
       when "set"
-        (->(_v) { encode_ToolOverlay_ParameterAction_Set(_v) }).call(data)
+        (->(_v) { encode_ToolParameterAction_SetVariant(_v) }).call(data)
       when "pin"
-        (->(_v) { encode_ToolOverlay_ParameterAction_Pin(_v) }).call(data)
+        (->(_v) { encode_ToolParameterAction_PinVariant(_v) }).call(data)
       else
         data
       end
     end
 
-    ENCODE_TOOL_OVERLAY_PARAMETER_PATH = {
+    ENCODE_TOOL_PARAMETER_ACTION_PIN = {
+      "path" => ["path", nil],
+      "pinned_parameter" => ["pinnedParameter", nil],
+      "pinnedParameter" => ["pinnedParameter", nil],
+      "on_missing" => ["onMissing", nil],
+      "onMissing" => ["onMissing", nil],
+    }.freeze
+
+    def self.encode_ToolParameterAction_Pin(data)
+      encode_fields(ENCODE_TOOL_PARAMETER_ACTION_PIN, data)
+    end
+
+    ENCODE_TOOL_PARAMETER_ACTION_REMOVE = {
       "path" => ["path", nil],
     }.freeze
 
-    def self.encode_ToolOverlay_ParameterPath(data)
-      encode_fields(ENCODE_TOOL_OVERLAY_PARAMETER_PATH, data)
+    def self.encode_ToolParameterAction_Remove(data)
+      encode_fields(ENCODE_TOOL_PARAMETER_ACTION_REMOVE, data)
     end
 
-    def self.encode_ToolOverlay_ResultAction(data)
+    ENCODE_TOOL_PARAMETER_ACTION_SET = {
+      "path" => ["path", nil],
+      "value_template" => ["valueTemplate", nil],
+      "valueTemplate" => ["valueTemplate", nil],
+    }.freeze
+
+    def self.encode_ToolParameterAction_Set(data)
+      encode_fields(ENCODE_TOOL_PARAMETER_ACTION_SET, data)
+    end
+
+    def self.encode_ToolResultAction(data)
       data = data.to_h if !data.is_a?(Hash) && data.class.name.to_s.start_with?(name.split("::").first + "::Types")
       unless data.is_a?(Hash)
         raise TypeError, "expected a Hash (or a decoded Types value object), got #{data.class}"
@@ -12807,27 +13094,23 @@ module Cadenya
 
       case data["type"] || data[:type]
       when "transform"
-        (->(_v) { encode_ToolOverlay_ResultAction_Transform(_v) }).call(data)
+        (->(_v) { encode_ToolResultAction_TransformVariant(_v) }).call(data)
       else
         data
       end
     end
 
-    ENCODE_TOOL_OVERLAY_SELECTOR = {
-      "conditions" => ["conditions", ->(_v) { _v.is_a?(Array) ? _v.map { |_i| (->(_v) { encode_Selector_Condition(_v) }).call(_i) } : _v }],
-      "operator" => ["operator", nil],
+    ENCODE_TOOL_RESULT_ACTION_TRANSFORM = {
+      "content_template" => ["contentTemplate", nil],
+      "contentTemplate" => ["contentTemplate", nil],
+      "on_error" => ["onError", nil],
+      "onError" => ["onError", nil],
+      "expect_json" => ["expectJson", nil],
+      "expectJson" => ["expectJson", nil],
     }.freeze
 
-    def self.encode_ToolOverlay_Selector(data)
-      encode_fields(ENCODE_TOOL_OVERLAY_SELECTOR, data)
-    end
-
-    ENCODE_TOOL_OVERLAY_WIDGET_ARGUMENT_EXPOSURE = {
-      "enabled" => ["enabled", nil],
-    }.freeze
-
-    def self.encode_ToolOverlay_WidgetArgumentExposure(data)
-      encode_fields(ENCODE_TOOL_OVERLAY_WIDGET_ARGUMENT_EXPOSURE, data)
+    def self.encode_ToolResultAction_Transform(data)
+      encode_fields(ENCODE_TOOL_RESULT_ACTION_TRANSFORM, data)
     end
 
     def self.encode_ToolSetAdapter(data)
@@ -12979,7 +13262,6 @@ module Cadenya
     ENCODE_TOOL_SET_SPEC = {
       "description" => ["description", nil],
       "adapter" => ["adapter", ->(_v) { encode_ToolSetAdapter(_v) }],
-      "overlays" => ["overlays", ->(_v) { _v.is_a?(Array) ? _v.map { |_i| (->(_v) { encode_ToolOverlay(_v) }).call(_i) } : _v }],
       "secrets" => ["secrets", ->(_v) { _v.is_a?(Array) ? _v.map { |_i| (->(_v) { encode_ToolSetSpec_Secret(_v) }).call(_i) } : _v }],
     }.freeze
 
@@ -13004,6 +13286,7 @@ module Cadenya
       "config" => ["config", ->(_v) { encode_ToolSpec_Config(_v) }],
       "llm_tool_name" => ["llmToolName", nil],
       "llmToolName" => ["llmToolName", nil],
+      "actions" => ["actions", ->(_v) { encode_ToolActions(_v) }],
     }.freeze
 
     def self.encode_ToolSpec(data)
@@ -13028,6 +13311,14 @@ module Cadenya
       else
         data
       end
+    end
+
+    ENCODE_TOOL_WIDGET_ARGUMENT_EXPOSURE = {
+      "enabled" => ["enabled", nil],
+    }.freeze
+
+    def self.encode_ToolWidgetArgumentExposure(data)
+      encode_fields(ENCODE_TOOL_WIDGET_ARGUMENT_EXPOSURE, data)
     end
 
     ENCODE_TRUSTED_ENDPOINT_SPEC = {
@@ -13350,68 +13641,40 @@ module Cadenya
       encode_fields(ENCODE_TOOL_SET_ADAPTER_OPEN_API_UPLOAD_ID, data)
     end
 
-    ENCODE_SELECTOR_CONDITION_ATTRIBUTE = {
+    ENCODE_TOOL_PARAMETER_ACTION_REMOVE_VARIANT = {
       "type" => ["type", nil],
-      "attribute" => ["attribute", ->(_v) { encode_ToolSetAdapter_AttributeFilter(_v) }],
+      "remove" => ["remove", ->(_v) { encode_ToolParameterAction_Remove(_v) }],
     }.freeze
 
-    def self.encode_Selector_Condition_Attribute(data)
-      encode_fields(ENCODE_SELECTOR_CONDITION_ATTRIBUTE, data)
+    def self.encode_ToolParameterAction_RemoveVariant(data)
+      encode_fields(ENCODE_TOOL_PARAMETER_ACTION_REMOVE_VARIANT, data)
     end
 
-    ENCODE_SELECTOR_CONDITION_HAS_PARAMETER = {
+    ENCODE_TOOL_PARAMETER_ACTION_SET_VARIANT = {
       "type" => ["type", nil],
-      "has_parameter" => ["hasParameter", ->(_v) { encode_ToolOverlay_ParameterPath(_v) }],
-      "hasParameter" => ["hasParameter", ->(_v) { encode_ToolOverlay_ParameterPath(_v) }],
+      "set" => ["set", ->(_v) { encode_ToolParameterAction_Set(_v) }],
     }.freeze
 
-    def self.encode_Selector_Condition_HasParameter(data)
-      encode_fields(ENCODE_SELECTOR_CONDITION_HAS_PARAMETER, data)
+    def self.encode_ToolParameterAction_SetVariant(data)
+      encode_fields(ENCODE_TOOL_PARAMETER_ACTION_SET_VARIANT, data)
     end
 
-    ENCODE_SELECTOR_CONDITION_TOOLS = {
+    ENCODE_TOOL_PARAMETER_ACTION_PIN_VARIANT = {
       "type" => ["type", nil],
-      "tools" => ["tools", ->(_v) { encode_Selector_ToolNames(_v) }],
+      "pin" => ["pin", ->(_v) { encode_ToolParameterAction_Pin(_v) }],
     }.freeze
 
-    def self.encode_Selector_Condition_Tools(data)
-      encode_fields(ENCODE_SELECTOR_CONDITION_TOOLS, data)
+    def self.encode_ToolParameterAction_PinVariant(data)
+      encode_fields(ENCODE_TOOL_PARAMETER_ACTION_PIN_VARIANT, data)
     end
 
-    ENCODE_TOOL_OVERLAY_PARAMETER_ACTION_REMOVE = {
+    ENCODE_TOOL_RESULT_ACTION_TRANSFORM_VARIANT = {
       "type" => ["type", nil],
-      "remove" => ["remove", ->(_v) { encode_ParameterAction_Remove(_v) }],
+      "transform" => ["transform", ->(_v) { encode_ToolResultAction_Transform(_v) }],
     }.freeze
 
-    def self.encode_ToolOverlay_ParameterAction_Remove(data)
-      encode_fields(ENCODE_TOOL_OVERLAY_PARAMETER_ACTION_REMOVE, data)
-    end
-
-    ENCODE_TOOL_OVERLAY_PARAMETER_ACTION_SET = {
-      "type" => ["type", nil],
-      "set" => ["set", ->(_v) { encode_ParameterAction_Set(_v) }],
-    }.freeze
-
-    def self.encode_ToolOverlay_ParameterAction_Set(data)
-      encode_fields(ENCODE_TOOL_OVERLAY_PARAMETER_ACTION_SET, data)
-    end
-
-    ENCODE_TOOL_OVERLAY_PARAMETER_ACTION_PIN = {
-      "type" => ["type", nil],
-      "pin" => ["pin", ->(_v) { encode_ParameterAction_Pin(_v) }],
-    }.freeze
-
-    def self.encode_ToolOverlay_ParameterAction_Pin(data)
-      encode_fields(ENCODE_TOOL_OVERLAY_PARAMETER_ACTION_PIN, data)
-    end
-
-    ENCODE_TOOL_OVERLAY_RESULT_ACTION_TRANSFORM = {
-      "type" => ["type", nil],
-      "transform" => ["transform", ->(_v) { encode_ResultAction_Transform(_v) }],
-    }.freeze
-
-    def self.encode_ToolOverlay_ResultAction_Transform(data)
-      encode_fields(ENCODE_TOOL_OVERLAY_RESULT_ACTION_TRANSFORM, data)
+    def self.encode_ToolResultAction_TransformVariant(data)
+      encode_fields(ENCODE_TOOL_RESULT_ACTION_TRANSFORM_VARIANT, data)
     end
 
     ENCODE_TOOL_SPEC_CONFIG_HTTP = {
