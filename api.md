@@ -509,7 +509,7 @@ client.objectives.list(workspace_id: nil, limit: nil, cursor: nil, agent_id: nil
 Create a new objective
 
 ```ruby
-client.objectives.create(agent_id:, workspace_id: nil, variation_id: nil, metadata: nil, system_prompt_data: nil, first_user_message: nil, secrets: nil, memory_cascade: nil, first_user_message_data: nil, episodic_memory: nil, tenant: nil, subject: nil, pinned_parameters: nil, client_tools: nil) # => Cadenya::Types::Objective
+client.objectives.create(agent_id:, workspace_id: nil, variation_id: nil, metadata: nil, system_prompt_data: nil, first_user_message: nil, secrets: nil, memory_cascade: nil, first_user_message_data: nil, episodic_memory: nil, tenant: nil, subject: nil, pinned_parameters: nil, client_tools: nil, system_prompt: nil) # => Cadenya::Types::Objective
 ```
 Get an objective by ID
 
@@ -609,7 +609,7 @@ client.objectives.interrupt(objective_id, workspace_id: nil) # => Cadenya::Types
 Create an objective and stream its events
 
 ```ruby
-client.objectives.create_and_stream(agent_id:, metadata:, workspace_id: nil, variation_id: nil, system_prompt_data: nil, first_user_message: nil, secrets: nil, memory_cascade: nil, first_user_message_data: nil, episodic_memory: nil, tenant: nil, subject: nil, pinned_parameters: nil, client_tools: nil, include_deltas: nil, last_event_id: nil) # => Cadenya::Stream
+client.objectives.create_and_stream(agent_id:, metadata:, workspace_id: nil, variation_id: nil, system_prompt_data: nil, first_user_message: nil, secrets: nil, memory_cascade: nil, first_user_message_data: nil, episodic_memory: nil, tenant: nil, subject: nil, pinned_parameters: nil, client_tools: nil, system_prompt: nil, include_deltas: nil, last_event_id: nil) # => Cadenya::Stream
 ```
 
 ## client.tool_search
@@ -675,6 +675,11 @@ Archive a tool set
 ```ruby
 client.tool_sets.archive(id, workspace_id: nil) # => Cadenya::Types::ToolSet
 ```
+Sync a tool set
+
+```ruby
+client.tool_sets.sync(id, workspace_id: nil) # => nil
+```
 Unarchive a tool set
 
 ```ruby
@@ -694,6 +699,34 @@ List tool set usage
 
 ```ruby
 client.tool_sets.list_usage(tool_set_id, workspace_id: nil, tool_id: nil, limit: nil, cursor: nil, sort_order: nil) # => Cadenya::Page of Cadenya::Types::ToolSetUsage
+```
+
+## client.tool_sets.rules
+
+List tool set rules
+
+```ruby
+client.tool_sets.rules.list(tool_set_id, workspace_id: nil) # => Cadenya::Types::ListToolSetRulesResponse
+```
+Create a tool set rule
+
+```ruby
+client.tool_sets.rules.create(tool_set_id, name:, workspace_id: nil, description: nil, when_: nil, actions: nil, disabled: nil, position: nil) # => Cadenya::Types::ToolRule
+```
+Get a tool set rule by ID
+
+```ruby
+client.tool_sets.rules.retrieve(tool_set_id, id, workspace_id: nil) # => Cadenya::Types::ToolRule
+```
+Delete a tool set rule
+
+```ruby
+client.tool_sets.rules.delete(tool_set_id, id, workspace_id: nil) # => nil
+```
+Update a tool set rule
+
+```ruby
+client.tool_sets.rules.update(tool_set_id, id, workspace_id: nil, name: nil, description: nil, when_: nil, actions: nil, disabled: nil, position: nil, update_mask: nil) # => Cadenya::Types::ToolRule
 ```
 
 ## client.tool_sets.secrets
@@ -729,7 +762,7 @@ client.tool_sets.secrets.update(tool_set_id, id, workspace_id: nil, metadata: ni
 List tools
 
 ```ruby
-client.tool_sets.tools.list(tool_set_id, workspace_id: nil, limit: nil, cursor: nil, prefix: nil, query: nil, names: nil, states: nil, requires_approval: nil, overlays: nil, labels: nil, sort_order: nil, include_info: nil) # => Cadenya::Page of Cadenya::Types::Tool
+client.tool_sets.tools.list(tool_set_id, workspace_id: nil, limit: nil, cursor: nil, prefix: nil, query: nil, names: nil, states: nil, requires_approval: nil, labels: nil, sort_order: nil, include_info: nil) # => Cadenya::Page of Cadenya::Types::Tool
 ```
 Create a new tool
 

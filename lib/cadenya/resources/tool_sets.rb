@@ -5,10 +5,11 @@
 module Cadenya
   module Resources
     class ToolSets
-      attr_reader :secrets, :tools
+      attr_reader :rules, :secrets, :tools
 
       def initialize(core)
         @core = core
+        @rules = ToolSetRules.new(core)
         @secrets = ToolSetSecrets.new(core)
         @tools = Tools.new(core)
       end
@@ -82,6 +83,14 @@ module Cadenya
         _path = "/v1/workspaces/#{Util.path_param('workspaceId', workspace_id)}/tool_sets/#{Util.path_param('id', id)}:archive"
         _data = @core.request(:post, _path, request_options: request_options)
         Types::ToolSet.from_json(_data)
+      end
+
+      # Sync a tool set
+      def sync(id, workspace_id: nil, request_options: nil)
+        workspace_id = @core.resolve_default("workspaceId", "CADENYA_WORKSPACE_ID", workspace_id)
+        _path = "/v1/workspaces/#{Util.path_param('workspaceId', workspace_id)}/tool_sets/#{Util.path_param('id', id)}:sync"
+        @core.request(:post, _path, expects_body: false, request_options: request_options)
+        nil
       end
 
       # Unarchive a tool set

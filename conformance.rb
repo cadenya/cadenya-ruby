@@ -123,7 +123,7 @@ run("MemoryService_GetMemoryEntry") { client.memory_layers.entries.retrieve("sam
 run("MemoryService_DeleteMemoryEntry") { client.memory_layers.entries.delete("sample", "sample", workspace_id: "sample") }
 run("MemoryService_UpdateMemoryEntry") { client.memory_layers.entries.update("sample", "sample", workspace_id: "sample", metadata: {"name" => "sample"}, spec: {}, update_mask: "sample") }
 run("ObjectiveService_ListObjectives") { check_page(client.objectives.list(workspace_id: "sample", limit: 1, cursor: "sample", agent_id: "sample", parent_objective_id: "sample", state: "OBJECTIVE_STATE_PENDING", profile_id: "sample", sort_order: "sample", include_info: true, agent_schedule_id: "sample", labels: "sample", tenant_id: "sample", subject_id: "sample", widget_id: "sample", widget_session_id: "sample")) }
-run("ObjectiveService_CreateObjective") { client.objectives.create(workspace_id: "sample", agent_id: "sample", variation_id: "sample", metadata: {}, system_prompt_data: {}, first_user_message: "sample", secrets: [{}], memory_cascade: [{"memory_layer_id" => "sample"}], first_user_message_data: {}, episodic_memory: {"key" => "sample"}, tenant: {"id" => "sample"}, subject: {"id" => "sample"}, pinned_parameters: {}, client_tools: {"definitions" => [{"name" => "sample"}]}) }
+run("ObjectiveService_CreateObjective") { client.objectives.create(workspace_id: "sample", agent_id: "sample", variation_id: "sample", metadata: {}, system_prompt_data: {}, first_user_message: "sample", secrets: [{}], memory_cascade: [{"memory_layer_id" => "sample"}], first_user_message_data: {}, episodic_memory: {"key" => "sample"}, tenant: {"id" => "sample"}, subject: {"id" => "sample"}, pinned_parameters: {}, client_tools: {"definitions" => [{"name" => "sample"}]}, system_prompt: "sample") }
 run("ObjectiveService_GetObjective") { client.objectives.retrieve("sample", workspace_id: "sample") }
 run("ObjectiveService_ListObjectiveContextWindows") { check_page(client.objectives.list_context_windows("sample", workspace_id: "sample", limit: 1, cursor: "sample", include_info: true, labels: "sample")) }
 run("ObjectiveService_GetObjectiveDiagnostics") { client.objectives.retrieve_diagnostics("sample", workspace_id: "sample") }
@@ -143,7 +143,7 @@ run("ObjectiveService_CancelObjective") { client.objectives.cancel("sample", wor
 run("ObjectiveService_CompactObjective") { client.objectives.compact("sample", workspace_id: "sample", compaction_config: {}) }
 run("ObjectiveService_ContinueObjective") { client.objectives.continue("sample", workspace_id: "sample", message: "sample", enqueue: true) }
 run("ObjectiveService_InterruptObjective") { client.objectives.interrupt("sample", workspace_id: "sample") }
-run("ObjectiveEventStreamsService_CreateAndStreamObjective") { check_stream(client.objectives.create_and_stream(workspace_id: "sample", agent_id: "sample", variation_id: "sample", metadata: {"external_id" => "sample"}, system_prompt_data: {}, first_user_message: "sample", secrets: [{}], memory_cascade: [{"memory_layer_id" => "sample"}], first_user_message_data: {}, episodic_memory: {"key" => "sample"}, tenant: {"id" => "sample"}, subject: {"id" => "sample"}, pinned_parameters: {}, client_tools: {"definitions" => [{"name" => "sample"}]}, include_deltas: true)) }
+run("ObjectiveEventStreamsService_CreateAndStreamObjective") { check_stream(client.objectives.create_and_stream(workspace_id: "sample", agent_id: "sample", variation_id: "sample", metadata: {"external_id" => "sample"}, system_prompt_data: {}, first_user_message: "sample", secrets: [{}], memory_cascade: [{"memory_layer_id" => "sample"}], first_user_message_data: {}, episodic_memory: {"key" => "sample"}, tenant: {"id" => "sample"}, subject: {"id" => "sample"}, pinned_parameters: {}, client_tools: {"definitions" => [{"name" => "sample"}]}, system_prompt: "sample", include_deltas: true)) }
 run("SearchService_SearchToolsOrToolSets") { client.tool_search.search_or_sets(workspace_id: "sample", query: "sample") }
 run("TenantService_ListTenants") { check_page(client.tenants.list(workspace_id: "sample", limit: 1, cursor: "sample", query: "sample", labels: "sample", sort_order: "sample", include_info: true)) }
 run("TenantService_GetTenant") { client.tenants.retrieve("sample", workspace_id: "sample", include_info: true) }
@@ -155,16 +155,22 @@ run("ToolService_GetToolSet") { client.tool_sets.retrieve("sample", workspace_id
 run("ToolService_DeleteToolSet") { client.tool_sets.delete("sample", workspace_id: "sample") }
 run("ToolService_UpdateToolSet") { client.tool_sets.update("sample", workspace_id: "sample", metadata: {"name" => "sample"}, spec: {"adapter" => {"mcp" => {}, "type" => "mcp"}}, update_mask: "sample") }
 run("ToolService_ArchiveToolSet") { client.tool_sets.archive("sample", workspace_id: "sample") }
+run("ToolService_SyncToolSet") { client.tool_sets.sync("sample", workspace_id: "sample") }
 run("ToolService_UnarchiveToolSet") { client.tool_sets.unarchive("sample", workspace_id: "sample") }
 run("ToolService_ListToolSetEvents") { check_page(client.tool_sets.list_events("sample", workspace_id: "sample", limit: 1, cursor: "sample", sort_order: "sample", include_info: true, labels: "sample")) }
 run("ToolService_GetToolSetOpenAPISpec") { client.tool_sets.retrieve_open_api_spec("sample", workspace_id: "sample") }
 run("ToolService_ListToolSetUsage") { check_page(client.tool_sets.list_usage("sample", workspace_id: "sample", tool_id: "sample", limit: 1, cursor: "sample", sort_order: "sample")) }
+run("ToolService_ListToolSetRules") { client.tool_sets.rules.list("sample", workspace_id: "sample") }
+run("ToolService_CreateToolSetRule") { client.tool_sets.rules.create("sample", workspace_id: "sample", name: "sample", description: "sample", when_: "sample", actions: {}, disabled: true, position: 1) }
+run("ToolService_GetToolSetRule") { client.tool_sets.rules.retrieve("sample", "sample", workspace_id: "sample") }
+run("ToolService_DeleteToolSetRule") { client.tool_sets.rules.delete("sample", "sample", workspace_id: "sample") }
+run("ToolService_UpdateToolSetRule") { client.tool_sets.rules.update("sample", "sample", workspace_id: "sample", name: "sample", description: "sample", when_: "sample", actions: {}, disabled: true, position: 1, update_mask: "sample") }
 run("ToolService_ListToolSetSecrets") { check_page(client.tool_sets.secrets.list("sample", workspace_id: "sample", limit: 1, cursor: "sample", prefix: "sample", query: "sample", sort_order: "sample", include_info: true)) }
 run("ToolService_CreateToolSetSecret") { client.tool_sets.secrets.create("sample", workspace_id: "sample", metadata: {"name" => "sample"}, spec: {}) }
 run("ToolService_GetToolSetSecret") { client.tool_sets.secrets.retrieve("sample", "sample", workspace_id: "sample") }
 run("ToolService_DeleteToolSetSecret") { client.tool_sets.secrets.delete("sample", "sample", workspace_id: "sample") }
 run("ToolService_UpdateToolSetSecret") { client.tool_sets.secrets.update("sample", "sample", workspace_id: "sample", metadata: {"name" => "sample"}, spec: {}, update_mask: "sample") }
-run("ToolService_ListTools") { check_page(client.tool_sets.tools.list("sample", workspace_id: "sample", limit: 1, cursor: "sample", prefix: "sample", query: "sample", names: ["sample"], states: ["STATE_AVAILABLE"], requires_approval: true, overlays: ["sample"], labels: "sample", sort_order: "sample", include_info: true)) }
+run("ToolService_ListTools") { check_page(client.tool_sets.tools.list("sample", workspace_id: "sample", limit: 1, cursor: "sample", prefix: "sample", query: "sample", names: ["sample"], states: ["STATE_AVAILABLE"], requires_approval: true, labels: "sample", sort_order: "sample", include_info: true)) }
 run("ToolService_CreateTool") { client.tool_sets.tools.create("sample", workspace_id: "sample", metadata: {"name" => "sample"}, spec: {"config" => {"http" => {"request_method" => "GET"}, "type" => "http"}, "description" => "sample", "parameters" => {}, "requires_approval" => true}) }
 run("ToolService_GetTool") { client.tool_sets.tools.retrieve("sample", "sample", workspace_id: "sample") }
 run("ToolService_DeleteTool") { client.tool_sets.tools.delete("sample", "sample", workspace_id: "sample") }

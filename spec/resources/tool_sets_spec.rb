@@ -115,6 +115,24 @@ RSpec.describe "client.tool_sets" do
     end
   end
 
+  describe "#sync" do
+    it "sends the golden request and decodes the response" do
+      VCR.use_cassette("ToolService_SyncToolSet") do
+        result = client.tool_sets.sync("sample", workspace_id: "sample")
+        expect(result).to be_nil
+      end
+    end
+
+    context "when workspace_id falls back to the client default" do
+      it "resolves the client-level value" do
+        stub = stub_request(:post, "#{SPEC_BASE_URL}/v1/workspaces/default_workspace_id/tool_sets/sample:sync")
+          .to_return(status: 204, body: "")
+        client.tool_sets.sync("sample")
+        expect(stub).to have_been_requested
+      end
+    end
+  end
+
   describe "#unarchive" do
     it "sends the golden request and decodes the response" do
       VCR.use_cassette("ToolService_UnarchiveToolSet") do
