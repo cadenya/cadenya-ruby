@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.10.0](https://github.com/cadenya/cadenya-ruby/compare/v1.9.0...v1.10.0) (2026-11-23)
+
+
+### Features
+
+* temporary workspace claim status, duration fields typed as strings ([#92](https://github.com/cadenya/cadenya-ruby/issues/92)) ([7730605](https://github.com/cadenya/cadenya-ruby/commit/773060585b3f7739528d1f9af05d83295d7e06f0))
+* tool set rules, tool set sync, and iteration ids on objective events ([#91](https://github.com/cadenya/cadenya-ruby/issues/91)) ([44b9da0](https://github.com/cadenya/cadenya-ruby/commit/44b9da0bf2e6e431dd7b7a63b2f80bf763677191))
+
 ## [1.9.0](https://github.com/cadenya/cadenya-ruby/compare/v1.8.0...v1.9.0) (2026-10-28)
 
 
